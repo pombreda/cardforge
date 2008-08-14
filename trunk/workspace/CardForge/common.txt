@@ -1,0 +1,386 @@
+//you can edit this file
+//this file is used for sealed and draft games to generate booster packs
+//all cards in this file are considered common
+//no blank lines
+//lines beginning with // are ignored
+Alpha Myr
+Ebony Rhino
+Metallic Sliver
+Omega Myr
+Phyrexian Walker
+Venser's Sliver
+Yotian Soldier
+Argothian Swine
+Balduvian Bears
+Barbary Apes
+Barbtooth Wurm
+Bear Cub
+Blanchwood Treefolk
+Boreal Druid
+Canopy Spider
+Carnivorous Plant
+Crash of Rhinos
+Durkwood Boars
+Elvish Ranger
+Forest Bear
+Fyndhorn Elves
+Giant Mantis
+Giant Spider
+Golden Bear
+Goliath Beetle
+Gorilla Warrior
+Ironroot Treefolk
+Meng Huo's Horde
+Moss Kami
+Moss Monster
+Needleshot Gourna
+Norwood Archers
+Orochi Sustainer
+Panther Warriors
+Plated Spider
+Plated Wurm
+Pygmy Razorback
+Rib Cage Spider
+Rowan Treefolk
+Scaled Wurm
+Silverback Ape
+Skyshroud Troopers
+Southern Elephant
+Trained Jackal
+Tree Monkey
+Urborg Elf
+Wall of Ice
+Wall of Wood
+War Mammoth
+Whiptail Wurm
+Willow Elf
+Woodland Druid
+Yavimaya Wurm
+Covert Operative
+Metathran Soldier
+Aesthir Glider
+Craven Giant
+Craven Knight
+Goblin Raider
+Hulking Goblin
+Jungle Lion
+Kyren Glider
+Nezumi Cutthroat
+Nightshade Stinger
+Scavenging Scarab
+Spineless Thug
+Yellow Scarves Troops
+Young Wei Recruits
+Anurid Murkdiver
+Bayou Dragonfly
+Bog Raiders
+Bog Smugglers
+Canyon Wildcat
+Cat Warriors
+Devouring Deep
+Dwarven Grunt
+Elite Cat Warrior
+Goblin Mountaineer
+Goblin Spelunkers
+Grayscaled Gharial
+Jukai Messenger
+Leaf Dancer
+Lost Soul
+Marsh Boa
+Marsh Goblins
+Moor Fiend
+Mountain Goat
+Plague Beetle
+Raiding Nightstalker
+Rock Badger
+Rootwater Commando
+Rushwood Dryad
+Shanodin Dryads
+Sokenzan Bruiser
+Willow Dryad
+Zodiac Dog
+Zodiac Goat
+Zodiac Monkey
+Zodiac Rabbit
+Zodiac Rat
+Zodiac Rooster
+Zodiac Snake
+Dakmor Scorpion
+Dross Crocodile
+Feral Shadow
+Headless Horseman
+Krovikan Scoundrel
+Llanowar Dead
+Misshapen Fiend
+Moaning Spirit
+Muck Rats
+Python
+Razortooth Rats
+Severed Legion
+Skeletal Crocodile
+Skeletal Snake
+Squirming Mass
+Wei Infantry
+Aven Envoy
+Bay Falcon
+Coral Merfolk
+Fugitive Wizard
+Gaea's Skyfolk
+Merfolk of the Pearl Trident
+River Kaijin
+Straw Soldiers
+Talas Air Ship
+Talas Merchant
+Talas Scout
+Vodalian Soldiers
+Wandering Ones
+Wu Infantry
+Zephyr Falcon
+Skyshroud Falcon
+Angelic Wall
+Barbarian Horde
+Bird Maiden
+Dwarven Trader
+Fire Elemental
+Goblin Bully
+Goblin Cavaliers
+Goblin Hero
+Gray Ogre
+Highland Giant
+Hurloon Minotaur
+Independent Troops
+Lizard Warrior
+Lowland Giant
+Minotaur Warrior
+Mons's Goblin Raiders
+Needlepeak Spider
+Obsidian Giant
+Ogre Warrior
+Raging Bull
+Scarwood Goblins
+Sisters of the Flame
+Streetbreaker Wurm
+Talruum Minotaur
+Tor Giant
+Viashino Warrior
+Vulshok Berserker
+Wild Colos
+Wild Jhovall
+Alaborn Trooper
+Armored Pegasus
+Border Guard
+Devoted Hero
+Femeref Scouts
+Fresh Volunteers
+Keepers of the Faith
+Knight Errant
+Pearled Unicorn
+Regal Unicorn
+Shu Elite Infantry
+Shu Foot Soldiers
+Squire
+Steadfast Guard
+Tormented Angel
+Trokin High Guard
+Volunteer Militia
+Wild Griffin
+Ambassador Oak
+Changeling Sentinel
+Immaculate Magistrate
+Imperious Perfect
+Meadowboon
+Prickly Boggart
+Aggressive Urge
+Akki Drillmaster
+Anarchist
+Angelfire Crusader
+Angelic Blessing
+Ashcoat Bear
+Ashen-Skin Zubera
+Assault Zeppelid
+Aven Fisher
+Avian Changeling
+Axegrinder Giant
+Balduvian Barbarians
+Barkhide Mauler
+Blade of the Sixth Pride
+Blind Phantasm
+Bog Imp
+Breath of Life
+Brute Force
+Cackling Flames
+Cackling Imp
+Castle Raptors
+Chittering Rats
+Cloud of Faeries
+Cloudcrown Oak
+Coastal Hornclaw
+Coercion
+Commune with Nature
+Coral Eel
+Counsel of the Soratami
+Courier Hawk
+Craw Wurm
+Dark Banishing
+Defiant Elf
+Disciple of Kangee
+Distress
+Diving Griffin
+Douse in Gloom
+Dripping-Tongue Zubera
+Dross Prowler
+Drudge Skeletons
+Dusk Imp
+Eager Cadet
+Echoing Decay
+Echoing Truth
+Elvish Fury
+Elvish Warrior
+Ember-Fist Zubera
+Erratic Explosion
+Essence Warden
+Expunge
+Faceless Butcher
+Fangren Hunter
+Filthy Cur
+Firebolt
+Fledgling Djinn
+Floating-Dream Zubera
+Flying Men
+Fomori Nomad
+Foot Soldiers
+Foul Imp
+Frost Ogre
+Frostling
+Frostweb Spider
+Funeral Charm
+Furnace Spirit
+Ghost Warden
+Giant Cockroach
+Giant Dustwasp
+Giant Growth
+Giant Warthog
+Glory Seeker
+Gnarled Mass
+Goblin Chariot
+Goblin Piker
+Goblin Sky Raider
+Goblin Skycutter
+Goretusk Firebeast
+Gravedigger
+Grizzly Bears
+Hand of Cruelty
+Highway Robber
+Hill Giant
+Horned Turtle
+Horseshoe Crab
+Hymn to Tourach
+Ichor Slick
+Impulse
+Inner-Flame Acolyte
+Kabuto Moth
+Kavu Climber
+Kjeldoran War Cry
+Kodama's Reach
+Lantern Kami
+Lava Spike
+Lay Waste
+Leaf Glider
+Life Burst
+Lightning Bolt
+Lightning Elemental
+Lignify
+Llanowar Elves
+Lucent Liminid
+Lumengrid Warden
+Man-o'-War
+Manta Riders
+Mass of Ghouls
+Molten Rain
+Moorish Cavalry
+Mudbutton Torchrunner
+Mulldrifter
+Nameless Inversion
+Needlespeak Spider
+Nessian Courser
+Norwood Ranger
+Oakgnarl Warrior
+Oblivion Ring
+Opt
+Order of the Sacred Bell
+Oubliette
+Path of Anger's Flame
+Peel from Reality
+Penumbra Bobcat
+Phyrexian Rager
+Primal Plasma
+Prodigal Pyromancer
+Prodigal Sorcerer
+Raging Goblin
+Raging Minotaur
+Raise Dead
+Raise the Alarm
+Redwood Treefolk
+Regress
+Remove Soul
+Renewed Faith
+Repulse
+Revered Dead
+Reviving Dose
+Sakura-Tribe Elder
+Scathe Zombies
+Scryb Sprites
+Serpent Warrior
+Shinka Gatekeeper
+Shock
+Silent-Chant Zubera
+Sinkhole
+Skirk Shaman
+Skyhunter Prowler
+Skyknight Legionnaire
+Slaughterhouse Bouncer
+Snapping Drake
+Spark Spray
+Sparksmith
+Spined Wurm
+Sprout Swarm
+Squall Drifter
+Stone Rain
+Storm Crow
+Strangling Soot
+Sunlance
+Suntail Hawk
+Symbiotic Elf
+Tanglebloom
+Tendrils of Corruption
+Terramorphic Expanse
+Terror
+Thought Courier
+Timberwatch Elf
+Torii Watchward
+Trained Armodon
+Transluminant
+Tremor
+Tribal Flames
+Urborg Syphon-Mage
+Venerable Monk
+Veteran Armorer
+Veteran Cavalier
+Villainous Ogre
+Vine Trellis
+Vodalian Merchant
+Volcanic Hammer
+Vulshok Sorcerer
+Wandering Stream
+Wayward Soul
+Wellwisher
+Whiptongue Frog
+Whirlpool Rider
+Wild Elephant
+Wild Mongrel
+Wildsize
+Wind Drake
+Wings of Velis Vel
+Wirewood Elf
+Words of Wisdom
+Wrap in Vigor

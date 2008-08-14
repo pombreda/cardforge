@@ -1,0 +1,1660 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+<meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<meta name=ProgId content=Word.Document>
+<meta name=Generator content="Microsoft Word 11">
+<meta name=Originator content="Microsoft Word 11">
+<link rel=File-List href="readme-compile_files/filelist.xml">
+<title>MTG Forge Source Code</title>
+<!--[if gte mso 9]><xml>
+ <o:DocumentProperties>
+  <o:Author>Valued Customer</o:Author>
+  <o:LastAuthor>Valued Customer</o:LastAuthor>
+  <o:Revision>4</o:Revision>
+  <o:TotalTime>3</o:TotalTime>
+  <o:Created>2007-10-10T20:38:00Z</o:Created>
+  <o:LastSaved>2008-01-06T04:28:00Z</o:LastSaved>
+  <o:Pages>1</o:Pages>
+  <o:Words>3806</o:Words>
+  <o:Characters>21695</o:Characters>
+  <o:Company>Valued Customer</o:Company>
+  <o:Lines>180</o:Lines>
+  <o:Paragraphs>50</o:Paragraphs>
+  <o:CharactersWithSpaces>25451</o:CharactersWithSpaces>
+  <o:Version>11.6568</o:Version>
+ </o:DocumentProperties>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:Zoom>160</w:Zoom>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]-->
+<style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:Wingdings;
+	panose-1:5 0 0 0 0 0 0 0 0 0;
+	mso-font-charset:2;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:0 268435456 0 0 -2147483648 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";}
+a:link, span.MsoHyperlink
+	{color:blue;
+	text-decoration:underline;
+	text-underline:single;}
+a:visited, span.MsoHyperlinkFollowed
+	{color:purple;
+	text-decoration:underline;
+	text-underline:single;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{margin:0in;
+	margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Courier New";
+	mso-fareast-font-family:"Times New Roman";}
+@page Section1
+	{size:8.5in 11.0in;
+	margin:1.0in 65.95pt 1.0in 65.95pt;
+	mso-header-margin:.5in;
+	mso-footer-margin:.5in;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style>
+<!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin:0in;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><!--[if gte mso 9]><xml>
+ <o:shapedefaults v:ext="edit" spidmax="4098"/>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <o:shapelayout v:ext="edit">
+  <o:idmap v:ext="edit" data="1"/>
+ </o:shapelayout></xml><![endif]-->
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+
+<div class=Section1>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>MTG
+Forge Source Code<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>All
+source code is released under the GNU license<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>MTG
+Forge lets you play Magic: The Gathering against a computer opponent using all
+of the rules.<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>Developers
+Blog: <a href="http://mtgrares.blogspot.com/">mtgrares.blogspot.com</a><o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>To
+compile, unzip everything into the same directory and type “javac *.java”<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>To run
+it type “java Gui_NewGame”<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'>All the
+code for the Magic cards is in CardFactory.java<span style='mso-spacerun:yes'> 
+</span>The basic card information like name, mana cost, text is in
+“cards.txt”<span style='mso-spacerun:yes'>  </span>The Card class represents
+regular, cardboard cards and the SpellAbility class represents the effect that
+any card does when it is played.<span style='mso-spacerun:yes'>  </span>Below
+are excepts from my blog describing how to program cards.<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>MTG Forge Overview<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Trying to
+understand a whole programming project is difficult and almost impossible
+without copious amounts of documentation.<span style='mso-spacerun:yes'> 
+</span>I’m going to try to summarize the major classes MTG Forge uses.<span
+style='mso-spacerun:yes'>  </span>The Card class mimics the functions of a real
+card, and the Card class exists in your hand, in play, in the graveyard, and
+removed from the game.<span style='mso-spacerun:yes'>  </span>A Card can hold
+any number of SpellAbility objects.<span style='mso-spacerun:yes'>  </span>Each
+Card has at least one SpellAbility and if the Card has an ability like Elvish
+Piper, the Card will have two SpellAbilities added.<span
+style='mso-spacerun:yes'>  </span>One SpellAbility is the default summon
+creature spell and the other SpellAbility is the activated ability that lets
+you put a creature from your hand into play.<span style='mso-spacerun:yes'> 
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Every
+SpellAbility can have an optional mana cost, the only SpellAbilities that don’t
+have a mana cost are creatures that have tap abilities.<span
+style='mso-spacerun:yes'>  </span>Instants and Sorceries also use the
+SpellAbility class.<span style='mso-spacerun:yes'>  </span>SpellAbility has a resolve
+method that is called after it is popped off the stack.<span
+style='mso-spacerun:yes'>  </span>The CardFactory class makes new cards and
+copies existing ones.<span style='mso-spacerun:yes'>  </span>CardFactory also
+adds the SpellAbility objects to the Cards, and implements SpellAbility’s
+resolve method.<span style='mso-spacerun:yes'>  </span>The resolve method for
+Wrath of God would destroy everything.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The file
+“cards.txt” holds simple cards as well as all the text for Instants and
+Sorceries.<span style='mso-spacerun:yes'>  </span>This file saved time because
+I didn’t have to program simple creatures like Glory Seeker.<span
+style='mso-spacerun:yes'>  </span>This file also let me specify mana abilities,
+so creatures like Bird of Paradise are only implemented in cards.txt, no other
+code is needed.<span style='mso-spacerun:yes'>  </span>Flying, haste, fear, and
+vigilance are also supported by cards.txt<span style='mso-spacerun:yes'> 
+</span>Some users have added their own cards, which surprised me.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The class
+that runs everything is Gui_NewGame.<span style='mso-spacerun:yes'>  </span>It
+starts up the user interface and initializes everything.<span
+style='mso-spacerun:yes'>  </span>Every screen is a separate class and
+JFrame.<span style='mso-spacerun:yes'>  </span>These display classes all start
+with the abbreviation Gui and are only loosely tied together, they all read
+from Constant.Runtime in order to read which deck you and the computer are
+using.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>I hate not
+throwing some code at you. </span><span style='font-size:13.0pt;font-family:
+Wingdings;mso-ascii-font-family:Arial;mso-hansi-font-family:Arial;mso-bidi-font-family:
+Arial;mso-char-type:symbol;mso-symbol-font-family:Wingdings'><span
+style='mso-char-type:symbol;mso-symbol-font-family:Wingdings'>J</span></span><span
+style='font-size:13.0pt;font-family:Arial'> The code below constructs Serra
+Avenger.<span style='mso-spacerun:yes'>  </span>AllZone holds all of the zones,
+in play, graveyard, etc… and can be globally accessed.<span
+style='mso-spacerun:yes'>  </span>Global variables are generally bad, but they
+really helped get MTG Forge working.<span style='mso-spacerun:yes'>  </span>The
+computer can play regular creature cards like Serra Avenger using the code
+below, since it just pays the mana cost and the resolve method works the same
+for both the human and computer player.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The
+computer checks the canPlay and canPlayAI methods in SpellAbility to see if it
+is allowed to play that card.<span style='mso-spacerun:yes'>  </span>This
+specific card does not have a canPlayAI method, a card like Hex does, because
+it targets 6 creatures.<span style='mso-spacerun:yes'>  </span>The card below belongs
+in the human player’s deck, since he both controls and owns the card.<span
+style='mso-spacerun:yes'>  </span>If this card was going into the computer’s
+library, the computer would be listed as the owner and controller.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final Card
+card = new Card();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setName(&quot;Serra
+Avenger&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setManaCost(&quot;W
+W&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setAttack(3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setDefense(3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addKeyword(&quot;Flying&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addKeyword(&quot;Vigilance&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setOwner(&quot;Human&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setController(&quot;Human&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>SpellAbility
+spell = new SpellAbility(SpellAbility.Spell, card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public void resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>PlayerZone play =
+AllZone.getZone(Constant.Zone.Play, card.getController());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>play.add(card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public boolean canPlay()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>   </span>//Serra Avenger cannot be played for the
+first three turns of the game<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>   </span>return 3 &lt; AllZone.Phase.getTurn();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Programming Shock<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Many cards
+and abilities are similar to Shock.<span style='mso-spacerun:yes'>  </span>In
+case you can’t remember, Shock deals 2 damage to target creature or
+player.<span style='mso-spacerun:yes'>  </span>First, Shock has to be added to
+the cards.txt file.<span style='mso-spacerun:yes'>  </span>Cards.txt holds all
+of the text that the card displays as well as the mana cost.<span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Shock<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>R<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Instant<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Shock deals
+2 damage to target creature or player.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The resolve
+method checks to see if the card is still in play, something that we take for
+granted in a real-life game.<span style='mso-spacerun:yes'> 
+</span>SpellAbility only allows for 1 target to be set, either a card or a
+player by the setTargetPlayer(String player) and setTargetCard(Card)
+methods.<span style='mso-spacerun:yes'>  </span>To get the target you call
+either getTargetPlayer or getTargetCard. The SpellAbiliy method
+setBeforePayMana(Input), lets the user actually choose the target card or
+player.<span style='mso-spacerun:yes'>  </span>CardFactoryUtil has a bunch of
+reusable Input classes that gets a user choice.<span style='mso-spacerun:yes'> 
+</span>If the spell just targeted a creature you would use
+CardFactoryUtil.input_targetCreature.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>SpellAbility
+canPlayAI method returns false if you do not want the computer to play this
+spell.<span style='mso-spacerun:yes'>   </span>A very simple AI for Shock is
+below.<span style='mso-spacerun:yes'>  </span>canPlayAI is called first, and if
+it returns true, then chooseTargetAI is called.<span style='mso-spacerun:yes'> 
+</span>chooseTargetAI sets the target for the spell by either calling
+setTargetCard(Card) or setTargetPlayer(String player).<span
+style='mso-spacerun:yes'>  </span>Some cards like Wrath of God do not have a
+chooseTargetAI method, because no targets are needed.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>This checks
+to see that the human player (you) have at least 1 creature in play and sets
+that creature as the target.<span style='mso-spacerun:yes'>  </span>A more
+sophisticated AI would try to get the best creature that Shock could kill, like
+a 2/2 flyer.<span style='mso-spacerun:yes'>  </span>The AI could also see if
+you had low life, and could alternately target you instead of a creature.<span
+style='mso-spacerun:yes'>  </span>The regular AI for Shock tries to kill a
+creature with flying or you if your life is low.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//simple AI
+for Shock<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//should be
+put in a SpellAbility object<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public
+boolean canPlayAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>CardList list =
+CardFactoryUtil.AI_getHumanCreature();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>return 0 &lt; list.size();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+chooseTargetAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>CardList list =
+CardFactoryUtil.AI_getHumanCreature();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>setTargetCard(list.get(0));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//Complete
+card<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final Card
+card = new Card();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setName(“Shock”);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setManaCost(&quot;R&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setOwner(Constant.Player.Human);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setController(Constant.Player.Human);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final
+SpellAbility spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>int damage = 2;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public boolean canPlayAI() {return false;}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public void resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>if(getTargetCard() != null)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>     
+</span>if(AllZone.GameAction.isCardInPlay(getTargetCard()))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>        </span>Card c = getTargetCard();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>        </span>c.addDamage(damage);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>else<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>     
+</span>AllZone.GameAction.getPlayerLife(getTargetPlayer()).subtractLife(damage);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}//resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};//SpellAbility<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(CardFactoryUtil.input_targetCreaturePlayer(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//Shock as
+it would be in CardFactory<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(cardName.equals(&quot;Shock&quot;))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>final SpellAbility spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//same stuff<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>};//SpellAbility<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//this is cleared because a card is presumed
+to be a permanent<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//all Sorceries and Instants have to call card.clearSpellAbility()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>card.clearSpellAbility();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'> 
+</span>spell.setBeforePayMana(CardFactoryUtil.input_targetCreaturePlayer(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Programming Giant Growth<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>People
+seemed to have really enjoyed my entry on “Programming Shock” so I’ll cover
+another common card.<span style='mso-spacerun:yes'>  </span>If you look at the
+code, you will see that it works for both Giant Growth and its Planar Chaos
+brother Brute Force.<span style='mso-spacerun:yes'>  </span>Remember at the top
+of the CardFactory getCard method the mana cost and name of the card is already
+set.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Giant
+Growth and other effects stay around “until end of turn.”<span
+style='mso-spacerun:yes'>  </span>End of turn is commonly abbreviated EOT.<span
+style='mso-spacerun:yes'>  </span>In order to program EOT effects some bit of
+code has to be executed later.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>MTG Forge
+source code has an interface called Command, which is a software Design
+Pattern.<span style='mso-spacerun:yes'>  </span>The interface for Command is
+very simple.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public
+interface Command<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<span
+style='mso-spacerun:yes'>    </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>public void execute();<span
+style='mso-spacerun:yes'>    </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Command is
+a generic object that is used to execute arbitrary code at a later time.<span
+style='mso-spacerun:yes'>  </span>So when Giant Growth resolves it will give
+the target creature +3/+3 and make a Command object that resets the creatures
+stats to normal.<span style='mso-spacerun:yes'> 
+</span>AllZone.EndOfTurn.addUntil(Command)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>executes
+all until EOT Commands.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>There are
+really two types of EOT effects, until EOT and at EOT.<span
+style='mso-spacerun:yes'>  </span>Giant Growth says until EOT and Ball
+Lightning says at EOT.<span style='mso-spacerun:yes'>  </span>So Giant Growth
+would use AllZone.EndOfTurn.addUntil(Command) and Ball Lightning would use
+AllZone.EndOfTurn.addAt(Command)<span style='mso-spacerun:yes'>  </span>This
+division doesn’t matter in the current version of MTG Forge, since you cannot
+stop at EOT.<span style='mso-spacerun:yes'>  </span>Technically “At EOT”
+effects are done first, then you would get priority to play cards/abilities,
+and then “Until Effects” wear off.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Unfortunately
+the resolve method for Giant Growth is a little messy because a Command object
+has to be constructed.<span style='mso-spacerun:yes'>  </span>Command has to be
+inside the resolve method in case Giant Growth is played, and then returned to
+your hand, and then played again.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>This is
+very Java specific and a little complicated.<span style='mso-spacerun:yes'> 
+</span>The array “target” is used because the Command object needs a final
+variable.<span style='mso-spacerun:yes'>  </span>Target simulates a variable
+that can be changed, while fulfilling the syntax that Java needs to make the
+Command object.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The AI just
+makes sure that the computer is attacking with at least one creature and plays
+Giant Growth on that creature.<span style='mso-spacerun:yes'>  </span>Currently
+the computer cannot play any spells/abilities during combat, so the computer
+will never attack with a smaller creature and then play Giant Growth.<span
+style='mso-spacerun:yes'>  </span>The computer will only play Giant Growth
+during his main phase.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(cardName.equals(&quot;Giant
+Growth&quot;) || cardName.equals(&quot;Brute Force&quot;))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>SpellAbility
+spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>final Card[] target = new Card[1];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>final Command untilEOT = new Command()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>public void execute()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>if(AllZone.GameAction.isCardInPlay(target[0]))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>        </span>target[0].setAttack
+(target[0].getAttack() - 3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>       
+</span>target[0].setDefense(target[0].getDefense()- 3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>target[0] = getTargetCard();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'> 
+</span>if(AllZone.GameAction.isCardInPlay(target[0]))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'> </span><span style='mso-spacerun:yes'> </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>target[0].setAttack (target[0].getAttack()
++ 3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>   
+</span>target[0].setDefense(target[0].getDefense()+ 3);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>AllZone.EndOfTurn.addUntil(untilEOT);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}//resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//Instants
+and Sorceries should clear because cards are presumed to be permanents<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.clearSpellAbility();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//AI
+removed for clarity, should be put in SpellAbility<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public
+boolean canPlayAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>return
+getAttacker() != null;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+chooseTargetAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>setTargetCard(getAttacker());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public Card
+getAttacker()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//target
+creature that is going to attack<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Combat c =
+ComputerUtil.getAttackers();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Card[] att
+= c.getAttackers();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(att.length
+!= 0)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>return att[0];<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>else<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>return null;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Programming Magic Cards 1<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Many people
+are interested in how I program cards in MTG Forge.<span
+style='mso-spacerun:yes'>  </span>Obviously some of the cards are simple and
+some are complicated.<span style='mso-spacerun:yes'>  </span>Wrath of God is
+very simple while Kiki-Jiki, Mirror Breaker is very complicated.<span
+style='mso-spacerun:yes'>  </span>The article “MTG Forge Overview” showed you
+Serra Angel which is a typical creature.<span style='mso-spacerun:yes'> 
+</span>Today I’m going to show you how I programmed tap abilities with and
+without mana costs as well as how to draw a card and gain life.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The code
+showed below is for “Super Card.”<span style='mso-spacerun:yes'>  </span>It is
+an artifact that lets you tap to draw a card or tap and pay 1 to gain a
+life.<span style='mso-spacerun:yes'>  </span>Super Card has 3 SpellAbilities
+added to the card: 1. so it comes into play as a permanent, 2. gain 1 life, and
+3. draw a card.<span style='mso-spacerun:yes'>  </span>As you may or not
+remember, the SpellAbility class is used for all spells and abilities, hence
+its name.<span style='mso-spacerun:yes'>  </span>The life gaining effects costs
+1 mana of any color while the draw card ability only taps the card.<span
+style='mso-spacerun:yes'>  </span>The resolve method of SpellAbility does the
+main function of any card or ability.<span style='mso-spacerun:yes'> 
+</span>The card’s controller is the one who gains life.<span
+style='mso-spacerun:yes'>   </span>If your opponent steals it during the game
+the effect will still work correctly and you will still own the card, but your
+opponent would control it.<span style='mso-spacerun:yes'>  </span>If it is put
+into a graveyard, it will go into its owner’s graveyard.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The
+setDescription method of SpellAbility sets the text that is show text box of
+the card on screen.<span style='mso-spacerun:yes'>  </span>The
+setStackDescription, also a part of SpellAbility, is the text that the stack
+displays.<span style='mso-spacerun:yes'>  </span>These two abilities require a
+different argument for the setBeforePayMana function.<span
+style='mso-spacerun:yes'>  </span>The setBeforePayMana function optionally lets
+a user do some action before choosing any targets and before paying for mana,
+it is the first thing that is checked when a card is clicked on.<span
+style='mso-spacerun:yes'>  </span>The setBeforePayMana function makes the user pay
+for the mana cost when gaining life, and just taps the card when drawing
+another card.<span style='mso-spacerun:yes'>  </span>You can put anything into
+the setBeforePayMana method and I added “tap abilities” late in development.<span
+style='mso-spacerun:yes'>  </span>setBeforePayMana accepts Input objects.<span
+style='mso-spacerun:yes'>  </span>Input objects process all user input through
+the mouse and allows the user choose targets.<span style='mso-spacerun:yes'> 
+</span>This way of doing abilities and tap abilities is not every elegant but
+it works.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone is
+a global (static) object that can be accessed from anywhere in the program and
+GameAction does some logical actions like drawing a card, gaining life,
+discarding, etc...<span style='mso-spacerun:yes'>  </span>When this card is
+clicked on the user is given the choice of playing either of the two abilities.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Card card =
+new Card();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setName(&quot;Super
+Card&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setOwner(“Human”);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setController(“Human”);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.setManaCost(“1”);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addType(“Artifact”);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(new
+Spell_Permanent(card));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final
+SpellAbility a = new Ability_Tap(card, &quot;1&quot;)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public void resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>AllZone.GameAction.getPlayerLife(card.getController()).addLife(1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>setStackDescription(card.getController()
++&quot; gains 1 life.&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>a.setDescription(&quot;1,
+tap: You gain 1 life.&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>a.setBeforePayMana(new
+Input_PayManaCost(a));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(a);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final
+SpellAbility b = new Ability_Tap(card, &quot;0&quot;)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>public void resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>   
+</span>AllZone.GameAction.drawCard(card.getController());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>setStackDescription(card.getController()
++&quot; draws a card&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>b.setDescription(&quot;tap:
+You draw a card.&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>b.setBeforePayMana(new
+Input_NoCost_TapAbility((Ability_Tap) b));<span style='mso-spacerun:yes'> 
+</span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(b);<o:p></o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Programming Life Gain<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>I wanted to
+cover some of the basic abilities that cards do like gaining life, losing life,
+drawing a card, etc…<span style='mso-spacerun:yes'>  </span>AllZone is a static
+global variable that can be accessed from anywhere.<span
+style='mso-spacerun:yes'>  </span>GameAction does some high level actions like
+drawing cards and destroying a creature.<span style='mso-spacerun:yes'> 
+</span>The code snippets that I will be going over usually will go in the
+resolve method of SpellAbility objects.<span style='mso-spacerun:yes'> 
+</span>These are some common actions that are done throughout the game.<span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>This is how
+you gain life.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>PlayerLife
+p = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>p.addLife(2);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Usually I
+wouldn’t hardcode the player (human or computer) so the code would look like
+this.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>PlayerLife
+p = AllZone.GameAction.getPlayerLife(card.getController());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>p.addLife(2);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Subtracting
+life is similar.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>PlayerLife
+p = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>p.subtractLife(4);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Drawing a
+card looks like this.<span style='mso-spacerun:yes'>  </span>If you wanted to
+draw multiple cards, you would use a for loop.<span style='mso-spacerun:yes'> 
+</span>AllZone.GameAction.drawCard(Constant.Player.Human);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Whenever a
+card is put into a graveyard, AllZone.GameAction.destroy(Card) is used.<span
+style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.destroy(Card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Cards like
+Strangling Soot will have a SpellAbility.resolve that looks like this.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.destroy(spell.getTargetCard());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Terror is
+similar but says that the card cannot be regenerated.<span
+style='mso-spacerun:yes'> 
+</span>AllZone.GameAction.destroyNoRegeneration(Card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>This
+discards a card at random from a player.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.discardRandom(Constant.Player.Computer);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Regular
+discard is done this way.<span style='mso-spacerun:yes'>  </span>This assumes
+that the chosen card is already picked and this method just moves the card from
+a player’s hand to the graveyard.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.discard(Card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Sacrificing
+a card is similar to discarding, the chosen card is already picked.<span
+style='mso-spacerun:yes'>  </span>This would be called from the Input class,
+since it handles all the user input from the mouse.<span
+style='mso-spacerun:yes'>  </span>The Input class lets the user choose a card
+and then the code below is executed.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.sacrifice(Card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Shuffling
+your library is a common occurrence.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.GameAction.shuffle(card.getController());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Cards like
+Shock just add damage to a card.<span style='mso-spacerun:yes'> 
+</span>GameAction.checkStateEffects moves the card to the graveyard if it is
+needed.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Card c =
+spell.getTargetCard();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>c.addDamage(2);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Input Explained<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Some people
+have commented that the Input class is giving them problems and I understand
+where they are coming from.<span style='mso-spacerun:yes'>  </span>All of this
+code was never meant to be understood by anyone else, lol.<span
+style='mso-spacerun:yes'>  </span>Anyways, the Input class handles all the user
+input, which is from a mouse, and is used to set targets for cards.<span
+style='mso-spacerun:yes'>  </span>The targets may be either a player or a
+card.<span style='mso-spacerun:yes'>  </span>SpellAbility
+setTargetPlayer(String player) and setTargetCard(Card) actually sets the target
+that the resolve will use.<span style='mso-spacerun:yes'>  </span>There is
+corresponding getTargetPlay and getTargetCard commands.<span
+style='mso-spacerun:yes'>  </span>This limits cards to a single target.<span
+style='mso-spacerun:yes'>  </span>Hex has multiple targets, but it is an
+exception.<span style='mso-spacerun:yes'>  </span>Multiple targets can be
+programmed but the code is messy.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The method
+SpellAbility setBeforePayMana(Input) is used to set the Input that will handle
+getting a card’s target.<span style='mso-spacerun:yes'>  </span>The method
+could have been named better.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>CardFactoryUtil
+returns common Inputs that are useful.<span style='mso-spacerun:yes'>  </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>To target a
+player, CardFactoryUtil.input_targetPlayer(SpellAbility spell).<span
+style='mso-spacerun:yes'>  </span>Hopefully Ancestral Recall is straightforward
+and easy to understand.<span style='mso-spacerun:yes'>  </span>The computer
+always sets himself as the target with the method setChooseTargetAI and
+canPlayAI makes sure the computer doesn’t have to discard any cards.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(cardName.equals(&quot;Ancestral
+Recall&quot;))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>SpellAbility
+spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'> 
+</span>AllZone.GameAction.drawCard(getTargetPlayer());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'> 
+</span>AllZone.GameAction.drawCard(getTargetPlayer());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>AllZone.GameAction.drawCard(getTargetPlayer());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public
+boolean canPlayAI() <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>return
+AllZone.Computer_Hand.getCards().length &lt;= 5;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setChooseTargetAI(CardFactoryUtil.AI_targetComputer());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(CardFactoryUtil.input_targetPlayer(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.clearSpellAbility();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>To target a
+creature, CardFactoryUtil. input_targetCreature(SpellAbility spell)<span
+style='mso-spacerun:yes'>  </span>Swords to Plowshares removes a creature from
+play and gives it’s controller some life.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(cardName.equals(&quot;Swords
+to Plowshares&quot;))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>SpellAbility
+spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(AllZone.GameAction.isCardInPlay(getTargetCard()))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//add life<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>String player =
+getTargetCard().getController();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>PlayerLife life = AllZone.GameAction.getPlayerLife(player);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>life.addLife(getTargetCard().getAttack());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//remove card from play<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>PlayerZone zone =
+AllZone.getZone(getTargetCard());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>zone.remove(getTargetCard());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}//resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public
+boolean canPlayAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>CardList creature
+= new CardList(AllZone.Human_Play.getCards());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>creature =
+creature.getType(&quot;Creature&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>return
+creature.size() != 0 &amp;&amp; (AllZone.Phase.getTurn() &gt; 4);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+chooseTargetAI()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>CardList
+play = new CardList(AllZone.Human_Play.getCards());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Card target
+= CardFactoryUtil.AI_getBestCreature(play);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>setTargetCard(target);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};//SpellAbility<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.clearSpellAbility();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>To target
+anything in the “type” line of a card like Creature, Land, Goblin, or
+Forest.<span style='mso-spacerun:yes'> 
+</span>CardFactoryUtil.input_targetType(SpellAbility spell, String cardType)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Type can
+also be “All” which would let the user target any permanent.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if(cardName.equals(&quot;Stone
+Rain&quot;))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>final SpellAbility
+spell = new Spell(card)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+resolve()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>Card c = getTargetCard();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>if(AllZone.GameAction.isCardInPlay(c))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>AllZone.GameAction.destroy(c);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};//Spell<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.clearSpellAbility();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>card.addSpellAbility(spell);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setChooseTargetAI(CardFactoryUtil.AI_targetType(&quot;Land&quot;,
+AllZone.Human_Play));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(CardFactoryUtil.input_targetType(spell,
+&quot;Land&quot;));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Stone Rain
+also configures the AI by the method <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>CardFactoryUtil.AI_targetType(String
+type, PlayerZone zone)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Type is
+like Forest, Creature, Land, or All.<span style='mso-spacerun:yes'> 
+</span>Common PlayerZones are <o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.Human_Play
+– Shock<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.Computer_Play
+– Giant Growth<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.Computer_Graveyard
+– Gravedigger<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone is just
+a global object that holds all of the “zones”, like in play, graveyard, etc…<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The human
+player can only target cards in play, so cards like Gravedigger show a window
+so a card from the graveyard can be selected.<span style='mso-spacerun:yes'> 
+</span>Dark Banishing has a custom Input that targets a non-black
+creature.<span style='mso-spacerun:yes'>  </span>After a creature is chosen in
+the selectCard method, the user has to pay the mana cost which stops the
+current Input.<span style='mso-spacerun:yes'>  </span>The SpellAbility of Dark
+Banishing was omitted for clarity.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Input
+target = new Input()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+showMessage()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>AllZone.Display.showMessage(&quot;Select
+target non-black creature for &quot; +spell.getSourceCard());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>ButtonUtil.enableOnlyCancel();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+selectButtonCancel() {stop();}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+selectCard(Card card, PlayerZone zone)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>if((!CardUtil.getColors(card).contains(Constant.Color.Black))
+<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>&amp;&amp;
+card.isCreature()<span
+style='mso-spacerun:yes'>                                          </span><o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>&amp;&amp;
+zone.is(Constant.Zone.Play))<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>spell.setTargetCard(card);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>stopSetNext(new Input_PayManaCost(spell));<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}//if<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}//selectCard()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};//Input<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>spell.setBeforePayMana(target);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><b style='mso-bidi-font-weight:normal'><span
+style='font-size:13.0pt;font-family:Arial'>Static Abilities<o:p></o:p></span></b></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>Today, I’m
+going to talk about the hardest cards to program.<span
+style='mso-spacerun:yes'>  </span>Cards like Glorious Anthem caused me a lot of
+headaches.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>This is a
+definition of static abilities from the rules manual.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>You don’t play
+and resolve static abilities like the other two ability types. When a permanent
+with a static ability comes into play, the ability’s effect simply “turns on.”
+It stays on as long as the permanent stays in play.<span
+style='mso-spacerun:yes'>  </span>(Static abilities create continuous effects.)<span
+style='mso-spacerun:yes'>  </span>Most enchantments have static abilities. For
+example, Telepathy reads, “Your opponents play with their hands revealed.” Once
+Telepathy is in play, you don’t have to pay a cost to have your opponent reveal
+his or her hand. Your opponent’s hand is just kept face up on the table until
+Telepathy leaves play.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>I call
+static ability, state abilities since they depend on the current “state” or
+condition of the game.<span style='mso-spacerun:yes'>  </span>State abilities
+include Glorious Anthem, Levitation, Soul Warden, and Castle Raptors.<span
+style='mso-spacerun:yes'>  </span>Glorious Anthem gives your creatures +1/+1,
+so it changes the state of the game.<span style='mso-spacerun:yes'> 
+</span>Castle Raptors gets a bonus if it is untapped.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>In MTG
+Forge static effects are processed after you play a land, the computer plays a
+land, or a spell/ability is resolved.<span style='mso-spacerun:yes'> 
+</span>The code for Glorious Anthem is a little messy since it keeps track of
+old creatures that were already in play.<span style='mso-spacerun:yes'> 
+</span>Glorious Anthem first takes away the +1/+1 from all old cards and then
+gives the bonus for each copy of Glorious Anthem in play.<span
+style='mso-spacerun:yes'>  </span>The code loops through all copies of Glorious
+Anthem in case you and your opponent both have it in play.<span
+style='mso-spacerun:yes'>  </span>This code also works correctly if you have
+multiple Anthems in play.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>The code
+below was taken from the class GameActionUtil.<span style='mso-spacerun:yes'> 
+</span>It has a method called executeCardStateEffects that executes all of the
+effects.<span style='mso-spacerun:yes'>  </span>Doing state effects this way
+has the drawback of separating code from the Card and SpellAbility classes
+which I would prefer not to.<span style='mso-spacerun:yes'>  </span>Platinum
+Angel has a very cool and hard to program state effect that denies your
+opponent from winning the game.<span style='mso-spacerun:yes'>  </span>Check it
+out in the upcoming 10<sup>th</sup> edition core set.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>GameAction
+also implements some state effects in the method checkStateEffects.<span
+style='mso-spacerun:yes'>  </span>Other MTG Forge state effects include sending
+a creature to the graveyard if it has sufficient damage.<span
+style='mso-spacerun:yes'>  </span>Destroying legendary creatures if two are
+into play and checking to see if any player’s life is 0.<span
+style='mso-spacerun:yes'>  </span>The cards that have a state effect in MTG
+Forge are Baru, Fist of Krosa, Soul Warden, Essence Warden, Nightmare, Korlash,
+Heir to Blackblade, Glorious Anthem, Gaea's Anthem, Wonder, Anger, Valor,
+Veteran Armorer, Radiant, Archangel, and Castle Raptors.<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>static
+Command Glorious_Anthem = new Command()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>CardList
+gloriousAnthemList = new CardList();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>public void
+execute()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>CardList list = gloriousAnthemList;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>Card c;<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//reset all cards in list - aka
+&quot;old&quot; cards<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>for(int i = 0; i &lt; list.size(); i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>c = list.get(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>c.setAttack(c.getAttack() - 1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>c.setDefense(c.getDefense() - 1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//add +1/+1 to cards<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>list.clear();<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>PlayerZone[] zone = getZone(&quot;Glorious
+Anthem&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>//for each zone found add +1/+1 to each card<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>for(int outer = 0; outer &lt; zone.length;
+outer++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>CardList creature = new
+CardList(zone[outer].getCards());<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>creature =
+creature.getType(&quot;Creature&quot;);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>for(int i = 0; i &lt; creature.size(); i++)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>{<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>c = creature.get(i);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>c.setAttack(c.getAttack() + 1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>c.setDefense(c.getDefense() + 1);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>      </span>gloriousAnthemList.add(c);<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>    </span>}//for inner<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><span
+style='mso-spacerun:yes'>  </span>}//for outer<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>}//execute()<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>};//Glorious
+Anthem<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//returns
+all PlayerZones that has at least 1 Glorious Anthem<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//if
+Computer has 2 Glorious Anthems, AllZone.Computer_Play will be returned twice<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>PlayerZone[]
+getZone(String cardName)<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'>//method
+body removed on purpose<o:p></o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoNormal><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+<p class=MsoPlainText><span style='font-size:13.0pt;font-family:Arial'><o:p>&nbsp;</o:p></span></p>
+
+</div>
+
+</body>
+
+</html>
