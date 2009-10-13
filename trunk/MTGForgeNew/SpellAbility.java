@@ -132,7 +132,12 @@ public void execute(Object o) {}};
     targetPlayer = null;//reset setTargetPlayer()
 
     targetCard = card;
-    setStackDescription(getSourceCard().getName() +" - targeting " +card);
+    String desc = "";
+    if (!card.isFaceDown())
+    	desc = getSourceCard().getName() + " - targeting " +card;
+    else
+    	desc = getSourceCard().getName() + " - targeting Morph(" + card.getUniqueNumber() + ")";
+    setStackDescription(desc);
   }
   public void setTargetPlayer(String p)
   {

@@ -23,6 +23,55 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone
 		{
 			c.setSickness(true);// summoning sickness
 			c.comesIntoPlay();
+			
+			PlayerZone play = AllZone.getZone(Constant.Zone.Play, c.getController());
+			
+			
+			if (c.isLand())
+			{
+				//System.out.println("A land just came into play: " + c.getName());
+				
+				CardList list = new CardList(play.getCards());
+				list = list.filter(new CardListFilter()
+				{
+					public boolean addCard(Card c) {
+						return c.getKeyword().contains("Landfall");
+					}
+				});
+				
+				for (int i=0; i<list.size();i++)
+				{
+					GameActionUtil.executeLandfallEffects(list.get(i));
+				}
+				
+			}//isLand()
+			
+			//hack to make tokens trigger ally effects:
+			CardList clist = new CardList(play.getCards());
+			clist = clist.filter(new CardListFilter()
+			{
+				public boolean addCard(Card c) {
+					return c.getName().equals("Conspiracy") && c.getChosenType().equals("Ally");
+				}
+			});
+			
+			if (c.getType().contains("Ally") || clist.size() > 0)
+			{
+				CardList list = new CardList(play.getCards());
+				list = list.filter(new CardListFilter()
+				{
+					public boolean addCard(Card c) {
+						return c.getType().contains("Ally") || c.getKeyword().contains("Changeling");
+					}				
+				});
+				
+				for (Card var : list)
+				{
+					GameActionUtil.executeAllyEffects(var);
+				}
+			}
+			
+			
 		}
 		if (AllZone.StateBasedEffects.getCardToEffectsList().containsKey(c.getName()))
 		{
@@ -32,25 +81,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone
 			}	
 		}
 		
-		if (c.isLand())
-		{
-			//System.out.println("A land just came into play: " + c.getName());
-			
-			PlayerZone play = AllZone.getZone(Constant.Zone.Play, c.getController());
-			CardList list = new CardList(play.getCards());
-			list = list.filter(new CardListFilter()
-			{
-				public boolean addCard(Card c) {
-					return c.getKeyword().contains("Landfall");
-				}
-			});
-			
-			for (int i=0; i<list.size();i++)
-			{
-				GameActionUtil.executeLandfallEffects(list.get(i));
-			}
-			
-		}
+		
 		/*
 		for (String effect : AllZone.StateBasedEffects.getStateBasedMap().keySet() ) {
 			Command com = GameActionUtil.commands.get(effect);

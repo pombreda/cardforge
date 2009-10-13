@@ -340,25 +340,6 @@ public class CardFactory implements NewConstants {
           
           return -1;
    }
-	/*
-    private final int shouldTapManaPool(Card c){
-        ArrayList<String> a = c.getKeyword();
-        for (int i = 0; i < a.size(); i++)
-           if (a.get(i).toString().startsWith("tap: add ") && //hacky stuff follows here:
-        	   !c.getName().equals("Kher Keep") &&
-        	   !c.getName().equals("Academy Ruins") &&
-        	   !c.getName().equals("Pendelhaven") &&
-        	   !c.getName().equals("Mikokoro, Center of the Sea") &&
-        	   !c.getName().equals("Okina, Temple to the Grandfathers") &&
-        	   !c.getName().equals("Volrath's Stronghold") &&
-        	   !c.getName().equals("Vitu-Ghazi, the City-Tree") &&
-        	   !c.getName().equals("Gargoyle Castle") && 
-        	   !c.getName().equals("Mutavault"))
-              return i;
-        
-        return -1;
-    }*/
-    
     
     private final int shouldManaAbility(Card c){
         ArrayList<String> a = c.getIntrinsicKeyword();
@@ -369,7 +350,6 @@ public class CardFactory implements NewConstants {
         return -1;
     }
 	
-
 	
 	final private Card getCard2(final String cardName, final String owner)
   {
@@ -2356,50 +2336,6 @@ public class CardFactory implements NewConstants {
     }
 
     
-    
-    /*if (shouldTapManaPool(card) != -1)
-    {
-       ArrayList<String> putKeywordsBack = new ArrayList<String>();
-       
-       int n = shouldTapManaPool(card);
-       while (n != -1)
-       {
-          String parse = card.getKeyword().get(n).toString();
-          putKeywordsBack.add(parse);
-          card.removeIntrinsicKeyword(parse);
-         
-          String k[] = parse.split("add ");
-          final String color = k[1];
-         
-          final Ability_Tap ability = new Ability_Tap(card, "0")
-          {
-              private static final long serialVersionUID = -113811381138L;
-             
-              public void resolve()
-              {
-                 CardList list = new CardList(AllZone.getZone(Constant.Zone.Play, Constant.Player.Human).getCards());
-                 list = list.getName("Mana Pool");
-                 Card mp = list.getCard(0);
-                 mp.addExtrinsicKeyword("ManaPool:"+color);
-              }
-              public boolean canPlayAI()
-              {
-                 return false;
-              }
-           };
-           
-           ability.setDescription("Add "+color+" to your mana pool");
-           ability.setStackDescription("Adds "+color+" to your mana pool");
-           card.addSpellAbility(ability);
-           
-           n = shouldTapManaPool(card);
-       }
-       for (int i = 0; i < putKeywordsBack.size(); i++)
-          card.addIntrinsicKeyword(putKeywordsBack.get(i));
-    }*/
-    
-    
-    
     while (shouldManaAbility(card) != -1)
     {
        int n = shouldManaAbility(card);
@@ -2420,9 +2356,6 @@ public class CardFactory implements NewConstants {
            card.addSpellAbility(ability);
        }
     }
-	
-    
-    
     	    
     ////////////////////////////////////////////////////////////////
     
@@ -3034,14 +2967,9 @@ public class CardFactory implements NewConstants {
          public boolean canPlayAI()
          {
         	 PlayerZone lib = AllZone.getZone(Constant.Zone.Library, Constant.Player.Computer);
-        	 //PlayerZone play = AllZone.getZone(Constant.Zone.Play, Constant.Player.Computer);
-    		 
-        	 //CardList elves = new CardList(play.getCards());
-    		 //elves = elves.getType("Elf");
-    		 
-    		 CardList chosens = new CardList(lib.getCards());
+
+        	 CardList chosens = new CardList(lib.getCards());
     		 chosens = chosens.getName("Nissa's Chosen");
-    		 
     		 
     		 if (chosens.size() > 0)
     			 return false;
@@ -3082,7 +3010,6 @@ public class CardFactory implements NewConstants {
             stop();
           }//showMessage()
        });
-       
        
 
        //ability3
@@ -5403,49 +5330,6 @@ public class CardFactory implements NewConstants {
     }//*************** END ************ END **************************
 
 
-    /*
-    //*************** START *********** START **************************
-    if(cardName.equals("Relentless Rats"))
-    {
-      final Command comesIntoPlay = new Command()
-      {
-        public void execute()
-        {
-          ArrayList creature = PlayerZoneUtil.getCardsNamed(AllZone.Computer_Play, "Relentless Rats");
-          creature.addAll     (PlayerZoneUtil.getCardsNamed(AllZone.Human_Play   , "Relentless Rats"));
-
-          int n = creature.size() - 1;//minus one for "himself"
-          Card c[] = CardUtil.toCard(creature);
-          for(int i = 0; i < c.length; i++)
-          {
-            c[i].setBaseAttack(2);
-            c[i].setBaseDefense(2);
-            c[i].addSemiPermanentAttackBoost(n);
-            c[i].addSemiPermanentDefenseBoost(n);
-          }
-        }//execute()
-      };//Command
-      card.setComesIntoPlay(comesIntoPlay);
-
-      Command destroy = new Command()
-      {
-        public void execute()
-        {
-          ArrayList creature = PlayerZoneUtil.getCardsNamed(AllZone.Computer_Play, "Relentless Rats");
-          creature.addAll     (PlayerZoneUtil.getCardsNamed(AllZone.Human_Play   , "Relentless Rats"));
-
-          Card c[] = CardUtil.toCard(creature);
-          for(int i = 0; i < c.length; i++)
-          {
-            c[i].addSemiPermanentAttackBoost(-1);
-            c[i].addSemiPermanentDefenseBoost(-1);
-          }
-        }
-      };
-      card.setDestroy(destroy);
-    }//*************** END ************ END **************************
-	*/
-
     //*************** START *********** START **************************
     if(cardName.equals("Kiki-Jiki, Mirror Breaker"))
     {
@@ -6034,21 +5918,6 @@ public class CardFactory implements NewConstants {
 	    		 
 
 	           }//resolve()
-	    	   /*
-	    	   public void chooseTargetAI()
-	    	   {
-	    		   CardList list = new CardList();
-	    		   PlayerZone play = AllZone.getZone(Constant.Player.Human, Constant.Zone.Play);
-	    		   
-	    		   list.addAll(play.getCards());
-	    		   list = list.getType("Sliver");
-		           CardListUtil.sortAttack(list);
-		           
-		           if (list.size() > 0)
-		        	   setTargetCard(list.get(0));
-	    	   }
-	    	   */
-	    	   
 
 	    	   public boolean canPlayAI()
 	           {
@@ -6253,8 +6122,6 @@ public class CardFactory implements NewConstants {
 
       card.addSpellAbility(ability);
     }//*************** END ************ END **************************
-
-
 
 
     //*************** START *********** START **************************
@@ -8698,9 +8565,6 @@ final Input target = new Input()
       ability.setStackDescription("Child of Alara - Destroy all non-land permanents, they can't be regenerated");
       card.setDestroy(destroy);
     }//*************** END ************ END **************************
-
-
-
 
 
     //*************** START *********** START **************************
@@ -20117,6 +19981,39 @@ if(cardName.equals("Jugan, the Rising Star"))
       ability.setBeforePayMana(new Input_NoCost_TapAbility(ability));
     }//*************** END ************ END **************************
 
+    //*************** START *********** START **************************
+    if(cardName.equals("Sea Gate Loremaster"))
+    {
+      final Ability_Tap ability = new Ability_Tap(card)
+      {
+		
+		private static final long serialVersionUID = -1701216509507402535L;
+		public boolean canPlayAI() {return false;}
+        public void resolve()
+        {
+          PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+          CardList list = new CardList(play.getCards());
+          list = list.filter(new CardListFilter()
+          {
+
+			public boolean addCard(Card c) {
+				return c.getType().contains("Ally") || c.getKeyword().contains("Changeling");
+			}
+        	  
+          });
+          
+          for (int i=0;i<list.size();i++)
+          {
+              AllZone.GameAction.drawCard(card.getController());
+          }
+          
+        }
+      };//SpellAbility
+      card.addSpellAbility(ability);
+      ability.setDescription("tap: Draw a card for each Ally you control.");
+      ability.setStackDescription(cardName + " - draw a card for each Ally you control.");
+      ability.setBeforePayMana(new Input_NoCost_TapAbility(ability));
+    }//*************** END ************ END **************************
 
 
 
@@ -20336,9 +20233,6 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//*************** END ************ END **************************
 
 
-
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Urborg Syphon-Mage"))
     {
@@ -20502,10 +20396,6 @@ if(cardName.equals("Jugan, the Rising Star"))
         }
       }));
     }//*************** END ************ END **************************
-
-
-
-
 
 
     //*************** START *********** START **************************
@@ -20898,6 +20788,30 @@ if(cardName.equals("Jugan, the Rising Star"))
       {
 		private static final long serialVersionUID = 3451888160398198322L;
 
+		public boolean canPlayAI()
+		{
+			CardList human = new CardList(AllZone.Human_Play.getCards());
+			CardList computer = new CardList(AllZone.Computer_Play.getCards());
+
+			human = human.filter(new CardListFilter()
+			{
+
+				public boolean addCard(Card c) {
+					return !c.getKeyword().contains("Flying") && CardFactoryUtil.canDamage(card, c) && 
+						    c.getNetDefense() == 1;
+				}
+			});
+			computer = computer.filter(new CardListFilter()
+			{
+				public boolean addCard(Card c) {
+					return !c.getKeyword().contains("Flying") && CardFactoryUtil.canDamage(card, c) &&
+							c.getNetDefense() == 1;
+				}
+			});
+
+			// the computer will at least destroy 2 more human creatures
+			return computer.size() < human.size() - 1;
+		}
 		public void resolve()
         {
           CardList all = new CardList();
@@ -22573,10 +22487,6 @@ if(cardName.equals("Jugan, the Rising Star"))
 
 
 
-
-
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Feudkiller's Verdict"))
     {
@@ -22853,7 +22763,6 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//*************** END ************ END **************************
 
 
-
     //*************** START *********** START **************************
     if(cardName.equals("Life Burst"))
     {
@@ -22908,29 +22817,6 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell.setBeforePayMana(CardFactoryUtil.input_targetPlayer(spell));
     }//*************** END ************ END **************************
-
-
-
-
-    /*
-    //*************** START *********** START **************************
-    if(cardName.equals("Lava Spike"))
-    {
-      final SpellAbility spell = new Spell(card)
-      {
-        public void resolve()
-        {
-          AllZone.GameAction.getPlayerLife(getTargetPlayer()).subtractLife(3);
-        }
-      };
-      spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-      card.clearSpellAbility();
-      card.addSpellAbility(spell);
-
-      spell.setBeforePayMana(CardFactoryUtil.input_targetPlayer(spell));
-    }//*************** END ************ END **************************
-
-	*/
 
 
   //*************** START *********** START **************************
@@ -23819,9 +23705,6 @@ if(cardName.equals("Jugan, the Rising Star"))
 	}//*************** END ************ END **************************
 		
 
-
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Sunlance"))
     {
@@ -23897,9 +23780,6 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//*************** END ************ END **************************
 
 
-
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Saltblast"))
     {
@@ -23972,9 +23852,6 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell.setBeforePayMana(target);
     }//*************** END ************ END **************************
-
-
-
 
 
     //*************** START *********** START **************************
@@ -24128,7 +24005,6 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//*************** END ************ END **************************
 
 
-
     //*************** START *********** START **************************
     if(cardName.equals("Spark Spray"))
     {
@@ -24169,7 +24045,6 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell.setBeforePayMana(CardFactoryUtil.input_targetCreaturePlayer(spell,true));
     }//*************** END ************ END **************************
-
 
 
     //*************** START *********** START **************************
@@ -31418,6 +31293,37 @@ if(cardName.equals("Jugan, the Rising Star"))
 	  //anyway, this does the trick:
 	  //card.removeIntrinsicKeyword("tap: add 1");
 	  card.setText(card.getSpellText() +  "\r\n1 U, tap: Put target creature card in your graveyard on top of your library.");
+	  //card.addExtrinsicKeyword("tap: add 1");
+	  
+  }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+  else if(cardName.equals("Oboro, Palace in the Clouds"))
+  {
+	  final Ability ability = new Ability(card, "1")
+	  {
+
+		public boolean canPlayAI()
+		{
+			return false;
+		}
+		  
+		public void resolve()
+		{
+			PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, card.getController());
+			AllZone.GameAction.moveTo(hand, card);
+		}
+	  };
+	  
+	  ability.setDescription("1: Return Oboro, Palace in the Clouds to your hand.");
+	  ability.setStackDescription("Return " + card.getName() + " to your hand.");
+	  
+	  card.addSpellAbility(ability);
+	  
+	  //not sure what's going on here, maybe because it's a land it doesn't add the ability to the text?
+	  //anyway, this does the trick:
+	  //card.removeIntrinsicKeyword("tap: add 1");
+	  card.setText(card.getSpellText() +  "\r\n1: Return Oboro, Palace in the Clouds to your hand.");
 	  //card.addExtrinsicKeyword("tap: add 1");
 	  
   }//*************** END ************ END **************************

@@ -137,7 +137,7 @@ public class ManaPool extends Card
 					}
 				}
 			}
-			else Colorless.concat(s);
+			else Colorless+=s;
 		}
 		has[0]+=cless;
 	}

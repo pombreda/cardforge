@@ -981,6 +981,94 @@ public class GameActionUtil
 		return cards.size();
 	}
 	
+	public static void executeAllyEffects(Card c)
+	{
+		if (c.getName().equals("Kazandu Blademaster") || c.getName().equals("Makindi Shieldmate") || 
+			c.getName().equals("Nimana Sell-Sword") || c.getName().equals("Ondu Cleric") ||
+			c.getName().equals("Oran-Rief Survivalist") ||c.getName().equals("Tuktuk Grunts") ||
+			c.getName().equals("Umara Raptor"))
+			ally_Generic_P1P1(c);
+		else if (c.getName().equals("Turntimber Ranger"))	
+			ally_Turntimber_Ranger(c);
+		
+	}
+	
+	private static boolean showAllyDialog(Card c)
+	{
+		String[] choices = { "Yes", "No" };
+    	  
+		Object q = null;
+
+		q = AllZone.Display.getChoiceOptional("Use " + c.getName() + "'s Ally ability?", choices);
+
+		if (q == null || q.equals("No"))
+			return false;
+		else
+			return true;
+	}
+	
+	private static void ally_Generic_P1P1(Card c)
+	{
+		final Card crd = c;
+		
+		Ability ability = new Ability(c, "0")
+		{
+			public void resolve()
+			{
+				crd.addCounter(Counters.P1P1, 1);
+			}
+		};
+		ability.setStackDescription(c.getName() + " - Ally: gets a +1/+1 counter.");
+		
+		if (c.getController().equals(Constant.Player.Human))
+				if (showAllyDialog(c))
+					AllZone.Stack.add(ability);
+		
+		else if (c.getController().equals(Constant.Player.Computer))
+			AllZone.Stack.add(ability);
+	}
+	
+	private static void ally_Turntimber_Ranger(Card c)
+	{
+		final Card crd = c;
+		Ability ability = new Ability(c, "0")
+		{
+			public void resolve()
+			{
+				Card card = new Card();
+
+				card.setName("Wolf");
+				card.setImageName("G 2 2 Wolf");
+
+				card.setOwner(crd.getController());
+				card.setController(crd.getController());
+
+				card.setManaCost("G");
+				card.setToken(true);
+
+				card.addType("Creature");
+				card.addType("Wolf");
+				card.setBaseAttack(2);
+				card.setBaseDefense(2);
+
+				PlayerZone play = AllZone.getZone(Constant.Zone.Play, crd.getController());
+				play.add(card);
+				
+				crd.addCounter(Counters.P1P1, 1);
+			}
+		};
+		
+		ability.setStackDescription(c.getName() + " - Ally: " + c.getController() + " puts a 2/2 green Wolf creature token onto the battlefield, and adds a +1/+1 on " +c.getName() +".");
+		
+		if (c.getController().equals(Constant.Player.Human))
+				if (showAllyDialog(c))
+					AllZone.Stack.add(ability);
+		
+		else if (c.getController().equals(Constant.Player.Computer))
+			AllZone.Stack.add(ability);
+	}
+	
+	
 	public static void executeLandfallEffects(Card c)
 	{
 		if (c.getName().equals("Rampaging Baloths"))

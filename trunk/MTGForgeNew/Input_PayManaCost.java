@@ -31,14 +31,15 @@ public class Input_PayManaCost extends Input
   {
 	//this is a hack, to prevent lands being able to use mana to pay their own abilities from cards like
     //Kher Keep, Pendelhaven, Blinkmoth Nexus, and Mikokoro, Center of the Sea, .... 
-	if (originalCard.equals(card))
+	/*if (originalCard.equals(card) && !card.getName().equals("Oboro, Palace in the Clouds"))*/
+	if (originalCard.equals(card) && spell.isTapAbility())
     {
 		return;
 		//originalCard.tap();
     }
-	boolean canuse = false;
+	boolean canUse = false;
 	for (Ability_Mana am : card.getManaAbility())
-		canuse |= am.canPlay();
+		canUse |= am.canPlay();
 	manaCost = Input_PayManaCostUtil.tapCard(card, manaCost);
 	showMessage();
 

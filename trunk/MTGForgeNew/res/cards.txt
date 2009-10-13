@@ -1,3 +1,56 @@
+Oboro, Palace in the Clouds
+no cost
+Legendary Land
+no text
+tap: add 1
+
+Umara Raptor
+1 U
+Creature Bird Ally
+Whenever Umara Raptor or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Umara Raptor.
+1/1
+Flying
+
+Tuktuk Grunts
+4 R
+Creature Goblin Warrior Ally
+Whenever Oran-Rief Survivalist or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Oran-Rief Survivalist.
+2/2
+Haste
+
+Oran-Rief Survivalist
+1 G
+Creature Human Warrior Ally
+Whenever Oran-Rief Survivalist or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Oran-Rief Survivalist.
+1/1
+
+Nimana Sell-Sword
+3 B
+Creature Human Warrior Ally
+Whenever Nimana Sell-Sword or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Nimana Sell-Sword.
+2/2
+
+Makindi Shieldmate
+2 W
+Creature Kor Soldier Ally
+Whenever Makindi Shieldmate or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Makindi Shieldmate.
+0/3
+Defender
+
+Kazandu Blademaster
+W W
+Creature Human Soldier
+Whenever Kazandu Blademaster or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Kazandu Blademaster.
+1/1
+First Strike
+Vigilance
+
+Turntimber Ranger
+3 G G
+Creature Elf Scout Ally
+Whenever Turntimber Ranger or another Ally enters the battlefield under your control, you may put a 2/2 green Wolf creature token onto the battlefield. If you do, put a +1/+1 counter on Turntimber Ranger.
+2/2
+
 Pillory of the Sleepless
 1 W B
 Enchantment Aura
@@ -206,13 +259,6 @@ Izzet Signet
 Artifact
 no text
 1,tap: add U R
-
-Kaleidostone
-2
-Artifact
-no text
-When this card comes into play, draw a card.
-5,tap: add W U B R G
 
 Knotvine Mystic
 W R G
