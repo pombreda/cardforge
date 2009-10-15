@@ -1,11 +1,11 @@
 public class Spell_Permanent extends Spell
 {
-  /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-public Spell_Permanent(Card sourceCard)
+
+
+	private static final long serialVersionUID = 2413495058630644447L;
+
+	public Spell_Permanent(Card sourceCard)
   {
     super(sourceCard);
 

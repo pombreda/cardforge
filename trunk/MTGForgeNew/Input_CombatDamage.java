@@ -220,7 +220,9 @@ private void playerDamage(PlayerLife p)
     for (int i=0; i < pwBlockers.size(); i++){
     	AllZone.pwCombat.removeFromCombat(pwBlockers.get(i));
     }
-
+    
+    
+    
     Card c;
     for(int i = 0; i < all.size(); i++)
     {

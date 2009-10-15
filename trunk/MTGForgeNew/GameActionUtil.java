@@ -1020,9 +1020,10 @@ public class GameActionUtil
 		};
 		ability.setStackDescription(c.getName() + " - Ally: gets a +1/+1 counter.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)) {
 				if (showAllyDialog(c))
 					AllZone.Stack.add(ability);
+		}
 		
 		else if (c.getController().equals(Constant.Player.Computer))
 			AllZone.Stack.add(ability);
@@ -1060,9 +1061,10 @@ public class GameActionUtil
 		
 		ability.setStackDescription(c.getName() + " - Ally: " + c.getController() + " puts a 2/2 green Wolf creature token onto the battlefield, and adds a +1/+1 on " +c.getName() +".");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)){
 				if (showAllyDialog(c))
 					AllZone.Stack.add(ability);
+		}
 		
 		else if (c.getController().equals(Constant.Player.Computer))
 			AllZone.Stack.add(ability);
@@ -1127,12 +1129,14 @@ public class GameActionUtil
 		
 		ability.setStackDescription(c.getName() + " - Landfall: " + c.getController() + " puts a 4/4 green Beast creature token onto the battlefield.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)){
 				if (showLandfallDialog(c))
 					AllZone.Stack.add(ability);
+		}	
 		
-		else if (c.getController().equals(Constant.Player.Computer))
+		else if (c.getController().equals(Constant.Player.Computer)) 
 			AllZone.Stack.add(ability);
+			
 	}
 	
 	private static void landfall_Emeria_Angel(Card c)
@@ -1168,9 +1172,10 @@ public class GameActionUtil
 		
 		ability.setStackDescription(c.getName() + " - Landfall: " + c.getController() + " puts a 1/1 white Bird creature token with flying onto the battlefield.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)) {
 				if (showLandfallDialog(c))
 					AllZone.Stack.add(ability);
+		}
 		
 		else if (c.getController().equals(Constant.Player.Computer))
 			AllZone.Stack.add(ability);
@@ -1191,10 +1196,10 @@ public class GameActionUtil
 		
 		ability.setStackDescription("Landfall: " + AllZone.GameAction.getOpponent(c.getController()) + " loses 3 life and " + c.getName() + " gets three +1/+1 counters.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)) {
 				if (showLandfallDialog(c))
 					AllZone.Stack.add(ability);
-		
+		}
 		else if (c.getController().equals(Constant.Player.Computer))
 			AllZone.Stack.add(ability);
 	}
@@ -1212,9 +1217,10 @@ public class GameActionUtil
 		
 		ability.setStackDescription(c.getName() + " - gets a Quest counter.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)) {
 				if (showLandfallDialog(c))
 					AllZone.Stack.add(ability);
+		}
 		
 		else if (c.getController().equals(Constant.Player.Computer))
 			AllZone.Stack.add(ability);
@@ -1252,10 +1258,11 @@ public class GameActionUtil
 		
 		ability.setStackDescription(c.getName() + " - add one mana of any color to your mana pool.");
 		
-		if (c.getController().equals(Constant.Player.Human))
+		if (c.getController().equals(Constant.Player.Human)) {
 				if (showLandfallDialog(c))
 					AllZone.Stack.add(ability);
-		
+		}
+			
 	}
 
 	public static void executeLifeLinkEffects(Card c)

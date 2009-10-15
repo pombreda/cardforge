@@ -4080,7 +4080,57 @@ public class CardFactory implements NewConstants {
         }
       });
     }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    if(cardName.equals("Kabira Crossroads"))
+    {
+      final SpellAbility ability = new Ability(card, "0")
+      {
+        public void resolve()
+        {
+          Card c = card;
+          PlayerLife life = AllZone.GameAction.getPlayerLife(c.getController());
+          life.addLife(2);
+        }
+      };
+      Command intoPlay = new Command()
+      {
+		private static final long serialVersionUID = -4550013855602477643L;
 
+		public void execute()
+    	  {
+    		  ability.setStackDescription(card.getName() + " - " +card.getController() +" gains 2 life");
+    		  AllZone.Stack.add(ability);
+    	  }
+      };
+      card.setComesIntoPlay(intoPlay);
+    }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    if(cardName.equals("Graypelt Refuge")|| cardName.equals("Seijiri Refuge")|| cardName.equals("Jwar Isle Refuge") || 
+       cardName.equals("Akoum Refuge")|| cardName.equals("Kazandu Refuge"))
+    {
+      final SpellAbility ability = new Ability(card, "0")
+      {
+        public void resolve()
+        {
+          Card c = card;
+          PlayerLife life = AllZone.GameAction.getPlayerLife(c.getController());
+          life.addLife(1);
+        }
+      };
+      Command intoPlay = new Command()
+      {
+      private static final long serialVersionUID = 5055232386220487221L;
+
+      public void execute()
+        {
+          ability.setStackDescription(card.getName() + " - " +card.getController() +" gains 1 life");
+          AllZone.Stack.add(ability);
+        }
+      };
+      card.setComesIntoPlay(intoPlay);
+    }//*************** END ************ END **************************
 
 
     //*************** START *********** START **************************
@@ -21379,14 +21429,15 @@ if(cardName.equals("Jugan, the Rising Star"))
       spell_two.setManaCost("5 U");
 
       spell_one.setDescription("Draw a card.");
+      spell_one.setStackDescription(cardName + " - " +card.getController() + " draws a card.");
       spell_two.setDescription("Buyback 5 - Pay 5 U , put this card into your hand as it resolves.");
+      spell_two.setStackDescription(cardName + " - (Buyback) " +card.getController() + " draws a card.");
 
       card.clearSpellAbility();
       card.addSpellAbility(spell_one);
       card.addSpellAbility(spell_two);
       
     }//*************** END ************ END **************************
-
 
 
     //*************** START *********** START **************************
@@ -38527,6 +38578,126 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
 
     } //*************** END ************ END **************************
     
+    //*************** START *********** START **************************
+    if (cardName.equals("Spidersilk Net"))
+    {
+       final Ability equip = new Ability(card, "2")
+       {
+          public void resolve()
+          {
+             if (AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()) )
+             {
+                if (card.isEquipping())
+                {
+                   Card crd = card.getEquipping().get(0);
+                   if (crd.equals(getTargetCard()) )
+                      return;
+                   
+                   card.unEquipCard(crd);
+                }   
+                card.equipCard(getTargetCard());
+             }
+          }
+          
+          public boolean canPlay()
+          {
+             return AllZone.getZone(card).is(Constant.Zone.Play) &&           
+                      AllZone.Phase.getActivePlayer().equals(card.getController()) &&
+                      (AllZone.Phase.getPhase().equals("Main1") || AllZone.Phase.getPhase().equals("Main2") );
+          }
+          
+          public boolean canPlayAI()
+            {
+              return getCreature().size() != 0 && !card.isEquipping();
+            }
+         
+          
+          public void chooseTargetAI()
+            {
+              Card target = CardFactoryUtil.AI_getBestCreature(getCreature());
+              setTargetCard(target);
+            }
+            CardList getCreature()
+            {
+              CardList list = new CardList(AllZone.Computer_Play.getCards());
+              list = list.filter(new CardListFilter()
+              {
+                public boolean addCard(Card c)
+                {
+                  return c.isCreature() && (!CardFactoryUtil.AI_doesCreatureAttack(c)) && CardFactoryUtil.canTarget(card, c) &&
+                         (! c.getKeyword().contains("Flying") || !c.getKeyword().contains("Reach"));
+                }
+              });
+              // list.remove(card);      // if mana-only cost, allow self-target
+              return list;
+            }//getCreature()
+          
+       };//equip ability
+       
+
+       Command onEquip = new Command()
+       {   
+
+		private static final long serialVersionUID = -5830699867070741036L;
+
+		public void execute()
+           {
+            if (card.isEquipping())
+             {
+                Card crd = card.getEquipping().get(0);
+                crd.addExtrinsicKeyword("Reach");
+                crd.addSemiPermanentDefenseBoost(2);
+             } 
+           }//execute()
+       };//Command
+      
+
+       Command onUnEquip = new Command()
+       {   
+
+		private static final long serialVersionUID = -4098923908462881875L;
+
+		public void execute()
+           {
+            if (card.isEquipping())
+             {
+                Card crd = card.getEquipping().get(0);
+                crd.removeExtrinsicKeyword("Reach");
+                crd.addSemiPermanentDefenseBoost(-2);
+                   
+             }
+            
+           }//execute()
+       };//Command
+      
+       
+       Input runtime = new Input()
+       {
+
+			private static final long serialVersionUID = 5068745895084312024L;
+	
+			public void showMessage()
+	        {
+	               //get all creatures you control
+	               CardList list = new CardList();
+	               list.addAll(AllZone.Human_Play.getCards());
+	               list = list.getType("Creature");
+	              
+	               stopSetNext(CardFactoryUtil.input_targetSpecific(equip, list, "Select target creature to equip", true));
+	        }
+        };//Input
+      
+       equip.setBeforePayMana(runtime);
+       
+       equip.setDescription("Equip: 2");
+       card.addSpellAbility(equip);
+       
+       card.setEquip(onEquip);
+       card.setUnEquip(onUnEquip);
+
+    } //*************** END ************ END **************************
+
+    
   //*************** START *********** START **************************
     if (cardName.equals("Whispersilk Cloak"))
     {
@@ -38649,7 +38820,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
   //*************** START *********** START **************************
     if (cardName.equals("Trusty Machete"))
     {
-       final Ability equip = new Ability(card, "1")
+       final Ability equip = new Ability(card, "2")
        {
           public void resolve()
           {
@@ -39363,7 +39534,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
         {
           Card c = new Card();
           Card crd = spell.getTargetCard();
-          
+                    
           c.setName("Squirrel");
           c.setImageName("G 1 1 Squirrel");
 
@@ -39474,6 +39645,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
 			private static final long serialVersionUID = -401631574059431293L;
 			public void resolve()
     		{
+				if (card.getController().equals(Constant.Player.Computer))
+					AllZone.GameAction.sacrifice(card);
     			if(getTargetCard() == null || !getTargetCard().isCreature())
     				return;
     			Card crd = getTargetCard();
@@ -39484,8 +39657,10 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     		public boolean canPlayAI()
     		{
     			CardList list = new CardList(AllZone.Computer_Play.getCards()).filter(
-    					new CardListFilter(){public boolean addCard(Card c){ return !card.isArtifact(); }});
-    			setTargetCard(CardFactoryUtil.AI_getBestCreature(list));
+    					new CardListFilter(){public boolean addCard(Card c){ return !c.isArtifact() && c.isCreature(); }});
+    			Card crd = CardFactoryUtil.AI_getBestCreature(list);
+    			if (crd != null)
+    				setTargetCard(crd);
     			return (getTargetCard() != null);
     		}
     	};

@@ -83,6 +83,7 @@ public class GenerateConstructedDeck
     CardList out = new CardList();
     out.addAll(CardListUtil.getColor(in, color1).toArray());
     out.addAll(CardListUtil.getColor(in, color2).toArray());
+    out.shuffle();
 
     CardList artifact = in.filter(new CardListFilter()
     {
@@ -266,7 +267,13 @@ public class GenerateConstructedDeck
     {
       public boolean addCard(Card c)
       {
-        return CardUtil.getColors(c).size() == 1 && //no gold colored cards
+    	ArrayList<String> list = CardUtil.getColors(c);
+    	if (list.size() == 2)
+      	{	
+      		if (!(list.contains(color1) && list.contains(color2)))
+      		   return false;
+      	}
+        return CardUtil.getColors(c).size() <= 2 && //only dual colored gold cards
                !c.isLand()                       && //no land
                !remove.contains(c.getName())     || //OR very important
                goodLand.contains(c.getName());

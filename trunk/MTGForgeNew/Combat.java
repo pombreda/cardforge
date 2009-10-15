@@ -30,7 +30,9 @@ public class Combat
 
     map.clear();
     blocked.clear();
-
+    
+    unblockedMap.clear();
+    
     attackingDamage = 0;
     defendingDamage = 0;
     defendingFirstStrikeDamage = 0;

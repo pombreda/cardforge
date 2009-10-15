@@ -137,6 +137,18 @@ public static void sortFlying(CardList list)
       }
     });
   }//getColor()
+  
+  public static CardList getGoldCards(CardList list)
+  {
+	  return list.filter(new CardListFilter()
+	  {
+		 public boolean addCard(Card c)
+		 {
+			 return CardUtil.getColors(c).size() >= 2;
+		 }
+	  });
+  }
+  
   public static int sumAttack(CardList c)
   {
     int attack = 0;

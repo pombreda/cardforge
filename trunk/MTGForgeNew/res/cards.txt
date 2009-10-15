@@ -1,3 +1,61 @@
+Vithian Renegades
+1 R G
+Creature Human Shaman
+When Vithian Renegades comes into play, destroy target artifact. 
+3/2
+
+Spidersilk Net
+2
+Artifact Equipment
+Equipped creature gets +0/+2 and has reach. 
+
+Kabira Crossroads
+no cost
+Land
+When Kabira Crossroads enters the battlefield, you gain 2 life.
+tap: add W
+Comes into play tapped.
+
+Akoum Refuge
+no cost
+Land
+When Akoum Refuge enters the battlefield, you gain 1 life.
+tap: add B
+tap: add R
+Comes into play tapped.
+
+Graypelt Refuge
+no cost
+Land
+When Graypelt Refuge enters the battlefield, you gain 1 life.
+tap: add G
+tap: add W
+Comes into play tapped.
+
+Jwar Isle Refuge
+no cost
+Land
+When Jwar Isle Refuge enters the battlefield, you gain 1 life.
+tap: add U
+tap: add B
+Comes into play tapped.
+
+Seijiri Refuge
+no cost
+Land
+When Seijiri Refuge enters the battlefield, you gain 1 life.
+tap: add W
+tap: add U
+Comes into play tapped.
+
+Kazandu Refuge
+no cost
+Land
+When Kazandu Refuge enters the battlefield, you gain 1 life.
+tap: add R
+tap: add G
+Comes into play tapped.
+
 Oboro, Palace in the Clouds
 no cost
 Legendary Land
@@ -54,23 +112,27 @@ Whenever Turntimber Ranger or another Ally enters the battlefield under your con
 Pillory of the Sleepless
 1 W B
 Enchantment Aura
-Enchant creature. Enchanted creature can't attack or block. Enchanted creature has "At the beginning of your upkeep, you lose 1 life."
+Enchanted creature can't attack or block. Enchanted creature has "At the beginning of your upkeep, you lose 1 life."
+Enchant creature
 
 Cessation
 2 W
 Enchantment Aura
 Enchanted creature can't attack.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Pacifism
 1 W
 Enchantment Aura
 Enchanted creature can't attack or block.
+Enchant creature
 
 Bound in Silence
 2 W
 Tribal Enchantment Rebel Aura
 Enchanted creature can't attack or block.
+Enchant creature
 
 Barrenton Cragtreads
 2 WU WU
@@ -97,7 +159,8 @@ When Rukh Egg is put into a graveyard from the battlefield, put a 4/4 red Bird c
 Nimbus Wings
 1 W
 Enchantment Aura
-Enchant creature. Enchanted creature gets +1/+2 and has flying.
+Enchanted creature gets +1/+2 and has flying.
+Enchant creature
 
 Vexing Beetle
 4 G
@@ -611,7 +674,8 @@ Equipped creature is unblockable. Equipped creature has shroud.
 Hero's Resolve
 1 W
 Enchantment Aura
-Enchant creature. Enchanted creature gets +1/+5.
+Enchanted creature gets +1/+5.
+Enchant creature
 
 Silent Attendant
 2 W
@@ -622,7 +686,8 @@ no text
 Zephid's Embrace
 2 U U
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+2 and has flying and shroud.
+Enchanted creature gets +2/+2 and has flying and shroud.
+Enchant creature
 
 Sunastian Falconer
 3 R G
@@ -652,34 +717,40 @@ Creatures you control have haste.
 Protective Bubble
 3 U
 Enchantment Aura
-Enchant creature. Enchanted creature is unblockable and has shroud.
+Enchanted creature is unblockable and has shroud.
+Enchant creature
 
 Diplomatic Immunity
 1 U
 Enchantment Aura
-Enchant creature. Enchanted creature has shroud.
+Enchanted creature has shroud.
 Shroud
+Enchant creature
 
 Robe of Mirrors
 U
 Enchantment Aura
-Enchant creature. Enchanted creature has shroud.
+Enchanted creature has shroud.
+Enchant creature
 
 Fear
 B B
 Enchantment Aura
-Enchant creature. Enchanted creature has fear.
+Enchanted creature has fear.
+Enchant creature
 
 Battle Mastery
 2 W
 Enchantment Aura
-Enchant creature. Enchanted creature has double strike.
+Enchanted creature has double strike.
+Enchant creature
 
 Uncontrollable Anger
 2 R
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+2 and attacks each turn if able.
+Enchanted creature gets +2/+2 and attacks each turn if able.
 Flash
+Enchant creature
 
 Soulscour
 7 W W W
@@ -751,8 +822,9 @@ no text
 AEther Web
 1 G
 Enchantment Aura
-Enchant creature. Enchanted creature gets +1/+1, has reach, and can block creatures with shadow as though they didn't have shadow. 
+Enchanted creature gets +1/+1, has reach, and can block creatures with shadow as though they didn't have shadow. 
 Flash
+Enchant creature
 
 Emeria Angel
 2 W W
@@ -765,8 +837,9 @@ Landfall
 Indomitable Will
 1 W
 Enchantment
-Enchant creature. Enchanted creature gets +1/+2.
+Enchanted creature gets +1/+2.
 Flash
+Enchant creature
 
 Cleanfall
 2 W
@@ -777,6 +850,7 @@ Cloak of Mists
 1 U
 Enchantment Aura
 Enchanted creature is unblockable.
+Enchant creature
 
 Nourish
 G G
@@ -865,7 +939,8 @@ This creature can block creatures with shadow as though they didn't have shadow.
 Guilty Conscience
 W
 Enchantment Aura
-Enchant Creature. Whenever enchanted creature deals damage, Guilty Conscience deals that much damage to that creature.
+Whenever enchanted creature deals damage, Guilty Conscience deals that much damage to that creature.
+Enchant creature
 
 Cao Ren, Wei Commander
 2 B B
@@ -1009,17 +1084,20 @@ spLoseLifeGainLife:2
 Wings of Hope
 W U
 Enchantment Aura
-Enchant Creature. Enchanted creature gets +1/+3 and has flying.
+Enchanted creature gets +1/+3 and has flying.
+Enchant creature
 
 Serra's Embrace
 2 W W
 Enchantment Aura
-Enchant Creature. Enchanted creature gets +2/+2 and has flying and vigilance.
+Enchanted creature gets +2/+2 and has flying and vigilance.
+Enchant creature
 
 Flight
 U
 Enchantment Aura
-Enchant creature. Enchanted creature has flying.
+Enchanted creature has flying.
+Enchant creature
 
 Sprout
 G
@@ -1048,26 +1126,30 @@ Cantrip
 Sluggishness
 1 R
 Enchantment Aura
-Enchant creature. Enchanted creature can't block.
+Enchanted creature can't block.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Aspect of Mongoose
 1 G
 Enchantment Auras
-Enchant creature. Enchanted creature has shroud.
+Enchanted creature has shroud.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Launch
 1 U
 Enchantment Aura
-Enchant creature. Enchanted creature has flying.
+Enchanted creature has flying.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Sleeper's Guile
 1 B
 Enchantment Aura
-Enchant creature. Enchanted creature has fear.
+Enchanted creature has fear.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Weatherseed Treefolk
 2 G G G
@@ -1080,20 +1162,23 @@ When this card is put into a graveyard from the battlefield, return this card to
 Brilliant Halo
 1 W
 Enchantment Aura
-Enchant creature. Enchanted creature gets +1/+2.
+Enchanted creature gets +1/+2.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Rancor
 G
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+0 and has trample.
+Enchanted creature gets +2/+0 and has trample.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Undying Rage
 2 R
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+2 and can't block.
+Enchanted creature gets +2/+2 and can't block.
 When this card is put into a graveyard from the battlefield, return this card to its owner's hand
+Enchant creature
 
 Vedalken Plotter
 2 U
@@ -1121,7 +1206,8 @@ no text
 Armadillo Cloak
 1 G W
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+2 and has trample and lifelink.
+Enchanted creature gets +2/+2 and has trample and lifelink.
+Enchant creature
 
 Dryad Sophisticate
 1 G
@@ -1636,17 +1722,20 @@ If Nissa's Chosen would be put into a graveyard from the battlefield, put it on 
 Leafdrake Roost
 3 G U
 Enchantment Aura
-Enchant Land. Enchanted land has "G U, Tap: Put a 2/2 green and blue Drake creature token with flying onto the battlefield."
+Enchanted land has "G U, Tap: Put a 2/2 green and blue Drake creature token with flying onto the battlefield."
+Enchant land
 
 Cursed Land
 2 B B
 Enchantment Aura
-Enchant Land. At the beginning of the upkeep of enchanted land's controller, Cursed Land deals 1 damage to that player.
+At the beginning of the upkeep of enchanted land's controller, Cursed Land deals 1 damage to that player.
+Enchant land
 
 Caribou Range
 2 W W
 Enchantment Aura
-Enchant land you control. Enchanted land has "W W, Tap: Put a 0/1 white Caribou creature token onto the battlefield."
+Enchanted land has "W W, Tap: Put a 0/1 white Caribou creature token onto the battlefield."
+Enchant land you control
 
 Felidar Sovereign
 4 W W
@@ -2248,7 +2337,8 @@ tap: add 1
 Mythic Proportions
 4 G G G
 Enchantment Aura
-Enchant Creature. Target creature gets +8/+8 and has trample.
+Target creature gets +8/+8 and has trample.
+Enchant creature
 
 Goblin King
 1 R R
@@ -2308,7 +2398,8 @@ no text
 Squirrel Nest
 1 G G
 Enchantment Aura
-Enchant land. Enchanted land has "Tap: Put a 1/1 green Squirrel creature token onto the battlefield.".
+Enchanted land has "Tap: Put a 1/1 green Squirrel creature token onto the battlefield.".
+Enchant land
 
 Umbral Mantle
 3
@@ -2528,17 +2619,20 @@ This card attacks each turn if able.
 Weakness
 B
 Enchantment Aura
-Enchant creature. Enchanted creature gets -2/-1.
+Enchanted creature gets -2/-1.
+Enchant creature
 
 Unholy Strength
 B
 Enchantment Aura
-Enchant creature. Enchanted creature gets +2/+1.
+Enchanted creature gets +2/+1.
+Enchant creature
 
 Holy Strength
 W
 Enchantment Aura
-Enchant creature. Enchanted creature gets +1/+2.
+Enchanted creature gets +1/+2.
+Enchant creature
 
 Giant Growth
 G
@@ -2693,13 +2787,15 @@ spPumpTgt:+4/+2/Trample
 Control Magic
 2 U U
 Enchantment Aura
-Enchant creature. You control enchanted creature.
+You control enchanted creature.
+Enchant creature
 
 Epic Proportions
 4 G G
 Enchantment Aura
-Enchant Creature. Target creature gets +5/+5 and has trample.
+Target creature gets +5/+5 and has trample.
 Flash
+Enchant Creature
 
 Banishing Knack
 U
@@ -3952,12 +4048,6 @@ Monk Realist
 Creature Human Monk Cleric
 When Monk Realist comes into play, destroy target enchantment.
 1/1
-
-Vithian Renegades
-1 R G
-Creature Human Shaman
-When Vithian Renegades comes into play, destroy target artifact. 
-2/2
 
 Brainbite
 2 U B

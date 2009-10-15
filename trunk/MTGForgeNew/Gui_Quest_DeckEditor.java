@@ -463,8 +463,4 @@ private void refreshGui()
     bottomModel.resort();
   }////refreshGui()
 
-public void clearDeck() {
-	// TODO Auto-generated method stub
-	
-}
 }

@@ -847,6 +847,7 @@ public class CombatUtil
 		  {
 			  PlayerZone library = AllZone.getZone(Constant.Zone.Library, c.getController());
 			  PlayerZone play = AllZone.getZone(Constant.Zone.Play, c.getController());
+			  PlayerZone oppPlay = AllZone.getZone(Constant.Zone.Play, AllZone.GameAction.getOpponent(c.getController()));
 			  
 	          CardList enchantments = new CardList(library.getCards());   
 	          enchantments = enchantments.filter(new CardListFilter(){
@@ -865,8 +866,37 @@ public class CombatUtil
 			          Object o = AllZone.Display.getChoiceOptional("Pick an enchantment to put into play", enchantments.toArray());
 			          if(o != null)
 			          {
-			        	  library.remove(o);
-			        	  play.add((Card)o);
+			        	  Card crd = (Card)o;
+			        	  library.remove(crd);
+			        	  play.add(crd);
+			        	  
+			        	  if (crd.isAura())
+			        	  {  
+			        		  Object obj = null;
+			        		  if (crd.getKeyword().contains("Enchant creature"))
+			        		  {
+				        		  CardList creats = new CardList(play.getCards());
+				        		  creats.addAll(oppPlay.getCards());
+				        		  creats = creats.getType("Creature");
+				        		  obj = AllZone.Display.getChoiceOptional("Pick a creature to attach "+crd.getName() + " to",creats.toArray() );
+			        		  }
+			        		  else if (crd.getKeyword().contains("Enchant land") || crd.getKeyword().contains("Enchant land you control"))
+			        		  {
+			        			  CardList lands = new CardList(play.getCards());
+				        		  //lands.addAll(oppPlay.getCards());
+				        		  lands = lands.getType("Land");
+				        		  if (lands.size() > 0)
+				        			  obj = AllZone.Display.getChoiceOptional("Pick a land to attach "+crd.getName() + " to",lands.toArray() );
+			        		  }
+			        		  if (obj != null)
+			        		  {
+			        			  Card target = (Card)obj;
+			        			  if(AllZone.GameAction.isCardInPlay(target)) {
+			        	        	  crd.enchantCard(target);
+			        			  }
+			        		  }
+			        		  
+			        	  }
 			        	  AllZone.GameAction.shuffle(c.getController());
 			        	  //we have to have cards like glorious anthem take effect immediately:
 			        	  for (String effect : AllZone.StateBasedEffects.getStateBasedMap().keySet() ) {
@@ -879,12 +909,22 @@ public class CombatUtil
 		          }
 		          else if (c.getController().equals("Computer"))
 		          {
-		        	  Card card = enchantments.get(0);
-		        	  library.remove(card);
-		        	  play.add(card);
-		        	  AllZone.GameAction.shuffle(c.getController());
-		        	  //we have to have cards like glorious anthem take effect immediately:
-		        	  GameActionUtil.executeCardStateEffects();
+		        	  enchantments = enchantments.filter(new CardListFilter()
+		        	  {
+		        		 public boolean addCard(Card c) 
+		        		 {
+		        			return !c.isAura(); 
+		        		 }
+		        	  });
+		        	  if (enchantments.size() > 0)
+		        	  {
+			        	  Card card = enchantments.get(0);
+			        	  library.remove(card);
+			        	  play.add(card);
+			        	  AllZone.GameAction.shuffle(c.getController());
+			        	  //we have to have cards like glorious anthem take effect immediately:
+			        	  GameActionUtil.executeCardStateEffects();
+		        	  }
 		          }
 	          } //enchantments.size > 0
 		  }//Zur the enchanter
