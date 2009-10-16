@@ -193,6 +193,16 @@ public class CardFactory implements NewConstants {
 		return -1;
 	}
 	
+    private final int shouldSpDamageTgt(Card c) {
+         ArrayList<String> a = c.getKeyword();
+         for (int i = 0; i < a.size(); i++)
+         {
+            if (a.get(i).toString().startsWith("spDamageTgt"))
+               return i;
+         }
+         return -1;
+    }
+	
 	private final int shouldSpDamageCP(Card c) {
 	      ArrayList<String> a = c.getKeyword();
 	      for (int i = 0; i < a.size(); i++)
@@ -1057,7 +1067,232 @@ public class CardFactory implements NewConstants {
       }
     }//Spore Saproling
     
-  //Spell damage cards  CP means Computer and Player (like shock, Lightning Bolt)
+    if (shouldSpDamageTgt(card)  != -1)
+    {
+       int n = shouldSpDamageTgt(card);
+       if (n != -1)
+       {
+          String parse = card.getKeyword().get(n).toString();
+          card.removeIntrinsicKeyword(parse);
+                   
+          card.clearSpellAbility();
+         
+          String k[] = parse.split(":");
+         
+          final boolean TgtCreature[] = {false};
+          final boolean TgtPlayer[] = {false};
+          final boolean TgtCP[] = {false};
+         
+          if (k[0].contains("CP"))
+             TgtCP[0] = true;
+          else if (k[0].contains("P"))
+             TgtPlayer[0] = true;
+          else if (k[0].contains("C"))
+             TgtCreature[0] = true;
+         
+          // how much damage
+        final int NumDmg[] = {-1};
+          final String NumDmgX[] = {"none"};
+
+          if (k[1].length() <= 2)      // numeric
+             NumDmg[0] = Integer.parseInt(k[1]);
+          else                     // result of some sort of function
+          {
+             if (k[1].startsWith("Count$"))
+             {
+                String kk[] = k[1].split("\\$");
+                NumDmgX[0] = kk[1];
+             }
+          }
+         
+          //drawbacks and descriptions
+          final String DrawBack[] = {"none"};
+          final String spDesc[] = {"none"};
+          final String stDesc[] = {"none"};
+          if (k.length > 2)
+          {
+             if (k[2].contains("Drawback$"))
+             {
+                String kk[] = k[2].split("\\$");
+                DrawBack[0] = kk[1];
+                if (k.length > 3)
+                   spDesc[0] = k[3];
+                if (k.length > 4)
+                   stDesc[0] = k[4];
+             }
+             else
+             {
+                if (k.length > 2)
+                   spDesc[0] = k[2];
+                if (k.length > 3)
+                   stDesc[0] = k[3];
+             }
+          }
+         
+          final SpellAbility DamageTgt = new Spell(card)
+          {
+             private static final long serialVersionUID = 7239608350643325111L;
+             private int damage;
+
+             public int getNumDamage()
+             {
+                if (NumDmg[0] != -1)
+                   return NumDmg[0];
+
+                if (! NumDmgX[0].equals("none"))
+                   return CardFactoryUtil.xCount(card, NumDmgX[0]);
+
+                return 0;
+             }
+            
+             boolean shouldTgtP()
+             {
+                PlayerZone compHand = AllZone.getZone(Constant.Zone.Hand, Constant.Player.Computer);
+                CardList hand = new CardList(compHand.getCards());
+
+                if (hand.size() >= 7)      // anti-discard-at-EOT
+                   return true;
+               
+                if(AllZone.Human_Life.getLife() < (10 - damage))   // if damage from this spell would drop the human to less than 10 life
+                   return true;
+               
+                return false;
+             }
+            
+             Card chooseTgtC()
+             {
+                // Combo alert!!
+              PlayerZone compy = AllZone.getZone(Constant.Zone.Play, Constant.Player.Computer);
+                CardList cPlay = new CardList(compy.getCards());
+                if (cPlay.size() > 0)
+                   for (int i = 0; i < cPlay.size(); i++)
+                      if (cPlay.get(i).getName().equals("Stuffy Doll"))
+                         return cPlay.get(i);
+               
+                PlayerZone human = AllZone.getZone(Constant.Zone.Play, Constant.Player.Human);
+              CardList hPlay = new CardList(human.getCards());
+              hPlay = hPlay.filter(new CardListFilter()
+               {
+                  public boolean addCard(Card c)
+                  {
+                     // will include creatures already dealt damage
+                     return c.isCreature() && ((c.getNetDefense() + c.getDamage()) <= damage) && CardFactoryUtil.canTarget(card, c);
+                  }
+               }
+              );
+             
+                if (hPlay.size() > 0)
+                {
+                   Card best = hPlay.get(0);
+               
+                   if (hPlay.size() > 1)
+                   {
+                      for (int i = 1; i < hPlay.size(); i++)
+                      {
+                         Card b = hPlay.get(i);
+                         // choose best overall creature?
+                       if (b.getSpellAbility().length > best.getSpellAbility().length ||
+                               b.getKeyword().size() > best.getKeyword().size() ||
+                               b.getNetAttack() > best.getNetAttack())
+                            best = b;
+                      }
+                   }
+                  
+                   return best;
+                }
+                  
+                return null;
+             }
+            
+             public boolean canPlayAI()
+             {
+                damage = getNumDamage();
+               
+                if (TgtCP[0] == true)
+                {
+                   if (shouldTgtP() == true)
+                   {
+                      setTargetPlayer(Constant.Player.Human);
+                      return true;
+                   }
+                  
+                   Card c = chooseTgtC();
+                   if (c != null)
+                   {
+                      setTargetCard(c);
+                      return true;
+                   }
+                }
+               
+                if (TgtPlayer[0] == true)
+                {
+                   setTargetPlayer(Constant.Player.Human);
+                   return shouldTgtP();
+                }
+               
+                if (TgtCreature[0] == true)
+                {
+                   Card c = chooseTgtC();
+                   if (c != null)
+                   {
+                      setTargetCard(c);
+                      return c != null;
+                   }
+                }
+               
+                return false;               
+             }
+
+             public void resolve()
+             {
+                damage = getNumDamage();
+                String tgtP = new String();
+               
+                if(getTargetCard() != null)
+                {
+                   if(AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()))
+                   {
+                      Card c = getTargetCard();
+                      //c.addDamage(damage);
+                      AllZone.GameAction.addDamage(c, damage);
+                      tgtP = c.getController();
+                   }
+                }
+                else
+                {
+                   AllZone.GameAction.addDamage(getTargetPlayer(), damage);
+                   tgtP = getTargetPlayer();
+                }
+
+                if (! DrawBack[0].equals("none"))
+                   CardFactoryUtil.doDrawBack(DrawBack[0], damage, card.getController(), AllZone.GameAction.getOpponent(card.getController()), tgtP, card, getTargetCard());
+             }// resolove
+          }; //spellAbility
+          if (NumDmg[0] < 1)
+          {
+             if (! spDesc[0].equals("none"))
+            DamageTgt.setDescription(spDesc[0]);
+             if (! stDesc[0].equals("none"))
+            DamageTgt.setStackDescription(stDesc[0]);
+          }
+          else
+          {
+             DamageTgt.setDescription(card.getName() + " deals " + NumDmg[0] + " damage to target creature or player.");
+             DamageTgt.setStackDescription(card.getName() +" deals " + NumDmg[0] + " damage.");
+          }
+          if (TgtCP[0])
+             DamageTgt.setBeforePayMana(CardFactoryUtil.input_targetCreaturePlayer(DamageTgt, true));
+          else if (TgtCreature[0])
+             DamageTgt.setBeforePayMana(CardFactoryUtil.input_targetCreature(DamageTgt));
+          else if (TgtPlayer[0])
+             DamageTgt.setBeforePayMana(CardFactoryUtil.input_targetPlayer(DamageTgt));
+
+        card.addSpellAbility(DamageTgt);
+       }
+    }// spDamageTgt
+
+    
+    //Spell damage cards  CP means Computer and Player (like shock, Lightning Bolt)
     if (shouldSpDamageCP(card)  != -1)
     {
        int n = shouldSpDamageCP(card);
@@ -4107,7 +4342,7 @@ public class CardFactory implements NewConstants {
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
-    if(cardName.equals("Graypelt Refuge")|| cardName.equals("Seijiri Refuge")|| cardName.equals("Jwar Isle Refuge") || 
+    if(cardName.equals("Graypelt Refuge")|| cardName.equals("Sejiri Refuge")|| cardName.equals("Jwar Isle Refuge") || 
        cardName.equals("Akoum Refuge")|| cardName.equals("Kazandu Refuge"))
     {
       final SpellAbility ability = new Ability(card, "0")
@@ -8312,7 +8547,33 @@ final Input target = new Input()
       card.setComesIntoPlay(intoPlay);
     }//*************** END ************ END **************************
 
+  //*************** START *********** START **************************
+    if(cardName.equals("Eviscerator"))
+    {
+      final SpellAbility ability = new Ability(card, "0")
+      {
+        public void resolve()
+        {
+          AllZone.GameAction.getPlayerLife(card.getController()).subtractLife(5);
+        }
+        public boolean canPlayAI()
+        {
+          return 8 < AllZone.Computer_Life.getLife();
+        }
+      };
+      Command intoPlay = new Command()
+      {
 
+		private static final long serialVersionUID = -221296021551561668L;
+
+		public void execute()
+        {
+          ability.setStackDescription("Eviscerator - " +card.getController() +" loses 5 life");
+          AllZone.Stack.add(ability);
+        }
+      };
+      card.setComesIntoPlay(intoPlay);
+    }//*************** END ************ END **************************
 
 
 
@@ -17682,6 +17943,213 @@ if(cardName.equals("Zephid's Embrace"))
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
 
+//*************** START *********** START **************************
+if(cardName.equals("Goblin War Paint"))
+{
+  final SpellAbility spell = new Spell(card)
+  {
+
+	private static final long serialVersionUID = -959968424187950430L;
+	public boolean canPlayAI()
+    {
+      CardList list = new CardList(AllZone.Computer_Play.getCards());
+      list = list.getType("Creature");
+
+      if(list.isEmpty())
+       return false;
+
+      //else
+      CardListUtil.sortAttack(list);
+      CardListUtil.sortFlying(list);
+
+      for (int i=0;i<list.size();i++) {
+         if (CardFactoryUtil.canTarget(card, list.get(i)))
+         {
+            setTargetCard(list.get(i));
+            return true;
+         }
+      }
+      return false;
+    }//canPlayAI()
+    public void resolve()
+    {
+      PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+      play.add(card);
+     
+      Card c = getTargetCard();
+     
+      if(AllZone.GameAction.isCardInPlay(c)  && CardFactoryUtil.canTarget(card, c) )
+      {
+         card.enchantCard(c);
+         System.out.println("Enchanted: " +getTargetCard());
+      }
+    }//resolve()
+  };//SpellAbility
+  card.clearSpellAbility();
+  card.addSpellAbility(spell);
+
+  Command onEnchant = new Command()
+  {   
+
+	private static final long serialVersionUID = 9074991509563203771L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+            crd.addSemiPermanentAttackBoost(2);
+            crd.addSemiPermanentDefenseBoost(2);
+           
+            crd.addExtrinsicKeyword("Haste");
+         }
+      }//execute()
+  };//Command
+
+
+  Command onUnEnchant = new Command()
+  {   
+
+	private static final long serialVersionUID = 720578490253659248L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+        crd.addSemiPermanentAttackBoost(-2);
+            crd.addSemiPermanentDefenseBoost(-2);
+           
+       crd.removeExtrinsicKeyword("Haste");
+         }
+     
+      }//execute()
+   };//Command
+   
+   Command onLeavesPlay = new Command()
+   {
+
+	private static final long serialVersionUID = -8089111708519929350L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+            card.unEnchantCard(crd);
+         }
+      }
+   };
+
+  card.setEnchant(onEnchant);
+  card.setUnEnchant(onUnEnchant);
+  card.setLeavesPlay(onLeavesPlay);
+
+  spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
+}//*************** END ************ END **************************
+
+//*************** START *********** START **************************
+if(cardName.equals("Paralyzing Grasp"))
+{
+  final SpellAbility spell = new Spell(card)
+  {
+
+	private static final long serialVersionUID = -2685360795445503449L;
+	public boolean canPlayAI()
+    {
+      CardList list = new CardList(AllZone.Human_Play.getCards());
+      list = list.getType("Creature");
+
+      if(list.isEmpty())
+       return false;
+
+      //else
+      CardListUtil.sortAttack(list);
+      CardListUtil.sortFlying(list);
+
+      for (int i=0;i<list.size();i++) {
+         if (CardFactoryUtil.canTarget(card, list.get(i)))
+         {
+            setTargetCard(list.get(i));
+            return true;
+         }
+      }
+      return false;
+    }//canPlayAI()
+    public void resolve()
+    {
+      PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+      play.add(card);
+     
+      Card c = getTargetCard();
+     
+      if(AllZone.GameAction.isCardInPlay(c)  && CardFactoryUtil.canTarget(card, c) )
+      {
+         card.enchantCard(c);
+         System.out.println("Enchanted: " +getTargetCard());
+      }
+    }//resolve()
+  };//SpellAbility
+  card.clearSpellAbility();
+  card.addSpellAbility(spell);
+
+  Command onEnchant = new Command()
+  {   
+
+	private static final long serialVersionUID = -380913483412563006L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+         crd.addExtrinsicKeyword("This card does not untap during your untap phase");
+         }
+      }//execute()
+  };//Command
+
+
+  Command onUnEnchant = new Command()
+  {   
+
+	private static final long serialVersionUID = 4534224467226579803L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+                   
+            crd.removeExtrinsicKeyword("This card does not untap during your untap phase");
+         }
+     
+      }//execute()
+   };//Command
+   
+   Command onLeavesPlay = new Command()
+   {
+
+	private static final long serialVersionUID = -2513967225177113996L;
+
+	public void execute()
+      {
+         if (card.isEnchanting())
+         {
+            Card crd = card.getEnchanting().get(0);
+            card.unEnchantCard(crd);
+         }
+      }
+   };
+
+  card.setEnchant(onEnchant);
+  card.setUnEnchant(onUnEnchant);
+  card.setLeavesPlay(onLeavesPlay);
+
+  spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
+}//*************** END ************ END **************************
+
+
+
 
 //*************** START *********** START **************************
 if(cardName.equals("Undying Rage"))
@@ -20741,7 +21209,8 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//*************** END ************ END **************************
    
     //*************** START *********** START **************************
-    if (cardName.equals("Goldmeadow Harrier"))
+    if (cardName.equals("Goldmeadow Harrier") || cardName.equals("Loxodon Mystic") 
+    	|| cardName.equals("Master Decoy"))
     {
     	final SpellAbility ability = new Ability_Tap(card, "W")
         {
@@ -20870,7 +21339,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           all = all.getType("Creature");
 
           for(int i = 0; i < all.size(); i++)
-            if(! all.get(i).getKeyword().contains("Flying"))
+            if(! all.get(i).getKeyword().contains("Flying") && CardFactoryUtil.canDamage(card,all.get(i)))
               all.get(i).addDamage(1);
         }
       };
@@ -21350,6 +21819,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell_one.setDescription("Return target permanent to its owner's hand.");
       spell_two.setDescription("Buyback 3 - Pay 4 U U, put this card into your hand as it resolves.");
+      spell_two.setIsBuyBackAbility(true);
 
       Input runtime1 = new Input()
 	  {
@@ -21432,6 +21902,7 @@ if(cardName.equals("Jugan, the Rising Star"))
       spell_one.setStackDescription(cardName + " - " +card.getController() + " draws a card.");
       spell_two.setDescription("Buyback 5 - Pay 5 U , put this card into your hand as it resolves.");
       spell_two.setStackDescription(cardName + " - (Buyback) " +card.getController() + " draws a card.");
+      spell_two.setIsBuyBackAbility(true);
 
       card.clearSpellAbility();
       card.addSpellAbility(spell_one);
@@ -21546,6 +22017,8 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell_one.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell_one));
       spell_two.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell_two));
+      
+      spell_two.setIsBuyBackAbility(true);
 
       card.clearSpellAbility();
       card.addSpellAbility(spell_one);
@@ -21879,6 +22352,8 @@ if(cardName.equals("Jugan, the Rising Star"))
       spell_one.setStackDescription("Lab Rats - Put a 1/1 black Rat token into play");
       spell_two.setStackDescription("Lab Rats - Buyback, Put a 1/1 black Rat token into play");
 
+      spell_two.setIsBuyBackAbility(true);
+      
       card.clearSpellAbility();
       card.addSpellAbility(spell_one);
       card.addSpellAbility(spell_two);
@@ -21947,6 +22422,8 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell_one.setStackDescription("Sprout Swarm - Put a 1/1 green Saproling token into play");
       spell_two.setStackDescription("Sprout Swarm - Buyback, Put a 1/1 green Saproling token into play");
+      
+      spell_two.setIsBuyBackAbility(true);
 
       card.clearSpellAbility();
       card.addSpellAbility(spell_one);
@@ -22835,7 +23312,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           });
 
           PlayerLife life = AllZone.GameAction.getPlayerLife(getTargetPlayer());
-          life.addLife(4 * count.size());
+          life.addLife(4 + (4 * count.size()));
         }
       };
       spell.setChooseTargetAI(CardFactoryUtil.AI_targetComputer());
@@ -25409,7 +25886,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           all.addAll(AllZone.Computer_Graveyard.getCards());
 
           all = all.getName("Kjeldoran War Cry");
-          return all.size();
+          return all.size() + 1;
         }
       };//SpellAbility
       card.clearSpellAbility();

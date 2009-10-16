@@ -87,10 +87,9 @@ public class Card extends MyObservable
   private Command unEquipCommand = Command.Blank;
   private Command enchantCommand = Command.Blank;
   private Command unEnchantCommand = Command.Blank;
+  private Command replaceMoveToGraveyardCommand = Command.Blank;
   
   private Hashtable<Counters,Integer> counters = new Hashtable<Counters,Integer>();
-  
-  
   
   //hacky code below, used to limit the number of times an ability
   //can be used per turn like Vampire Bats
@@ -408,6 +407,10 @@ public class Card extends MyObservable
   
   public void setLeavesPlay(Command c)  {leavesPlayCommand = c;}
   public void leavesPlay() 		{leavesPlayCommand.execute(); }
+  
+  public Command getReplaceMoveToGraveyard() 		{ return replaceMoveToGraveyardCommand; }
+  public void setReplaceMoveToGraveyard(Command c)  { replaceMoveToGraveyardCommand = c;}
+  public void replaceMoveToGraveyard()				{ replaceMoveToGraveyardCommand.execute(); }
   
   public void setSickness(boolean b) {sickness = b;}
   public boolean hasSickness()

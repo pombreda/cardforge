@@ -20,6 +20,7 @@ public abstract class SpellAbility
 
   private boolean spell;
   private boolean tapAbility;
+  private boolean buyBackAbility = false; //false by default
 
   private Input beforePayMana;
   private Input afterResolve;
@@ -78,6 +79,9 @@ public void execute(Object o) {}};
   public boolean isSpell()        {return spell; }
   public boolean isAbility()     {return ! isSpell(); }
   public boolean isTapAbility() {return tapAbility;}
+  
+  public void setIsBuyBackAbility(boolean b) { buyBackAbility = b;}
+  public boolean isBuyBackAbility() 		 {return buyBackAbility; }
 
   public void setSourceCard(Card c) {sourceCard=c;}
   public Card getSourceCard()  {return sourceCard;}

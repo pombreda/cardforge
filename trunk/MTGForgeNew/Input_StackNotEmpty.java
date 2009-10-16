@@ -18,6 +18,25 @@ public class Input_StackNotEmpty extends Input implements java.io.Serializable
     SpellAbility sa = AllZone.Stack.pop();
     Card c = sa.getSourceCard();
 
+    if (sa.getSourceCard().getKeyword().contains("Cantrip"))
+      	AllZone.GameAction.drawCard(sa.getSourceCard().getController());
+    
+
+    final Card crd = c;
+    if (sa.isBuyBackAbility())
+    {
+    	c.setReplaceMoveToGraveyard(new Command() {
+			private static final long serialVersionUID = -2559488318473330418L;
+
+			public void execute() {
+				PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, crd.getController());
+		        AllZone.GameAction.moveTo(hand, crd);				
+			}
+    	});
+    }
+    
+    sa.resolve();
+    AllZone.GameAction.checkStateEffects();
 
     //special consideration for "Beacon of Unrest" and other "Beacon" cards
     if((c.isInstant() || c.isSorcery())     &&
@@ -25,16 +44,12 @@ public class Input_StackNotEmpty extends Input implements java.io.Serializable
        (! c.getName().startsWith("Pulse")) &&
     	!AllZone.GameAction.isCardRemovedFromGame(c)) //hack to make flashback work
     {
-      AllZone.GameAction.moveToGraveyard(c);
+      if (c.getReplaceMoveToGraveyard().equals(Command.Blank))
+    	  AllZone.GameAction.moveToGraveyard(c);
+      else
+    	  c.replaceMoveToGraveyard();
     }
     
-    if (sa.getSourceCard().getKeyword().contains("Cantrip"))
-      	AllZone.GameAction.drawCard(sa.getSourceCard().getController());
-    //resolve() needs to be call AFTER stuff is moved to the graveyard
-    //because cards like Elvish Fury are returned to hand after resolving
-    sa.resolve();
-    AllZone.GameAction.checkStateEffects();
-
 
     //update all zones, something things arent' updated for some reason
     AllZone.Human_Hand.updateObservers();

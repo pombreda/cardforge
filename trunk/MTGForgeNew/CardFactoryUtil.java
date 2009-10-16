@@ -1795,6 +1795,7 @@ public class CardFactoryUtil
   }
   */
   
+  
   public static CardList getFlashbackCards(String player)
   {
 	  PlayerZone grave = AllZone.getZone(Constant.Zone.Graveyard, player);
@@ -1818,6 +1819,365 @@ public class CardFactoryUtil
             }
             return count;
   }
+  
+  //parser for non-mana X variables
+  public static int xCount(Card c, String s)
+  {
+     int n = 0;
+    
+      String cardController = c.getController();
+      String oppController = AllZone.GameAction.getOpponent(cardController);
+     
+      PlayerZone myField = AllZone.getZone(Constant.Zone.Play, cardController);
+      PlayerZone opField = AllZone.getZone(Constant.Zone.Play, oppController);
+
+      PlayerZone myYard = AllZone.getZone(Constant.Zone.Graveyard, cardController);
+      PlayerZone opYard = AllZone.getZone(Constant.Zone.Graveyard, oppController);
+     
+      PlayerZone myHand = AllZone.getZone(Constant.Zone.Hand, cardController);
+      PlayerZone opHand = AllZone.getZone(Constant.Zone.Hand, oppController);
+     
+      final String [] l;
+      l = s.split("/");      // separate the specification from any math
+      final String m[] = {"none"};
+      if (l.length > 1)
+         m[0] = l[1];
+      final String [] sq;
+      sq = l[0].split("\\.");
+
+      CardList someCards = new CardList();
+     
+      //Complex counting methods
+     
+      // Count$Domain
+      if (sq[0].contains("Domain"))
+      {
+         someCards.addAll(myField.getCards());
+         String basic[] = {"Forest", "Plains", "Mountain", "Island", "Swamp"};
+
+         for(int i = 0; i < basic.length; i++)
+            if (! someCards.getType(basic[i]).isEmpty())
+               n++;
+           
+         return doXMath(n, m);
+      }
+     
+      // Count$YourLifeTotal
+      if (sq[0].contains("YourLifeTotal"))
+      {
+         if (cardController.equals(Constant.Player.Computer))
+            return doXMath(AllZone.Computer_Life.getLife(), m);
+         else if (cardController.equals(Constant.Player.Human))
+            return doXMath(AllZone.Human_Life.getLife(), m);
+        
+         return 0;
+      }
+     
+      // Count$OppLifeTotal
+      if (sq[0].contains("OppLifeTotal"))
+      {
+         if (oppController.equals(Constant.Player.Computer))
+            return doXMath(AllZone.Computer_Life.getLife(), m);
+         else if (oppController.equals(Constant.Player.Human))
+            return doXMath(AllZone.Human_Life.getLife(), m);
+        
+         return 0;
+      }
+     
+      // Count$Chroma.<mana letter>
+      if (sq[0].contains("Chroma"))
+           return doXMath(getNumberOfManaSymbolsControlledByColor(sq[1], cardController), m);
+
+      // Count$Hellbent.<numHB>.<numNotHB>
+      if (sq[0].contains("Hellbent"))
+         if (myHand.size() <= 1)
+            return doXMath(Integer.parseInt(sq[1]), m);   // Hellbent
+         else
+            return doXMath(Integer.parseInt(sq[2]), m);    // not Hellbent
+
+    
+      //Generic Zone-based counting
+     // Count$QualityAndZones.Subquality
+     
+      // build a list of cards in each possible specified zone
+
+      // if a card was ever written to count two different zones,
+      // make sure they don't get added twice.
+      boolean MF = false, MY = false, MH = false;
+      boolean OF = false, OY = false, OH = false;
+     
+      if (sq[0].contains("YouCtrl"))
+         if (MF == false)
+         {
+            someCards.addAll(myField.getCards());
+            MF = true;
+         }
+
+      if (sq[0].contains("InYourYard"))
+         if (MY == false)
+         {
+            someCards.addAll(myYard.getCards());
+            MY = true;
+         }
+
+      if (sq[0].contains("InYourHand"))
+         if (MH == false)
+         {
+            someCards.addAll(myHand.getCards());
+            MH = true;
+         }
+
+      if (sq[0].contains("OppCtrl"))
+         if (OF == false)
+         {
+            someCards.addAll(opField.getCards());
+            OF = true;
+         }
+
+      if (sq[0].contains("InOppYard"))
+         if (OY == false)
+         {
+            someCards.addAll(opYard.getCards());
+            OY = true;
+         }
+     
+      if (sq[0].contains("InOppHand"))
+         if (OH == false)
+         {
+            someCards.addAll(opHand.getCards());
+            OH = true;
+         }
+     
+      if (sq[0].contains("OnBattlefield"))
+      {
+         if (MF == false)
+            someCards.addAll(myField.getCards());
+         if (OF == false)
+            someCards.addAll(opField.getCards());
+      }
+
+      if (sq[0].contains("InAllYards"))
+      {
+         if (MY == false)
+            someCards.addAll(myYard.getCards());
+         if (OY = false)
+            someCards.addAll(opYard.getCards());
+      }
+
+      if (sq[0].contains("InAllHands"))
+      {
+         if (MH == false)
+            someCards.addAll(myHand.getCards());
+         if (OH == false)
+            someCards.addAll(opHand.getCards());
+      }
+
+      // filter lists based on the specified quality
+     
+      // "Clerics you control" - Count$TypeYouCtrl.Cleric
+      if (sq[0].contains("Type"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c)
+            {
+               if (c.getType().contains(sq[1]) || c.getKeyword().contains("Changeling"))
+                  return true;
+
+               return false;
+            }
+         });
+      }
+
+      // "Named <CARDNAME> in all graveyards" - Count$NamedAllYards.<CARDNAME>
+     
+      if (sq[0].contains("Named"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c)
+            {
+               if (c.getName().equals(sq[1]))
+                  return true;
+
+               return false;
+            }
+         });
+      }
+
+      // Refined qualities
+
+      // "Untapped Lands" - Count$UntappedTypeYouCtrl.Land
+      if (sq[0].contains("Untapped"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return !c.isTapped();}
+         });
+      }
+     
+      if (sq[0].contains("Tapped"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return c.isTapped();}
+         });
+      }
+
+      // "White Creatures" - Count$WhiteTypeYouCtrl.Creature
+      if (sq[0].contains("White"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return CardUtil.getColor(c) == Constant.Color.White;}
+         });
+      }
+
+      if (sq[0].contains("Blue"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return CardUtil.getColor(c) == Constant.Color.Blue;}
+         });
+      }
+
+      if (sq[0].contains("Black"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return CardUtil.getColor(c) == Constant.Color.Black;}
+         });
+      }
+
+      if (sq[0].contains("Red"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return CardUtil.getColor(c) == Constant.Color.Red;}
+         });
+      }
+
+      if (sq[0].contains("Green"))
+      {
+         someCards = someCards.filter(new CardListFilter()
+         {
+            public boolean addCard(Card c){
+               return CardUtil.getColor(c) == Constant.Color.Green;}
+         });
+      }
+     
+      if (sq[0].contains("Multicolor"))
+         someCards = someCards.filter(new CardListFilter ()
+         {
+            public boolean addCard(Card c){
+               return (CardUtil.getColors(c).size() > 1);
+            }
+         });
+     
+      if (sq[0].contains("Monocolor"))
+         someCards = someCards.filter(new CardListFilter ()
+         {
+            public boolean addCard(Card c){
+               return (CardUtil.getColors(c).size() == 1);
+            }
+         });
+
+      n = someCards.size();
+     
+      return doXMath(n, m);
+  }
+
+  private static int doXMath(int num, String[] m)
+  {
+     if (m[0].equals("none"))
+        return num;
+    
+     String[] s = m[0].split("\\.");
+         
+     if (s[0].contains("Plus"))
+        return num + Integer.parseInt(s[1]);
+     else if (s[0].contains("NMinus"))
+        return Integer.parseInt(s[1]) - num;
+     else if (s[0].contains("Minus"))
+        return num - Integer.parseInt(s[1]);
+     else if (s[0].contains("Twice"))
+        return num * 2;
+     else if (s[0].contains("HalfUp"))
+        return (int) (Math.ceil(num / 2));
+     else if (s[0].contains("HalfDown"))
+        return (int) (Math.floor(num / 2));
+    
+     return num;
+  }
+
+ 
+  public static void doDrawBack(String DB, int nDB, String cardController, String Opp, String TgtP, Card Src, Card TgtC)
+  { 
+     // Drawbacks may be any simple additional effect a spell or ability may have
+     // not just the negative ones
+    
+     String d[] = DB.split("/");
+     int X;
+     if (d[1].equals("X"))
+        X = nDB;
+     else
+        X = Integer.parseInt(d[1]);
+    
+     String dbPlayer = new String();
+     if (d[0].contains("You"))
+        dbPlayer = cardController;
+     else if (d[0].contains("Opp"))
+        dbPlayer = Opp;
+     else if (d[0].contains("Tgt"))
+        dbPlayer = TgtP;
+    
+     if (d[0].contains("Damage"))
+        AllZone.GameAction.addDamage(dbPlayer, X);
+    
+     if (d[0].contains("GainLife"))
+        AllZone.GameAction.addLife(dbPlayer, X);
+         
+     if (d[0].contains("LoseLife"))
+        AllZone.GameAction.subLife(TgtP, X);
+         
+     if (d[0].contains("Discard"))
+     {       
+        if (d.length > 2)
+        {
+           if (d[2].contains("UnlessDiscardType"))
+           {
+              String dd[] = d[2].split("\\.");
+              AllZone.GameAction.discardUnless(dbPlayer, X, dd[1]);
+           }
+           if (d[2].contains("AtRandom"))
+              AllZone.GameAction.discardRandom(dbPlayer, X);
+        } else
+           AllZone.GameAction.discard(dbPlayer, X);
+     }
+    
+     if (d[0].contains("HandToLibrary"))
+        AllZone.GameAction.handToLibrary(dbPlayer, X, d[2]);
+    
+     if (d[0].contains("Draw"))
+        for (int i=0; i < X; i++)
+           AllZone.GameAction.drawCard(dbPlayer);
+    
+     if (d[0].contains("GenToken")) // placeholder for effect
+        X = X + 0;
+         
+     if (d[0].contains("ReturnFromYard")) // placeholder for effect
+        X = X + 0;
+       
+     if (d[0].contains("Sacrifice")) // placeholder for effect
+        X = X + 0;
+  }
+
 
   //may return null
   static public Card getRandomCard(CardList list)

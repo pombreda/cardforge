@@ -1,3 +1,34 @@
+Eviscerator
+3 B B
+Creature Horror
+When Eviscerator enters the battlefield, you lose 5 life.
+5/5
+Protection from white
+
+Master Decoy
+1 W
+Creature Human Soldier
+no text
+1/2
+
+Loxodon Mystic
+3 W W
+Creature Elephant Cleric
+no text
+1/1
+
+Giant Strength
+R R
+Enchantment Aura
+Enchanted creature gets +2/+2.
+Enchant creature
+
+Goblin War Paint
+2 R
+Enchantment Aura
+Enchanted creature gets +2/+2 and has haste.
+Enchant creature
+
 Vithian Renegades
 1 R G
 Creature Human Shaman
@@ -40,7 +71,7 @@ tap: add U
 tap: add B
 Comes into play tapped.
 
-Seijiri Refuge
+Sejiri Refuge
 no cost
 Land
 When Seijiri Refuge enters the battlefield, you gain 1 life.
@@ -97,7 +128,7 @@ Defender
 
 Kazandu Blademaster
 W W
-Creature Human Soldier
+Creature Human Soldier Ally
 Whenever Kazandu Blademaster or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Kazandu Blademaster.
 1/1
 First Strike

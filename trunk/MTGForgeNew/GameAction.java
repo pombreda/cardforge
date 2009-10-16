@@ -1194,6 +1194,28 @@ private int getDifferentLand(CardList list, String land)
 	  if (isCardInPlay(card))
 		  card.addDamage(damageToAdd);
   }
+  
+  public void addLife(String player, int life)
+  {
+     // place holder for future life gain modification rules
+    
+     getPlayerLife(player).addLife(life);
+  }
+ 
+  public void subLife(String player, int life)
+  {
+     // place holder for future life loss modification rules
+    
+     getPlayerLife(player).subtractLife(life);
+  }
+ 
+  public void addDamage(String player, int damage)
+  {
+     // place holder for future damage modification rules (prevention?)
+    
+     getPlayerLife(player).subtractLife(damage);
+  }
+
 
   public static void main(String[] args)
   {

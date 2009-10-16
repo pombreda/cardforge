@@ -95,7 +95,7 @@ public class ManaPool extends Card
 		String res="";
 		for (String s : parts)
 		{
-			if (s.length()==2 && colors.contains(s.charAt(2) + "")) s=s.charAt(0)+"/"+s.charAt(1);
+			if (s.length()==2 && colors.contains(s.charAt(1) + "")) s=s.charAt(0)+"/"+s.charAt(1);
 			if (s.length()==3) s="(" + s + ")";
 			if (s.equals("S")) s="(S)";//for if/when we implement snow mana
 			if (s.equals("X")) s="(X)";//X costs?
