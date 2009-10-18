@@ -380,7 +380,7 @@ public class CardFactory implements NewConstants {
     //of card.txt and add the appropriate code to make that happen
     if(card.getKeyword().contains("Comes into play tapped."))
     {
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = 203335252453049234L;
 
@@ -1268,18 +1268,26 @@ public class CardFactory implements NewConstants {
                    CardFactoryUtil.doDrawBack(DrawBack[0], damage, card.getController(), AllZone.GameAction.getOpponent(card.getController()), tgtP, card, getTargetCard());
              }// resolove
           }; //spellAbility
-          if (NumDmg[0] < 1)
-          {
-             if (! spDesc[0].equals("none"))
-            DamageTgt.setDescription(spDesc[0]);
-             if (! stDesc[0].equals("none"))
-            DamageTgt.setStackDescription(stDesc[0]);
-          }
-          else
-          {
-             DamageTgt.setDescription(card.getName() + " deals " + NumDmg[0] + " damage to target creature or player.");
-             DamageTgt.setStackDescription(card.getName() +" deals " + NumDmg[0] + " damage.");
-          }
+          if (! spDesc[0].equals("none"))
+              DamageTgt.setDescription(spDesc[0]);
+            else
+            {
+              String s;
+              s = card.getName() + " deals " + NumDmg[0] + " damage to target";
+              if (TgtCP[0])
+                s = s + " creature or player.";
+              else if (TgtCreature[0])
+                s = s + " creature.";
+              else if (TgtPlayer[0])
+                s = s + " player.";
+              DamageTgt.setDescription(s);
+            }
+
+            if (! stDesc[0].equals("none"))
+              DamageTgt.setStackDescription(stDesc[0]);
+            else
+              DamageTgt.setStackDescription(card.getName() + " - deals " + NumDmg[0] + " damage.");
+
           if (TgtCP[0])
              DamageTgt.setBeforePayMana(CardFactoryUtil.input_targetCreaturePlayer(DamageTgt, true));
           else if (TgtCreature[0])
@@ -2350,7 +2358,7 @@ public class CardFactory implements NewConstants {
 	  	  devour.setStackDescription(card.getName() +" - gets " + magnitude + " +1/+1 counter(s) per devoured creature.");
 	  	  devour.setDescription("Devour " +magnitude);
 	  	  card.addSpellAbility(devour);
-	  	  card.setComesIntoPlay(intoPlay);
+	  	  card.addComesIntoPlayCommand(intoPlay);
         
         //card.addSpellAbility(CardFactoryUtil.ability_Devour(card, magnitude));
       }
@@ -2368,7 +2376,7 @@ public class CardFactory implements NewConstants {
             String t = card.getSpellText();
             if (!t.equals("")) t += "\r\n";
             card.setText(t + parse + " (This enters the battlefield with " + m + " +1/+1 counters on it. When it's put into a graveyard, you may put its +1/+1 counters on target artifact creature.)");//Erm help? Isn't there a normal way to do this?...
-            card.setComesIntoPlay(
+            card.addComesIntoPlayCommand(
                   new Command()
                   {
 					private static final long serialVersionUID = 339412525059881775L;
@@ -2414,7 +2422,7 @@ public class CardFactory implements NewConstants {
              }//resolve()
             };
 
-          card.setDestroy(new Command()
+          card.addDestroyCommand(new Command()
             {
                private static final long serialVersionUID = 304026662487997331L;
                
@@ -2615,7 +2623,7 @@ public class CardFactory implements NewConstants {
             AllZone.Stack.add(ability);
           }
         };
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
     }//end if
    
 
@@ -4271,7 +4279,7 @@ public class CardFactory implements NewConstants {
       //card.clearSpellAbility();
       card.clearSpellKeepManaAbility();
 
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = 7352127748114888255L;
 		
@@ -4334,11 +4342,12 @@ public class CardFactory implements NewConstants {
 
 		public void execute()
     	  {
+			  card.tap();
     		  ability.setStackDescription(card.getName() + " - " +card.getController() +" gains 2 life");
     		  AllZone.Stack.add(ability);
     	  }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -4350,6 +4359,7 @@ public class CardFactory implements NewConstants {
         public void resolve()
         {
           Card c = card;
+          c.tap();
           PlayerLife life = AllZone.GameAction.getPlayerLife(c.getController());
           life.addLife(1);
         }
@@ -4360,18 +4370,19 @@ public class CardFactory implements NewConstants {
 
       public void execute()
         {
+    	  card.tap();
           ability.setStackDescription(card.getName() + " - " +card.getController() +" gains 1 life");
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
     //*************** START *********** START **************************
     if(cardName.equals("Faerie Conclave"))
     {
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = 2792041290726604698L;
 
@@ -4440,7 +4451,7 @@ public class CardFactory implements NewConstants {
     //*************** START *********** START **************************
     if(cardName.equals("Forbidding Watchtower"))
     {
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = 5212793782060828409L;
 
@@ -4506,7 +4517,7 @@ public class CardFactory implements NewConstants {
     //*************** START *********** START **************************
     if(cardName.equals("Treetop Village"))
     {
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = -2246560994818997231L;
 
@@ -5602,7 +5613,7 @@ public class CardFactory implements NewConstants {
         }
       };//Command
       ability.setStackDescription("Caller of the Claw - Put a 2/2 green Bear creature token into play for each nontoken creature put into your graveyard from play this turn.");
-      card.setComesIntoPlay(comesIntoPlay);
+      card.addComesIntoPlayCommand(comesIntoPlay);
 
       SpellAbility spell = new Spell_Permanent(card)
       {
@@ -5770,7 +5781,7 @@ public class CardFactory implements NewConstants {
       card.clearSpellAbility();
       card.addSpellAbility(summoningSpell);
 
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = -2504426622672629123L;
 
@@ -5849,7 +5860,7 @@ public class CardFactory implements NewConstants {
       card.clearSpellAbility();
       card.addSpellAbility(summoningSpell);
 
-      card.setComesIntoPlay(new Command()
+      card.addComesIntoPlayCommand(new Command()
       {
 		private static final long serialVersionUID = 1227443034730254929L;
 
@@ -5923,6 +5934,70 @@ public class CardFactory implements NewConstants {
     }//*************** END ************ END **************************
     
   
+  //*************** START *********** START **************************
+    if(cardName.equals("Azusa, Lost but Seeking"))
+    {
+    	
+    	final Ability ability = new Ability(card, "0")
+    	{
+    		public boolean canPlay()
+    		{
+    			SpellAbility sa;
+    	    	for (int i=0; i<AllZone.Stack.size(); i++)
+    	    	{
+    	    	     sa = AllZone.Stack.peek(i);
+    	    	     if (sa.getSourceCard().equals(card))
+    	    	          return false;
+    	    	}
+    			
+    			String player = card.getController();
+    			PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, player);
+    			CardList lands = new CardList(hand.getCards());
+    			lands = lands.getType("Land");
+    			
+    			return lands.size() > 0 &&
+    				(AllZone.Phase.getPhase().equals(Constant.Phase.Main2) || AllZone.Phase.getPhase().equals(Constant.Phase.Main1))
+    				&& AllZone.GameAction.isCardInPlay(card) && CardFactoryUtil.canUseAbility(card);
+    		}
+    		public void resolve()
+    		{
+
+    			String player = card.getController();
+    			
+    			PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, player);
+    			PlayerZone play = AllZone.getZone(Constant.Zone.Play, player);
+    			
+    			
+    			CardList lands = new CardList(hand.getCards());
+    			lands = lands.getType("Land");
+    			
+    			if (lands.size() > 0)
+    			{
+    				if (player.equals(Constant.Player.Human))
+    				{
+		    			Object o = AllZone.Display.getChoiceOptional("Select land to play", lands.toArray());
+		    			if (o!=null)
+		    			{
+		    				Card c = (Card)o;
+		    				hand.remove(c);
+		    				play.add(c);
+		    			}
+    				}
+    				else
+    				{
+    					Card c = lands.get(0);
+    					hand.remove(c);
+    					play.add(c);
+    				}
+    				card.setAbilityUsed(card.getAbilityUsed()+1);
+    			}
+    		}
+    	};
+    	
+    	card.addSpellAbility(ability);
+    	ability.setDescription("You may play two additional lands on each of your turns.");
+        ability.setStackDescription(card.getName() + " - " + card.getController() + " plays an additional land.");
+    }//*************** END ************ END **************************  
     
   //*************** START *********** START **************************
     if(cardName.equals("Exploration"))
@@ -6611,7 +6686,7 @@ public class CardFactory implements NewConstants {
         }
       };
       ability.setStackDescription("Hunted Phantasm - Opponent puts five 1/1 Goblin Creature tokens onto the battlefield.");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -6659,7 +6734,7 @@ public class CardFactory implements NewConstants {
         }
       };
       ability.setStackDescription("Hunted Horror - Opponent puts two 3/3 Centaur tokens with Protection from Black onto the battlefield.");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -6706,7 +6781,7 @@ public class CardFactory implements NewConstants {
         }
       };
       ability.setStackDescription("Hunted Lammasu - Opponent puts a 4/4 black Horror creature token onto the battlefield.");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -6754,7 +6829,7 @@ public class CardFactory implements NewConstants {
         }
       };
       ability.setStackDescription("Hunted Dragon - Opponent puts 3 Knight tokens with First Strike into play");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -6804,7 +6879,7 @@ public class CardFactory implements NewConstants {
         }
       };
       ability.setStackDescription("Hunted Troll - Opponent puts 4 Faerie tokens with flying into play");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
 
       final Command untilEOT = new Command()
@@ -7074,7 +7149,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -7100,7 +7175,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -7127,7 +7202,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -7189,7 +7264,7 @@ final Input target = new Input()
     			{
 	    			input[0] =  (String)JOptionPane.showInputDialog(null, "Which creature type?", "Pick type", JOptionPane.QUESTION_MESSAGE);
 	    			
-	    			if (input[0].equals("Legendary") || input[0].equals("Artifact") || input[0].equals("Enchantment"))
+	    			if (input[0].equals("Legendary") || input[0].equals("Artifact") || input[0].equals("Enchantment") || input[0].equals("Creature"))
 	    				input[0] = "";
 	    			//TODO: some more input validation, case-sensitivity, etc.
 	    			
@@ -7197,7 +7272,11 @@ final Input target = new Input()
     			}
     			else
     			{
-    				input[0] = "Sliver"; //what to put here for the AI???
+    				String chosenType = CardFactoryUtil.chooseCreatureTypeAI(card);
+    				if (!chosenType.equals(""))
+    					input[0] = chosenType;
+    				else 
+    					input[0] = "Sliver"; //what to put here for the AI???
     			}
     			
     			card.setChosenType(input[0]);
@@ -7213,7 +7292,8 @@ final Input target = new Input()
             AllZone.Stack.add(ability);
           }
         };
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
+     
     	
     }//*************** END ************ END **************************
     
@@ -7328,7 +7408,7 @@ final Input target = new Input()
 	            AllZone.Stack.add(ability);
 	          }
         };
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
     	
     }//*************** END ************ END **************************
     		
@@ -7379,7 +7459,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -7542,8 +7622,8 @@ final Input target = new Input()
         {
           public void resolve()
           {
+        	card.untap();
             makeToken();
-            card.untap();
           }
           void makeToken()
           {
@@ -7569,6 +7649,14 @@ final Input target = new Input()
           }//makeToken()
           public boolean canPlay()
           {
+        	  SpellAbility sa;
+        	  for (int i=0; i<AllZone.Stack.size(); i++)
+              {
+              	sa = AllZone.Stack.peek(i);
+              	if (sa.getSourceCard().equals(card))
+              			return false;
+              }
+        	  
         	  if (card.isTapped() && !card.hasSickness())
         		  return true;
         	  else 
@@ -7634,7 +7722,7 @@ final Input target = new Input()
         }
       };
       
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
       
       final SpellAbility a2 = new Ability(card, "G")
 	    {
@@ -7740,7 +7828,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -7786,7 +7874,7 @@ final Input target = new Input()
           }
         }//execute()
       };//Command
-      card.setDestroy(leavesPlay);
+      card.addDestroyCommand(leavesPlay);
     }//*************** END ************ END **************************
 
 
@@ -7813,7 +7901,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.addSpellAbility(new Spell_Evoke(card, "2 U")
       {
@@ -7856,7 +7944,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setLeavesPlay(leavesPlay);
+      card.addLeavesPlayCommand(leavesPlay);
 
       card.addSpellAbility(new Spell_Evoke(card, "3 W")
       {
@@ -7926,8 +8014,8 @@ final Input target = new Input()
             AllZone.GameAction.destroy(all.get(i));
         }//execute
       };//Command
-      card.setComesIntoPlay(intoPlay);
-      card.setLeavesPlay(leavesPlay);
+      card.addComesIntoPlayCommand(intoPlay);
+      card.addLeavesPlayCommand(leavesPlay);
     }//*************** END ************ END **************************
 
 
@@ -7986,7 +8074,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8014,7 +8102,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8054,8 +8142,8 @@ final Input target = new Input()
         	  AllZone.EndOfTurn.addAt(destroy);
         }
       };
-      card.setComesIntoPlay(intoPlay);
-      card.setTurnFaceUp(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
+      card.addTurnFaceUpCommand(intoPlay);
       card.setSacrificeAtEOT(true);
     }//*************** END ************ END **************************
     
@@ -8113,7 +8201,7 @@ final Input target = new Input()
           }
         };
         
-        card.setDestroy(destroy);
+        card.addDestroyCommand(destroy);
     	
     }//*************** END ************ END **************************
 
@@ -8161,7 +8249,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8192,7 +8280,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8220,7 +8308,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END ************************** 
   
     
@@ -8248,7 +8336,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END ************************** 
 
 
@@ -8271,7 +8359,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8296,7 +8384,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8320,7 +8408,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8353,7 +8441,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8403,7 +8491,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8442,7 +8530,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8474,7 +8562,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8504,7 +8592,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8544,7 +8632,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
   //*************** START *********** START **************************
@@ -8572,7 +8660,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8601,7 +8689,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8688,7 +8776,7 @@ final Input target = new Input()
           return list.size() != 0;
         }//canPlay()
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
       card.clearSpellAbility();
       card.addSpellAbility(spell);
     }//*************** END ************ END **************************
@@ -8721,7 +8809,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8749,7 +8837,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8795,7 +8883,7 @@ final Input target = new Input()
         }
       };
       ability.setStackDescription("Goblin Ringleader - reveal the top four cards of your library. Put all Goblin cards revealed this way into your hand and the rest on the bottom of your library.");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -8840,7 +8928,7 @@ final Input target = new Input()
         }
       };
       ability.setStackDescription("Sylvan Messenger - reveal the top four cards of your library. Put all Elf cards revealed this way into your hand and the rest on the bottom of your library.");
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
 
@@ -8874,7 +8962,7 @@ final Input target = new Input()
         }
       };
       ability.setStackDescription("Child of Alara - Destroy all non-land permanents, they can't be regenerated");
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -8904,7 +8992,7 @@ final Input target = new Input()
         }
       };
       ability.setStackDescription("Ryusei, the Falling Star - deals 5 damage to each creature without flying");
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
     
     
@@ -8944,7 +9032,7 @@ final Input target = new Input()
 
            }//execute()
          };
-         card.setComesIntoPlay(intoPlay);
+         card.addComesIntoPlayCommand(intoPlay);
 
     }//*************** END ************ END **************************
 
@@ -9014,7 +9102,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9148,7 +9236,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9265,7 +9353,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9388,7 +9476,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9541,7 +9629,7 @@ final Input target = new Input()
           }//if ok to play
         }//execute()
       };//Command
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -9580,7 +9668,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -9628,7 +9716,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9693,7 +9781,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -9768,7 +9856,7 @@ final Input target = new Input()
           }//else
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -10011,7 +10099,7 @@ final Input target = new Input()
           }
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -10063,7 +10151,7 @@ final Input target = new Input()
           }
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
     //*************** START *********** START **************************
@@ -10111,7 +10199,7 @@ final Input target = new Input()
           }
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -10214,7 +10302,7 @@ final Input target = new Input()
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -10256,7 +10344,7 @@ final Input target = new Input()
         }
       };
 
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -10298,7 +10386,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
     
     //*************** START *********** START **************************
@@ -10339,7 +10427,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -10380,7 +10468,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -10406,7 +10494,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -10471,7 +10559,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   
@@ -10536,7 +10624,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       //add cycling
       card.addSpellAbility(CardFactoryUtil.ability_cycle(card, "2"));
@@ -10571,7 +10659,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -10607,7 +10695,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -10628,14 +10716,19 @@ final Input target = new Input()
           list.remove(card);//doesn't move Sky Swallower
           while(! list.isEmpty())
           {
+        	((PlayerZone_ComesIntoPlay)AllZone.Human_Play).setTriggers(false);
+	        ((PlayerZone_ComesIntoPlay)AllZone.Computer_Play).setTriggers(false);
             //so "comes into play" abilities don't trigger
-            list.get(0).setComesIntoPlay(Command.Blank);
+            ///list.get(0).addComesIntoPlayCommand(Command.Blank);
 
             oppPlay.add(list.get(0));
             myPlay.remove(list.get(0));
 
             list.get(0).setController(opp);
             list.remove(0);
+            
+            ((PlayerZone_ComesIntoPlay)AllZone.Human_Play).setTriggers(true);
+	        ((PlayerZone_ComesIntoPlay)AllZone.Computer_Play).setTriggers(true);
           }
         }//resolve()
       };
@@ -10650,7 +10743,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
 
@@ -11064,8 +11157,8 @@ final Input target = new Input()
         };
         
         
-        card.setComesIntoPlay(intoPlay);
-        card.setDestroy(destroy);
+        card.addComesIntoPlayCommand(intoPlay);
+        card.addDestroyCommand(destroy);
     	
     }//*************** END ************ END **************************
     
@@ -11191,8 +11284,8 @@ final Input target = new Input()
         }//execute()
       };//Command
 
-      card.setComesIntoPlay(commandComes);
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addComesIntoPlayCommand(commandComes);
+      card.addLeavesPlayCommand(commandLeavesPlay);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -11387,8 +11480,8 @@ final Input target = new Input()
       
       card.clearSpellAbility();
       
-      card.setComesIntoPlay(commandComes);
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addComesIntoPlayCommand(commandComes);
+      card.addLeavesPlayCommand(commandLeavesPlay);
       
       
 
@@ -11536,8 +11629,8 @@ final Input target = new Input()
         }//execute()
       };//Command
 
-      card.setComesIntoPlay(commandComes);
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addComesIntoPlayCommand(commandComes);
+      card.addLeavesPlayCommand(commandLeavesPlay);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -11658,7 +11751,7 @@ final Input target = new Input()
         }//execute()
       };//CommandComes
       
-      card.setComesIntoPlay(commandComes);
+      card.addComesIntoPlayCommand(commandComes);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -11804,8 +11897,8 @@ final Input target = new Input()
         }//execute()
       };//Command
 
-      card.setComesIntoPlay(commandComes);
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addComesIntoPlayCommand(commandComes);
+      card.addLeavesPlayCommand(commandLeavesPlay);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -11980,8 +12073,8 @@ final Input target = new Input()
         }//execute()
       };//Command
 
-      card.setComesIntoPlay(commandComes);
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addComesIntoPlayCommand(commandComes);
+      card.addLeavesPlayCommand(commandLeavesPlay);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -12191,7 +12284,7 @@ final Input target = new Input()
     	  AllZone.Stack.add(ability);
     	}//execute()
       };//Command
-      card.setLeavesPlay(commandLeavesPlay);
+      card.addLeavesPlayCommand(commandLeavesPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(enchantment);
@@ -12449,7 +12542,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -12508,7 +12601,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -12561,7 +12654,7 @@ final Input target = new Input()
 
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -12614,7 +12707,7 @@ final Input target = new Input()
 
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -12685,7 +12778,7 @@ final Input target = new Input()
           AllZone.Stack.add(ability);
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -12705,12 +12798,18 @@ final Input target = new Input()
             PlayerZone oldPlay = AllZone.getZone(getTargetCard());
 
             //so "comes into play" abilities don't trigger
-            getTargetCard().setComesIntoPlay(Command.Blank);
+            //getTargetCard().addComesIntoPlayCommand(Command.Blank);
 
+            ((PlayerZone_ComesIntoPlay)AllZone.Human_Play).setTriggers(false);
+	        ((PlayerZone_ComesIntoPlay)AllZone.Computer_Play).setTriggers(false);
+            
             play.add(getTargetCard());
             oldPlay.remove(getTargetCard());
 
             getTargetCard().setController(card.getController());
+            
+            ((PlayerZone_ComesIntoPlay)AllZone.Human_Play).setTriggers(true);
+	        ((PlayerZone_ComesIntoPlay)AllZone.Computer_Play).setTriggers(true);
           }
         }//resolve()
       };
@@ -12758,7 +12857,7 @@ final Input target = new Input()
           }
         }//execute()
       };
-      card.setDestroy(destroy);
+      card.addDestroyCommand(destroy);
     }//*************** END ************ END **************************
 
 
@@ -14092,7 +14191,7 @@ final Input target = new Input()
 
       //card.clearSpellAbility();
       ability.setStackDescription(cardName + " - Exchange control of target land you control and target land an opponent controls.");
-      card.setComesIntoPlay(comesIntoPlay);
+      card.addComesIntoPlayCommand(comesIntoPlay);
     }//*************** END ************ END **************************
     
 
@@ -14825,6 +14924,30 @@ final Input target = new Input()
       //tap ability - no cost - target creature - EOT
 
       final Card[] target = new Card[1];
+      
+      final Command destroy = new Command()
+      {
+		private static final long serialVersionUID = -2433442359225521472L;
+
+		public void execute()
+        {
+          AllZone.Stack.add(new Ability(card, "0", "Return " +target[0] +" from graveyard to play")
+          {
+            public void resolve()
+            {
+              PlayerZone grave = AllZone.getZone(target[0]);
+              //checks to see if card is still in the graveyard
+              if(AllZone.GameAction.isCardInZone(target[0], grave))
+              {
+                PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+                AllZone.GameAction.moveTo(play, target[0]);
+                target[0].setController(card.getController());
+              }
+            }
+          });
+        }//execute()
+      };
+      
       final Command untilEOT = new Command()
       {
         private static final long serialVersionUID = 2777978927867867610L;
@@ -14832,7 +14955,9 @@ final Input target = new Input()
 		public void execute()
         {
           //resets the Card destroy Command
-          target[0].setDestroy(Command.Blank);
+          //target[0].addDestroy(Command.Blank);
+		  target[0].removeDestroyCommand(destroy);	
+		
         }
       };
 
@@ -14848,28 +14973,7 @@ final Input target = new Input()
 
             //when destroyed, return to play
             //add triggered ability to target card
-            target[0].setDestroy(new Command()
-            {
-				private static final long serialVersionUID = -2433442359225521472L;
-
-			public void execute()
-              {
-                AllZone.Stack.add(new Ability(card, "0", "Return " +target[0] +" from graveyard to play")
-                {
-                  public void resolve()
-                  {
-                    PlayerZone grave = AllZone.getZone(target[0]);
-                    //checks to see if card is still in the graveyard
-                    if(AllZone.GameAction.isCardInZone(target[0], grave))
-                    {
-                      PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
-                      AllZone.GameAction.moveTo(play, target[0]);
-                      target[0].setController(card.getController());
-                    }
-                  }
-                });
-              }//execute()
-            });
+            target[0].addDestroyCommand(destroy);
           }//if
         }//resolve()
         public boolean canPlayAI()
@@ -15567,7 +15671,7 @@ final Input target = new Input()
         public boolean canPlayAI()
         {
           Card[] hand = AllZone.Computer_Hand.getCards();
-          return CardFactoryUtil.AI_doesCreatureAttack(card) && (hand.length != 0);
+          return CardFactoryUtil.AI_doesCreatureAttack(card) && (hand.length > 3);
         }
         public void  chooseTargetAI() {AllZone.GameAction.discardRandom(Constant.Player.Computer);}
 
@@ -16146,9 +16250,9 @@ if(cardName.equals("Epic Proportions"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16241,9 +16345,9 @@ if(cardName.equals("Mythic Proportions"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16351,9 +16455,9 @@ public void execute()
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16456,9 +16560,9 @@ if(cardName.equals("Hero's Resolve"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16558,9 +16662,9 @@ if(cardName.equals("Holy Strength"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16659,9 +16763,9 @@ if(cardName.equals("Unholy Strength"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16760,9 +16864,9 @@ if(cardName.equals("Weakness"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -16918,9 +17022,9 @@ if(cardName.equals("Cessation"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17016,9 +17120,9 @@ if(cardName.equals("Pacifism") || cardName.equals("Bound in Silence"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17115,9 +17219,9 @@ if(cardName.equals("Pillory of the Sleepless"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17215,9 +17319,9 @@ if(cardName.equals("Brilliant Halo"))
 	 }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17316,9 +17420,9 @@ if(cardName.equals("Cloak of Mists"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17423,9 +17527,9 @@ if(cardName.equals("Indomitable Will"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17533,9 +17637,9 @@ if(cardName.equals("Uncontrollable Anger"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17630,9 +17734,9 @@ if(cardName.equals("Fear"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17730,9 +17834,9 @@ if(cardName.equals("Battle Mastery"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17831,9 +17935,9 @@ if(cardName.equals("Protective Bubble"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -17936,9 +18040,9 @@ if(cardName.equals("Zephid's Embrace"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18041,9 +18145,9 @@ if(cardName.equals("Goblin War Paint"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18141,9 +18245,9 @@ if(cardName.equals("Paralyzing Grasp"))
       }
    };
 
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
 
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18245,9 +18349,9 @@ if(cardName.equals("Undying Rage"))
 		}
 	};
 	
-	card.setEnchant(onEnchant);
-	card.setUnEnchant(onUnEnchant);
-	card.setLeavesPlay(onLeavesPlay);
+	card.addEnchantCommand(onEnchant);
+	card.addUnEnchantCommand(onUnEnchant);
+	card.addLeavesPlayCommand(onLeavesPlay);
 	
 	spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18346,9 +18450,9 @@ if(cardName.equals("Rancor"))
 	   }
    };
   
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
   
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18454,9 +18558,9 @@ if(cardName.equals("Armadillo Cloak"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18558,9 +18662,9 @@ if(cardName.equals("Serra's Embrace"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18661,9 +18765,9 @@ if(cardName.equals("Wings of Hope"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18765,9 +18869,9 @@ if(cardName.equals("AEther Web"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18866,9 +18970,9 @@ if(cardName.equals("Launch") || cardName.equals("Flight"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -18965,9 +19069,9 @@ if(cardName.equals("Aspect of Mongoose") || cardName.equals("Robe of Mirrors") |
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -19065,9 +19169,9 @@ if(cardName.equals("Sleeper's Guile"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -19166,9 +19270,9 @@ if(cardName.equals("Sluggishness"))
       }
    };
  
-  card.setEnchant(onEnchant);
-  card.setUnEnchant(onUnEnchant);
-  card.setLeavesPlay(onLeavesPlay);
+  card.addEnchantCommand(onEnchant);
+  card.addUnEnchantCommand(onUnEnchant);
+  card.addLeavesPlayCommand(onLeavesPlay);
  
   spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 }//*************** END ************ END **************************
@@ -19231,7 +19335,7 @@ if(cardName.equals("Jugan, the Rising Star"))
     }//execute()
   };//Command
 
-  card.setDestroy(leavesPlay);
+  card.addDestroyCommand(leavesPlay);
 }//*************** END ************ END **************************
 
 
@@ -19429,9 +19533,9 @@ if(cardName.equals("Jugan, the Rising Star"))
     	   }
        };
       
-      card.setEnchant(onEnchant);
-      card.setUnEnchant(onUnEnchant);
-      card.setLeavesPlay(onLeavesPlay);
+      card.addEnchantCommand(onEnchant);
+      card.addUnEnchantCommand(onUnEnchant);
+      card.addLeavesPlayCommand(onLeavesPlay);
       
 
       spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
@@ -19513,7 +19617,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
 
-      card.setLeavesPlay(new Command()
+      card.addLeavesPlayCommand(new Command()
       {
         private static final long serialVersionUID = -8961588142846220965L;
 
@@ -23252,8 +23356,18 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       card.clearSpellAbility();
       card.addSpellAbility(spell);
-      if (cardName.equals("Renewed Faith"))
+      if (cardName.equals("Renewed Faith")) {
     	  card.addSpellAbility(CardFactoryUtil.ability_cycle(card, "1 W"));
+    	  card.addCycleCommand(new Command(){
+			private static final long serialVersionUID = 7699412574052780825L;
+
+			public void execute() 
+    		{
+				PlayerLife life = AllZone.GameAction.getPlayerLife(card.getController());
+				life.addLife(2);
+    		}
+    	  });
+      }
     }//*************** END ************ END **************************
 
 
@@ -23321,6 +23435,40 @@ if(cardName.equals("Jugan, the Rising Star"))
 
       spell.setBeforePayMana(CardFactoryUtil.input_targetPlayer(spell));
     }//*************** END ************ END **************************
+    
+    //*************** START *********** START **************************
+    if(cardName.equals("Accumulated Knowledge"))
+    {
+      final SpellAbility spell = new Spell(card)
+      {
+		private static final long serialVersionUID = -7650377883588723237L;
+
+		public void resolve()
+        {
+          CardList count = new CardList();
+          count.addAll(AllZone.Human_Graveyard.getCards());
+          count.addAll(AllZone.Computer_Graveyard.getCards());
+          count = count.filter(new CardListFilter()
+          {
+            public boolean addCard(Card c)
+            {
+              return c.getName().equals("Accumulated Knowledge");
+            }
+          });
+
+          for (int i=0;i<=count.size();i++)
+          {
+        	  AllZone.GameAction.drawCard(card.getController());
+          }
+        }
+      };
+      spell.setDescription("Draw a card, then draw cards equal to the number of cards named Accumulated Knowledge in all graveyards.");
+      spell.setStackDescription(cardName + " - Draw a card, then draw cards equal to the number of cards named Accumulated Knowledge in all graveyards.");
+      card.clearSpellAbility();
+      card.addSpellAbility(spell);
+
+    }//*************** END ************ END **************************
+
 
 
 
@@ -23920,7 +24068,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           }//else
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     
   }//*************** END ************ END **************************
 	
@@ -24112,7 +24260,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 	      };//Command
 
 		
-		card.setTurnFaceUp(turnsFaceUp);
+		card.addTurnFaceUpCommand(turnsFaceUp);
 	}//*************** END ************ END **************************
 
 	//*************** START *********** START **************************
@@ -24152,7 +24300,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 	        }//execute()
 	    };//Command
 		
-		card.setTurnFaceUp(turnsFaceUp);
+		card.addTurnFaceUpCommand(turnsFaceUp);
 		
 	}//*************** END ************ END **************************
 	
@@ -26689,7 +26837,7 @@ if(cardName.equals("Jugan, the Rising Star"))
                 AllZone.Stack.add(ability);
     		}
     	};//command
-    	card.setDestroy(destroy);
+    	card.addDestroyCommand(destroy);
     }
     //*************** START *********** START **************************
     if(cardName.equals("Serra Avatar"))
@@ -26707,7 +26855,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           AllZone.GameAction.shuffle(card.getOwner());
         }//execute()
       };//Command
-      card.setDestroy(leavesPlay);
+      card.addDestroyCommand(leavesPlay);
     }//***************
 
 
@@ -28308,7 +28456,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -28376,7 +28524,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -28624,7 +28772,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           }
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
       
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -29088,6 +29236,66 @@ if(cardName.equals("Jugan, the Rising Star"))
       card.clearSpellAbility();
       card.addSpellAbility(spell);
     }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    else if(cardName.equals("Temporal Spring"))
+    {
+      final SpellAbility spell = new Spell(card)
+      {
+		private static final long serialVersionUID = 2649912511833536966L;
+
+		public boolean canPlayAI()
+        {
+          CardList human = CardFactoryUtil.AI_getHumanCreature(card, true);
+          return 3 < AllZone.Phase.getTurn() && 0 < human.size();
+        }
+        public void chooseTargetAI()
+        {
+          CardList human = CardFactoryUtil.AI_getHumanCreature(card, true);
+          setTargetCard(CardFactoryUtil.AI_getBestCreature(human));
+        }
+
+        public void resolve()
+        {
+          if(AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()) )
+          {
+            if(getTargetCard().isToken())
+              AllZone.getZone(getTargetCard()).remove(getTargetCard());
+            else
+            {
+              AllZone.GameAction.moveToTopOfLibrary(getTargetCard());
+            }
+          }//if
+        }//resolve()
+      };//SpellAbility
+      Input target = new Input()
+      { 
+
+		private static final long serialVersionUID = 3852696858086356864L;
+		public void showMessage()
+        {
+          AllZone.Display.showMessage("Select target permanent for " +spell.getSourceCard());
+          ButtonUtil.enableOnlyCancel();
+        }
+        public void selectButtonCancel() {stop();}
+        public void selectCard(Card c, PlayerZone zone)
+        {
+          if(!CardFactoryUtil.canTarget(spell, c)){
+          	  AllZone.Display.showMessage("Cannot target this card (Shroud? Protection?).");
+          }
+          else if(zone.is(Constant.Zone.Play))
+          {
+            spell.setTargetCard(c);
+            stopSetNext(new Input_PayManaCost(spell));
+          }
+        }
+      };//Input
+
+      spell.setBeforePayMana(target);
+      card.clearSpellAbility();
+      card.addSpellAbility(spell);
+    }//*************** END ************ END **************************
+    
     
   //*************** START *********** START **************************
     else if(cardName.equals("Boomerang") || cardName.equals("Eye of Nowhere"))
@@ -29654,7 +29862,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 	          }
         };
         
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
     	
     
     	final SpellAbility ability = new Ability(card, "1 R")
@@ -30044,7 +30252,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
     
@@ -30113,7 +30321,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
     
@@ -30177,7 +30385,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -30240,7 +30448,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -30396,7 +30604,7 @@ if(cardName.equals("Jugan, the Rising Star"))
             }
           }//execute()
         };//Command
-        card.setDestroy(leavesPlay);
+        card.addDestroyCommand(leavesPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -30570,7 +30778,7 @@ if(cardName.equals("Jugan, the Rising Star"))
            }
         };
         
-        card.setComesIntoPlay(fetchBasicLand);
+        card.addComesIntoPlayCommand(fetchBasicLand);
      
        
       
@@ -30611,7 +30819,7 @@ if(cardName.equals("Jugan, the Rising Star"))
            }
          };
          
-         card.setComesIntoPlay(intoPlay);
+         card.addComesIntoPlayCommand(intoPlay);
          
          final SpellAbility a2 = new Ability(card, "2 W")
  	     {
@@ -30684,7 +30892,7 @@ if(cardName.equals("Jugan, the Rising Star"))
            }
          };
          
-         card.setComesIntoPlay(intoPlay);
+         card.addComesIntoPlayCommand(intoPlay);
 
   	    final SpellAbility a2 = new Ability(card, "0")
 	    {
@@ -30786,7 +30994,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           }
         };
          
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
          
 	    final SpellAbility a2 = new Ability(card, "0")
 	    {
@@ -30894,7 +31102,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
        };
        
-       card.setComesIntoPlay(intoPlay);
+       card.addComesIntoPlayCommand(intoPlay);
 
 	    final SpellAbility a2 = new Ability(card, "1")
 	    {
@@ -31176,7 +31384,7 @@ if(cardName.equals("Jugan, the Rising Star"))
            }
          };
          
-         card.setComesIntoPlay(intoPlay);
+         card.addComesIntoPlayCommand(intoPlay);
          
          final SpellAbility ability = new Ability(card, "3")
          {
@@ -31654,9 +31862,9 @@ if(cardName.equals("Jugan, the Rising Star"))
   	          Object check = AllZone.Display.getChoiceOptional("Select Artifact", list.toArray());
   	          if(check != null)
   	          {
-  	            PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
+  	            //PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
   	            //library.add((Card)check, 0);
-  	            AllZone.GameAction.moveTo(library, (Card)check);
+  	            AllZone.GameAction.moveToTopOfLibrary((Card)check);
   	          }
             }
           }
@@ -31758,9 +31966,9 @@ if(cardName.equals("Jugan, the Rising Star"))
   	          Object check = AllZone.Display.getChoiceOptional("Select Creature", list.toArray());
   	          if(check != null)
   	          {
-  	            PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
+  	            //PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
   	            //library.add((Card)check, 0);
-  	            AllZone.GameAction.moveTo(library, (Card)check);
+  	            AllZone.GameAction.moveToTopOfLibrary((Card)check);
   	          }
             }
           }
@@ -31786,7 +31994,8 @@ if(cardName.equals("Jugan, the Rising Star"))
   	            c = grave[0];
   	          //System.out.println("computer picked - " +c);
   	          AllZone.Computer_Graveyard.remove(c);
-  	          AllZone.Computer_Library.add(c, 0);
+  	          //AllZone.Computer_Library.add(c, 0);
+  	          AllZone.GameAction.moveToTopOfLibrary(c);
             }
           }//computerResolve
           
@@ -32073,7 +32282,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
        };
        
-       card.setDestroy(draw3Cards);
+       card.addDestroyCommand(draw3Cards);
 
     
   }//*************** END ************ END **************************  
@@ -32102,7 +32311,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
        };
        
-       card.setDestroy(gain3Life);
+       card.addDestroyCommand(gain3Life);
   }//*************** END ************ END **************************  
 
     
@@ -32132,7 +32341,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
        };
        
-       card.setDestroy(gain1Life);
+       card.addDestroyCommand(gain1Life);
   }//*************** END ************ END **************************  
     
   //*************** START *********** START **************************  
@@ -32159,7 +32368,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
        };
        
-       card.setDestroy(gain2Life);
+       card.addDestroyCommand(gain2Life);
 
     
   }//*************** END ************ END **************************  
@@ -32211,7 +32420,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
       };
       
-      card.setDestroy(make3Tokens);
+      card.addDestroyCommand(make3Tokens);
       
    }//*************** END ************ END **************************
     
@@ -32291,8 +32500,8 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
       };
 
-      card.setDestroy(draw);
-      card.setComesIntoPlay(fetchBasicLand);
+      card.addDestroyCommand(draw);
+      card.addComesIntoPlayCommand(fetchBasicLand);
       
    }//*************** END ************ END **************************
       
@@ -32338,7 +32547,7 @@ if(cardName.equals("Jugan, the Rising Star"))
          }
       };
 
-      card.setDestroy(makeToken);
+      card.addDestroyCommand(makeToken);
    }//*************** END ************ END **************************
     
  //*************** START *********** START **************************
@@ -32396,7 +32605,7 @@ if(cardName.equals("Jugan, the Rising Star"))
         }
      };
 
-     card.setDestroy(fetchPlains);
+     card.addDestroyCommand(fetchPlains);
   }//*************** END ************ END **************************
  
     //*************** START *********** START **************************
@@ -33085,7 +33294,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 			}
     	};
     	
-    	ability.setDescription("Tap: You may put a creature card with converted mana cost equal to the number of charge counters on �ther Vial from your hand into play.");
+    	ability.setDescription("Tap: You may put a creature card with converted mana cost equal to the number of charge counters on AEther Vial from your hand into play.");
     	ability.setStackDescription(card.getName() + " - put creature card with converted mana cost equal to the number of charge counters into play.");
     	
     	card.addSpellAbility(ability);
@@ -33103,8 +33312,10 @@ if(cardName.equals("Jugan, the Rising Star"))
        }
        public boolean canPlayAI()
         {
-          setTargetCard(CardFactoryUtil.AI_getBestCreature(new CardList(AllZone.Human_Play.getCards())));
-         return ((AllZone.Computer_Hand.size() > 2)&&(getTargetCard() != null)) ;
+    	  CardList humanPlay = new CardList(AllZone.Human_Play.getCards()); 
+    	  if (humanPlay.size() > 0)
+    		  setTargetCard(CardFactoryUtil.AI_getBestCreature(humanPlay));
+          return ((AllZone.Computer_Hand.size() > 2)&&(getTargetCard() != null)) ;
         }
        public void resolve()
        {
@@ -33502,7 +33713,7 @@ if(cardName.equals("Jugan, the Rising Star"))
 
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
     //*************** START *********** START **************************
@@ -33529,7 +33740,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
     //*************** START *********** START **************************
@@ -33556,7 +33767,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -33594,7 +33805,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
       card.addSpellAbility(new Spell_Permanent(card)
@@ -33665,7 +33876,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
 
@@ -33737,7 +33948,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
 
@@ -33816,7 +34027,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
 
@@ -33908,7 +34119,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
      
@@ -34525,7 +34736,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
 
@@ -34593,7 +34804,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           
         }//execute()
       };//Command
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
 
       card.clearSpellAbility();
 
@@ -34984,7 +35195,7 @@ if(cardName.equals("Jugan, the Rising Star"))
         };//Command
         //ability.setStackDescription("Ranger of Eos - Grab 2 creatures");
         //AllZone.Stack.add(ability);
-        card.setComesIntoPlay(intoPlay);
+        card.addComesIntoPlayCommand(intoPlay);
   	  
   	  
              
@@ -35150,7 +35361,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           AllZone.Stack.add(ability);
         }
       };
-      card.setComesIntoPlay(intoPlay);
+      card.addComesIntoPlayCommand(intoPlay);
     
   }//*************** END ************ END **************************
 	
@@ -36420,8 +36631,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
             }
           };
 
-      card.setLeavesPlay(gain2Life);
-      card.setComesIntoPlay(gain2Life);
+      card.addLeavesPlayCommand(gain2Life);
+      card.addComesIntoPlayCommand(gain2Life);
 
     }//*************** END ************ END **************************
     
@@ -36442,7 +36653,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
               firstTime = false;
             }
       };
-      card.setComesIntoPlay(ageCounters);
+      card.addComesIntoPlayCommand(ageCounters);
 
     }//*************** END ************ END **************************
     
@@ -36464,7 +36675,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
             }
       };
 
-      card.setComesIntoPlay(fadeCounters);
+      card.addComesIntoPlayCommand(fadeCounters);
 
     }//*************** END ************ END **************************
 
@@ -37422,7 +37633,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
 	    		return list.size() != 0;
 	    	}//canPlay()
 	    };
-	    card.setComesIntoPlay(intoPlay);
+	    card.addComesIntoPlayCommand(intoPlay);
 	    card.clearSpellKeepManaAbility();
 	    card.addSpellAbility(spell);
     }//*************** END ************ END **************************
@@ -38231,8 +38442,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 2");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -38351,8 +38562,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 3");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -38472,8 +38683,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 3");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -38587,8 +38798,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 2");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -38704,8 +38915,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 1");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -38816,8 +39027,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	equip.setDescription("Equip: 1");
     	card.addSpellAbility(equip);
     	
-    	card.setEquip(onEquip);
-    	card.setUnEquip(onUnEquip);
+    	card.addEquipCommand(onEquip);
+    	card.addUnEquipCommand(onUnEquip);
     } //*************** END ************ END **************************
     
   //*************** START *********** START **************************
@@ -38931,8 +39142,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 2");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -39050,8 +39261,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 2");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -39169,8 +39380,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 2");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
 
@@ -39289,8 +39500,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 2");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -39407,8 +39618,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 2");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
 
     } //*************** END ************ END **************************
     
@@ -39499,8 +39710,8 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
        equip.setDescription("Equip: 1");
        card.addSpellAbility(equip);
        
-       card.setEquip(onEquip);
-       card.setUnEquip(onUnEquip);
+       card.addEquipCommand(onEquip);
+       card.addUnEquipCommand(onUnEquip);
     } //*************** END ************ END **************************  
     
     
@@ -39552,7 +39763,7 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     		   }
     	   }
        };
-      card.setLeavesPlay(onLeavesPlay);
+      card.addLeavesPlayCommand(onLeavesPlay);
       
       Input runtime = new Input()
       {
@@ -39781,9 +39992,9 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
 	  a2.setBeforePayMana(runtime);
        
       
-      card.setEnchant(onEnchant);
-      card.setUnEnchant(onUnEnchant);
-      card.setLeavesPlay(onLeavesPlay);
+      card.addEnchantCommand(onEnchant);
+      card.addUnEnchantCommand(onUnEnchant);
+      card.addLeavesPlayCommand(onLeavesPlay);
       
       Input runtime2 = new Input()
       {
@@ -39933,9 +40144,9 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	   }
        };
       
-      card.setEnchant(onEnchant);
-      card.setUnEnchant(onUnEnchant);
-      card.setLeavesPlay(onLeavesPlay);
+      card.addEnchantCommand(onEnchant);
+      card.addUnEnchantCommand(onUnEnchant);
+      card.addLeavesPlayCommand(onLeavesPlay);
       
       Input runtime = new Input()
       {
@@ -40085,9 +40296,9 @@ return land.size() > 1 && CardFactoryUtil.AI_isMainPhase();
     	   }
        };
       
-      card.setEnchant(onEnchant);
-      card.setUnEnchant(onUnEnchant);
-      card.setLeavesPlay(onLeavesPlay);
+      card.addEnchantCommand(onEnchant);
+      card.addUnEnchantCommand(onUnEnchant);
+      card.addLeavesPlayCommand(onLeavesPlay);
       
       Input runtime = new Input()
       {

@@ -114,7 +114,7 @@ abstract public class Ability_Mana extends SpellAbility implements java.io.Seria
     	}//Hacky, but should work
     	else setManaCost(copy.substring(0, copy.indexOf(",")));
     	String divider = ",";
-    	while(!copy.isEmpty())
+    	while(!copy.trim().equals(""))
     	{
     		if(copy.startsWith(":"))
     			if (!divider.equals(".")) divider=".";

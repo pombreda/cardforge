@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone
 {
 	private static final long serialVersionUID = 5750837078903423978L;
@@ -55,13 +57,22 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone
 				}
 			});
 			
-			if (c.getType().contains("Ally") || clist.size() > 0)
+			String[] allyNames = {"Umara Raptor", "Tuktuk Grunts", "Oran-Rief Survivalist", "Nimana Sell-Sword", "Makindi Shieldmate", 
+								  "Kazandu Blademaster","Turntimber Ranger"};
+			final ArrayList<String> allyNamesList = new ArrayList<String>();
+			
+			for (int i=0;i<allyNames.length;i++)
+			{
+				allyNamesList.add(allyNames[i]);
+			}
+			
+			if (c.getType().contains("Ally") || (clist.size() > 0 && (c.getType().contains("Creature") || c.getKeyword().contains("Changeling"))) || allyNamesList.contains(c.getName()))
 			{
 				CardList list = new CardList(play.getCards());
 				list = list.filter(new CardListFilter()
 				{
 					public boolean addCard(Card c) {
-						return c.getType().contains("Ally") || c.getKeyword().contains("Changeling");
+						return c.getType().contains("Ally") || c.getKeyword().contains("Changeling") || allyNamesList.contains(c.getName());
 					}				
 				});
 				

@@ -122,11 +122,11 @@ public class ManaPool extends Card
 		int cless = 0;
 		for(String s : cost)
 		{
-			if(s.isEmpty()) continue;//mana.split gave me a "" for some reason
+			if(s.trim().equals("")) continue;//mana.split gave me a "" for some reason
 			if(colors.contains(s))
 			{ 
 				has[colors.indexOf(s) + 1]++;
-				if (!Colorless.isEmpty())
+				if (!Colorless.trim().equals(""))
 				{
 					try{
 						cless+= Integer.parseInt(Colorless);
@@ -143,7 +143,7 @@ public class ManaPool extends Card
 	}
 	public void addOne(String Mana)
 	{
-		if(Mana.isEmpty()) return;
+		if(Mana.trim().equals("")) return;
 		int cInt = cIndex(Mana);
 		if(cInt > 0)
 			has[cInt]++;
@@ -161,7 +161,8 @@ public class ManaPool extends Card
 	public static String[] getManaParts(String Mana_2)//turns "G G" -> {"G","G"}, "2 UG"->"{"2","U/G"}, "B W U R G" -> {"B","W","U","R","G"}, etc.
 	{
 		String Mana=Mana_2;
-		if (Mana.isEmpty()) return null;
+		//if (Mana.isEmpty()) return null;
+		if (Mana.trim().equals("")) return null;
 		Mana=oraclize(Mana);
 		try
 		{
@@ -191,7 +192,7 @@ public class ManaPool extends Card
 			if(colors.contains(s))
 			{
 				res.add(s);
-				if(clessString.isEmpty()) continue;
+				if(clessString.trim().equals("")) continue;
 				try
 				{
 					Colorless += Integer.parseInt(clessString);
@@ -234,7 +235,7 @@ public class ManaPool extends Card
 	public void subtractOne(String Mana){subtractOne(new ManaCost(Mana),Mana);}
 	public ManaCost subtractOne(ManaCost manaCost, String Mana)
 	{
-		if(Mana.isEmpty()||manaCost.toString().isEmpty()) return manaCost;
+		if(Mana.trim().equals("")||manaCost.toString().trim().equals("")) return manaCost;
 		if(cIndex(Mana) >0 )
 		{
 			  if(!manaCost.isNeeded(Mana) || has[cIndex(Mana)]==0) return manaCost;

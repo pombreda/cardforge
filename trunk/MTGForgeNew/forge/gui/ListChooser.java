@@ -149,7 +149,7 @@ public class ListChooser<T> {
         if(called) throw new IllegalStateException("Already shown");
         int value;
         do {
-            d = p.createDialog(title);
+            d = p.createDialog(p.getParent(),title);
             if(minChoices != 0) d.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             jList.setSelectedIndex(0);
             d.setVisible(true);

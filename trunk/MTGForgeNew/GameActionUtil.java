@@ -1066,8 +1066,26 @@ public class GameActionUtil
 					AllZone.Stack.add(ability);
 		}
 		
-		else if (c.getController().equals(Constant.Player.Computer))
-			AllZone.Stack.add(ability);
+		else if (c.getController().equals(Constant.Player.Computer)) {
+			
+			PlayerZone cPlay = AllZone.Computer_Play;
+			CardList list = new CardList();
+			list.addAll(cPlay.getCards());
+		
+			CardList cl = list.filter(new CardListFilter()
+			{
+				public boolean addCard(Card crd) {
+					return crd.getName().equals("Conspiracy") && crd.getChosenType().equals("Ally");
+				}
+			});
+			
+			list = list.getName("Wolf");
+			
+			if ((list.size() > 15 && cl.size() > 0))
+				;
+			else
+				AllZone.Stack.add(ability);
+		}
 	}
 	
 	
@@ -4041,7 +4059,7 @@ public class GameActionUtil
 				  	devour.setStackDescription(c.getName() +" - gets 2 +1/+1 counter(s) per devoured creature.");
 				  	devour.setDescription("Devour 2");
 				    c.addSpellAbility(devour);
-				  	c.setComesIntoPlay(intoPlay);
+				  	c.addComesIntoPlayCommand(intoPlay);
 					
 					
 					PlayerZone play = AllZone.getZone(Constant.Zone.Play,card.getController());

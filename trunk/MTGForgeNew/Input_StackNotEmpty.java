@@ -25,7 +25,7 @@ public class Input_StackNotEmpty extends Input implements java.io.Serializable
     final Card crd = c;
     if (sa.isBuyBackAbility())
     {
-    	c.setReplaceMoveToGraveyard(new Command() {
+    	c.addReplaceMoveToGraveyardCommand(new Command() {
 			private static final long serialVersionUID = -2559488318473330418L;
 
 			public void execute() {
@@ -44,7 +44,7 @@ public class Input_StackNotEmpty extends Input implements java.io.Serializable
        (! c.getName().startsWith("Pulse")) &&
     	!AllZone.GameAction.isCardRemovedFromGame(c)) //hack to make flashback work
     {
-      if (c.getReplaceMoveToGraveyard().equals(Command.Blank))
+      if (c.getReplaceMoveToGraveyard().size() == 0)
     	  AllZone.GameAction.moveToGraveyard(c);
       else
     	  c.replaceMoveToGraveyard();

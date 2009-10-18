@@ -18,6 +18,9 @@ forest.jpg					http://resources.wizards.com/magic/cards/unh/en-us/card73946.jpg
 forest1.jpg					http://gatherer.wizards.com/handlers/image.ashx?type=card&multiverseid=2748
 forest2.jpg					http://gatherer.wizards.com/handlers/image.ashx?type=card&multiverseid=587
 forest3.jpg					http://gatherer.wizards.com/handlers/image.ashx?type=card&multiverseid=586
+accumulated_knowledge       http://www.wizards.com/global/images/magic/general/accumulated_knowledge.jpg
+azusa_lost_but_seeking.jpg  http://www.wizards.com/global/images/magic/general/azusa_lost_but_seeking.jpg
+temporal_spring.jpg			http://www.wizards.com/global/images/magic/general/temporal_spring.jpg
 spidersilk_net.jpg			http://www.wizards.com/global/images/magic/general/spidersilk_net.jpg
 akoum_refuge.jpg			http://www.wizards.com/global/images/magic/general/akoum_refuge.jpg
 barrenton_cragtreads.jpg		http://www.wizards.com/global/images/magic/general/barrenton_cragtreads.jpg

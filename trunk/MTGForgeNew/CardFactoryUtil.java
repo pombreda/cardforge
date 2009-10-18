@@ -227,7 +227,8 @@ public class CardFactoryUtil
     {"Pit Imp"                 , new Integer(2)},
     {"Roterothopter"           , new Integer(2)},
     {"Vampire Bats"            , new Integer(2)},
-    {"Fire-Belly Changeling"   , new Integer(2)}
+    {"Fire-Belly Changeling"   , new Integer(2)},
+    {"Azusa, Lost but Seeking" , new Integer(2)}
   };
 
   public static boolean canUseAbility(Card card)
@@ -1123,6 +1124,7 @@ public class CardFactoryUtil
       {
         AllZone.GameAction.discard(sourceCard);
         AllZone.GameAction.drawCard(sourceCard.getController());
+        sourceCard.cycle();
       }
     };
     cycle.setDescription("Cycling "  +cycleCost +" (" +cycleCost +", Discard this card: Draw a card.)");
@@ -2177,7 +2179,144 @@ public class CardFactoryUtil
      if (d[0].contains("Sacrifice")) // placeholder for effect
         X = X + 0;
   }
+  public static int getNumberOfMostProminentCreatureType(CardList list, String type)
+  {
+	 list = list.getType(type); 
+	 return list.size();
+  }
+  
+  public static String getMostProminentCreatureType(CardList list)
+  {
+	  
+	  Map<String,Integer> map = new HashMap<String,Integer>();
+	  String s = "";
+	  
+	  for (int i=0;i<list.size();i++)
+	  {
+		  Card c = list.get(i);
+		  ArrayList<String> typeList = c.getType();
+		  
+		  for (String var : typeList)
+		  {
+			  if (var.equals("Creature") || var.equals("Artifact") || var.equals("Land") || var.equals("Tribal") || var.equals("Enchantment") || 
+				  var.equals("Legendary") )
+				  ;
+			  else if (!map.containsKey(var))
+				  map.put(var, 1);
+			  else 
+			  {
+				  map.put(var, map.get(var)+1);
+			  }
+		  }
+	  }//for
+	  
+	  int max = 0;
+	  String maxType = "";
+	  
+	  for (int i=0;i<map.size();i++)
+	  {
+		  Iterator<String> iter = map.keySet().iterator();
+		  while(iter.hasNext()) {
+			  String type = iter.next();
+		      System.out.println(type + " - " + map.get(type));
+		      
+		      if (max < map.get(type))
+		      {
+		    	  max = map.get(type);
+		    	  maxType = type;
+		      }
+		  }
+	  }
+	  s = maxType;
+	  return s;
+  }
+  
+  
+  public static String chooseCreatureTypeAI(Card c)
+  {
+	  String s = "";
+	  //TODO, take into account what human has
+	  
+	  PlayerZone humanPlayZone = AllZone.getZone(Constant.Zone.Play, Constant.Player.Human); 
+	  PlayerZone humanLibZone  = AllZone.getZone(Constant.Zone.Library, Constant.Player.Human);
+	  
+	  CardList humanPlay = new CardList(humanPlayZone.getCards());
+	  CardList humanLib  = new CardList(humanLibZone.getCards());
+	  
+	  PlayerZone compPlayZone = AllZone.getZone(Constant.Zone.Play, Constant.Player.Computer); 
+	  PlayerZone compLibZone  = AllZone.getZone(Constant.Zone.Library, Constant.Player.Computer);
+	  PlayerZone compHandZone = AllZone.getZone(Constant.Zone.Hand, Constant.Player.Computer);
+	  
+	  CardList compPlay = new CardList(compPlayZone.getCards());
+	  CardList compLib  = new CardList(compLibZone.getCards());
+	  CardList compHand = new CardList(compHandZone.getCards());
 
+	  humanPlay = humanPlay.getType("Creature");
+	  humanLib = humanLib.getType("Creature");
+	  
+	  compPlay = compPlay.getType("Creature");
+	  compLib = compLib.getType("Creature");
+	  
+	  //Buffs
+	  if (c.getName().equals("Conspiracy") || c.getName().equals("Cover of Darkness") || c.getName().equals("Belbe's Portal") ||
+		  c.getName().equals("Steely Resolve") || c.getName().equals("Shared Triumph"))
+	  {	
+		  
+		  String type = "";
+		  int number = 0;
+		  if ((c.getName().equals("Shared Triumph") || c.getName().equals("Cover of Darkness") || c.getName().equals("Steely Resolve") )&& compPlay.size() > 7)
+		  {
+			 type = getMostProminentCreatureType(compPlay);
+			 number = getNumberOfMostProminentCreatureType(compPlay, type);
+			 
+		  }
+		  
+		  if (number >= 3)
+				 s = type;	
+		  else {
+			  type = getMostProminentCreatureType(compLib);
+			  number = getNumberOfMostProminentCreatureType(compLib, type);
+			  if (number >= 5)
+				  s = type;	 
+			  
+		  }
+		  
+		  CardList turnTimber = new CardList();
+		  turnTimber.addAll(compPlay.toArray());
+		  turnTimber.addAll(compLib.toArray());
+		  turnTimber.addAll(compHand.toArray());
+		  
+		  turnTimber = turnTimber.getName("Turntimber Ranger");
+		  
+		  if (c.getName().equals("Conspiracy") && turnTimber.size() > 0 )
+			  s = "Ally";
+		  
+	  }
+	  //Debuffs
+	  else if(c.getName().equals("Engineered Plague"))
+	  {
+		  String type = "";
+		  int number = 0;
+		  if (c.getName().equals("Engineered Plague") && humanPlay.size() > 6)
+		  {
+			 type = getMostProminentCreatureType(humanPlay);
+			 number = getNumberOfMostProminentCreatureType(humanPlay, type);
+			 if (number >= 3) 
+				 s = type;	 
+			 else if (humanLib.size()>0)
+			 {
+				 type = getMostProminentCreatureType(humanLib);
+				 number = getNumberOfMostProminentCreatureType(humanLib, type);
+				 if (number >=5)
+					 s = type;
+			 }
+		  }
+		  
+		  
+	  }
+	  return s;
+  }
+  
 
   //may return null
   static public Card getRandomCard(CardList list)
@@ -2192,6 +2331,18 @@ public class CardFactoryUtil
   static public Card getRandomCard(PlayerZone zone)
   {
     return getRandomCard(new CardList(zone.getCards()));
+  }
+  
+  public static void main(String[] args)
+  {
+	 
+	 CardList in = AllZone.CardFactory.getAllCards();
+	  
+     CardList list = new CardList();
+     list.addAll(CardListUtil.getColor(in, "black").toArray());
+     list = list.getType("Creature");
+     
+     System.out.println("Most prominent creature type: " + getMostProminentCreatureType(list));
   }
   
 }

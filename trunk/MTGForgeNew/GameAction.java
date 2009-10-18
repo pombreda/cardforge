@@ -72,6 +72,19 @@ private Card getCurrentCard(int ID)
     moveTo(grave, c);
   }
 
+  public void moveToTopOfLibrary(Card c)
+  {
+	  PlayerZone p = AllZone.getZone(c);
+	  PlayerZone library = AllZone.getZone(Constant.Zone.Library, c.getOwner());
+	  
+	  if(p != null)
+	      p.remove(c);
+	  if(! c.isToken())
+	        c = AllZone.CardFactory.copyCard(c);
+
+	    library.add(c, 0);
+  }
+  
   public void discardRandom(String player)
   {
     Card[] c = AllZone.getZone(Constant.Zone.Hand, player).getCards();

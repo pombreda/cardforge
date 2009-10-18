@@ -1,3 +1,24 @@
+Spidersilk Net
+0
+Artifact Equipment
+Equipped creature gets +0/+2 and has reach. 
+
+Accumulated Knowledge
+1 U
+Instant
+no text
+
+Azusa, Lost but Seeking
+2 G
+Legendary Creature Human Monk
+no text
+1/2
+
+Temporal Spring
+1 G U
+Sorcery
+Put target permanent on top of its owner's library.
+
 Eviscerator
 3 B B
 Creature Horror
@@ -35,57 +56,46 @@ Creature Human Shaman
 When Vithian Renegades comes into play, destroy target artifact. 
 3/2
 
-Spidersilk Net
-2
-Artifact Equipment
-Equipped creature gets +0/+2 and has reach. 
-
 Kabira Crossroads
 no cost
 Land
-When Kabira Crossroads enters the battlefield, you gain 2 life.
+Kabira Crossroads enters the battlefield tapped. When Kabira Crossroads enters the battlefield, you gain 2 life.
 tap: add W
-Comes into play tapped.
 
 Akoum Refuge
 no cost
 Land
-When Akoum Refuge enters the battlefield, you gain 1 life.
+Akoum Refuge enters the battlefield tapped. When Akoum Refuge enters the battlefield, you gain 1 life.
 tap: add B
 tap: add R
-Comes into play tapped.
 
 Graypelt Refuge
 no cost
 Land
-When Graypelt Refuge enters the battlefield, you gain 1 life.
+Graypelt Refuge enters the battlefield tapped. When Graypelt Refuge enters the battlefield, you gain 1 life.
 tap: add G
 tap: add W
-Comes into play tapped.
 
 Jwar Isle Refuge
 no cost
 Land
-When Jwar Isle Refuge enters the battlefield, you gain 1 life.
+Jwar Isle Refuge enters the battlefield tapped. When Jwar Isle Refuge enters the battlefield, you gain 1 life.
 tap: add U
-tap: add B
-Comes into play tapped.
+tap: add B 
 
 Sejiri Refuge
 no cost
 Land
-When Seijiri Refuge enters the battlefield, you gain 1 life.
+Sejiri Refuge enters the battlefield tapped. When Seijiri Refuge enters the battlefield, you gain 1 life.
 tap: add W
 tap: add U
-Comes into play tapped.
 
 Kazandu Refuge
 no cost
 Land
-When Kazandu Refuge enters the battlefield, you gain 1 life.
+Kazandu Refuge enters the battlefield tapped. When Kazandu Refuge enters the battlefield, you gain 1 life.
 tap: add R
 tap: add G
-Comes into play tapped.
 
 Oboro, Palace in the Clouds
 no cost
@@ -103,7 +113,7 @@ Flying
 Tuktuk Grunts
 4 R
 Creature Goblin Warrior Ally
-Whenever Oran-Rief Survivalist or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Oran-Rief Survivalist.
+Whenever Tuktuk Grunts or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Oran-Rief Survivalist.
 2/2
 Haste
 

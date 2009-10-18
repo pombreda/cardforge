@@ -79,15 +79,16 @@ public class Card extends MyObservable
   private String manaCost = "";
   private String chosenType = "";
 
-  private Command comesIntoPlayCommand = Command.Blank;
-  private Command destroyCommand           = Command.Blank;
-  private Command leavesPlayCommand = Command.Blank;
-  private Command turnFaceUpCommand = Command.Blank;
-  private Command equipCommand = Command.Blank;
-  private Command unEquipCommand = Command.Blank;
-  private Command enchantCommand = Command.Blank;
-  private Command unEnchantCommand = Command.Blank;
-  private Command replaceMoveToGraveyardCommand = Command.Blank;
+  private ArrayList<Command> comesIntoPlayCommandList = new ArrayList<Command>();
+  private ArrayList<Command> destroyCommandList       = new ArrayList<Command>();
+  private ArrayList<Command> leavesPlayCommandList	  = new ArrayList<Command>();
+  private ArrayList<Command> turnFaceUpCommandList    = new ArrayList<Command>();
+  private ArrayList<Command> equipCommandList 		  = new ArrayList<Command>();
+  private ArrayList<Command> unEquipCommandList 	  = new ArrayList<Command>();
+  private ArrayList<Command> enchantCommandList 	  = new ArrayList<Command>();
+  private ArrayList<Command> unEnchantCommandList 	  = new ArrayList<Command>();
+  private ArrayList<Command> replaceMoveToGraveyardCommandList = new ArrayList<Command>();
+  private ArrayList<Command> cycleCommandList		  = new ArrayList<Command>();
   
   private Hashtable<Counters,Integer> counters = new Hashtable<Counters,Integer>();
   
@@ -384,33 +385,75 @@ public class Card extends MyObservable
   public void setIsFaceDown(boolean b) { faceDown = b;}
   public boolean isFaceDown() { return faceDown; }
   
-  public void setComesIntoPlay(Command c) {comesIntoPlayCommand = c;}
-  public void comesIntoPlay()			   {comesIntoPlayCommand.execute();}
+  public void addComesIntoPlayCommand(Command c) {comesIntoPlayCommandList.add(c);}
+  public void removeComesIntoPlayCommand(Command c) { comesIntoPlayCommandList.remove(c);}
+  public void comesIntoPlay() {
+	 for (Command var : comesIntoPlayCommandList)
+		 var.execute();
+  }
   
-  public void setTurnFaceUp(Command c) { turnFaceUpCommand = c; }
-  public void turnFaceUp() { System.out.println("turning face up"); turnFaceUpCommand.execute(); }
+  public void addTurnFaceUpCommand(Command c) { turnFaceUpCommandList.add(c); }
+  public void removeTurnFaceUpCommand(Command c) { turnFaceUpCommandList.remove(c); }
+  public void turnFaceUp() { 
+	  for (Command var : turnFaceUpCommandList)
+			 var.execute();
+  }
   
-  public void setDestroy(Command c)    {destroyCommand = c;}
-  public void destroy()				{destroyCommand.execute(); }
+  public void addDestroyCommand(Command c)    {destroyCommandList.add(c);}
+  public void removeDestroyCommand(Command c) {destroyCommandList.remove(c); }
+  public void destroy()				
+  {
+	  for (Command var : destroyCommandList)
+		 var.execute();
+  }
   
-  public void setEquip (Command c) {equipCommand = c; }
-  public void equip() { equipCommand.execute();}
+  public void addLeavesPlayCommand(Command c)  { leavesPlayCommandList.add(c);}
+  public void removeLeavesPlayCommand(Command c) { leavesPlayCommandList.remove(c); }
+  public void leavesPlay() {
+	  for (Command var : leavesPlayCommandList)
+			 var.execute();
+  }
   
-  public void setUnEquip(Command c) {unEquipCommand = c; }
-  public void unEquip() { unEquipCommand.execute();}
+  public void addEquipCommand(Command c) {equipCommandList.add(c); }
+  public void removeEquipCommand(Command c) { equipCommandList.remove(c); }
+  public void equip() { 
+	  for (Command var : equipCommandList)
+		 var.execute();
+  }
   
-  public void setEnchant(Command c) {enchantCommand = c; }
-  public void enchant() { enchantCommand.execute(); }
+  public void addUnEquipCommand(Command c) {unEquipCommandList.add(c); }
+  public void removeUnEquipCommand(Command c) { unEquipCommandList.remove(c); }
+  public void unEquip() {  
+	  for (Command var : unEquipCommandList)
+			 var.execute();
+	  }
+  
+  public void addEnchantCommand(Command c) {enchantCommandList.add(c); }
+  public void removeEnchantCommand(Command c) {enchantCommandList.add(c); }
+  public void enchant() { 
+	  for (Command var : enchantCommandList)
+			 var.execute();
+ }
 
-  public void setUnEnchant(Command c) {unEnchantCommand = c; }
-  public void unEnchant()  {unEnchantCommand.execute();}
+  public void addUnEnchantCommand(Command c) { unEnchantCommandList.add(c); }
+  public void unEnchant()  { 
+	  for (Command var : unEnchantCommandList)
+		 var.execute();
+  }
   
-  public void setLeavesPlay(Command c)  {leavesPlayCommand = c;}
-  public void leavesPlay() 		{leavesPlayCommand.execute(); }
+  public ArrayList<Command> getReplaceMoveToGraveyard() { return replaceMoveToGraveyardCommandList; }
+  public void addReplaceMoveToGraveyardCommand(Command c)  { replaceMoveToGraveyardCommandList.add(c);}
+  public void replaceMoveToGraveyard()				
+  { 
+	  for (Command var : replaceMoveToGraveyardCommandList)
+			 var.execute();
+  }
   
-  public Command getReplaceMoveToGraveyard() 		{ return replaceMoveToGraveyardCommand; }
-  public void setReplaceMoveToGraveyard(Command c)  { replaceMoveToGraveyardCommand = c;}
-  public void replaceMoveToGraveyard()				{ replaceMoveToGraveyardCommand.execute(); }
+  public void addCycleCommand(Command c) { cycleCommandList.add(c); }
+  public void cycle() { 
+	  for (Command var : cycleCommandList)
+		 var.execute();
+  }
   
   public void setSickness(boolean b) {sickness = b;}
   public boolean hasSickness()
