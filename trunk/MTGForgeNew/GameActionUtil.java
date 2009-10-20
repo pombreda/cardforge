@@ -6938,6 +6938,37 @@ public class GameActionUtil
 		}// execute()
 	};
 
+	public static Command Dakkon = new Command()
+	{
+
+		private static final long serialVersionUID = 6863244333398587274L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Dakkon Blackblade");
+
+			for (int i = 0; i < list.size(); i++)
+			{
+				Card c = list.get(i);
+				c.setBaseAttack(countLands(c));
+				c.setBaseDefense(c.getBaseAttack());
+			}
+		}// execute()
+
+		private int countLands(Card c)
+		{
+			PlayerZone play = AllZone.getZone(Constant.Zone.Play, c
+					.getController());
+			CardList lands = new CardList(play.getCards());
+			lands = lands.getType("Land");
+			return lands.size();
+		}
+	};
+	
 	public static Command Korlash = new Command()
 	{
 		private static final long serialVersionUID = 1791221644995716398L;
@@ -7390,6 +7421,265 @@ public class GameActionUtil
 		
 	};//Nimble_Mongoose
 	
+	public static Command Mystic_Enforcer = new Command()
+	{
+
+		private static final long serialVersionUID = 4569052031336290843L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Mystic Enforcer");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (hasThreshold(c)){
+						c.setBaseAttack(6);
+						c.setBaseDefense(6);
+						if (!c.getIntrinsicKeyword().contains("Flying"))
+							c.addIntrinsicKeyword("Flying");
+					}
+					else
+					{
+						c.setBaseAttack(3);
+						c.setBaseDefense(3);
+						if (c.getIntrinsicKeyword().contains("Flying"))
+							c.removeIntrinsicKeyword("Flying");
+					}
+								
+				}
+			}
+		}// execute()
+
+		private boolean hasThreshold(Card c)
+		{
+			PlayerZone grave = AllZone.getZone(Constant.Zone.Graveyard, c.getController());
+			
+			CardList gy = new CardList();
+			gy.addAll(grave.getCards());
+			
+			if (gy.size()>=7)
+				return true;
+			else
+				return false;
+		}
+		
+	};//Mystic_Enforcer
+	
+	public static Command Bant_Sureblade = new Command()
+	{
+
+		private static final long serialVersionUID = 1987511205573387864L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Bant Sureblade");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (CardFactoryUtil.controlsAnotherMulticoloredPermanent(c)){
+						c.setBaseAttack(3);
+						c.setBaseDefense(2);
+						if (!c.getIntrinsicKeyword().contains("First Strike"))
+							c.addIntrinsicKeyword("First Strike");
+					}
+					else
+					{
+						c.setBaseAttack(2);
+						c.setBaseDefense(1);
+						if (c.getIntrinsicKeyword().contains("First Strike"))
+							c.removeIntrinsicKeyword("First Strike");
+					}
+								
+				}
+			}
+		}// execute()
+	
+	};//Bant_Sureblade
+	
+	public static Command Esper_Stormblade = new Command()
+	{
+
+		private static final long serialVersionUID = 1799759665613654307L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Esper Stormblade");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (CardFactoryUtil.controlsAnotherMulticoloredPermanent(c)){
+						c.setBaseAttack(3);
+						c.setBaseDefense(2);
+						if (!c.getIntrinsicKeyword().contains("Flying"))
+							c.addIntrinsicKeyword("Flying");
+					}
+					else
+					{
+						c.setBaseAttack(2);
+						c.setBaseDefense(1);
+						if (c.getIntrinsicKeyword().contains("Flying"))
+							c.removeIntrinsicKeyword("Flying");
+					}
+								
+				}
+			}
+		}// execute()
+	
+	};//Esper_Stormblade
+	
+	public static Command Grixis_Grimblade = new Command()
+	{
+
+		private static final long serialVersionUID = 5895665460018262987L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Grixis Grimblade");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (CardFactoryUtil.controlsAnotherMulticoloredPermanent(c)){
+						c.setBaseAttack(3);
+						c.setBaseDefense(2);
+						if (!c.getIntrinsicKeyword().contains("Deathtouch"))
+							c.addIntrinsicKeyword("Deathtouch");
+					}
+					else
+					{
+						c.setBaseAttack(2);
+						c.setBaseDefense(1);
+						if (c.getIntrinsicKeyword().contains("Deathtouch"))
+							c.removeIntrinsicKeyword("Deathtouch");
+					}
+								
+				}
+			}
+		}// execute()
+	
+	};//Grixis_Grimblade
+	
+	public static Command Jund_Hackblade = new Command()
+	{
+
+		private static final long serialVersionUID = -4386978825641506610L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Jund Hackblade");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (CardFactoryUtil.controlsAnotherMulticoloredPermanent(c)){
+						c.setBaseAttack(3);
+						c.setBaseDefense(2);
+						if (!c.getIntrinsicKeyword().contains("Haste"))
+							c.addIntrinsicKeyword("Haste");
+					}
+					else
+					{
+						c.setBaseAttack(2);
+						c.setBaseDefense(1);
+						if (c.getIntrinsicKeyword().contains("Haste"))
+							c.removeIntrinsicKeyword("Haste");
+					}
+								
+				}
+			}
+		}// execute()
+	
+	};//Jund_Hackblade
+	
+	public static Command Naya_Hushblade = new Command()
+	{
+		private static final long serialVersionUID = 3953482302338689497L;
+
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Naya Hushblade");
+			
+			if (list.size() > 0)
+			{
+				//Card crd = list.get(0); //unused
+				
+				for (int i = 0; i < list.size(); i++)
+				{
+					
+					Card c = list.get(i);
+					if (CardFactoryUtil.controlsAnotherMulticoloredPermanent(c)){
+						c.setBaseAttack(3);
+						c.setBaseDefense(2);
+						if (!c.getIntrinsicKeyword().contains("Shroud"))
+							c.addIntrinsicKeyword("Shroud");
+					}
+					else
+					{
+						c.setBaseAttack(2);
+						c.setBaseDefense(1);
+						if (c.getIntrinsicKeyword().contains("Shroud"))
+							c.removeIntrinsicKeyword("Shroud");
+					}
+								
+				}
+			}
+		}// execute()
+	
+	};//Naya_Hushblade
+	
+	
 	public static Command Werebear = new Command()
 	{
 
@@ -7571,7 +7861,6 @@ public class GameActionUtil
 
 		public void execute()
 		{
-
 			
 			CardList creature = new CardList();
 			creature.addAll(AllZone.Human_Play.getCards());
@@ -8958,6 +9247,44 @@ public class GameActionUtil
 			
 	};//terravore
 	
+	public static Command Magnivore = new Command()
+	{
+
+		private static final long serialVersionUID = 6569701555927133445L;
+		public void execute()
+		{
+			// get all creatures
+			CardList list = new CardList();
+			list.addAll(AllZone.Human_Play.getCards());
+			list.addAll(AllZone.Computer_Play.getCards());
+			list = list.getName("Magnivore");
+
+			for (int i = 0; i < list.size(); i++)
+			{
+				Card c = list.get(i);
+				c.setBaseAttack(countSorcs());
+				c.setBaseDefense(c.getBaseAttack());
+			}
+		}
+		private int countSorcs()
+		{
+			PlayerZone compGrave = AllZone.getZone(Constant.Zone.Graveyard, Constant.Player.Computer);
+			PlayerZone humGrave = AllZone.getZone(Constant.Zone.Graveyard, Constant.Player.Human);
+			CardList list = new CardList();
+			list.addAll(compGrave.getCards());
+			list.addAll(humGrave.getCards());
+			
+			list = list.filter(new CardListFilter(){
+				public boolean addCard(Card c) {
+					return c.isSorcery();
+				}
+			});
+			
+			return list.size();
+		}
+			
+	};//magnivore
+	
 	public static Command Tarmogoyf = new Command()
 	{
 		private static final long serialVersionUID = 5895665460018262987L;
@@ -9605,6 +9932,48 @@ public class GameActionUtil
 			}// for outer
 		}// execute()
 	};// Gaea's Anthem
+	
+	public static Command Jacques = new Command()
+	{
+
+		private static final long serialVersionUID = -4568356486065355565L;
+		CardList gloriousAnthemList = new CardList();
+
+		public void execute()
+		{
+			CardList list = gloriousAnthemList;
+			Card c;
+			// reset all cards in list - aka "old" cards
+			for (int i = 0; i < list.size(); i++)
+			{
+				c = list.get(i);
+				c.addSemiPermanentDefenseBoost(-2);
+			}
+
+			// add +1/+1 to cards
+			list.clear();
+			PlayerZone[] zone = getZone("Jacques le Vert");
+
+			// for each zone found add +1/+1 to each card
+			for (int outer = 0; outer < zone.length; outer++)
+			{
+				CardList creature = new CardList(zone[outer].getCards());
+				creature = creature.getType("Creature");
+
+				for (int i = 0; i < creature.size(); i++)
+				{
+					c = creature.get(i);
+					if (CardUtil.getColors(c).contains(Constant.Color.Green))
+					{
+						c.addSemiPermanentDefenseBoost(2);
+						gloriousAnthemList.add(c);
+					}
+
+					
+				}// for inner
+			}// for outer
+		}// execute()
+	};// Jacques
 
 	public static Command Kaysa = new Command()
 	{
@@ -10270,7 +10639,9 @@ public class GameActionUtil
 		commands.put("Nyxathid", Nyxathid);
 		commands.put("Lord_of_Extinction", Lord_of_Extinction);
 		commands.put("Terravore", Terravore);
+		commands.put("Magnivore", Magnivore);
 		commands.put("Tarmogoyf", Tarmogoyf);
+		commands.put("Dakkon", Dakkon);
 		commands.put("Korlash", Korlash);
 
 		commands.put("Dauntless_Dourbark", Dauntless_Dourbark);
@@ -10280,6 +10651,12 @@ public class GameActionUtil
 		commands.put("Hedge_Troll", Hedge_Troll);
 		commands.put("Wild_Nacatl", Wild_Nacatl);
 		commands.put("Liu_Bei", Liu_Bei);
+		commands.put("Mystic_Enforcer", Mystic_Enforcer);
+		commands.put("Bant_Sureblade", Bant_Sureblade);
+		commands.put("Esper_Stormblade", Esper_Stormblade);
+		commands.put("Grixis_Grimblade", Grixis_Grimblade);
+		commands.put("Jund_Hackblade", Jund_Hackblade);
+		commands.put("Naya_Hushblade", Naya_Hushblade);
 		commands.put("Nimble_Mongoose", Nimble_Mongoose);
 		commands.put("Werebear", Werebear);
 		commands.put("Divinity_of_Pride", Divinity_of_Pride);
@@ -10327,6 +10704,7 @@ public class GameActionUtil
 		commands.put("Night_of_Souls_Betrayal", Night_of_Souls_Betrayal);
 		
 		commands.put("Thelonite_Hermit", Thelonite_Hermit);
+		commands.put("Jacques", Jacques);
 		commands.put("Kaysa", Kaysa);
 		commands.put("Meng_Huo", Meng_Huo);
 		commands.put("Eladamri", Eladamri);

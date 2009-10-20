@@ -25,24 +25,24 @@ public class Input_Main extends Input
     }
     public void selectCard(Card card, PlayerZone zone)
     {
-	//these if statements cannot be combined
-	if(card.isLand() && zone.is(Constant.Zone.Hand, Constant.Player.Human))
-	{
-	    if(canPlayLand)
-	    {
-		InputUtil.playAnyCard(card, zone);
-		canPlayLand = false;
-                AllZone.GameAction.checkStateEffects();
-	    }
-
-		//TODO: add code for exploration / fastbond here
-	}
-	else
-	{
-//	    SpellAbility sa = card.getSpellAbility()[0];
-//	    sa.setRandomTargetAI();
-//	    AllZone.Stack.add(sa);
-	    InputUtil.playAnyCard(card, zone);
-	}
+		//these if statements cannot be combined
+		if(card.isLand() && zone.is(Constant.Zone.Hand, Constant.Player.Human))
+		{
+		    if(canPlayLand)
+		    {
+			InputUtil.playAnyCard(card, zone);
+			canPlayLand = false;
+	                AllZone.GameAction.checkStateEffects();
+		    }
+	
+			//TODO: add code for exploration / fastbond here
+		}
+		else
+		{
+	//	    SpellAbility sa = card.getSpellAbility()[0];
+	//	    sa.setRandomTargetAI();
+	//	    AllZone.Stack.add(sa);
+		    InputUtil.playAnyCard(card, zone);
+		}
     }//selectCard()
 }

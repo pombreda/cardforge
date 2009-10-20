@@ -77,6 +77,18 @@ public class CombatUtil
     	temp = blkCL.filter(new CardListFilter()
     	{
 			public boolean addCard(Card c) {
+				return c.isLand() && c.getType().contains("Legendary");
+			}	
+    	});
+    	if (!temp.isEmpty())
+    		return false;
+    }
+    
+    if (attacker.getKeyword().contains("Nonbasic landwalk"))
+    {
+    	temp = blkCL.filter(new CardListFilter()
+    	{
+			public boolean addCard(Card c) {
 				return c.isLand() && !c.isBasicLand();
 			}	
     	});

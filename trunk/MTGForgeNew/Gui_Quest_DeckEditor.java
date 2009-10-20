@@ -1,10 +1,12 @@
 
-
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -69,6 +72,24 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
     private JLabel            statsLabel2      = new JLabel();
     private JLabel            jLabel1          = new JLabel();
     
+    private JCheckBox whiteCheckBox = new JCheckBox("W", true);
+	private JCheckBox blueCheckBox = new JCheckBox("U", true);
+	private JCheckBox blackCheckBox = new JCheckBox("B", true);
+	private JCheckBox redCheckBox = new JCheckBox("R", true);
+	private JCheckBox greenCheckBox = new JCheckBox("G", true);
+	private JCheckBox colorlessCheckBox = new JCheckBox("C", true);
+	
+	private JCheckBox landCheckBox = new JCheckBox("Land", true);
+	private JCheckBox creatureCheckBox = new JCheckBox("Creature", true);
+	private JCheckBox sorceryCheckBox = new JCheckBox("Sorcery", true);
+	private JCheckBox instantCheckBox = new JCheckBox("Instant", true);
+	private JCheckBox planeswalkerCheckBox = new JCheckBox("Planeswalker", true);
+	private JCheckBox artifactCheckBox = new JCheckBox("Artifact", true);
+	private JCheckBox enchantmentCheckBox = new JCheckBox("Enchant", true);
+	
+	private CardList top;
+	private CardList bottom;
+    
     public static void main(String[] args) {
 
     }
@@ -79,14 +100,22 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
     }
     
     public void updateDisplay(CardList top, CardList bottom) {
-        topModel.clear();
-        bottomModel.clear();
-        
-        Card c;
-        String cardName;
-        //ReadBoosterPack pack = new ReadBoosterPack();
-        QuestData_BoosterPack pack = new QuestData_BoosterPack();
-        
+    	
+    	this.top = top;
+		this.bottom = bottom;
+		
+		topModel.clear();
+		bottomModel.clear();
+
+		if (AllZone.NameChanger.shouldChangeCardName()) {
+			top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
+			bottom = new CardList(AllZone.NameChanger.changeCard(bottom
+					.toArray()));
+		}
+
+		Card c;
+		String cardName;
+		QuestData_BoosterPack pack = new QuestData_BoosterPack();
 
         ArrayList<String> addedList = AllZone.QuestData.getAddedCards();
         
@@ -117,6 +146,122 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
         topModel.resort();
         bottomModel.resort();
     }//updateDisplay
+    
+    public void updateDisplay() {
+		//updateDisplay(this.top, this.bottom);
+    	
+    	topModel.clear();
+    	
+    	if (AllZone.NameChanger.shouldChangeCardName()) {
+			top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
+			bottom = new CardList(AllZone.NameChanger.changeCard(bottom
+					.toArray()));
+		}
+
+		Card c;
+		String cardName;
+		ReadBoosterPack pack = new ReadBoosterPack();
+
+		// update top
+		for (int i = 0; i < top.size(); i++) {
+			c = top.get(i);
+
+			// add rarity to card if this is a sealed card pool
+
+			cardName = AllZone.NameChanger.getOriginalName(c.getName());
+			if (!pack.getRarity(cardName).equals("error")) {
+				c.setRarity(pack.getRarity(cardName));
+			}
+			
+			boolean filteredOut = filterByColor(c);
+			
+			if (!filteredOut) {
+				filteredOut = filterByType(c);
+			}
+			
+			if (!filteredOut) {
+				topModel.addCard(c);
+			}
+		}// for
+		
+		topModel.resort();
+	}
+    
+    private boolean filterByColor(Card c) {
+		boolean filterOut = false;
+
+		if (!whiteCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.White)) {
+				filterOut = true;
+			}
+		}
+
+		if (!blueCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.Blue)) {
+				filterOut = true;
+			}
+		}
+
+		if (!blackCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.Black)) {
+				filterOut = true;
+			}
+		}
+
+		if (!redCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.Red)) {
+				filterOut = true;
+			}
+		}
+
+		if (!greenCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.Green)) {
+				filterOut = true;
+			}
+		}
+
+		if (!colorlessCheckBox.isSelected()) {
+			if (CardUtil.getColors(c).contains(Constant.Color.Colorless)) {
+				filterOut = true;
+			}
+		}
+
+		return filterOut;
+	}
+
+	private boolean filterByType(Card c) {
+		boolean filterOut = false;
+
+		if (!landCheckBox.isSelected() && c.isLand()) {
+			filterOut = true;
+		}
+
+		if (!creatureCheckBox.isSelected() && c.isCreature()) {
+			filterOut = true;
+		}
+
+		if (!sorceryCheckBox.isSelected() && c.isSorcery()) {
+			filterOut = true;
+		}
+
+		if (!instantCheckBox.isSelected() && c.isInstant()) {
+			filterOut = true;
+		}
+
+		if (!planeswalkerCheckBox.isSelected() && c.isPlaneswalker()) {
+			filterOut = true;
+		}
+
+		if (!artifactCheckBox.isSelected() && c.isArtifact()) {
+			filterOut = true;
+		}
+
+		if (!enchantmentCheckBox.isSelected() && c.isEnchantment()) {
+			filterOut = true;
+		}
+
+		return filterOut;
+	}
     
     public TableModel getTopTableModel() {
         return topModel;
@@ -292,7 +437,7 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
         jScrollPane2.getViewport().setBackground(new Color(204, 204, 204));
         jScrollPane2.setBorder(titledBorder2);
         jScrollPane2.setBounds(new Rectangle(19, 458, 726, 218));
-        removeButton.setBounds(new Rectangle(281, 403, 146, 49));
+        removeButton.setBounds(new Rectangle(180, 403, 146, 49));
         removeButton.setIcon(upIcon);
         removeButton.setFont(new java.awt.Font("Dialog", 0, 13));
         removeButton.setText("Remove Card");
@@ -309,7 +454,128 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
         });
         addButton.setIcon(downIcon);
         addButton.setFont(new java.awt.Font("Dialog", 0, 13));
-        addButton.setBounds(new Rectangle(83, 403, 146, 49));
+        addButton.setBounds(new Rectangle(23, 403, 146, 49));
+        
+        /**
+         * Type filtering
+         */
+        Font f = new Font("Tahoma", Font.PLAIN, 10);
+        landCheckBox.setBounds(340, 400, 48, 20);
+        landCheckBox.setFont(f);
+		landCheckBox.setOpaque(false);
+		landCheckBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		creatureCheckBox.setBounds(385, 400, 65, 20);
+		creatureCheckBox.setFont(f);
+		creatureCheckBox.setOpaque(false);
+		creatureCheckBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		sorceryCheckBox.setBounds(447, 400, 62, 20);
+		sorceryCheckBox.setFont(f);
+		sorceryCheckBox.setOpaque(false);
+		sorceryCheckBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		instantCheckBox.setBounds(505, 400, 60, 20);
+		instantCheckBox.setFont(f);
+		instantCheckBox.setOpaque(false);
+		instantCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		planeswalkerCheckBox.setBounds(558, 400, 85, 20);
+		planeswalkerCheckBox.setFont(f);
+		planeswalkerCheckBox.setOpaque(false);
+		planeswalkerCheckBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		artifactCheckBox.setBounds(638, 400, 58, 20);
+		artifactCheckBox.setFont(f);
+		artifactCheckBox.setOpaque(false);
+		artifactCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		enchantmentCheckBox.setBounds(692, 400, 80, 20);
+		enchantmentCheckBox.setFont(f);
+		enchantmentCheckBox.setOpaque(false);
+		enchantmentCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+        
+        /**
+		 * Color filtering
+		 */
+		whiteCheckBox.setBounds(340, 430, 40, 20);
+		whiteCheckBox.setOpaque(false);
+		whiteCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		blueCheckBox.setBounds(380, 430, 40, 20);
+		blueCheckBox.setOpaque(false);
+		blueCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		blackCheckBox.setBounds(420, 430, 40, 20);
+		blackCheckBox.setOpaque(false);
+		blackCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		redCheckBox.setBounds(460, 430, 40, 20);
+		redCheckBox.setOpaque(false);
+		redCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		greenCheckBox.setBounds(500, 430, 40, 20);
+		greenCheckBox.setOpaque(false);
+		greenCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+		colorlessCheckBox.setBounds(540, 430, 40, 20);
+		colorlessCheckBox.setOpaque(false);
+		colorlessCheckBox.addItemListener(new ItemListener() {
+			
+			public void itemStateChanged(ItemEvent e) {
+				updateDisplay();
+			}
+		});
+        
+		 /**
+         * Other
+         */
+		
         cardDetailPanel.setBorder(titledBorder3);
         cardDetailPanel.setBounds(new Rectangle(765, 23, 239, 323));
         cardDetailPanel.setLayout(null);
@@ -364,6 +630,21 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardDetail, DeckDisp
         jScrollPane2.getViewport().add(bottomTable, null);
         jScrollPane1.getViewport().add(topTable, null);
         jPanel3.add(cdLabel5, null);
+        
+        this.getContentPane().add(landCheckBox, null);
+		this.getContentPane().add(creatureCheckBox, null);
+		this.getContentPane().add(sorceryCheckBox, null);
+		this.getContentPane().add(instantCheckBox, null);
+		this.getContentPane().add(planeswalkerCheckBox, null);
+		this.getContentPane().add(artifactCheckBox, null);
+		this.getContentPane().add(enchantmentCheckBox, null);
+        
+		this.getContentPane().add(whiteCheckBox, null);
+		this.getContentPane().add(blueCheckBox, null);
+		this.getContentPane().add(blackCheckBox, null);
+		this.getContentPane().add(redCheckBox, null);
+		this.getContentPane().add(greenCheckBox, null);
+		this.getContentPane().add(colorlessCheckBox, null);
     }
     
     void addButton_actionPerformed(ActionEvent e) {
@@ -433,11 +714,8 @@ private void refreshGui()
     {
       c = AllZone.CardFactory.getCard(deck.getMain(i), Constant.Player.Human);
 
-      //add rarity to card if this is a sealed card pool
-      if(Constant.Runtime.GameType[0].equals(Constant.GameType.Sealed))
-      {
-        c.setRarity(pack.getRarity(c.getName()));
-      }
+      c.setRarity(pack.getRarity(c.getName()));
+      
 
       bottomModel.addCard(c);
     }//for

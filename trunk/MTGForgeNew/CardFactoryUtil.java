@@ -1597,6 +1597,26 @@ public class CardFactoryUtil
 	 return list.containsName(c.getName());
   }
   
+  public static boolean controlsAnotherMulticoloredPermanent(Card c)
+  {
+	  PlayerZone play = AllZone.getZone(Constant.Zone.Play, c.getController());
+	  
+	  final Card crd = c;
+	  
+	  CardList list = new CardList(play.getCards());
+	  list = list.filter(new CardListFilter()
+	  {
+
+		public boolean addCard(Card c) {
+			return !c.equals(crd) && CardUtil.getColors(c).size() >= 2;
+		}
+	  
+	  });
+	  
+	  return list.size() >= 1;
+	  
+  }
+  
   public static int getNumberOfManaSymbolsControlledByColor(String colorAbb, String player)
   {
 	  PlayerZone play = AllZone.getZone(Constant.Zone.Play,player);
@@ -1644,6 +1664,12 @@ public class CardFactoryUtil
 					  return false;
 			  }
 			  
+			  if (kw.equals("This card can't be the target of Aura spells."))
+			  {
+				  if (spell.isAura())
+					  return false;
+			  }
+
 			  if (kw.equals("Protection from white") && CardUtil.getColors(spell).contains(Constant.Color.White))
 				  return false;
 			  if (kw.equals("Protection from blue") && CardUtil.getColors(spell).contains(Constant.Color.Blue))

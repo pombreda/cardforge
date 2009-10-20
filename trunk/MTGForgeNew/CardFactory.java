@@ -10202,7 +10202,55 @@ final Input target = new Input()
       card.addComesIntoPlayCommand(intoPlay);
     }//*************** END ************ END **************************
 
-
+    //*************** START *********** START ************************
+    if (cardName.equals("Aedun Oakenshield"))
+    {
+    	final Ability_Tap ability = new Ability_Tap(card, "B R G")
+        {
+			private static final long serialVersionUID = -7913968639880781838L;
+			public boolean canPlayAI() {return getGraveCreatures().size() != 0;}
+	
+	          public void chooseTargetAI()
+	          {
+	            CardList grave = getGraveCreatures();
+	            Card target = CardFactoryUtil.AI_getBestCreature(grave);
+	            setTargetCard(target);
+	          }
+	
+	          public void resolve()
+	          {
+	            if(card.getController().equals(Constant.Player.Human))
+	            {
+	              Card c = (Card) AllZone.Display.getChoice("Select card", getGraveCreatures().toArray());
+	              setTargetCard(c);
+	            }
+	
+	            PlayerZone grave = AllZone.getZone(Constant.Zone.Graveyard, card.getController());
+	            PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, card.getController());
+	
+	            if(AllZone.GameAction.isCardInZone(getTargetCard(), grave))
+	               AllZone.GameAction.moveTo(hand, getTargetCard());
+	          }//resolve()
+	          public boolean canPlay()
+	          {
+	            return getGraveCreatures().size() != 0;
+	          }
+	          CardList getGraveCreatures()
+	          {
+	            PlayerZone grave = AllZone.getZone(Constant.Zone.Graveyard, card.getController());
+	            CardList list = new CardList(grave.getCards());
+	            list = list.getType("Creature");
+	            return list;
+	          }
+        };//SpellAbility
+        ability.setDescription("B R G, Tap: Return target creature card from your graveyard to your hand.");
+        ability.setStackDescription(cardName + " - return target creature from your graveyard to your hand.");
+        
+        card.clearSpellAbility();
+        card.addSpellAbility(ability);
+    
+    
+  	}//*************** END ************ END **************************
 
     //*************** START *********** START **************************
     if(cardName.equals("Raise Dead") || cardName.equals("Disentomb") || cardName.equals("Return to Battle") ||
@@ -14478,7 +14526,61 @@ final Input target = new Input()
       spell.setBeforePayMana(runtime);
     }//*************** END ************ END **************************
 
+  //*************** START *********** START **************************
+    if(cardName.equals("Ramses Overdark"))
+    {
+      final Ability_Tap ability = new Ability_Tap(card)
+      {
 
+		private static final long serialVersionUID = 3560953910041049722L;
+
+		public boolean canPlayAI()
+        {
+          if(CardFactoryUtil.AI_doesCreatureAttack(card))
+            return false;
+
+          return CardFactoryUtil.AI_getHumanCreature(card, true).size() != 0;
+        }
+        public void chooseTargetAI()
+        {
+          CardList creature = CardFactoryUtil.AI_getHumanCreature(card, true);
+          Card target = CardFactoryUtil.AI_getBestCreature(creature);
+          setTargetCard(target);
+        }
+
+        public void resolve()
+        {
+          if(AllZone.GameAction.isCardInPlay(getTargetCard())  && CardFactoryUtil.canTarget(card, getTargetCard()) && getTargetCard().isEnchanted() )
+          {
+            AllZone.GameAction.destroy(getTargetCard());
+          }
+        }//resolve()
+      };//SpellAbility
+      card.addSpellAbility(ability);
+      ability.setDescription("tap: Destroy target enchanted creature.");
+
+      Input runtime = new Input()
+      {
+
+		private static final long serialVersionUID = 7538894357147291895L;
+
+		public void showMessage()
+        {
+          CardList all = new CardList();
+          all.addAll(AllZone.Human_Play.getCards());
+          all.addAll(AllZone.Computer_Play.getCards());
+          all = all.filter(new CardListFilter()
+          {
+			public boolean addCard(Card c) {
+				return AllZone.GameAction.isCardInPlay(c) && c.isCreature() && CardFactoryUtil.canTarget(card, c) && c.isEnchanted();
+			}
+          });
+          
+          stopSetNext(CardFactoryUtil.input_targetSpecific(ability, all, "Destroy target enchanted creature.", true));
+        }
+      };
+      ability.setBeforePayMana(runtime);
+    }//*************** END ************ END **************************
 
 
 
@@ -14860,7 +14962,171 @@ final Input target = new Input()
 
       ability.setBeforePayMana(target);
     }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    if(cardName.equals("Tetsuo Umezawa"))
+    {
+      //tap ability - no cost - target creature
 
+      final Ability_Tap ability = new Ability_Tap(card)
+      {
+
+		private static final long serialVersionUID = -8034678094689484203L;
+		public void resolve()
+        {
+		  CardList blockers = AllZone.Combat.getAllBlockers();
+			
+          if(AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()) &&
+        	(blockers.contains(getTargetCard()) || getTargetCard().isTapped()) )  
+          {
+        	  AllZone.GameAction.destroy(getTargetCard());
+          }
+        }//resolve()
+        public boolean canPlayAI()
+        {
+          return false;
+        }
+      };//SpellAbility
+
+      Input target = new Input()
+      {
+
+		private static final long serialVersionUID = -1939019440028116051L;
+		public void showMessage()
+        {
+          AllZone.Display.showMessage("Select target tapped or blocking creature.");
+          ButtonUtil.enableOnlyCancel();
+        }
+        public void selectButtonCancel() {stop();}
+        public void selectCard(Card card, PlayerZone zone)
+        {
+          CardList blockers = AllZone.Combat.getAllBlockers();
+          if(card.isCreature() && zone.is(Constant.Zone.Play) &&
+        	  (blockers.contains(card) || card.isTapped()) )
+          {
+            ability.setTargetCard(card);
+            stopSetNext(new Input_NoCost_TapAbility(ability));
+          }
+        }
+      };
+
+      card.addSpellAbility(ability);
+      ability.setDescription("U B B R, Tap: Destroy target tapped or blocking creature.");
+
+      ability.setBeforePayMana(target);
+    }//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    if(cardName.equals("Tor Wauki"))
+    {
+      //tap ability - no cost - target creature
+
+      final Ability_Tap ability = new Ability_Tap(card)
+      {
+
+		private static final long serialVersionUID = -8034678094689484203L;
+		public void resolve()
+        {
+		  CardList attackers = new CardList(AllZone.Combat.getAttackers());
+		  CardList blockers = AllZone.Combat.getAllBlockers();
+			
+          if(AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()) &&
+        	(attackers.contains(getTargetCard()) || blockers.contains(getTargetCard()) )  )
+          {
+        	  getTargetCard().addDamage(2);
+          }
+        }//resolve()
+        public boolean canPlayAI()
+        {
+          return false;
+        }
+      };//SpellAbility
+
+      Input target = new Input()
+      {
+
+		private static final long serialVersionUID = -1939019440028116051L;
+		public void showMessage()
+        {
+          AllZone.Display.showMessage("Select target attacking or blocking creature.");
+          ButtonUtil.enableOnlyCancel();
+        }
+        public void selectButtonCancel() {stop();}
+        public void selectCard(Card card, PlayerZone zone)
+        {
+          CardList attackers = new CardList(AllZone.Combat.getAttackers());
+          CardList blockers = AllZone.Combat.getAllBlockers();
+          if(card.isCreature() && zone.is(Constant.Zone.Play) &&
+        	 (attackers.contains(card) || blockers.contains(card) ) )
+          {
+            ability.setTargetCard(card);
+            stopSetNext(new Input_NoCost_TapAbility(ability));
+          }
+        }
+      };
+
+      card.addSpellAbility(ability);
+      ability.setDescription("tap: Tor Wauki deals 2 damage to target attacking or blocking creature.");
+
+      ability.setBeforePayMana(target);
+    }//*************** END ************ END **************************
+    
+    
+
+    //*************** START *********** START **************************
+    if(cardName.equals("Lady Caleria"))
+    {
+      //tap ability - no cost - target creature
+
+      final Ability_Tap ability = new Ability_Tap(card)
+      {
+
+		private static final long serialVersionUID = -8034678094689484203L;
+		public void resolve()
+        {
+		  CardList attackers = new CardList(AllZone.Combat.getAttackers());
+		  CardList blockers = AllZone.Combat.getAllBlockers();
+			
+          if(AllZone.GameAction.isCardInPlay(getTargetCard()) && CardFactoryUtil.canTarget(card, getTargetCard()) &&
+        	(attackers.contains(getTargetCard()) || blockers.contains(getTargetCard()) )  )
+          {
+        	  getTargetCard().addDamage(3);
+          }
+        }//resolve()
+        public boolean canPlayAI()
+        {
+          return false;
+        }
+      };//SpellAbility
+
+      Input target = new Input()
+      {
+
+		private static final long serialVersionUID = -1939019440028116051L;
+		public void showMessage()
+        {
+          AllZone.Display.showMessage("Select target attacking or blocking creature.");
+          ButtonUtil.enableOnlyCancel();
+        }
+        public void selectButtonCancel() {stop();}
+        public void selectCard(Card card, PlayerZone zone)
+        {
+          CardList attackers = new CardList(AllZone.Combat.getAttackers());
+          CardList blockers = AllZone.Combat.getAllBlockers();
+          if(card.isCreature() && zone.is(Constant.Zone.Play) &&
+        	 (attackers.contains(card) || blockers.contains(card) ) )
+          {
+            ability.setTargetCard(card);
+            stopSetNext(new Input_NoCost_TapAbility(ability));
+          }
+        }
+      };
+
+      card.addSpellAbility(ability);
+      ability.setDescription("tap: Lady Caleria deals 3 damage to target attacking or blocking creature.");
+
+      ability.setBeforePayMana(target);
+    }//*************** END ************ END **************************
     
     //*************** START *********** START **************************
     if(cardName.equals("Femeref Archers"))
@@ -15226,8 +15492,6 @@ final Input target = new Input()
 
 
 
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Cao Cao, Lord of Wei"))
     {
@@ -15277,8 +15541,101 @@ final Input target = new Input()
 
       card.addSpellAbility(ability);
     }//*************** END ************ END **************************
+    
+    
+  //*************** START *********** START **************************
+    if(cardName.equals("Gwendlyn Di Corci"))
+    {
+      //mana tap ability
+      final Ability_Tap ability = new Ability_Tap(card, "0")
+      {
 
+		private static final long serialVersionUID = -4211234606012596777L;
+		public void chooseTargetAI() {setTargetPlayer(Constant.Player.Human); }
+        public boolean canPlayAI()
+        {
+          int hand = AllZone.Human_Hand.getCards().length;
+          return hand > 0;
+        }
 
+        public void resolve()
+        {
+          String player = getTargetPlayer();
+
+          AllZone.GameAction.discardRandom(player);
+          
+        }//resolve()
+        public boolean canPlay()
+        {
+          setStackDescription(card.getName() +" - " +getTargetPlayer() +" discards a card at random.");
+
+          String activePlayer = AllZone.Phase.getActivePlayer();
+
+          return super.canPlay() &&
+                 card.getController().equals(activePlayer);
+        }
+      };//SpellAbility
+      
+      Input input = new Input()
+      {
+		private static final long serialVersionUID = 3312693459353844120L;
+
+		public void showMessage()
+    	  {
+    	    //prevents this from running multiple times, which it is for some reason
+    	    if(ability.getSourceCard().isUntapped())
+    	    {
+    	      ability.getSourceCard().tap();
+    	      stopSetNext(CardFactoryUtil.input_targetPlayer(ability));
+    	    }
+    	  }
+      };
+
+      ability.setDescription("Tap: Target player discards a card at random. Activate this ability only during your turn.");
+      ability.setBeforePayMana(input);
+      //ability.setBeforePayMana(CardFactoryUtil.input_targetPlayer(ability));
+
+      card.addSpellAbility(ability);
+    }//*************** END ************ END **************************
+    
+    //*************** START *********** START **************************
+    if(cardName.equals("Xira Arien"))
+    {
+      //mana tap ability
+      final Ability_Tap ability = new Ability_Tap(card, "G R B")
+      {
+
+		private static final long serialVersionUID = 5373361883064666451L;
+		public void chooseTargetAI() {setTargetPlayer(Constant.Player.Computer);}
+        public boolean canPlayAI()
+        {
+          int hand = AllZone.Computer_Hand.getCards().length;
+          int lib = AllZone.Computer_Library.getCards().length;
+          return hand < 6 && lib > 0;
+        }
+
+        public void resolve()
+        {
+          String player = getTargetPlayer();
+
+          AllZone.GameAction.drawCard(player);
+          
+        }//resolve()
+        public boolean canPlay()
+        {
+          
+          setStackDescription(card.getName() +" - " +getTargetPlayer() +" discards a card at random.");
+
+          return super.canPlay();
+        }
+      };//SpellAbility
+
+      ability.setDescription("Tap: Target player draws a card.");
+      //ability.setBeforePayMana(new Input_NoCost_TapAbility(ability));
+      ability.setBeforePayMana(CardFactoryUtil.input_targetPlayer(ability));
+
+      card.addSpellAbility(ability);
+    }//*************** END ************ END **************************
 
 
 
@@ -20838,7 +21195,7 @@ if(cardName.equals("Jugan, the Rising Star"))
           {
             public boolean addCard(Card c)
             {
-              return ! c.getKeyword().contains("Flying");
+              return ! c.getKeyword().contains("Flying") && CardFactoryUtil.canDamage(card, c);
             }
           });
           for(int i = 0; i < list.size(); i++)
@@ -20942,6 +21299,74 @@ if(cardName.equals("Jugan, the Rising Star"))
 	    card.clearSpellAbility();
 	    card.addSpellAbility(spell);
   	}//*************** END ************ END **************************
+    
+  //*************** START *********** START **************************
+    if (cardName.equals("Stangg")){
+    	
+    	final Ability ability = new Ability(card, "0")
+		{
+			public void resolve()
+			{
+				Card c = new Card();
+
+				c.setName("Stangg Twin");
+				
+				c.setOwner(card.getController());
+				c.setController(card.getController());
+
+				c.setManaCost("R G");
+				c.setToken(true);
+
+				c.addType("Legendary");
+				c.addType("Creature");
+				c.addType("Human");
+				c.addType("Warrior");
+				c.setBaseAttack(3);
+				c.setBaseDefense(4);
+				
+				c.addLeavesPlayCommand(new Command()
+				{
+					private static final long serialVersionUID = 3367390368512271319L;
+
+					public void execute() {
+						if (AllZone.GameAction.isCardInPlay(card))
+							AllZone.GameAction.sacrifice(card);
+					}
+					
+				});
+
+				PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+				play.add(c);
+				
+			}
+		};
+		ability.setStackDescription("When Stangg enters the battlefield, if Stangg is on the battlefield, put a legendary 3/4 red and green Human Warrior creature token named Stangg Twin onto the battlefield.");
+		
+		card.addComesIntoPlayCommand(new Command()
+		{
+			private static final long serialVersionUID = 6667896040611028600L;
+
+			public void execute() {
+				AllZone.Stack.add(ability);
+			}			
+		});
+		
+		card.addLeavesPlayCommand(new Command()
+		{
+			private static final long serialVersionUID = 1786900359843939456L;
+
+			public void execute() {
+				CardList list = new CardList();
+				list.addAll(AllZone.Computer_Play.getCards());
+				list.addAll(AllZone.Human_Play.getCards());
+				list = list.getName("Stangg Twin");
+				
+				if (list.size() == 1)
+					AllZone.GameAction.removeFromGame(list.get(0));
+			}	
+		});
+    	
+    }//*************** END ************ END **************************
 
     //*************** START *********** START **************************
     if(cardName.equals("Llanowar Mentor"))
@@ -24072,6 +24497,50 @@ if(cardName.equals("Jugan, the Rising Star"))
     
   }//*************** END ************ END **************************
 	
+ //*************** START *********** START **************************
+  if(cardName.equals("Boris Devilboon"))
+  {		
+		final Ability_Tap tokenAbility1 = new Ability_Tap(card, "2 B R")
+	    {
+			private static final long serialVersionUID = -6343382804503119405L;
+
+			public boolean canPlayAI()
+	        {
+	          String phase = AllZone.Phase.getPhase();
+	          return phase.equals(Constant.Phase.Main2);
+	        }
+	        public void chooseTargetAI() {card.tap();}
+
+	        public void resolve()
+	        {
+	          Card c = new Card();
+
+	          c.setOwner(card.getController());
+	          c.setController(card.getController());
+
+	          c.setName("Minor Demon");
+	          c.setImageName("BR 1 1 Demon");
+	          c.setManaCost("B R");
+	          c.setToken(true);
+
+	          c.addType("Creature");
+	          c.addType("Demon");
+
+	          c.setBaseAttack(1);
+	          c.setBaseDefense(1);
+
+	          PlayerZone play = AllZone.getZone(Constant.Zone.Play, card.getController());
+	          play.add(c);
+	        }//resolve()
+	      };//SpellAbility
+
+	      card.addSpellAbility(tokenAbility1);
+
+	      tokenAbility1.setDescription("2 B R, tap: Put a 1/1 black and red Demon creature token named Minor Demon onto the battlefield.");
+	      tokenAbility1.setStackDescription(card.getName() + " - Put a 1/1 black and red Demon creature token named Minor Demon onto the battlefield.");
+	      tokenAbility1.setBeforePayMana(new Input_PayManaCost(tokenAbility1));
+  }
+	  
   //*************** START *********** START **************************
   if(cardName.equals("Rhys the Redeemed"))
   {		
@@ -31554,6 +32023,80 @@ if(cardName.equals("Jugan, the Rising Star"))
 
 	
  }//*************** END ************ END **************************
+    
+    //*************** START *********** START **************************
+    else if(cardName.equals("Karakas"))
+    {
+  	  final Ability_Tap ability = new Ability_Tap(card, "0")
+  	  {
+
+		private static final long serialVersionUID = -6589125907956046586L;
+
+		public boolean canPlayAI()
+  	      {
+  	          CardList list = new CardList(AllZone.Human_Play.getCards());
+  	          list = list.filter(new CardListFilter()
+  	          {
+				public boolean addCard(Card c) {
+					return c.isCreature() && c.getKeyword().contains("Legendary");
+				} 
+  	          });
+  	          
+  	          setTargetCard(CardFactoryUtil.AI_getBestCreature(list, card));
+  	          
+  	          return list.size() > 0;
+  	      }
+  		  
+  		  public void resolve()
+  		  {
+  			  Card c = getTargetCard();
+  			  
+  			  if (c!=null)
+  			  {
+  				  if ( CardFactoryUtil.canTarget(card, c) && c.isCreature() && c.getType().contains("Legendary") )
+  					  AllZone.GameAction.moveTo(AllZone.getZone(Constant.Zone.Hand, card.getOwner()), c);
+  			  }  
+  		  }
+  	  };
+  	  
+  	  Input runtime = new Input()
+      {
+
+		private static final long serialVersionUID = -7649200192384343204L;
+
+		public void showMessage()
+        {
+            CardList choice = new CardList();
+            choice.addAll(AllZone.Human_Play.getCards());
+            choice.addAll(AllZone.Computer_Play.getCards());
+
+            choice = choice.getType("Creature");
+            choice = choice.filter(new CardListFilter()
+            {
+              public boolean addCard(Card c)
+              {
+                return (c.isCreature() && c.getType().contains("Legendary"));
+              }
+            });
+            
+            //System.out.println("size of choice: " + choice.size());
+            stopSetNext(CardFactoryUtil.input_targetSpecific(ability, choice, "Select target Legendary creature:", true));
+          }
+        };
+  	  
+  	  ability.setDescription("tap: Return target legendary creature to its owner's hand.");
+  	  //ability.setStackDescription(card.getName() + " - gives target creature +1/+2 until end of turn.");
+  	  
+  	  card.addSpellAbility(ability);
+  	  ability.setBeforePayMana(runtime);
+  	  
+  	  //not sure what's going on here, maybe because it's a land it doesn't add the ability to the text?
+  	  //anyway, this does the trick:
+  	  //card.removeIntrinsicKeyword("tap: add G");
+  	  card.setText(card.getSpellText() +  "\r\ntap: Return target legendary creature to its owner's hand.");
+  	  //card.addIntrinsicKeyword("tap: add G");
+  	  
+    }//*************** END ************ END **************************
 
   //*************** START *********** START **************************
   else if(cardName.equals("Pendelhaven"))

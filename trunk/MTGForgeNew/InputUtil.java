@@ -24,7 +24,7 @@ public class InputUtil
 	    AllZone.Human_Hand.remove(card);
 	    AllZone.Stack.add(card.getSpellAbility()[0]);
 	}
-	else
+	else if (zone.is(Constant.Zone.Hand, Constant.Player.Human) || zone.is(Constant.Zone.Play, Constant.Player.Human))
 	    AllZone.GameAction.playCard(card);
     }//selectCard()
 }

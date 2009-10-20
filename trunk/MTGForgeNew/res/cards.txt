@@ -1,3 +1,126 @@
+Xira Arien
+B R G
+Legendary Creature Insect Wizard
+no text
+1/2
+Flying
+
+Gwendlyn Di Corci
+R B B U
+Legendary Creature Human Rogue
+no text
+3/5
+
+Boris Devilboon
+3 B R
+Legendary Creature Zombie Wizard
+no text
+2/2
+
+Aedun Oakenshield
+G R B
+Legendary Creature Human Knight
+no text
+1/2
+
+Karakas
+no cost
+Legendary Land
+no text
+tap: add W
+
+Magnivore
+2 R R
+Creature Lhurgoyf
+Magnivore's power and toughness are each equal to the number of sorcery cards in all graveyards.
+1/1
+Haste
+
+Naya Hushblade
+RW G
+Creature Elf Rogue
+As long as you control another multicolored permanent, Naya Hushblade gets +1/+1 and has shroud.
+2/1
+
+Jund Hackblade
+BG R
+Creature Goblin Berserker
+As long as you control another multicolored permanent, Jund Hackblade gets +1/+1 and has haste.
+2/1
+
+Grixis Grimblade
+UR B
+Creature Zombie Warrior
+As long as you control another multicolored permanent, Grixis Grimblade gets +1/+1 and has deathtouch.
+2/1
+
+Esper Stormblade
+WB U
+Artifact Creature Vedalken Wizard
+As long as you control another multicolored permanent, Esper Stormblade gets +1/+1 and has flying.
+2/1
+
+Bant Sureblade
+GU W
+Creature Human Soldier
+As long as you control another multicolored permanent, Bant Sureblade gets +1/+1 and has first strike.
+2/1
+
+Dakkon Blackblade
+2 B U U W
+Legendary Creature
+Dakkon Blackblade's power and toughness are each equal to the number of lands you control.
+1/1
+
+Stangg
+4 R G
+Legendary Creature Human Warrior
+When Stangg enters the battlefield, if Stangg is on the battlefield, put a legendary 3/4 red and green Human Warrior creature token named Stangg Twin onto the battlefield. When Stangg leaves the battlefield, exile that token. When that token leaves the battlefield, sacrifice Stangg.
+3/4
+
+Bartel Runaxe
+3 G R B
+Legendary Creature Giant Warrior
+no text
+6/5
+Vigilance
+This card can't be the target of Aura spells.
+
+Tetsuo Umezawa
+R B U
+Legendary Creature Human Archer
+no text
+3/3
+This card can't be the target of Aura spells.
+
+Ayumi, the Last Visitor
+3 G G
+Legendary Creature Spirit
+no text
+7/3
+Legendary landwalk
+
+Livonya Silone
+2 R R G G
+Legendary Creature Human Warrior
+no text
+4/4
+First Strike
+Legendary landwalk
+
+Mystic Enforcer
+2 G W
+Creature Human Nomad Mystic
+Threshold - As long as seven or more cards are in your graveyard, Mystic Enforcer gets +3/+3 and has flying.
+3/3
+Protection from black
+
+Jacques le Vert
+1 W G R
+Legendary Creature Human Warrior
+Green creatures you control get +0/+2.
+3/2
+
 Spidersilk Net
 0
 Artifact Equipment

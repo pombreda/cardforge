@@ -36,7 +36,9 @@ public class StateBasedEffects
 		cardToEffectsList.put("Nyxathid", new String[] {"Nyxathid"});
 		cardToEffectsList.put("Lord of Extinction", new String[] {"Lord_of_Extinction"});
 		cardToEffectsList.put("Terravore", new String[] {"Terravore"});
+		cardToEffectsList.put("Magnivore", new String[] {"Magnivore"});
 		cardToEffectsList.put("Tarmogoyf", new String[] {"Tarmogoyf"});
+		cardToEffectsList.put("Dakkon Blackblade", new String[] {"Dakkon"});
 		cardToEffectsList.put("Korlash, Heir to Blackblade", new String[] {"Korlash"});
 		cardToEffectsList.put("Dauntless Dourbark", new String[] {"Dauntless_Dourbark"});
 		cardToEffectsList.put("Vexing Beetle", new String[] {"Vexing_Beetle"});
@@ -45,6 +47,12 @@ public class StateBasedEffects
 		cardToEffectsList.put("Hedge Troll", new String[] {"Hedge_Troll"});
 		cardToEffectsList.put("Wild Nacatl", new String[] {"Wild_Nacatl"});
 		cardToEffectsList.put("Liu Bei, Lord of Shu", new String[] {"Liu_Bei"});
+		cardToEffectsList.put("Bant Sureblade", new String[] {"Bant_Sureblade"});
+		cardToEffectsList.put("Esper Stormblade", new String[] {"Esper_Stormblade"});
+		cardToEffectsList.put("Grixis Grimblade", new String[] {"Grixis_Grimblade"});
+		cardToEffectsList.put("Jund Hackblade", new String[] {"Jund_Hackblade"});
+		cardToEffectsList.put("Naya Hushblade", new String[] {"Naya_Hushblade"});
+		cardToEffectsList.put("Mystic Enforcer", new String[] {"Mystic_Enforcer"});
 		cardToEffectsList.put("Nimble Mongoose", new String[] {"Nimble_Mongoose"});
 		cardToEffectsList.put("Werebear", new String[] {"Werebear"});
 		cardToEffectsList.put("Divinity of Pride", new String[] {"Divinity_of_Pride"});
@@ -76,6 +84,7 @@ public class StateBasedEffects
 		cardToEffectsList.put("Engineered Plague", new String[] {"Engineered_Plague"});
 		cardToEffectsList.put("Night of Souls' Betrayal", new String[] {"Night_of_Souls_Betrayal"});
 		cardToEffectsList.put("Thelonite Hermit", new String[] {"Thelonite_Hermit"});
+		cardToEffectsList.put("Jacques le Vert", new String[] {"Jacques"});
 		cardToEffectsList.put("Kaysa", new String[] {"Kaysa"});
 		cardToEffectsList.put("Meng Huo, Barbarian King", new String[] {"Meng_Huo"});
 		cardToEffectsList.put("Eladamri, Lord of Leaves", new String[] {"Eladamri"});
