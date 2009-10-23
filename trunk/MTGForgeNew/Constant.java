@@ -51,6 +51,7 @@ public interface Constant
     public static final String Draw   = "Draw";
     public static final String Main1  = "Main1";
     //public static final String Begin_Combat = "Beginning of Combat";
+    public static final String Combat_Before_Declare_Attackers_InstantAbility = "Before Attack Phase - Play Instants and Abilities";
     public static final String Combat_Declare_Attackers_InstantAbility = "Declare Attackers - Play Instants and Abilities";
     public static final String Combat_Declare_Attackers = "Declare Attackers";
     public static final String Combat_Declare_Blockers  = "Declare Blockers";

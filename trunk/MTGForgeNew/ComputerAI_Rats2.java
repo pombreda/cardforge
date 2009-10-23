@@ -53,6 +53,11 @@ public class ComputerAI_Rats2 implements Computer
     AllZone.Phase.setNeedToNextPhase(true);
     }//declare_blockers()
     
+    public void declare_attackers_before()
+    {
+    	 AllZone.Phase.setNeedToNextPhase(true);
+    }
+    
     public void declare_attackers()
     {
 	Card[] a = CardUtil.toCard(PlayerZoneUtil.getUntappedCreatures(AllZone.Computer_Play));

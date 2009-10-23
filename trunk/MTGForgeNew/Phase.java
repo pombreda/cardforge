@@ -27,9 +27,10 @@ public class Phase extends MyObservable
     //computer's turn
     {Constant.Player.Computer    , Constant.Phase.Untap}                               ,
     {Constant.Player.Computer    , Constant.Phase.Draw}                                ,
-    //{Constant.Player.Human	  , Constant.Phase.Combat_Declare_Attackers_InstantAbility},
     {Constant.Player.Computer , Constant.Phase.Main1}                                  ,
+    {Constant.Player.Human , Constant.Phase.Combat_Before_Declare_Attackers_InstantAbility},
     {Constant.Player.Computer , Constant.Phase.Combat_Declare_Attackers}               ,
+    {Constant.Player.Human	  , Constant.Phase.Combat_Declare_Attackers_InstantAbility},
     {Constant.Player.Human    , Constant.Phase.Combat_Declare_Blockers}                ,
     {Constant.Player.Computer , Constant.Phase.Combat_Declare_Blockers_InstantAbility} ,
     {Constant.Player.Human    , Constant.Phase.Combat_Declare_Blockers_InstantAbility} ,
@@ -79,6 +80,8 @@ public class Phase extends MyObservable
     	}
     }
     
+    if(getPhase().equals(Constant.Phase.Combat_Declare_Attackers_InstantAbility))
+    	System.out.println("HELLO");
     
     //empty manapool:
     //CardList cl = new CardList(AllZone.getZone(Constant.Zone.Play, Constant.Player.Human).getCards());

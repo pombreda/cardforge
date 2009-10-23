@@ -1819,18 +1819,30 @@ public class CardFactory implements NewConstants {
             {
                for (int i = 0; i < Tgts.length; i++)
                {
-                  if (Tgts[i].equals("Artifact"))
-                     results.add(CardFactoryUtil.AI_getBestArtifact(choices));
-                  else if (Tgts[i].equals("Creature"))
-                     results.add(CardFactoryUtil.AI_getBestCreature(choices));
-                  else if (Tgts[i].equals("Enchantment"))
-                     results.add(CardFactoryUtil.AI_getBestEnchantment(choices, card, true));
-                  else if (Tgts[i].equals("Land"))
-                     results.add(CardFactoryUtil.AI_getBestLand(choices));
-                  else if (Tgts[i].equals("Permanent"))
-                     results.add(CardFactoryUtil.AI_getMostExpensivePermanent(choices, card, true));
+                  if (Tgts[i].equals("Artifact")) {
+                	 if (CardFactoryUtil.AI_getBestArtifact(choices) != null)
+                		 results.add(CardFactoryUtil.AI_getBestArtifact(choices));
+                  }
+                  else if (Tgts[i].equals("Creature")) {
+                	 if (CardFactoryUtil.AI_getBestCreature(choices) != null)
+                     	results.add(CardFactoryUtil.AI_getBestCreature(choices));
+                  }
+                  else if (Tgts[i].equals("Enchantment")) {
+                	 if (CardFactoryUtil.AI_getBestEnchantment(choices, card, true) != null)
+                	  	results.add(CardFactoryUtil.AI_getBestEnchantment(choices, card, true));
+                  }
+                  else if (Tgts[i].equals("Land")) {
+                	  if (CardFactoryUtil.AI_getBestLand(choices) != null)
+                	  	results.add(CardFactoryUtil.AI_getBestLand(choices));
+                  }
+                  else if (Tgts[i].equals("Permanent")){
+                	 if (CardFactoryUtil.AI_getMostExpensivePermanent(choices, card, true) != null)
+                     	results.add(CardFactoryUtil.AI_getMostExpensivePermanent(choices, card, true));
+                  }
                }
             }
+
+            
             if (results.size() > 0)
             {
                results.shuffle();
@@ -8570,7 +8582,7 @@ final Input target = new Input()
 
 
     //*************** START *********** START **************************
-    if(cardName.equals("Highway Robber"))
+    if(cardName.equals("Highway Robber") || cardName.equals("Dakmor Ghoul"))
     {
       final SpellAbility ability = new Ability(card, "0")
       {
@@ -13727,8 +13739,6 @@ final Input target = new Input()
 
 
 
-
-
     //*************** START *********** START **************************
     if(cardName.equals("Orcish Artillery") || cardName.equals("Goblin Artillery") 
     || cardName.equals("Orcish Cannoneers"))
@@ -13760,6 +13770,12 @@ final Input target = new Input()
               getTargetCard().addDamage(2);
               //3 damage to self
               AllZone.GameAction.getPlayerLife(card.getController()).subtractLife(3);
+              
+              if (card.getKeyword().contains("Lifelink"))
+              	GameActionUtil.executeLifeLinkEffects(card, 5);
+              for(int i=0; i < CardFactoryUtil.hasNumberEnchantments(card, "Guilty Conscience"); i++)
+            	   GameActionUtil.executeGuiltyConscienceEffects(card, 5);
+              
             }
           }
           else
@@ -13767,7 +13783,13 @@ final Input target = new Input()
             AllZone.GameAction.getPlayerLife(getTargetPlayer()).subtractLife(2);
             //3 damage to self
             AllZone.GameAction.getPlayerLife(card.getController()).subtractLife(3);
+            
+            if (card.getKeyword().contains("Lifelink"))
+            	GameActionUtil.executeLifeLinkEffects(card, 5);
+            for(int i=0; i < CardFactoryUtil.hasNumberEnchantments(card, "Guilty Conscience"); i++)
+          	   GameActionUtil.executeGuiltyConscienceEffects(card, 5);
           }
+          
         }//resolve()
       };//SpellAbility
       card.addSpellAbility(ability);
@@ -29673,33 +29695,37 @@ if(cardName.equals("Jugan, the Rising Star"))
         	PlayerZone grave = AllZone.getZone(Constant.Zone.Graveyard, Constant.Player.Human);
             CardList list = new CardList(hand.getCards());
             
-            Object o = AllZone.Display.getChoiceOptional("First card to discard", list.toArray());
+            if (list.size() > 0){
             
-            Card c = (Card)o;
-      		list.remove(c);
-
-      		hand.remove(c);
-      		grave.add(c);
-      		
-      		if(c.getType().contains("Land")) {
-      			PlayerLife life = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);
-      			life.addLife(3);
-      		}
-      		
-      		Object o2 = AllZone.Display.getChoiceOptional("Second card to discard", list.toArray());
-            
-            Card c2 = (Card)o2;
-      		list.remove(c2);
-
-      		hand.remove(c2);
-      		grave.add(c2);
-      		
-      		if(c2.getType().contains("Land")) {
-      			PlayerLife life = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);
-      			life.addLife(3);
-      		}
-            
-        	
+	            Object o = AllZone.Display.getChoiceOptional("First card to discard", list.toArray());
+	            
+	            Card c = (Card)o;
+	      		list.remove(c);
+	
+	      		hand.remove(c);
+	      		grave.add(c);
+	      		
+	      		if(c.getType().contains("Land")) {
+	      			PlayerLife life = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);
+	      			life.addLife(3);
+	      		}
+	      		
+	      		if (list.size() > 0)
+	      		{
+		      		Object o2 = AllZone.Display.getChoiceOptional("Second card to discard", list.toArray());
+		            
+		            Card c2 = (Card)o2;
+		      		list.remove(c2);
+		
+		      		hand.remove(c2);
+		      		grave.add(c2);
+		      		
+		      		if(c2.getType().contains("Land")) {
+		      			PlayerLife life = AllZone.GameAction.getPlayerLife(Constant.Player.Computer);
+		      			life.addLife(3);
+		      		}
+	      		}
+            }
         }
       };
       card.clearSpellAbility();

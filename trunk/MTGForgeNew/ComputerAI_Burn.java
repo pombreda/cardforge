@@ -57,7 +57,10 @@ public class ComputerAI_Burn implements Computer {
         //for debugging: System.out.println("need to nextPhase(ComputerAI_Burn.main2) = true; Note, this is untested, did it work?");
         AllZone.Phase.setNeedToNextPhase(true);
     }
-    
+    public void declare_attackers_before()
+    {
+    	 AllZone.Phase.setNeedToNextPhase(true);
+    }
     public void declare_attackers() {
         
         //AllZone.Phase.nextPhase();

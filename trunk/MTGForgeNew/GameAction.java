@@ -111,11 +111,12 @@ private Card getCurrentCard(int ID)
 
   public void discard(String player, int numDiscard)
   {
+	 if (player.equals(Constant.Player.Human))
+		  AllZone.InputControl.setInput(CardFactoryUtil.input_discard(numDiscard));
+	 else {
      for (int i=0; i < numDiscard; i++)
-        if (player.equals(Constant.Player.Human))
-           AllZone.InputControl.setInput(CardFactoryUtil.input_discard());
-        else
            AI_discard();
+	 }
   }
 
   public void discardUnless(String player, int numDiscard, String uType)
@@ -1141,6 +1142,9 @@ private int getDifferentLand(CardList list, String land)
 		  if (card.getKeyword().contains("Protection from Demons") && sourceCard.getType().contains("Demon"))
 			  assignedDamage = 0;
 		  if (card.getKeyword().contains("Protection from Goblins") && sourceCard.getType().contains("Goblin"))
+			  assignedDamage = 0;
+		  
+		  if (card.getKeyword().contains("Protection from enchantments") && sourceCard.getType().contains("Enchantment"))
 			  assignedDamage = 0;
 	  }
 	  else //got blocked by multiple blockers

@@ -196,6 +196,11 @@ public class ComputerAI_General implements Computer {
         return spellAbility.toArray(new SpellAbility[spellAbility.size()]);
     }
     
+    public void declare_attackers_before()
+    {
+    	 AllZone.Phase.setNeedToNextPhase(true);
+    }
+    
     public void declare_attackers() {
         final Combat c = ComputerUtil.getAttackers();
         c.setAttackingPlayer(AllZone.Combat.getAttackingPlayer());

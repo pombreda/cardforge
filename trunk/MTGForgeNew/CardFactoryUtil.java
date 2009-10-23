@@ -1694,6 +1694,9 @@ public class CardFactoryUtil
 			  if (kw.equals("Protection from Goblins") && (spell.getType().contains("Goblin") || spell.getKeyword().contains("Changeling") ))
 				  return false;
 			  
+			  if (kw.equals("Protection from enchantments") && spell.getType().contains("Enchantment"))
+				  return false;
+			  
 			  if (kw.equals("Protection from everything"))
 				  return false;
 		  }
@@ -1742,6 +1745,9 @@ public class CardFactoryUtil
 				  return true;
 			  if (kw.equals("Protection from Goblins") && (card.getType().contains("Goblin") || card.getKeyword().contains("Changeling") ))
 				  return true;
+			  
+			  if (kw.equals("Protection from enchantments") && card.getType().contains("Enchantment"))
+				  return true;
 		  }
 	  }
 	  return false;
@@ -1780,6 +1786,9 @@ public class CardFactoryUtil
 		  if (kw.equals("Protection from Demons") && (spell.getType().contains("Demon") || spell.getKeyword().contains("Changeling") ))
 			  return false;
 		  if (kw.equals("Protection from Goblins") && (spell.getType().contains("Goblin") || spell.getKeyword().contains("Changeling") ))
+			  return false;
+		  
+		  if (kw.equals("Protection from enchantments") && spell.getType().contains("Enchantment"))
 			  return false;
 		  
 		  if (kw.equals("Protection from everything"))
@@ -2337,8 +2346,6 @@ public class CardFactoryUtil
 					 s = type;
 			 }
 		  }
-		  
-		  
 	  }
 	  return s;
   }

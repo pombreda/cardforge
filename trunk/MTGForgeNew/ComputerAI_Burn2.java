@@ -78,6 +78,11 @@ public class ComputerAI_Burn2 implements Computer {
         AllZone.Phase.setNeedToNextPhase(true);
     }
     
+    public void declare_attackers_before()
+    {
+    	 AllZone.Phase.setNeedToNextPhase(true);
+    }
+    
     public void declare_attackers() {
         final Combat c = ComputerUtil.getAttackers();
         c.setAttackingPlayer(AllZone.Combat.getAttackingPlayer());

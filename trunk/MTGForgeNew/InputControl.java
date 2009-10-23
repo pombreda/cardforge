@@ -54,11 +54,34 @@
 
            else if(phase.equals(Constant.Phase.Main1) || phase.equals(Constant.Phase.Main2))
               return new Input_Main();
-
+           
+           else if(phase.equals(Constant.Phase.Combat_Before_Declare_Attackers_InstantAbility))
+           {
+        	   if (ComputerUtil.getPossibleAttackers().size() > 0)
+        		   return new Input_Before_Attack_Instant();
+        	   else
+        	   {
+        		   AllZone.Phase.setNeedToNextPhase(true);
+        		   return null;
+        	   }
+           }
+           
            else if(phase.equals(Constant.Phase.Combat_Declare_Attackers))
            {
               return new Input_Attack();
            }
+           
+           else if (phase.equals(Constant.Phase.Combat_Declare_Attackers_InstantAbility))
+           {
+        	   if (! skipPhase())
+        		   return new Input_Attack_Instant();
+        	   else
+        	   {
+        		   AllZone.Phase.setNeedToNextPhase(true);
+        		   return null;
+        	   }
+           }
+           
            //this is called twice per turn, only when its human's turn
            //and then the 2nd time when its the computer's turn
            else if(phase.equals(Constant.Phase.Combat_Declare_Blockers_InstantAbility))

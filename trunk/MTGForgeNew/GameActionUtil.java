@@ -7702,8 +7702,8 @@ public class GameActionUtil
 					
 					Card c = list.get(i);
 					if (hasThreshold(c)){
-						c.setBaseAttack(3);
-						c.setBaseDefense(3);
+						c.setBaseAttack(4);
+						c.setBaseDefense(4);
 					}
 					else
 					{
@@ -8750,6 +8750,90 @@ public class GameActionUtil
 			return artifacts.size();
 		}
 
+		
+	};
+	
+	public static Command Tethered_Griffin = new Command()
+	{
+		
+		private static final long serialVersionUID = 572286202401670996L;
+		int enchantments = 0;
+		public void execute()
+		{
+			CardList creature = new CardList();
+			creature.addAll(AllZone.Human_Play.getCards());
+			creature.addAll(AllZone.Computer_Play.getCards());
+			
+			creature = creature.getName("Tethered Griffin");
+			
+			for (int i = 0; i < creature.size(); i++)
+			{
+				Card c = creature.get(i);
+				enchantments = countEnchantments(c);
+				if (enchantments == 0)
+				{
+					AllZone.GameAction.sacrifice(c);
+				}
+			}
+				
+		}//execute()
+		
+		private int countEnchantments(Card c)
+		{
+			PlayerZone play = AllZone.getZone(Constant.Zone.Play, c
+					.getController());
+			CardList enchantments = new CardList(play.getCards());
+			enchantments = enchantments.getType("Enchantment");
+			return enchantments.size();
+		}
+
+		
+	};
+	
+	public static Command Zuberi = new Command()
+	{
+		private static final long serialVersionUID = -6283266522827930762L;
+		CardList gloriousAnthemList = new CardList();
+
+		public void execute()
+		{
+
+			CardList cList = gloriousAnthemList;
+			Card c;
+
+			for (int i = 0; i < cList.size(); i++)
+			{
+				c = cList.get(i);
+				c.addSemiPermanentAttackBoost(-1);
+				c.addSemiPermanentDefenseBoost(-1);
+			}
+			cList.clear();
+			PlayerZone[] zone = getZone("Zuberi, Golden Feather");
+
+			// for each zone found add +1/+1 to each card
+			for (int outer = 0; outer < zone.length; outer++)
+			{
+				CardList creature = new CardList();
+				creature.addAll(AllZone.Human_Play.getCards());
+				creature.addAll(AllZone.Computer_Play.getCards());
+				creature = creature.getType("Griffin");
+
+				for (int i = 0; i < creature.size(); i++)
+				{
+					c = creature.get(i);
+					if (c.isCreature()
+							&& !c.getName().equals("Zuberi, Golden Feather"))
+					{
+						c.addSemiPermanentAttackBoost(1);
+						c.addSemiPermanentDefenseBoost(1);
+						gloriousAnthemList.add(c);
+					}
+
+				} // for
+			} // for
+
+		}// execute()
+		
 		
 	};
 	
@@ -10662,6 +10746,7 @@ public class GameActionUtil
 		commands.put("Divinity_of_Pride", Divinity_of_Pride);
 		commands.put("Yavimaya_Enchantress", Yavimaya_Enchantress);
 		commands.put("Knight_of_the_Reliquary", Knight_of_the_Reliquary);
+		commands.put("Zuberi", Zuberi);
 		commands.put("Master_of_Etherium", Master_of_Etherium);
 		commands.put("Master_of_Etherium_Pump", Master_of_Etherium_Pump);
 		commands.put("Master_of_Etherium_Other", Master_of_Etherium_Other);
@@ -10687,6 +10772,7 @@ public class GameActionUtil
 		commands.put("Scion_of_Oona_Other", Scion_of_Oona_Other);
 
 		commands.put("Covetous_Dragon", Covetous_Dragon);
+		commands.put("Tethered_Griffin", Tethered_Griffin);
 		
 		commands.put("Shared_Triumph", Shared_Triumph);
 		commands.put("Crucible_of_Fire", Crucible_of_Fire);

@@ -15,6 +15,12 @@ public class ComputerAI_Testing implements Computer
     }
     
     public void main1() {AllZone.Phase.nextPhase();}
+    
+    public void declare_attackers_before()
+    {
+    	 AllZone.Phase.setNeedToNextPhase(true);
+    }
+    
     public void declare_attackers(){
     	
     	//AllZone.Phase.nextPhase();

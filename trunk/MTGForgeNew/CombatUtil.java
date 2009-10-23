@@ -72,7 +72,7 @@ public class CombatUtil
             return false;
     }
     
-    if (attacker.getKeyword().contains("Nonbasic landwalk"))
+    if (attacker.getKeyword().contains("Legendary landwalk"))
     {
     	temp = blkCL.filter(new CardListFilter()
     	{

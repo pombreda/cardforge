@@ -29,6 +29,12 @@ public class ComputerAI_Input extends Input
 	{
 	    computer.main1();
 	}
+	
+	else if (phase.equals(Constant.Phase.Combat_Declare_Attackers_InstantAbility))
+	 {
+		 computer.declare_attackers_before();
+	 }
+	
 	else if(phase.equals(Constant.Phase.Combat_Declare_Attackers))
 	{
 	    computer.declare_attackers();

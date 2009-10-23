@@ -58,6 +58,7 @@ public class StateBasedEffects
 		cardToEffectsList.put("Divinity of Pride", new String[] {"Divinity_of_Pride"});
 		cardToEffectsList.put("Yavimaya Enchantress", new String[] {"Yavimaya_Enchantress"});
 		cardToEffectsList.put("Knight of the Reliquary", new String[] {"Knight_of_the_Reliquary"});
+		cardToEffectsList.put("Zuberi, Golden Feather", new String[] {"Zuberi"});
 		cardToEffectsList.put("Master of Etherium", new String[] {"Master_of_Etherium", "Master_of_Etherium_Pump", "Master_of_Etherium_Other"});
 		cardToEffectsList.put("Relentless Rats", new String[] {"Relentless_Rats_Other"});
 		cardToEffectsList.put("Privileged Position", new String[] {"Privileged_Position", "Privileged_Position_Other"});
@@ -70,6 +71,7 @@ public class StateBasedEffects
 		cardToEffectsList.put("Aven Brigadier", new String[] {"Aven_Brigadier_Soldier_Pump", "Aven_Brigadier_Bird_Pump", "Aven_Brigadier_Other"});
 		cardToEffectsList.put("Scion of Oona", new String[] {"Scion_of_Oona_Pump", "Scion_of_Oona_Other"});
 		cardToEffectsList.put("Covetous Dragon", new String[] {"Covetous_Dragon"});
+		cardToEffectsList.put("Tethered Griffin", new String[] {"Tethered_Griffin"});
 		cardToEffectsList.put("Shared Triumph", new String[] {"Shared_Triumph"});
 		cardToEffectsList.put("Crucible of Fire", new String[] {"Crucible_of_Fire"});
 		cardToEffectsList.put("Glorious Anthem", new String[] {"Glorious_Anthem"});

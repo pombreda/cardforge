@@ -1,3 +1,134 @@
+Dakmor Ghoul
+2 B B
+Creature Zombie
+When Dakmor Ghoul enters the battlefield, target opponent loses 2 life and you gain 2 life.
+2/2
+
+Tethered Griffin
+W
+Creature Griffin
+When you control no enchantments, sacrifice Tethered Griffin.
+2/3
+Flying
+
+Azorius First-Wing
+W U
+Creature Griffin
+no text
+2/2
+Flying
+Protection from enchantments
+
+Zuberi, Golden Feather
+4 W
+Legendary Creature Griffin
+Other Griffin creatures get +1/+1.
+3/3
+Flying
+
+Orcish Cannonade
+1 R R
+Instant
+no text
+spDamageTgtCP:2:Drawback$DamageYou/3:Orcish Cannonade deals 2 damage to target creature or player and 3 damage to you. Draw a card.
+Cantrip
+
+Kindle
+1 R
+Instant
+no text
+spDamageTgtCP:Count$NamedInAllYards.Kindle/Plus.2:Kindle deals X damage to target creature or player, where X is 2 plus the number of cards named Kindle in all graveyards.
+
+Ire of Kaminari
+3 R
+Instant — Arcane
+no text
+spDamageTgtCP:Count$TypeInYourYard.Arcane:Ire of Kaminari deals damage to target creature or player equal to the number of Arcane cards in your graveyard.
+
+Goblin War Strike
+R
+Sorcery
+no text
+spDamageTgtP:Count$TypeYouCtrl.Goblin:Goblin War Strike deals damage equal to the number of Goblins you control to target player.
+
+Flame Burst
+1 R
+Instant
+no text
+spDamageTgtCP:Count$NamedInAllYards.Flame Burst/Plus.2:Flame Burst deals X damage to target creature or player, where X is 2 plus the number of cards named Flame Burst in all graveyards.
+
+Feedback Bolt
+4 R
+Instant
+no text
+spDamageTgtP:Count$TypeYouCtrl.Artifact:Feedback Bolt deals damage to target player equal to the number of artifacts you control.:Feedback Bolt - deals damage to target player equal to the number of artifacts you control.
+
+Blightning
+1 B R
+Sorcery
+no text
+spDamageTgtP:3:Drawback$TgtDiscard/2:Blightning deals 3 damage to target player. That player discards two cards.:Blightning - deals 3 damage and that player discards two cards.
+
+Vicious Hunger
+B B
+Sorcery
+no text
+spDamageTgtC:2:Drawback$GainLifeYou/2:Vicious Hunger deals 2 damage to target creature and you gain 2 life.
+
+Vampiric Feast
+5 B B
+Sorcery
+no text
+spDamageTgtCP:4:Drawback$GainLifeYou/4:Vampiric Feast deals 4 damage to target creature or player and you gain 4 life.
+
+Thermal Blast
+4 R
+Instant
+no text
+spDamageTgtC:Count$Hellbent.5.3:Thermal Blast deals 3 damage to target creature. Threshold — Thermal Blast deals 5 damage to that creature instead if seven or more cards are in your graveyard.
+
+Spitting Earth
+1 R
+Sorcery
+no text
+spDamageTgtC:Count$TypeYouCtrl.Mountain:Spitting Earth deals damage equal to the number of Mountains you control to target creature.
+
+Spire Barrage
+4 R
+Sorcery
+no text
+spDamageTgtCP:Count$TypeYouCtrl.Mountain:Spire Barrage deals damage to target creature or player equal to the number of Mountains you control.
+
+Spiraling Embers
+3 R
+Sorcery Arcane
+no text
+spDamageTgtCP:Count$InYourHand:Spiraling Embers deals damage to target creature or player equal to the number of cards in your hand.
+
+Skred
+R
+Instant
+no text
+spDamageTgtC:Count$TypeYouCtrl.Snow:Skred deals damage to target creature equal to the number of snow permanents you control.
+
+Seismic Strike
+2 R
+Instant
+no text
+spDamageTgtC:Count$TypeYouCtrl.Mountain:Seismic Strike deals damage to target creature equal to the number of Mountains you control.
+
+Rockslide Ambush
+1 R
+Sorcery
+no text
+spDamageTgtC:Count$TypeYouCtrl.Mountain:Rockslide Ambush deals damage equal to the number of Mountains you control to target creature.
+
+Profane Prayers
+2 B B
+Sorcery
+no text
+spDamageTgtCP:Count$TypeYouCtrl.Cleric:Drawback$GainLifeYou/X:Profane Prayers deals X damage to target creature or player and you gain X life, where X is the number of Clerics on the battlefield.
+
 Xira Arien
 B R G
 Legendary Creature Insect Wizard
@@ -224,7 +355,7 @@ Oboro, Palace in the Clouds
 no cost
 Legendary Land
 no text
-tap: add 1
+tap: add U
 
 Umara Raptor
 1 U
@@ -236,7 +367,7 @@ Flying
 Tuktuk Grunts
 4 R
 Creature Goblin Warrior Ally
-Whenever Tuktuk Grunts or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Oran-Rief Survivalist.
+Whenever Tuktuk Grunts or another Ally enters the battlefield under your control, you may put a +1/+1 counter on Tuktuk Grunts.
 2/2
 Haste
 

@@ -326,6 +326,17 @@ private static Random random = new Random();
     for(int i = 0; i < permanent.size(); i++)
       permanent.get(i).untap();
   }
+  static public CardList getPossibleAttackers()
+  {
+	  CardList list = new CardList(AllZone.Computer_Play.getCards());
+	  list = list.filter(new CardListFilter()
+	  {
+		public boolean addCard(Card c) {
+			return c.isCreature() && CombatUtil.canAttack(c);
+		}
+	  });
+	  return list;
+  }
   static public Combat getAttackers()
   {
     ComputerUtil_Attack2 att = new ComputerUtil_Attack2(
