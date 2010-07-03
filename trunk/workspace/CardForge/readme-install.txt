@@ -1,1 +1,0 @@
-Unzip all files to the same directory.  To run it, double-click on "run-forge.jar" or type "java -jar run-forge.jar" from the command line
