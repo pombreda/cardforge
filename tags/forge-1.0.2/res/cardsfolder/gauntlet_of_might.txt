@@ -1,0 +1,13 @@
+Name:Gauntlet of Might
+ManaCost:4
+Types:Artifact
+Text:Whenever a Mountain is tapped for mana, its controller adds R to his or her mana pool (in addition to the mana the land produces).
+K:stPumpAll:Creature.Red:1/1:No Condition:Red creatures get +1/+1.
+SVar:RemAIDeck:True
+SVar:RemRandomDeck:True
+SVar:Rarity:Rare
+SVar:Picture:http://www.wizards.com/global/images/magic/general/gauntlet_of_might.jpg
+SetInfo:LEA|Rare|http://magiccards.info/scans/en/al/244.jpg
+SetInfo:LEB|Rare|http://magiccards.info/scans/en/be/246.jpg
+SetInfo:2ED|Rare|http://magiccards.info/scans/en/un/245.jpg
+End
