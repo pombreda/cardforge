@@ -1,0 +1,11 @@
+Name:Berserk
+ManaCost:G
+Types:Instant
+Text:Cast CARDNAME only before the combat damage step.\r\nTarget creature gains trample and gets +X/+0 until end of turn, where X is its power. At the beginning of the next end step, destroy that creature if it attacked this turn.
+SVar:RemAIDeck:True
+SVar:Rarity:Uncommon
+SVar:Picture:http://www.wizards.com/global/images/magic/general/berserk.jpg
+SetInfo:LEA|Uncommon|http://magiccards.info/scans/en/al/94.jpg
+SetInfo:LEB|Uncommon|http://magiccards.info/scans/en/be/94.jpg
+SetInfo:2ED|Uncommon|http://magiccards.info/scans/en/un/94.jpg
+End
