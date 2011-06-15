@@ -42,9 +42,6 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 		if (params.containsKey("ConditionOpponentTurn"))
 			setOpponentTurn(true);
 
-		if (params.containsKey("ConditionAnyPlayer"))
-			setAnyPlayer(true);
-
 		if (params.containsKey("ConditionPhases")) {
 			String phases = params.get("ConditionPhases");
 
@@ -63,8 +60,6 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 
 		if (params.containsKey("ConditionCardsInHand"))
 			setActivateCardsInHand(Integer.parseInt(params.get("ConditionCardsInHand")));
-
-
 
 		//Condition version of IsPresent stuff
 		if (params.containsKey("ConditionPresent")){
