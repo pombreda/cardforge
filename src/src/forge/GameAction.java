@@ -187,29 +187,6 @@ public class GameAction {
     	if(c.hasKeyword("If CARDNAME is put into a graveyard this turn, its controller gets a poison counter.")) {
     		c.getController().addPoisonCounters(1);
     	}
-    	
-    	if (AllZoneUtil.isCardInPlay("Planar Void")) {
-    		CardList pVoids = AllZoneUtil.getCardsInPlay("Planar Void");
-    		for(int i = 0; i < pVoids.size(); i++) {
-    			Card pVoid = pVoids.get(i);
-    			final Card voidingCard = c;
-    			if (!c.equals(pVoid)) {
-		    		Ability ability = new Ability(pVoid, "0") {
-						@Override
-						public void resolve() {
-							if(AllZoneUtil.isCardInZone(grave, voidingCard))
-								moveTo(AllZone.getZone(Constant.Zone.Exile, voidingCard.getOwner()), voidingCard);
-						}
-		
-					};// Ability
-					StringBuilder sb = new StringBuilder();
-	    			sb.append("Planar Void - exile ").append(c);
-	    			ability.setStackDescription(sb.toString());
-	    			
-	    			AllZone.Stack.add(ability);
-    			}
-    		}
-    	}
 
 		//must put card in OWNER's graveyard not controller's
 		c = moveTo(grave, c);
