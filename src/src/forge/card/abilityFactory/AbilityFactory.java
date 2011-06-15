@@ -540,9 +540,12 @@ public class AbilityFactory {
 			AbilityFactory_GainControl afControl = new AbilityFactory_GainControl(this);
 			
 			if (isAb)
-				SA = afControl.getAbility();
+				SA = afControl.getAbilityGainControl();
 			else if (isSp)
-				SA = afControl.getSpell();
+				SA = afControl.getSpellGainControl();
+			else if (isDb) {
+				SA = afControl.getDrawbackGainControl();
+			}
 		}
 		
 		if (API.equals("Discard")){
