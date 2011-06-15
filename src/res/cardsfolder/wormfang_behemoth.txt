@@ -10,4 +10,5 @@ SVar:TrigReturn:AB$ChangeZoneAll | Cost$ 0 | ChangeType$ Card | Origin$ Exile | 
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/wormfang_behemoth.jpg
+SetInfo:JUD|Rare|http://magiccards.info/scans/en/ju/55.jpg
 End
