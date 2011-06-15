@@ -7,4 +7,5 @@ SVar:ABPump:AB$Pump | Cost$ B | NumAtt$ +1 | NumDef$ +1 | SpellDescription$ CARD
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/shades_breath.jpg
+SetInfo:ONS|Uncommon|http://magiccards.info/scans/en/on/167.jpg
 End
