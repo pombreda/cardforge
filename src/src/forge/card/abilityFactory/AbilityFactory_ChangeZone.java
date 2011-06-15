@@ -536,6 +536,8 @@ public class AbilityFactory_ChangeZone {
                 fetchList.remove(c);
                 if (remember != null)
                 	card.addRemembered(c);
+                //for imprinted since this doesn't use Target
+                if(params.containsKey("Imprint")) card.addImprinted(c);
 
                 if (destination.equals("Library")) {
                     // do not shuffle the library once we have placed a fetched card on top.
@@ -555,8 +557,6 @@ public class AbilityFactory_ChangeZone {
 		    	else
                 	AllZone.GameAction.moveTo(destZone, c);
                 
-                //for imprinted since this doesn't use Target
-                if(params.containsKey("Imprint")) card.addImprinted(c);
             }
             else{
             	StringBuilder sb = new StringBuilder();
@@ -636,6 +636,8 @@ public class AbilityFactory_ChangeZone {
 
             if (remember != null)
             	card.addRemembered(c);
+            //for imprinted since this doesn't use Target
+            if(params.containsKey("Imprint")) card.addImprinted(c);
         	fetched.add(c);
         	fetchList.remove(c);
         }
@@ -659,8 +661,6 @@ public class AbilityFactory_ChangeZone {
         	else
         		AllZone.GameAction.moveTo(destZone, c);
         	
-        	//for imprinted since this doesn't use Target
-            if(params.containsKey("Imprint")) card.addImprinted(c);
         }
         
         if (!"Battlefield".equals(destination) && !"Card".equals(type)){
@@ -820,7 +820,7 @@ public class AbilityFactory_ChangeZone {
 		else{
 			// non-targeted retrieval
 			CardList retrieval = null;
-			if (af.getMapParams().containsKey("Defined")){
+			if (params.containsKey("Defined")){
 				// add hooks into AF_Defined function
 				retrieval = knownDetermineDefined(sa, params.get("Defined"), origin);
 			}
