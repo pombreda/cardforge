@@ -1564,8 +1564,7 @@ class CardFactory_Planeswalkers {
                 		{
                 			public boolean addCard(Card c)
                 			{
-                				return c.hasKeyword("When CARDNAME enters the battlefield, draw a card.") 
-                						|| c.getName().equals("Venerated Teacher") 
+                				return c.getName().equals("Venerated Teacher") 
                 						|| c.getName().equals("Stoneforge Mystic") 
                 						|| c.getName().equals("Sun Titan") 
                 						|| c.isType("Ally");

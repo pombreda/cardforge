@@ -243,11 +243,6 @@ public class ComputerUtil
 
       sa.resolve();
 
-      if (source.hasKeyword("Draw a card."))
-    	  source.getController().drawCard();
-	  if (source.hasKeyword("Draw a card at the beginning of the next turn's upkeep."))
-		  source.getController().addSlowtripList(source);
-
       //destroys creatures if they have lethal damage, etc..
       AllZone.GameAction.checkStateEffects();
     }
