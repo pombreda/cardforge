@@ -43,7 +43,6 @@ public class GameActionUtil {
 		upkeep_Ceta_Sanctuary();
 		upkeep_Tangle_Wire();
 		upkeep_Dance_of_the_Dead();
-		upkeep_Mana_Crypt();
 		upkeep_Farmstead();
 		
 		upkeep_Greener_Pastures();
@@ -1554,11 +1553,11 @@ public class GameActionUtil {
     	}
 
     	if( (flip == true && choice.equals("heads")) || (flip == false && choice.equals("tails"))) {
-    		JOptionPane.showMessageDialog(null, source.getName()+" - "+source.getController()+" wins flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
+    		JOptionPane.showMessageDialog(null, source.getName()+" - "+caller+" wins flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
     		return true;
     	}
     	else{
-    		JOptionPane.showMessageDialog(null, source.getName()+" - "+source.getController()+" loses flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
+    		JOptionPane.showMessageDialog(null, source.getName()+" - "+caller+" loses flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
     		return false;
     	}
     }
@@ -2282,30 +2281,6 @@ public class GameActionUtil {
 			}
 		}
 	}
-	
-	private static void upkeep_Mana_Crypt() {
-		final Player player = AllZone.Phase.getPlayerTurn();
-
-		CardList crypts = AllZoneUtil.getPlayerCardsInPlay(player, "Mana Crypt");
-		for(final Card crypt:crypts) {
-			SpellAbility ab = new Ability(crypt, "0"){
-
-				@Override
-				public void resolve(){
-					if(flipACoin(crypt.getController().getOpponent(), crypt)) {
-						//do nothing
-					}
-					else {
-						crypt.getController().addDamage(3, crypt);
-					}
-				}
-			};
-			ab.setStackDescription(crypt.getName()+" - Flip a coin.");
-
-            AllZone.Stack.addSimultaneousStackEntry(ab);
-
-		}
-	}//upkeep_Mana_Crypt
 	
 	private static void upkeep_Farmstead() {
 		final String auraName = "Farmstead";
