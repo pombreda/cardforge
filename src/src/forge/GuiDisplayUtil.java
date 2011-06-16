@@ -32,6 +32,7 @@ import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaPool;
 import forge.card.spellability.Ability_Mana;
 import forge.card.trigger.Trigger;
+import forge.gui.GuiUtils;
 import forge.gui.game.CardPanel;
 import forge.properties.NewConstants;
 
@@ -1157,4 +1158,15 @@ public class GuiDisplayUtil implements NewConstants {
         }
         return cl;
     }
-}
+    
+    public static void devModeTutor(){
+    	CardList lib = AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer);
+    	Object o = GuiUtils.getChoiceOptional("Choose a card", lib.toArray());
+    	if(null == o) return;
+    	else {
+    		Card c = (Card)o;
+    		AllZone.GameAction.moveToHand(c);
+    	}
+    }
+    
+}//end class GuiDisplayUtil

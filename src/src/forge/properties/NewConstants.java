@@ -270,6 +270,13 @@ public interface NewConstants {
             	public static final String BUTTON = "%s/Display/setupbattlefield/button";
             	public static final String MENU = "%s/Display/setupbattlefield/menu";
             }
+            
+            public static final String TUTOR = "%s/Display/tutor";
+            
+            public static interface TUTOR {
+                public static final String BUTTON = "%s/Display/tutor/button";
+                public static final String MENU   = "%s/Display/tutor/menu";
+            }
         }
         
         public static interface Gui_DownloadPictures {
