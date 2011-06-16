@@ -484,7 +484,7 @@ public class Cost_Payment {
         // can't really unreturn things
 	}
     
-    public void payComputerCosts(){
+    public boolean payComputerCosts(){
     	// ******** NOTE for Adding Costs ************
     	// make sure ComputerUtil.canPayAdditionalCosts() is updated so the AI knows if they can Pay the cost
     	CardList sacCard = new CardList();
@@ -512,7 +512,7 @@ public class Cost_Payment {
     		
 	    	if (sacCard.size() != amount){
 	    		System.out.println("Couldn't find a valid card to sacrifice for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -526,7 +526,7 @@ public class Cost_Payment {
     		
 	    	if (exileCard.size() != cost.getExileAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -539,7 +539,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromHandCard.size() != cost.getExileFromHandAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -552,7 +552,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromGraveCard.size() != cost.getExileFromGraveAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -564,7 +564,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromTopCard.size() != cost.getExileFromTopAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -576,16 +576,16 @@ public class Cost_Payment {
     		
 	    	if (returnCard.size() != cost.getReturnAmount()){
 	    		System.out.println("Couldn't find a valid card to return for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
     	if (cost.getDiscardThis()){
     		if(!AllZoneUtil.getPlayerHand(card.getController()).contains(card.getController().getLastDrawnCard())) {
-    			return;
+    			return false;
     		}
 			if (!AllZone.getZone(card).getZoneName().equals(Constant.Zone.Hand))
-				return;
+				return false;
     	}
     	
     	if (cost.getTapXTypeCost()) {
@@ -595,14 +595,14 @@ public class Cost_Payment {
     		
     		if (tapXCard == null || tapXCard.size() != cost.getTapXTypeAmount()){
 	    		System.out.println("Couldn't find a valid card to tap for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
     	// double check if counters available? Real check is in ComputerUtil.canPayAdditionalCosts()
     	if (cost.getSubCounter() && cost.getCounterNum() > card.getCounters(cost.getCounterType())){
     		System.out.println("Not enough " + cost.getCounterType() + " on " + card.getName());
-    		return;
+    		return false;
     	}
     	
     	if (cost.getTap())
@@ -684,8 +684,7 @@ public class Cost_Payment {
 			for(Card c : returnCard)
 				AllZone.GameAction.moveToHand(c);
 		}
-
-		AllZone.Stack.addAndUnfreeze(ability);
+		return true;
     }
     
 	public void changeCost(){
