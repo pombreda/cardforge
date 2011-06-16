@@ -290,8 +290,17 @@ public class AbilityFactory_Animate {
 		}
 		
 		//colors to be added or changed to
-		final String finalDesc = params.containsKey("Colors") ? 
-			CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("Colors").split(",")))) : "";
+		String tmpDesc = "";
+		if(params.containsKey("Colors")) {
+			String colors = params.get("Colors");
+			if(colors.equals("ChosenColor")) {
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(host.getChosenColor().split(","))));
+			}
+			else{
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(colors.split(","))));
+			}
+		}
+		final String finalDesc = tmpDesc;
 		
 		//abilities to add to the animated being
 		ArrayList<String> abilities = new ArrayList<String>();
@@ -593,8 +602,17 @@ public class AbilityFactory_Animate {
 		}
 		
 		//colors to be added or changed to
-		final String finalDesc = params.containsKey("Colors") ? 
-			CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("Colors").split(",")))) : "";
+		String tmpDesc = "";
+		if(params.containsKey("Colors")) {
+			String colors = params.get("Colors");
+			if(colors.equals("ChosenColor")) {
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(host.getChosenColor().split(","))));
+			}
+			else{
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(colors.split(","))));
+			}
+		}
+		final String finalDesc = tmpDesc;
 		
 		//abilities to add to the animated being
 		ArrayList<String> abilities = new ArrayList<String>();
