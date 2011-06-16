@@ -370,22 +370,22 @@ public class CardUtil {
 	public static String getShortColorsString(ArrayList<String> colors) {
 		String colorDesc = "";
 		for(String col : colors) {
-			if(col.equals("White")) {
+			if(col.equalsIgnoreCase("White")) {
 				colorDesc += "W";
 			}
-			else if(col.equals("Blue")) {
+			else if(col.equalsIgnoreCase("Blue")) {
 				colorDesc += "U";
 			}
-			else if(col.equals("Black")) {
+			else if(col.equalsIgnoreCase("Black")) {
 				colorDesc += "B";
 			}
-			else if(col.equals("Red")) {
+			else if(col.equalsIgnoreCase("Red")) {
 				colorDesc += "R";
 			}
-			else if(col.equals("Green")) {
+			else if(col.equalsIgnoreCase("Green")) {
 				colorDesc += "G";
 			}
-			else if(col.equals("Colorless")) {
+			else if(col.equalsIgnoreCase("Colorless")) {
 				colorDesc = "C";
 			}
 		}
