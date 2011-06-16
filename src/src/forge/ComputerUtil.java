@@ -352,17 +352,14 @@ public class ComputerUtil
 		  int once = 0;
 			
 		  for(Ability_Mana m : manaAbilities){
-			  
-			  if(sourceLand.isTapped())
-				  continue;
-			  
+
 			  //if the AI can't pay the additional costs skip the mana ability
 			  if (m.getPayCosts() != null) {
 				  if (!canPayAdditionalCosts(m, player))
 					  continue;
-			  } else
-				  if(sourceLand.isTapped())
-					  continue;
+			  }
+			  else if(sourceLand.isTapped() && m.isTapAbility())
+				  continue;
 			  
 			  colors = getProduceableColors(m, player);
 	
@@ -683,17 +680,14 @@ public class ComputerUtil
 		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
 			
 		  for(Ability_Mana m : manaAbilities){
-			  
-			  if(sourceLand.isTapped())
-				  continue;
-			  
+
 			  //if the AI can't pay the additional costs skip the mana ability
 			  if (m.getPayCosts() != null) {
 				  if (!canPayAdditionalCosts(m, player))
 					  continue;
-			  } else
-				  if(sourceLand.isTapped())
-					  continue;
+			  } 
+			  else if(sourceLand.isTapped() && m.isTapAbility())
+				  continue;
 			  
 			  colors = getProduceableColors(m, player);
 			  for(int j = 0; j <colors.size();j++)
