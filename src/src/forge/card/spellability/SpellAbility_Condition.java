@@ -159,12 +159,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 		}
 
 		if(presentDefined != null) {
-			CardList list;
-			if (presentDefined == null)
-				list = AllZoneUtil.getCardsInPlay();
-			else{
-				list = new CardList(AbilityFactory.getDefinedCards(sa.getSourceCard(), presentDefined, sa));
-			}
+			CardList list = new CardList(AbilityFactory.getDefinedCards(sa.getSourceCard(), presentDefined, sa));
 
 			list = list.getValidCards(sIsPresent.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 
