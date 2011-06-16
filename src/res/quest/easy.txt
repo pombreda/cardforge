@@ -24,6 +24,7 @@ Indiana Jones 1
 Jack Sparrow 1
 James Bond 1
 Joe Kidd 1
+Kang 1
 King Arthur 1
 King Edward 1
 King Goldemar 1
