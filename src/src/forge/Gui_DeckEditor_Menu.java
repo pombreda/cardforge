@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+//import java.util.HashMap;
+//import java.util.Map;
 
 
 interface DeckDisplay {
@@ -56,7 +58,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
     private String currentDeckName;
     private String currentGameType;
+    private String currentDeckPlayerType;
 
+    public void setCurrentGameType(String gameType) {
+    	currentGameType = gameType;
+    }
+    
     private JMenuItem newDraftItem;
     private DeckDisplay deckDisplay;
 
@@ -96,8 +103,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         clearfilter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                CardList all = AllZone.CardFactory.getAllCards();
-                deckDisplay.updateDisplay(all, deckDisplay.getBottom());
+                //CardList all = AllZone.CardFactory.getAllCards();
+                //deckDisplay.updateDisplay(all, deckDisplay.getBottom());
+                deckDisplay.updateDisplay(deckDisplay.getTop(), deckDisplay.getBottom());
                 Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
                 g.blackCheckBox.setSelected(true);
                 g.blackCheckBox.setEnabled(true);
@@ -318,7 +326,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }//new sealed
 
 
-    private void newSealed() {
+/*    private void newSealed() {
         if (debugPrint) {
             System.out.println("New Sealed");
         }
@@ -331,8 +339,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         deckDisplay.updateDisplay(new ReadBoosterPack().getBoosterPack5(), new CardList());
     }//new sealed
-
-    private void newDraft() {
+*/
+/*    private void newDraft() {
         if (debugPrint) {
             System.out.println("New Draft");
         }
@@ -361,11 +369,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         for (int i = 0; i < deck.countSideboard(); i++) {
             String cardName = deck.getMain(i);
-            //String setCode = "";
+            String setCode = "";
             if (cardName.contains("|")) {
                 String s[] = cardName.split("\\|", 2);
                 cardName = s[0];
-                //setCode = s[1];
+                setCode = s[1];
             }
 
             top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
@@ -373,7 +381,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         deckDisplay.updateDisplay(top, new CardList());
     }//new draft
-
+*/
 
     private FileFilter dckFilter = new FileFilter() {
         @Override
@@ -833,40 +841,47 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         //must be AFTER get user input, since user could cancel
         currentGameType = Constant.GameType.Sealed;
+        
         newDraftItem.setEnabled(false);
 
         Deck deck = deckManager.getDeck(name);
         showSealedDeck(deck);
     }//open sealed
 
-    private void showSealedDeck(Deck deck) {
+	public void showSealedDeck(Deck deck) {
         setDeckData(deck.getName(), true);
+        currentDeckPlayerType = deck.getMetadata("PlayerType");
 
         CardList top = new CardList();
-        for (int i = 0; i < deck.countSideboard(); i++) {
-            String cardName = deck.getMain(i);
-            //String setCode = "";
-            if (cardName.contains("|")) {
-                String s[] = cardName.split("\\|", 2);
-                cardName = s[0];
-                //setCode = s[1];
-            }
-
-            top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+        if (deck.countSideboard() > 0) {
+	        for (int i = 0; i < deck.countSideboard(); i++) {
+	            String cardName = deck.getSideboard(i);
+	            String setCode = "";
+	            if (cardName.contains("|")) {
+	                String s[] = cardName.split("\\|", 2);
+	                cardName = s[0];
+	                setCode = s[1];
+	            }
+	            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+	            c.setCurSetCode(setCode);
+	            top.add(c);
+	        }
         }
         CardList bottom = new CardList();
-        for (int i = 0; i < deck.countMain(); i++) {
-            String cardName = deck.getMain(i);
-            //String setCode = "";
-            if (cardName.contains("|")) {
-                String s[] = cardName.split("\\|", 2);
-                cardName = s[0];
-                //setCode = s[1];
-            }
-
-            bottom.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+        if (deck.countMain() > 0) {
+	        for (int i = 0; i < deck.countMain(); i++) {
+	            String cardName = deck.getMain(i);
+	            String setCode = "";
+	            if (cardName.contains("|")) {
+	                String s[] = cardName.split("\\|", 2);
+	                cardName = s[0];
+	                setCode = s[1];
+	            }
+	            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+	            c.setCurSetCode(setCode);
+	            bottom.add(c);
+	        }
         }
-
         deckDisplay.updateDisplay(top, bottom);
     }//showSealedDeck()
 
@@ -895,31 +910,23 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         CardList top = new CardList();
         for (int i = 0; i < deck.countSideboard(); i++) {
             String cardName = deck.getSideboard(i);
-            String setCode = "";
             if (cardName.contains("|")) {
                 String s[] = cardName.split("\\|", 2);
                 cardName = s[0];
-                setCode = s[1];
             }
 
-            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
-            c.setCurSetCode(setCode);
-            top.add(c);
+            top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
         }
 
         CardList bottom = new CardList();
         for (int i = 0; i < deck.countMain(); i++) {
             String cardName = deck.getMain(i);
-            String setCode = "";
             if (cardName.contains("|")) {
                 String s[] = cardName.split("\\|", 2);
                 cardName = s[0];
-                setCode = s[1];
             }
 
-            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
-            c.setCurSetCode(setCode);
-            bottom.add(c);
+            bottom.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
         }
 
         deckDisplay.updateDisplay(top, bottom);
@@ -1140,9 +1147,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         if (!currentGameType.equals(Constant.GameType.Constructed)) {
             list = deckDisplay.getTop();
             for (int i = 0; i < list.size(); i++) {
-                cardName = list.get(i).getName();
+                cardName = list.get(i).getName() + "|" + list.get(i).getCurSetCode();
                 deck.addSideboard(AllZone.NameChanger.getOriginalName(cardName));
             }
+            if (currentGameType.equals(Constant.GameType.Sealed))
+            	deck.addMetaData("PlayerType", currentDeckPlayerType);
         }
         return deck;
     }//getDeck()
@@ -1150,8 +1159,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     private void setupMenu() {
         JMenuItem newConstructed = new JMenuItem("New Deck - Constructed");
 
-        JMenuItem newSealed = new JMenuItem("New Deck - Sealed");
-        JMenuItem newDraft = new JMenuItem("New Deck - Draft");
+        //JMenuItem newSealed = new JMenuItem("New Deck - Sealed");
+        //JMenuItem newDraft = new JMenuItem("New Deck - Draft");
 
         JMenuItem newRandomConstructed = new JMenuItem("New Deck - Generate Random Constructed Cardpool");
         JMenuItem newGenerateConstructed = new JMenuItem("New Deck - Generate Constructed Deck");
@@ -1166,8 +1175,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         JMenuItem openSealed = new JMenuItem("Open Deck - Sealed");
         JMenuItem openDraft = new JMenuItem("Open Deck - Draft");
 
-        newDraftItem = newDraft;
-        newDraftItem.setEnabled(false);
+        //newDraftItem = newDraft;
+        //newDraftItem.setEnabled(false);
 
         JMenuItem save = new JMenuItem("Save");
         JMenuItem saveAs = new JMenuItem("Save As");
@@ -1177,8 +1186,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         JMenu fileMenu = new JMenu("Deck Actions");
         fileMenu.add(newConstructed);
 
-        fileMenu.add(newSealed);
-        fileMenu.add(newDraft);
+        //fileMenu.add(newSealed);
+        //fileMenu.add(newDraft);
         fileMenu.addSeparator();
 
         fileMenu.add(openConstructed);
@@ -1299,7 +1308,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         });
 
 
-        newSealed.addActionListener(new ActionListener() {
+/*        newSealed.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     SwingUtilities.invokeLater(new Runnable() {
@@ -1313,8 +1322,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 }
             }
         });
-
-        newDraft.addActionListener(new ActionListener() {
+*/
+/*        newDraft.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {
                     SwingUtilities.invokeLater(new Runnable() {
@@ -1328,7 +1337,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 }
             }
         });
-
+*/
         openConstructed.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
                 try {

@@ -318,6 +318,8 @@ public interface NewConstants {
                 public static final String DEV_MODE         = "%s/NewGame/devmode";
                 public static final String QUEST_MODE         = "%s/NewGame/questmode";
                 public static final String START_GAME         = "%s/NewGame/startgame";
+                public static final String SAVE_SEALED_MSG  = "%s/NewGame/savesealed_msg";
+                public static final String SAVE_SEALED_TTL  = "%s/NewGame/savesealed_ttl";
                 
         	}
             public static interface MENU_BAR {

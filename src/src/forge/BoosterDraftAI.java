@@ -340,9 +340,7 @@ public class BoosterDraftAI
 	
 	CardList otherCreatures = AIPlayables.getType("Creature");
 	while (nCreatures > 1 && otherCreatures.size() > 1) {
-		
-		Random r = new Random();
-		Card c = otherCreatures.get(r.nextInt(otherCreatures.size() - 1));
+		Card c = otherCreatures.get(MyRandom.random.nextInt(otherCreatures.size() - 1));
 		outList.add(c);
 		cardsNeeded--;
 		nCreatures--;
@@ -358,8 +356,7 @@ public class BoosterDraftAI
 
 	int ii = 0;
 	while (cardsNeeded > 0 && others.size() > 1) {
-		Random r = new Random();
-		Card c = others.get(r.nextInt(others.size() - 1));
+		Card c = others.get(MyRandom.random.nextInt(others.size() - 1));
 		
 		//out.addMain(c.getName());
 		outList.add(c);
@@ -378,8 +375,7 @@ public class BoosterDraftAI
 		
 		//if (z.size() < 1)
 		//	throw new RuntimeException("BoosterDraftAI : buildDeck() error, deck does not have enough non-lands");
-		Random r = new Random();
-		Card c = z.get(r.nextInt(z.size() - 1));
+		Card c = z.get(MyRandom.random.nextInt(z.size() - 1));
 		
 		//out.addMain(c.getName());
 		outList.add(c);
@@ -486,15 +482,13 @@ public class BoosterDraftAI
 	}
 	
 	while (outList.size() > 40) {
-		Random r = new Random();
-		Card c = outList.get(r.nextInt(outList.size() - 1));
+		Card c = outList.get(MyRandom.random.nextInt(outList.size() - 1));
 		outList.remove(c);
 		AIPlayables.add(c);
 	}
 	
 	while (outList.size() < 40) {
-		Random r = new Random();
-		Card c = AIPlayables.get(r.nextInt(AIPlayables.size() - 1));
+		Card c = AIPlayables.get(MyRandom.random.nextInt(AIPlayables.size() - 1));
 		outList.add(c);
 		AIPlayables.remove(c);
 	}
