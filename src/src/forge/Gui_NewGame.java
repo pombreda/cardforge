@@ -15,7 +15,6 @@ import forge.properties.ForgePreferences.CardSizeType;
 import forge.properties.ForgePreferences.StackOffsetType;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
-import forge.properties.NewConstants.LANG.Gui_NewGame.NEW_GAME_TEXT;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.MENU;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.OPTIONS;
 import net.miginfocom.swing.MigLayout;
