@@ -694,7 +694,7 @@ public class AllZoneUtil {
 	 */
 	public static CardListFilter nonlands = new CardListFilter() {
 		public boolean addCard(Card c) {
-			return c.isLand();
+			return !c.isLand();
 		}
 	};
 	
