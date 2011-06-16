@@ -33,6 +33,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     private static final long serialVersionUID     = 130339644136746796L;
     
     Gui_DeckEditor_Menu       customMenu;
+    public Gui_ProgressBarWindow gPBW = new Gui_ProgressBarWindow();
     
     //private ImageIcon         upIcon               = Constant.IO.upIcon;
     //private ImageIcon         downIcon             = Constant.IO.downIcon;
@@ -126,7 +127,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     }
     
     public void updateDisplay(CardList top, CardList bottom) {
-        
         this.top = top;
         this.bottom = bottom;
         
@@ -142,8 +142,14 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         String cardName;
         ReadBoosterPack pack = new ReadBoosterPack();
         
+        if (gPBW.isVisible())
+        	gPBW.setProgressRange(0, top.size() + bottom.size());
+        
         // update top
         for(int i = 0; i < top.size(); i++) {
+        	if (gPBW.isVisible())
+        		gPBW.increment();
+        	
             c = top.get(i);
             
             // add rarity to card if this is a sealed card pool
@@ -187,7 +193,10 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         
         // update bottom
         for(int i = 0; i < bottom.size(); i++) {
-            c = bottom.get(i);
+        	if (gPBW.isVisible())
+        		gPBW.increment();
+        	
+        	c = bottom.get(i);
             
             // add rarity to card if this is a sealed card pool
             if(!customMenu.getGameType().equals(Constant.GameType.Constructed)) c.setRarity(pack.getRarity(c.getName()));
@@ -216,6 +225,8 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             bottomModel.addCard(c);
         }// for
         
+        if (gPBW.isVisible())
+        	gPBW.setTitle("Sorting Deck Editor");
         topModel.resort();
         topTable.repaint();
         bottomModel.resort();
@@ -442,6 +453,11 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             }
         };
         
+    	//pm = new ProgressMonitor(this, "Loading Deck Editor", "", 0, 20000);
+    	gPBW.setTitle("Loading Deck Editor");
+    	gPBW.setVisible(true);
+    	
+        
         customMenu = new Gui_DeckEditor_Menu(this, exit);
         this.setJMenuBar(customMenu);
         
@@ -458,10 +474,13 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         setup();
         
         //show cards, makes this user friendly
-        customMenu.newConstructed();
+        if (Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed))
+        	customMenu.newConstructed();
         
         topModel.sort(1, true);
         bottomModel.sort(1, true);
+        
+        gPBW.dispose();
     }//show(Command)
     
     private void addListeners() {
@@ -817,25 +836,31 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         if(n != -1) {
             Card c = topModel.rowToCard(n);
             
-            Card newC = new Card();
-            newC.setName(c.getName());
-            newC.setColor(c.getColor());
-            newC.setType(c.getType());
-            newC.setManaCost(c.getManaCost());
-            newC.setBaseAttack(c.getBaseAttack());
-            newC.setBaseDefense(c.getBaseDefense());
-            newC.setBaseLoyalty(c.getBaseLoyalty());
-            newC.setRarity(c.getRarity());
-            newC.setCurSetCode(c.getCurSetCode());
-            newC.setImageFilename(c.getImageFilename());
-            newC.setSets(c.getSets());
-            newC.setText(c.getText());
-            
-            bottomModel.addCard(newC);
-            bottomModel.resort();
-            
-            if(!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
-                topModel.removeCard(c);
+            if (customMenu.getGameType().equals(Constant.GameType.Constructed)) {
+	            Card newC = new Card();
+	            newC.setName(c.getName());
+	            newC.setColor(c.getColor());
+	            newC.setType(c.getType());
+	            newC.setManaCost(c.getManaCost());
+	            newC.setBaseAttack(c.getBaseAttack());
+	            newC.setBaseDefense(c.getBaseDefense());
+	            newC.setBaseLoyalty(c.getBaseLoyalty());
+	            newC.setRarity(c.getRarity());
+	            newC.setCurSetCode(c.getCurSetCode());
+	            newC.setImageFilename(c.getImageFilename());
+	            newC.setSets(c.getSets());
+	            newC.setText(c.getText());
+	            
+	            bottomModel.addCard(newC);
+	            bottomModel.resort();
+            }
+            else {
+            //if(!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
+                bottomModel.addCard(c);
+                bottomModel.resort();
+                
+                top.remove(c);
+            	topModel.removeCard(c);
             }
             
             //3 conditions" 0 cards left, select the same row, select next row
@@ -1012,18 +1037,19 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     private void refreshGui() {
         Deck deck = Constant.Runtime.HumanDeck[0];
         if(deck == null) //this is just a patch, i know
-        deck = new Deck(Constant.Runtime.GameType[0]);
+        	deck = new Deck(Constant.Runtime.GameType[0]);
         
         topModel.clear();
         bottomModel.clear();
         
         Card c;
-        ReadBoosterPack pack = new ReadBoosterPack();
+        //ReadBoosterPack pack = new ReadBoosterPack();
         for(int i = 0; i < deck.countMain(); i++) {
             c = AllZone.CardFactory.getCard(deck.getMain(i), AllZone.HumanPlayer);
             
             //add rarity to card if this is a sealed card pool
-            if(Constant.Runtime.GameType[0].equals(Constant.GameType.Sealed)) c.setRarity(pack.getRarity(c.getName()));
+            //if(Constant.Runtime.GameType[0].equals(Constant.GameType.Sealed))
+            //	c.setRarity(pack.getRarity(c.getName()));
             
             bottomModel.addCard(c);
         }//for
@@ -1032,7 +1058,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             //add sideboard to GUI
             for(int i = 0; i < deck.countSideboard(); i++) {
                 c = AllZone.CardFactory.getCard(deck.getSideboard(i), AllZone.HumanPlayer);
-                c.setRarity(pack.getRarity(c.getName()));
+                //c.setRarity(pack.getRarity(c.getName()));
                 topModel.addCard(c);
             }
         } else {

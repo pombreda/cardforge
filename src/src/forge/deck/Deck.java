@@ -182,6 +182,13 @@ public class Deck implements Comparable<Deck>, Serializable{
     public Set<Map.Entry<String,String>> getMetadata() {
         return metadata.entrySet();
     }
+    
+    public String getMetadata(String key) {
+    	if (metadata.containsKey(key))
+    		return metadata.get(key);
+    	
+    	return "";
+    }
 
     public void addMetaData(String key, String value) {
         metadata.put(key, value);
