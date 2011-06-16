@@ -338,10 +338,8 @@ public class ComputerUtil
 
 	  CardList land = getAvailableMana(player);
 
-	  if(card.isLand())
-	  {
-		  land.remove(card);
-	  }
+	  //this is to prevent errors for land cards that have abilities that cost mana
+	  land.remove(card);
 	  
 	  ArrayList<String> colors;
 
@@ -352,14 +350,14 @@ public class ComputerUtil
 		  int once = 0;
 			
 		  for(Ability_Mana m : manaAbilities){
-
+			  
 			  //if the AI can't pay the additional costs skip the mana ability
 			  if (m.getPayCosts() != null) {
 				  if (!canPayAdditionalCosts(m, player))
 					  continue;
-			  }
-			  else if(sourceLand.isTapped() && m.isTapAbility())
-				  continue;
+			  } else
+				  if(sourceLand.isTapped())
+					  continue;
 			  
 			  colors = getProduceableColors(m, player);
 	
@@ -384,19 +382,22 @@ public class ComputerUtil
   
   
   static public int determineLeftoverMana(SpellAbility sa){
+	  return determineLeftoverMana(sa, AllZone.ComputerPlayer);
+  }
+  
+  static public int determineLeftoverMana(SpellAbility sa, Player player){
 	  // This function should mostly be called to determine how much mana AI has leftover to pay X costs
 	  // This function is basically getAvailableMana.size() - sa.getConvertedManaCost()
 	  // Except in the future the AI can hopefully use mana sources that provided more than a single mana
 
+	  
 	  int xMana = 0;
 	  boolean paid = false;
 
 	  CardList land = getAvailableMana();
-
-	  if(sa.getSourceCard().isLand() /*&& sa.isTapAbility()*/)
-	  {
-		  land.remove(sa.getSourceCard());
-	  }
+	  
+	  //this is to prevent errors for land cards that have abilities that cost mana
+	  land.remove(sa.getSourceCard());
 
 	  ManaCost cost = new ManaCost(sa.getManaCost());
 	  cost = AllZone.GameAction.getSpellCostChange(sa, cost);
@@ -406,26 +407,43 @@ public class ComputerUtil
 
 	  for(int i = 0; i < land.size(); i++)
 	  {
-		  colors = getColors(land.get(i));
-		  int j;
-		  for(j =0; j < colors.size(); j++)
-		  {			  
-			  if (paid){
-				  j = colors.size();
+		  Card sourceLand = land.get(i);
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
+		  boolean landUsed = false;
+			
+		  for(Ability_Mana m : manaAbilities){
+			  
+			  if (landUsed) break; //don't check other mana abilities of the same card
+			  
+			  //if the AI can't pay the additional costs skip the mana ability
+			  if (m.getPayCosts() != null) {
+				  if (!canPayAdditionalCosts(m, player))
+					  continue;
+			  } else
+				  if(sourceLand.isTapped())
+					  continue;
+			  
+			  if(paid)
 				  break;
-			  }
-			  if(cost.isNeeded(colors.get(j)))
-			  {
-				  cost.payMana(colors.get(j));
-				  paid = cost.isPaid();
-				  break;
+			  
+			  colors = getProduceableColors(m, player);
+			  int j;
+			  for(j =0; j < colors.size(); j++)
+			  {			  
+				  if(cost.isNeeded(colors.get(j)))
+				  {
+					  cost.payMana(colors.get(j));
+					  paid = cost.isPaid();
+					  landUsed = true; //don't check other mana abilities of the same card
+					  break;
+				  }
 			  }
 		  }
-		  if (j == colors.size())	// Cost either paid, or this card doesn't produce a "needed" color
+		  if (!landUsed)
 			  xMana++;
 	  }
 	  
-	  return xMana; 
+	  return xMana;
   }
   
   static public boolean canPayAdditionalCosts(SpellAbility sa)
@@ -600,38 +618,7 @@ public class ComputerUtil
 		
 		return true;
   }
-  /*
-  static public boolean canPayCost(String cost)
-  {
-    if(cost.equals(("0")))
-       return true;
-
-    CardList land = getAvailableMana();
-    
-    ManaCost manacost = new ManaCost(cost);
-    
-    ArrayList<String> colors;
-
-    for(int i = 0; i < land.size(); i++)
-    {
-      colors = getColors(land.get(i));
-      int once = 0;
-      
-      for(int j =0; j < colors.size(); j++)
-      {
-	      if(manacost.isNeeded(colors.get(j)) && once == 0)
-	      { 
-	        manacost.payMana(colors.get(j));
-	        once++;
-	      }
-
-	      if(manacost.isPaid()) {
-	    	  return true;
-	      }
-      }
-    }
-    return false;
-  }//canPayCost()*/
+  
 
   static public void payManaCost(SpellAbility sa)
   {
@@ -669,10 +656,7 @@ public class ComputerUtil
 	  CardList land = getAvailableMana();
 
 	  //this is to prevent errors for land cards that have abilities that cost mana.
-	  if(sa.getSourceCard().isLand() /*&& sa.isTapAbility()*/)
-	  {
-		  land.remove(sa.getSourceCard());
-	  }
+	  land.remove(sa.getSourceCard());
 
 	  for(int i = 0; i < land.size(); i++)
 	  {
@@ -680,14 +664,14 @@ public class ComputerUtil
 		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
 			
 		  for(Ability_Mana m : manaAbilities){
-
+			  
 			  //if the AI can't pay the additional costs skip the mana ability
 			  if (m.getPayCosts() != null) {
 				  if (!canPayAdditionalCosts(m, player))
 					  continue;
-			  } 
-			  else if(sourceLand.isTapped() && m.isTapAbility())
-				  continue;
+			  } else
+				  if(sourceLand.isTapped())
+					  continue;
 			  
 			  colors = getProduceableColors(m, player);
 			  for(int j = 0; j <colors.size();j++)
@@ -760,37 +744,6 @@ public class ComputerUtil
 		if (!colors.contains(Constant.Color.Colorless) && m.isBasic() && m.mana().equals("1"))
 			colors.add(Constant.Color.Colorless);
 		
-		return colors;
-  }
-  
- 
-  public static ArrayList<String> getColors(Card land)
-  {
-	  // loop through abilities and peek at mana abilities
-	  // any mana abilities, look what color they produce
-	  
-		ArrayList<String> colors = new ArrayList<String>();
-		ArrayList<Ability_Mana> mana = land.getManaAbility();
-		
-		for(Ability_Mana m : mana){
-			
-			//if the mana ability is not avaiable move to the next one
-			m.setActivatingPlayer(land.getController());
-			if (!m.canPlay()) continue;
-			
-			if (!colors.contains(Constant.Color.Black) && m.isBasic() && m.mana().equals("B"))
-				colors.add(Constant.Color.Black);
-			if (!colors.contains(Constant.Color.White) && m.isBasic() && m.mana().equals("W"))
-				colors.add(Constant.Color.White);
-			if (!colors.contains(Constant.Color.Green) && m.isBasic() && m.mana().equals("G"))
-				colors.add(Constant.Color.Green);
-			if (!colors.contains(Constant.Color.Red) && m.isBasic() && m.mana().equals("R"))
-				colors.add(Constant.Color.Red);
-			if (!colors.contains(Constant.Color.Blue) && m.isBasic() && m.mana().equals("U"))
-				colors.add(Constant.Color.Blue);
-			if (!colors.contains(Constant.Color.Colorless) && m.isBasic() && m.mana().equals("1"))
-				colors.add(Constant.Color.Colorless);
-		}
 		return colors;
   }
 
