@@ -130,51 +130,7 @@ public class CardFactory_Sorceries {
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
         
-/*        
-	
-	    //*************** START *********** START **************************
-        else if(cardName.equals("Identity Crisis")) {
-        	Target t = new Target(card, "Select target player", "Player");
-        	Cost cost = new Cost("2 W W B B", cardName, false);
-        	
-            final SpellAbility spell = new Spell(card, cost, t) {
-                private static final long serialVersionUID = 42470566751344693L;
-                
-                @Override
-                public boolean canPlayAI() {
-                    Player player = AllZone.HumanPlayer;
-                    CardList libList = AllZoneUtil.getPlayerCardsInLibrary(player);
-                    return libList.size() > 0;
-                }
-                
-                @Override
-                public void resolve() {
-                    Player player = getTargetPlayer();
-                    
-                    CardList handList = AllZoneUtil.getPlayerHand(player);
-                    CardList graveList = AllZoneUtil.getPlayerGraveyard(player);
-                    
-                    int max = handList.size();
-                    for(int i = 0; i < max; i++) {
-                        Card c = handList.get(i);
-                        AllZone.GameAction.exile(c);
-                    }
-                    int grv = graveList.size();
-                    for(int i = 0; i < grv; i++) {
-                        Card c = graveList.get(i);
-                        AllZone.GameAction.exile(c);
-                    }
-                }
-            };//SpellAbility
-            spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-
- */
-       
+        
         //*************** START *********** START **************************
         else if(cardName.equals("Do or Die")) {
         	// TODO: Please please please, someone fix this card
@@ -662,35 +618,6 @@ public class CardFactory_Sorceries {
         	card.clearFirstSpellAbility();
         	card.addSpellAbility(spell);
         }//*************** END ************ END **************************
-       
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Feudkiller's Verdict")) {
-            SpellAbility spell = new Spell(card) {
-                private static final long serialVersionUID = -5532477141899236266L;
-                
-                @Override
-                public void resolve() {
-                	Player player = card.getController();
-                    player.gainLife(10, card);
-                    
-                    Player opponent = card.getController().getOpponent();
-                    
-                    if(opponent.getLife() < player.getLife()) makeToken();
-                }//resolve()
-                
-                void makeToken() {
-                    CardFactoryUtil.makeToken("Giant Warrior", "W 5 5 Giant Warrior", card.getController(), "W", new String[] {
-                            "Creature", "Giant", "Warrior"}, 5, 5, new String[] {""});
-                }//makeToken()
-                
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-
 
         
         //*************** START *********** START **************************
