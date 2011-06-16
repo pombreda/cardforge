@@ -82,7 +82,8 @@ public class ComputerUtil
 				sa.chooseTargetAI();
 
 			Cost_Payment pay = new Cost_Payment(cost, sa);
-			pay.payComputerCosts();
+			if (pay.payComputerCosts())
+				AllZone.Stack.addAndUnfreeze(sa);
 		}
   }
   
@@ -192,7 +193,8 @@ public class ComputerUtil
 	}
 	else{
 		Cost_Payment pay = new Cost_Payment(cost, bestSA);
-		pay.payComputerCosts();
+		if (pay.payComputerCosts())
+			AllZone.Stack.addAndUnfreeze(bestSA);
 	}
 	
 	return true;
@@ -345,20 +347,37 @@ public class ComputerUtil
 
 	  for(int i = 0; i < land.size(); i++)
 	  {
-		  colors = getColors(land.get(i));
+		  Card sourceLand = land.get(i);
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
 		  int once = 0;
-
-		  for(int j =0; j < colors.size(); j++)
-		  {
-			  if(cost.isNeeded(colors.get(j)) && once == 0)
+			
+		  for(Ability_Mana m : manaAbilities){
+			  
+			  if(sourceLand.isTapped())
+				  continue;
+			  
+			  //if the AI can't pay the additional costs skip the mana ability
+			  if (m.getPayCosts() != null) {
+				  if (!canPayAdditionalCosts(m, player))
+					  continue;
+			  } else
+				  if(sourceLand.isTapped())
+					  continue;
+			  
+			  colors = getProduceableColors(m, player);
+	
+			  for(int j =0; j < colors.size(); j++)
 			  {
-				  cost.payMana(colors.get(j));
-				  once++;
-			  }
-
-			  if(cost.isPaid()) {
-				  manapool.clearPay(sa, true);
-				  return canPayAdditionalCosts(sa, player);
+				  if(cost.isNeeded(colors.get(j)) && once == 0)
+				  {
+					  cost.payMana(colors.get(j));
+					  once++;
+				  }
+	
+				  if(cost.isPaid()) {
+					  manapool.clearPay(sa, true);
+					  return canPayAdditionalCosts(sa, player);
+				  }
 			  }
 		  }
 	  }
@@ -584,7 +603,7 @@ public class ComputerUtil
 		
 		return true;
   }
-  
+  /*
   static public boolean canPayCost(String cost)
   {
     if(cost.equals(("0")))
@@ -615,11 +634,12 @@ public class ComputerUtil
       }
     }
     return false;
-  }//canPayCost()
+  }//canPayCost()*/
 
   static public void payManaCost(SpellAbility sa)
   {
 	  String mana = sa.getPayCosts() != null ? sa.getPayCosts().getTotalMana() : sa.getManaCost();
+	  Player player = AllZone.ComputerPlayer;
 
 	  ManaCost cost = AllZone.GameAction.getSpellCostChange(sa, new ManaCost(mana));
 
@@ -659,39 +679,62 @@ public class ComputerUtil
 
 	  for(int i = 0; i < land.size(); i++)
 	  {
-		  final Card sourceLand = land.get(i);
-		  colors = getColors(land.get(i));
-		  for(int j = 0; j <colors.size();j++)
-		  {
-			  if(cost.isNeeded(colors.get(j)) && sourceLand.isUntapped())
+		  Card sourceLand = land.get(i);
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
+			
+		  for(Ability_Mana m : manaAbilities){
+			  
+			  if(sourceLand.isTapped())
+				  continue;
+			  
+			  //if the AI can't pay the additional costs skip the mana ability
+			  if (m.getPayCosts() != null) {
+				  if (!canPayAdditionalCosts(m, player))
+					  continue;
+			  } else
+				  if(sourceLand.isTapped())
+					  continue;
+			  
+			  colors = getProduceableColors(m, player);
+			  for(int j = 0; j <colors.size();j++)
 			  {
-				  sourceLand.tap();
-				  cost.payMana(colors.get(j));
+				  if(cost.isNeeded(colors.get(j)))
+				  {
 
-				  if (sourceLand.getName().equals("Undiscovered Paradise")) {
-					  sourceLand.setBounceAtUntap(true);
+					  //Pay additional costs
+					  if (m.getPayCosts() != null) {
+						  Cost_Payment pay = new Cost_Payment(m.getPayCosts(), m);
+						  if(!pay.payComputerCosts()) continue;
+					  }else
+						  sourceLand.tap();
+					  
+					  cost.payMana(colors.get(j));
+	
+					  if (sourceLand.getName().equals("Undiscovered Paradise")) {
+						  sourceLand.setBounceAtUntap(true);
+					  }
+	
+					  if(sourceLand.getName().equals("Rainbow Vale")) {
+						  sourceLand.addExtrinsicKeyword("An opponent gains control of CARDNAME at the beginning of the next end step.");
+					  }
+	
+					  //System.out.println("just subtracted " + colors.get(j) + ", cost is now: " + cost.toString());
+					  //Run triggers        
+				      HashMap<String,Object> runParams = new HashMap<String,Object>();
+	
+				      runParams.put("Card", sourceLand);
+				      runParams.put("Player", player);
+				      runParams.put("Produced", colors.get(j)); //can't tell what mana to computer just paid?
+				      AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);
+	
 				  }
-
-				  if(sourceLand.getName().equals("Rainbow Vale")) {
-					  sourceLand.addExtrinsicKeyword("An opponent gains control of CARDNAME at the beginning of the next end step.");
+				  if(cost.isPaid())
+				  {
+					  //if (sa instanceof Spell_Permanent) // should probably add this
+					  sa.getSourceCard().setSunburstValue(cost.getSunburst());
+					  AllZone.Computer_ManaPool.clearPay(sa, false);
+					  break; 
 				  }
-
-				  //System.out.println("just subtracted " + colors.get(j) + ", cost is now: " + cost.toString());
-				  //Run triggers        
-			      HashMap<String,Object> runParams = new HashMap<String,Object>();
-
-			      runParams.put("Card", sourceLand);
-			      runParams.put("Player", AllZone.ComputerPlayer);
-			      runParams.put("Produced", colors.get(j)); //can't tell what mana to computer just paid?
-			      AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);
-
-			  }
-			  if(cost.isPaid())
-			  {
-				  //if (sa instanceof Spell_Permanent) // should probably add this
-				  sa.getSourceCard().setSunburstValue(cost.getSunburst());
-				  AllZone.Computer_ManaPool.clearPay(sa, false);
-				  break; 
 			  }
 		  }
 
@@ -700,6 +743,31 @@ public class ComputerUtil
 		  throw new RuntimeException("ComputerUtil : payManaCost() cost was not paid for " + sa.getSourceCard().getName());
       
   }//payManaCost()
+  
+  
+  public static ArrayList<String> getProduceableColors(Ability_Mana m, Player player)
+  {
+		ArrayList<String> colors = new ArrayList<String>();
+			
+		//if the mana ability is not avaiable move to the next one
+		m.setActivatingPlayer(player);
+		if (!m.canPlay()) return colors;
+		
+		if (!colors.contains(Constant.Color.Black) && m.isBasic() && m.mana().equals("B"))
+			colors.add(Constant.Color.Black);
+		if (!colors.contains(Constant.Color.White) && m.isBasic() && m.mana().equals("W"))
+			colors.add(Constant.Color.White);
+		if (!colors.contains(Constant.Color.Green) && m.isBasic() && m.mana().equals("G"))
+			colors.add(Constant.Color.Green);
+		if (!colors.contains(Constant.Color.Red) && m.isBasic() && m.mana().equals("R"))
+			colors.add(Constant.Color.Red);
+		if (!colors.contains(Constant.Color.Blue) && m.isBasic() && m.mana().equals("U"))
+			colors.add(Constant.Color.Blue);
+		if (!colors.contains(Constant.Color.Colorless) && m.isBasic() && m.mana().equals("1"))
+			colors.add(Constant.Color.Colorless);
+		
+		return colors;
+  }
   
  
   public static ArrayList<String> getColors(Card land)
