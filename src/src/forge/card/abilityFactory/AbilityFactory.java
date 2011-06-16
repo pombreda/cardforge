@@ -661,6 +661,15 @@ public class AbilityFactory {
 				SA = AbilityFactory_Choose.createDrawbackChooseType(this);
 		}
 		
+		if (API.equals("ChooseColor")){
+			if (isAb)
+				SA = AbilityFactory_Choose.createAbilityChooseColor(this);
+			else if (isSp)
+				SA = AbilityFactory_Choose.createSpellChooseColor(this);
+			else if (isDb)
+				SA = AbilityFactory_Choose.createDrawbackChooseColor(this);
+		}
+		
 		if(API.equals("CopyPermanent")) {
 			if(isAb)
 				SA = AbilityFactory_Copy.createAbilityCopyPermanent(this);
