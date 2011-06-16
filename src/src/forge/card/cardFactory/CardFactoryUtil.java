@@ -803,7 +803,7 @@ public class CardFactoryUtil {
             @Override
             public boolean canPlay() {
                 for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    if(AllZone.Stack.peekInstance(i).equals(sourceCard)) return false;
+                    if(AllZone.Stack.peekInstance(i).getSourceCard().equals(sourceCard)) return false;
                 }
                 
                 if (AllZoneUtil.isCardInPlay(sourceCard) 

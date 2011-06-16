@@ -204,7 +204,7 @@ class CardFactory_Lands {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     if(card.getCounters(Counters.ICE) > 0 && AllZoneUtil.isCardInPlay(card) && super.canPlay()) return true;

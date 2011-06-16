@@ -408,7 +408,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -479,7 +479,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -560,7 +560,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -783,7 +783,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -1585,7 +1585,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
