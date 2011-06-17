@@ -347,6 +347,9 @@ public class ComputerUtil
 	  {
 		  Card sourceLand = land.get(i);
 		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
+		  
+		  manaAbilities = sortForNeeded(cost, manaAbilities, player);
+		  
 		  int once = 0;
 			
 		  for(Ability_Mana m : manaAbilities){
@@ -408,6 +411,7 @@ public class ComputerUtil
 	  {
 		  Card sourceLand = land.get(i);
 		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
+		  manaAbilities = sortForNeeded(cost, manaAbilities, player);
 		  boolean sourceUsed = false;
 		  boolean sourceCanBeUsed = false; //The card has at least one usable mana ability
 			
@@ -666,6 +670,8 @@ public class ComputerUtil
 	  {
 		  Card sourceLand = land.get(i);
 		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
+		  
+		  manaAbilities = sortForNeeded(cost, manaAbilities, player);
 			
 		  for(Ability_Mana m : manaAbilities){
 			  
@@ -737,8 +743,8 @@ public class ComputerUtil
 		ArrayList<String> colors = new ArrayList<String>();
 			
 		//if the mana ability is not avaiable move to the next one
-		/*m.setActivatingPlayer(player);
-		if (!m.canPlay()) return colors;*/
+		m.setActivatingPlayer(player);
+		if (!m.canPlay()) return colors;
 		
 		if (!colors.contains(Constant.Color.Black) && m.isBasic() && m.mana().equals("B"))
 			colors.add(Constant.Color.Black);
@@ -794,6 +800,45 @@ public class ComputerUtil
 
 	  return sortedMana;
   }//getAvailableMana()
+  
+  // sorts the most needed mana abilities to come first
+  static public ArrayList<Ability_Mana> sortForNeeded(ManaCost cost, ArrayList<Ability_Mana> manaAbilities, Player player) {
+	  
+	  ArrayList<String> colors;
+	  
+	  ArrayList<Ability_Mana> res = new ArrayList<Ability_Mana>();
+	  
+	  ManaCost onlyColored = new ManaCost(cost.toString());
+	  
+	  onlyColored.removeColorlessMana();
+	  
+	  for(Ability_Mana am:manaAbilities) {
+		  colors = getProduceableColors(am, player);
+		  for(int j = 0; j <colors.size();j++)
+		  {
+	  		if(onlyColored.isNeeded(colors.get(j))) {
+	  			res.add(am);
+	  			break;
+	  		}
+		  }
+	  }
+	  
+	  for(Ability_Mana am:manaAbilities) {
+		  
+		  if (res.contains(am)) break;
+		  
+		  colors = getProduceableColors(am, player);
+		  for(int j = 0; j <colors.size();j++)
+		  {
+	  		if(cost.isNeeded(colors.get(j))) {
+	  			res.add(am);
+	  			break;
+	  		}
+		  }
+	  }
+      
+      return res;
+  }
   
 
   //plays a land if one is available
