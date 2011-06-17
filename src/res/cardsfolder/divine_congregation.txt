@@ -7,4 +7,5 @@ A:SP$ GainLife | Cost$ 3 W | LifeAmount$ X | ValidTgts$ Player | TgtPrompt$ Sele
 SVar:X:TargetedPlayer$CreaturesInPlay/Times.2
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/divine_congregation.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/13.jpg
 End

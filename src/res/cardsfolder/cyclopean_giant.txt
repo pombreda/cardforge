@@ -8,4 +8,5 @@ SVar:TrigAnimate:AB$ Animate | Cost$ 0 | ValidTgts$ Land | TgtPrompt$ Select tar
 SVar:DBExile:DB$ChangeZone | Defined$ Self | Origin$ Graveyard | Destination$ Exile
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/cyclopean_giant.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/100.jpg
 End
