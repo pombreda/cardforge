@@ -350,16 +350,8 @@ public class ComputerAI_General implements Computer {
     	sas = getOtherPhases();
     	if (sas.length > 0){
 			// Spell not Countered 
-    		// each AF should check the Stack/Phase on it's own
-			
-			//ArrayList<Object> targets = topSA.getTarget().getTargets();
-	    	// does it target me or something I own?
-	    	// can i protect it? can I counter it?
-	    	
-	    	// if i can't save it, can I activate an ability on that card in response? sacrifice etc?
-	    	
-	    	// does it target his stuff? can I kill it in response?
-
+    		if (!ComputerUtil.playCards(sas))
+    			return;
     	}
     	// if this hasn't been covered above, just PassPriority()
     	AllZone.Phase.passPriority();
