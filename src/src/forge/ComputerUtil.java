@@ -782,10 +782,11 @@ public class ComputerUtil
 	  return getAvailableMana(AllZone.ComputerPlayer);
   }//getAvailableMana()
   
+  //gets available mana sources and sorts them
   static public CardList getAvailableMana(final Player player)
   {
 	  CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-	  CardList mana = list.filter(new CardListFilter()
+	  CardList manaSources = list.filter(new CardListFilter()
 	  {
 		  public boolean addCard(Card c)
 		  {
@@ -798,22 +799,55 @@ public class ComputerUtil
 		  }
 	  });//CardListFilter
 
-	  CardList sortedMana = new CardList();
-
-	  for (int i=0; i<mana.size();i++)
-	  {
-		  Card card = mana.get(i);
-		  if (card.isBasicLand()){
-			  sortedMana.add(card);
-			  mana.remove(card);
+	  CardList sortedManaSources = new CardList();
+	  
+	  //Search for mana sources that have a certain number of mana abilities (start with 1 and go up to 5) and no drawback/costs
+	  for (int number = 1; number < 6; number++)
+		  for (int i=0; i<manaSources.size();i++)
+		  {
+			  Card card = manaSources.get(i);
+			  
+			  if (card.isCreature()) break; //don't use creatures before other permanents
+			  
+			  int usableManaSources = 0;
+			  boolean needsLimitedResources = false;
+			  ArrayList<Ability_Mana> manaAbilities = card.getAIPlayableMana();
+			  
+			  for(Ability_Mana m : manaAbilities){
+				  
+				  Cost cost = m.getPayCosts();
+				  
+				  //if the AI can't pay the additional costs skip the mana ability
+				  if (cost != null) {
+					  if (!canPayAdditionalCosts(m, player))
+						  continue;
+					  if (cost.getSubCounter() || cost.getLifeCost())
+						  needsLimitedResources = true;
+				  } else
+					  if(card.isTapped())
+						  continue;
+				  
+				  //don't use abilities with dangerous drawbacks
+				  if(m.getSubAbility() != null) {
+					  if (!m.getSubAbility().chkAI_Drawback())
+						  continue;
+					  needsLimitedResources = true; //TODO: check for good drawbacks (gainLife)
+				  }
+				  usableManaSources++;
+			  }
+			  
+			  if(usableManaSources == number && !needsLimitedResources)
+				  sortedManaSources.add(card);
 		  }
-	  }
-	  for (int j=0; j<mana.size();j++)
+	  
+	  //Add the rest
+	  for (int j=0; j<manaSources.size();j++)
 	  {
-		  sortedMana.add(mana.get(j));
+		  if (!sortedManaSources.contains(manaSources.get(j)))
+			  sortedManaSources.add(manaSources.get(j));
 	  }
 
-	  return sortedMana;
+	  return sortedManaSources;
   }//getAvailableMana()
   
   // sorts the most needed mana abilities to come first
