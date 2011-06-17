@@ -863,13 +863,13 @@ public class AbilityFactory_PermanentState {
 		HashMap<String,String> params = af.getMapParams();
 		Card card = sa.getSourceCard();
 
-		String Valid = "";
+		String valid = "";
 
 		if(params.containsKey("ValidCards")) 
-			Valid = params.get("ValidCards");
+			valid = params.get("ValidCards");
 
 		CardList list = AllZoneUtil.getCardsInPlay();
-		list = list.getValidCards(Valid.split(","), card.getController(), card);
+		list = list.getValidCards(valid.split(","), card.getController(), card);
 
 		for(int i = 0; i < list.size(); i++) list.get(i).untap();
 	}
@@ -1000,17 +1000,33 @@ public class AbilityFactory_PermanentState {
 	
 	private static void tapAllResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
-		Card card = sa.getSourceCard();
+		
+		CardList cards = null;
+		
+		ArrayList<Player> tgtPlayers = null;
 
-		String Valid = "";
+		Target tgt = af.getAbTgt();
+		if (tgt != null)
+			tgtPlayers = tgt.getTargetPlayers();
+		else if (params.containsKey("Defined"))		// Make sure Defined exists to use it
+			tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+		
+		if (tgtPlayers == null || tgtPlayers.isEmpty())
+			cards = AllZoneUtil.getCardsInPlay();
+		else
+			cards = AllZoneUtil.getPlayerCardsInPlay(tgtPlayers.get(0));
+		
+		cards = filterListByType(cards, params, sa);
 
-		if(params.containsKey("ValidCards")) 
-			Valid = params.get("ValidCards");
-
-		CardList list = AllZoneUtil.getCardsInPlay();
-		list = list.getValidCards(Valid.split(","), card.getController(), card);
-
-		for(int i = 0; i < list.size(); i++) list.get(i).tap();
+		for(Card c : cards) c.tap();
+	}
+	
+	private static CardList filterListByType(CardList list, HashMap<String,String> params, SpellAbility sa){
+		String type = params.containsKey("ValidCards") ? params.get("ValidCards") : "";
+		if (type == "")
+			return list;
+		
+		return list.getValidCards(type.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 	}
 
 	private static boolean tapAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
@@ -1024,6 +1040,11 @@ public class AbilityFactory_PermanentState {
 		Card source = sa.getSourceCard();
 		HashMap<String,String> params = af.getMapParams();
 
+		//TODO - targeting with TapAll
+		//CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+		//human = human.filter(AllZoneUtil.tapped);
+		//return human.size() > 0 && AllZone.Phase.getPhase().equals("Main1");
+		
 		String valid = "";
 		if(params.containsKey("ValidCards")) 
 			valid = params.get("ValidCards");
