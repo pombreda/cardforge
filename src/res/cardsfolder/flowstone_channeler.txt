@@ -1,4 +1,4 @@
-Name:Flowstone Channel
+Name:Flowstone Channeler
 ManaCost:2 R
 Types:Creature Human Spellshaper
 Text:no text
