@@ -748,6 +748,15 @@ public class AbilityFactory {
 			else if (isDb)
 				SA = AbilityFactory_Debuff.createDrawbackDebuffAll(this);
 		}
+        
+        if(API.equals("DrainMana")) {
+			if (isAb)
+				SA = AbilityFactory_Mana.createAbilityDrainMana(this);
+			else if (isSp)
+				SA = AbilityFactory_Mana.createSpellDrainMana(this);
+			else if (isDb)
+				SA = AbilityFactory_Mana.createDrawbackDrainMana(this);
+		}
 
 		if (SA == null)
 			throw new RuntimeException("AbilityFactory : SpellAbility was not created for "+hostCard.getName()+". Looking for API: "+API);

@@ -2,14 +2,19 @@ package forge.card.abilityFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.Card;
 import forge.CardList;
+import forge.ComputerUtil;
 import forge.Constant;
 import forge.Counters;
+import forge.MyRandom;
 import forge.Player;
+import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Mana;
 import forge.card.spellability.Ability_Sub;
 import forge.card.spellability.Cost;
@@ -515,4 +520,236 @@ public class AbilityFactory_Mana {
 		return (landsControlled.containsName("Urza's Mine") && landsControlled.containsName("Urza's Tower") &&
 			landsControlled.containsName("Urza's Power Plant"));
 	}
-}
+	
+	// ****************************************
+	// ************** DrainMana ***************
+	// ****************************************
+	
+	public static SpellAbility createAbilityDrainMana(final AbilityFactory af) {
+		final SpellAbility abDrainMana = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
+			private static final long serialVersionUID = 5669367387381350104L;
+
+			@Override
+			public String getStackDescription() {
+				return drainManaStackDescription(af, this);
+			}
+			
+			@Override
+			public boolean canPlayAI() {
+				return drainManaCanPlayAI(af,this);
+			}
+			
+			@Override
+			public void resolve() {
+				drainManaResolve(af, this);
+			}
+
+			@Override
+			public boolean doTrigger(boolean mandatory) {
+				return drainManaTrigger(af, this, mandatory);
+			}
+			
+		};
+		return abDrainMana;
+	}
+	
+	public static SpellAbility createSpellDrainMana(final AbilityFactory af) {
+		final SpellAbility spDrainMana = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
+			private static final long serialVersionUID = -4294474468024747680L;
+
+			@Override
+			public String getStackDescription(){
+				return drainManaStackDescription(af, this);
+			}
+			
+			@Override
+			public boolean canPlayAI() {
+				return drainManaCanPlayAI(af, this);
+			}
+			
+			@Override
+			public void resolve() {
+				drainManaResolve(af, this);
+			}
+			
+		};
+		return spDrainMana;
+	}
+	
+	public static SpellAbility createDrawbackDrainMana(final AbilityFactory af) {
+		final SpellAbility dbDrainMana = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
+			private static final long serialVersionUID = 1458568386420831420L;
+
+			@Override
+			public String getStackDescription() {
+				return drainManaStackDescription(af, this);
+			}
+			
+			@Override
+			public void resolve() {
+				drainManaResolve(af, this);
+			}
+
+			@Override
+			public boolean chkAI_Drawback() {
+				return drainManaPlayDrawbackAI(af, this);
+			}
+
+			@Override
+			public boolean doTrigger(boolean mandatory) {
+				return drainManaTrigger(af, this, mandatory);
+			}
+			
+		};
+		return dbDrainMana;
+	}
+	
+	private static String drainManaStackDescription(AbilityFactory af, SpellAbility sa) {
+		StringBuilder sb = new StringBuilder();
+		
+		HashMap<String,String> params = af.getMapParams();
+
+		if (sa instanceof Ability_Sub)
+			sb.append(" ");
+		else
+			sb.append(sa.getSourceCard()).append(" - ");
+
+		ArrayList<Player> tgtPlayers;
+		Target tgt = af.getAbTgt();
+		if (tgt != null)
+			tgtPlayers = tgt.getTargetPlayers();
+		else{
+			tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+		}
+
+		Iterator<Player> it = tgtPlayers.iterator();
+		while(it.hasNext()) {
+			sb.append(it.next());
+			if(it.hasNext()) sb.append(", ");
+		}
+		
+		sb.append(" empties his or her mana pool.");
+
+		Ability_Sub subAb = sa.getSubAbility();
+		if (subAb != null)
+			sb.append(subAb.getStackDescription());
+
+		return sb.toString();
+	}
+	
+	private static boolean drainManaCanPlayAI(final AbilityFactory af, SpellAbility sa){
+		// AI cannot use this properly until he can use SAs during Humans turn
+		if (!ComputerUtil.canPayCost(sa))
+			return false;
+		
+		HashMap<String,String> params = af.getMapParams();
+		Target tgt = af.getAbTgt();
+		Card source = sa.getSourceCard();
+		
+		Random r = MyRandom.random;
+		boolean randomReturn = r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed());
+		
+		if(tgt == null) {
+			//assume we are looking to tap human's stuff
+			//TODO - check for things with untap abilities, and don't tap those.
+			ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
+			
+			if(!defined.contains(AllZone.HumanPlayer)) {
+				return false;
+			}
+		}
+		else{
+			tgt.resetTargets();
+			tgt.addTarget(AllZone.HumanPlayer);
+		}
+		
+        Ability_Sub subAb = sa.getSubAbility();
+        if(subAb != null) {
+        	randomReturn &= subAb.chkAI_Drawback();
+        }
+		
+		return randomReturn;
+	}
+	
+	private static boolean drainManaTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
+		if (!ComputerUtil.canPayCost(sa))
+			return false;
+		
+		HashMap<String,String> params = af.getMapParams();
+		Target tgt = sa.getTarget();
+		Card source = sa.getSourceCard();
+		
+		if(null == tgt) {
+			if(mandatory) {
+				return true;
+			}
+			else {
+				ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
+				
+				if(!defined.contains(AllZone.HumanPlayer)) {
+					return false;
+				}
+			}
+			
+			return true;
+		}
+		else {
+			tgt.resetTargets();
+			tgt.addTarget(AllZone.HumanPlayer);
+		}
+		
+		return true;
+	}
+	
+	private static boolean drainManaPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+		// AI cannot use this properly until he can use SAs during Humans turn
+		HashMap<String,String> params = af.getMapParams();
+		Target tgt = af.getAbTgt();
+		Card source = sa.getSourceCard();
+		
+		boolean randomReturn = true;
+		
+		if (tgt == null){
+			ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
+			
+			if(defined.contains(AllZone.ComputerPlayer)) {
+				return false;
+			}
+		}
+		else{
+			tgt.resetTargets();
+			tgt.addTarget(AllZone.HumanPlayer);
+		}
+		
+        Ability_Sub subAb = sa.getSubAbility();
+        if (subAb != null)
+        	randomReturn &= subAb.chkAI_Drawback();
+		
+		return randomReturn;
+	}
+	
+	private static void drainManaResolve(final AbilityFactory af, final SpellAbility sa){
+		HashMap<String,String> params = af.getMapParams();
+		Card card = sa.getSourceCard();
+		
+		ArrayList<Player> tgtPlayers;
+		Target tgt = af.getAbTgt();
+		if (tgt != null)
+			tgtPlayers = tgt.getTargetPlayers();
+		else{
+			tgtPlayers = AbilityFactory.getDefinedPlayers(card, params.get("Defined"), sa);
+		}
+
+		for(Player p : tgtPlayers){
+			if (tgt == null || p.canTarget(af.getHostCard())) {
+				if(p.isHuman()) {
+					AllZone.ManaPool.clearPool();
+				}
+				else if(p.isComputer()) {
+					AllZone.Computer_ManaPool.clearPool();
+				}
+			}
+		}
+	}
+	
+}//end class AbilityFactory_Mana
