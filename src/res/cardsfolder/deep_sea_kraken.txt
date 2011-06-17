@@ -9,4 +9,5 @@ T:Mode$ SpellCast | ValidCard$ Card.YouDontCtrl | Execute$ TrigRemoveCounter | I
 SVar:TrigRemoveCounter:AB$RemoveCounter | Cost$ 0 | Defined$ Self | CounterType$ TIME | CounterNum$ 1
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/deep_sea_kraken.jpg
+SetInfo:TSP|Rare|http://magiccards.info/scans/en/ts/56.jpg
 End

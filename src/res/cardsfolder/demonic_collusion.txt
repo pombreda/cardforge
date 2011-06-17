@@ -7,4 +7,5 @@ A:SP$ ChangeZone | Cost$ 3 B B Discard<2/Card> | Origin$ Library | Destination$ 
 SVar:DBBuyback:DB$ ChangeZone | Cost$ 0 | Origin$ Stack | Destination$ Hand | ValidCard$ Card.Self
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/demonic_collusion.jpg
+SetInfo:TSP|Rare|http://magiccards.info/scans/en/ts/103.jpg
 End

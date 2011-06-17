@@ -9,4 +9,5 @@ SVar:DBReturn:DB$ChangeZone | Origin$ Exile | Destination$ Battlefield
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/flickering_spirit.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/17.jpg
 End

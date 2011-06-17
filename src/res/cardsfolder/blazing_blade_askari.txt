@@ -8,4 +8,5 @@ A:AB$ Animate | Cost$ 2 | Defined$ Card.Self | Colors$ Colorless | SpellDescript
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/blazing_blade_askari.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/146.jpg
 End
