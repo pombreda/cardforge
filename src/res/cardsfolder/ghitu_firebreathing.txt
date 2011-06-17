@@ -9,5 +9,5 @@ A:AB$ Pump | Cost$ R | Defined$ Enchanted | NumAtt$ +1 | SpellDescription$ Encha
 A:AB$ ChangeZone | Cost$ R | Defined$ Self | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return CARDNAME to its owner's hand.
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/ghitu_firebreathing.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/158.jpg
 End
-
