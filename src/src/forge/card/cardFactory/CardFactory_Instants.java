@@ -1057,41 +1057,6 @@ public class CardFactory_Instants {
         
         
         //*************** START *********** START **************************
-        else if(cardName.equals("Mana Short")) {
-            /*
-             * Tap all lands target player controls and empty his or her mana pool.
-             */
-        	Target t = new Target(card, "Select target player", "Player");
-        	Cost cost = new Cost("2 U", cardName, false);
-        	
-            final SpellAbility spell = new Spell(card, cost, t) {
-				private static final long serialVersionUID = -2175586347805121896L;
-
-				@Override
-                public boolean canPlayAI() {
-                    CardList lands = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
-                    lands = lands.filter(AllZoneUtil.untapped);
-                    return lands.size() > 0 || !AllZone.ManaPool.isEmpty();
-                }
-				
-                @Override
-                public void resolve() {
-                	CardList lands = AllZoneUtil.getPlayerLandsInPlay(getTargetPlayer());
-                	for(Card c:lands) c.tap();
-                	if(getTargetPlayer().isHuman()) AllZone.ManaPool.clearPool();
-                }//resolve()
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-
-            spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-        }//*************** END ************ END **************************
-        
-        
-        
-        //*************** START *********** START **************************
         else if(cardName.equals("Telling Time")) {
         	final SpellAbility spell = new Spell(card) {
 				private static final long serialVersionUID = 2626878556107707854L;
