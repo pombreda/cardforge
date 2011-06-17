@@ -362,6 +362,11 @@ public class ComputerUtil
 				  if(sourceLand.isTapped())
 					  continue;
 			  
+			  //don't use abilities with dangerous drawbacks
+			  if(m.getSubAbility() != null)
+				  if (!m.getSubAbility().chkAI_Drawback())
+					  continue;
+			  
 			  colors = getProduceableColors(m, player);
 	
 			  for(int j =0; j < colors.size(); j++)
@@ -425,6 +430,11 @@ public class ComputerUtil
 					  continue;
 			  } else
 				  if(sourceLand.isTapped())
+					  continue;
+			  
+			  //don't use abilities with dangerous drawbacks
+			  if(m.getSubAbility() != null)
+				  if (!m.getSubAbility().chkAI_Drawback())
 					  continue;
 			  
 			  sourceCanBeUsed = true; //The card has at least one usable mana ability
@@ -681,6 +691,11 @@ public class ComputerUtil
 					  continue;
 			  } else
 				  if(sourceLand.isTapped())
+					  continue;
+			  
+			  //don't use abilities with dangerous drawbacks
+			  if(m.getSubAbility() != null)
+				  if (!m.getSubAbility().chkAI_Drawback())
 					  continue;
 			  
 			  colors = getProduceableColors(m, player);
