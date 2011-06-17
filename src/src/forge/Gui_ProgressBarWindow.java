@@ -1,13 +1,17 @@
 package forge;
 
+import java.awt.Dimension;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JProgressBar;
 
 public class Gui_ProgressBarWindow extends JDialog {
+
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 5832740611050396643L;
-	
 	private final JPanel contentPanel = new JPanel();
 
 	/**
@@ -29,15 +33,18 @@ public class Gui_ProgressBarWindow extends JDialog {
 	 * Create the dialog.
 	 */
 	public Gui_ProgressBarWindow() {
-		setTitle("Some Progress");
 		setResizable(false);
-		setBounds(100, 100, 450, 84);
+		setTitle("Some Progress");
+		Dimension screen = this.getToolkit().getScreenSize();
+        setBounds(screen.width / 3, 100, //position
+                450, 84); //size
 		getContentPane().setLayout(null);
 		contentPanel.setBounds(0, 0, 442, 58);
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
 		contentPanel.setLayout(null);
 		{
+			progressBar.setValue(50);
 			//progressBar.setBackground(Color.GRAY);
 			//progressBar.setForeground(Color.BLUE);
 			progressBar.setBounds(12, 12, 418, 32);
