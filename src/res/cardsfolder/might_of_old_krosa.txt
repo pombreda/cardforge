@@ -1,0 +1,9 @@
+Name:Might of Old Krosa
+ManaCost:G
+Types:Instant
+Text:no text
+A:SP$ Pump | Cost$ G | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumAtt$ +2 | NumDef$ +2 | SpellDescription$ Target creature gets +2/+2 until end of turn.
+A:SP$ Pump | Cost$ G | ValidTgts$ Creature | TgtPrompt$ Select target creature | ActivationPhases$ Main1->Main2 | NumAtt$ +4 | NumDef$ +4 | SpellDescription$ If you cast this spell during your main phase, that creature gets +4/+4 until end of turn instead.
+SVar:Rarity:Uncommon
+SVar:Picture:http://www.wizards.com/global/images/magic/general/might_of_old_krosa.jpg
+End
