@@ -348,4 +348,12 @@ public class ManaCost {
 	public int getXcounter() {
 		return xcounter;
 	}
+	
+	public void removeColorlessMana() {
+
+		for(int i=0; i < manaPart.size();i++){
+			if (manaPart.get(i) instanceof Mana_PartColorless)
+				manaPart.remove(manaPart.get(i));
+		}
+	}
 }
