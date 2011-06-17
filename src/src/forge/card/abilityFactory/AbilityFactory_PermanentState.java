@@ -1154,18 +1154,17 @@ public class AbilityFactory_PermanentState {
 	// ************** Tap or Untap ************
 	// ****************************************
 	
-	public static SpellAbility createAbilityTapOrUntap(final AbilityFactory AF){
-		final SpellAbility abTapOrUntap = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityTapOrUntap(final AbilityFactory af) {
+		final SpellAbility abTapOrUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = -4713183763302932079L;
-			final AbilityFactory af = AF;
 			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapOrUntapStackDescription(af, this);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return tapOrUntapCanPlayAI(af,this);
 			}
 			
@@ -1183,18 +1182,17 @@ public class AbilityFactory_PermanentState {
 		return abTapOrUntap;
 	}
 	
-	public static SpellAbility createSpellTapOrUntap(final AbilityFactory AF){
-		final SpellAbility spTapOrUntap = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellTapOrUntap(final AbilityFactory af) {
+		final SpellAbility spTapOrUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = -8870476840484788521L;
-			final AbilityFactory af = AF;
 			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapOrUntapStackDescription(af, this);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return tapOrUntapCanPlayAI(af, this);
 			}
 			
@@ -1207,13 +1205,12 @@ public class AbilityFactory_PermanentState {
 		return spTapOrUntap;
 	}
 	
-	public static SpellAbility createDrawbackTapOrUntap(final AbilityFactory AF){
-		final SpellAbility dbTapOrUntap = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackTapOrUntap(final AbilityFactory af) {
+		final SpellAbility dbTapOrUntap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
 			private static final long serialVersionUID = -8282868583712773337L;
-			final AbilityFactory af = AF;
 			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapOrUntapStackDescription(af, this);
 			}
 			
@@ -1236,13 +1233,13 @@ public class AbilityFactory_PermanentState {
 		return dbTapOrUntap;
 	}
 	
-	private static String tapOrUntapStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String tapOrUntapStackDescription(AbilityFactory af, SpellAbility sa) {
 		// when getStackDesc is called, just build exactly what is happening
 		StringBuilder sb = new StringBuilder();
 		
 		HashMap<String,String> params = af.getMapParams();
 
-		if (sa instanceof Ability_Sub)
+		if(sa instanceof Ability_Sub)
 			sb.append(" ");
 		else
 			sb.append(sa.getSourceCard()).append(" - ");
@@ -1266,13 +1263,13 @@ public class AbilityFactory_PermanentState {
 		sb.append(".");
 
 		Ability_Sub subAb = sa.getSubAbility();
-		if (subAb != null)
+		if(subAb != null)
 			sb.append(subAb.getStackDescription());
 
 		return sb.toString();
 	}
 	
-	private static boolean tapOrUntapCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean tapOrUntapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
@@ -1284,7 +1281,7 @@ public class AbilityFactory_PermanentState {
 		Random r = MyRandom.random;
 		boolean randomReturn = r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed());
 		
-		if (tgt == null){
+		if (tgt == null) {
 			//assume we are looking to tap human's stuff
 			//TODO - check for things with untap abilities, and don't tap those.
 			ArrayList<Card> defined = AbilityFactory.getDefinedCards(source, params.get("Defined"), sa);
@@ -1316,7 +1313,7 @@ public class AbilityFactory_PermanentState {
 		Target tgt = sa.getTarget();
 		Card source = sa.getSourceCard();
 		
-		if (tgt == null){
+		if (tgt == null) {
 			if (mandatory)
 				return true;
 			
@@ -1324,11 +1321,11 @@ public class AbilityFactory_PermanentState {
 			
 			return true;
 		}
-		else{
-			if (tapPrefTargeting(source, tgt, af, sa, mandatory)){
+		else {
+			if (tapPrefTargeting(source, tgt, af, sa, mandatory)) {
 				return true;
 			}
-			else if (mandatory){
+			else if (mandatory) {
 				// not enough preferred targets, but mandatory so keep going:
 				return tapUnpreferredTargeting(af, sa, mandatory);
 			}
@@ -1337,17 +1334,17 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	private static boolean tapOrUntapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean tapOrUntapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		Target tgt = af.getAbTgt();
 		Card source = sa.getSourceCard();
 		
 		boolean randomReturn = true;
 		
-		if (tgt == null){
+		if (tgt == null) {
 			// either self or defined, either way should be fine
 		}
-		else{
+		else {
 			// target section, maybe pull this out?
 			tgt.resetTargets();
 			if (!tapPrefTargeting(source, tgt, af, sa, false))
@@ -1361,7 +1358,7 @@ public class AbilityFactory_PermanentState {
 		return randomReturn;
 	}
 	
-	private static void tapOrUntapResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void tapOrUntapResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		Card card = sa.getSourceCard();
 		
@@ -1369,12 +1366,12 @@ public class AbilityFactory_PermanentState {
 		Target tgt = af.getAbTgt();
 		if (tgt != null)
 			tgtCards = tgt.getTargetCards();
-		else{
+		else {
 			tgtCards = AbilityFactory.getDefinedCards(card, params.get("Defined"), sa);
 		}
 
-		for(Card tgtC : tgtCards){
-			if (AllZoneUtil.isCardInPlay(tgtC) && (tgt == null || CardFactoryUtil.canTarget(af.getHostCard(), tgtC))){
+		for(Card tgtC : tgtCards) {
+			if (AllZoneUtil.isCardInPlay(tgtC) && (tgt == null || CardFactoryUtil.canTarget(af.getHostCard(), tgtC))) {
 				String[] tapOrUntap = new String[] {"Tap", "Untap"};
 				Object z = GuiUtils.getChoiceOptional("Tap or Untap "+tgtC+"?", tapOrUntap);
 				if(null == z) continue;
