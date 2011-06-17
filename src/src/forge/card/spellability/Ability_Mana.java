@@ -93,7 +93,7 @@ abstract public class Ability_Mana extends Ability_Activated implements java.io.
         HashMap<String,Object> runParams = new HashMap<String,Object>();
 
         runParams.put("Card", source);
-        runParams.put("Player", AllZone.HumanPlayer);
+        runParams.put("Player", player);
         runParams.put("Ability_Mana", this);
         runParams.put("Produced", produced);
         AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);

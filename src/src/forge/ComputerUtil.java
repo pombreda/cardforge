@@ -346,7 +346,7 @@ public class ComputerUtil
 	  for(int i = 0; i < land.size(); i++)
 	  {
 		  Card sourceLand = land.get(i);
-		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
 		  int once = 0;
 			
 		  for(Ability_Mana m : manaAbilities){
@@ -390,7 +390,6 @@ public class ComputerUtil
 	  // This function is basically getAvailableMana.size() - sa.getConvertedManaCost()
 	  // Except in the future the AI can hopefully use mana sources that provided more than a single mana
 
-	  
 	  int xMana = 0;
 	  boolean paid = false;
 
@@ -408,12 +407,13 @@ public class ComputerUtil
 	  for(int i = 0; i < land.size(); i++)
 	  {
 		  Card sourceLand = land.get(i);
-		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
-		  boolean landUsed = false;
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
+		  boolean sourceUsed = false;
+		  boolean sourceCanBeUsed = false; //The card has at least one usable mana ability
 			
 		  for(Ability_Mana m : manaAbilities){
 			  
-			  if (landUsed) break; //don't check other mana abilities of the same card
+			  if (sourceUsed) break; //don't check other mana abilities of the same card
 			  
 			  //if the AI can't pay the additional costs skip the mana ability
 			  if (m.getPayCosts() != null) {
@@ -423,6 +423,8 @@ public class ComputerUtil
 				  if(sourceLand.isTapped())
 					  continue;
 			  
+			  sourceCanBeUsed = true; //The card has at least one usable mana ability
+			  
 			  if(paid)
 				  break;
 			  
@@ -430,16 +432,19 @@ public class ComputerUtil
 			  int j;
 			  for(j =0; j < colors.size(); j++)
 			  {			  
+				  if(paid)
+					  break;
+				  
 				  if(cost.isNeeded(colors.get(j)))
 				  {
 					  cost.payMana(colors.get(j));
 					  paid = cost.isPaid();
-					  landUsed = true; //don't check other mana abilities of the same card
+					  sourceUsed = true; //don't check other mana abilities of the same card
 					  break;
 				  }
 			  }
 		  }
-		  if (!landUsed)
+		  if (sourceCanBeUsed && !sourceUsed)
 			  xMana++;
 	  }
 	  
@@ -645,7 +650,6 @@ public class ComputerUtil
 		  card.setXManaCostPaid(manaToAdd);
 	  }
 
-
 	  if(cost.isPaid())
 		  return;
 
@@ -655,13 +659,13 @@ public class ComputerUtil
 	  
 	  CardList land = getAvailableMana();
 
-	  //this is to prevent errors for land cards that have abilities that cost mana.
+	  //this is to prevent errors for mana sources that have abilities that cost mana.
 	  land.remove(sa.getSourceCard());
 
 	  for(int i = 0; i < land.size(); i++)
 	  {
 		  Card sourceLand = land.get(i);
-		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getManaAbility();
+		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
 			
 		  for(Ability_Mana m : manaAbilities){
 			  
@@ -687,6 +691,11 @@ public class ComputerUtil
 						  sourceLand.tap();
 					  
 					  cost.payMana(colors.get(j));
+					  
+					  //resolve subabilities
+					  AbilityFactory af = m.getAbilityFactory();
+					  if (af != null)
+						  AbilityFactory.resolveSubAbilities(m);
 	
 					  if (sourceLand.getName().equals("Undiscovered Paradise")) {
 						  sourceLand.setBounceAtUntap(true);
@@ -728,8 +737,8 @@ public class ComputerUtil
 		ArrayList<String> colors = new ArrayList<String>();
 			
 		//if the mana ability is not avaiable move to the next one
-		m.setActivatingPlayer(player);
-		if (!m.canPlay()) return colors;
+		/*m.setActivatingPlayer(player);
+		if (!m.canPlay()) return colors;*/
 		
 		if (!colors.contains(Constant.Color.Black) && m.isBasic() && m.mana().equals("B"))
 			colors.add(Constant.Color.Black);
