@@ -3381,38 +3381,6 @@ public class CardFactory_Creatures {
         	intoPlay.setStackDescription(sb.toString());
         	
         	card.addComesIntoPlayCommand(comesIntoPlay);
-        }//*************** END ************ END ************************** 
-        
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Dawnglare Invoker")) {
-        	/*
-        	 * 8: Tap all creatures target player controls.
-        	 */
-        	Target t = new Target(card, "Select target player", "Player");
-        	Cost cost = new Cost("8", cardName, true);
-
-        	final SpellAbility ability = new Ability_Activated(card, cost, t) {
-        		private static final long serialVersionUID = 3822525186243879729L;
-
-        		@Override
-        		public boolean canPlayAI() {
-        			CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
-        			human = human.filter(AllZoneUtil.tapped);
-        			return human.size() > 0 && AllZone.Phase.getPhase().equals("Main1");
-        		}
-        		@Override
-        		public void resolve() {
-        			final Player player = getTargetPlayer();
-        			CardList creatures = AllZoneUtil.getCreaturesInPlay(player);
-        			for(Card c:creatures) {
-        				//no need to check if they're already tapped, c.tap() already does that
-        				c.tap();
-        			}
-        		}   
-        	};
-        	card.addSpellAbility(ability);
-        	ability.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
         }//*************** END ************ END **************************
         
         
