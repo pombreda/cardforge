@@ -996,7 +996,8 @@ public class Card extends MyObservable {
                 } else if (keyword.get(i).startsWith("Soulshift") || keyword.get(i).startsWith("Cumulative upkeep") 
                         || keyword.get(i).startsWith("Echo")      || keyword.get(i).startsWith("Fading") 
                         || keyword.get(i).startsWith("Ripple")    || keyword.get(i).startsWith("Unearth") 
-                        || keyword.get(i).startsWith("Vanishing") || keyword.get(i).startsWith("Madness")) {
+                        || keyword.get(i).startsWith("Vanishing") || keyword.get(i).startsWith("Madness")
+                        || keyword.get(i).startsWith("Devour")) {
                     String k = keyword.get(i);
                     k = k.replace(":", " ");
                     sbLong.append(k).append("\r\n");
