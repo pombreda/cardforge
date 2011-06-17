@@ -1254,13 +1254,77 @@ public class AbilityFactory {
 		return parent;
 	}
 	
-	/*
-	public static void resolveSubAbility(SpellAbility sa){
-		Ability_Sub abSub = sa.getSubAbility();
-		if (abSub != null){
-			abSub.resolve();
+	public static ArrayList<Object> predictThreatenedObjects(){
+		ArrayList<Object> objects = new ArrayList<Object>();
+		if (AllZone.Stack.size() == 0)
+			return objects;
+		
+		// check stack for something that will kill this
+		SpellAbility topStack = AllZone.Stack.peekAbility();
+		objects.addAll(predictThreatenedObjects(topStack));
+		
+		return objects;
+	}
+	
+	public static ArrayList<Object> predictThreatenedObjects(SpellAbility topStack){
+		ArrayList<Object> objects = new ArrayList<Object>();
+		ArrayList<Object> threatened = new ArrayList<Object>();
+		
+		if (topStack == null)
+			return objects;
+		
+		Card source = topStack.getSourceCard();
+		AbilityFactory topAf = topStack.getAbilityFactory();
+		Target tgt = topStack.getTarget();
+		
+		if (tgt == null){
+			objects = getDefinedObjects(source, topAf.getMapParams().get("Defined"), topStack);
 		}
-	}*/
+		else{
+			objects = tgt.getTargets();
+		}
+		
+		// Determine if Defined Objects are "threatened" will be destroyed due to this SA
+		if (topAf != null){
+			String api = topAf.getAPI(); 
+			if (api.equals("DealDamage")){
+				// If PredictDamage is >= Lethal Damage
+				int dmg = AbilityFactory.calculateAmount(topStack.getSourceCard(), topAf.getMapParams().get("NumDmg"), topStack);
+				for(Object o : objects){
+					if (o instanceof Card){
+						Card c = (Card)o;
+						if (c.predictDamage(dmg, source, false) >= c.getKillDamage())
+							threatened.add(c);
+					}
+					else if (o instanceof Player){
+						Player p = (Player)o;
+						
+						if (source.hasKeyword("Infect")){
+							if (p.predictDamage(dmg, source, false) >= p.getPoisonCounters())
+								threatened.add(p);
+						}
+						else if (p.predictDamage(dmg, source, false) >= p.getLife())
+							threatened.add(p);
+					}
+				}
+			}
+			
+			else if (api.equals("DamageAll")){
+				
+			}
+			
+			else if (api.equals("Destroy")){
+				
+			}
+			
+			else if (api.equals("DestroyAll")){
+				
+			}
+		}
+		
+		threatened.addAll(predictThreatenedObjects(topStack.getSubAbility()));
+		return threatened;
+	}
 	
 	public static void handleRemembering(AbilityFactory AF)
 	{

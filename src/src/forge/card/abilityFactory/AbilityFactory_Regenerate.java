@@ -9,10 +9,13 @@ import forge.AllZoneUtil;
 import forge.Card;
 import forge.CardList;
 import forge.CardListUtil;
+import forge.CardUtil;
 import forge.CombatUtil;
 import forge.Command;
 import forge.ComputerUtil;
 import forge.Constant;
+import forge.GameAction;
+import forge.GameActionUtil;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Sub;
@@ -182,7 +185,12 @@ public class AbilityFactory_Regenerate {
 			ArrayList<Card> list = AbilityFactory.getDefinedCards(hostCard, params.get("Defined"), sa);
 			
 			if (AllZone.Stack.size() > 0){
-			// check stack for something that will kill this
+				ArrayList<Object> objects = AbilityFactory.predictThreatenedObjects();
+				
+				for(Card c : list){
+					if (objects.contains(c) && c.getShield() == 0)
+						chance = true;
+				}
 			}
 			else{
 				if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
@@ -211,6 +219,17 @@ public class AbilityFactory_Regenerate {
 			
 			if (AllZone.Stack.size() > 0){
 				// check stack for something on the stack will kill anything i control
+				ArrayList<Object> objects = AbilityFactory.predictThreatenedObjects();
+				
+				CardList threatenedTargets = new CardList();
+				
+				for(Card c : targetables){
+					if (!objects.contains(c) && c.getShield() == 0)
+						threatenedTargets.add(c);
+				}
+				
+				// Choose "best" of the remaining to regenerate
+				tgt.addTarget(CardFactoryUtil.AI_getBestCreature(threatenedTargets));
 			}
 			else{
 				if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
