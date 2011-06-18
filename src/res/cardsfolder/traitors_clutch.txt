@@ -7,4 +7,5 @@ A:SP$ Pump | Cost$ 4 B | ValidTgts$ Creature | NumAtt$ +1 | KW$ Shadow | SubAbil
 SVar:DBAnimate:DB$Animate | Defined$ Targeted | Colors$ Black | OverwriteColors$ True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/traitors_clutch.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/137.jpg
 End
