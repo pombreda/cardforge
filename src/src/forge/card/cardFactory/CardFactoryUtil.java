@@ -2507,6 +2507,8 @@ public class CardFactoryUtil {
         if(sq[0].contains("CardPower")) return doXMath(c.getNetAttack(), m, c);
         // Count$CardToughness
         if(sq[0].contains("CardToughness")) return doXMath(c.getNetDefense(), m, c);
+        // Count$CardPowerPlusToughness
+        if(sq[0].contains("CardSumPT")) return doXMath((c.getNetAttack() + c.getNetDefense()), m, c);
         // Count$CardManaCost
         if(sq[0].contains("CardManaCost")) return doXMath(CardUtil.getConvertedManaCost(c), m, c);
         // Count$CardCounters.<counterType>
