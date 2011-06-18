@@ -9,4 +9,5 @@ SVar:ABReturn:AB$ChangeZone | Cost$ 1 B Sac<1/CARDNAME> | ChangeType$ Card.named
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sengir_nosferatu.jpg
+SetInfo:TSP|Rare|http://magiccards.info/scans/en/ts/128.jpg
 End

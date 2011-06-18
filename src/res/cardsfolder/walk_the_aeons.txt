@@ -8,4 +8,5 @@ SVar:DBBuyback:DB$ ChangeZone | Origin$ Stack | Destination$ Hand | Defined$ Sel
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/walk_the_aeons.jpg
+SetInfo:TSP|Rare|http://magiccards.info/scans/en/ts/93.jpg
 End
