@@ -1284,17 +1284,20 @@ public class AbilityFactory {
 		
 		Card source = topStack.getSourceCard();
 		AbilityFactory topAf = topStack.getAbilityFactory();
-		Target tgt = topStack.getTarget();
 		
-		if (tgt == null){
-			objects = getDefinedObjects(source, topAf.getMapParams().get("Defined"), topStack);
-		}
-		else{
-			objects = tgt.getTargets();
-		}
-		
-		// Determine if Defined Objects are "threatened" will be destroyed due to this SA
+		// Can only Predict things from AFs
 		if (topAf != null){
+			Target tgt = topStack.getTarget();
+			
+			if (tgt == null){
+				objects = getDefinedObjects(source, topAf.getMapParams().get("Defined"), topStack);
+			}
+			else{
+				objects = tgt.getTargets();
+			}
+			
+			// Determine if Defined Objects are "threatened" will be destroyed due to this SA
+
 			String api = topAf.getAPI(); 
 			if (api.equals("DealDamage")){
 				// If PredictDamage is >= Lethal Damage
