@@ -120,7 +120,6 @@ public class GameActionUtil {
 		playCard_Vengevine(c);
 		playCard_Demigod_of_Revenge(c);
 		playCard_Standstill(c);
-		playCard_Sigil_of_the_Empty_Throne(c);
 		playCard_Curse_of_Wizardry(c);
 		playCard_Venser_Emblem(c);
 		playCard_Ichneumon_Druid(c);
@@ -537,32 +536,7 @@ public class GameActionUtil {
 
 	}
 
-	public static void playCard_Sigil_of_the_Empty_Throne(Card c) {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(c.getController(), "Sigil of the Empty Throne");
-
-		if(c.isEnchantment()) {
-			for(int i = 0; i < list.size(); i++) {
-				final Card card = list.get(0);
-
-				Ability ability2 = new Ability(card, "0") {
-					@Override
-					public void resolve() {
-						CardFactoryUtil.makeToken("Angel", "W 4 4 Angel", card.getController(), "W", new String[] {
-								"Creature", "Angel"}, 4, 4, new String[] {"Flying"});
-					}
-				}; // ability2
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append(card).append(" - ").append(c.getController());
-				sb.append(" puts a 4/4 White Angel token with flying onto the battlefield.");
-				ability2.setStackDescription(sb.toString());
-
-                AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-
-			} // for
-		}// if isEnchantment()
-	}
+	
 	
 	public static void playCard_Curse_of_Wizardry(final Card c) {
 		CardList list = AllZoneUtil.getCardsInPlay("Curse of Wizardry");
