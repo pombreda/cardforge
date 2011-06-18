@@ -118,7 +118,6 @@ public class GameActionUtil {
         playCard_Storm(sa);
 
 		playCard_Vengevine(c);
-		playCard_Demigod_of_Revenge(c);
 		playCard_Standstill(c);
 		playCard_Curse_of_Wizardry(c);
 		playCard_Venser_Emblem(c);
@@ -481,32 +480,6 @@ public class GameActionUtil {
 		}
 	}
 
-
-	public static void playCard_Demigod_of_Revenge(final Card c) {
-		// not enough boom stick references in this block of code
-		if(c.getName().equals("Demigod of Revenge")) {
-			Ability ability2 = new Ability(c, "0") {
-				@Override
-				public void resolve() {
-					CardList evildead = AllZoneUtil.getPlayerGraveyard(c.getController(), "Demigod of Revenge");
-
-					for(Card c : evildead){
-						AllZone.GameAction.moveToPlay(c);
-					}
-				}
-			}; // ability2
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(c.getName()).append(" - ").append(c.getController());
-			sb.append(" casts Demigod of Revenge, returns all cards named Demigod ");
-			sb.append("of Revenge from your graveyard to the battlefield.");
-			ability2.setStackDescription(sb.toString());
-
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-
-		}//if					
-	}// Demigod of Revenge
 
 	public static void playCard_Standstill(Card c) {
 		CardList list = AllZoneUtil.getCardsInPlay("Standstill");
