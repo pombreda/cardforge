@@ -316,6 +316,8 @@ public class GameAction {
         if (p != null && p.is(Constant.Zone.Battlefield))
         	c = AllZone.CardFactory.copyCard(c);
         
+        c.clearCounters(); //remove all counters
+        
         if (libPosition == -1 || libPosition > library.size())
         	libPosition = library.size();
         
