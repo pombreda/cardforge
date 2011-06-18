@@ -354,7 +354,7 @@ public class AbilityFactory_ZoneAffecting {
 		if (tgt != null)
 			tgtPlayers = tgt.getTargetPlayers();
 		else
-			tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+			tgtPlayers = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
 		
 		boolean optional = params.containsKey("OptionalDecider");
 		boolean slowDraw = params.containsKey("NextUpkeep");

@@ -606,4 +606,14 @@ public abstract class SpellAbility {
     public boolean isMandatory() {
         return mandatory;
     }
+    
+    public SpellAbility getRootSpellAbility(){
+    	if (this instanceof Ability_Sub){
+    		SpellAbility parent = ((Ability_Sub)this).getParent();
+    		if (parent != null)
+    			return parent.getRootSpellAbility();
+    	}
+    	
+    	return this;
+    }
 }

@@ -953,8 +953,9 @@ public class AbilityFactory {
 					}
 				}
 				else if (calcX[0].startsWith("Triggered")) {
+					SpellAbility root = ability.getRootSpellAbility();
 					list = new CardList();
-					list.add((Card)ability.getTriggeringObject(calcX[0].substring(9)));
+					list.add((Card)root.getTriggeringObject(calcX[0].substring(9)));
 				}
 				else if (calcX[0].startsWith("Remembered")) {
 					// Add whole Remembered list to handlePaid
@@ -1018,7 +1019,8 @@ public class AbilityFactory {
 		}
 		
 		else if (defined.startsWith("Triggered")){
-            Object crd = sa.getTriggeringObject(defined.substring(9));
+			SpellAbility root = sa.getRootSpellAbility();
+            Object crd = root.getTriggeringObject(defined.substring(9));
             if(crd instanceof Card)
             {
                 c = AllZoneUtil.getCardState((Card)crd);
@@ -1118,11 +1120,12 @@ public class AbilityFactory {
 			}
 		}
         else if (defined.startsWith("Triggered")){
+        	SpellAbility root = sa.getRootSpellAbility();
             Object o = null;
             if (defined.endsWith("Controller")){
                 String triggeringType = defined.substring(9);
                 triggeringType = triggeringType.substring(0,triggeringType.length()-10);
-                Object c = sa.getTriggeringObject(triggeringType);
+                Object c = root.getTriggeringObject(triggeringType);
                 if(c instanceof Card)
                 {
                     o = ((Card)c).getController();
@@ -1131,7 +1134,7 @@ public class AbilityFactory {
             else if (defined.endsWith("Owner")){
                 String triggeringType = defined.substring(9);
                 triggeringType = triggeringType.substring(0,triggeringType.length()-5);
-                Object c = sa.getTriggeringObject(triggeringType);
+                Object c = root.getTriggeringObject(triggeringType);
                 if(c instanceof Card)
                 {
                     o = ((Card)c).getOwner();
@@ -1139,7 +1142,7 @@ public class AbilityFactory {
 		    }
             else {
                 String triggeringType = defined.substring(9);
-                o = sa.getTriggeringObject(triggeringType);
+                o = root.getTriggeringObject(triggeringType);
             }
             if(o != null)
             {
