@@ -7,4 +7,5 @@ A:SP$ DealDamage | Cost$ 5 R | NumDmg$ 5 | ValidTgts$ Creature | CostDesc$ Or pa
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/lightning_axe.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/168.jpg
 End

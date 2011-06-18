@@ -6,4 +6,5 @@ A:SP$ Pump | Cost$ G | ValidTgts$ Creature | TgtPrompt$ Select target creature |
 SVar:X:Count$IfMainPhase.4.2
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/might_of_old_krosa.jpg
+SetInfo:TSP|Uncommon|http://magiccards.info/scans/en/ts/204.jpg
 End
