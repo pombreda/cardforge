@@ -11,4 +11,5 @@ SVar:TrigReturn:AB$ChangeZone | Cost$ 0 | Defined$ Self | Origin$ Exile | Destin
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/norin_the_wary.jpg
+SetInfo:TSP|Rare|http://magiccards.info/scans/en/ts/171.jpg
 End

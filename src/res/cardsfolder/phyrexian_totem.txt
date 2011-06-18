@@ -10,4 +10,5 @@ SVar:X:TriggerCount$DamageAmount
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/phyrexian_totem.jpg
+SetInfo:TSP|Uncommon|http://magiccards.info/scans/en/ts/261.jpg
 End

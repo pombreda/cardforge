@@ -7,4 +7,5 @@ A:SP$ ChangeZone | Cost$ 3 U | ChangeType$ Instant,Card.withFlash | ChangeNum$ 1
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mystical_teachings.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/69.jpg
 End

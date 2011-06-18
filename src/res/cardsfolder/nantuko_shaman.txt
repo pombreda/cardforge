@@ -8,4 +8,5 @@ T:Mode$ ChangesZone | ValidCard$ Card.Self | IsPresent$ Land.tapped+YouCtrl | Pr
 SVar:TrigDraw:AB$Draw | Cost$ 0 | NumCards$ 1
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/nantuko_shaman.jpg
+SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/208.jpg
 End
