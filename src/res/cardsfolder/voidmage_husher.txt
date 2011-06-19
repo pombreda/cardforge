@@ -10,4 +10,5 @@ SVar:TrigCounter:AB$Counter | Cost$ 0 | TargetType$ Activated | TgtPrompt$ Selec
 SVar:TrigBounce:AB$ChangeZone | Cost$ 0 | Origin$ Battlefield | Destination$ Hand
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/voidmage_husher.jpg
+SetInfo:TSP|Uncommon|http://magiccards.info/scans/en/ts/92.jpg
 End

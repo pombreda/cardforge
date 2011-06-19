@@ -9,4 +9,5 @@ A:AB$ Animate | Cost$ U SubCounter<1/P1P1> | ValidTgts$ Land | TgtPrompt$ Select
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/floodchaser.jpg
+SetInfo:MOR|Common|http://magiccards.info/scans/en/mt/34.jpg
 End
