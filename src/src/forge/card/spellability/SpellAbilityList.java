@@ -45,7 +45,7 @@ public class SpellAbilityList {
     //Move1.getMax() uses this
     public void execute() {
         for(int i = 0; i < size(); i++) {
-            if(!ComputerUtil.canPlay(get(i))) throw new RuntimeException(
+            if(!ComputerUtil.canPayCost(get(i))) throw new RuntimeException(
                     "SpellAbilityList : execute() error, cannot pay for the spell " + get(i).getSourceCard()
                             + " - " + get(i).getStackDescription());
             

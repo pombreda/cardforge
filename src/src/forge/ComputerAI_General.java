@@ -211,7 +211,7 @@ public class ComputerAI_General implements Computer {
                 //This try/catch should fix the "computer is thinking" bug
                 try {
                 	sa.setActivatingPlayer(AllZone.ComputerPlayer);
-                    if(sa.canPlay() && ComputerUtil.canPayCost(sa) && sa.canPlayAI()){
+                    if(ComputerUtil.canBePlayedAndPayedByAI(sa)){
                     	spellAbility.add(sa);
                     }
                 } catch(Exception ex) {

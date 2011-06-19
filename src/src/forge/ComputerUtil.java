@@ -42,13 +42,13 @@ public class ComputerUtil
 	    		continue;
 	    	
 	    	sa.setActivatingPlayer(AllZone.ComputerPlayer);
-	    	if(canPayCost(sa) && sa.canPlay() && sa.canPlayAI())
+	    	if(canBePlayedAndPayedByAI(sa)) //checks everything nescessary
 	    	{
 	    		handlePlayingSpellAbility(sa);
 		
 		        return false;
 	    	}
-	    }//while
+	    }
 	    return true;
   }//playCards()
   
@@ -152,7 +152,7 @@ public class ComputerUtil
 
 	for(SpellAbility sa : possibleCounters){
 		sa.setActivatingPlayer(AllZone.ComputerPlayer);
-		if(canPayCost(sa) && sa.canPlay() && sa.canPlayAI()){
+		if(canBePlayedAndPayedByAI(sa)){
 			if (bestSA == null){
 				bestSA = sa;
 				bestRestriction = counterSpellRestriction(sa);
@@ -167,7 +167,7 @@ public class ComputerUtil
 				}
 			}
 		}
-	}//while
+	}
 	
 	if (bestSA == null) 
 		return false;
@@ -250,6 +250,7 @@ public class ComputerUtil
     }
   }//play()
 
+  
   //gets Spells of cards in hand and Abilities of cards in play
   //checks to see
   //1. if canPlay() returns true, 2. can pay for mana
@@ -272,24 +273,11 @@ public class ComputerUtil
     
     all.addAll(humanPlayable);
     
-    all = all.filter(new CardListFilter()
-    {
-      public boolean addCard(Card c)
-      {
-        if(c.isBasicLand())
-          return false;
-
-        return true;
-      }
-    });
-    
-
     ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
     for(int outer = 0; outer < all.size(); outer++)
     {
       SpellAbility[] sa = all.get(outer).getSpellAbility();
       for(int i = 0; i < sa.length; i++)
-        if(sa[i].canPlayAI() && canPayCost(sa[i]) /*&& sa[i].canPlay()*/)
           spellAbility.add(sa[i]);//this seems like it needs to be copied, not sure though
     }
 
@@ -298,9 +286,10 @@ public class ComputerUtil
     return sa;
   }
   
-  static public boolean canPlay(SpellAbility sa)
+  //This is for playing spells regularly (no Cascade/Ripple etc.)
+  static public boolean canBePlayedAndPayedByAI(SpellAbility sa)
   {
-	  return sa.canPlayAI() && canPayCost(sa);
+	  return sa.canPlayAI() && sa.canPlay() && canPayCost(sa);
   }
   
   static public boolean canPayCost(SpellAbility sa)
@@ -311,7 +300,7 @@ public class ComputerUtil
   
   static public boolean canPayCost(SpellAbility sa, Player player)
   {
-	  if(!payManaCost(sa, player, true))
+	  if(!payManaCost(sa, player, true, 0))
 		  return false;
 	  
 	  return canPayAdditionalCosts(sa, player);
@@ -513,11 +502,6 @@ public class ComputerUtil
   {
 	  payManaCost(sa, AllZone.ComputerPlayer, false, 0);
   }
-  
-  static public boolean payManaCost(SpellAbility sa, Player player, boolean test)
-  {
-	  return payManaCost(sa, player, test, 0);
-  }
 
   //the test flag is for canPayCost and should not change the game state
   static public boolean payManaCost(SpellAbility sa, Player player, boolean test, int extraMana)
@@ -563,15 +547,15 @@ public class ComputerUtil
 	  
 	  cost = ((ManaPool)manapool).subtractMana(sa, cost);
 	  
-	  CardList land = getAvailableMana();
+	  CardList manaSources = getAvailableMana();
 
 	  //this is to prevent errors for mana sources that have abilities that cost mana.
-	  land.remove(sa.getSourceCard());
+	  manaSources.remove(sa.getSourceCard());
 
-	  for(int i = 0; i < land.size(); i++)
+	  for(int i = 0; i < manaSources.size(); i++)
 	  {
-		  Card sourceLand = land.get(i);
-		  ArrayList<Ability_Mana> manaAbilities = sourceLand.getAIPlayableMana();
+		  Card sourceCard = manaSources.get(i);
+		  ArrayList<Ability_Mana> manaAbilities = sourceCard.getAIPlayableMana();
 		  
 		  boolean used = false; //this is for testing paying mana only
 		  
@@ -586,7 +570,7 @@ public class ComputerUtil
 				  if (!canPayAdditionalCosts(m, player))
 					  continue;
 			  } else
-				  if(sourceLand.isTapped())
+				  if(sourceCard.isTapped())
 					  continue;
 			  
 			  //don't use abilities with dangerous drawbacks
@@ -607,7 +591,7 @@ public class ComputerUtil
 							  Cost_Payment pay = new Cost_Payment(m.getPayCosts(), m);
 							  if(!pay.payComputerCosts()) continue;
 						  }else
-							  sourceLand.tap();
+							  sourceCard.tap();
 					  }
 					  else used = true; // mana source is now used in the test
 					  
@@ -619,21 +603,21 @@ public class ComputerUtil
 						  if (af != null)
 							  AbilityFactory.resolveSubAbilities(m);
 	
-						  if (sourceLand.getName().equals("Undiscovered Paradise")) {
-							  sourceLand.setBounceAtUntap(true);
+						  if (sourceCard.getName().equals("Undiscovered Paradise")) {
+							  sourceCard.setBounceAtUntap(true);
 						  }
 		
-						  if(sourceLand.getName().equals("Rainbow Vale")) {
-							  sourceLand.addExtrinsicKeyword("An opponent gains control of CARDNAME at the beginning of the next end step.");
+						  if(sourceCard.getName().equals("Rainbow Vale")) {
+							  sourceCard.addExtrinsicKeyword("An opponent gains control of CARDNAME at the beginning of the next end step.");
 						  }
 	
 						  //System.out.println("just subtracted " + colors.get(j) + ", cost is now: " + cost.toString());
 						  //Run triggers        
 					      HashMap<String,Object> runParams = new HashMap<String,Object>();
 		
-					      runParams.put("Card", sourceLand);
+					      runParams.put("Card", sourceCard);
 					      runParams.put("Player", player);
-					      runParams.put("Produced", colors.get(j)); //can't tell what mana to computer just paid?
+					      runParams.put("Produced", colors.get(j)); //can't tell what mana the computer just paid?
 					      AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);
 					  }//not a test
 				  }
@@ -713,7 +697,7 @@ public class ComputerUtil
 			  
 			  if (card.isCreature()) break; //don't use creatures before other permanents
 			  
-			  int usableManaSources = 0;
+			  int usableManaAbilities = 0;
 			  boolean needsLimitedResources = false;
 			  ArrayList<Ability_Mana> manaAbilities = card.getAIPlayableMana();
 			  
@@ -737,10 +721,10 @@ public class ComputerUtil
 						  continue;
 					  needsLimitedResources = true; //TODO: check for good drawbacks (gainLife)
 				  }
-				  usableManaSources++;
+				  usableManaAbilities++;
 			  }
 			  
-			  if(usableManaSources == number && !needsLimitedResources)
+			  if(usableManaAbilities == number && !needsLimitedResources)
 				  sortedManaSources.add(card);
 		  }
 	  
