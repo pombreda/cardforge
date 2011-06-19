@@ -2318,6 +2318,10 @@ public class CardFactoryUtil {
         		return doXMath(AllZoneUtil.getPlayerCardsInLibrary(players.get(0)).size(), m, source);
         	}
         }
+        if(sq[0].contains("LandsInGraveyard"))
+        	if(players.size() > 0) {
+        		return doXMath(AllZoneUtil.getPlayerTypeInGraveyard(players.get(0), "Land").size(), m, source);
+        	}
         
         if(sq[0].contains("CreaturesInPlay")) {
         	if(players.size() > 0) {
@@ -2339,8 +2343,7 @@ public class CardFactoryUtil {
         
         if(sq[0].contains("TopOfLibraryCMC")) {
         	if(players.size() > 0) {
-        		CardList topcard = AllZoneUtil.getPlayerCardsInLibrary(players.get(0), 1);
-        		return doXMath(topcard.getTotalConvertedManaCost(), m, source);
+        		return doXMath(AllZoneUtil.getPlayerCardsInLibrary(players.get(0), 1).getTotalConvertedManaCost(), m, source);
         	}
         }
         

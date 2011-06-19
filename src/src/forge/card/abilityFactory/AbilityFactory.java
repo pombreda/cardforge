@@ -903,6 +903,22 @@ public class AbilityFactory {
 					}
 					return CardFactoryUtil.playerXCount(players, calcX[1], card) * multiplier;
 				}
+				if(calcX[0].startsWith("TargetedController")) {
+					ArrayList<Player> players = new ArrayList<Player>();
+					ArrayList<Card> list = getDefinedCards(card, "Targeted", ability);
+					ArrayList<SpellAbility> sas = getDefinedSpellAbilities(card, "Targeted", ability);
+
+					for(Card c : list){
+						Player p = c.getController();
+						if (!players.contains(p))
+							players.add(p);
+					}
+					for(SpellAbility s : sas) {
+						Player p = s.getSourceCard().getController();
+						if(!players.contains(p)) players.add(p);
+					}
+					return CardFactoryUtil.playerXCount(players, calcX[1], card) * multiplier;
+				}
 				
 				CardList list = new CardList();
 				if (calcX[0].startsWith("Sacrificed"))
