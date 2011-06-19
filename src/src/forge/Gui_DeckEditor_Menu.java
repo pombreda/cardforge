@@ -64,7 +64,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     	currentGameType = gameType;
     }
     
-    private JMenuItem newDraftItem;
+    //private JMenuItem newDraftItem;
     private DeckDisplay deckDisplay;
 
     private Command exitCommand;
@@ -791,7 +791,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         //must be AFTER get user input, since user could cancel
         currentGameType = Constant.GameType.Constructed;
-        newDraftItem.setEnabled(false);
+        //newDraftItem.setEnabled(false);
 
         Deck deck = deckManager.getDeck(name);
         showConstructedDeck(deck);
@@ -842,7 +842,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         //must be AFTER get user input, since user could cancel
         currentGameType = Constant.GameType.Sealed;
         
-        newDraftItem.setEnabled(false);
+        //newDraftItem.setEnabled(false);
 
         Deck deck = deckManager.getDeck(name);
         showSealedDeck(deck);
@@ -898,7 +898,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         //must be AFTER get user input, since user could cancel
         currentGameType = Constant.GameType.Draft;
-        newDraftItem.setEnabled(true);
+        //newDraftItem.setEnabled(true);
 
         Deck deck = deckManager.getDraftDeck(name)[0];
         showDraftDeck(deck);
