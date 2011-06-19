@@ -263,7 +263,7 @@ public class CardFactory_Sorceries {
             card.addSpellAbility(spell);
         }//*************** END ************ END ************************** 
         
-        
+        /*
         //*************** START *********** START **************************
         else if(cardName.equals("Roiling Terrain")) {
         	Cost cost = new Cost("2 R R", cardName, false);
@@ -302,7 +302,7 @@ public class CardFactory_Sorceries {
             card.addSpellAbility(spell);  
         }//*************** END ************ END **************************
 
-       
+       */
         //*************** START *********** START **************************
         else if(cardName.equals("Mind's Desire"))
         {
