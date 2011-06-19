@@ -408,7 +408,7 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
     					if (imgFN.equals("none") ||	(!imgFN.contains(SC3) && !imgFN.contains(SC2)))
 						{
 							String fn = GuiDisplayUtil.cleanStringMWS(c.getName()) + ".full.jpg";
-							if (MyRandom.percentTrue(65))
+							if (MyRandom.percentTrue(50))
 								CList.add(new mCard(SC3 + "/" + fn, URLBase + SC2 + "/" + Base64Coder.encodeString(fn, true), SC3));
 							else
 								CList.add(new mCard(SC3 + "/" + fn, c.getCurSetURL(), SC3));
