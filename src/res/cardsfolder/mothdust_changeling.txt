@@ -8,4 +8,5 @@ A:AB$ Pump | Cost$ tapXType<1/Creature.untapped+YouCtrl> | KW$ Flying | CostDesc
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mothdust_changeling.jpg
+SetInfo:MOR|Common|http://magiccards.info/scans/en/mt/42.jpg
 End
