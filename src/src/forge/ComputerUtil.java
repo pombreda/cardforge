@@ -152,7 +152,7 @@ public class ComputerUtil
 
 	for(SpellAbility sa : possibleCounters){
 		sa.setActivatingPlayer(AllZone.ComputerPlayer);
-		if(canBePlayedAndPayedByAI(sa)){
+		if(canBePlayedAndPayedByAI(sa)){ //checks everything nescessary
 			if (bestSA == null){
 				bestSA = sa;
 				bestRestriction = counterSpellRestriction(sa);
