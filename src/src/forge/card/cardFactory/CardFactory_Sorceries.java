@@ -1144,7 +1144,7 @@ public class CardFactory_Sorceries {
             spell.setBeforePayMana(chooseTwoInput);
         }//*************** END ************ END **************************
         
-        
+        /*
         //*************** START *********** START **************************
         else if(cardName.equals("Pulse of the Tangle")) {
             SpellAbility spell = new Spell(card) {
@@ -1172,7 +1172,7 @@ public class CardFactory_Sorceries {
             card.clearFirstSpellAbility();
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
-        
+        */
         
         //*************** START *********** START **************************
         else if(cardName.equals("Parallel Evolution")) {
