@@ -593,10 +593,10 @@ public class GameAction {
         }
     }//destroyLegendaryCreatures()
     
-    public void sacrifice(Card c) {
+    public boolean sacrifice(Card c) {
     	if(c.getName().equals("Mana Pool")) {
     		System.out.println("Trying to sacrifice mana pool...");
-    		return;
+    		return false;
     	}
         sacrificeDestroy(c);
         
@@ -605,7 +605,7 @@ public class GameAction {
         runParams.put("Card", c);
         AllZone.TriggerHandler.runTrigger("Sacrificed", runParams);
 
-
+        return true;
     }
     
     public boolean destroyNoRegeneration(Card c) {
