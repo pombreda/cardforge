@@ -257,6 +257,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Ned Flanders 2", "medium", "Mono B reanimator deck with a few large creatures and some spells");
         addToDeckList("Ned Flanders 3", "hard", "Mono B reanimator deck with a few large creatures and some spells");
         addToDeckList("Ned Flanders 4", "very hard", "Mono B reanimator deck with a few large creatures and some spells");
+        addToDeckList("Neo 2", "medium", "RG deck with Boartusk Liege, Jund Hackblade and Naya Hushblade");
         addToDeckList("Neo 3", "hard", "RG deck with Boartusk Liege, Jund Hackblade and Naya Hushblade");
         addToDeckList("Newton 3", "hard", "WB Relentless Rats deck with Thrumming Stone, Vindicate and Swords to Plowshares");
         

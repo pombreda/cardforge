@@ -1,4 +1,5 @@
 Albert Einstein 2
+Apu Nahasapeemapetilon 2
 Aquaman 2
 Aragorn 2
 Barney Rubble 2
@@ -47,6 +48,7 @@ Magnum 2
 Marge Simpson 2
 Nagini 2
 Ned Flanders 2
+Neo 2
 Oberon 2
 Pebbles Flintstone 2
 Pinky and the Brain 2
