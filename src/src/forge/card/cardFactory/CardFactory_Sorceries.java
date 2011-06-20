@@ -1918,67 +1918,6 @@ public class CardFactory_Sorceries {
            card.clearFirstSpellAbility();
            card.addSpellAbility(spell);
         }//*********************END**********END***********************
-        
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Lavalanche"))
-        {
-        	Cost cost = new Cost("X B R G", cardName, false);
-        	Target tgt = new Target(card, "Select a Player", "Player");
-        	final SpellAbility spell = new Spell(card, cost, tgt)
-        	{
-        		private static final long serialVersionUID = 3571646571415945308L;
-        		public void resolve()
-        		{
-        			int damage = card.getXManaCostPaid();
-
-        			Player player = getTargetPlayer();
-        			CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-
-        			list = list.filter(new CardListFilter()
-        			{
-        				public boolean addCard(Card c)
-        				{
-        					return c.isCreature();
-        				}
-        			});
-
-        			for(int i = 0; i < list.size(); i++) {
-        				list.get(i).addDamage(card.getXManaCostPaid(), card);
-        			}
-
-        			player.addDamage(damage, card);
-        			card.setXManaCostPaid(0);
-        		}
-        		public boolean canPlayAI()
-        		{
-        			final int maxX = ComputerUtil.getAvailableMana().size() - 3;
-
-        			if (AllZone.HumanPlayer.getLife() <= maxX)
-        				return true;
-
-        			CardListFilter filter = new CardListFilter(){
-        				public boolean addCard(Card c)
-        				{
-        					return c.isCreature() && maxX >= (c.getNetDefense() + c.getDamage());
-        				}
-        			};
-
-        			CardList killableCreatures = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-        			killableCreatures = killableCreatures.filter(filter);
-
-        			return (killableCreatures.size() >= 2);    // kill at least two of the human's creatures
-        		}
-        	};
-        	spell.setDescription("Lavalanche deals X damage to target player and each creature he or she controls.");
-        	spell.setStackDescription("Lavalanche - deals X damage to target player and each creature he or she controls.");
-        	spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-
-        	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
-        	card.clearFirstSpellAbility();
-        	card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
                
         
         //*************** START *********** START **************************
