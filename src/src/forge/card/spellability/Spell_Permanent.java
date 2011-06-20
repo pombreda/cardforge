@@ -24,13 +24,15 @@ public class Spell_Permanent extends Spell {
     private static final long serialVersionUID = 2413495058630644447L;
     
     private boolean willChampion = false;
-    private String championType = null;
+    private String championValid = null;
+    private String championValidDesc = "";
     
     /////////////////////
     ///////
     private final CommandReturn championGetCreature = new CommandReturn() {
         public Object execute() {
-            return AllZoneUtil.getPlayerTypeInPlay(getSourceCard().getController(), championType);
+        	CardList cards = AllZoneUtil.getPlayerCardsInPlay(getSourceCard().getController());
+        	return cards.getValidCards(championValid, getSourceCard().getController(), getSourceCard());
         }
     };//CommandReturn
     
@@ -53,7 +55,7 @@ public class Spell_Permanent extends Spell {
             CardList choice = (CardList) championGetCreature.execute();
             
             stopSetNext(CardFactoryUtil.input_targetChampionSac(getSourceCard(), championAbilityComes, choice,
-                    "Select another "+championType+" you control to exile", false, false));
+                    "Select another "+championValidDesc+" you control to exile", false, false));
             ButtonUtil.disableAll(); //target this card means: sacrifice this card
         }
     };
@@ -72,7 +74,8 @@ public class Spell_Permanent extends Spell {
             }
             else { //Computer
                 Card target;
-                CardList computer = AllZoneUtil.getPlayerTypeInPlay(AllZone.ComputerPlayer, championType);
+                CardList computer = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                computer = computer.getValidCards(championValid, getSourceCard().getController(), getSourceCard());
                 computer.remove(getSourceCard());
                 
                 computer.shuffle();
@@ -135,9 +138,14 @@ public class Spell_Permanent extends Spell {
         if(CardFactory.hasKeyword(sourceCard,"Champion") != -1) {
         	int n = CardFactory.hasKeyword(sourceCard, "Champion");
             
-            String parse = sourceCard.getKeyword().get(n).toString();
+            String toParse = sourceCard.getKeyword().get(n).toString();
+            String parsed[] = toParse.split(":");
         	willChampion = true;
-        	championType = parse.split(":")[1];
+        	championValid = parsed[1];
+        	if(parsed.length > 2) {
+        		championValidDesc = parsed[2];
+        	}
+        	else championValidDesc = championValid;
         }
         
         if(sourceCard.isCreature()) {

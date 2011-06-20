@@ -1005,6 +1005,8 @@ public class Card extends MyObservable {
                 else if (keyword.get(i).startsWith("Champion")) {
                 	String k = getKeyword().get(i);
                 	String kk[] = k.split(":");
+                	String types = kk[1];
+                	if(kk.length > 2) types = kk[2];
                 	if (kk[1].equals("Creature")) kk[1] = kk[1].toLowerCase();
                 	sbLong.append("Champion a");
                 	if (kk[1].toLowerCase().startsWith("a") 
@@ -1014,8 +1016,8 @@ public class Card extends MyObservable {
                 			|| kk[1].toLowerCase().startsWith("u")) {
                 		sbLong.append("n");
                 	}
-                	sbLong.append(" ").append(kk[1]);
-                	sbLong.append(" (When this enters the battlefield, sacrifice it unless you exile another ").append(kk[1]);
+                	sbLong.append(" ").append(types);
+                	sbLong.append(" (When this enters the battlefield, sacrifice it unless you exile another ").append(types);
                 	sbLong.append(" you control. When this leaves the battlefield, that card returns to the battlefield.)\r\n");
                 } else if (keyword.get(i).endsWith(".")) {
                     sbLong.append(keyword.get(i).toString()).append("\r\n");
