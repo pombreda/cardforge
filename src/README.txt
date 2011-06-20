@@ -26,3 +26,16 @@ The server containing the set pictures is limited to 30 gigs per month. At the c
 When you install the new version of forge find the forge/res/pics/ folder. Either move it or copy and paste the pics folder over to the recently installed new version of forge. This way you will only have to download the pictures for the new cards.
 
 This should save enough bandwidth that everyone will be able to download the new set pictures from the cardforge server. We do appreciate your efforts to save bandwidth.
+
+
+How to file a bug report via google code:
+
+1) Go to http://code.google.com/p/forge-card-game/issues/list.
+
+2) Get a Googlemail account if you don't have one already.
+
+3) Search for existing open issues with key words from your bug report (e.g. "Sphinx-Bone Wand"). If an issue describing your bug does already exist, you can provide additional information in its comment section.
+
+4) Post your issue by clicking on "new issue". You will receive a template that you can fill out. Under "version", write the release date of the beta (e.g. "BETA 06/12/2011") or the revision you used to compile your Forge version if you use the SVN (e.g. "Revision 9875"; command: "./svn.exe info forge-svn").
+
+5) If there are news regarding your issue, you will automatically be notified via your Googlemail address.
