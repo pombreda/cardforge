@@ -487,6 +487,15 @@ public class AbilityFactory {
 				SA = AbilityFactory_Sacrifice.createDrawbackSacrifice(this);
 		}
 		
+		if (API.equals("SacrificeAll")){
+			if (isAb)
+				SA = AbilityFactory_Sacrifice.createAbilitySacrificeAll(this);
+			else if (isSp)
+				SA = AbilityFactory_Sacrifice.createSpellSacrificeAll(this);
+			else if (isDb)
+				SA = AbilityFactory_Sacrifice.createDrawbackSacrificeAll(this);
+		}
+		
 		if (API.equals("Destroy")){
 			if (isAb)
 				SA = AbilityFactory_Destroy.createAbilityDestroy(this);

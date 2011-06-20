@@ -2268,58 +2268,6 @@ public class CardFactory_Sorceries {
 
         
         //*************** START *********** START **************************
-        else if(cardName.equals("All Is Dust")) {
-        	/*
-        	 * Each player sacrifices all colored permanents he or she controls.
-        	 */
-        	SpellAbility spell = new Spell(card) {
-				private static final long serialVersionUID = -8228522411909468245L;
-
-				@Override
-        		public void resolve() {
-        			CardList all = AllZoneUtil.getCardsInPlay();
-        			all = all.filter(colorless);
-
-        			CardListUtil.sortByIndestructible(all);
-        			CardListUtil.sortByDestroyEffect(all);
-
-        			for(Card c: all) {
-        				AllZone.GameAction.sacrifice(c);
-        			}
-        		}// resolve()
-
-        		@Override
-        		public boolean canPlayAI() {
-        			//same basic AI as Wrath of God, Damnation, Consume the Meek, etc.
-        			CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-        			human = human.filter(colorless);
-        			human = human.getNotKeyword("Indestructible");
-        			CardList computer = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
-        			computer = computer.filter(colorless);
-        			computer = computer.getNotKeyword("Indestructible");
-
-        			Log.debug("All Is Dust", "Current phase:" + AllZone.Phase.getPhase());
-        			// the computer will at least destroy 2 more human permanents
-        			return  AllZone.Phase.getPhase().equals(Constant.Phase.Main2) && 
-        				(computer.size() < human.size() - 1
-        				|| (AllZone.ComputerPlayer.getLife() < 7 && !human.isEmpty()));
-        		}
-        		
-        		private CardListFilter colorless = new CardListFilter() {
-        			public boolean addCard(Card c) {
-    					return !CardUtil.getColors(c).contains(Constant.Color.Colorless) && !c.getName().equals("Mana Pool") &&
-    					       !c.getName().equals("Mind's Desire");
-    				}
-        		};
-        	};// SpellAbility
-        	
-        	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
-        	card.clearFirstSpellAbility();
-        	card.addSpellAbility(spell);
-        }// *************** END ************ END **************************
-                
-        
-        //*************** START *********** START **************************
         else if(cardName.equals("Explosive Revelation")) {
         	/*
         	 * Choose target creature or player. Reveal cards from the top of
