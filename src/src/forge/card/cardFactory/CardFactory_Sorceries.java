@@ -2149,34 +2149,6 @@ public class CardFactory_Sorceries {
 
         	card.setSVar("PlayMain1", "TRUE");
         } //*************** END ************ END **************************
-        
-                
-        //*************** START *********** START **************************
-        else if(cardName.equals("Hellion Eruption")) {
-            final SpellAbility spell = new Spell(card) {
-				private static final long serialVersionUID = 5820870438419741058L;
-
-				@Override
-				public boolean canPlayAI() {
-            		return AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer).size() > 0;
-            	}
-				
-                @Override
-                public void resolve() {
-                	CardList cards = AllZoneUtil.getCreaturesInPlay(card.getController());
-                	for(Card creature:cards) {
-                            AllZone.GameAction.sacrifice(creature);
-                            CardFactoryUtil.makeToken("Hellion", "R 4 4 hellion", creature.getController(), "R", new String[] {
-                                    "Creature", "Hellion"}, 4, 4, new String[] {""});
-                    }
-                }
-                
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
 
         
         //*************** START *********** START **************************
