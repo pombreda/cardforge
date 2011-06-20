@@ -161,6 +161,7 @@ public class Phase extends MyObservable
         final String phase = AllZone.Phase.getPhase();
         final Player turn = AllZone.Phase.getPlayerTurn();
         AllZone.Phase.setSkipPhase(true);
+        AllZone.GameAction.checkStateEffects();
 
         if(phase.equals(Constant.Phase.Untap)) {
             PhaseUtil.handleUntap();
