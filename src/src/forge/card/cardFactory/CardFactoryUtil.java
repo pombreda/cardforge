@@ -304,7 +304,7 @@ public class CardFactoryUtil {
         if (c.hasKeyword("Prevent all damage that would be dealt to CARDNAME.")) value += 60;
         if (c.hasKeyword("Prevent all combat damage that would be dealt to CARDNAME.")) value += 50;
         if (c.hasKeyword("Shroud")) value += 30;
-        if (c.hasKeyword("CARDNAME can't be the target of spells or abilities your opponents control.")) value += 35;
+        if (c.hasKeyword("Hexproof")) value += 35;
         if (c.hasStartOfKeyword("Protection")) value += 20;
         if (c.hasStartOfKeyword("PreventAllDamageBy")) value += 10;
         value += c.getKeywordMagnitude("Absorb") * 11;
@@ -2101,9 +2101,6 @@ public class CardFactoryUtil {
         	return true;
         }
         
-        if (AllZoneUtil.isCardInPlay("Leonin Abunas", target.getController()) && target.isArtifact()
-        		&& !spell.getController().equals(target.getController())) return false;
-        
         if (AllZoneUtil.isCardInPlay("Spellbane Centaur", target.getController()) && target.isCreature()
         		&& spell.isBlue()) return false;
         
@@ -2119,7 +2116,7 @@ public class CardFactoryUtil {
                 kw = list.get(i);
                 if(kw.equals("Shroud")) return false;
                 
-                if(kw.equals("CARDNAME can't be the target of spells or abilities your opponents control.")) {
+                if(kw.equals("Hexproof")) {
                     if(!spell.getController().equals(target.getController())) return false;
                 }
                 
