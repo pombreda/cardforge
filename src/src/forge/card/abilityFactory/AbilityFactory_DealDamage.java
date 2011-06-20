@@ -802,7 +802,7 @@ public class AbilityFactory_DealDamage {
 						return false;
 
 					//if we can kill human, do it
-					if((validP.contains("Each") || validP.contains("EachOpponent")) 
+					if((validP.contains("Each") || validP.contains("EachOpponent") ||  validP.contains("Targeted")) 
 							&& AllZone.HumanPlayer.getLife() <= AllZone.HumanPlayer.predictDamage(dmg, source, false))
 						break;
 
@@ -855,17 +855,15 @@ public class AbilityFactory_DealDamage {
 		for(Card c:list) c.addDamage(dmg, card);
 
 		if(players.equals("Each")) {
-			for(Player p:AllZoneUtil.getPlayersInGame()) {
+			for(Player p:AllZoneUtil.getPlayersInGame())
 				p.addDamage(dmg, card);
-			}
 		}
 		else if(players.equals("EachOpponent")) {
 			for(Player p:AllZoneUtil.getOpponents(card.getController())) p.addDamage(dmg, card);
 		}
 		else if(players.equals("Self"))
 			card.getController().addDamage(dmg, card);
-		else {
-			//anything else to go here?
-		}
+		else if(players.equals("Targeted"))
+			targetPlayer.addDamage(dmg, card);
 	}
 }
