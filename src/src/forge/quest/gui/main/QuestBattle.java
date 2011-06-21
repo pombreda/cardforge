@@ -292,6 +292,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Raven 3", "hard", " Possessed Birds deck");
 //        addToDeckList("Red Skull 2", "medium", "BR Metalcraft deck");
         addToDeckList("Redwall 2", "medium", "Mono R Defender deck with Vent Sentinel");
+        addToDeckList("Reverend Lovejoy 2", "medium", "WRG deck with Kavu Predator and Punishing Fire");
         addToDeckList("Riddler 3", "hard", "WR deck with mass damage spells, Spitemare and Swans of Bryn Argoll");
         addToDeckList("Riddler 4", "very hard", "WR deck with mass damage spells, Stuffy Doll and Guilty Conscience");
 //        addToDeckList("Robin 2", "medium", "G Big Green deck");
