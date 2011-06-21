@@ -1043,7 +1043,7 @@ public class AbilityFactory {
 			cards.addAll(parent.getTarget().getTargetCards());
 		}
 		
-		else if (defined.startsWith("Triggered")){
+		else if (defined.startsWith("Triggered") && sa != null){
 			SpellAbility root = sa.getRootSpellAbility();
             Object crd = root.getTriggeringObject(defined.substring(9));
             if(crd instanceof Card)
