@@ -45,7 +45,7 @@ public class GameActionUtil {
 		upkeep_Dance_of_the_Dead();
 		upkeep_Farmstead();
 		
-		upkeep_Greener_Pastures();
+		
 		upkeep_Shapeshifter();
 		upkeep_Vesuvan_Doppelganger_Keyword();
 		
@@ -4086,47 +4086,7 @@ public class GameActionUtil {
 	}//cursed land
 
 
-	private static void upkeep_Greener_Pastures() {
-		final Player player = AllZone.Phase.getPlayerTurn();
-
-		CardList self = AllZoneUtil.getPlayerCardsInPlay(player);
-		CardList opp = AllZoneUtil.getPlayerCardsInPlay(player.getOpponent());
-
-		self = self.getType("Land");
-		opp = opp.getType("Land");
-
-		if((self.size() == opp.size()) || opp.size() > self.size()) return;
-		else //active player has more lands
-		{
-			Player mostLandsPlayer = null;
-			if(self.size() > opp.size()) mostLandsPlayer = player;
-
-			final Player mostLands = mostLandsPlayer;
-
-			CardList list = AllZoneUtil.getCardsInPlay("Greener Pastures");
-
-			Ability ability;
-
-			for(int i = 0; i < list.size(); i++) {
-				//final Card crd = list.get(i);
-				ability = new Ability(list.get(i), "0") {
-					@Override
-					public void resolve() {
-						CardFactoryUtil.makeTokenSaproling(mostLands);
-					}// resolve()
-				};// Ability
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append("Greener Pastures - ").append(mostLands).append(" puts a 1/1 green Saproling token onto the battlefield.");
-				ability.setStackDescription(sb.toString());
-
-                AllZone.Stack.addSimultaneousStackEntry(ability);
-
-			}// for
-
-		}//else
-	}// upkeep_Greener_Pastures()
-
+	
 	private static void upkeep_Masticore() {
 		final Player player = AllZone.Phase.getPlayerTurn();
 
