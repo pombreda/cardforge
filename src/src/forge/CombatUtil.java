@@ -911,21 +911,33 @@ public class CombatUtil {
 			HashMap<String,String> trigParams = trigger.getMapParams();
 			Card source = trigger.getHostCard();
 				
-			if(combatTriggerWillTrigger(attacker, defender, trigger, null) && trigParams.containsKey("Execute")) {
-				String ability = source.getSVar(trigParams.get("Execute"));
-				AbilityFactory AF = new AbilityFactory();
-        		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
-        		if (abilityParams.containsKey("AB")) {
-					if (abilityParams.get("AB").equals("Pump"))
-						if (!abilityParams.containsKey("ValidTgts") && !abilityParams.containsKey("Tgt"))
-						if (AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null).contains(defender))
-						if (abilityParams.containsKey("NumAtt")){
-							String att = abilityParams.get("NumAtt");
-							if (att.startsWith("+"))
-								att = att.substring(1);
-							power += Integer.parseInt(att);
-						}
-        		}
+			if(!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
+				continue;
+			String ability = source.getSVar(trigParams.get("Execute"));
+			AbilityFactory AF = new AbilityFactory();
+    		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
+    		if (abilityParams.containsKey("AB") && !abilityParams.get("AB").equals("Pump"))
+    			continue;
+    		if (abilityParams.containsKey("DB") && !abilityParams.get("DB").equals("Pump"))
+    			continue;
+			if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
+				continue; //targeted pumping not supported
+			ArrayList<Card> list = AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null);
+			if (abilityParams.containsKey("Defined") && abilityParams.get("Defined").equals("TriggeredBlocker"))
+				list.add(defender);
+			if (list.isEmpty()) continue;
+			if (!list.contains(defender)) continue;
+			if (!abilityParams.containsKey("NumAtt")) continue;
+			
+			String att = abilityParams.get("NumAtt");
+			if (att.startsWith("+"))
+				att = att.substring(1);
+			try {
+				power += Integer.parseInt(att);
+			}
+			catch(NumberFormatException nfe) {
+				//can't parse the number (X for example)
+				power += 0;
 			}
 		}
     	return power;
@@ -947,21 +959,33 @@ public class CombatUtil {
 			HashMap<String,String> trigParams = trigger.getMapParams();
 			Card source = trigger.getHostCard();
 
-			if(combatTriggerWillTrigger(attacker, defender, trigger, null)  && trigParams.containsKey("Execute")) {
-				String ability = source.getSVar(trigParams.get("Execute"));
-				AbilityFactory AF = new AbilityFactory();
-        		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
-        		if (abilityParams.containsKey("AB")) {
-					if (abilityParams.get("AB").equals("Pump"))
-						if (!abilityParams.containsKey("ValidTgts") && !abilityParams.containsKey("Tgt"))
-						if (AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null).contains(defender))
-						if (abilityParams.containsKey("NumDef")) {
-							String def = abilityParams.get("NumDef");
-							if (def.startsWith("+"))
-								def = def.substring(1);
-							toughness += Integer.parseInt(def);
-						}
-        		}
+			if(!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
+				continue;
+			String ability = source.getSVar(trigParams.get("Execute"));
+			AbilityFactory AF = new AbilityFactory();
+    		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
+    		if (abilityParams.containsKey("AB") && !abilityParams.get("AB").equals("Pump"))
+    			continue;
+    		if (abilityParams.containsKey("DB") && !abilityParams.get("DB").equals("Pump"))
+    			continue;
+			if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
+				continue; //targeted pumping not supported
+			ArrayList<Card> list = AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null);
+			if (abilityParams.containsKey("Defined") && abilityParams.get("Defined").equals("TriggeredBlocker"))
+				list.add(defender);
+			if (list.isEmpty()) continue;
+			if (!list.contains(defender)) continue;
+			if (!abilityParams.containsKey("NumDef")) continue;
+			
+			String def = abilityParams.get("NumDef");
+			if (def.startsWith("+"))
+				def = def.substring(1);
+			try{
+				toughness += Integer.parseInt(def);
+			}
+			catch(NumberFormatException nfe) {
+				//can't parse the number (X for example)
+				toughness += 0;
 			}
 		}
     	return toughness;
@@ -988,39 +1012,40 @@ public class CombatUtil {
 			HashMap<String,String> trigParams = trigger.getMapParams();
 			Card source = trigger.getHostCard();
 
-			if(combatTriggerWillTrigger(attacker, defender, trigger, combat)  && trigParams.containsKey("Execute")) {
-				String ability = source.getSVar(trigParams.get("Execute"));
-				AbilityFactory AF = new AbilityFactory();
-        		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
-        		if (abilityParams.containsKey("AB")) {
-        			boolean isValid = false;
-        			
-        			//Pump
-					if (abilityParams.get("AB").equals("Pump"))
-						if (!abilityParams.containsKey("ValidTgts") && !abilityParams.containsKey("Tgt")) //not targeted
-							if (AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null).contains(attacker))
-								isValid = true;
-					
-					//PumpAll
-					if (abilityParams.get("AB").equals("PumpAll") && abilityParams.containsKey("ValidCards"))
-							if (attacker.isValidCard(abilityParams.get("ValidCards").split(","), source.getController(), source)
-									|| attacker.isValidCard(abilityParams.get("ValidCards").replace("attacking+", "").split(",")
-											, source.getController(), source))
-								isValid = true;
-					
-					if (abilityParams.containsKey("NumAtt") && isValid){
-						String att = abilityParams.get("NumAtt");
-						if (att.startsWith("+"))
-							att = att.substring(1);
-						try {
-							power += Integer.parseInt(att);
-						}
-						catch(NumberFormatException nfe) {
-							//can't parse the number (X for example)
-							power += 0;
-						}
-					}
-        		}
+			if(!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
+				continue;
+			String ability = source.getSVar(trigParams.get("Execute"));
+			AbilityFactory AF = new AbilityFactory();
+    		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
+			if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
+				continue; //targeted pumping not supported
+    		if (abilityParams.containsKey("AB") && !abilityParams.get("AB").equals("Pump") && !abilityParams.get("AB").equals("PumpAll"))
+    			continue;
+    		if (abilityParams.containsKey("DB") && !abilityParams.get("DB").equals("Pump") && !abilityParams.get("DB").equals("PumpAll"))
+    			continue;
+    		ArrayList<Card> list = new ArrayList<Card>();
+    		if (!abilityParams.containsKey("ValidCards")) //no pumpAll
+    			list = AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null);
+			if (abilityParams.containsKey("Defined") && abilityParams.get("Defined").equals("TriggeredAttacker"))
+				list.add(attacker);
+			if (abilityParams.containsKey("ValidCards"))
+				if (attacker.isValidCard(abilityParams.get("ValidCards").split(","), source.getController(), source)
+						|| attacker.isValidCard(abilityParams.get("ValidCards").replace("attacking+", "").split(",")
+								, source.getController(), source))
+				list.add(attacker);
+			if (list.isEmpty()) continue;
+			if (!list.contains(attacker)) continue;
+			if (!abilityParams.containsKey("NumAtt")) continue;
+			
+			String att = abilityParams.get("NumAtt");
+			if (att.startsWith("+"))
+				att = att.substring(1);
+			try {
+				power += Integer.parseInt(att);
+			}
+			catch(NumberFormatException nfe) {
+				//can't parse the number (X for example)
+				power += 0;
 			}
 		}
     	return power;
@@ -1038,39 +1063,40 @@ public class CombatUtil {
 			HashMap<String,String> trigParams = trigger.getMapParams();
 			Card source = trigger.getHostCard();
 
-			if(combatTriggerWillTrigger(attacker, defender, trigger, combat) && trigParams.containsKey("Execute")) {
-				String ability = source.getSVar(trigParams.get("Execute"));
-				AbilityFactory AF = new AbilityFactory();
-        		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
-        		if (abilityParams.containsKey("AB")) {
-        			boolean isValid = false;
-        			
-        			//Pump
-					if (abilityParams.get("AB").equals("Pump"))
-						if (!abilityParams.containsKey("ValidTgts") && !abilityParams.containsKey("Tgt")) //not targeted
-							if (AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null).contains(attacker))
-								isValid = true;
-					
-					//PumpAll
-					if (abilityParams.get("AB").equals("PumpAll")  && abilityParams.containsKey("ValidCards"))
-							if (attacker.isValidCard(abilityParams.get("ValidCards").split(","), source.getController(), source)
-									|| attacker.isValidCard(abilityParams.get("ValidCards").replace("attacking+", "").split(",")
-											, source.getController(), source))
-								isValid = true;
-					
-					if (abilityParams.containsKey("NumDef") && isValid){
-							String def = abilityParams.get("NumDef");
-							if (def.startsWith("+"))
-								def = def.substring(1);
-							try{
-								toughness += Integer.parseInt(def);
-							}
-							catch(NumberFormatException nfe) {
-								//can't parse the number (X for example)
-								toughness += 0;
-							}
-						}
-        		}
+			if(!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
+				continue;
+			String ability = source.getSVar(trigParams.get("Execute"));
+			AbilityFactory AF = new AbilityFactory();
+    		HashMap<String,String> abilityParams = AF.getMapParams(ability, source);
+			if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
+				continue; //targeted pumping not supported
+    		if (abilityParams.containsKey("AB") && !abilityParams.get("AB").equals("Pump") && !abilityParams.get("AB").equals("PumpAll"))
+    			continue;
+    		if (abilityParams.containsKey("DB") && !abilityParams.get("DB").equals("Pump") && !abilityParams.get("DB").equals("PumpAll"))
+    			continue;
+    		ArrayList<Card> list = new ArrayList<Card>();
+    		if (!abilityParams.containsKey("ValidCards")) //no pumpAll
+    			list = AbilityFactory.getDefinedCards(source, abilityParams.get("Defined"), null);
+			if (abilityParams.containsKey("Defined") && abilityParams.get("Defined").equals("TriggeredAttacker"))
+				list.add(attacker);
+			if (abilityParams.containsKey("ValidCards"))
+				if (attacker.isValidCard(abilityParams.get("ValidCards").split(","), source.getController(), source)
+						|| attacker.isValidCard(abilityParams.get("ValidCards").replace("attacking+", "").split(",")
+								, source.getController(), source))
+				list.add(attacker);
+			if (list.isEmpty()) continue;
+			if (!list.contains(attacker)) continue;
+			if (!abilityParams.containsKey("NumDef")) continue;
+			
+			String def = abilityParams.get("NumDef");
+			if (def.startsWith("+"))
+				def = def.substring(1);
+			try{
+				toughness += Integer.parseInt(def);
+			}
+			catch(NumberFormatException nfe) {
+				//can't parse the number (X for example)
+				toughness += 0;
 			}
 		}
     	return toughness;
