@@ -19,7 +19,6 @@ import forge.ButtonUtil;
 import forge.Card;
 import forge.CardList;
 import forge.CardListFilter;
-import forge.CardListUtil;
 import forge.CardUtil;
 import forge.Command;
 import forge.ComputerUtil;
@@ -233,21 +232,8 @@ public class CardFactory implements NewConstants {
     	c.setController(source.getController());
     	c.setCopiedSpell(true);
     	
-    	SpellAbility[] sas = c.getSpellAbility();
-    	SpellAbility copySA = null;
-    	for(int i = 0; i < sas.length; i++) {
-    		if(original.getAbilityUsed() == i) {
-    			copySA = sas[i];
-    		}
-    	}
-
-    	if (copySA == null){
-    		StringBuilder sb = new StringBuilder();
-    		sb.append("Couldn't find matching SpellAbility to copy Source: ").append(source);
-    		sb.append(" Spell to Copy: ").append(source);
-    		System.out.println(sb.toString());
-    		return;
-    	}
+    	SpellAbility copySA = sa.copy();	
+    	copySA.setSourceCard(c);
     	
     	if (bCopyDetails){
     		c.addXManaCostPaid(original.getXManaCostPaid());
@@ -1575,151 +1561,6 @@ public class CardFactory implements NewConstants {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-	  
-        //*************** START *********** START **************************
-        else if(cardName.equals("Isochron Scepter"))
-        {
-        	Cost abCost = new Cost("2 T", cardName, true);
-        	final Ability_Activated freeCast = new Ability_Activated(card, abCost, null)
-        	{
-
-        		private static final long serialVersionUID = 4455819149429678456L;
-
-        		@Override
-        		public void resolve() {
-        			if(getSourceCard().getAttachedCards().length == 0)
-        			{
-        				//AllZone.Display.showMessage("You have not exiled a card.");
-        				return;
-        			}
-        			Card c = copyCard(getSourceCard().getAttachedCards()[0]);
-        			if(getSourceCard().getController().isComputer())
-        			{
-        				for(SpellAbility sa:getSourceCard().getAttachedCards()[0].getSpellAbility())
-        					if(sa.canPlayAI())
-        					{
-        						ComputerUtil.playStackFree(sa);
-        						return;
-        					}
-        			}
-        			else AllZone.GameAction.playCardNoCost(c);
-        		}
-			
-        		public boolean canPlay()
-        		{
-        			if (!super.canPlay())
-        				return false;
-				
-        			if (getSourceCard().getAttachedCards().length > 0)
-        			{
-        				// Isochron Scepter might be broken?
-        				Card c = copyCard(getSourceCard().getAttachedCards()[0]);
-        				SpellAbility sa = c.getSpellAbility()[0];
-    					return sa.canPlay();
-        			}
-        			else
-        				return false;
-        		}
-			
-        		public boolean canPlayAI()
-        		{
-        			if (getSourceCard().getAttachedCards().length == 0)
-        				return false;
-        			for(SpellAbility sa:getSourceCard().getAttachedCards()[0].getSpellAbility())
-        				if(sa.canPlayAI())
-        					return true;
-        			return false;
-        		}
-        	};
-        	freeCast.setDescription(abCost+"You may copy the exiled card. If you do, you may cast the copy without paying its mana cost");
-        	freeCast.setStackDescription("Copy the exiled card and cast the copy without paying its mana cost.");
-          
-        	final Input exile = new Input() {
-        		private static final long serialVersionUID = -6392468000100283596L;
-              
-        		@Override
-        		public void showMessage() {
-        			AllZone.Display.showMessage("You may exile an Instant with converted mana cost two or less from your hand");
-        			ButtonUtil.enableOnlyCancel();
-        		}
-              
-        		@Override
-        		public void selectCard(Card c, PlayerZone zone) {
-        			if(zone.is(Constant.Zone.Hand) && c.isInstant() && CardUtil.getConvertedManaCost(c) <= 2)
-        			{
-        				AllZone.GameAction.moveTo(AllZone.Human_Exile, c);
-        				card.attachCard(c);
-        				stop();
-        			}
-        		}
-              
-        		@Override
-        		public void selectButtonCancel() {
-        			stop();
-        		}
-        	};//Input
-          
-        	final SpellAbility ability = new Ability(card, "0") {
-        		@Override
-        		public void resolve() {
-        			if(card.getController().isHuman()) {
-        				if(AllZone.Human_Hand.size() > 0)
-        					AllZone.InputControl.setInput(exile);
-        			} else {
-        				CardList list = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
-        				list = list.filter( new CardListFilter(){
-        					public boolean addCard(Card c)
-        					{
-        						return c.isInstant() && CardUtil.getConvertedManaCost(c) <=2 ;
-        					}
-        				});
-        				CardListUtil.sortCMC(list);
-        				list.reverse();
-        				Card c = list.get(0);
-        				AllZone.GameAction.moveTo(AllZone.Computer_Exile, c);
-        				card.attachCard(c);
-        			}//else
-        		}//resolve()
-        	};//SpellAbility
-        	
-        	Command intoPlay = new Command() {
-        		private static final long serialVersionUID = 9202753910259054021L;
-              
-        		public void execute() {
-            	  
-        			StringBuilder sb = new StringBuilder();
-        			sb.append("Imprint - ").append(card.getController());
-        			sb.append(" may exile an instant card with converted mana cost 2 or less from their hand.");
-        			ability.setStackDescription(sb.toString());
-
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
-
-        		}
-        	};
-        	
-        	SpellAbility spell = new Spell_Permanent(card) {
-        		private static final long serialVersionUID = -2940969025405788931L;
-              
-        		//could never get the AI to work correctly
-        		//it always played the same card 2 or 3 times
-        		@Override
-        		public boolean canPlayAI() {
-        			for(Card c : AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer))
-        				if(c.isInstant() && CardUtil.getConvertedManaCost(c) <=2)
-        					return true;
-        			return false;
-        		}
-        	};
-          
-        	card.addComesIntoPlayCommand(intoPlay);
-          
-        	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
-        	card.clearFirstSpellAbility();
-        	card.addSpellAbility(spell);
-        	card.addSpellAbility(freeCast);
-        }//*************** END ************ END **************************
-        
-      
         //*************** START *********** START **************************
         else if(cardName.equals("Lodestone Bauble")) {
         	/* 1, Tap, Sacrifice Lodestone Bauble: Put up to four target basic
