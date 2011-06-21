@@ -52,6 +52,7 @@ public class Card extends MyObservable {
     
     private ArrayList<Object>			rememberedObjects					= new ArrayList<Object>();
     private ArrayList<Card>				imprintedCards						= new ArrayList<Card>();
+    private Card						championedCard						= null;
     
     private HashMap<Card, Integer>       receivedDamageFromThisTurn        = new HashMap<Card, Integer>();
     private HashMap<Card, Integer>		 dealtDamageToThisTurn			   = new HashMap<Card, Integer>();
@@ -216,6 +217,14 @@ public class Card extends MyObservable {
     
     public void clearImprinted() {
     	imprintedCards.clear();
+    }
+    
+    public void setChampionedCard(Card c) {
+    	championedCard = c;
+    }
+    
+    public Card getChampionedCard() {
+    	return championedCard;
     }
     
     public Trigger addTrigger(Trigger t)

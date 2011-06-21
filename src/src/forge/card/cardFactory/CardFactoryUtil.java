@@ -1745,21 +1745,24 @@ public class CardFactoryUtil {
             
             @Override
             public void selectCard(Card card, PlayerZone zone) {
-                if(targeted && !canTarget(spell, card)) {
-                    AllZone.Display.showMessage("Cannot target this card (Shroud? Protection?).");
-                } else if(choices.contains(card)) {
-                    spell.setTargetCard(card);
-                    if(spell.getManaCost().equals("0") || free) {
-                        this.setFree(false);
-                        AllZone.Stack.add(spell);
-                        stop();
-                    } else stopSetNext(new Input_PayManaCost(spell));
-                    //TODO - needs to be targeted
-                    if(crd.getName().equals("Mistbind Clique")) {
-                    	CardList list = AllZoneUtil.getPlayerLandsInPlay(AllZone.ComputerPlayer);
-                    	for(Card c:list) c.tap();
-                    }
-                }
+            	if(choices.contains(card)) {
+            		if(card == spell.getSourceCard()) {
+            			AllZone.GameAction.sacrifice(spell.getSourceCard());
+            			stop();
+            		}
+            		else {
+            			spell.getSourceCard().setChampionedCard(card);
+            			AllZone.GameAction.exile(card);
+            			
+            			stop();
+            			
+            			//Run triggers
+            			HashMap<String,Object> runParams = new HashMap<String,Object>();
+            			runParams.put("Card", spell.getSourceCard());
+            			runParams.put("Championed", card);
+            			AllZone.TriggerHandler.runTrigger("Championed", runParams);
+            		}
+            	}
             }//selectCard()
         };
         return target;

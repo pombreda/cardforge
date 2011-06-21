@@ -78,6 +78,9 @@ public class TriggerHandler {
 		{
 			ret = new Trigger_Blocks(mapParams,host);
 		}
+		else if(mode.equals("Championed")) {
+			ret = new Trigger_Championed(mapParams, host);
+		}
 		else if(mode.equals("ChangesZone"))
 		{
 			ret = new Trigger_ChangesZone(mapParams,host);
