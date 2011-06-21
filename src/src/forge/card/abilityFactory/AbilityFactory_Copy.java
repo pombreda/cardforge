@@ -24,6 +24,7 @@ import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Target;
 import forge.card.trigger.Trigger;
+import forge.gui.GuiUtils;
 
 public class AbilityFactory_Copy {
 
@@ -466,6 +467,7 @@ public class AbilityFactory_Copy {
 			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), params.get("Defined"), sa);
 
 		sb.append("Copy ");
+		// TODO Someone fix this Description when Copying Charms
 		Iterator<SpellAbility> it = tgtSpells.iterator();
 		while(it.hasNext()) {
 			sb.append(it.next().getSourceCard());
@@ -510,15 +512,19 @@ public class AbilityFactory_Copy {
 		else
 			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), params.get("Defined"), sa);
 
-		for(SpellAbility tgtSA: tgtSpells) {
-			if (tgt == null || CardFactoryUtil.canTarget(card, tgtSA.getSourceCard())) {
-
-				//copied from Twincast
-				AllZone.CardFactory.copySpellontoStack(card, tgtSA.getSourceCard(), true);				
-				//end copied from Twincast
-
-			}//end canTarget
-		}//end foreach SpellAbility
+		if (tgtSpells.size() == 0)
+			return;
+		
+		SpellAbility chosenSA = null;
+		if (tgtSpells.size() == 1)
+			chosenSA = tgtSpells.get(0);
+		else if (sa.getActivatingPlayer().isHuman())
+			chosenSA = (SpellAbility)GuiUtils.getChoice("Select a spell to copy", tgtSpells.toArray());
+		else
+			chosenSA = tgtSpells.get(0);
+		
+		if (tgt == null || CardFactoryUtil.canTarget(card, chosenSA.getSourceCard())) 
+			AllZone.CardFactory.copySpellontoStack(card, chosenSA.getSourceCard(), chosenSA, true);	
 	}//end resolve
 
 }//end class AbilityFactory_Copy

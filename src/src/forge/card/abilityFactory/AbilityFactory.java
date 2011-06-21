@@ -1229,6 +1229,10 @@ public class AbilityFactory {
             if(sa.getTriggeringObject(triggeringType) instanceof SpellAbility)
                 s = (SpellAbility)sa.getTriggeringObject(triggeringType);
         }
+        else if (defined.startsWith("Imprinted")){
+        	for(Card imp : card.getImprinted())
+        		sas.addAll(imp.getSpellAbilities());
+        }
 		
 		if (s != null)
 			sas.add(s);
