@@ -534,28 +534,31 @@ public class AbilityFactory_ChangeZone {
             if (o != null) {
                 Card c = (Card) o;
                 fetchList.remove(c);
-                if (remember != null)
-                	card.addRemembered(c);
-                //for imprinted since this doesn't use Target
-                if(params.containsKey("Imprint")) card.addImprinted(c);
-
+                Card movedCard = null;
+                
                 if (destination.equals("Library")) {
                     // do not shuffle the library once we have placed a fetched card on top.
                     if (origin.contains("Library") && i < 1) {
                         player.shuffle();
                     }
-                    AllZone.GameAction.moveToLibrary(c, libraryPos);
+                    movedCard = AllZone.GameAction.moveToLibrary(c, libraryPos);
                 }
                 else if (destination.equals("Battlefield")){
-		        		if (params.containsKey("Tapped"))
-		        			c.tap();
-		        		if (params.containsKey("GainControl"))
-		        			c.setController(sa.getActivatingPlayer());
-		        	
-		        		AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
-		    		}
+	        		if (params.containsKey("Tapped"))
+	        			c.tap();
+	        		if (params.containsKey("GainControl"))
+	        			c.setController(sa.getActivatingPlayer());
+	        	
+	        		movedCard = AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
+	    		}
 		    	else
-                	AllZone.GameAction.moveTo(destZone, c);
+		    		movedCard = AllZone.GameAction.moveTo(destZone, c);
+                
+                if (remember != null)
+                	card.addRemembered(movedCard);
+                //for imprinted since this doesn't use Target
+                if(params.containsKey("Imprint"))
+                	card.addImprinted(movedCard);
                 
             }
             else{
