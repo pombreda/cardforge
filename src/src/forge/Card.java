@@ -1150,6 +1150,11 @@ public class Card extends MyObservable {
         sb.append("\r\n");
         sb.append(text.replaceAll("\\\\r\\\\n", "\r\n"));
         sb.append("\r\n");
+        
+        if(isAura()) {
+            // Give spellText line breaks for easier reading
+            sb.append(getSpellText().replaceAll("\\\\r\\\\n", "\r\n")).append("\r\n");
+        }
 
         // Triggered abilities
         for(Trigger trig : triggers)
@@ -1168,7 +1173,7 @@ public class Card extends MyObservable {
         	if (!isPermanent())
         		continue;
         	
-        	if (sa instanceof Spell_Permanent && primaryCost){
+        	if (sa instanceof Spell_Permanent && primaryCost && !isAura()){
         		// For Alt costs, make sure to display the cost!
         		primaryCost = false;
         		continue;
@@ -1182,7 +1187,7 @@ public class Card extends MyObservable {
         		addedManaStrings.add(sAbility);
             }
 
-            if (sa instanceof Spell_Permanent){
+            if (sa instanceof Spell_Permanent && !isAura()){
             	sb.insert(0, "\r\n");
             	sb.insert(0, sAbility);
             }
