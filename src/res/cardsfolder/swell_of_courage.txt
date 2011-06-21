@@ -7,4 +7,5 @@ A:AB$ PutCounter | Cost$ X W W Discard<1/CARDNAME> | ValidTgts$ Creature | TgtPr
 SVar:X:Count$xPaid
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/swell_of_courage.jpg
+SetInfo:MOR|Uncommon|http://magiccards.info/scans/en/mt/26.jpg
 End
