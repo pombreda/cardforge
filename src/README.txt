@@ -30,7 +30,7 @@ This should save enough bandwidth that everyone will be able to download the new
 
 How to file a bug report via google code:
 
-1) Go to http://code.google.com/p/forge-card-game/issues/list.
+1) Go to http://code.google.com/p/cardforge/issues/list.
 
 2) Get a Googlemail account if you don't have one already.
 
