@@ -313,7 +313,8 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Saruman 3", "hard", "UBR discard deck with Megrim, Liliana's Caress and Burning Inquiry ");
         addToDeckList("Sauron 2", "medium", "UB Black Vise deck with Underworld Dreams, lots of card draw for both players");
         addToDeckList("Scooby Doo 3", "hard", "WR Giants Aggro deck with a few changelings");
-        addToDeckList("Scotty 2", "medium", "WBG Pestilence deck with Castle, Penumbra Kavu, Spider and Wurm but no pro black");
+        addToDeckList("Scotty 2", "medium", "WBG protection from black Famine deck with Phantom Centaur and Nightwind Glider");
+        addToDeckList("Scotty 3", "hard", "WBG protection from black Famine deck with Chameleon Colossus and Oversoul of Dusk");
         addToDeckList("Seabiscuit 1", "easy", "Mono W Metalcraft deck with Ardent Recruit and Indomitable Archangel");
         addToDeckList("Seabiscuit 2", "medium", "Mono W Metalcraft deck with Ardent Recruit and Indomitable Archangel");
         addToDeckList("Seabiscuit 3", "hard", "Mono W Metalcraft deck with Ardent Recruit and Indomitable Archangel");
