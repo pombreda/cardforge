@@ -1908,7 +1908,7 @@ public class CardFactory_Sorceries {
         	card.addSpellAbility(spell);
         }//*************** END ************ END **************************
         
-        /*
+ 
         //*************** START *********** START **************************
         else if(cardName.equals("Brood Birthing")) {
         	final SpellAbility spell = new Spell(card)
@@ -1940,7 +1940,7 @@ public class CardFactory_Sorceries {
         	card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
-        */
+
         //*************** START *********** START **************************
         else if(cardName.equals("Explosive Revelation")) {
         	/*
@@ -2216,59 +2216,7 @@ public class CardFactory_Sorceries {
         	spell.setBeforePayMana(input);
         }//*************** END ************ END **************************
                 
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Recall")) {
-        	/*
-        	 * Discard X cards, then return a card from your graveyard to your
-        	 * hand for each card discarded this way. Exile Recall.
-        	 */
-        	Cost cost = new Cost(card.getManaCost(), cardName, false);
-        	final SpellAbility spell = new Spell(card, cost, null) {
-				private static final long serialVersionUID = -3935814273439962834L;
-
-				@Override
-        		public boolean canPlayAI() {
-        			//for compy to play this wisely, it should check hand, and if there
-        			//are no spells that canPlayAI(), then use recall.  maybe.
-        			return false;
-        		}
-
-        		@Override
-        		public void resolve() {       			
-        			int numCards = card.getXManaCostPaid();
-        			final Player player = card.getController();
-        			int maxCards = AllZoneUtil.getPlayerHand(player).size();
-        			if(numCards != 0) {
-        				numCards = Math.min(numCards, maxCards);
-        			if(player.isHuman()) {
-        				AllZone.InputControl.setInput(CardFactoryUtil.input_discardRecall(numCards, card, this));
-        			}
-           			}
-        			/*else { //computer
-        				card.getControler().discardRandom(numCards);
-        				AllZone.GameAction.exile(card);
-        				CardList grave = AllZoneUtil.getPlayerGraveyard(card.getController());
-        				for(int i = 1; i <= numCards; i ++) {
-        					Card t1 = CardFactoryUtil.AI_getBestCreature(grave);
-        					if(null != t1) {
-        						t1 = grave.get(0);
-        						grave.remove(t1);
-        						AllZone.GameAction.moveToHand(t1);
-        					}
-        				}
-        			}*/
-        		}//resolve()
-        	};//SpellAbility
-        	
-        	StringBuilder sb = new StringBuilder();
-        	sb.append(card.getName()).append(" - discard X cards and return X cards to your hand.");
-        	spell.setStackDescription(sb.toString());
-        	
-        	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
-        	card.clearFirstSpellAbility();
-        	card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
+       
         
         
         //*************** START *********** START **************************
