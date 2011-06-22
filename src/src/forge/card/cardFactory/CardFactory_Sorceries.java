@@ -1908,7 +1908,7 @@ public class CardFactory_Sorceries {
         	card.addSpellAbility(spell);
         }//*************** END ************ END **************************
         
-        
+        /*
         //*************** START *********** START **************************
         else if(cardName.equals("Brood Birthing")) {
         	final SpellAbility spell = new Spell(card)
@@ -1940,7 +1940,7 @@ public class CardFactory_Sorceries {
         	card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
-        
+        */
         //*************** START *********** START **************************
         else if(cardName.equals("Explosive Revelation")) {
         	/*
