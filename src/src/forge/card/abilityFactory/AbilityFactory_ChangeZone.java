@@ -828,7 +828,7 @@ public class AbilityFactory_ChangeZone {
 				retrieval = knownDetermineDefined(sa, params.get("Defined"), origin);
 			}
 			
-			if (retrieval == null)
+			if (retrieval == null || retrieval.isEmpty())
 				return false;
 			
 			if (retrieval.get(0) == source){
