@@ -1144,35 +1144,7 @@ public class CardFactory_Sorceries {
             spell.setBeforePayMana(chooseTwoInput);
         }//*************** END ************ END **************************
         
-        /*
-        //*************** START *********** START **************************
-        else if(cardName.equals("Pulse of the Tangle")) {
-            SpellAbility spell = new Spell(card) {
-                private static final long serialVersionUID = 523613120207836692L;
-                
-                @Override
-                public void resolve() {
-                    CardFactoryUtil.makeToken("Beast", "G 3 3 Beast", card.getController(), "G",
-                            new String[] {"Creature", "Beast"}, 3, 3, new String[] {""});
-                    
-                    //return card to hand if necessary
-                    Player player = card.getController();
-                    
-                    CardList oppList = AllZoneUtil.getCreaturesInPlay(player.getOpponent());
-                    CardList myList = AllZoneUtil.getCreaturesInPlay(player);
-                    
-                    //if true, return card to hand
-                    if(myList.size() < oppList.size()) 
-                    	AllZone.GameAction.moveToHand(card);
-
-                }//resolve()
-            };
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-        */
+        
         
         //*************** START *********** START **************************
         else if(cardName.equals("Parallel Evolution")) {
@@ -1857,7 +1829,7 @@ public class CardFactory_Sorceries {
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
         
-                                
+        /*                        
         //********************Start********Start***********************
         else if(cardName.equals("Living Death"))
         {
@@ -1918,7 +1890,7 @@ public class CardFactory_Sorceries {
            card.clearFirstSpellAbility();
            card.addSpellAbility(spell);
         }//*********************END**********END***********************
-               
+        */       
         
         //*************** START *********** START **************************
         else if(cardName.equals("Balance"))
