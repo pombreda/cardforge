@@ -10,4 +10,5 @@ SVar:TrigPump:AB$Pump | Cost$ 0 | Defined$ TriggeredAttacker | NumDef$ +5
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/unstoppable_ash.jpg
+SetInfo:MOR|Rare|http://magiccards.info/scans/en/mt/137.jpg
 End

@@ -10,4 +10,5 @@ SVar:DBCleanup:DB$ Cleanup | ClearRemembered$ True
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mystifying_maze.jpg
+SetInfo:M11|Rare|http://magiccards.info/scans/en/m11/226.jpg
 End
