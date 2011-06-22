@@ -1556,7 +1556,7 @@ public class GameAction {
     							Number_ManaCost = Number_ManaCost.trim();
     							for(int check = 0; check < Max; check ++) {
     								if(Number_ManaCost.equals(Numbers[check])) {
-    									int xValue = CardFactoryUtil.xCount(originalCard, originalCard.getSVar("X"));
+    									int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
     									//if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
     									Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check + xValue));
     								}
@@ -1705,7 +1705,7 @@ public class GameAction {
     								Number_ManaCost = Number_ManaCost.trim();
     								for(int check = 0; check < Max; check ++) {
     									if(Number_ManaCost.equals(Numbers[check])) {
-    										int xValue = CardFactoryUtil.xCount(originalCard, originalCard.getSVar("X"));
+    										int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
     										//if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
     										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - xValue));
     									}
