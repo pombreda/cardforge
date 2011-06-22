@@ -1,8 +1,9 @@
 Name:Fear
 ManaCost:B B
 Types:Enchantment Aura
-Text:Enchanted creature has fear.
+Text:no text
 K:Enchant creature
+K:enPump:Fear
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/fear.jpg
 SetInfo:8ED|Common|http://magiccards.info/scans/en/8e/134.jpg
