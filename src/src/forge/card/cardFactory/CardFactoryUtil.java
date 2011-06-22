@@ -3526,7 +3526,7 @@ public class CardFactoryUtil {
     		ability.setStackDescription(sb.toString());
     		
     		AllZone.Stack.add(ability);
-    	}
+    	}/*
     	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, destroy CARDNAME.") 
     			|| AllZoneUtil.isCardInPlay("Horobi, Death's Wail")) {
     		
@@ -3557,7 +3557,7 @@ public class CardFactoryUtil {
     		
     		AllZone.Stack.add(ability);
     	}
-    	/*
+
     	//When enchanted creature becomes the target of a spell or ability, <destroy/exile/sacrifice> <that creature/CARDNAME>. (It can't be regenerated.)
     	ArrayList<Card> auras = c.getEnchantedBy();
     	for(int a=0;a<auras.size();a++)
