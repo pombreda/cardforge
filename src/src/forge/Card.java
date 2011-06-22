@@ -2757,6 +2757,7 @@ public class Card extends MyObservable {
 	public boolean hasProperty(String Property, final Player sourceController, final Card source) {
 		//by name can also have color names, so needs to happen before colors.
         if (Property.startsWith("named")) { if(!getName().equals(Property.substring(5))) return false; }
+        else if (Property.startsWith("notnamed")) { if(getName().equals(Property.substring(8))) return false; }
         else if (Property.startsWith("sameName")) { if(!getName().equals(source.getName())) return false; }
         // ... Card colors
         else if (Property.contains("White") 
