@@ -548,7 +548,7 @@ class CardFactory_Auras {
         //******************************************************************
         // This card can't be converted to keyword, problem with CARDNME   *
         //*************** START *********** START **************************
-        else if(cardName.equals("Vigilance")) {
+        /*else if(cardName.equals("Vigilance")) {
         	Cost cost = new Cost(card.getManaCost(), cardName, false);
         	Target tgt = new Target(card, "C");
         	final SpellAbility spell = new Spell_Permanent(card, cost, tgt) {
@@ -648,7 +648,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        
+        */
         
         //******************************************************************
         // This card can't be converted to keyword, problem with Lifelink  *
