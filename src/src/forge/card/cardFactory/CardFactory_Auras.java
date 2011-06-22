@@ -648,7 +648,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        */
+        
         
         //******************************************************************
         // This card can't be converted to keyword, problem with Lifelink  *
@@ -683,7 +683,7 @@ class CardFactory_Auras {
                     /*
                      *  else target another creature
                      *  Do not enchant card with Defender or Lifelink or enchant card already enchanted
-                     */
+                     
                     CardListUtil.sortAttack(list);
                     CardListUtil.sortFlying(list);
                     
@@ -758,7 +758,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        
+        */
         
         //*************** START *********** START **************************
         else if(cardName.equals("Animate Dead") || cardName.equals("Dance of the Dead")) {
