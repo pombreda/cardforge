@@ -10,4 +10,5 @@ SVar:Flight:DB$ Pump | Defined$ Self | KW$ Flying
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/gargoyle_sentinel.jpg
+SetInfo:M11|Uncommon|http://magiccards.info/scans/en/m11/207.jpg
 End
