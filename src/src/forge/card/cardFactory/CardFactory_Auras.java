@@ -983,6 +983,7 @@ class CardFactory_Auras {
             card.setSVar("PlayMain1", "TRUE");
         }//*************** END ************ END **************************
         
+        /*
         //**************************************************************
         // This card can't be converted to keyword, problem with Fear  *
         //*************** START *********** START **********************
@@ -1016,7 +1017,7 @@ class CardFactory_Auras {
                     /*
                      *  else target another creature
                      *  Do not enchant card with Defender or Fear or enchant card already enchanted
-                     */
+                     
                     CardListUtil.sortAttack(list);
                     CardListUtil.sortFlying(list);
                     
@@ -1092,7 +1093,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        
+        */
         //*************** START *********** START **************************
         else if (cardName.equals("Entangling Vines") || cardName.equals("Glimmerdust Nap") || 
         		 cardName.equals("Melancholy") || cardName.equals("Mystic Restraints") || 
