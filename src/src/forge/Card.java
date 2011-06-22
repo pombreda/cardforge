@@ -2297,7 +2297,8 @@ public class Card extends MyObservable {
     
     public void addIntrinsicKeyword(String s) {
         if (s.trim().length()!=0)
-        	intrinsicKeyword.add((getName().trim().length()== 0 ? s :s.replaceAll(getName(), "CARDNAME")));
+        	intrinsicKeyword.add(s);
+        	//intrinsicKeyword.add((getName().trim().length()== 0 ? s :s.replaceAll(getName(), "CARDNAME")));
     }
     
     public void addIntrinsicAbility(String s)
@@ -2334,8 +2335,9 @@ public class Card extends MyObservable {
     public void addExtrinsicKeyword(String s) {
         //if(!hasKeyword(s)){
     	if (s.startsWith("HIDDEN")) addHiddenExtrinsicKeyword(s);
-        else 
-        	extrinsicKeyword.add((getName().trim().length()==0 ? s :s.replaceAll(getName(), "CARDNAME")));
+        else
+            extrinsicKeyword.add(s);
+        	//extrinsicKeyword.add((getName().trim().length()==0 ? s :s.replaceAll(getName(), "CARDNAME")));
         //}
     }
     
