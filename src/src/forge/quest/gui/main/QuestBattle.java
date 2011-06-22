@@ -29,6 +29,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Aquaman 1", "easy", "WU Control deck");
         addToDeckList("Aquaman 2", "medium", "WU Caw-Blade deck");
         addToDeckList("Aquaman 3", "hard", "WU Caw-Blade deck");
+        addToDeckList("Aragorn 1", "medium", "WBRG Landfall deck");
         addToDeckList("Aragorn 2", "medium", "WUBRG Landfall deck");
 //        addToDeckList("Ash 1", "easy", "WB Singleton deck");
 //        addToDeckList("Ash 2", "medium", "WB Singleton deck");
