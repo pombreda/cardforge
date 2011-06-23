@@ -74,6 +74,10 @@ public class TriggerHandler {
 		{
 			ret = new Trigger_Attacks(mapParams,host);
 		}
+        else if(mode.equals("BecomesTarget"))
+        {
+            ret = new Trigger_BecomesTarget(mapParams,host);
+        }
 		else if(mode.equals("Blocks"))
 		{
 			ret = new Trigger_Blocks(mapParams,host);
