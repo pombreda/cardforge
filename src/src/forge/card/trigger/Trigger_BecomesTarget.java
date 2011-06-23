@@ -42,7 +42,7 @@ public class Trigger_BecomesTarget extends Trigger {
         }
         if(mapParams.containsKey("ValidSource"))
         {
-            if(!matchesValid(runParams.get("Source"),mapParams.get("ValidSource").split(","),hostCard))
+            if(!matchesValid(((SpellAbility)runParams.get("SourceSA")).getSourceCard(),mapParams.get("ValidSource").split(","),hostCard))
             {
                 return false;
             }
@@ -75,7 +75,8 @@ public class Trigger_BecomesTarget extends Trigger {
     @Override
     public void setTriggeringObjects(SpellAbility sa)
     {
-        sa.setTriggeringObject("Source",runParams.get("Source"));
+        sa.setTriggeringObject("SourceSA",runParams.get("SourceSA"));
+        sa.setTriggeringObject("Source",((SpellAbility)runParams.get("SourceSA")).getSourceCard());
         sa.setTriggeringObject("Target",runParams.get("Target"));
     }
 }
