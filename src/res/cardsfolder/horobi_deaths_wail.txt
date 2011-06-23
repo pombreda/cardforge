@@ -1,8 +1,10 @@
 Name:Horobi, Death's Wail
 ManaCost:2 B B
 Types:Legendary Creature Spirit
-Text:Whenever a creature becomes the target of a spell or ability, destroy that creature.
+Text:no text
 PT:4/4
+T:Mode$ BecomesTarget | ValidTarget$ Creature | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ Whenever a creature becomes the target of a spell or ability, destroy that creature.
+SVar:TrigDestroy:AB$Destroy | Cost$ 0 | Defined$ TriggeredTarget
 K:Flying
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/horobi_deaths_wail.jpg

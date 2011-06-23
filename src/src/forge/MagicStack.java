@@ -114,8 +114,8 @@ public class MagicStack extends MyObservable {
 				sp.resolve();
 			else {
 				push(sp);
-				if (sp.getTargetCard() != null)
-					CardFactoryUtil.checkTargetingEffects(sp, sp.getTargetCard());
+				/*if (sp.getTargetCard() != null)
+					CardFactoryUtil.checkTargetingEffects(sp, sp.getTargetCard());*/
 			}
 		}
 	}
@@ -676,8 +676,8 @@ public class MagicStack extends MyObservable {
 			}
 		}
 
-		if (sp.getTargetCard() != null)
-			CardFactoryUtil.checkTargetingEffects(sp, sp.getTargetCard());
+		/*if (sp.getTargetCard() != null)
+			CardFactoryUtil.checkTargetingEffects(sp, sp.getTargetCard());*/
 
 		if(simultaneousStackEntryList.size() > 0)
 			AllZone.Phase.passPriority();
