@@ -1737,8 +1737,6 @@ public class CombatUtil {
         	// opponent discards their hand,
         	opp.discardRandom(handSize, a.getSpellAbility()[0]);
         	opp.drawCards(handSize);
-        } else if(a.getName().equals("Elven Warhounds")) {
-        	AllZone.GameAction.moveToLibrary(b);
         }
         
         a.setCreatureGotBlockedThisCombat(true);
