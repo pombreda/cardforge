@@ -44,7 +44,7 @@ public class QuestPetPlant extends QuestPetAbstract {
             petCard.setImageName("G 1 3 Plant Wall");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(3);
-            petCard.addIntrinsicKeyword("First Strike");
+            // petCard.addIntrinsicKeyword("First Strike");
         }
         else if (level == 5) {
             petCard.setImageName("G 1 3 Plant Wall Deathtouch");
