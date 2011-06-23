@@ -3495,7 +3495,7 @@ public class CardFactoryUtil {
     	
     	return "";
     }
-    
+    /*
     //whenever CARDNAME becomes the target of a spell or ability, ... :
     public static void checkTargetingEffects(SpellAbility sa, final Card c)
     {
@@ -3531,7 +3531,7 @@ public class CardFactoryUtil {
     		ability.setStackDescription(sb.toString());
     		
     		AllZone.Stack.add(ability);
-    	}/*
+    	}
     	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, sacrifice it.")) {
     		SpellAbility ability = new Ability(c, "0")
     		{
@@ -3621,8 +3621,8 @@ public class CardFactoryUtil {
     			}
     		}
     	}
-    	//}*/
-    }
+    	//}
+    }*/
 
     
     public static void main(String[] args) {
