@@ -3180,6 +3180,8 @@ public class CardFactoryUtil {
 	    		String costString = k[2];
 	    		if (costString.equals("X"))
 	    			cost += CardFactoryUtil.xCount(card, card.getSVar("X"));
+	    		else if (costString.equals("Y"))
+	    			cost += CardFactoryUtil.xCount(card, card.getSVar("Y"));
 	    		else
 	    			cost += Integer.parseInt(k[2]);
 			}
