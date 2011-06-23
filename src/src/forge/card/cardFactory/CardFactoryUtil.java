@@ -3164,24 +3164,28 @@ public class CardFactoryUtil {
     
     //total cost to pay for an attacker c, cards like Propaganda, Ghostly Prison, Collective Restraint, ...
     public static String getPropagandaCost(Card c) {
-        String s = "";
+        int cost = 0;
         
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(c.getController().getOpponent());
-        list = list.filter(new CardListFilter() {
-            public boolean addCard(Card c) {
-                return c.getName().equals("Propaganda") || c.getName().equals("Windborn Muse")
-                        || c.getName().equals("Ghostly Prison");
-            }
-        });
-        int cost = list.size() * 2;
+        CardList list = AllZoneUtil.getCardsInPlay();
+        for(Card card : list) {
+			if (card.hasStartOfKeyword("Creatures can't attack unless their controller pays")) {
+	        	int KeywordPosition = card.getKeywordPosition("Creatures can't attack unless their controller pays");
+	        	String parse = card.getKeyword().get(KeywordPosition).toString();
+	    		String k[] = parse.split(":");
+	    		
+	    		String restrictions[] = k[1].split(",");
+	    		if (!c.isValidCard(restrictions,  card.getController(), card))
+	    			continue;
+	    		
+	    		String costString = k[2];
+	    		if (costString.equals("X"))
+	    			cost += CardFactoryUtil.xCount(card, card.getSVar("X"));
+	    		else
+	    			cost += Integer.parseInt(k[2]);
+			}
+        }
         
-        list = AllZoneUtil.getPlayerCardsInPlay(c.getController().getOpponent(), "Collective Restraint");
-        
-        int domain = countBasicLandTypes(c.getController().getOpponent());
-        
-        cost += domain * list.size();
-        
-        s = Integer.toString(cost);
+        String s = Integer.toString(cost);
         
         return s;
     }

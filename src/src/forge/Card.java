@@ -998,6 +998,10 @@ public class Card extends MyObservable {
                     String k[] = keyword.get(i).split(":");
                     if(!k[4].equals("no text"))
                     	sbLong.append(k[4]).append("\r\n");
+                }else if (keyword.get(i).toString().contains("Creatures can't attack unless their controller pays")) {
+                    String k[] = keyword.get(i).split(":");
+                    if(!k[3].equals("no text"))
+                    	sbLong.append(k[3]).append("\r\n");
                 } else if (keyword.get(i).startsWith("Enchant")) {
                     String k = keyword.get(i);
                     k = k.replace("Curse", "");
