@@ -4089,7 +4089,7 @@ public class CardFactory_Creatures {
         	card.addSpellAbility(toExile);
         }//*************** END ************ END **************************
         
-      
+        /*
         //*************** START *********** START **************************
         else if(cardName.equals("Frost Titan")) {
         	final Trigger targetedTrigger = TriggerHandler.parseTrigger("FrostTitanCounter","Mode$ SpellAbilityCast | TargetsValid$ Card.Self | ValidControllingPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigOverridden | TriggerDescription$ Whenever CARDNAME becomes the target of a spell or ability an opponent controls, counter that spell or ability unless its controller pays 2.", card);
@@ -4141,7 +4141,7 @@ public class CardFactory_Creatures {
         	
         	card.addTrigger(targetedTrigger);
         }//*************** END ************ END **************************
-        
+         */
       
         //*************** START *********** START **************************
         else if(cardName.equals("Brass Squire")) {

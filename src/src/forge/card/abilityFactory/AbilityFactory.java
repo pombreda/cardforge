@@ -1155,6 +1155,10 @@ public class AbilityFactory {
                 {
                     o = ((Card)c).getController();
                 }
+                if(c instanceof SpellAbility)
+                {
+                    o = ((SpellAbility)c).getSourceCard().getController();
+                }
             }
             else if (defined.endsWith("Owner")){
                 String triggeringType = defined.substring(9);

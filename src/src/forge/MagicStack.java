@@ -483,7 +483,7 @@ public class MagicStack extends MyObservable {
 
             //Run BecomesTarget triggers
             runParams.clear();
-            runParams.put("Source",sp.getSourceCard());
+            runParams.put("SourceSA",sp);
             if(chosenTargets.size() > 0)
             {
                 for(Target_Choices tc : chosenTargets)
