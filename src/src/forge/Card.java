@@ -1160,10 +1160,12 @@ public class Card extends MyObservable {
         sb.append(text.replaceAll("\\\\r\\\\n", "\r\n"));
         sb.append("\r\n");
         
-        if(isAura()) {
+        /*
+         * if(isAura()) {
             // Give spellText line breaks for easier reading
             sb.append(getSpellText().replaceAll("\\\\r\\\\n", "\r\n")).append("\r\n");
         }
+        */
 
         // Triggered abilities
         for(Trigger trig : triggers)
@@ -1200,9 +1202,12 @@ public class Card extends MyObservable {
             	sb.insert(0, "\r\n");
             	sb.insert(0, sAbility);
             }
-            else{
-	            sb.append(sAbility);
-	            sb.append("\r\n");
+            else if (! sAbility.endsWith(getName())) {
+                sb.append(sAbility);
+                sb.append("\r\n");
+                // The test above appears to prevent the card name from showing and therefore it no longer needs to be deleted from the stringbuilder
+                //if (sb.toString().endsWith("CARDNAME")) 
+                //    sb.replace(sb.toString().lastIndexOf("CARDNAME"), sb.toString().lastIndexOf("CARDNAME") + name.length() - 1, "");
             }
         }
         
