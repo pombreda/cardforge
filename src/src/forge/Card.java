@@ -1110,11 +1110,12 @@ public class Card extends MyObservable {
                 }
             }
             
-            //Changeling + CARDNAME can't be countered. + Cascade
+            // Changeling + CARDNAME can't be countered. + Cascade + Multikicker
             for (int i = 0; i < kw.size(); i++) {
                 if ((kw.get(i).contains("Changeling") && !sb.toString().contains("Changeling")) 
                         || (kw.get(i).contains("CARDNAME can't be countered.") && !sb.toString().contains("CARDNAME can't be countered.")) 
-                        || (kw.get(i).contains("Cascade") && !sb.toString().contains("Cascade"))) {
+                        || (kw.get(i).contains("Cascade") && !sb.toString().contains("Cascade"))
+                        || (kw.get(i).contains("Multikicker") && !sb.toString().contains("Multikicker"))) {
                     sb.append(kw.get(i)).append("\r\n");
                 }
             }
