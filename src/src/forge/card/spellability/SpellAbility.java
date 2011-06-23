@@ -616,4 +616,21 @@ public abstract class SpellAbility {
     	
     	return this;
     }
+
+    public ArrayList<Target_Choices> getAllTargetChoices() {
+        ArrayList<Target_Choices> res = new ArrayList<Target_Choices>();
+
+        SpellAbility sa = getRootSpellAbility();
+        if(sa.getTarget() != null)
+            res.add(sa.getTarget().getTargetChoices());
+        while(sa.getSubAbility() != null)
+        {
+            sa = sa.getSubAbility();
+
+            if(sa.getTarget() != null)
+                res.add(sa.getTarget().getTargetChoices());
+        }
+
+        return res;
+    }
 }

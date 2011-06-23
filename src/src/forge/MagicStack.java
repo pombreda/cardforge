@@ -9,15 +9,7 @@ import com.esotericsoftware.minlog.Log;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaCost;
-import forge.card.spellability.Ability;
-import forge.card.spellability.Ability_Mana;
-import forge.card.spellability.Ability_Static;
-import forge.card.spellability.Ability_Triggered;
-import forge.card.spellability.SpellAbility;
-import forge.card.spellability.SpellAbility_StackInstance;
-import forge.card.spellability.Spell_Permanent;
-import forge.card.spellability.Target;
-import forge.card.spellability.Target_Selection;
+import forge.card.spellability.*;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost_Ability;
@@ -198,6 +190,8 @@ public class MagicStack extends MyObservable {
 	}
 
 	public void add(final SpellAbility sp) {
+        ArrayList<Target_Choices> chosenTargets = sp.getAllTargetChoices();
+
 		if (sp instanceof Ability_Mana) { // Mana Abilities go straight through
 			sp.resolve();
 			sp.resetOnceResolved();
@@ -459,7 +453,7 @@ public class MagicStack extends MyObservable {
 
 		if(!sp.getSourceCard().isCopiedSpell()) //Copied spells aren't cast per se so triggers shouldn't run for them.
 		{
-			//Run trigger
+			//Run SpellAbilityCast triggers
 			HashMap<String,Object> runParams = new HashMap<String,Object>();
 			runParams.put("Cost", sp.getPayCosts());
 			runParams.put("Player", sp.getSourceCard().getController());
@@ -467,22 +461,66 @@ public class MagicStack extends MyObservable {
 			runParams.put("CastSA", sp);
 			AllZone.TriggerHandler.runTrigger("SpellAbilityCast", runParams);
 
+            //Run SpellCast triggers
 			if(sp.isSpell())
 			{
-				runParams.put("Cost", sp.getPayCosts());
 				AllZone.TriggerHandler.runTrigger("SpellCast", runParams);
 			}
+
+            //Run AbilityCast triggers
 			if(sp.isAbility())
 			{
-				runParams.put("Cost", sp.getPayCosts());
 				AllZone.TriggerHandler.runTrigger("AbilityCast", runParams);
 			}
+
+            //Run Cycled triggers
 			if(sp.isCycling())
 			{
 				runParams.clear();
 				runParams.put("Card", sp.getSourceCard());
 				AllZone.TriggerHandler.runTrigger("Cycled", runParams);
 			}
+
+            //Run BecomesTarget triggers
+            runParams.clear();
+            runParams.put("Source",sp.getSourceCard());
+            if(chosenTargets.size() > 0)
+            {
+                for(Target_Choices tc : chosenTargets)
+                {
+                    for(Object tgt : tc.getTargets())
+                    {
+                        runParams.put("Target",tgt);
+
+                        AllZone.TriggerHandler.runTrigger("BecomesTarget",runParams);
+                    }
+                }
+            }
+            //Not sure these clauses are necessary. Consider it a precaution for backwards compatibility for hardcoded cards.
+            if(sp.getTargetCard() != null)
+            {
+                runParams.put("Target",sp.getTargetCard());
+
+                AllZone.TriggerHandler.runTrigger("BecomesTarget",runParams);
+            }
+            if(sp.getTargetList() != null)
+            {
+                if(sp.getTargetList().size() > 0)
+                {
+                    for(Card ctgt : sp.getTargetList())
+                    {
+                        runParams.put("Target",ctgt);
+
+                        AllZone.TriggerHandler.runTrigger("BecomesTarget",runParams);
+                    }
+                }
+            }
+            if(sp.getTargetPlayer() != null)
+            {
+                runParams.put("Target",sp.getTargetPlayer());
+
+                AllZone.TriggerHandler.runTrigger("BecomesTarget",runParams);
+            }
 		}
 
 		if(sp instanceof Spell_Permanent && sp.getSourceCard().getName().equals("Mana Vortex")) {
