@@ -9,6 +9,7 @@ SVar:TrigPutCounter:AB$PutCounter | Cost$ 0 | CounterType$ PIN | CounterNum$ 1 |
 SVar:TrigDestroy:AB$Destroy | Cost$ 0 | Defined$ Self | SubAbility$ DBDealDamageYou
 SVar:DBDealDamageYou:DB$DealDamage | Defined$ You | NumDmg$ X
 SVar:X:Count$CardCounters.PIN
+SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/voodoo_doll.jpg
 End
