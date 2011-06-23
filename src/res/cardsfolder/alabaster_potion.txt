@@ -7,4 +7,7 @@ A:SP$ PreventDamage | Cost$ X W W | Tgt$ TgtCP | Amount$ X | PrecostDesc$ or | S
 SVar:X:Count$xPaid
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/alabaster_potion.jpg
+SetInfo:5ED|Common|http://magiccards.info/scans/en/5e/279.jpg
+SetInfo:4ED|Common|http://magiccards.info/scans/en/4e/251.jpg
+SetInfo:LEG|Common|http://magiccards.info/scans/en/lg/171.jpg
 End

@@ -9,4 +9,5 @@ SVar:TrigAnimate1:AB$Animate | Cost$ 0 | Defined$ TriggeredAttacker | Colors$ Gr
 SVar:TrigAnimate2:AB$Animate | Cost$ 0 | Defined$ TriggeredBlocker | Colors$ Green | Permanent$ True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/aisling_leprechaun.jpg
+SetInfo:LEG|Common|http://magiccards.info/scans/en/lg/87.jpg
 End
