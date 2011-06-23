@@ -8,4 +8,5 @@ SVar:TrigDestroy:AB$Destroy | Cost$ 0 | ValidTgts$ Artifact.YouDontCtrl | TgtPro
 SVar:DBPump:DB$Pump | KW$ HIDDEN Prevent all combat damage that would be dealt by CARDNAME.
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/floral_spuzzem.jpg
+SetInfo:LEG|Uncommon|http://magiccards.info/scans/en/lg/101.jpg
 End
