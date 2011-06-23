@@ -1,3 +1,1 @@
-Source Code Control
-
-I don't know how to use a central code repository.  I studied computer programming in college and we never did any group programming.  To further complicate the issue I also use the computer at the library.  So until someone else wants to be "source code control guy" I'm just going to upload the source as a zip file if you if you make any changes you can either e-mail me or upload your new file.  Hope this helps, Forge
+We use google code's subversion server. Instead of '/trunk' like some projects, our trunk is named '/src'. There's another 'src' folder inside that. 
