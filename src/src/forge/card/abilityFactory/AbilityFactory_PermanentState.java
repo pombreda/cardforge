@@ -23,22 +23,22 @@ import forge.card.spellability.Target;
 import forge.gui.GuiUtils;
 
 public class AbilityFactory_PermanentState {
+	
 	// ****************************************
 	// ************** Untap *******************
 	// ****************************************
-	public static SpellAbility createAbilityUntap(final AbilityFactory AF){
-		final SpellAbility abUntap = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	
+	public static SpellAbility createAbilityUntap(final AbilityFactory af) {
+		final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = 5445572699000471299L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return untapStackDescription(af, this);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return untapCanPlayAI(af,this);
 			}
 			
@@ -56,19 +56,17 @@ public class AbilityFactory_PermanentState {
 		return abUntap;
 	}
 	
-	public static SpellAbility createSpellUntap(final AbilityFactory AF){
-		final SpellAbility spUntap = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellUntap(final AbilityFactory af) {
+		final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return untapStackDescription(af, this);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return untapCanPlayAI(af, this);
 			}
 			
@@ -81,14 +79,12 @@ public class AbilityFactory_PermanentState {
 		return spUntap;
 	}
 	
-	public static SpellAbility createDrawbackUntap(final AbilityFactory AF){
-		final SpellAbility dbUntap = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackUntap(final AbilityFactory af) {
+		final SpellAbility dbUntap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return untapStackDescription(af, this);
 			}
 			
@@ -111,7 +107,7 @@ public class AbilityFactory_PermanentState {
 		return dbUntap;
 	}
 
-	public static String untapStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String untapStackDescription(AbilityFactory af, SpellAbility sa) {
 		// when getStackDesc is called, just build exactly what is happening
 		StringBuilder sb = new StringBuilder();
 		final HashMap<String, String> params = af.getMapParams();
@@ -153,7 +149,7 @@ public class AbilityFactory_PermanentState {
 		return sb.toString();
 	}
 	
-	public static boolean untapCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean untapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
@@ -184,7 +180,7 @@ public class AbilityFactory_PermanentState {
 		return randomReturn;
 	}
 	
-	public static boolean untapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean untapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		HashMap<String,String> params = af.getMapParams();
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
@@ -215,7 +211,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	public static boolean untapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean untapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		Target tgt = af.getAbTgt();
 
@@ -236,7 +232,7 @@ public class AbilityFactory_PermanentState {
 		return randomReturn;
 	}
 	
-	public static boolean untapPrefTargeting(Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean untapPrefTargeting(Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		Card source = sa.getSourceCard();
 		
 		CardList untapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
@@ -287,7 +283,7 @@ public class AbilityFactory_PermanentState {
 		return true;
 	}
 	
-	public static boolean untapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean untapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		Card source = sa.getSourceCard();
 		Target tgt = sa.getTarget();
 		
@@ -318,7 +314,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	public static boolean untapTargetList(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory, CardList tapList){
+	private static boolean untapTargetList(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory, CardList tapList) {
 		for(Card c : tgt.getTargetCards())
 			tapList.remove(c);
 		
@@ -364,14 +360,14 @@ public class AbilityFactory_PermanentState {
 		return true;
 	}
 	
-	public static void untapResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void untapResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		Card card = sa.getSourceCard();
 		Target tgt = af.getAbTgt();
 		ArrayList<Card> tgtCards = null;
 		
 		if (params.containsKey("UntapUpTo"))
-			chooseUntapUpTo(af, sa, params);
+			untapChooseUpTo(af, sa, params);
 		else{	
 			if (tgt != null)
 				tgtCards = tgt.getTargetCards();
@@ -386,7 +382,7 @@ public class AbilityFactory_PermanentState {
 		}
 	}
 	
-	public static void chooseUntapUpTo(AbilityFactory af, SpellAbility sa, HashMap<String,String> params){
+	private static void untapChooseUpTo(AbilityFactory af, SpellAbility sa, HashMap<String,String> params) {
 		int num = Integer.parseInt(params.get("Amount"));
 		String valid = params.get("UntapType");
 		
@@ -416,19 +412,17 @@ public class AbilityFactory_PermanentState {
 	// ************** Tap *********************
 	// ****************************************
 	
-	public static SpellAbility createAbilityTap(final AbilityFactory AF){
-		final SpellAbility abTap = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityTap(final AbilityFactory af) {
+		final SpellAbility abTap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = 5445572699000471299L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapStackDescription(af, this);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return tapCanPlayAI(af,this);
 			}
 			
@@ -446,19 +440,17 @@ public class AbilityFactory_PermanentState {
 		return abTap;
 	}
 	
-	public static SpellAbility createSpellTap(final AbilityFactory AF){
-		final SpellAbility spTap = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellTap(final AbilityFactory af) {
+		final SpellAbility spTap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapStackDescription(af, this);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return tapCanPlayAI(af, this);
 			}
 			
@@ -471,14 +463,12 @@ public class AbilityFactory_PermanentState {
 		return spTap;
 	}
 	
-	public static SpellAbility createDrawbackTap(final AbilityFactory AF){
-		final SpellAbility dbTap = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackTap(final AbilityFactory af) {
+		final SpellAbility dbTap = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapStackDescription(af, this);
 			}
 			
@@ -501,7 +491,7 @@ public class AbilityFactory_PermanentState {
 		return dbTap;
 	}
 	
-	public static String tapStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String tapStackDescription(AbilityFactory af, SpellAbility sa) {
 		// when getStackDesc is called, just build exactly what is happening
 		StringBuilder sb = new StringBuilder();
 		final HashMap<String, String> params = af.getMapParams();
@@ -537,7 +527,7 @@ public class AbilityFactory_PermanentState {
 		 return sb.toString();
 	}
 	
-	public static boolean tapCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean tapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
@@ -572,7 +562,7 @@ public class AbilityFactory_PermanentState {
 		return randomReturn;
 	}
 	
-	public static boolean tapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean tapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 		
@@ -600,7 +590,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	public static boolean tapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean tapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
 		// AI cannot use this properly until he can use SAs during Humans turn
 		Target tgt = af.getAbTgt();
 		Card source = sa.getSourceCard();
@@ -624,7 +614,7 @@ public class AbilityFactory_PermanentState {
 		return randomReturn;
 	}
 	
-	public static boolean tapPrefTargeting(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean tapPrefTargeting(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		CardList tapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
 		tapList = tapList.filter(AllZoneUtil.untapped);
 		tapList = tapList.getValidCards(tgt.getValidTgts(), source.getController(), source);
@@ -675,7 +665,7 @@ public class AbilityFactory_PermanentState {
 		return true;
 	}
 	
-	public static boolean tapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean tapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		Card source = sa.getSourceCard();
 		Target tgt = sa.getTarget();		
 		
@@ -705,7 +695,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	public static boolean tapTargetList(AbilityFactory af, SpellAbility sa, CardList tapList, boolean mandatory){
+	private static boolean tapTargetList(AbilityFactory af, SpellAbility sa, CardList tapList, boolean mandatory) {
 		Card source = sa.getSourceCard();
 		Target tgt = sa.getTarget();
 		
@@ -754,7 +744,7 @@ public class AbilityFactory_PermanentState {
 		return true;
 	}
 	
-	public static void tapResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void tapResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		Card card = sa.getSourceCard();
 		
@@ -775,18 +765,17 @@ public class AbilityFactory_PermanentState {
 	// ****************************************
 	// ************** UntapAll *****************
 	// ****************************************
-	public static SpellAbility createAbilityUntapAll(final AbilityFactory AF){
-		final SpellAbility abUntap = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityUntapAll(final AbilityFactory af) {
+		final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = 8914852730903389831L;
-			final AbilityFactory af = AF;
 
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return untapAllStackDescription(af, this);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return untapAllCanPlayAI(af, this);
 			}
 
@@ -804,16 +793,16 @@ public class AbilityFactory_PermanentState {
 		return abUntap;
 	}
 
-	public static SpellAbility createSpellUntapAll(final AbilityFactory AF){
-		final SpellAbility spUntap = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellUntapAll(final AbilityFactory af){
+		final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = 5713174052551899363L;
-			final AbilityFactory af = AF;
 
 			@Override
 			public String getStackDescription() {
 				return untapAllStackDescription(af, this);
 			}
 
+			@Override
 			public boolean canPlayAI() {
 				return untapAllCanPlayAI(af, this);
 			}
@@ -832,7 +821,7 @@ public class AbilityFactory_PermanentState {
 			private static final long serialVersionUID = -5187900994680626766L;
 
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return untapAllStackDescription(af, this);
 			}
 			
@@ -855,7 +844,7 @@ public class AbilityFactory_PermanentState {
 		return dbUntapAll;
 	}
 	
-	private static boolean untapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean untapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
 		return true;
 	}
 
@@ -881,7 +870,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 
-	public static boolean untapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean untapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 		
@@ -892,7 +881,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	private static String untapAllStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String untapAllStackDescription(AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		// when getStackDesc is called, just build exactly what is happening
 		StringBuilder sb = new StringBuilder();
@@ -916,18 +905,17 @@ public class AbilityFactory_PermanentState {
 	// ****************************************
 	// ************** TapAll *****************
 	// ****************************************
-	public static SpellAbility createAbilityTapAll(final AbilityFactory AF){
-		final SpellAbility abUntap = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityTapAll(final AbilityFactory af) {
+		final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -2095140656782946737L;
-			final AbilityFactory af = AF;
 
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return tapAllStackDescription(af, this);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return tapAllCanPlayAI(af, this);
 			}
 
@@ -945,16 +933,16 @@ public class AbilityFactory_PermanentState {
 		return abUntap;
 	}
 
-	public static SpellAbility createSpellTapAll(final AbilityFactory AF){
-		final SpellAbility spUntap = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+	public static SpellAbility createSpellTapAll(final AbilityFactory af) {
+		final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = -62401571838950166L;
-			final AbilityFactory af = AF;
 
 			@Override
 			public String getStackDescription() {
 				return tapAllStackDescription(af, this);
 			}
 
+			@Override
 			public boolean canPlayAI() {
 				return tapAllCanPlayAI(af, this);
 			}
@@ -968,11 +956,9 @@ public class AbilityFactory_PermanentState {
 		return spUntap;
 	}
 
-	public static SpellAbility createDrawbackTapAll(final AbilityFactory AF){
-		final SpellAbility dbTap = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackTapAll(final AbilityFactory af){
+		final SpellAbility dbTap = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
-			
-			final AbilityFactory af = AF;
 			
 			@Override
 			public String getStackDescription(){
@@ -1021,7 +1007,7 @@ public class AbilityFactory_PermanentState {
 		for(Card c : cards) c.tap();
 	}
 	
-	private static CardList filterListByType(CardList list, HashMap<String,String> params, SpellAbility sa){
+	private static CardList filterListByType(CardList list, HashMap<String,String> params, SpellAbility sa) {
 		String type = params.containsKey("ValidCards") ? params.get("ValidCards") : "";
 		if (type == "")
 			return list;
@@ -1084,7 +1070,7 @@ public class AbilityFactory_PermanentState {
 	}
 
 
-	private static String tapAllStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String tapAllStackDescription(AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		// when getStackDesc is called, just build exactly what is happening
 		StringBuilder sb = new StringBuilder();
@@ -1105,7 +1091,7 @@ public class AbilityFactory_PermanentState {
 		return sb.toString();
 	}
 	
-	public static boolean tapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean tapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 		
@@ -1145,7 +1131,7 @@ public class AbilityFactory_PermanentState {
 		return false;
 	}
 	
-	private static boolean tapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean tapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
 		return true;
 	}
 	
