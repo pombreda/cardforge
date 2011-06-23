@@ -2,10 +2,12 @@ package forge.card.trigger;
 
 import java.util.HashMap;
 
+import forge.AllZone;
 import forge.Card;
 import forge.Player;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Cost;
+import forge.card.spellability.SpellAbility_StackInstance;
 
 public class Trigger_SpellAbilityCast extends Trigger {
 
@@ -18,7 +20,8 @@ public class Trigger_SpellAbilityCast extends Trigger {
 	{
 		SpellAbility SA = (SpellAbility)runParams.get("CastSA");
 		Card cast = SA.getSourceCard();
-
+		SpellAbility_StackInstance si = AllZone.Stack.getInstanceFromSpellAbility(SA);
+		
 		if(mapParams.get("Mode").equals("SpellCast"))
 		{
 			if(!SA.isSpell())
@@ -48,7 +51,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
 		
 		if(mapParams.containsKey("ValidActivatingPlayer"))
 		{
-			if(!matchesValid(SA.getActivatingPlayer(),mapParams.get("ValidActivatingPlayer").split(","),hostCard))
+			if(!matchesValid(si.getActivatingPlayer(),mapParams.get("ValidActivatingPlayer").split(","),hostCard))
 			{
 				return false;
 			}
@@ -64,7 +67,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
 		
 		if(mapParams.containsKey("TargetsValid"))
 		{
-			SpellAbility sa = ((SpellAbility)runParams.get("CastSA"));
+			SpellAbility sa = si.getSpellAbility();
 			if(sa.getTarget() == null)
 			{
 				if(sa.getTargetCard() == null)
