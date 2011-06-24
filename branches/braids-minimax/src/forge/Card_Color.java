@@ -6,7 +6,7 @@ import java.util.EnumSet;
 import forge.card.mana.ManaCost;
 
 public class Card_Color {
-	// takes care of individual card color, for global color change effects use AllZone.GameInfo.getColorChanges()
+	// takes care of individual card color, for global color change effects use AllZone.getGameInfo().getColorChanges()
 	private EnumSet<Color> col;
 	private boolean additional;
 	public boolean getAdditional() { return additional; }

@@ -1,6 +1,10 @@
 
 package forge;
 
+import java.util.Collection;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+
 import com.esotericsoftware.minlog.Log;
 
 import forge.gui.input.Input;
@@ -26,8 +30,8 @@ public class ComputerAI_Input extends Input {
     	/*
     	 * //put this back in
         ButtonUtil.disableAll();
-        AllZone.Display.showMessage("Phase: "
-                + AllZone.Phase.getPhase()
+        AllZone.getDisplay().showMessage("Phase: "
+                + AllZone.getPhase().getPhase()
                 + "\nAn error may have occurred. Please send the \"Stack Report\" and the \"Detailed Error Trace\" to the Forge forum.");
         */
         think();
@@ -39,9 +43,9 @@ public class ComputerAI_Input extends Input {
     
     private void think() {
     	//TODO: instead of setNextPhase, pass priority
-        final String phase = AllZone.Phase.getPhase();
+        final String phase = AllZone.getPhase().getPhase();
         
-        if (AllZone.Stack.size() > 0)
+        if (AllZone.getStack().size() > 0)
         	computer.stack_not_empty();
         else if(phase.equals(Constant.Phase.Main1)) {
         	Log.debug("Computer main1");
@@ -70,4 +74,9 @@ public class ComputerAI_Input extends Input {
         	computer.stack_not_empty();
 
     }//think
+
+	@Override
+	public Collection<MinimaxMove> getMoves() {
+		throw new IllegalStateException("ComputerAI_Input.getMoves must never be called.");
+	}
 }

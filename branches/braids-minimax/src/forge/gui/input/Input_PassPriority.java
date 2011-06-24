@@ -1,5 +1,8 @@
 package forge.gui.input;
 
+import java.util.Collection;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 import forge.AllZone;
 import forge.ButtonUtil;
 import forge.Card;
@@ -15,8 +18,8 @@ public class Input_PassPriority extends Input implements java.io.Serializable {
 		GuiDisplayUtil.updateGUI();
         ButtonUtil.enableOnlyOK();
         
-        String phase = AllZone.Phase.getPhase();
-        Player player = AllZone.Phase.getPriorityPlayer();
+        String phase = AllZone.getPhase().getPhase();
+        Player player = AllZone.getPhase().getPriorityPlayer();
         
         if (player.isComputer()){
         	System.out.println(phase + ": Computer in passpriority");
@@ -24,32 +27,37 @@ public class Input_PassPriority extends Input implements java.io.Serializable {
         
         StringBuilder sb = new StringBuilder();
         
-        sb.append("Turn : ").append(AllZone.Phase.getPlayerTurn()).append("\n");
+        sb.append("Turn : ").append(AllZone.getPhase().getPlayerTurn()).append("\n");
         sb.append("Phase: ").append(phase).append("\n");
         sb.append("Stack: ");
-        if (AllZone.Stack.size() != 0)
-        	sb.append(AllZone.Stack.size()).append(" to Resolve.");
+        if (AllZone.getStack().size() != 0)
+        	sb.append(AllZone.getStack().size()).append(" to Resolve.");
         else
         	sb.append("Empty");
         sb.append("\n");
         sb.append("Priority: ").append(player);
 
-        AllZone.Display.showMessage(sb.toString());
+        AllZone.getDisplay().showMessage(sb.toString());
     }
     
     @Override
     public void selectButtonOK() {
-    	AllZone.Phase.passPriority();
+    	AllZone.getPhase().passPriority();
     	GuiDisplayUtil.updateGUI();
-    	Input in = AllZone.InputControl.getInput();
+    	Input in = AllZone.getInputControl().getInput();
     	if (in == this || in == null) 
-    		AllZone.InputControl.resetInput();
+    		AllZone.getInputControl().resetInput();
     	// Clear out PassPriority after clicking button
     }
     
     @Override
     public void selectCard(Card card, PlayerZone zone) {
-    	if (AllZone.GameAction.playCard(card))
-    		AllZone.Phase.setPriority(AllZone.HumanPlayer);
+    	if (AllZone.getGameAction().playCard(card))
+    		AllZone.getPhase().setPriority(AllZone.getHumanPlayer());
     }//selectCard()
+
+	@Override
+	public Collection<MinimaxMove> getMoves() {
+		throw new IllegalStateException("Input_PassPriority.getMoves must never be called.");
+	}
 }

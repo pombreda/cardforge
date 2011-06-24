@@ -40,7 +40,7 @@ public class Input_PayManaCostUtil
     while(it.hasNext())
     {
     	Ability_Mana ma = it.next();
-    	ma.setActivatingPlayer(AllZone.HumanPlayer);
+    	ma.setActivatingPlayer(AllZone.getHumanPlayer());
     	if (!ma.canPlay()) it.remove();
     	else if (!canMake(ma, cneeded.toString())) it.remove();
     	
@@ -88,11 +88,11 @@ public class Input_PayManaCostUtil
     	chosen = (Ability_Mana) GuiUtils.getChoice("Choose mana ability", abilities.toArray());
     }
     
-	AllZone.GameAction.playSpellAbility(chosen);
+	AllZone.getGameAction().playSpellAbility(chosen);
 
- 	manaCost = AllZone.ManaPool.subtractMana(sa, manaCost, chosen);
+ 	manaCost = AllZone.getManaPool().subtractMana(sa, manaCost, chosen);
 
- 	AllZone.Human_Battlefield.updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap (copied)
+ 	AllZone.getHumanBattlefield().updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap (copied)
  	return manaCost;	
 
   }

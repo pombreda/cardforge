@@ -65,7 +65,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     public QuestMainPanel(QuestFrame mainFrame) {
         super(mainFrame);
-        questData = AllZone.QuestData;
+        questData = AllZone.getQuestData();
 
         initUI();
     }
@@ -379,7 +379,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
     }
 
     void refresh() {
-        AllZone.QuestData.saveData();
+        AllZone.getQuestData().saveData();
 
         devModeCheckBox.setSelected(Constant.Runtime.DevMode[0]);
         smoothLandCheckBox.setSelected(Constant.Runtime.Smooth[0]);
@@ -529,7 +529,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
             public void execute() {
                 //saves all deck data
-                AllZone.QuestData.saveData();
+                AllZone.getQuestData().saveData();
 
                 new QuestFrame();
             }
@@ -552,7 +552,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
             public void execute() {
                 //saves all deck data
-                AllZone.QuestData.saveData();
+                AllZone.getQuestData().saveData();
 
                 new QuestFrame();
             }
@@ -588,10 +588,10 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
         //DO NOT CHANGE THIS ORDER, GuiDisplay needs to be created before cards are added
         if (newGUICheckbox.isSelected()) {
-            AllZone.Display = new GuiDisplay4();
+            AllZone.setDisplay(new GuiDisplay4());
         }
         else {
-            AllZone.Display = new GuiDisplay3();
+            AllZone.setDisplay(new GuiDisplay3());
         }
 
         Gui_NewGame.preferences.newGui = newGUICheckbox.isSelected();
@@ -607,9 +607,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
             setupBattle(humanDeck);
         }
 
-        AllZone.QuestData.saveData();
+        AllZone.getQuestData().saveData();
         
-        AllZone.Display.setVisible(true);
+        AllZone.getDisplay().setVisible(true);
         mainFrame.dispose();
     }
 
@@ -619,7 +619,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         Deck computer = QuestBattleManager.getAIDeckNewFormat((selectedOpponent).getName());
         Constant.Runtime.ComputerDeck[0] = computer;
 
-        AllZone.GameAction.newGame(humanDeck, computer, forge.quest.data.QuestUtil.getHumanPlantAndPet(questData),
+        AllZone.getGameAction().newGame(humanDeck, computer, forge.quest.data.QuestUtil.getHumanPlantAndPet(questData),
                 new CardList(), questData.getLife(), 20, null);
     }
 
@@ -629,7 +629,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         Deck computerDeck = QuestBattleManager.getAIDeckNewFormat("quest" + selectedQuest.getId());
         Constant.Runtime.ComputerDeck[0] = computerDeck;
 
-        AllZone.QuestAssignment = selectedQuest;
+        AllZone.setQuestAssignment(selectedQuest);
 
         int extraLife = 0;
 
@@ -637,7 +637,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
             extraLife = 3;
         }
 
-        AllZone.GameAction.newGame(humanDeck, computerDeck,
+        AllZone.getGameAction().newGame(humanDeck, computerDeck,
                 forge.quest.data.QuestUtil.getHumanPlantAndPet(questData, selectedQuest), new CardList(),
                 questData.getLife() + extraLife, selectedQuest.getComputerLife(), selectedQuest);
 

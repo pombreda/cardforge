@@ -651,7 +651,7 @@ public class GUI_Filter extends javax.swing.JDialog {
         
         String name = NameText.getText();
         String cText = cardText.getText();
-        CardList filterCardList = AllZone.CardFactory.getAllCards();
+        CardList filterCardList = AllZone.getCardFactory().getAllCards();
         CardFilter filter = new CardFilter();
         Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
         g.blackCheckBox.setSelected(true);

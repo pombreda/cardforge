@@ -22,9 +22,13 @@ import forge.card.spellability.SpellAbility_Restriction;
 import forge.card.spellability.Target;
 import forge.gui.input.Input;
 
-public class TriggerHandler {
+public class TriggerHandler
+	implements java.io.Serializable
+{
 
-    private ArrayList<String> registeredModes = new ArrayList<String>();
+	private static final long serialVersionUID = 4653811170478301576L;
+	
+	private ArrayList<String> registeredModes = new ArrayList<String>();
 	private ArrayList<Trigger> registeredTriggers = new ArrayList<Trigger>();
 	private ArrayList<String> suppressedModes = new ArrayList<String>();
 
@@ -257,7 +261,7 @@ public class TriggerHandler {
 		//AP
 		for(Trigger regtrig : registeredTriggers)
 		{
-			if(regtrig.getHostCard().getController().equals(AllZone.Phase.getPlayerTurn()))
+			if(regtrig.getHostCard().getController().equals(AllZone.getPhase().getPlayerTurn()))
 			{
 				runSingleTrigger(regtrig,mode,runParams);
 			}
@@ -265,7 +269,7 @@ public class TriggerHandler {
         for(int i=0;i<delayedTriggers.size();i++)
         {
             Trigger deltrig = delayedTriggers.get(i);
-            if(deltrig.getHostCard().getController().equals(AllZone.Phase.getPlayerTurn()))
+            if(deltrig.getHostCard().getController().equals(AllZone.getPhase().getPlayerTurn()))
             {
                 if(runSingleTrigger(deltrig,mode,runParams))
                 {
@@ -278,7 +282,7 @@ public class TriggerHandler {
 		//NAP
 		for(Trigger regtrig : registeredTriggers)
 		{
-			if(regtrig.getHostCard().getController().equals(AllZone.Phase.getPlayerTurn().getOpponent()))
+			if(regtrig.getHostCard().getController().equals(AllZone.getPhase().getPlayerTurn().getOpponent()))
 			{
 				runSingleTrigger(regtrig,mode,runParams);
 			}
@@ -286,7 +290,7 @@ public class TriggerHandler {
         for(int i=0;i<delayedTriggers.size();i++)
         {
             Trigger deltrig = delayedTriggers.get(i);
-            if(deltrig.getHostCard().getController().equals(AllZone.Phase.getPlayerTurn().getOpponent()))
+            if(deltrig.getHostCard().getController().equals(AllZone.getPhase().getPlayerTurn().getOpponent()))
             {
                 if(runSingleTrigger(deltrig,mode,runParams))
                 {
@@ -331,7 +335,7 @@ public class TriggerHandler {
 			}				
 			
 			// Any trigger should cause the phase not to skip
-			AllZone.Phase.setSkipPhase(false);
+			AllZone.getPhase().setSkipPhase(false);
 			
 			regtrig.setRunParams(runParams);
 			
@@ -961,7 +965,7 @@ public class TriggerHandler {
 					{
 						//Card src = (Card)(sa[0].getSourceCard().getTriggeringObject("Card"));
 						//System.out.println("Trigger resolving for "+mode+".  Card = "+src);
-						AllZone.GameAction.playSpellAbility_NoStack(sa[0], true);
+						AllZone.getGameAction().playSpellAbility_NoStack(sa[0], true);
 					}
 					else
 					{
@@ -986,7 +990,7 @@ public class TriggerHandler {
 			/*
 			if(host.getController().isHuman())
 			{
-				AllZone.GameAction.playSpellAbility(wrapperAbility);
+				AllZone.getGameAction().playSpellAbility(wrapperAbility);
 			}
 			else
 			{
@@ -998,7 +1002,7 @@ public class TriggerHandler {
             //Card src = (Card)(sa[0].getSourceCard().getTriggeringObject("Card"));
 			//System.out.println("Trigger going on stack for "+mode+".  Card = "+src);
             
-            AllZone.Stack.addSimultaneousStackEntry(wrapperAbility);
+            AllZone.getStack().addSimultaneousStackEntry(wrapperAbility);
             return true;
 		}
 

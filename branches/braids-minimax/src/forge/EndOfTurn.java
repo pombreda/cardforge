@@ -27,9 +27,9 @@ public class EndOfTurn implements java.io.Serializable
 		GameActionUtil.endOfTurn_Krovikan_Horror();
 
 		GameActionUtil.removeAttackedBlockedThisTurn();
-		AllZone.GameInfo.setPreventCombatDamageThisTurn(false);
+		AllZone.getGameInfo().setPreventCombatDamageThisTurn(false);
 
-		AllZone.StaticEffects.rePopulateStateBasedList();
+		AllZone.getStaticEffects().rePopulateStateBasedList();
 
 		for (Card c : all) {
 			if (!c.isFaceDown()
@@ -39,14 +39,14 @@ public class EndOfTurn implements java.io.Serializable
 				final SpellAbility sac = new Ability(card, "0") {
 					@Override
 					public void resolve() {
-						if (AllZoneUtil.isCardInPlay(card)) AllZone.GameAction.sacrifice(card);
+						if (AllZoneUtil.isCardInPlay(card)) AllZone.getGameAction().sacrifice(card);
 					}
 				};
 				StringBuilder sb = new StringBuilder();
 				sb.append("Sacrifice ").append(card);
 				sac.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(sac);
+				AllZone.getStack().addSimultaneousStackEntry(sac);
 
 			}
 			if (!c.isFaceDown() 
@@ -55,14 +55,14 @@ public class EndOfTurn implements java.io.Serializable
 				final SpellAbility exile = new Ability(card, "0") {
 					@Override
 					public void resolve() {
-						if (AllZoneUtil.isCardInPlay(card)) AllZone.GameAction.exile(card);
+						if (AllZoneUtil.isCardInPlay(card)) AllZone.getGameAction().exile(card);
 					}
 				};
 				StringBuilder sb = new StringBuilder();
 				sb.append("Exile ").append(card);
 				exile.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(exile);
+				AllZone.getStack().addSimultaneousStackEntry(exile);
 
 			}
 			if (!c.isFaceDown() 
@@ -71,14 +71,14 @@ public class EndOfTurn implements java.io.Serializable
 				final SpellAbility destroy = new Ability(card, "0") {
 					@Override
 					public void resolve() {
-						if (AllZoneUtil.isCardInPlay(card)) AllZone.GameAction.destroy(card);
+						if (AllZoneUtil.isCardInPlay(card)) AllZone.getGameAction().destroy(card);
 					}
 				};
 				StringBuilder sb = new StringBuilder();
 				sb.append("Destroy ").append(card);
 				destroy.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(destroy);
+				AllZone.getStack().addSimultaneousStackEntry(destroy);
 
 			}
 			//Berserk is using this, so don't check isFaceDown()
@@ -88,14 +88,14 @@ public class EndOfTurn implements java.io.Serializable
 					final SpellAbility sac = new Ability(card, "0") {
 						@Override
 						public void resolve() {
-							if (AllZoneUtil.isCardInPlay(card)) AllZone.GameAction.destroy(card);
+							if (AllZoneUtil.isCardInPlay(card)) AllZone.getGameAction().destroy(card);
 						}
 					};
 					StringBuilder sb = new StringBuilder();
 					sb.append("Destroy ").append(card);
 					sac.setStackDescription(sb.toString());
 
-					AllZone.Stack.addSimultaneousStackEntry(sac);
+					AllZone.getStack().addSimultaneousStackEntry(sac);
 
 				}
 				else {
@@ -108,7 +108,7 @@ public class EndOfTurn implements java.io.Serializable
 					@Override
 					public void resolve() {
 						if (AllZoneUtil.isCardInPlay(vale)) {
-							AllZone.GameAction.changeController(new CardList(vale), vale.getController(), vale.getController().getOpponent());
+							AllZone.getGameAction().changeController(new CardList(vale), vale.getController(), vale.getController().getOpponent());
 
 							vale.removeExtrinsicKeyword("An opponent gains control of CARDNAME at the beginning of the next end step.");
 						}
@@ -118,11 +118,11 @@ public class EndOfTurn implements java.io.Serializable
 				sb.append(vale.getName()).append(" changes controllers.");
 				change.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(change);
+				AllZone.getStack().addSimultaneousStackEntry(change);
 
 			}
 			if(c.getName().equals("Erg Raiders") && !c.getCreatureAttackedThisTurn() &&
-					!c.isSick() && AllZone.Phase.isPlayerTurn(c.getController())) {
+					!c.isSick() && AllZone.getPhase().isPlayerTurn(c.getController())) {
 				final Card raider = c;
 				final SpellAbility change = new Ability(raider, "0") {
 					@Override
@@ -136,19 +136,19 @@ public class EndOfTurn implements java.io.Serializable
 				sb.append(raider).append(" deals 2 damage to controller.");
 				change.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(change);
+				AllZone.getStack().addSimultaneousStackEntry(change);
 
 			}
 			if(c.hasKeyword("At the beginning of your end step, sacrifice this creature unless it attacked this turn.")
 					&& !c.getCreatureAttackedThisTurn()
-					/* && !(c.getTurnInZone() == AllZone.Phase.getTurn())*/
-					&& AllZone.Phase.isPlayerTurn(c.getController())) {
+					/* && !(c.getTurnInZone() == AllZone.getPhase().getTurn())*/
+					&& AllZone.getPhase().isPlayerTurn(c.getController())) {
 				final Card source = c;
 				final SpellAbility change = new Ability(source, "0") {
 					@Override
 					public void resolve() {
 						if(AllZoneUtil.isCardInPlay(source)) {
-							AllZone.GameAction.sacrifice(source);
+							AllZone.getGameAction().sacrifice(source);
 						}
 					}
 				};
@@ -156,17 +156,17 @@ public class EndOfTurn implements java.io.Serializable
 				sb.append(source.getName()).append(" - sacrifice ").append(source.getName()).append(".");
 				change.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(change);
+				AllZone.getStack().addSimultaneousStackEntry(change);
 
 			}
 			if(c.hasKeyword("At the beginning of your end step, return CARDNAME to its owner's hand.")
-					&& AllZone.Phase.isPlayerTurn(c.getController())) {
+					&& AllZone.getPhase().isPlayerTurn(c.getController())) {
 				final Card source = c;
 				final SpellAbility change = new Ability(source, "0") {
 					@Override
 					public void resolve() {
 						if(AllZoneUtil.isCardInPlay(source)) {
-							AllZone.GameAction.moveToHand(source);
+							AllZone.getGameAction().moveToHand(source);
 						}
 					}
 				};
@@ -174,7 +174,7 @@ public class EndOfTurn implements java.io.Serializable
 				sb.append(source).append(" - At the beginning of your end step, return CARDNAME to its owner's hand.");
 				change.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(change);
+				AllZone.getStack().addSimultaneousStackEntry(change);
 
 			}
 

@@ -137,8 +137,8 @@ public class GuiDisplayUtil implements NewConstants {
     
     public static void devModeGenerateMana(){
     	Card dummy = new Card();
-    	dummy.setOwner(AllZone.HumanPlayer);
-    	dummy.setController(AllZone.HumanPlayer);
+    	dummy.setOwner(AllZone.getHumanPlayer());
+    	dummy.setController(AllZone.getHumanPlayer());
     	Ability_Mana abMana = new Ability_Mana(dummy, "0", "W U B G R 1", 10) {
 			private static final long serialVersionUID = -2164401486331182356L;
 
@@ -227,7 +227,7 @@ public class GuiDisplayUtil implements NewConstants {
         for(int i = 0; i < c.length; i++)
             if((!(c[i].isCreature() || c[i].isEnchantment() || c[i].isArtifact() || c[i].isPlaneswalker()) || (c[i].isLand()
                     && c[i].isArtifact() && !c[i].isCreature() && !c[i].isEnchantment()))
-                    && !AllZone.GameAction.isAttachee(c[i])
+                    && !AllZone.getGameAction().isAttachee(c[i])
                     || (c[i].getName().startsWith("Mox") && !c[i].getName().equals("Mox Diamond"))) a.add(c[i]);
         
         setupPanel(j, a, true);
@@ -926,9 +926,9 @@ public class GuiDisplayUtil implements NewConstants {
     }
     
     public static void updateGUI() {
-        AllZone.Computer_Battlefield.updateObservers();
-        AllZone.Human_Battlefield.updateObservers();
-        AllZone.Human_Hand.updateObservers();
+        AllZone.getComputerBattlefield().updateObservers();
+        AllZone.getHumanBattlefield().updateObservers();
+        AllZone.getHumanHand().updateObservers();
     }
     
     public static void devSetupGameState() {
@@ -1039,102 +1039,102 @@ public class GuiDisplayUtil implements NewConstants {
 		
         if (!t_changePlayer.trim().toLowerCase().equals("none")) {
         	if (t_changePlayer.trim().toLowerCase().equals("human")) {        		
-        		AllZone.Phase.setPlayerTurn(AllZone.HumanPlayer);
+        		AllZone.getPhase().setPlayerTurn(AllZone.getHumanPlayer());
         	}
         	if (t_changePlayer.trim().toLowerCase().equals("ai")) {        		
-        		AllZone.Phase.setPlayerTurn(AllZone.ComputerPlayer);
+        		AllZone.getPhase().setPlayerTurn(AllZone.getComputerPlayer());
         	}
         }
         
         if (!t_changePhase.trim().toLowerCase().equals("none")) {
-    		AllZone.Phase.setDevPhaseState(t_changePhase);
+    		AllZone.getPhase().setDevPhaseState(t_changePhase);
         }
         
 		if (!t_humanSetupCardsInPlay.trim().toLowerCase().equals("none")) 
-			humanDevSetup = devProcessCardsForZone(humanSetupCardsInPlay, AllZone.HumanPlayer);
+			humanDevSetup = devProcessCardsForZone(humanSetupCardsInPlay, AllZone.getHumanPlayer());
 
 		if (!t_humanSetupCardsInHand.trim().toLowerCase().equals("none"))
-			humanDevHandSetup = devProcessCardsForZone(humanSetupCardsInHand, AllZone.HumanPlayer);
+			humanDevHandSetup = devProcessCardsForZone(humanSetupCardsInHand, AllZone.getHumanPlayer());
 
 		if (!t_computerSetupCardsInPlay.trim().toLowerCase().equals("none"))
-			computerDevSetup = devProcessCardsForZone(computerSetupCardsInPlay, AllZone.ComputerPlayer);
+			computerDevSetup = devProcessCardsForZone(computerSetupCardsInPlay, AllZone.getComputerPlayer());
 
 		if (!t_computerSetupCardsInHand.trim().toLowerCase().equals("none"))
-			computerDevHandSetup = devProcessCardsForZone(computerSetupCardsInHand, AllZone.ComputerPlayer);
+			computerDevHandSetup = devProcessCardsForZone(computerSetupCardsInHand, AllZone.getComputerPlayer());
 		
 		if (!t_computerSetupGraveyard.trim().toLowerCase().equals("none"))
-			computerDevGraveyardSetup = devProcessCardsForZone(computerSetupGraveyard, AllZone.ComputerPlayer);
+			computerDevGraveyardSetup = devProcessCardsForZone(computerSetupGraveyard, AllZone.getComputerPlayer());
 		
 		if (!t_humanSetupGraveyard.trim().toLowerCase().equals("none"))
-			humanDevGraveyardSetup = devProcessCardsForZone(humanSetupGraveyard, AllZone.HumanPlayer);
+			humanDevGraveyardSetup = devProcessCardsForZone(humanSetupGraveyard, AllZone.getHumanPlayer());
 		
         if (!t_humanSetupLibrary.trim().toLowerCase().equals("none"))
-        	humanDevLibrarySetup = devProcessCardsForZone(humanSetupLibrary, AllZone.HumanPlayer);
+        	humanDevLibrarySetup = devProcessCardsForZone(humanSetupLibrary, AllZone.getHumanPlayer());
         
         if (!t_computerSetupLibrary.trim().toLowerCase().equals("none"))
-        	computerDevLibrarySetup = devProcessCardsForZone(computerSetupLibrary, AllZone.ComputerPlayer);
+        	computerDevLibrarySetup = devProcessCardsForZone(computerSetupLibrary, AllZone.getComputerPlayer());
         
         if (!t_humanSetupExile.trim().toLowerCase().equals("none"))
-        	humanDevExileSetup = devProcessCardsForZone(humanSetupExile, AllZone.HumanPlayer);
+        	humanDevExileSetup = devProcessCardsForZone(humanSetupExile, AllZone.getHumanPlayer());
 
         if (!t_computerSetupExile.trim().toLowerCase().equals("none"))
-        	computerDevExileSetup = devProcessCardsForZone(computerSetupExile, AllZone.ComputerPlayer);
+        	computerDevExileSetup = devProcessCardsForZone(computerSetupExile, AllZone.getComputerPlayer());
 
-        AllZone.TriggerHandler.suppressMode("ChangesZone");
+        AllZone.getTriggerHandler().suppressMode("ChangesZone");
 
 		for (Card c : humanDevSetup)
 		{
-			AllZone.Human_Hand.add(c);
-			AllZone.GameAction.moveToPlay(c);
+			AllZone.getHumanHand().add(c);
+			AllZone.getGameAction().moveToPlay(c);
 			c.setSickness(false);
 		}
 		 
 		for (Card c: computerDevSetup)
 		{
-			AllZone.Computer_Hand.add(c);
-			AllZone.GameAction.moveToPlay(c);
+			AllZone.getComputerHand().add(c);
+			AllZone.getGameAction().moveToPlay(c);
 			c.setSickness(false);
 		}
 		
 		if (computerDevGraveyardSetup.size() > 0)
-			AllZone.Computer_Graveyard.setCards(computerDevGraveyardSetup.toArray());
+			AllZone.getComputerGraveyard().setCards(computerDevGraveyardSetup.toArray());
 		if (humanDevGraveyardSetup.size() > 0)
-			AllZone.Human_Graveyard.setCards(humanDevGraveyardSetup.toArray());
+			AllZone.getHumanGraveyard().setCards(humanDevGraveyardSetup.toArray());
 		
 		if (computerDevHandSetup.size() > 0)
-			AllZone.Computer_Hand.setCards(computerDevHandSetup.toArray());
+			AllZone.getComputerHand().setCards(computerDevHandSetup.toArray());
 		if (humanDevHandSetup.size() > 0)
-			AllZone.Human_Hand.setCards(humanDevHandSetup.toArray());
+			AllZone.getHumanHand().setCards(humanDevHandSetup.toArray());
 
         if(humanDevLibrarySetup.size() > 0)
-            AllZone.Human_Library.setCards(humanDevLibrarySetup.toArray());
+            AllZone.getHumanLibrary().setCards(humanDevLibrarySetup.toArray());
         if(computerDevLibrarySetup.size() > 0)
-            AllZone.Computer_Library.setCards(computerDevLibrarySetup.toArray());
+            AllZone.getComputerLibrary().setCards(computerDevLibrarySetup.toArray());
 		
         if(humanDevExileSetup.size() > 0)
-            AllZone.Human_Exile.setCards(humanDevExileSetup.toArray());
+            AllZone.getHumanExile().setCards(humanDevExileSetup.toArray());
         if(computerDevExileSetup.size() > 0)
-            AllZone.Computer_Exile.setCards(computerDevExileSetup.toArray());
+            AllZone.getComputerExile().setCards(computerDevExileSetup.toArray());
 
-        AllZone.TriggerHandler.clearSuppression("ChangesZone");
+        AllZone.getTriggerHandler().clearSuppression("ChangesZone");
 		
 		if (setComputerLife > 0)
-			AllZone.ComputerPlayer.setLife(setComputerLife, null);
+			AllZone.getComputerPlayer().setLife(setComputerLife, null);
 		if (setHumanLife > 0)
-			AllZone.HumanPlayer.setLife(setHumanLife, null);
+			AllZone.getHumanPlayer().setLife(setHumanLife, null);
 
-		AllZone.GameAction.checkStateEffects();
-		AllZone.Phase.updateObservers();
-		AllZone.Human_Exile.updateObservers();
-		AllZone.Computer_Exile.updateObservers();
-		AllZone.Human_Hand.updateObservers();
-		AllZone.Computer_Hand.updateObservers();
-		AllZone.Human_Graveyard.updateObservers();
-		AllZone.Computer_Graveyard.updateObservers();
-		AllZone.Human_Battlefield.updateObservers();
-		AllZone.Computer_Battlefield.updateObservers();
-		AllZone.Human_Library.updateObservers();
-		AllZone.Computer_Library.updateObservers();
+		AllZone.getGameAction().checkStateEffects();
+		AllZone.getPhase().updateObservers();
+		AllZone.getHumanExile().updateObservers();
+		AllZone.getComputerExile().updateObservers();
+		AllZone.getHumanHand().updateObservers();
+		AllZone.getComputerHand().updateObservers();
+		AllZone.getHumanGraveyard().updateObservers();
+		AllZone.getComputerGraveyard().updateObservers();
+		AllZone.getHumanBattlefield().updateObservers();
+		AllZone.getComputerBattlefield().updateObservers();
+		AllZone.getHumanLibrary().updateObservers();
+		AllZone.getComputerLibrary().updateObservers();
 	}
 
     public static CardList devProcessCardsForZone(String[] data, Player player)
@@ -1143,7 +1143,7 @@ public class GuiDisplayUtil implements NewConstants {
         for (int i = 0; i < data.length; i ++) {
         	String cardinfo[] = data[i].trim().split("\\|");
         	
-            Card c = AllZone.CardFactory.getCard(cardinfo[0], player);
+            Card c = AllZone.getCardFactory().getCard(cardinfo[0], player);
 
             if (cardinfo.length != 2)
             	c.setCurSetCode(c.getMostRecentSet());
@@ -1152,7 +1152,7 @@ public class GuiDisplayUtil implements NewConstants {
             
 			c.setImageFilename(CardUtil.buildFilename(c));
 			for(Trigger trig : c.getTriggers()) {
-				AllZone.TriggerHandler.registerTrigger(trig);
+				AllZone.getTriggerHandler().registerTrigger(trig);
 			}
 			cl.add(c);
         }
@@ -1160,12 +1160,12 @@ public class GuiDisplayUtil implements NewConstants {
     }
     
     public static void devModeTutor(){
-    	CardList lib = AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer);
+    	CardList lib = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer());
     	Object o = GuiUtils.getChoiceOptional("Choose a card", lib.toArray());
     	if(null == o) return;
     	else {
     		Card c = (Card)o;
-    		AllZone.GameAction.moveToHand(c);
+    		AllZone.getGameAction().moveToHand(c);
     	}
     }
     

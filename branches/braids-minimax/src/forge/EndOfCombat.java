@@ -14,7 +14,7 @@ public class EndOfCombat implements java.io.Serializable
 
 	public void executeAt()
 	{
-		//AllZone.StateBasedEffects.rePopulateStateBasedList();
+		//AllZone.getStateBasedEffects().rePopulateStateBasedList();
 		execute(at);
 	}//executeAt()
 

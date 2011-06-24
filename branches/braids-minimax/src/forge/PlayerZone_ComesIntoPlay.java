@@ -1,6 +1,7 @@
 
 package forge;
 
+import forge.ai.minimax.Unstatic;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability;
 import forge.card.spellability.SpellAbility;
@@ -10,8 +11,9 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
     
     private boolean           trigger          = true;
     private boolean           leavesTrigger    = true;
-	private static boolean SimultaneousEntry = false; // For Cards with Multiple Token Entry. Only Affects Allies at the moment.
-	static int SimultaneousEntryCounter = 1; // For Cards with Multiple Token Entry. Only Affects Allies at the moment.
+    
+	// static is overused, and this doesn't seem to be referenced anywhere.
+	//static int SimultaneousEntryCounter = 1; // For Cards with Multiple Token Entry. Only Affects Allies at the moment.
     
     public PlayerZone_ComesIntoPlay(String zone, Player player) {
         super(zone, player);
@@ -56,8 +58,8 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
         
         if (adjustLandPlays){
         	if (eachPlayer){
-        		AllZone.HumanPlayer.addMaxLandsToPlay(addMax);
-        		AllZone.ComputerPlayer.addMaxLandsToPlay(addMax);
+        		AllZone.getHumanPlayer().addMaxLandsToPlay(addMax);
+        		AllZone.getComputerPlayer().addMaxLandsToPlay(addMax);
         	}
         	else
         		c.getController().addMaxLandsToPlay(addMax);
@@ -116,7 +118,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
                 	sb.append(tisLand.getController()).append(" controls.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
                 
@@ -139,7 +141,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
                 	CardList oLands = AllZoneUtil.getPlayerLandsInPlay(lesLand.getOwner().getOpponent());
                 	//(pLands - 1) because this land is in play, and the ability is before it is in play
                 	if(oLands.size() <= (pLands.size() - 1)) {
-                		AllZone.Stack.addSimultaneousStackEntry(ability);
+                		AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 	}
                 }
@@ -147,10 +149,10 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
             }//isLand()
         }
         
-        if(AllZone.StaticEffects.getCardToEffectsList().containsKey(c.getName())) {
-            String[] effects = AllZone.StaticEffects.getCardToEffectsList().get(c.getName());
+        if(AllZone.getStaticEffects().getCardToEffectsList().containsKey(c.getName())) {
+            String[] effects = AllZone.getStaticEffects().getCardToEffectsList().get(c.getName());
             for(String effect:effects) {
-                AllZone.StaticEffects.addStateBasedEffect(effect);
+                AllZone.getStaticEffects().addStateBasedEffect(effect);
             }
         }
         
@@ -168,7 +170,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
                             	if(AllZoneUtil.isCardInPlayerGraveyard(player, crd)
                                         && AllZoneUtil.isCardInPlay(c) && c.isCreature()
                                         && c.getNetAttack() == 1 && c.getNetDefense() == 1) {
-                                    AllZone.GameAction.moveToPlay(crd);
+                                    AllZone.getGameAction().moveToPlay(crd);
                                     
                                     crd.equipCard(c);
                                 }
@@ -179,7 +181,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
                             if(AllZoneUtil.isCardInPlayerGraveyard(player, crd)
                                     && AllZoneUtil.isCardInPlay(c) && c.isCreature()
                                     && c.getNetAttack() == 1 && c.getNetDefense() == 1) {
-                            	AllZone.GameAction.moveToPlay(crd);
+                            	AllZone.getGameAction().moveToPlay(crd);
                                 
                                 crd.equipCard(c);
                             }
@@ -192,7 +194,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
                 sb.append("return Sword of the Meek from your graveyard to the battlefield, then attach it to that creature.");
                 ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
             }
         }
@@ -229,8 +231,8 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
         
         if (adjustLandPlays){
         	if (eachPlayer){
-        		AllZone.HumanPlayer.addMaxLandsToPlay(addMax);
-        		AllZone.ComputerPlayer.addMaxLandsToPlay(addMax);
+        		AllZone.getHumanPlayer().addMaxLandsToPlay(addMax);
+        		AllZone.getComputerPlayer().addMaxLandsToPlay(addMax);
         	}
         	else
         		c.getController().addMaxLandsToPlay(addMax);
@@ -241,19 +243,19 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
         	c.leavesPlay();
         }
 
-        if(AllZone.StaticEffects.getCardToEffectsList().containsKey(c.getName())) {
-            String[] effects = AllZone.StaticEffects.getCardToEffectsList().get(c.getName());
+        if(AllZone.getStaticEffects().getCardToEffectsList().containsKey(c.getName())) {
+            String[] effects = AllZone.getStaticEffects().getCardToEffectsList().get(c.getName());
             String tempEffect = "";
             for(String effect:effects) {
                 tempEffect = effect;
-                AllZone.StaticEffects.removeStateBasedEffect(effect);
+                AllZone.getStaticEffects().removeStateBasedEffect(effect);
                 Command comm = GameActionUtil.commands.get(tempEffect); //this is to make sure cards reset correctly
                 comm.execute();
             }
             
         }
 
-        for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+        for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
             Command com = GameActionUtil.commands.get(effect);
             com.execute();
         }
@@ -275,10 +277,10 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
     }
 
 	public static void setSimultaneousEntry(boolean simultaneousEntry) {
-		SimultaneousEntry = simultaneousEntry;
+		Unstatic.getGlobalGameState().setSimultaneousEntry(simultaneousEntry);
 	}
 
 	public static boolean isSimultaneousEntry() {
-		return SimultaneousEntry;
+		return Unstatic.getGlobalGameState().isSimultaneousEntry();
 	}
 }

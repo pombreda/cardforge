@@ -9,8 +9,8 @@ public class QuestPetBird extends QuestPetAbstract{
         Card petCard = new Card();
         
         petCard.setName("Bird Pet");
-        petCard.setController(AllZone.HumanPlayer);
-        petCard.setOwner(AllZone.HumanPlayer);
+        petCard.setController(AllZone.getHumanPlayer());
+        petCard.setOwner(AllZone.getHumanPlayer());
 
         petCard.addColor("W");
         petCard.setToken(true);

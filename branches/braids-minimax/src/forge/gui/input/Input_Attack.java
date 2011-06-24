@@ -1,6 +1,10 @@
 
 package forge.gui.input;
 
+import java.util.Collection;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.ButtonUtil;
@@ -22,7 +26,7 @@ public class Input_Attack extends Input {
     	
         ButtonUtil.enableOnlyOK();
 
-        Object o = AllZone.Combat.nextDefender();        
+        Object o = AllZone.getCombat().nextDefender();        
         if (o == null){
         	return;
         }
@@ -31,18 +35,18 @@ public class Input_Attack extends Input {
         sb.append("Declare Attackers: Select Creatures to Attack ");
         sb.append(o.toString());
         
-        AllZone.Display.showMessage(sb.toString());
+        AllZone.getDisplay().showMessage(sb.toString());
         
-        if (AllZone.Combat.getRemainingDefenders() == 0) {
+        if (AllZone.getCombat().getRemainingDefenders() == 0) {
         	// Nothing left to attack, has to attack this defender
-            CardList possibleAttackers = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+            CardList possibleAttackers = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
             possibleAttackers = possibleAttackers.getType("Creature");
             for (int i = 0; i < possibleAttackers.size(); i++) {
                 Card c = possibleAttackers.get(i);
                 if (c.hasKeyword("CARDNAME attacks each turn if able.") 
-                		&& CombatUtil.canAttack(c,AllZone.Combat) 
+                		&& CombatUtil.canAttack(c,AllZone.getCombat()) 
                 		&& !c.isAttacking()) {
-                    AllZone.Combat.addAttacker(c);
+                    AllZone.getCombat().addAttacker(c);
                     //if(!c.hasKeyword("Vigilance")) 
                     //	c.tap();
                 }
@@ -52,14 +56,14 @@ public class Input_Attack extends Input {
     
     @Override
     public void selectButtonOK() {
-    	if (AllZone.Combat.getAttackers().length > 0)
-    		AllZone.Phase.setCombat(true);
+    	if (AllZone.getCombat().getAttackers().length > 0)
+    		AllZone.getPhase().setCombat(true);
     
-    	if (AllZone.Combat.getRemainingDefenders() != 0)
-    		AllZone.Phase.repeatPhase();
+    	if (AllZone.getCombat().getRemainingDefenders() != 0)
+    		AllZone.getPhase().repeatPhase();
     	
-    	AllZone.Phase.setNeedToNextPhase(true);
-    	AllZone.InputControl.resetInput();
+    	AllZone.getPhase().setNeedToNextPhase(true);
+    	AllZone.getInputControl().resetInput();
     }
     
     @Override
@@ -67,17 +71,17 @@ public class Input_Attack extends Input {
     	if (card.isAttacking() || card.getController().isComputer())
     		return;
     	
-        if(zone.is(Constant.Zone.Battlefield, AllZone.HumanPlayer) && CombatUtil.canAttack(card,AllZone.Combat)) {
+        if(zone.is(Constant.Zone.Battlefield, AllZone.getHumanPlayer()) && CombatUtil.canAttack(card,AllZone.getCombat())) {
             
         	// TODO add the propaganda code here and remove it in Phase.nextPhase()
         	// if (!CombatUtil.checkPropagandaEffects(card))
         	// 		return;
         	         
-            AllZone.Combat.addAttacker(card);
-            AllZone.Human_Battlefield.updateObservers();	// just to make sure the attack symbol is marked
+            AllZone.getCombat().addAttacker(card);
+            AllZone.getHumanBattlefield().updateObservers();	// just to make sure the attack symbol is marked
             
             //for Castle Raptors, since it gets a bonus if untapped
-            for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+            for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
                 Command com = GameActionUtil.commands.get(effect);
                 com.execute();
             }
@@ -90,4 +94,9 @@ public class Input_Attack extends Input {
     public void unselectCard(Card card, PlayerZone zone) {
 
     }
+
+	@Override
+	public Collection<MinimaxMove> getMoves() {
+		throw new NotImplementedError();
+	}
 }

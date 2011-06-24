@@ -146,25 +146,25 @@ public abstract class Trigger {
         		// Upkeep->Combat_Begin (Before Declare Attackers)
 
         		String[] split = phases.split("->", 2);
-        		phases = AllZone.Phase.buildActivateString(split[0], split[1]);
+        		phases = AllZone.getPhase().buildActivateString(split[0], split[1]);
         	}
             ArrayList<String> triggerPhases = new ArrayList<String>();
             for(String s :  phases.split(","))
 			{
 				triggerPhases.add(s);
 			}
-            if(!triggerPhases.contains(AllZone.Phase.getPhase()))
+            if(!triggerPhases.contains(AllZone.getPhase().getPhase()))
             {
                 return false;
             }
         }
         
         if(mapParams.containsKey("PlayerTurn"))
-            if(!AllZone.Phase.isPlayerTurn(hostCard.getController()))
+            if(!AllZone.getPhase().isPlayerTurn(hostCard.getController()))
                 return false;
         
         if(mapParams.containsKey("OpponentTurn"))
-            if(AllZone.Phase.isPlayerTurn(hostCard.getController()))
+            if(AllZone.getPhase().isPlayerTurn(hostCard.getController()))
                 return false;
 
         return true;

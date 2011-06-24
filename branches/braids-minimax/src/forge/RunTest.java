@@ -14,9 +14,9 @@ public class RunTest
     {
 	{
 	    Card c;
-	    CardFactory cf = AllZone.CardFactory;
+	    CardFactory cf = AllZone.getCardFactory();
 	    //********* test Card
-	    c = cf.getCard("Elvish Warrior", AllZone.ComputerPlayer);
+	    c = cf.getCard("Elvish Warrior", AllZone.getComputerPlayer());
 	    check("1", c.getOwner().isComputer());
 	    check("1.1", c.getName().equals("Elvish Warrior"));
 	    check("2", c.getManaCost().equals("G G"));
@@ -261,7 +261,7 @@ public class RunTest
 	}
 	
 	{
-	    CardFactory cf = AllZone.CardFactory;
+	    CardFactory cf = AllZone.getCardFactory();
 	    CardList c1 = new CardList();
 	    c1.add(cf.getCard("Shock", null));
 	    c1.add(cf.getCard("Royal Assassin", null));

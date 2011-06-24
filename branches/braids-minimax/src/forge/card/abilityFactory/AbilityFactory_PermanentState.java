@@ -239,7 +239,7 @@ public class AbilityFactory_PermanentState {
 	public static boolean untapPrefTargeting(Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory){
 		Card source = sa.getSourceCard();
 		
-		CardList untapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		CardList untapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 		untapList = untapList.getTargetableCards(source);
 		untapList = untapList.getValidCards(tgt.getValidTgts(), source.getController(), source);
 		
@@ -394,9 +394,9 @@ public class AbilityFactory_PermanentState {
 		
 		// Reuse existing UntapUpTo Input
     	if (activatingPlayer.isHuman()) 
-    		AllZone.InputControl.setInput(CardFactoryUtil.input_UntapUpToNType(num, valid));
+    		AllZone.getInputControl().setInput(CardFactoryUtil.input_UntapUpToNType(num, valid));
     	else{
-            CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+            CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
             list = list.getType(valid);
             list = list.filter(AllZoneUtil.tapped);
             
@@ -625,7 +625,7 @@ public class AbilityFactory_PermanentState {
 	}
 	
 	public static boolean tapPrefTargeting(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory){
-		CardList tapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+		CardList tapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 		tapList = tapList.filter(AllZoneUtil.untapped);
 		tapList = tapList.getValidCards(tgt.getValidTgts(), source.getController(), source);
 		// filter out enchantments and planeswalkers, their tapped state doesn't matter.
@@ -1041,9 +1041,9 @@ public class AbilityFactory_PermanentState {
 		HashMap<String,String> params = af.getMapParams();
 
 		//TODO - targeting with TapAll
-		//CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+		//CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
 		//human = human.filter(AllZoneUtil.tapped);
-		//return human.size() > 0 && AllZone.Phase.getPhase().equals("Main1");
+		//return human.size() > 0 && AllZone.getPhase().getPhase().equals("Main1");
 		
 		String valid = "";
 		if(params.containsKey("ValidCards")) 

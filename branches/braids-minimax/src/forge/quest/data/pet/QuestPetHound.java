@@ -16,8 +16,8 @@ public class QuestPetHound extends QuestPetAbstract{
         Card petCard = new Card();
 
         petCard.setName("Hound Pet");
-        petCard.setController(AllZone.HumanPlayer);
-        petCard.setOwner(AllZone.HumanPlayer);
+        petCard.setController(AllZone.getHumanPlayer());
+        petCard.setOwner(AllZone.getHumanPlayer());
 
         petCard.addColor("R");
         petCard.setToken(true);

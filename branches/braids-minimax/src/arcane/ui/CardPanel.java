@@ -236,8 +236,8 @@ public class CardPanel extends JPanel implements CardContainer{
 		if (beenHere && getCard() != null) {
 			if (getCard().getName().equals("Mana Pool") && !isAnimationPanel) {
 				
-				if (AllZone.ManaPool != null) {
-					String s = AllZone.ManaPool.getManaList();
+				if (AllZone.getManaPool() != null) {
+					String s = AllZone.getManaPool().getManaList();
 					if (!s.equals("|||||||||||")) {
 						//System.out.println("ManaList: " + s);
 						

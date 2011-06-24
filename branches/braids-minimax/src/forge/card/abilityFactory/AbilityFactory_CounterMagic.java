@@ -141,7 +141,7 @@ public class AbilityFactory_CounterMagic {
 		boolean toReturn = true;
 		Cost abCost = af.getAbCost();
 		final Card source = sa.getSourceCard();
-		if(AllZone.Stack.size() < 1) {
+		if(AllZone.getStack().size() < 1) {
 			return false;
 		}
 		
@@ -150,13 +150,13 @@ public class AbilityFactory_CounterMagic {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 		}
@@ -164,7 +164,7 @@ public class AbilityFactory_CounterMagic {
 		Target tgt = sa.getTarget();
 		if (tgt != null) {
 			
-			SpellAbility topSA = AllZone.Stack.peekAbility();
+			SpellAbility topSA = AllZone.getStack().peekAbility();
 			if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
 				return false;
 		
@@ -178,7 +178,7 @@ public class AbilityFactory_CounterMagic {
 		
 		if (unlessCost != null){
 			// Is this Usable Mana Sources? Or Total Available Mana?
-			int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.HumanPlayer);
+			int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.getHumanPlayer());
 			int toPay = 0;
 			boolean setPayX = false;
 			if (unlessCost.equals("X") && source.getSVar(unlessCost).equals("Count$xPaid")){
@@ -216,13 +216,13 @@ public class AbilityFactory_CounterMagic {
 	
 	public boolean counterDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory){
 		boolean toReturn = true;
-		if(AllZone.Stack.size() < 1) {
+		if(AllZone.getStack().size() < 1) {
 			return false;
 		}
 
 		Target tgt = sa.getTarget();
 		if (tgt != null) {
-			SpellAbility topSA = AllZone.Stack.peekAbility();
+			SpellAbility topSA = AllZone.getStack().peekAbility();
 			if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
 				return false;
 
@@ -235,7 +235,7 @@ public class AbilityFactory_CounterMagic {
 			Card source = sa.getSourceCard();
 			if (unlessCost != null){
 				// Is this Usable Mana Sources? Or Total Available Mana?
-				int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.HumanPlayer);
+				int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.getHumanPlayer());
 				int toPay = 0;
 				boolean setPayX = false;
 				if (unlessCost.equals("X") && source.getSVar(unlessCost).equals("Count$xPaid")){
@@ -297,7 +297,7 @@ public class AbilityFactory_CounterMagic {
 			if (tgtSA.isSpell() && tgtSACard.keywordsContain("CARDNAME can't be countered."))
 				continue;
 				
-			SpellAbility_StackInstance si = AllZone.Stack.getInstanceFromSpellAbility(tgtSA);
+			SpellAbility_StackInstance si = AllZone.getStack().getInstanceFromSpellAbility(tgtSA);
 			if (si == null)
 				continue;
 
@@ -305,7 +305,7 @@ public class AbilityFactory_CounterMagic {
 				
 			// Destroy Permanent may be able to be turned into a SubAbility
 			if(tgtSA.isAbility() && params.containsKey("DestroyPermanent")) {
-				AllZone.GameAction.destroy(tgtSACard);
+				AllZone.getGameAction().destroy(tgtSACard);
 			}
 
             if(params.containsKey("RememberTargets"))
@@ -360,28 +360,28 @@ public class AbilityFactory_CounterMagic {
 	}//end counterStackDescription
 	
 	private void removeFromStack(SpellAbility tgtSA, SpellAbility srcSA, SpellAbility_StackInstance si) {
-		AllZone.Stack.remove(si);
+		AllZone.getStack().remove(si);
 		
 		if(tgtSA.isAbility())  {
 			//For Ability-targeted counterspells - do not move it anywhere, even if Destination$ is specified.
 		}
 		else if(destination.equals("Graveyard")) {
-			AllZone.GameAction.moveToGraveyard(tgtSA.getSourceCard());
+			AllZone.getGameAction().moveToGraveyard(tgtSA.getSourceCard());
 		}
 		else if(destination.equals("Exile")) {
-			AllZone.GameAction.exile(tgtSA.getSourceCard());
+			AllZone.getGameAction().exile(tgtSA.getSourceCard());
 		}
 		else if(destination.equals("TopOfLibrary")) {
-			AllZone.GameAction.moveToLibrary(tgtSA.getSourceCard());
+			AllZone.getGameAction().moveToLibrary(tgtSA.getSourceCard());
 		}
 		else if(destination.equals("Hand")) {
-			AllZone.GameAction.moveToHand(tgtSA.getSourceCard());
+			AllZone.getGameAction().moveToHand(tgtSA.getSourceCard());
 		}
 		else if(destination.equals("BottomOfLibrary")) {
-			AllZone.GameAction.moveToBottomOfLibrary(tgtSA.getSourceCard());
+			AllZone.getGameAction().moveToBottomOfLibrary(tgtSA.getSourceCard());
 		}
 		else if(destination.equals("ShuffleIntoLibrary")) {
-			AllZone.GameAction.moveToBottomOfLibrary(tgtSA.getSourceCard());
+			AllZone.getGameAction().moveToBottomOfLibrary(tgtSA.getSourceCard());
 			tgtSA.getSourceCard().getController().shuffle();
 		}
 		else {

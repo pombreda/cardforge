@@ -9,12 +9,18 @@ import java.util.Random;
 
 import javax.swing.JOptionPane;
 
+import net.slightlymagic.braids.game.ai.minimax.MinimaxPlayer;
+import net.slightlymagic.braids.game.ai.minimax.MinimaxTeam;
+
 import forge.card.cardFactory.CardFactoryUtil;
+import forge.card.mana.ManaPool;
 import forge.card.spellability.Ability;
 import forge.card.spellability.SpellAbility;
 
 
-public abstract class Player extends MyObservable{
+public abstract class Player extends MyObservable
+	implements MinimaxPlayer, MinimaxTeam
+{
 	protected String name;
 	protected int poisonCounters;
 	protected int life;
@@ -36,6 +42,7 @@ public abstract class Player extends MyObservable{
 	protected Card lastDrawnCard;
 	protected int numDrawnThisTurn = 0;
 	protected CardList slowtripList = new CardList();
+	private ManaPool manaPool;
 	
 	public Player(String myName) {
 		this(myName, 20, 0);
@@ -60,6 +67,12 @@ public abstract class Player extends MyObservable{
 		handSizeOperations = new ArrayList<HandSizeOp>();
 	}
 	
+	/**
+	 * This is strictly for serialization.
+	 */
+	public Player() {
+	}
+
 	public void reset(){
 		life = 20;
 		poisonCounters = 0;
@@ -146,7 +159,7 @@ public abstract class Player extends MyObservable{
 				HashMap<String,Object> runParams = new HashMap<String,Object>();
 				runParams.put("Player", this);
 				runParams.put("LifeAmount", lifeGain);
-				AllZone.TriggerHandler.runTrigger("LifeGained", runParams);
+				AllZone.getTriggerHandler().runTrigger("LifeGained", runParams);
 			}
 		}
 		else System.out.println("Player - trying to gain negative or 0 life");
@@ -179,7 +192,7 @@ public abstract class Player extends MyObservable{
     	HashMap<String,Object> runParams = new HashMap<String,Object>();
     	runParams.put("Player", this);
     	runParams.put("LifeAmount", toLose);
-    	AllZone.TriggerHandler.runTrigger("LifeLost", runParams);
+    	AllZone.getTriggerHandler().runTrigger("LifeLost", runParams);
 		
 		return newLifeSet;
 	}
@@ -260,7 +273,7 @@ public abstract class Player extends MyObservable{
 	        runParams.put("DamageTarget",this);
 	        runParams.put("DamageAmount",damageToDo);
             runParams.put("IsCombatDamage",isCombat);
-	        AllZone.TriggerHandler.runTrigger("DamageDone", runParams);
+	        AllZone.getTriggerHandler().runTrigger("DamageDone", runParams);
         }
 	}
 	
@@ -383,7 +396,7 @@ public abstract class Player extends MyObservable{
 			for(int i = 0; i < restDamage; i++) {
 				CardList lib = AllZoneUtil.getPlayerCardsInLibrary(this);
 				if(lib.size() > 0) {
-					AllZone.GameAction.moveToGraveyard(lib.get(0));
+					AllZone.getGameAction().moveToGraveyard(lib.get(0));
 				}
 			}
 			return 0;
@@ -393,7 +406,7 @@ public abstract class Player extends MyObservable{
 			for(int i = 0; i < restDamage; i++) {
 				CardList lib = AllZoneUtil.getPlayerCardsInLibrary(this);
 				if(lib.size() > 0) {
-					AllZone.GameAction.exile(lib.get(0));
+					AllZone.getGameAction().exile(lib.get(0));
 				}
 			}
 			//return so things like Lifelink, etc do not trigger.  This is a replacement effect I think.
@@ -523,7 +536,7 @@ public abstract class Player extends MyObservable{
 
 	////////////////////////////////
 	///
-	/// replaces AllZone.GameAction.draw* methods
+	/// replaces AllZone.getGameAction().draw* methods
 	///
 	////////////////////////////////
 	
@@ -555,7 +568,7 @@ public abstract class Player extends MyObservable{
 	private void doDraw(PlayerZone library) {
 		if(library.size() != 0) {
 			Card c = library.get(0);
-			AllZone.GameAction.moveToHand(c);
+			AllZone.getGameAction().moveToHand(c);
 
 			setLastDrawnCard(c);
 			c.setDrawnThisTurn(true);
@@ -564,13 +577,13 @@ public abstract class Player extends MyObservable{
 			//Run triggers
 			HashMap<String,Object> runParams = new HashMap<String,Object>();
 			runParams.put("Card", c);
-			AllZone.TriggerHandler.runTrigger("Drawn", runParams);
+			AllZone.getTriggerHandler().runTrigger("Drawn", runParams);
 		}
 		//lose:
-		else if (!Constant.Runtime.DevMode[0] || AllZone.Display.canLoseByDecking()) {	
+		else if (!Constant.Runtime.DevMode[0] || AllZone.getDisplay().canLoseByDecking()) {	
 			// if devMode is off, or canLoseByDecking is Enabled, run Lose Condition
 			if (altLoseConditionMet("Milled")){
-				AllZone.GameAction.checkStateEffects();
+				AllZone.getGameAction().checkStateEffects();
 			}
 		}
 	}
@@ -611,7 +624,7 @@ public abstract class Player extends MyObservable{
     
     ////////////////////////////////
 	///
-	/// replaces AllZone.GameAction.discard* methods
+	/// replaces AllZone.getGameAction().discard* methods
 	///
 	////////////////////////////////
     
@@ -644,28 +657,28 @@ public abstract class Player extends MyObservable{
     			};
     			ability.setStackDescription(c.getName()+" - "+
     					sa.getSourceCard().getController()+" loses 5 life.");
-    			AllZone.Stack.add(ability);
+    			AllZone.getStack().add(ability);
     		}
     	}
         
         // necro disrupts madness
         if (AllZoneUtil.getPlayerCardsInPlay(c.getOwner(), "Necropotence").size() > 0) {	
-        	AllZone.GameAction.exile(c);
+        	AllZone.getGameAction().exile(c);
         	return;
         }
         
-        AllZone.GameAction.discard_madness(c);
+        AllZone.getGameAction().discard_madness(c);
         
         if ((c.hasKeyword("If a spell or ability an opponent controls causes you to discard CARDNAME, put it onto the battlefield instead of putting it into your graveyard.")
         		|| c.hasKeyword("If a spell or ability an opponent controls causes you to discard CARDNAME, put it onto the battlefield with two +1/+1 counters on it instead of putting it into your graveyard."))	
         		&& !c.getController().equals(sa.getSourceCard().getController())) {
-        	AllZone.GameAction.discard_PutIntoPlayInstead(c);
+        	AllZone.getGameAction().discard_PutIntoPlayInstead(c);
         }
         else if (c.hasKeyword("If a spell or ability an opponent controls causes you to discard CARDNAME, return it to your hand.")) {
         	;
         }
         else {
-        	AllZone.GameAction.moveToGraveyard(c);
+        	AllZone.getGameAction().moveToGraveyard(c);
         }
         
         //Run triggers
@@ -678,7 +691,7 @@ public abstract class Player extends MyObservable{
         runParams.put("Player", this);
         runParams.put("Card", c);
         runParams.put("Cause", cause);
-        AllZone.TriggerHandler.runTrigger("Discarded", runParams);
+        AllZone.getTriggerHandler().runTrigger("Discarded", runParams);
         
     }//end doDiscard
     
@@ -713,7 +726,7 @@ public abstract class Player extends MyObservable{
     	PlayerZone destination = AllZone.getZone(zone, this);
     	
     	for(int i = 0; i < max; i++) {
-    		AllZone.GameAction.moveTo(destination, lib.get(i));
+    		AllZone.getGameAction().moveTo(destination, lib.get(i));
     	}
     }
     
@@ -756,7 +769,7 @@ public abstract class Player extends MyObservable{
         //Run triggers
         HashMap<String, Object> runParams = new HashMap<String, Object>();
         runParams.put("Player",this);
-        AllZone.TriggerHandler.runTrigger("Shuffled",runParams);
+        AllZone.getTriggerHandler().runTrigger("Shuffled",runParams);
 
     }//shuffle
     ////////////////////////////////
@@ -777,20 +790,20 @@ public abstract class Player extends MyObservable{
     
     public void playLand(Card land){
     	if (canPlayLand()){
-    		AllZone.GameAction.moveToPlay(land);
+    		AllZone.getGameAction().moveToPlay(land);
 			CardFactoryUtil.playLandEffects(land);
 			numLandsPlayed++;
 			
 			//check state effects for static animate (Living Lands, Conversion, etc...)
-			AllZone.GameAction.checkStateEffects();
+			AllZone.getGameAction().checkStateEffects();
 			
 			//Run triggers
 			HashMap<String, Object> runParams = new HashMap<String, Object>();
 			runParams.put("Card", land);
-			AllZone.TriggerHandler.runTrigger("LandPlayed", runParams);
+			AllZone.getTriggerHandler().runTrigger("LandPlayed", runParams);
     	}
     	
-    	AllZone.Stack.unfreezeStack();
+    	AllZone.getStack().unfreezeStack();
     }
     
     public boolean canPlayLand(){
@@ -803,6 +816,16 @@ public abstract class Player extends MyObservable{
     ////	properties about the player and his/her cards/game status
     ////
     ///////////////////////////////
+    
+    public ManaPool getManaPool() {
+    	return this.manaPool;
+    }
+    
+    public void setManaPool(ManaPool pool) {
+    	this.manaPool = pool;
+    }
+    
+    
     public boolean hasPlaneswalker() {
         return null != getPlaneswalker();
     }
@@ -1131,7 +1154,15 @@ public abstract class Player extends MyObservable{
     		return pCMC > oCMC;
     	}
     }
-    
+
+	public boolean hasCounters() {
+		return (getPoisonCounters() > 0);
+	}
+
+    public MinimaxTeam getTeam() {
+    	return this;
+    }
+
     protected abstract void clashMoveToTopOrBottom(Card c);
     
 	////////////////////////////////
@@ -1152,4 +1183,5 @@ public abstract class Player extends MyObservable{
 	public String toString() {
 		return name;
 	}
+
 }

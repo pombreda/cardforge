@@ -356,7 +356,7 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         ArrayList<Card> list = new ArrayList<Card>();
         File file;
         
-        CardList all = AllZone.CardFactory.getAllCards(); 
+        CardList all = AllZone.getCardFactory().getAllCards(); 
         
         File base = ForgeProps.getFile(IMAGE_BASE);
         

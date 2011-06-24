@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import forge.ai.minimax.Unstatic;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaCost;
@@ -41,7 +42,7 @@ public class ComputerUtil
 	    	if (af != null && af.getAPI().equals("Counter"))
 	    		continue;
 	    	
-	    	sa.setActivatingPlayer(AllZone.ComputerPlayer);
+	    	sa.setActivatingPlayer(AllZone.getComputerPlayer());
 	    	if(canBePlayedAndPayedByAI(sa)) //checks everything nescessary
 	    	{
 	    		handlePlayingSpellAbility(sa);
@@ -62,11 +63,11 @@ public class ComputerUtil
   }//playCards()
   
   static public void handlePlayingSpellAbility(SpellAbility sa){
-		AllZone.Stack.freezeStack();
+		AllZone.getStack().freezeStack();
 		Card source = sa.getSourceCard();
 
 		if (sa.isSpell() && !source.isCopiedSpell())
-			AllZone.GameAction.moveToStack(source);
+			AllZone.getGameAction().moveToStack(source);
 
 		Cost cost = sa.getPayCosts();
 		Target tgt = sa.getTarget();
@@ -75,7 +76,7 @@ public class ComputerUtil
 			payManaCost(sa);
 			sa.chooseTargetAI();
 			sa.getBeforePayManaAI().execute();
-			AllZone.Stack.addAndUnfreeze(sa);
+			AllZone.getStack().addAndUnfreeze(sa);
 		} 
 		else {
 			if (tgt != null && tgt.doesTarget())
@@ -83,7 +84,7 @@ public class ComputerUtil
 
 			Cost_Payment pay = new Cost_Payment(cost, sa);
 			if (pay.payComputerCosts())
-				AllZone.Stack.addAndUnfreeze(sa);
+				AllZone.getStack().addAndUnfreeze(sa);
 		}
   }
   
@@ -106,7 +107,7 @@ public class ComputerUtil
 	  // Consider the costs here for relative "scoring"
 	  if (cost.getDiscardType().equals("Hand")){
 		  // Null Brooch aid
-		  restrict -= (AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer).size() * 20);
+		  restrict -= (AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()).size() * 20);
 	  }
 	  
 	  // Abilities before Spells (card advantage)
@@ -123,7 +124,7 @@ public class ComputerUtil
 	  if (unless != null){
 		  int amount = AbilityFactory.calculateAmount(source, unless, sa);
 		  
-		  int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.HumanPlayer);
+		  int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.getHumanPlayer());
 		  
 		  // If the Unless isn't enough, this should be less likely to be used
 		  if (amount > usableManaSources)
@@ -151,7 +152,7 @@ public class ComputerUtil
 	int bestRestriction = Integer.MIN_VALUE;
 
 	for(SpellAbility sa : possibleCounters){
-		sa.setActivatingPlayer(AllZone.ComputerPlayer);
+		sa.setActivatingPlayer(AllZone.getComputerPlayer());
 		if(canBePlayedAndPayedByAI(sa)){ //checks everything nescessary
 			if (bestSA == null){
 				bestSA = sa;
@@ -176,11 +177,11 @@ public class ComputerUtil
 	// "Look" at Targeted SA and "calculate" the threshold
 	// if (bestRestriction < targetedThreshold) return false;
 	
-	AllZone.Stack.freezeStack();
+	AllZone.getStack().freezeStack();
 	Card source = bestSA.getSourceCard();
 	
 	if(bestSA.isSpell() && !source.isCopiedSpell())
-		AllZone.GameAction.moveToStack(source);
+		AllZone.getGameAction().moveToStack(source);
 	
 	Cost cost = bestSA.getPayCosts();
 	
@@ -189,12 +190,12 @@ public class ComputerUtil
 	    payManaCost(bestSA);
 	    bestSA.chooseTargetAI();
 	    bestSA.getBeforePayManaAI().execute();
-	    AllZone.Stack.addAndUnfreeze(bestSA);
+	    AllZone.getStack().addAndUnfreeze(bestSA);
 	}
 	else{
 		Cost_Payment pay = new Cost_Payment(cost, bestSA);
 		if (pay.payComputerCosts())
-			AllZone.Stack.addAndUnfreeze(bestSA);
+			AllZone.getStack().addAndUnfreeze(bestSA);
 	}
 	
 	return true;
@@ -208,25 +209,25 @@ public class ComputerUtil
 	  {
 		  Card source = sa.getSourceCard();
 		  if(sa.isSpell() && !source.isCopiedSpell())
-  				AllZone.GameAction.moveToStack(source);
+  				AllZone.getGameAction().moveToStack(source);
 	  
-		  sa.setActivatingPlayer(AllZone.ComputerPlayer);
+		  sa.setActivatingPlayer(AllZone.getComputerPlayer());
 	  
 		  payManaCost(sa);
 		  
-		  AllZone.Stack.add(sa);
+		  AllZone.getStack().add(sa);
 	  }
   }
   
   final static public void playStackFree(SpellAbility sa)
   {
-	  sa.setActivatingPlayer(AllZone.ComputerPlayer);
+	  sa.setActivatingPlayer(AllZone.getComputerPlayer());
 	  
 	  Card source = sa.getSourceCard();
 	  if(sa.isSpell() && !source.isCopiedSpell())
-				AllZone.GameAction.moveToStack(source);
+				AllZone.getGameAction().moveToStack(source);
 
-	  AllZone.Stack.add(sa);
+	  AllZone.getStack().add(sa);
   }
   
   final static public void playNoStack(SpellAbility sa)
@@ -237,16 +238,16 @@ public class ComputerUtil
     {
     	Card source = sa.getSourceCard();
 		if (sa.isSpell() && !source.isCopiedSpell())
-			AllZone.GameAction.moveToStack(source);
+			AllZone.getGameAction().moveToStack(source);
 
-      sa.setActivatingPlayer(AllZone.ComputerPlayer);
+      sa.setActivatingPlayer(AllZone.getComputerPlayer());
       
       payManaCost(sa);
 
       sa.resolve();
 
       //destroys creatures if they have lethal damage, etc..
-      AllZone.GameAction.checkStateEffects();
+      AllZone.getGameAction().checkStateEffects();
     }
   }//play()
 
@@ -256,29 +257,52 @@ public class ComputerUtil
   //1. if canPlay() returns true, 2. can pay for mana
   static public SpellAbility[] getSpellAbility()
   {
+	  return getSpellAbility(AllZone.getComputerPlayer(), false);
+  }
+  
+  
+  static public SpellAbility[] getSpellAbility(Player player, boolean ignoreCanPlayAI)
+  {
     CardList all = new CardList();
-    all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer));
-    all.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
-    all.addAll(CardFactoryUtil.getGraveyardActivationCards(AllZone.ComputerPlayer));
+    all.addAll(AllZoneUtil.getPlayerCardsInPlay(player));
+    all.addAll(AllZoneUtil.getPlayerHand(player));
+    all.addAll(CardFactoryUtil.getGraveyardActivationCards(player).toArray());
     
-    CardList humanPlayable = new CardList();
-    humanPlayable.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer));
-    humanPlayable = humanPlayable.filter(new CardListFilter()
+    // Add other players' battlefield-cards' abilities that can be played by 
+    // any player.
+    CardList otherPlayersPlayableCards = new CardList();
+    for (Player otherPlayer : 
+    	 Unstatic.getGlobalGameState().getNonOustedPlayers())
     {
-      public boolean addCard(Card c)
-      {
-        return (c.canAnyPlayerActivate());
-      }
-    });
+    	if (!player.isPlayer(otherPlayer)) {
+		    otherPlayersPlayableCards.addAll(AllZoneUtil.getPlayerCardsInPlay(otherPlayer));
+
+		    otherPlayersPlayableCards = otherPlayersPlayableCards.filter(new CardListFilter()
+		    {
+		      public boolean addCard(Card c)
+		      {
+		        return (c.canAnyPlayerActivate());
+		      }
+		    });
+
+    	}
+    }
     
-    all.addAll(humanPlayable);
+    all.addAll(otherPlayersPlayableCards.toArray());
     
     ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
     for(int outer = 0; outer < all.size(); outer++)
     {
       SpellAbility[] sa = all.get(outer).getSpellAbility();
       for(int i = 0; i < sa.length; i++)
-          spellAbility.add(sa[i]);//this seems like it needs to be copied, not sure though
+      {
+    	
+        //if((ignoreCanPlayAI || sa[i].canPlayAI()) && 
+        //   canPayCost(sa[i], player) /*&& sa[i].canPlay()*/)
+        //{
+        spellAbility.add(sa[i]);//this seems like it needs to be copied, not sure though
+        //}
+      }
     }
 
     SpellAbility[] sa = new SpellAbility[spellAbility.size()];
@@ -294,7 +318,7 @@ public class ComputerUtil
   
   static public boolean canPayCost(SpellAbility sa)
   {
-	  return canPayCost(sa, AllZone.ComputerPlayer);
+	  return canPayCost(sa, AllZone.getComputerPlayer());
   }//canPayCost()
   
   
@@ -308,7 +332,7 @@ public class ComputerUtil
   
   
   static public int determineLeftoverMana(SpellAbility sa){
-	  return determineLeftoverMana(sa, AllZone.ComputerPlayer);
+	  return determineLeftoverMana(sa, AllZone.getComputerPlayer());
   }
   
   static public int determineLeftoverMana(SpellAbility sa, Player player){
@@ -327,7 +351,7 @@ public class ComputerUtil
   
   static public boolean canPayAdditionalCosts(SpellAbility sa)
   {
-	  return canPayAdditionalCosts(sa, AllZone.ComputerPlayer);
+	  return canPayAdditionalCosts(sa, AllZone.getComputerPlayer());
   }
   
   static public boolean canPayAdditionalCosts(SpellAbility sa, Player player)
@@ -500,7 +524,7 @@ public class ComputerUtil
   
   static public void payManaCost(SpellAbility sa)
   {
-	  payManaCost(sa, AllZone.ComputerPlayer, false, 0);
+	  payManaCost(sa, AllZone.getComputerPlayer(), false, 0);
   }
 
   //the test flag is for canPayCost and should not change the game state
@@ -510,10 +534,10 @@ public class ComputerUtil
 	  
 	  ManaCost cost = new ManaCost(mana);
 
-	  cost = AllZone.GameAction.getSpellCostChange(sa, cost);
+	  cost = AllZone.getGameAction().getSpellCostChange(sa, cost);
 	  
-	  ManaPool manapool = AllZone.Computer_ManaPool;
-	  if (player.isHuman()) manapool = AllZone.ManaPool;
+	  ManaPool manapool = AllZone.getComputerManaPool();
+	  if (player.isHuman()) manapool = AllZone.getManaPool();
 
 	  Card card = sa.getSourceCard();
 	  // Tack xMana Payments into mana here if X is a set value
@@ -618,7 +642,7 @@ public class ComputerUtil
 					      runParams.put("Card", sourceCard);
 					      runParams.put("Player", player);
 					      runParams.put("Produced", colors.get(j)); //can't tell what mana the computer just paid?
-					      AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);
+					      AllZone.getTriggerHandler().runTrigger("TapsForMana", runParams);
 					  }//not a test
 				  }
 				  if(cost.isPaid())
@@ -667,7 +691,7 @@ public class ComputerUtil
 
   static public CardList getAvailableMana()
   {
-	  return getAvailableMana(AllZone.ComputerPlayer);
+	  return getAvailableMana(AllZone.getComputerPlayer());
   }//getAvailableMana()
   
   //gets available mana sources and sorts them
@@ -781,7 +805,7 @@ public class ComputerUtil
   //plays a land if one is available
   static public boolean chooseLandsToPlay()
   {
-	  Player computer = AllZone.ComputerPlayer;
+	  Player computer = AllZone.getComputerPlayer();
 	  CardList landList = AllZoneUtil.getPlayerHand(computer);
 	  landList = landList.filter(AllZoneUtil.lands);
 
@@ -803,7 +827,7 @@ public class ComputerUtil
 			      }
 			      if (c.isType("Legendary") 
 			    		  && !c.getName().equals("Flagstones of Trokair")) {
-				      CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+				      CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 				      if (list.containsName(c.getName()))
 				      return false;
 			      }
@@ -823,7 +847,7 @@ public class ComputerUtil
 		  landList.remove(ix);
 		  computer.playLand(land);
 
-		  if (AllZone.Stack.size() != 0)
+		  if (AllZone.getStack().size() != 0)
 			  return false;
 	  }
 	  return true;
@@ -856,7 +880,7 @@ public class ComputerUtil
 	  }
   
   static public CardList chooseSacrificeType(String type, Card activate, Card target, int amount) {
-      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
       typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
 	  if (target != null && target.getController().isComputer() && typeList.contains(target))  
 		  typeList.remove(target);		// don't sacrifice the card we're pumping
@@ -897,7 +921,7 @@ public class ComputerUtil
   }
   
   static public CardList chooseExileFrom(String zone, String type, Card activate, Card target, int amount){
-	  CardList typeList = AllZoneUtil.getCardsInZone(zone, AllZone.ComputerPlayer);
+	  CardList typeList = AllZoneUtil.getCardsInZone(zone, AllZone.getComputerPlayer());
       typeList = typeList.getValidCards(type.split(","),activate.getController() ,activate);
 	  if (target != null && target.getController().isComputer() && typeList.contains(target))
 		  typeList.remove(target);	// don't exile the card we're pumping
@@ -913,7 +937,7 @@ public class ComputerUtil
   }
   
   static public CardList chooseTapType(String type, Card activate, boolean tap, int amount){
-      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
       typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
 	  
       //is this needed?
@@ -934,7 +958,7 @@ public class ComputerUtil
   }
   
   static public CardList chooseReturnType(String type, Card activate, Card target, int amount){
-      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+      CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
       typeList = typeList.getValidCards(type.split(","),activate.getController() ,activate);
 	  if (target != null && target.getController().isComputer() && typeList.contains(target)) // don't bounce the card we're pumping
 		  typeList.remove(target);
@@ -951,7 +975,7 @@ public class ComputerUtil
 
   static public CardList getPossibleAttackers()
   {
-	  CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+	  CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 	  list = list.filter(new CardListFilter()
 	  {
 		public boolean addCard(Card c) {
@@ -963,17 +987,17 @@ public class ComputerUtil
   
   static public Combat getAttackers()
   {
-	  ComputerUtil_Attack2 att = new ComputerUtil_Attack2(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer),
-			  AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer), AllZone.HumanPlayer.getLife());
+	  ComputerUtil_Attack2 att = new ComputerUtil_Attack2(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()),
+			  AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer()), AllZone.getHumanPlayer().getLife());
 
 	  return att.getAttackers();
   }
   
   static public Combat getBlockers()
   {
-    CardList blockers = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+    CardList blockers = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
-    return ComputerUtil_Block2.getBlockers(AllZone.Combat, blockers);
+    return ComputerUtil_Block2.getBlockers(AllZone.getCombat(), blockers);
   }
   
   static void sortSpellAbilityByCost(SpellAbility sa[])
@@ -1017,7 +1041,7 @@ public class ComputerUtil
 			if (list.getNotType("Creature").size() == 0) {
 				c = CardFactoryUtil.AI_getWorstCreature(list);
 			} else if (list.getNotType("Land").size() == 0) {
-				c = CardFactoryUtil.getWorstLand(AllZone.ComputerPlayer);
+				c = CardFactoryUtil.getWorstLand(AllZone.getComputerPlayer());
 			} else {
 				c = list.get(0);
 			}
@@ -1036,7 +1060,7 @@ public class ComputerUtil
 			}
 			
 			list.remove(c);
-			AllZone.GameAction.sacrifice(c);
+			AllZone.getGameAction().sacrifice(c);
 		}
 	}
     

@@ -1,4 +1,8 @@
 package forge;
+
+/**
+ * @deprecated
+ */
 public abstract class Move
 {        
     abstract public Move[] generateMoves();

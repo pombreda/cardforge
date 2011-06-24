@@ -14,7 +14,7 @@ public class QuestItemElixir extends QuestItemAbstract{
 
     @Override
     public String getPurchaseDescription() {
-        return "Gives +1 to maximum life<br>Current Life: "+AllZone.QuestData.getLife();
+        return "Gives +1 to maximum life<br>Current Life: "+AllZone.getQuestData().getLife();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class QuestItemElixir extends QuestItemAbstract{
 
     @Override
     public void onPurchase() {
-        AllZone.QuestData.addLife(1);
+        AllZone.getQuestData().addLife(1);
     }
 
 }
