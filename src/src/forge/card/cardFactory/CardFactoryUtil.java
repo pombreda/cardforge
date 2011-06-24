@@ -2564,12 +2564,13 @@ public class CardFactoryUtil {
             CardList res = ((DefaultPlayerZone)AllZone.getZone(destination, AllZone.getHumanPlayer())).getCardsAddedThisTurn(origin);
             res.addAll(((DefaultPlayerZone)AllZone.getZone(destination, AllZone.getComputerPlayer())).getCardsAddedThisTurn(origin));
 
-            res.filter(new CardListFilter() {
+            res = res.filter(new CardListFilter() {
                public boolean addCard(Card csubject)
                {
                    return csubject.isValidCard(valid,csource.getController(),csource);
                }
             });
+
 
             return doXMath(res.size(),m, c);
         }
