@@ -30,6 +30,7 @@ import forge.MyRandom;
 import forge.Player;
 import forge.PlayerZone;
 import forge.Phase;
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.spellability.Ability;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Mana;
@@ -4363,7 +4364,33 @@ public class CardFactory_Creatures {
             myTrig.setOverridingAbility(awaken);
             card.addTrigger(myTrig);
         }//*************** END ************ END **************************
-        
+
+        //*************** START *********** START **************************
+        else if(cardName.equals("Duct Crawler") || cardName.equals("Shrewd Hatchling") || cardName.equals("Spin Engine"))
+        {
+            String theCost = "0";
+            if(cardName.equals("Duct Crawler"))
+                theCost = "1 R";
+            else if(cardName.equals("Shrewd Hatchling"))
+                theCost = "UR";
+            else if(cardName.equals("Spin Engine"))
+                theCost = "R";
+
+            StringBuilder keywordBuilder = new StringBuilder("HIDDEN CARDNAME can't block ");
+            keywordBuilder.append(card.getName()).append(" (").append(card.getUniqueNumber()).append(")");
+
+            AbilityFactory createAb = new AbilityFactory();
+            StringBuilder abilityBuilder = new StringBuilder("AB$Pump | Cost$ ");
+            abilityBuilder.append(theCost);
+            abilityBuilder.append(" | Tgt$ TgtC | IsCurse$ True | KW$ ");
+            abilityBuilder.append(keywordBuilder.toString());
+            abilityBuilder.append(" | SpellDescription$ Target creature can't block CARDNAME this turn.");
+            SpellAbility myAb = createAb.getAbility(abilityBuilder.toString(),card);
+
+            card.addSpellAbility(myAb);
+
+
+        }//*************** END ************ END **************************
         
         if(hasKeyword(card, "Level up") != -1 && hasKeyword(card, "maxLevel") != -1)
         {
