@@ -197,6 +197,7 @@ public class AbilityFactory_Effect {
 		eff.setOwner(controller);
 		eff.setImageName(card.getImageName());
 		eff.setColor(card.getColor());
+        eff.setImmutable(true);
 		
 		// Effects should be Orange or something probably
 		
@@ -268,7 +269,8 @@ public class AbilityFactory_Effect {
 		}
 		
 		// TODO: Add targeting to the effect so it knows who it's dealing with
-		
+		AllZone.getTriggerHandler().suppressMode("ChangesZone");
 		AllZone.getGameAction().moveToPlay(eff);
+        AllZone.getTriggerHandler().clearSuppression("ChangesZone");
 	}
 }
