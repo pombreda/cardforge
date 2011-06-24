@@ -14,7 +14,7 @@ public abstract class Input implements java.io.Serializable {
 
     //showMessage() is always the first method called
     public void showMessage() {
-        AllZone.Display.showMessage("Blank Input");
+        AllZone.getDisplay().showMessage("Blank Input");
     }
     
     public void selectCard(Card c, PlayerZone zone) {}
@@ -27,22 +27,22 @@ public abstract class Input implements java.io.Serializable {
     
     //helper methods, since they are used alot
     //to be used by anything in CardFactory like SetTargetInput
-    //NOT TO BE USED by Input_Main or any of the "regular" Inputs objects that are not set using AllZone.InputControl.setInput(Input)
+    //NOT TO BE USED by Input_Main or any of the "regular" Inputs objects that are not set using AllZone.getInputControl().setInput(Input)
     final public void stop() {
         //clears a "temp" Input like Input_PayManaCost if there is one
-        AllZone.InputControl.resetInput();
+        AllZone.getInputControl().resetInput();
         
-        if(AllZone.Phase.isNeedToNextPhase()) {
+        if(AllZone.getPhase().isNeedToNextPhase()) {
             // mulligan needs this to move onto next phase
-            AllZone.Phase.setNeedToNextPhase(false);
-            AllZone.Phase.nextPhase();
+            AllZone.getPhase().setNeedToNextPhase(false);
+            AllZone.getPhase().nextPhase();
         }
     }
     
     //exits the "current" Input and sets the next Input
     final public void stopSetNext(Input in) {
         stop();
-        AllZone.InputControl.setInput(in);
+        AllZone.getInputControl().setInput(in);
     }
     
     @Override

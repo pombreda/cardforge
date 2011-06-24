@@ -137,7 +137,7 @@ public class AbilityFactory_EndGameCondition {
 	}
 	
 	public static boolean winsGameCanPlayAI(final AbilityFactory af, final SpellAbility sa){
-		if (AllZone.ComputerPlayer.cantWin())
+		if (AllZone.getComputerPlayer().cantWin())
 			return false;
 
 		// TODO: Check conditions are met on card (e.g. Coalition Victory)
@@ -309,7 +309,7 @@ public class AbilityFactory_EndGameCondition {
 	}
 	
 	public static boolean losesGameCanPlayAI(final AbilityFactory af, final SpellAbility sa){
-		if (AllZone.HumanPlayer.cantLose())
+		if (AllZone.getHumanPlayer().cantLose())
 			return false;
 		
 		// Only one SA Lose the Game card right now, which is Door to Nothingness
@@ -317,7 +317,7 @@ public class AbilityFactory_EndGameCondition {
 		 Target tgt = sa.getTarget();
 		 if (tgt != null){
 			 tgt.resetTargets();
-			 tgt.addTarget(AllZone.HumanPlayer);
+			 tgt.addTarget(AllZone.getHumanPlayer());
 		 }
 		
 		// In general, don't return true. 
@@ -332,13 +332,13 @@ public class AbilityFactory_EndGameCondition {
 		// Phage the Untouchable 
 		// (Final Fortune would need to attach it's delayed trigger to a specific turn, which can't be done yet)
 		
-		if (!mandatory && AllZone.HumanPlayer.cantLose())
+		if (!mandatory && AllZone.getHumanPlayer().cantLose())
 			return false;
 		
 		Target tgt = sa.getTarget();
 		if (tgt != null) {
 			tgt.resetTargets();
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		
 		// WinGame abilities usually don't have subAbilities but for consistency...

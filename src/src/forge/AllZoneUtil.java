@@ -72,8 +72,8 @@ public class AllZoneUtil {
 	 */
 	public static CardList getLandsInPlay() {
 		CardList lands = new CardList();
-		lands.addAll(getPlayerLandsInPlay(AllZone.HumanPlayer));
-		lands.addAll(getPlayerLandsInPlay(AllZone.ComputerPlayer));
+		lands.addAll(getPlayerLandsInPlay(AllZone.getHumanPlayer()));
+		lands.addAll(getPlayerLandsInPlay(AllZone.getComputerPlayer()));
 		return lands;
 	}
 	
@@ -103,8 +103,8 @@ public class AllZoneUtil {
 	 */
 	public static CardList getCardsInPlay(final String cardName) {
 		CardList cards = new CardList();
-		cards.addAll(getPlayerCardsInPlay(AllZone.HumanPlayer));
-		cards.addAll(getPlayerCardsInPlay(AllZone.ComputerPlayer));
+		cards.addAll(getPlayerCardsInPlay(AllZone.getHumanPlayer()));
+		cards.addAll(getPlayerCardsInPlay(AllZone.getComputerPlayer()));
 		if( cardName != null && !"".equals(cardName) ) {
 			cards = cards.getName(cardName);
 		}
@@ -155,8 +155,8 @@ public class AllZoneUtil {
 	 */
 	public static CardList getCardsInGraveyard() {
 		CardList cards = new CardList();
-		cards.addAll(getPlayerGraveyard(AllZone.HumanPlayer));
-		cards.addAll(getPlayerGraveyard(AllZone.ComputerPlayer));
+		cards.addAll(getPlayerGraveyard(AllZone.getHumanPlayer()));
+		cards.addAll(getPlayerGraveyard(AllZone.getComputerPlayer()));
 		return cards;
 	}
 	
@@ -198,8 +198,8 @@ public class AllZoneUtil {
 	 */
 	public static CardList getCardsInGraveyard(final String cardName) {
 		CardList cards = new CardList();
-		cards.addAll(getPlayerGraveyard(AllZone.HumanPlayer));
-		cards.addAll(getPlayerGraveyard(AllZone.ComputerPlayer));
+		cards.addAll(getPlayerGraveyard(AllZone.getHumanPlayer()));
+		cards.addAll(getPlayerGraveyard(AllZone.getComputerPlayer()));
 		cards = cards.getName(cardName);
 		return cards;
 	}
@@ -284,8 +284,8 @@ public class AllZoneUtil {
 	 */
 	public static CardList getCardsInExile() {
 		CardList cards = new CardList();
-		cards.addAll(getPlayerCardsInExile(AllZone.ComputerPlayer));
-		cards.addAll(getPlayerCardsInExile(AllZone.HumanPlayer));
+		cards.addAll(getPlayerCardsInExile(AllZone.getComputerPlayer()));
+		cards.addAll(getPlayerCardsInExile(AllZone.getHumanPlayer()));
 		return cards;
 	}
 	
@@ -461,8 +461,8 @@ public class AllZoneUtil {
 	 * @return a CardList of all cards in play of a given color
 	 */
 	public static CardList getColorInPlay(final String color) {
-		CardList cards = getPlayerColorInPlay(AllZone.ComputerPlayer, color);
-		cards.addAll(getPlayerColorInPlay(AllZone.HumanPlayer, color));
+		CardList cards = getPlayerColorInPlay(AllZone.getComputerPlayer(), color);
+		cards.addAll(getPlayerColorInPlay(AllZone.getHumanPlayer(), color));
 		return cards;
 	}
 	
@@ -511,33 +511,33 @@ public class AllZoneUtil {
 
 		if (zone.contains(Constant.Zone.Graveyard)){
 			if (player == null || player.isHuman())
-				all.addAll(AllZone.Human_Graveyard.getCards());
+				all.addAll(AllZone.getHumanGraveyard().getCards());
 			if (player == null || player.isComputer())
-				all.addAll(AllZone.Computer_Graveyard.getCards());
+				all.addAll(AllZone.getComputerGraveyard().getCards());
 		}
 		if (zone.contains(Constant.Zone.Hand)){
 			if (player == null || player.isHuman())
-				all.addAll(AllZone.Human_Hand.getCards());
+				all.addAll(AllZone.getHumanHand().getCards());
 			if (player == null || player.isComputer())
-				all.addAll(AllZone.Computer_Hand.getCards());
+				all.addAll(AllZone.getComputerHand().getCards());
 		}
 		if (zone.contains(Constant.Zone.Battlefield)){
 			if (player == null || player.isHuman())
-				all.addAll(AllZone.Human_Battlefield.getCards());
+				all.addAll(AllZone.getHumanBattlefield().getCards());
 			if (player == null || player.isComputer())
-				all.addAll(AllZone.Computer_Battlefield.getCards());
+				all.addAll(AllZone.getComputerBattlefield().getCards());
 		}
 		if (zone.contains(Constant.Zone.Exile)){
 			if (player == null || player.isHuman())
-				all.addAll(AllZone.Human_Exile.getCards());
+				all.addAll(AllZone.getHumanExile().getCards());
 			if (player == null || player.isComputer())
-				all.addAll(AllZone.Computer_Exile.getCards());
+				all.addAll(AllZone.getComputerExile().getCards());
 		}
 		if (zone.contains(Constant.Zone.Library)){
 			if (player == null || player.isHuman())
-				all.addAll(AllZone.Human_Library.getCards());
+				all.addAll(AllZone.getHumanLibrary().getCards());
 			if (player == null || player.isComputer())
-				all.addAll(AllZone.Computer_Library.getCards());
+				all.addAll(AllZone.getComputerLibrary().getCards());
 		}
 		
         return all;
@@ -793,21 +793,21 @@ public class AllZoneUtil {
 	 */
 	public static CardList getCardsInGame(){
         CardList all = new CardList();
-        all.addAll(AllZone.Human_Graveyard.getCards());
-        all.addAll(AllZone.Human_Hand.getCards());
-        all.addAll(AllZone.Human_Library.getCards());
-        all.addAll(AllZone.Human_Battlefield.getCards());
-        all.addAll(AllZone.Human_Exile.getCards());
+        all.addAll(AllZone.getHumanGraveyard().getCards());
+        all.addAll(AllZone.getHumanHand().getCards());
+        all.addAll(AllZone.getHumanLibrary().getCards());
+        all.addAll(AllZone.getHumanBattlefield().getCards());
+        all.addAll(AllZone.getHumanExile().getCards());
         //should this include Human_Command ?
-        //all.addAll(AllZone.Human_Sideboard.getCards());
+        //all.addAll(AllZone.getHumanSideboard().getCards());
         
-        all.addAll(AllZone.Computer_Graveyard.getCards());
-        all.addAll(AllZone.Computer_Hand.getCards());
-        all.addAll(AllZone.Computer_Library.getCards());
-        all.addAll(AllZone.Computer_Battlefield.getCards());
-        all.addAll(AllZone.Computer_Exile.getCards());
+        all.addAll(AllZone.getComputerGraveyard().getCards());
+        all.addAll(AllZone.getComputerHand().getCards());
+        all.addAll(AllZone.getComputerLibrary().getCards());
+        all.addAll(AllZone.getComputerBattlefield().getCards());
+        all.addAll(AllZone.getComputerExile().getCards());
         //should this include Computer_Command ?
-        //all.addAll(AllZone.Computer_Sideboard.getCards());
+        //all.addAll(AllZone.getComputerSideboard().getCards());
         
         return all;
     }
@@ -825,8 +825,8 @@ public class AllZoneUtil {
 	 */
 	public static ArrayList<Player> getPlayersInGame() {
 		ArrayList<Player> list = new ArrayList<Player>();
-		list.add(AllZone.HumanPlayer);
-		list.add(AllZone.ComputerPlayer);
+		list.add(AllZone.getHumanPlayer());
+		list.add(AllZone.getComputerPlayer());
 		return list;
 	}
 	

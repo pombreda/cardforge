@@ -89,7 +89,7 @@ class CardFactory_Equipment {
                 public void resolve() {
                     getSourceCard().addTempAttackBoost(2);
                     getSourceCard().addTempDefenseBoost(2);
-                    AllZone.EndOfTurn.addUntil(EOT(getSourceCard()));
+                    AllZone.getEndOfTurn().addUntil(EOT(getSourceCard()));
                 }
                 
                 @Override
@@ -194,7 +194,7 @@ class CardFactory_Equipment {
 
         		//not changed
         		CardList getCreature() {
-        			CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+        			CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
         			list = list.filter(new CardListFilter() {
         				public boolean addCard(Card c) {
         					return CardFactoryUtil.AI_doesCreatureAttack(c)
@@ -292,7 +292,7 @@ class CardFactory_Equipment {
 				public void showMessage() {
 					CardList list = AllZoneUtil.getCreaturesInPlay(card.getController());
 					list = list.filter(AllZoneUtil.getCanTargetFilter(card));
-            		AllZone.Display.showMessage(card+" - Select target creature you control to attach");
+            		AllZone.getDisplay().showMessage(card+" - Select target creature you control to attach");
             		ButtonUtil.disableAll();
             		if(list.size() == 0) stop();
             	}
@@ -311,7 +311,7 @@ class CardFactory_Equipment {
         	final SpellAbility comesIntoPlayAbility = new Ability(card, "0") {
                 @Override
                 public void resolve() {
-                	AllZone.InputControl.setInput(in);
+                	AllZone.getInputControl().setInput(in);
                 }//resolve()
             }; //comesIntoPlayAbility
             
@@ -324,7 +324,7 @@ class CardFactory_Equipment {
 					sb.append("When Piston Sledge enters the battlefield, attach it to target creature you control.");
 					comesIntoPlayAbility.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(comesIntoPlayAbility);
+                    AllZone.getStack().addSimultaneousStackEntry(comesIntoPlayAbility);
 
                 }
             };

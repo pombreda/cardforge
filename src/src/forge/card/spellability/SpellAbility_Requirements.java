@@ -36,12 +36,12 @@ public class SpellAbility_Requirements {
 				Card c = ability.getSourceCard();
 
 				fromZone = AllZone.getZone(c);
-				AllZone.GameAction.moveToStack(c);
+				AllZone.getGameAction().moveToStack(c);
 			}
 		}
 		
 		// freeze Stack. No abilities should go onto the stack while I'm filling requirements.
-		AllZone.Stack.freezeStack();
+		AllZone.getStack().freezeStack();
 		
 		// Skip to paying if parent ability doesn't target and has no subAbilities. (or trigger case where its already targeted)
 		if (!skipTargeting && (select.doesTarget() || ability.getSubAbility() != null)){
@@ -59,11 +59,11 @@ public class SpellAbility_Requirements {
 			Card c = ability.getSourceCard();
 			if (bCasting && !c.isCopiedSpell()){	// and not a copy
 				// add back to where it came from
-				AllZone.GameAction.moveTo(fromZone, c);
+				AllZone.getGameAction().moveTo(fromZone, c);
 			}
 			
 			select.resetTargets();
-			AllZone.Stack.clearFrozen();
+			AllZone.getStack().clearFrozen();
 			return;
 		}
 		else
@@ -91,20 +91,20 @@ public class SpellAbility_Requirements {
 				addAbilityToStack();
 			
 			select.resetTargets();
-            AllZone.GameAction.checkStateEffects();
+            AllZone.getGameAction().checkStateEffects();
 		}
 		else if (payment.isCanceled()){
 			Card c = ability.getSourceCard();
 			if (bCasting && !c.isCopiedSpell()){	// and not a copy
 				// add back to Previous Zone
-				AllZone.GameAction.moveTo(fromZone, c);
+				AllZone.getGameAction().moveTo(fromZone, c);
 			}
 			
 			if (select != null)
 				select.resetTargets();
 			
 			payment.cancelPayment();
-			AllZone.Stack.clearFrozen();
+			AllZone.getStack().clearFrozen();
 		}
 	}
 	
@@ -125,7 +125,7 @@ public class SpellAbility_Requirements {
 			ability.setStackDescription(sb.toString());
 		}
 		
-		AllZone.ManaPool.clearPay(ability, false);
-		AllZone.Stack.addAndUnfreeze(ability);
+		AllZone.getManaPool().clearPay(ability, false);
+		AllZone.getStack().addAndUnfreeze(ability);
 	}
 }

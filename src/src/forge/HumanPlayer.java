@@ -18,7 +18,7 @@ public class HumanPlayer extends Player{
 	}
 	
 	public Player getOpponent() {
-		return AllZone.ComputerPlayer;
+		return AllZone.getComputerPlayer();
 	}
 	
 	////////////////
@@ -57,15 +57,15 @@ public class HumanPlayer extends Player{
 		if(o.equals("Yes")) {
 			Card c = (Card) GuiUtils.getChoice("Select card to dredge", getDredge().toArray());
 			//rule 702.49a
-			if(getDredgeNumber(c) <= AllZone.Human_Library.size()) {
+			if(getDredgeNumber(c) <= AllZone.getHumanLibrary().size()) {
 
 				//might have to make this more sophisticated
 				//dredge library, put card in hand
-				AllZone.GameAction.moveToHand(c);
+				AllZone.getGameAction().moveToHand(c);
 
 				for(int i = 0; i < getDredgeNumber(c); i++) {
-					Card c2 = AllZone.Human_Library.get(0);
-					AllZone.GameAction.moveToGraveyard(c2);
+					Card c2 = AllZone.getHumanLibrary().get(0);
+					AllZone.getGameAction().moveToGraveyard(c2);
 				}
 				dredged = true;
 			}
@@ -77,14 +77,14 @@ public class HumanPlayer extends Player{
 	}
 	
 	public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
-		AllZone.InputControl.setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
+		AllZone.getInputControl().setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
 		
 		// why is CardList returned?
 		return new CardList();	
 	}
 	
 	public void discardUnless(int num, String uType, SpellAbility sa) {
-		AllZone.InputControl.setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
+		AllZone.getInputControl().setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
 	}
 	
 	public void handToLibrary(final int numToLibrary, String libPos) {
@@ -97,7 +97,7 @@ public class HumanPlayer extends Player{
                     + " on the top or bottom of your library?", new Object[] {"top", "bottom"});
             libPos = o.toString();
         }
-        AllZone.InputControl.setInput(CardFactoryUtil.input_putFromHandToLibrary(libPos, numToLibrary));
+        AllZone.getInputControl().setInput(CardFactoryUtil.input_putFromHandToLibrary(libPos, numToLibrary));
 	}
 	
 	protected void doScry(final CardList topN, final int N) {
@@ -107,7 +107,7 @@ public class HumanPlayer extends Player{
             if(o != null) {
                 Card c = (Card) o;
                 topN.remove(c);
-                AllZone.GameAction.moveToBottomOfLibrary(c);
+                AllZone.getGameAction().moveToBottomOfLibrary(c);
             } 
             else // no card chosen for the bottom
             	break;
@@ -119,7 +119,7 @@ public class HumanPlayer extends Player{
             if(o != null) {
                 Card c = (Card) o;
                 topN.remove(c);
-                AllZone.GameAction.moveToLibrary(c);
+                AllZone.getGameAction().moveToLibrary(c);
             }
             // no else - a card must have been chosen
         }
@@ -127,20 +127,20 @@ public class HumanPlayer extends Player{
 	
 	public void sacrificePermanent(String prompt, CardList choices) {
 		Input in = CardFactoryUtil.input_sacrificePermanent(choices, prompt);
-        AllZone.InputControl.setInput(in);
+        AllZone.getInputControl().setInput(in);
 	}
 	
 	protected void clashMoveToTopOrBottom(Card c) {
 		String choice = "";
     	String choices[] = {"top","bottom"};
-    	AllZone.Display.setCard(c);
+    	AllZone.getDisplay().setCard(c);
         choice = (String) GuiUtils.getChoice(c.getName()+" - Top or bottom of Library", choices);
 
     	if(choice.equals("bottom"))  {
-    		AllZone.GameAction.moveToBottomOfLibrary(c);
+    		AllZone.getGameAction().moveToBottomOfLibrary(c);
     	}
     	else{
-    		AllZone.GameAction.moveToLibrary(c);
+    		AllZone.getGameAction().moveToLibrary(c);
     	}
 	}
 	

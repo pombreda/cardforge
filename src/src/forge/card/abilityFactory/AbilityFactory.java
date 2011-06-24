@@ -858,16 +858,16 @@ public class AbilityFactory {
 	public static boolean playReusable(SpellAbility sa){
 		// TODO probably also consider if winter orb or similar are out
 
-		return (sa.getPayCosts().isReusuableResource() && AllZone.Phase.is(Constant.Phase.End_Of_Turn) 
-				&& AllZone.Phase.isNextTurn(AllZone.ComputerPlayer));
+		return (sa.getPayCosts().isReusuableResource() && AllZone.getPhase().is(Constant.Phase.End_Of_Turn) 
+				&& AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer()));
 	}
 	
 	//returns true if it's better to wait until blockers are declared
 	public static boolean waitForBlocking(SpellAbility sa){
 
 		return (sa.getSourceCard().isCreature() && sa.getPayCosts().getTap() 
-				&& (AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Blockers_InstantAbility) 
-				|| AllZone.Phase.isNextTurn(AllZone.HumanPlayer)));
+				&& (AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Blockers_InstantAbility) 
+				|| AllZone.getPhase().isNextTurn(AllZone.getHumanPlayer())));
 	}
 	
 	public static boolean isSorcerySpeed(SpellAbility sa){
@@ -1194,12 +1194,12 @@ public class AbilityFactory {
 				players.add(p);
 		}
 		else if (defined.equals("AttackingPlayer")){
-			Player p = AllZone.Combat.getAttackingPlayer();
+			Player p = AllZone.getCombat().getAttackingPlayer();
 			if (!players.contains(p))
 				players.add(p);
 		}
 		else if (defined.equals("DefendingPlayer")){
-			Player p = AllZone.Combat.getDefendingPlayer();
+			Player p = AllZone.getCombat().getDefendingPlayer();
 			if (!players.contains(p))
 				players.add(p);
 		}
@@ -1301,11 +1301,11 @@ public class AbilityFactory {
 	
 	public static ArrayList<Object> predictThreatenedObjects(){
 		ArrayList<Object> objects = new ArrayList<Object>();
-		if (AllZone.Stack.size() == 0)
+		if (AllZone.getStack().size() == 0)
 			return objects;
 		
 		// check stack for something that will kill this
-		SpellAbility topStack = AllZone.Stack.peekAbility();
+		SpellAbility topStack = AllZone.getStack().peekAbility();
 		objects.addAll(predictThreatenedObjects(topStack));
 		
 		return objects;
@@ -1440,7 +1440,7 @@ public class AbilityFactory {
             
             public void execute() {
             	resolveSubAbilities(sa);
-				AllZone.Stack.finishResolving(sa, false);
+				AllZone.getStack().finishResolving(sa, false);
             }
         };
         
@@ -1449,9 +1449,9 @@ public class AbilityFactory {
             
             public void execute() {
             	sa.resolve();
-            	if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.HumanPlayer);
+            	if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.getHumanPlayer());
             	resolveSubAbilities(sa);
-				AllZone.Stack.finishResolving(sa, false);
+				AllZone.getStack().finishResolving(sa, false);
             }
         };
         
@@ -1462,13 +1462,13 @@ public class AbilityFactory {
             if(ComputerUtil.canPayCost(ability)) {
             	ComputerUtil.playNoStack(ability); //Unless cost was payed - no resolve
             	resolveSubAbilities(sa);
-				AllZone.Stack.finishResolving(sa, false);
+				AllZone.getStack().finishResolving(sa, false);
             }
             else {
                 sa.resolve();
-                if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.ComputerPlayer);
+                if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.getComputerPlayer());
                 resolveSubAbilities(sa);
-				AllZone.Stack.finishResolving(sa, false);
+				AllZone.getStack().finishResolving(sa, false);
             }
         }
 	}
@@ -1486,7 +1486,7 @@ public class AbilityFactory {
 				
 				//try to resolve subabilities (see null check above)
 				resolveSubAbilities(sa);
-				AllZone.Stack.finishResolving(sa, false);
+				AllZone.getStack().finishResolving(sa, false);
 			}
 			else passUnlessCost(sa);
 		} else

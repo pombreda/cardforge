@@ -211,7 +211,7 @@ public class AbilityFactory_Token extends AbilityFactory {
 		for(String type : tokenTypes){
 			if (type.equals("Legendary")){
 				// Don't kill AIs Legendary tokens
-				if (AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, tokenName).size() > 0)
+				if (AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), tokenName).size() > 0)
 					return false;
 			}
 		}
@@ -225,14 +225,14 @@ public class AbilityFactory_Token extends AbilityFactory {
 		}
 			
 		//Don't generate tokens without haste before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && AllZone.Phase.isPlayerTurn(AllZone.ComputerPlayer) && !haste)
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer()) && !haste)
         	return false;
-		if((AllZone.Phase.isAfter(Constant.Phase.Combat_Begin) || AllZone.Phase.isPlayerTurn(AllZone.HumanPlayer)) && oneShot)
+		if((AllZone.getPhase().isAfter(Constant.Phase.Combat_Begin) || AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer())) && oneShot)
         	return false;
 
 		// TODO: if i don't have enough blockers and my token can block one of the unblocked creatures
 		// create it after attackers are declared
-		//if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Attackers_InstantAbility, AllZone.HumanPlayer))
+		//if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Attackers_InstantAbility, AllZone.getHumanPlayer()))
 		//	return true;
 
 		// prevent run-away activations - first time will always return true
@@ -244,16 +244,16 @@ public class AbilityFactory_Token extends AbilityFactory {
 		if (tgt != null){
 			tgt.resetTargets();
 			if (tgt.canOnlyTgtOpponent())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);		
+				tgt.addTarget(AllZone.getComputerPlayer());		
 		}
 
 		if (cost != null){
 			if (cost.getSacCost() && !cost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = cost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
@@ -269,7 +269,7 @@ public class AbilityFactory_Token extends AbilityFactory {
 				}
 			}
 			if (cost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - cost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - cost.getLifeAmount() < 4)
 					return false;
 			}
 		}
@@ -415,7 +415,7 @@ public class AbilityFactory_Token extends AbilityFactory {
 							private static final long serialVersionUID = -9007707442828928732L;
 
 							public void execute() {
-								AllZone.TriggerHandler.removeAllFromCard(c);
+								AllZone.getTriggerHandler().removeAllFromCard(c);
 							}
 							
 						};
@@ -424,7 +424,7 @@ public class AbilityFactory_Token extends AbilityFactory {
 						String ability = AF.getHostCard().getSVar(parsedTrigger.getMapParams().get("Execute"));
 						parsedTrigger.setOverridingAbility(new AbilityFactory().getAbility(ability, c));
 						c.addTrigger(parsedTrigger);
-						AllZone.TriggerHandler.registerTrigger(parsedTrigger);
+						AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
 					}
 				}
 			}
@@ -450,7 +450,7 @@ public class AbilityFactory_Token extends AbilityFactory {
 				}
 				if(tokenAttacking)
 				{
-					AllZone.Combat.addAttacker(c);
+					AllZone.getCombat().addAttacker(c);
 				}
 			}
 		}

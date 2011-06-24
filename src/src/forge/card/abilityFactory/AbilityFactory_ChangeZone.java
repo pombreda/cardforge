@@ -213,13 +213,13 @@ public class AbilityFactory_ChangeZone {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -239,9 +239,9 @@ public class AbilityFactory_ChangeZone {
 		Target tgt = af.getAbTgt();
 		if(tgt != null && tgt.canTgtPlayer()) {
 			if (af.isCurse())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);
+				tgt.addTarget(AllZone.getComputerPlayer());
 			pDefined = tgt.getTargetPlayers();
 		}
 		else{
@@ -284,9 +284,9 @@ public class AbilityFactory_ChangeZone {
 		Target tgt = af.getAbTgt();
 		if(tgt != null && tgt.canTgtPlayer()) {
 			if (af.isCurse())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);
+				tgt.addTarget(AllZone.getComputerPlayer());
 		}
 		
 		return true;
@@ -315,16 +315,16 @@ public class AbilityFactory_ChangeZone {
 		Target tgt = af.getAbTgt();
 		if(tgt != null && tgt.canTgtPlayer()) {
 			if (af.isCurse()){
-				if (AllZone.HumanPlayer.canTarget(source))
-					tgt.addTarget(AllZone.HumanPlayer);
-				else if (mandatory && AllZone.ComputerPlayer.canTarget(source))
-					tgt.addTarget(AllZone.ComputerPlayer);
+				if (AllZone.getHumanPlayer().canTarget(source))
+					tgt.addTarget(AllZone.getHumanPlayer());
+				else if (mandatory && AllZone.getComputerPlayer().canTarget(source))
+					tgt.addTarget(AllZone.getComputerPlayer());
 			}
 			else{
-				if (AllZone.ComputerPlayer.canTarget(source))
-					tgt.addTarget(AllZone.ComputerPlayer);
-				else if (mandatory && AllZone.HumanPlayer.canTarget(source))
-					tgt.addTarget(AllZone.HumanPlayer);
+				if (AllZone.getComputerPlayer().canTarget(source))
+					tgt.addTarget(AllZone.getComputerPlayer());
+				else if (mandatory && AllZone.getHumanPlayer().canTarget(source))
+					tgt.addTarget(AllZone.getHumanPlayer());
 			}
 
 			pDefined = tgt.getTargetPlayers();
@@ -540,7 +540,7 @@ public class AbilityFactory_ChangeZone {
                     if (origin.contains("Library") && i < 1) {
                         player.shuffle();
                     }
-                    movedCard = AllZone.GameAction.moveToLibrary(c, libraryPos);
+                    movedCard = AllZone.getGameAction().moveToLibrary(c, libraryPos);
                 }
                 else if (destination.equals("Battlefield")){
 	        		if (params.containsKey("Tapped"))
@@ -548,10 +548,10 @@ public class AbilityFactory_ChangeZone {
 	        		if (params.containsKey("GainControl"))
 	        			c.setController(sa.getActivatingPlayer());
 	        	
-	        		movedCard = AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
+	        		movedCard = AllZone.getGameAction().moveTo(AllZone.getZone(destination, c.getController()),c);
 	    		}
 		    	else
-		    		movedCard = AllZone.GameAction.moveTo(destZone, c);
+		    		movedCard = AllZone.getGameAction().moveTo(destZone, c);
                 
                 if (remember != null)
                 	card.addRemembered(movedCard);
@@ -647,7 +647,7 @@ public class AbilityFactory_ChangeZone {
         	Card newCard = null;
         	if ("Library".equals(destination)){
         		int libraryPos = params.containsKey("LibraryPosition") ? Integer.parseInt(params.get("LibraryPosition")) : 0;
-        		AllZone.GameAction.moveToLibrary(c, libraryPos);
+        		AllZone.getGameAction().moveToLibrary(c, libraryPos);
         	}
         	else if ("Battlefield".equals(destination)){
         		if (params.containsKey("Tapped"))
@@ -655,10 +655,10 @@ public class AbilityFactory_ChangeZone {
         		if (params.containsKey("GainControl"))
         			c.setController(sa.getActivatingPlayer());
 
-        		newCard = AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
+        		newCard = AllZone.getGameAction().moveTo(AllZone.getZone(destination, c.getController()),c);
         	}
         	else
-        		newCard = AllZone.GameAction.moveTo(destZone, c);
+        		newCard = AllZone.getGameAction().moveTo(destZone, c);
         
             if (remember != null)
             	card.addRemembered(newCard);
@@ -717,8 +717,8 @@ public class AbilityFactory_ChangeZone {
 	}
 	
 	private static Card basicManaFixing(CardList list, String type){	// type = basic land types
-        CardList combined = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
-        combined.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
+        CardList combined = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+        combined.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
         
         String names[] = type.split(",");
         ArrayList<String> basics = new ArrayList<String>();
@@ -788,13 +788,13 @@ public class AbilityFactory_ChangeZone {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -870,7 +870,7 @@ public class AbilityFactory_ChangeZone {
 			tgt.resetTargets();
 
 		CardList list = AllZoneUtil.getCardsInZone(origin);
-		list = list.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, source);
+		list = list.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), source);
 		
 		if (list.size() < tgt.getMinTargets(sa.getSourceCard(), sa))
 			return false;
@@ -891,7 +891,7 @@ public class AbilityFactory_ChangeZone {
 		
 		// for now only bounce opponents stuff, but consider my stuff that might die
 		if (destination.equals("Exile") || origin.equals("Battlefield"))
-			list = list.getController(AllZone.HumanPlayer);
+			list = list.getController(AllZone.getHumanPlayer());
 
 		if (list.isEmpty())
 			return false;
@@ -953,7 +953,7 @@ public class AbilityFactory_ChangeZone {
 		Target tgt = af.getAbTgt();
 
 		CardList list = AllZoneUtil.getCardsInZone(origin);
-		list = list.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, source);
+		list = list.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), source);
 		
 		
 		// Narrow down the list:
@@ -1173,7 +1173,7 @@ public class AbilityFactory_ChangeZone {
 	    			// library position is zero indexed
 	    			int libraryPosition = params.containsKey("LibraryPosition") ? Integer.parseInt(params.get("LibraryPosition")) : 0;        
 
-	    			AllZone.GameAction.moveToLibrary(tgtC, libraryPosition);
+	    			AllZone.getGameAction().moveToLibrary(tgtC, libraryPosition);
 
 	    			if (params.containsKey("Shuffle"))	// for things like Gaea's Blessing
 	    				tgtC.getOwner().shuffle();
@@ -1185,16 +1185,16 @@ public class AbilityFactory_ChangeZone {
 		        		if (params.containsKey("GainControl"))
 		        			tgtC.setController(sa.getActivatingPlayer());
 		        	
-		        		AllZone.GameAction.moveTo(AllZone.getZone(destination, tgtC.getController()),tgtC);
+		        		AllZone.getGameAction().moveTo(AllZone.getZone(destination, tgtC.getController()),tgtC);
 		        		
 		        		if(params.containsKey("Ninjutsu") || params.containsKey("Attacking")) {
-		        			AllZone.Combat.addAttacker(tgtC);
-		        			AllZone.Combat.addUnblockedAttacker(tgtC);
+		        			AllZone.getCombat().addAttacker(tgtC);
+		        			AllZone.getCombat().addUnblockedAttacker(tgtC);
 		        		}
 		    		}
 		    		else
 		    		{
-		    			AllZone.GameAction.moveTo(AllZone.getZone(destination, pl), tgtC);
+		    			AllZone.getGameAction().moveTo(AllZone.getZone(destination, pl), tgtC);
 		    		}
 	    		}
 			}
@@ -1318,7 +1318,7 @@ public class AbilityFactory_ChangeZone {
 				// Sac is ok in general, but should add some decision making based off what we Sacrifice and what we might get
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -1342,9 +1342,9 @@ public class AbilityFactory_ChangeZone {
 		// ex. "Return all Auras attached to target"
 		// ex. "Return all blocking/blocked by target creature" 
 		
-		CardList humanType = AllZoneUtil.getCardsInZone(origin, AllZone.HumanPlayer);
+		CardList humanType = AllZoneUtil.getCardsInZone(origin, AllZone.getHumanPlayer());
 		humanType = filterListByType(humanType, params, sa);
-		CardList computerType = AllZoneUtil.getCardsInZone(origin, AllZone.ComputerPlayer);
+		CardList computerType = AllZoneUtil.getCardsInZone(origin, AllZone.getComputerPlayer());
 		computerType = filterListByType(computerType, params, sa);
 
 		// TODO: improve restrictions on when the AI would want to use this
@@ -1367,16 +1367,16 @@ public class AbilityFactory_ChangeZone {
 				 return false;
 			
 			// Don't cast during main1?
-			if (AllZone.Phase.is(Constant.Phase.Main1, AllZone.ComputerPlayer))
+			if (AllZone.getPhase().is(Constant.Phase.Main1, AllZone.getComputerPlayer()))
 				return false;
 		}
 		else if (origin.equals("Graveyard")){
 			Target tgt = af.getAbTgt();
 			if (tgt != null){
-				if(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer).isEmpty())
+				if(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()).isEmpty())
 					return false;
 				tgt.resetTargets();
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			}
 		}
 		else if (origin.equals("Exile")){
@@ -1490,10 +1490,10 @@ public class AbilityFactory_ChangeZone {
                 c.tap();
 			if (params.containsKey("GainControl")){
 				c.setController(sa.getActivatingPlayer());
-				AllZone.GameAction.moveToPlay(c, sa.getActivatingPlayer());
+				AllZone.getGameAction().moveToPlay(c, sa.getActivatingPlayer());
 			}
 			else
-				AllZone.GameAction.moveTo(destination, c, libraryPos);
+				AllZone.getGameAction().moveTo(destination, c, libraryPos);
 			
 			if (remember != null)
 				sa.getSourceCard().addRemembered(c);
@@ -1501,10 +1501,10 @@ public class AbilityFactory_ChangeZone {
 		
 		// if Shuffle parameter exists, and any amount of cards were owned by that player, then shuffle that library
 		if (params.containsKey("Shuffle")){
-			if (cards.getOwner(AllZone.HumanPlayer).size() > 0)
-				AllZone.HumanPlayer.shuffle();
-			if (cards.getOwner(AllZone.ComputerPlayer).size() > 0)
-				AllZone.ComputerPlayer.shuffle();
+			if (cards.getOwner(AllZone.getHumanPlayer()).size() > 0)
+				AllZone.getHumanPlayer().shuffle();
+			if (cards.getOwner(AllZone.getComputerPlayer()).size() > 0)
+				AllZone.getComputerPlayer().shuffle();
 		}
 	}
 	

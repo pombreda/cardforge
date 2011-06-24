@@ -12,13 +12,13 @@ public class GuiInput extends MyObservable implements Observer {
     Input input;
     
     public GuiInput() {
-        AllZone.InputControl.addObserver(this);
-        AllZone.Stack.addObserver(this);
-        AllZone.Phase.addObserver(this);
+        AllZone.getInputControl().addObserver(this);
+        AllZone.getStack().addObserver(this);
+        AllZone.getPhase().addObserver(this);
     }
     
     public void update(Observable observable, Object obj) {
-        Input tmp = AllZone.InputControl.updateInput();
+        Input tmp = AllZone.getInputControl().updateInput();
         if(tmp != null) {
             setInput(tmp);
         }

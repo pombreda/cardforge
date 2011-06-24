@@ -13,8 +13,8 @@ public class QuestPetPlant extends QuestPetAbstract {
 
         petCard.setName("Plant Wall");
 
-        petCard.setController(AllZone.HumanPlayer);
-        petCard.setOwner(AllZone.HumanPlayer);
+        petCard.setController(AllZone.getHumanPlayer());
+        petCard.setOwner(AllZone.getHumanPlayer());
 
         petCard.addColor("G");
         petCard.setToken(true);
@@ -65,7 +65,7 @@ public class QuestPetPlant extends QuestPetAbstract {
 
 				@Override
                 public boolean canPlayAI() {
-                    return AllZone.Phase.getPhase().equals(Constant.Phase.Main2);
+                    return AllZone.getPhase().getPhase().equals(Constant.Phase.Main2);
                 }
 
                 @Override
@@ -141,12 +141,12 @@ public class QuestPetPlant extends QuestPetAbstract {
 
     @Override
     public void onPurchase() {
-        AllZone.QuestData.getPetManager().addPlantLevel();
+        AllZone.getQuestData().getPetManager().addPlantLevel();
     }
 
     @Override
     public boolean isAvailableForPurchase() {
-        QuestPetPlant plant = (QuestPetPlant) AllZone.QuestData.getPetManager().getPlant();
+        QuestPetPlant plant = (QuestPetPlant) AllZone.getQuestData().getPetManager().getPlant();
 
         return plant == null || plant.getLevel() < plant.getMaxLevel();
     }

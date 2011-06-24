@@ -171,7 +171,7 @@ public class AbilityFactory_ZoneAffecting {
 				return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -194,7 +194,7 @@ public class AbilityFactory_ZoneAffecting {
 		}
 		
 		//Don't use draw abilities before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -204,7 +204,7 @@ public class AbilityFactory_ZoneAffecting {
 		double chance = .4;	// 40 percent chance of drawing with instant speed stuff
 		if (AbilityFactory.isSorcerySpeed(sa))
 			chance = .667;	// 66.7% chance for sorcery speed
-		if((AllZone.Phase.is(Constant.Phase.End_Of_Turn) && AllZone.Phase.isNextTurn(AllZone.ComputerPlayer)))
+		if((AllZone.getPhase().is(Constant.Phase.End_Of_Turn) && AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer())))
 			chance = .9;	// 90% for end of opponents turn
 		Random r = MyRandom.random;
 		boolean randomReturn = r.nextFloat() <= Math.pow(chance, source.getAbilityUsed()+1);
@@ -223,10 +223,10 @@ public class AbilityFactory_ZoneAffecting {
         HashMap<String,String> params = af.getMapParams();
         Card source = sa.getSourceCard();
         
-        int computerHandSize = AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.ComputerPlayer).size();
-        int humanLibrarySize = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.HumanPlayer).size();
-        int computerLibrarySize = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.ComputerPlayer).size();
-        int computerMaxHandSize = AllZone.ComputerPlayer.getMaxHandSize();
+        int computerHandSize = AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.getComputerPlayer()).size();
+        int humanLibrarySize = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.getHumanPlayer()).size();
+        int computerLibrarySize = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.getComputerPlayer()).size();
+        int computerMaxHandSize = AllZone.getComputerPlayer().getMaxHandSize();
         
         int numCards = 1;
         if (params.containsKey("NumCards"))
@@ -252,16 +252,16 @@ public class AbilityFactory_ZoneAffecting {
             // ability is targeted
             tgt.resetTargets();
             
-            boolean canTgtHuman = AllZone.HumanPlayer.canTarget(source);
-            boolean canTgtComp = AllZone.ComputerPlayer.canTarget(source);
+            boolean canTgtHuman = AllZone.getHumanPlayer().canTarget(source);
+            boolean canTgtComp = AllZone.getComputerPlayer().canTarget(source);
             boolean tgtHuman = false;
             
             if (!canTgtHuman && !canTgtComp)
             	return false;
             
-            if (canTgtHuman && !AllZone.HumanPlayer.cantLose() && numCards >= humanLibrarySize) {
+            if (canTgtHuman && !AllZone.getHumanPlayer().cantLose() && numCards >= humanLibrarySize) {
                 // Deck the Human? DO IT!
-                tgt.addTarget(AllZone.HumanPlayer);
+                tgt.addTarget(AllZone.getHumanPlayer());
                 return true;
             }
             
@@ -278,7 +278,7 @@ public class AbilityFactory_ZoneAffecting {
             	}
             }
             
-            if (computerHandSize + numCards > computerMaxHandSize && AllZone.Phase.getPlayerTurn().isComputer()) {
+            if (computerHandSize + numCards > computerMaxHandSize && AllZone.getPhase().getPlayerTurn().isComputer()) {
             	if (xPaid){
     				numCards = computerMaxHandSize - computerHandSize;
     				source.setSVar("PayX", Integer.toString(numCards));
@@ -294,9 +294,9 @@ public class AbilityFactory_ZoneAffecting {
             	return false;
             
             if ((!tgtHuman || !canTgtHuman) && canTgtComp)
-            	tgt.addTarget(AllZone.ComputerPlayer);
+            	tgt.addTarget(AllZone.getComputerPlayer());
             else
-            	tgt.addTarget(AllZone.HumanPlayer);
+            	tgt.addTarget(AllZone.getHumanPlayer());
         }
         else {
         	// TODO: consider if human is the defined player
@@ -308,7 +308,7 @@ public class AbilityFactory_ZoneAffecting {
             		return false;
             }
             
-            if (computerHandSize + numCards > computerMaxHandSize && AllZone.Phase.getPlayerTurn().isComputer()) {
+            if (computerHandSize + numCards > computerMaxHandSize && AllZone.getPhase().getPlayerTurn().isComputer()) {
                 // Don't draw too many cards and then risk discarding cards at EOT
             	if (!(params.containsKey("NextUpkeep") || sa instanceof Ability_Sub) && !mandatory)
             		return false;
@@ -525,7 +525,7 @@ public class AbilityFactory_ZoneAffecting {
 				return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -542,7 +542,7 @@ public class AbilityFactory_ZoneAffecting {
 		Random r = MyRandom.random;
 		
 		//Don't use draw abilities before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -553,7 +553,7 @@ public class AbilityFactory_ZoneAffecting {
 		if (AbilityFactory.isSorcerySpeed(sa))
 			chance = .667;	// 66.7% chance for sorcery speed
 		
-		if((AllZone.Phase.is(Constant.Phase.End_Of_Turn) && AllZone.Phase.isNextTurn(AllZone.ComputerPlayer)))
+		if((AllZone.getPhase().is(Constant.Phase.End_Of_Turn) && AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer())))
 			chance = .9;	// 90% for end of opponents turn
 		
 		boolean randomReturn = r.nextFloat() <= Math.pow(chance, source.getAbilityUsed()+1);
@@ -565,7 +565,7 @@ public class AbilityFactory_ZoneAffecting {
 		if (params.get("NumCards").equals("X") && source.getSVar("X").equals("Count$xPaid")){
 			// Set PayX here to maximum value.
 			int cardsToDiscard = Math.min(ComputerUtil.determineLeftoverMana(sa), 
-					AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.HumanPlayer).size());
+					AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.getHumanPlayer()).size());
 			source.setSVar("PayX", Integer.toString(cardsToDiscard));
 		}
 		
@@ -579,9 +579,9 @@ public class AbilityFactory_ZoneAffecting {
 		if (tgt != null){
 			tgt.resetTargets();
 			Card source = sa.getSourceCard();
-			if (!AllZone.HumanPlayer.canTarget(source)){
-				if (mandatory && AllZone.ComputerPlayer.canTarget(source)){
-					tgt.addTarget(AllZone.ComputerPlayer);
+			if (!AllZone.getHumanPlayer().canTarget(source)){
+				if (mandatory && AllZone.getComputerPlayer().canTarget(source)){
+					tgt.addTarget(AllZone.getComputerPlayer());
 					return true;
 				}
 				return false;
@@ -589,27 +589,27 @@ public class AbilityFactory_ZoneAffecting {
 			
 			int numCards = AbilityFactory.calculateAmount(sa.getSourceCard(), params.get("NumCards"), sa);
 			
-			CardList pLibrary = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.HumanPlayer);
+			CardList pLibrary = AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.getHumanPlayer());
 			
 			if (pLibrary.size() == 0){	// deck already empty, no need to mill
 				if (!mandatory)
 					return false;
 				
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 				return true;
 			}
 			
 			if (numCards >= pLibrary.size()){
 				// Can Mill out Human's deck? Do it!
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 				return true;
 			}
 			
 			// Obscure case when you know what your top card is so you might? want to mill yourself here
 			// if (AI wants to mill self)
-			// tgt.addTarget(AllZone.ComputerPlayer);
+			// tgt.addTarget(AllZone.getComputerPlayer());
 			// else
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		return true;
 	}
@@ -641,7 +641,7 @@ public class AbilityFactory_ZoneAffecting {
 		if (params.get("NumCards").equals("X") && source.getSVar("X").equals("Count$xPaid")){
 			// Set PayX here to maximum value.
 			int cardsToDiscard = Math.min(ComputerUtil.determineLeftoverMana(sa), 
-					AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.HumanPlayer).size());
+					AllZoneUtil.getCardsInZone(Constant.Zone.Library, AllZone.getHumanPlayer()).size());
 			source.setSVar("PayX", Integer.toString(cardsToDiscard));
 		}
 		
@@ -883,7 +883,7 @@ public class AbilityFactory_ZoneAffecting {
 									dCs.add(dC);
 									GuiUtils.getChoiceOptional("Computer has chosen", dCs.toArray());
 
-									AllZone.ComputerPlayer.discard(dC, sa); // is this right?
+									AllZone.getComputerPlayer().discard(dC, sa); // is this right?
 								}
 							}
 						}
@@ -896,7 +896,7 @@ public class AbilityFactory_ZoneAffecting {
 									Card dC = GuiUtils.getChoice("Choose a card to be discarded", dPChHand.toArray());
 
 									dPChHand.remove(dC);
-									AllZone.HumanPlayer.discard(dC, sa); // is this right?
+									AllZone.getHumanPlayer().discard(dC, sa); // is this right?
 								}
 							}
 						}
@@ -991,7 +991,7 @@ public class AbilityFactory_ZoneAffecting {
 				return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -1002,7 +1002,7 @@ public class AbilityFactory_ZoneAffecting {
 			
 		}
 
-		boolean humanHasHand = AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.HumanPlayer).size() > 0;
+		boolean humanHasHand = AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.getHumanPlayer()).size() > 0;
 		
 		if (tgt != null){
 			if (!humanHasHand)
@@ -1033,13 +1033,13 @@ public class AbilityFactory_ZoneAffecting {
 			if (params.get("NumCards").equals("X") && source.getSVar("X").equals("Count$xPaid")){
 				// Set PayX here to maximum value.
 				int cardsToDiscard = Math.min(ComputerUtil.determineLeftoverMana(sa), 
-						AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.HumanPlayer).size());
+						AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.getHumanPlayer()).size());
 				source.setSVar("PayX", Integer.toString(cardsToDiscard));
 			}
 		}
 		
 		//Don't use draw abilities before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -1050,7 +1050,7 @@ public class AbilityFactory_ZoneAffecting {
 		if (AbilityFactory.isSorcerySpeed(sa))
 			chance = .75;	// 75% chance for sorcery speed
 		
-		if((AllZone.Phase.is(Constant.Phase.End_Of_Turn) && AllZone.Phase.isNextTurn(AllZone.ComputerPlayer)))
+		if((AllZone.getPhase().is(Constant.Phase.End_Of_Turn) && AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer())))
 			chance = .9;	// 90% for end of opponents turn
 		
 		Random r = MyRandom.random;
@@ -1070,8 +1070,8 @@ public class AbilityFactory_ZoneAffecting {
 	private static boolean discardTargetAI(AbilityFactory af) {
 		Target tgt = af.getAbTgt();
 		if(tgt!= null) {
-			if (AllZone.HumanPlayer.canTarget(af.getHostCard())){
-				tgt.addTarget(AllZone.HumanPlayer);
+			if (AllZone.getHumanPlayer().canTarget(af.getHostCard())){
+				tgt.addTarget(AllZone.getHumanPlayer());
 				return true;
 			}
 		}
@@ -1086,8 +1086,8 @@ public class AbilityFactory_ZoneAffecting {
 		Target tgt = af.getAbTgt();
 		if(tgt!= null) {
 			if (!discardTargetAI(af)){
-				if (mandatory && AllZone.ComputerPlayer.canTarget(af.getHostCard()))
-					tgt.addTarget(AllZone.ComputerPlayer);
+				if (mandatory && AllZone.getComputerPlayer().canTarget(af.getHostCard()))
+					tgt.addTarget(AllZone.getComputerPlayer());
 				else
 					return false;
 			}

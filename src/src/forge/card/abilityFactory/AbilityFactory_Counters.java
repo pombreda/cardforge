@@ -169,7 +169,7 @@ public class AbilityFactory_Counters {
 		String type = params.get("CounterType");
 		String amountStr = params.get("CounterNum");
 
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 
 
 		list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -197,7 +197,7 @@ public class AbilityFactory_Counters {
 			if (abCost.getSacCost() && (!abCost.getSacThis() || source.isCreature())){
 				//only sacrifice something that's supposed to be sacrificed 
 				String sacType = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
@@ -281,7 +281,7 @@ public class AbilityFactory_Counters {
 		}
 		
 		//Don't use non P1P1/M1M1 counters before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases")
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases")
 				&& !(type.equals("P1P1") || type.equals("M1M1")) )
         	return false;
 		
@@ -306,7 +306,7 @@ public class AbilityFactory_Counters {
 		String amountStr = params.get("CounterNum");
 		final int amount = AbilityFactory.calculateAmount(af.getHostCard(), amountStr, sa);
 		
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
@@ -374,7 +374,7 @@ public class AbilityFactory_Counters {
 		boolean chance = true;
 		boolean preferred = true;
 		CardList list;
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		String type = params.get("CounterType");
 		String amountStr = params.get("CounterNum");
 		final int amount = AbilityFactory.calculateAmount(af.getHostCard(), amountStr, sa);
@@ -648,7 +648,7 @@ public class AbilityFactory_Counters {
 		
 		//TODO - currently, not targeted, only for Self
 		
-		//Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		//Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		
 		if (abCost != null){
@@ -656,7 +656,7 @@ public class AbilityFactory_Counters {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String sacType = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
@@ -711,7 +711,7 @@ public class AbilityFactory_Counters {
 		
 		//TODO - currently, not targeted, only for Self
 		
-		//Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		//Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		// TODO handle proper calculation of X values based on Cost
 		//final int amount = calculateAmount(af.getHostCard(), amountStr, sa);
@@ -911,7 +911,7 @@ public class AbilityFactory_Counters {
 	}
 	
 	private static void proliferateResolve(final AbilityFactory AF, SpellAbility sa) {
-		CardList hperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+		CardList hperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 		hperms = hperms.filter(new CardListFilter() {
 			public boolean addCard(Card crd)
 			{
@@ -919,7 +919,7 @@ public class AbilityFactory_Counters {
 			}
 		});
 		
-		CardList cperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		CardList cperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 		cperms = cperms.filter(new CardListFilter() {
 			public boolean addCard(Card crd)
 			{
@@ -930,18 +930,18 @@ public class AbilityFactory_Counters {
 		if (AF.getHostCard().getController().isHuman()) {	
 			cperms.addAll(hperms);
 			final CardList unchosen = cperms;
-			AllZone.InputControl.setInput(new Input() {
+			AllZone.getInputControl().setInput(new Input() {
 				private static final long serialVersionUID = -1779224307654698954L;
 
 				@Override
 				public void showMessage() {
 					ButtonUtil.enableOnlyCancel();
-					AllZone.Display.showMessage("Proliferate: Choose permanents and/or players");
+					AllZone.getDisplay().showMessage("Proliferate: Choose permanents and/or players");
 				}
 
 				@Override
 				public void selectButtonCancel() {
-                    AllZone.Stack.chooseOrderOfSimultaneousStackEntryAll(); //Hacky intermittent solution to triggers that look for counters being put on. They used to wait for another priority passing after proliferate finished.
+                    AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll(); //Hacky intermittent solution to triggers that look for counters being put on. They used to wait for another priority passing after proliferate finished.
 					stop();
 				}
 
@@ -962,13 +962,13 @@ public class AbilityFactory_Counters {
 				public void selectPlayer(Player player) {
 					if (player.isHuman() && selHuman == false) {
 						selHuman = true;
-						if (AllZone.HumanPlayer.getPoisonCounters() > 0)
-							AllZone.HumanPlayer.addPoisonCounters(1);
+						if (AllZone.getHumanPlayer().getPoisonCounters() > 0)
+							AllZone.getHumanPlayer().addPoisonCounters(1);
 					}
 					if (player.isComputer() && selComputer == false) {
 						selComputer = true;
-						if (AllZone.ComputerPlayer.getPoisonCounters() > 0)
-							AllZone.ComputerPlayer.addPoisonCounters(1);
+						if (AllZone.getComputerPlayer().getPoisonCounters() > 0)
+							AllZone.getComputerPlayer().addPoisonCounters(1);
 					}
 				}
 			});
@@ -1008,7 +1008,7 @@ public class AbilityFactory_Counters {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("<html>Proliferate: <br>Computer selects ");
-			if (cperms.size() == 0 && hperms.size() == 0 && AllZone.HumanPlayer.getPoisonCounters() == 0)
+			if (cperms.size() == 0 && hperms.size() == 0 && AllZone.getHumanPlayer().getPoisonCounters() == 0)
 				sb.append("<b>nothing</b>.");
 			else {
 				if (cperms.size()>0) {
@@ -1027,7 +1027,7 @@ public class AbilityFactory_Counters {
 					}
 					sb.append("</b><br>");
 				}
-				if (AllZone.HumanPlayer.getPoisonCounters() > 0)
+				if (AllZone.getHumanPlayer().getPoisonCounters() > 0)
 					sb.append("<b>Human Player</b>.");
 			}//else
 			sb.append("</html>");
@@ -1046,8 +1046,8 @@ public class AbilityFactory_Counters {
 			}
 			
 			//give human a poison counter, if he has one
-			if (AllZone.HumanPlayer.getPoisonCounters() > 0)
-        		AllZone.HumanPlayer.addPoisonCounters(1);
+			if (AllZone.getHumanPlayer().getPoisonCounters() > 0)
+        		AllZone.getHumanPlayer().addPoisonCounters(1);
 			
 		} //comp
 	}
@@ -1174,8 +1174,8 @@ public class AbilityFactory_Counters {
 		boolean curse = af.isCurse();
 		Target tgt = sa.getTarget();
 
-		hList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		cList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		hList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+		cList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
 		hList = hList.getValidCards(valid, source.getController(), source);
 		cList = cList.getValidCards(valid, source.getController(), source);
@@ -1195,9 +1195,9 @@ public class AbilityFactory_Counters {
 		if (tgt != null){
 			Player pl;
 			if (curse)
-				pl = AllZone.HumanPlayer;
+				pl = AllZone.getHumanPlayer();
 			else
-				pl = AllZone.ComputerPlayer;
+				pl = AllZone.getComputerPlayer();
 			
 			tgt.addTarget(pl);
 			

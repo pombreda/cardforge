@@ -173,7 +173,7 @@ public class AbilityFactory_Pump {
         	KWpump = Keywords.toArray(new String[Keywords.size()]);
         final String KWs[] = KWpump;
     	
-        CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+        CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
         list = list.filter(new CardListFilter() {
             public boolean addCard(Card c) {
                 if (!CardFactoryUtil.canTarget(hostCard, c))
@@ -187,39 +187,39 @@ public class AbilityFactory_Pump {
                 if (kSize && hKW) return false;
             	
                 //give haste to creatures that could attack with it
-                if(c.hasSickness() && kHaste && AllZone.Phase.isPlayerTurn(AllZone.ComputerPlayer) && CombatUtil.canAttackNextTurn(c)
-                		&& AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Attackers))
+                if(c.hasSickness() && kHaste && AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer()) && CombatUtil.canAttackNextTurn(c)
+                		&& AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Attackers))
                     return true;
                 
                 //give evasive keywords to creatures that can attack
-                if(evasive && AllZone.Phase.isPlayerTurn(AllZone.ComputerPlayer) && CombatUtil.canAttack(c) 
-                		&& AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Attackers) && c.getNetCombatDamage()>0)
+                if(evasive && AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer()) && CombatUtil.canAttack(c) 
+                		&& AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Attackers) && c.getNetCombatDamage()>0)
                     return true;
                     
                 //will the creature attack (only relevant for sorcery speed)?
-                if (CardFactoryUtil.AI_doesCreatureAttack(c) && AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Attackers)
-                		&& AllZone.Phase.isPlayerTurn(AllZone.ComputerPlayer))
+                if (CardFactoryUtil.AI_doesCreatureAttack(c) && AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Attackers)
+                		&& AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer()))
                 	return true;
                 
                 //is the creature blocking and unable to destroy the attacker or would be destroyed itself?
                 if (c.isBlocking() && (CombatUtil.blockerWouldBeDestroyed(c) 
-                		|| CombatUtil.attackerWouldBeDestroyed(AllZone.Combat.getAttackerBlockedBy(c))))
+                		|| CombatUtil.attackerWouldBeDestroyed(AllZone.getCombat().getAttackerBlockedBy(c))))
                 	return true;
                 
                 //is the creature unblocked and the spell will pump its power?
-                if (AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Blockers) && AllZone.Combat.isAttacking(c)
-                		&& AllZone.Combat.isUnblocked(c) && attack > 0)
+                if (AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers) && AllZone.getCombat().isAttacking(c)
+                		&& AllZone.getCombat().isUnblocked(c) && attack > 0)
                 	return true;
                 
                 //is the creature in blocked and the blocker would survive
-                if (AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Blockers) && AllZone.Combat.isAttacking(c)
-                		&& AllZone.Combat.isBlocked(c)
-                		&& CombatUtil.blockerWouldBeDestroyed(AllZone.Combat.getBlockers(c).get(0)))
+                if (AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers) && AllZone.getCombat().isAttacking(c)
+                		&& AllZone.getCombat().isBlocked(c)
+                		&& CombatUtil.blockerWouldBeDestroyed(AllZone.getCombat().getBlockers(c).get(0)))
                 	return true;
                 
                 //if the life of the computer is in danger, try to pump potential blockers before declaring blocks
-                if (CombatUtil.lifeInDanger(AllZone.Combat) && AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Attackers) 
-                		&& CombatUtil.canBlock(c, AllZone.Combat) && AllZone.Phase.isPlayerTurn(AllZone.HumanPlayer))
+                if (CombatUtil.lifeInDanger(AllZone.getCombat()) && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Attackers) 
+                		&& CombatUtil.canBlock(c, AllZone.getCombat()) && AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
                 	return true;
                 
                 return false; 
@@ -230,7 +230,7 @@ public class AbilityFactory_Pump {
     
     private CardList getCurseCreatures(SpellAbility sa, final int defense, int attack)
     {
-    	CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+    	CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
     	list = list.filter(AllZoneUtil.getCanTargetFilter(hostCard));
         
     	if (defense < 0 && !list.isEmpty()) { // with spells that give -X/-X, compi will try to destroy a creature
@@ -270,7 +270,7 @@ public class AbilityFactory_Pump {
     	if (AF.getAbCost().getSacCost() && sa.getSourceCard().isCreature()) return false;	
     	if (AF.getAbCost().getLifeCost()) {
     		if (!AF.isCurse()) return false; //Use life only to kill creatures
-    		if (AllZone.ComputerPlayer.getLife() - AF.getAbCost().getLifeAmount() < 4)
+    		if (AllZone.getComputerPlayer().getLife() - AF.getAbCost().getLifeAmount() < 4)
 				return false;
     	}
     	if (AF.getAbCost().getSubCounter()){
@@ -295,14 +295,14 @@ public class AbilityFactory_Pump {
     	SpellAbility_Restriction restrict = sa.getRestrictions();
     	
     	// Phase Restrictions
-    	if (AllZone.Stack.size() == 0 && AllZone.Phase.isBefore(Constant.Phase.Combat_Begin)){
+    	if (AllZone.getStack().size() == 0 && AllZone.getPhase().isBefore(Constant.Phase.Combat_Begin)){
     		// Instant-speed pumps should not be cast outside of combat when the stack is empty
     		if (!AF.isCurse()){
     			if (!AbilityFactory.isSorcerySpeed(sa))
     				return false;
     		}
     	}
-    	else if (AllZone.Stack.size() > 0){
+    	else if (AllZone.getStack().size() > 0){
     		// TODO: pump something only if the top thing on the stack will kill it via damage
     		// or if top thing on stack will pump it/enchant it and I want to kill it
     		return false;
@@ -379,7 +379,7 @@ public class AbilityFactory_Pump {
 
     private boolean pumpTgtAI(SpellAbility sa, int defense, int attack, boolean mandatory)
     {
-        if(!mandatory && AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility) && !(AF.isCurse() && defense < 0))
+        if(!mandatory && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility) && !(AF.isCurse() && defense < 0))
         	return false;
         
 		Target tgt = AF.getAbTgt();
@@ -392,12 +392,12 @@ public class AbilityFactory_Pump {
 		
         list = list.getValidCards(tgt.getValidTgts(), sa.getActivatingPlayer(), sa.getSourceCard());
         
-        if (AllZone.Stack.size() == 0){
+        if (AllZone.getStack().size() == 0){
         	// If the cost is tapping, don't activate before declare attack/block
         	if (sa.getPayCosts() != null && sa.getPayCosts().getTap()){
-	        	if (AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Attackers) && AllZone.Phase.isPlayerTurn(AllZone.ComputerPlayer))
+	        	if (AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Attackers) && AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer()))
 	        		list.remove(sa.getSourceCard());
-	        	if (AllZone.Phase.isBefore(Constant.Phase.Combat_Declare_Blockers) && AllZone.Phase.isPlayerTurn(AllZone.HumanPlayer))
+	        	if (AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Blockers) && AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
 	        		list.remove(sa.getSourceCard());
         	}
         }
@@ -463,12 +463,12 @@ public class AbilityFactory_Pump {
     	Card source = sa.getSourceCard();
     	
     	if (af.isCurse()){
-    		pref = list.getController(AllZone.HumanPlayer);
-    		forced = list.getController(AllZone.ComputerPlayer);
+    		pref = list.getController(AllZone.getHumanPlayer());
+    		forced = list.getController(AllZone.getComputerPlayer());
     	}
     	else{
-    		pref = list.getController(AllZone.ComputerPlayer);
-    		forced = list.getController(AllZone.HumanPlayer);
+    		pref = list.getController(AllZone.getComputerPlayer());
+    		forced = list.getController(AllZone.getHumanPlayer());
     	}
     	
     	while(tgt.getNumTargeted() < tgt.getMaxTargets(source, sa)){
@@ -694,8 +694,8 @@ public class AbilityFactory_Pump {
 		                }
 		            }
 		        };
-		        if(params.containsKey("UntilEndOfCombat")) AllZone.EndOfCombat.addUntil(untilEOT);
-		        else AllZone.EndOfTurn.addUntil(untilEOT);
+		        if(params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(untilEOT);
+		        else AllZone.getEndOfTurn().addUntil(untilEOT);
 	        }
 		}
     }//pumpResolve()
@@ -800,9 +800,9 @@ public class AbilityFactory_Pump {
 			valid = params.get("ValidCards");
     	}
     	
-    	CardList comp = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+    	CardList comp = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
     	comp = comp.getValidCards(valid, hostCard.getController(), hostCard);
-    	CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+    	CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
     	human = human.getValidCards(valid,hostCard.getController(), hostCard);
     	
     	//only count creatures that can attack
@@ -836,7 +836,7 @@ public class AbilityFactory_Pump {
     	}//end Curse
     	
     	//don't use non curse PumpAll after Combat_Begin until AI is improved
-    	if(AllZone.Phase.isAfter(Constant.Phase.Combat_Begin))
+    	if(AllZone.getPhase().isAfter(Constant.Phase.Combat_Begin))
     		return false;
     	
     	if (comp.size() <= human.size() || comp.size() <= 1)
@@ -893,7 +893,7 @@ public class AbilityFactory_Pump {
 		            }
 		        };
 		        
-		        AllZone.EndOfTurn.addUntil(untilEOT);
+		        AllZone.getEndOfTurn().addUntil(untilEOT);
 	        }
 		}   
     }//pumpAllResolve()

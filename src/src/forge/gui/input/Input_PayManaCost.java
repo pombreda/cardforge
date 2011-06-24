@@ -35,10 +35,10 @@ public class Input_PayManaCost extends Input {
                 if(spell.getAfterPayMana() != null) stopSetNext(spell.getAfterPayMana());
                 else {
                 	manaCost = new ManaCost("0"); 
-                    AllZone.Stack.add(spell);
+                    AllZone.getStack().add(spell);
                 }
         	} else {
-        		manaCost = AllZone.GameAction.getSpellCostChange(sa, new ManaCost(originalManaCost)); 
+        		manaCost = AllZone.getGameAction().getSpellCostChange(sa, new ManaCost(originalManaCost)); 
         	}    	
         }
         else
@@ -58,10 +58,10 @@ public class Input_PayManaCost extends Input {
                 if(spell.getAfterPayMana() != null) stopSetNext(spell.getAfterPayMana());
                 else {
                 	manaCost = new ManaCost("0"); 
-                    AllZone.Stack.add(spell);
+                    AllZone.getStack().add(spell);
                 }
         	} else {
-        		manaCost = AllZone.GameAction.getSpellCostChange(sa, new ManaCost(originalManaCost)); 
+        		manaCost = AllZone.getGameAction().getSpellCostChange(sa, new ManaCost(originalManaCost)); 
         	}    	
         }
         else
@@ -88,7 +88,7 @@ public class Input_PayManaCost extends Input {
         manaCost = Input_PayManaCostUtil.activateManaAbility(spell, card, manaCost);
         
         // only show message if this is the active input
-        if (AllZone.InputControl.getInput() == this)
+        if (AllZone.getInputControl().getInput() == this)
         	showMessage();
         
         if(manaCost.isPaid()) {
@@ -115,14 +115,14 @@ public class Input_PayManaCost extends Input {
     
     private void done() {
         if(phyLifeToLose > 0)
-            AllZone.HumanPlayer.payLife(phyLifeToLose,originalCard);
+            AllZone.getHumanPlayer().payLife(phyLifeToLose,originalCard);
 		if (spell.getSourceCard().isCopiedSpell()) {
 			if (spell.getAfterPayMana() != null) {
 				stopSetNext(spell.getAfterPayMana());
 			} else
-				AllZone.InputControl.resetInput();
+				AllZone.getInputControl().resetInput();
 		} else {
-			AllZone.ManaPool.clearPay(spell, false);
+			AllZone.getManaPool().clearPay(spell, false);
 			resetManaCost();
 
 			// if tap ability, tap card
@@ -134,7 +134,7 @@ public class Input_PayManaCost extends Input {
 			// if this is a spell, move it to the Stack ZOne
 
 			if (spell.isSpell())	// already checked for if its a copy
-				AllZone.GameAction.moveToStack(originalCard);
+				AllZone.getGameAction().moveToStack(originalCard);
 
 			if (spell.getAfterPayMana() != null)
 				stopSetNext(spell.getAfterPayMana());
@@ -145,9 +145,9 @@ public class Input_PayManaCost extends Input {
 				}
 				else
 				{
-					AllZone.Stack.add(spell);
+					AllZone.getStack().add(spell);
 				}
-				AllZone.InputControl.resetInput();
+				AllZone.getInputControl().resetInput();
 			}
 		}
     }
@@ -155,8 +155,8 @@ public class Input_PayManaCost extends Input {
     @Override
     public void selectButtonCancel() {
         resetManaCost();
-        AllZone.ManaPool.unpaid(spell, true);
-        AllZone.Human_Battlefield.updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
+        AllZone.getManaPool().unpaid(spell, true);
+        AllZone.getHumanBattlefield().updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
         
         stop();
     }
@@ -178,7 +178,7 @@ public class Input_PayManaCost extends Input {
             msg.append("\n(Click on your life total to pay life for phyrexian mana.)");
         }
 
-        AllZone.Display.showMessage(msg.toString());
+        AllZone.getDisplay().showMessage(msg.toString());
         if(manaCost.isPaid() && !new ManaCost(originalManaCost).isPaid()) {
         	originalCard.setSunburstValue(manaCost.getSunburst());
         	done(); 

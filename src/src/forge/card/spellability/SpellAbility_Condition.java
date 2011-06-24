@@ -52,7 +52,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 				// Upkeep->Combat_Begin (Before Declare Attackers)
 
 				String[] split = phases.split("->", 2);
-				phases = AllZone.Phase.buildActivateString(split[0], split[1]);
+				phases = AllZone.getPhase().buildActivateString(split[0], split[1]);
 			}
 
 			setPhases(phases);
@@ -110,10 +110,10 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 		if (bSorcerySpeed && !Phase.canCastSorcery(activator))
 			return false;
 
-		if (bPlayerTurn && !AllZone.Phase.isPlayerTurn(activator))
+		if (bPlayerTurn && !AllZone.getPhase().isPlayerTurn(activator))
 			return false;
 
-		if (bOpponentTurn && AllZone.Phase.isPlayerTurn(activator))
+		if (bOpponentTurn && AllZone.getPhase().isPlayerTurn(activator))
 			return false;
 
 		if (activationLimit != -1 && numberTurnActivations >= activationLimit)
@@ -121,7 +121,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 
 		if (phases.size() > 0){
 			boolean isPhase = false;
-			String currPhase = AllZone.Phase.getPhase();
+			String currPhase = AllZone.getPhase().getPhase();
 			for(String s : phases){
 				if (s.equals(currPhase)){
 					isPhase = true;

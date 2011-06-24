@@ -28,7 +28,7 @@ public class Input_Block extends Input {
     @Override
     public void showMessage() {
         //for Castle Raptors, since it gets a bonus if untapped
-        for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+        for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
             Command com = GameActionUtil.commands.get(effect);
             com.execute();
         }
@@ -41,24 +41,24 @@ public class Input_Block extends Input {
         if(currentAttacker == null) {
         	/*
         	//Lure
-        	CardList attackers = new CardList(AllZone.Combat.getAttackers());
+        	CardList attackers = new CardList(AllZone.getCombat().getAttackers());
         	for(Card attacker:attackers) {
         		if(attacker.hasKeyword("All creatures able to block CARDNAME do so.")) {
-        			CardList bls = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+        			CardList bls = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
         			for(Card bl:bls) {
-        				if(CombatUtil.canBlock(attacker, bl, AllZone.Combat)) {
+        				if(CombatUtil.canBlock(attacker, bl, AllZone.getCombat())) {
         					allBlocking.add(bl);
-        					AllZone.Combat.addBlocker(attacker, bl);
+        					AllZone.getCombat().addBlocker(attacker, bl);
         				}
         			}
         		}
         	}*/
         	
-        	AllZone.Display.showMessage("To Block, click on your Opponents attacker first, then your blocker(s)");
+        	AllZone.getDisplay().showMessage("To Block, click on your Opponents attacker first, then your blocker(s)");
         }
         else {
         	String attackerName = currentAttacker.isFaceDown() ? "Morph" : currentAttacker.getName();
-        	AllZone.Display.showMessage("Select a creature to block " + attackerName + " ("
+        	AllZone.getDisplay().showMessage("Select a creature to block " + attackerName + " ("
         			+ currentAttacker.getUniqueNumber() + ") ");
         }
         
@@ -67,24 +67,24 @@ public class Input_Block extends Input {
     
     @Override
     public void selectButtonOK() {
-    	if(CombatUtil.finishedMandatotyBlocks(AllZone.Combat)) {
+    	if(CombatUtil.finishedMandatotyBlocks(AllZone.getCombat())) {
 	        // Done blocking
 	        ButtonUtil.reset();
 	
-	        AllZone.Phase.setNeedToNextPhase(true);
+	        AllZone.getPhase().setNeedToNextPhase(true);
     	}
     }
     
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         //is attacking?
-        if(CardUtil.toList(AllZone.Combat.getAttackers()).contains(card)) {
+        if(CardUtil.toList(AllZone.getCombat().getAttackers()).contains(card)) {
             currentAttacker = card;
-        } else if(zone.is(Constant.Zone.Battlefield, AllZone.HumanPlayer) && card.isCreature() 
-        		&& CombatUtil.canBlock(currentAttacker, card, AllZone.Combat)) {
+        } else if(zone.is(Constant.Zone.Battlefield, AllZone.getHumanPlayer()) && card.isCreature() 
+        		&& CombatUtil.canBlock(currentAttacker, card, AllZone.getCombat())) {
             if(currentAttacker != null && (!allBlocking.contains(card))) {
                 allBlocking.add(card);
-                AllZone.Combat.addBlocker(currentAttacker, card);
+                AllZone.getCombat().addBlocker(currentAttacker, card);
             }
         }
         showMessage();

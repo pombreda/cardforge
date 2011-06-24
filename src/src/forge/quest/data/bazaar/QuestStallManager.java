@@ -66,8 +66,8 @@ public class QuestStallManager {
     public static void buildItems(){
         SortedSet<QuestStallPurchasable> itemSet = new TreeSet<QuestStallPurchasable>();
 
-        itemSet.addAll(AllZone.QuestData.getInventory().getItems());
-        itemSet.addAll(AllZone.QuestData.getPetManager().getPetsAndPlants());
+        itemSet.addAll(AllZone.getQuestData().getInventory().getItems());
+        itemSet.addAll(AllZone.getQuestData().getPetManager().getPetsAndPlants());
 
         items = new HashMap<String, SortedSet<QuestStallPurchasable>>();
 

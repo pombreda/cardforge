@@ -162,13 +162,13 @@ public class AbilityFactory_Regenerate {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), hostCard.getController(), hostCard);
 			    if(ComputerUtil.getCardPreference(hostCard, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 		}
@@ -181,7 +181,7 @@ public class AbilityFactory_Regenerate {
 			// As far as I can tell these Defined Cards will only have one of them
 			ArrayList<Card> list = AbilityFactory.getDefinedCards(hostCard, params.get("Defined"), sa);
 			
-			if (AllZone.Stack.size() > 0){
+			if (AllZone.getStack().size() > 0){
 				ArrayList<Object> objects = AbilityFactory.predictThreatenedObjects();
 				
 				for(Card c : list){
@@ -190,7 +190,7 @@ public class AbilityFactory_Regenerate {
 				}
 			}
 			else{
-				if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+				if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 					boolean flag = false;
 					
 					for(Card c : list){
@@ -208,13 +208,13 @@ public class AbilityFactory_Regenerate {
 		else{
 			tgt.resetTargets();
 			// filter AIs battlefield by what I can target
-			CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
-			targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, hostCard);
+			CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+			targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), hostCard);
 			
 			if (targetables.size() == 0)
 				return false;
 			
-			if (AllZone.Stack.size() > 0){
+			if (AllZone.getStack().size() > 0){
 				// check stack for something on the stack will kill anything i control
 				ArrayList<Object> objects = AbilityFactory.predictThreatenedObjects();
 				
@@ -229,7 +229,7 @@ public class AbilityFactory_Regenerate {
 				tgt.addTarget(CardFactoryUtil.AI_getBestCreature(threatenedTargets));
 			}
 			else{
-				if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+				if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 					CardList combatants = targetables.getType("Creature");
 					CardListUtil.sortByEvaluateCreature(combatants);
 
@@ -279,8 +279,8 @@ public class AbilityFactory_Regenerate {
 		tgt.resetTargets();
 		// filter AIs battlefield by what I can target
 		CardList targetables = AllZoneUtil.getCardsInPlay();
-		targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, hostCard);
-		CardList compTargetables = targetables.getController(AllZone.ComputerPlayer);
+		targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), hostCard);
+		CardList compTargetables = targetables.getController(AllZone.getComputerPlayer());
 		
 		if (targetables.size() == 0)
 			return false;
@@ -291,7 +291,7 @@ public class AbilityFactory_Regenerate {
 		if (compTargetables.size() > 0){
 			CardList combatants = compTargetables.getType("Creature");
 			CardListUtil.sortByEvaluateCreature(combatants);
-			if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+			if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 				for(Card c : combatants){
 					if (c.getShield() == 0 && CombatUtil.combatantWouldBeDestroyed(c)){
 						tgt.addTarget(c);
@@ -352,7 +352,7 @@ public class AbilityFactory_Regenerate {
 			
 			if (AllZoneUtil.isCardInPlay(tgtC) && (tgt == null || CardFactoryUtil.canTarget(hostCard, tgtC))){
 				tgtC.addShield();
-				AllZone.EndOfTurn.addUntil(untilEOT);
+				AllZone.getEndOfTurn().addUntil(untilEOT);
 			}
 		}
 	}//regenerateResolve
@@ -483,13 +483,13 @@ public class AbilityFactory_Regenerate {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String type = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(type.split(","), hostCard.getController(), hostCard);
 			    if(ComputerUtil.getCardPreference(hostCard, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 		}
@@ -511,12 +511,12 @@ public class AbilityFactory_Regenerate {
 			return false;
 
 		int numSaved = 0;
-		if (AllZone.Stack.size() > 0){
+		if (AllZone.getStack().size() > 0){
 			//TODO - check stack for something on the stack will kill anything i control
 		}
 		else{
 
-			if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+			if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 				CardList combatants = list.getType("Creature");
 
 				for(Card c : combatants){
@@ -573,7 +573,7 @@ public class AbilityFactory_Regenerate {
 			
 			if (AllZoneUtil.isCardInPlay(c)){
 				c.addShield();
-				AllZone.EndOfTurn.addUntil(untilEOT);
+				AllZone.getEndOfTurn().addUntil(untilEOT);
 			}
 		}
 	}//regenerateAllResolve

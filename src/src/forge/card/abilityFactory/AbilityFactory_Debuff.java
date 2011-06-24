@@ -200,7 +200,7 @@ public class AbilityFactory_Debuff {
     	SpellAbility_Restriction restrict = sa.getRestrictions();
     	
     	// Phase Restrictions
-    	if (AllZone.Stack.size() == 0 && AllZone.Phase.isBefore(Constant.Phase.Combat_Begin)){
+    	if (AllZone.getStack().size() == 0 && AllZone.getPhase().isBefore(Constant.Phase.Combat_Begin)){
     		// Instant-speed pumps should not be cast outside of combat when the stack is empty
     		if (!AbilityFactory.isSorcerySpeed(sa))
     			return false;
@@ -237,7 +237,7 @@ public class AbilityFactory_Debuff {
 
 	private static boolean debuffTgtAI(AbilityFactory af, SpellAbility sa, ArrayList<String> kws, boolean mandatory) {
 		//this would be for evasive things like Flying, Unblockable, etc
-		if(!mandatory && AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility))
+		if(!mandatory && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility))
 			return false;
 
 		Target tgt = af.getAbTgt();
@@ -282,7 +282,7 @@ public class AbilityFactory_Debuff {
 
 	private static CardList getCurseCreatures(AbilityFactory af, SpellAbility sa, final ArrayList<String> kws) {
 		Card hostCard = af.getHostCard();
-		CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+		CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
 		list = list.filter(AllZoneUtil.getCanTargetFilter(hostCard));
 
 		if (!list.isEmpty()) {
@@ -310,8 +310,8 @@ public class AbilityFactory_Debuff {
 		for(Card c : tgt.getTargetCards())
 			list.remove(c);
 
-		CardList pref = list.getController(AllZone.HumanPlayer);
-		CardList forced = list.getController(AllZone.ComputerPlayer);
+		CardList pref = list.getController(AllZone.getHumanPlayer());
+		CardList forced = list.getController(AllZone.getComputerPlayer());
 		Card source = sa.getSourceCard();
 
 		while(tgt.getNumTargeted() < tgt.getMaxTargets(source, sa)){
@@ -395,7 +395,7 @@ public class AbilityFactory_Debuff {
 				}
 			}
 			if(!params.containsKey("Permanent")) {
-				AllZone.EndOfTurn.addUntil(new Command() {
+				AllZone.getEndOfTurn().addUntil(new Command() {
 					private static final long serialVersionUID = 5387486776282932314L;
 
 					public void execute() {
@@ -509,9 +509,9 @@ public class AbilityFactory_Debuff {
 			valid = params.get("ValidCards");
     	}
     	
-    	CardList comp = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+    	CardList comp = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
     	comp = comp.getValidCards(valid, hostCard.getController(), hostCard);
-    	CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+    	CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
     	human = human.getValidCards(valid,hostCard.getController(), hostCard);
     	
     	//TODO - add blocking situations here also
@@ -524,7 +524,7 @@ public class AbilityFactory_Debuff {
 		});
     	
     	//don't use DebuffAll after Combat_Begin until AI is improved
-    	if(AllZone.Phase.isAfter(Constant.Phase.Combat_Begin))
+    	if(AllZone.getPhase().isAfter(Constant.Phase.Combat_Begin))
     		return false;
     	
     	if (comp.size() > human.size())
@@ -555,7 +555,7 @@ public class AbilityFactory_Debuff {
 				}
 			}
 			if(!params.containsKey("Permanent")) {
-				AllZone.EndOfTurn.addUntil(new Command() {
+				AllZone.getEndOfTurn().addUntil(new Command() {
 					private static final long serialVersionUID = 7486231071095628674L;
 
 					public void execute() {

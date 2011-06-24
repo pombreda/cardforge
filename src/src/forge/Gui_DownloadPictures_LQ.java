@@ -282,7 +282,7 @@ public class Gui_DownloadPictures_LQ extends DefaultBoundedRangeModel implements
     	mCard[] cardTokenLQ = readFile(CARD_PICTURES_TOKEN_LQ);
         
     	ArrayList<mCard> CList = new ArrayList<mCard>();
-    	CardList AllCards = AllZone.CardFactory.getAllCards();
+    	CardList AllCards = AllZone.getCardFactory().getAllCards();
     	//Log.error("AllCards.size: " + AllCards.size());
     	
     	for (int i=0; i<AllCards.size(); i++)

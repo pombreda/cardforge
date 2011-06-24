@@ -20,7 +20,7 @@ import forge.gui.input.Input_PayManaCost_Ability;
 
 public class GameActionUtil {
 	public static void executeUpkeepEffects() {
-		AllZone.Stack.freezeStack();
+		AllZone.getStack().freezeStack();
 		upkeep_Braid_Of_Fire();
 		
 		upkeep_Slowtrips();  // for "Draw a card at the beginning of the next turn's upkeep."
@@ -94,16 +94,16 @@ public class GameActionUtil {
 		upkeep_AI_Aluren(); 
 		// experimental, AI abuse aluren
 
-		AllZone.Stack.unfreezeStack();
+		AllZone.getStack().unfreezeStack();
 	}
 
 	public static void executeDrawStepEffects() {
-		AllZone.Stack.freezeStack();
-		final Player player = AllZone.Phase.getPlayerTurn();
+		AllZone.getStack().freezeStack();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		draw_Sylvan_Library(player);
 
-    	AllZone.Stack.unfreezeStack();
+    	AllZone.getStack().unfreezeStack();
 	}
 
 	public static void executePlayCardEffects(SpellAbility sa) {
@@ -130,11 +130,11 @@ public class GameActionUtil {
 			private static final long serialVersionUID = -845154812215847505L;
 			public void execute() {
 
-				CardList humanNexus = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer, "Maelstrom Nexus");
-				CardList computerNexus = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, "Maelstrom Nexus");
+				CardList humanNexus = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer(), "Maelstrom Nexus");
+				CardList computerNexus = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), "Maelstrom Nexus");
 
 				if (humanNexus.size() > 0){
-					if (Phase.PlayerSpellCount == 1 && !c.isCopiedSpell())
+					if (Phase.getPlayerSpellCount() == 1 && !c.isCopiedSpell())
 					{
 						for (int i = 0; i < humanNexus.size(); i++)
 						{
@@ -143,7 +143,7 @@ public class GameActionUtil {
 					}
 				}
 				if (computerNexus.size() > 0){
-					if (Phase.ComputerSpellCount == 1 && !c.isCopiedSpell())
+					if (Phase.getComputerSpellCount() == 1 && !c.isCopiedSpell())
 					{
 						for (int i = 0; i < computerNexus.size(); i++)
 						{ 
@@ -194,7 +194,7 @@ public class GameActionUtil {
                                 int answer = JOptionPane.showConfirmDialog(null, question.toString(), title.toString(), JOptionPane.YES_NO_OPTION);
                                 
                                 if (answer == JOptionPane.YES_OPTION) {
-                                    AllZone.GameAction.playCardNoCost(cascadedCard);
+                                    AllZone.getGameAction().playCardNoCost(cascadedCard);
                                     revealed.remove(cascadedCard);
                                 }
                             } else //computer
@@ -212,7 +212,7 @@ public class GameActionUtil {
                         }
                         revealed.shuffle();
                         for (Card bottom:revealed) {
-                        	AllZone.GameAction.moveToBottomOfLibrary(bottom);
+                        	AllZone.getGameAction().moveToBottomOfLibrary(bottom);
                         }
                     }
                 };
@@ -220,7 +220,7 @@ public class GameActionUtil {
                 sb.append(c).append(" - Cascade.");
                 ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
             }
         };
@@ -232,8 +232,8 @@ public class GameActionUtil {
 			private static final long serialVersionUID = -845154812215847505L;
 			public void execute() {
 
-				CardList humanThrummingStone = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer, "Thrumming Stone");
-				CardList computerThrummingStone = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, "Thrumming Stone");
+				CardList humanThrummingStone = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer(), "Thrumming Stone");
+				CardList computerThrummingStone = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), "Thrumming Stone");
 
 				for (int i = 0; i < humanThrummingStone.size(); i++)
 				{
@@ -258,7 +258,7 @@ public class GameActionUtil {
 				boolean Activate_Ripple = false;
 				if(controller.isHuman()){
 					Object[] possibleValues = {"Yes", "No"};
-					AllZone.Display.showMessage("Activate Ripple? ");
+					AllZone.getDisplay().showMessage("Activate Ripple? ");
 					Object q = JOptionPane.showOptionDialog(null, "Activate Ripple for " + c, "Ripple", 
 							JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 							null, possibleValues, possibleValues[0]);
@@ -293,7 +293,7 @@ public class GameActionUtil {
 												JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 												null, possibleValues, possibleValues[0]);
 										if (q.equals(0)) {
-											AllZone.GameAction.playCardNoCost(RippledCards[i]);
+											AllZone.getGameAction().playCardNoCost(RippledCards[i]);
 											revealed.remove(RippledCards[i]);
 										}
 									} else //computer
@@ -313,7 +313,7 @@ public class GameActionUtil {
 							}
 							revealed.shuffle();
 							for (Card bottom:revealed) {
-								AllZone.GameAction.moveToBottomOfLibrary(bottom);
+								AllZone.getGameAction().moveToBottomOfLibrary(bottom);
 							}
 						}
 					};
@@ -321,7 +321,7 @@ public class GameActionUtil {
 					sb.append(c).append(" - Ripple.");
 					ability.setStackDescription(sb.toString());
 
-					AllZone.Stack.addSimultaneousStackEntry(ability);
+					AllZone.getStack().addSimultaneousStackEntry(ability);
 
 				}
 			}
@@ -336,12 +336,12 @@ public class GameActionUtil {
 		{		
 			int StormNumber  = Phase.getStormCount() - 1;		
 			for (int i = 0; i < StormNumber; i++)
-				AllZone.CardFactory.copySpellontoStack(source, source, sa, true);   	
+				AllZone.getCardFactory().copySpellontoStack(source, source, sa, true);   	
 		}
 	}//playCard_Storm()
 	
 	public static void playCard_Vengevine(Card c) {
-		if (c.isCreature() == true && (Phase.PlayerCreatureSpellCount == 2 || Phase.ComputerCreatureSpellCount == 2))
+		if (c.isCreature() == true && (Phase.getPlayerCreatureSpellCount() == 2 || Phase.getComputerCreatureSpellCount() == 2))
 		{
 			final Player controller = c.getController();
 			final PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, controller);
@@ -355,7 +355,7 @@ public class GameActionUtil {
 						public void resolve() {
 							if(controller.isComputer() || GameActionUtil.showYesNoDialog(card, "Return Vengevine from the graveyard?")){
 								if(AllZoneUtil.isCardInPlayerGraveyard(controller, card)) {
-									AllZone.GameAction.moveTo(play, card);
+									AllZone.getGameAction().moveTo(play, card);
 								}
 							}
 						}
@@ -366,7 +366,7 @@ public class GameActionUtil {
 					sb.append("spell you cast this turn, you may return Vengevine from your graveyard to the battlefield.");
 					ability.setStackDescription(sb.toString());
 
-					AllZone.Stack.addSimultaneousStackEntry(ability);
+					AllZone.getStack().addSimultaneousStackEntry(ability);
 
 				}
 			}//if
@@ -374,7 +374,7 @@ public class GameActionUtil {
 	}//playCard_Vengevine()
 	
 	public static void playCard_Ichneumon_Druid(Card c) {
-		if (c.isInstant() && (Phase.PlayerInstantSpellCount >= 2 || Phase.ComputerInstantSpellCount >= 2)) {
+		if (c.isInstant() && (Phase.getPlayerInstantSpellCount() >= 2 || Phase.getComputerInstantSpellCount() >= 2)) {
 			final Player player = c.getController();
 			final Player opp = player.getOpponent();
 			CardList list = AllZoneUtil.getPlayerCardsInPlay(opp, "Ichneumon Druid");
@@ -391,7 +391,7 @@ public class GameActionUtil {
 				sb.append(card).append(" - ").append("Whenever an opponent casts an instant spell other than the first instant spell that player casts each turn, Ichneumon Druid deals 4 damage to him or her.");
 				ability.setStackDescription(sb.toString());
 
-				AllZone.Stack.addSimultaneousStackEntry(ability);
+				AllZone.getStack().addSimultaneousStackEntry(ability);
 			}
 		}
 	}//playCard_Ichneumon_Druid()
@@ -418,13 +418,13 @@ public class GameActionUtil {
 				{
 					Card target = getTargetCard();
 					if (CardFactoryUtil.canTarget(card, target) && AllZoneUtil.isCardInPlay(target))
-						AllZone.GameAction.exile(target);
+						AllZone.getGameAction().exile(target);
 				}
 				
 				public void chooseTargetAI()
 				{
-					CardList humanList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-					CardList compList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+					CardList humanList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+					CardList compList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 					
 					CardListFilter filter = new CardListFilter(){
 						public boolean addCard(Card c)
@@ -470,11 +470,11 @@ public class GameActionUtil {
 
 			ability.setBeforePayMana(runtime);
 			if (controller.isHuman())
-				AllZone.GameAction.playSpellAbility(ability);
+				AllZone.getGameAction().playSpellAbility(ability);
 			else {
 				ability.chooseTargetAI();
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -492,7 +492,7 @@ public class GameActionUtil {
 				@Override
 				public void resolve() {
 					// sac standstill
-					AllZone.GameAction.sacrifice(card);
+					AllZone.getGameAction().sacrifice(card);
 					// player who didn't play spell, draws 3 cards
 					drawer.drawCards(3);
 				}
@@ -503,7 +503,7 @@ public class GameActionUtil {
 			sb.append(" played a spell, ").append(drawer).append(" draws three cards.");
 			ability2.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
+            AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 		}
 
@@ -532,7 +532,7 @@ public class GameActionUtil {
 					sb.append(c.getController()).append(" loses 1 life.");
 					ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
 				}
 			}//if
@@ -543,14 +543,14 @@ public class GameActionUtil {
 
 	public static void payManaDuringAbilityResolve(String message, String manaCost, Command paid, Command unpaid){
 		// temporarily disable the Resolve flag, so the user can payMana for the resolving Ability
-		boolean bResolving = AllZone.Stack.getResolving();
-		AllZone.Stack.setResolving(false);
-		AllZone.InputControl.setInput(new Input_PayManaCost_Ability(message, manaCost, paid, unpaid));
-		AllZone.Stack.setResolving(bResolving);
+		boolean bResolving = AllZone.getStack().getResolving();
+		AllZone.getStack().setResolving(false);
+		AllZone.getInputControl().setInput(new Input_PayManaCost_Ability(message, manaCost, paid, unpaid));
+		AllZone.getStack().setResolving(bResolving);
 	}
 
 	private static void upkeep_Braid_Of_Fire(){
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList braids = AllZoneUtil.getPlayerCardsInPlay(player, "Braid of Fire");
 		
@@ -574,20 +574,20 @@ public class GameActionUtil {
 						abMana.produceMana();
 					}
 					else{
-						AllZone.GameAction.sacrifice(c);
+						AllZone.getGameAction().sacrifice(c);
 					}
 						
 				}
 			};
 			upkeepAbility.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(upkeepAbility);
+            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 
 		}
 	} //upkeep_Braid_of_Fire
 
 	public static void upkeep_CumulativeUpkeepCost() {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.Phase.getPlayerTurn());
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
 		list = list.filter(new CardListFilter() {
 			public boolean addCard(Card c) {
 				ArrayList<String> a = c.getKeyword();
@@ -614,7 +614,7 @@ public class GameActionUtil {
 				private static final long serialVersionUID = -8737736216222268696L;
 
 				public void execute() {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			};
 
@@ -634,18 +634,18 @@ public class GameActionUtil {
 						if(ComputerUtil.canPayCost(aiPaid)) 
 							ComputerUtil.playNoStack(aiPaid);
 						else 
-							AllZone.GameAction.sacrifice(c);
+							AllZone.getGameAction().sacrifice(c);
 				}
 			};
 			upkeepAbility.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(upkeepAbility);
+            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 
 		}
 	}//upkeepCost
 
 	private static void upkeep_Echo() {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.Phase.getPlayerTurn());
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
 		list = list.filter(new CardListFilter() {
 			public boolean addCard(Card c) {
 				return c.hasKeyword("(Echo unpaid)");
@@ -662,7 +662,7 @@ public class GameActionUtil {
 					private static final long serialVersionUID = -7354791599039157375L;
 
 					public void execute() {
-						AllZone.GameAction.sacrifice(c);
+						AllZone.getGameAction().sacrifice(c);
 					}
 				};
 				
@@ -682,13 +682,13 @@ public class GameActionUtil {
 							if(ComputerUtil.canPayCost(aiPaid)) 
 								ComputerUtil.playNoStack(aiPaid);
 							else 
-								AllZone.GameAction.sacrifice(c);
+								AllZone.getGameAction().sacrifice(c);
 						}
 					}
 				};
 				sacAbility.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(sacAbility);
+                AllZone.getStack().addSimultaneousStackEntry(sacAbility);
 
 
 				c.removeIntrinsicKeyword("(Echo unpaid)");
@@ -697,7 +697,7 @@ public class GameActionUtil {
 	}//echo
 
 	private static void upkeep_Slowtrips() {  // Draw a card at the beginning of the next turn's upkeep.
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		
 		CardList list = player.getSlowtripList();
 		
@@ -713,7 +713,7 @@ public class GameActionUtil {
 			};
 			slowtrip.setStackDescription(card.getName() + " - Draw a card");
 
-			AllZone.Stack.addSimultaneousStackEntry(slowtrip);
+			AllZone.getStack().addSimultaneousStackEntry(slowtrip);
 
 			
 		}
@@ -736,14 +736,14 @@ public class GameActionUtil {
 			};
 			slowtrip.setStackDescription(card.getName() + " - Draw a card");
 
-            AllZone.Stack.addSimultaneousStackEntry(slowtrip);
+            AllZone.getStack().addSimultaneousStackEntry(slowtrip);
 
 		}
 		opponent.clearSlowtripList();
 	}
 
 	private static void upkeep_UpkeepCost() {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.Phase.getPlayerTurn());
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
 
 		for(int i = 0; i < list.size(); i++) {
 			final Card c = list.get(i);
@@ -765,7 +765,7 @@ public class GameActionUtil {
 								Player player = c.getController();
 								player.addDamage(7, c);
 							}
-							AllZone.GameAction.destroy(c);
+							AllZone.getGameAction().destroy(c);
 						}
 					};
 		
@@ -787,13 +787,13 @@ public class GameActionUtil {
 										&& ! c.hasKeyword("Indestructible")) 
 									ComputerUtil.playNoStack(aiPaid);
 								else 
-									AllZone.GameAction.destroy(c);
+									AllZone.getGameAction().destroy(c);
 							}		
 						}
 					};
 					upkeepAbility.setStackDescription(sb.toString());
 		
-		            AllZone.Stack.addSimultaneousStackEntry(upkeepAbility);
+		            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 				}//destroy
 				
 				//sacrifice
@@ -806,7 +806,7 @@ public class GameActionUtil {
 						private static final long serialVersionUID = 5612348769167529102L;
 		
 						public void execute() {
-							AllZone.GameAction.sacrifice(c);
+							AllZone.getGameAction().sacrifice(c);
 						}
 					};
 		
@@ -826,13 +826,13 @@ public class GameActionUtil {
 							{
 								if(ComputerUtil.canPayCost(aiPaid)) 
 									ComputerUtil.playNoStack(aiPaid);
-								else AllZone.GameAction.sacrifice(c);
+								else AllZone.getGameAction().sacrifice(c);
 							}		
 						}
 					};
 					upkeepAbility.setStackDescription(sb.toString());
 		
-		            AllZone.Stack.addSimultaneousStackEntry(upkeepAbility);
+		            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 				}//sacrifice
 			}
 
@@ -841,7 +841,7 @@ public class GameActionUtil {
 
 
 	private static void upkeep_DamageUpkeepCost() {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.Phase.getPlayerTurn());
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
 		list = list.filter(new CardListFilter() {
 			public boolean addCard(Card c) {
 				ArrayList<String> a = c.getKeyword();
@@ -892,13 +892,13 @@ public class GameActionUtil {
 					else //computer
 					{
 						if(ComputerUtil.canPayCost(aiPaid)) ComputerUtil.playNoStack(aiPaid);
-						else AllZone.GameAction.sacrifice(c);
+						else AllZone.getGameAction().sacrifice(c);
 					}
 				}
 			};
 			upkeepAbility.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(upkeepAbility);
+            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 
 		}
 	}//damageUpkeepCost
@@ -918,7 +918,7 @@ public class GameActionUtil {
 		 * nonartifact creature that player controls of his or her
 		 * choice. It can't be regenerated.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final CardList the = AllZoneUtil.getCardsInPlay("The Abyss");
 		final CardList magus = AllZoneUtil.getCardsInPlay("Magus of the Abyss");
 		
@@ -934,17 +934,17 @@ public class GameActionUtil {
 				public void resolve() {
 					if(player.isHuman()) {
 						if(abyss_getTargets(player, abyss).size() > 0) {
-							AllZone.InputControl.setInput( new Input() {
+							AllZone.getInputControl().setInput( new Input() {
 								private static final long serialVersionUID = 4820011040853968644L;
 								public void showMessage() {
-									AllZone.Display.showMessage(abyss.getName()+" - Select one nonartifact creature to destroy");
+									AllZone.getDisplay().showMessage(abyss.getName()+" - Select one nonartifact creature to destroy");
 									ButtonUtil.disableAll();
 								}
 								public void selectCard(Card selected, PlayerZone zone) {
 									//probably need to restrict by controller also
 									if(selected.isCreature() && !selected.isArtifact() && CardFactoryUtil.canTarget(abyss, selected)
 											&& zone.is(Constant.Zone.Battlefield) && zone.getPlayer().isHuman()) {
-										AllZone.GameAction.destroyNoRegeneration(selected);
+										AllZone.getGameAction().destroyNoRegeneration(selected);
 										stop();
 									}
 								}//selectCard()
@@ -955,14 +955,14 @@ public class GameActionUtil {
 						CardList targets = abyss_getTargets(player,abyss);
 						CardList indestruct = targets.getKeyword("Indestructible");
 						if(indestruct.size() > 0) {
-							AllZone.GameAction.destroyNoRegeneration(indestruct.get(0));
+							AllZone.getGameAction().destroyNoRegeneration(indestruct.get(0));
 						}
 						else {
 							Card target = CardFactoryUtil.AI_getWorstCreature(targets);
 							if(null == target) {
 								//must be nothing valid to destroy
 							}
-							else AllZone.GameAction.destroyNoRegeneration(target);
+							else AllZone.getGameAction().destroyNoRegeneration(target);
 						}
 					}
 				}//resolve
@@ -973,7 +973,7 @@ public class GameActionUtil {
 			sacrificeCreature.setStackDescription(sb.toString());
 			
 			if(abyss_getTargets(player,abyss).size() > 0)
-                AllZone.Stack.addSimultaneousStackEntry(sacrificeCreature);
+                AllZone.getStack().addSimultaneousStackEntry(sacrificeCreature);
 
 		}//end for
 	}//The Abyss
@@ -990,7 +990,7 @@ public class GameActionUtil {
 		 * At the beginning of each player's upkeep, that player
 		 * sacrifices a land.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final CardList vortices = AllZoneUtil.getCardsInPlay("Mana Vortex");
 		
 		for(Card c:vortices) {
@@ -1005,7 +1005,7 @@ public class GameActionUtil {
 					//if no lands in play, sacrifice all "Mana Vortex"s
 					if(AllZoneUtil.getLandsInPlay().size() == 0) {
 						for(Card d:vortices) {
-							AllZone.GameAction.sacrifice(d);
+							AllZone.getGameAction().sacrifice(d);
 						}
 						return;
 					}
@@ -1016,7 +1016,7 @@ public class GameActionUtil {
 			sb.append(vortex.getName()).append(" - "+player+" sacrifices a land.");
 			sacrificeLand.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(sacrificeLand);
+            AllZone.getStack().addSimultaneousStackEntry(sacrificeLand);
 
 		}//end for
 	}//Mana_Vortex
@@ -1028,7 +1028,7 @@ public class GameActionUtil {
 		 * At the beginning of your upkeep, you may sacrifice an artifact. If
 		 * you don't, tap Yawgmoth Demon and it deals 2 damage to you.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final CardList cards = AllZoneUtil.getPlayerCardsInPlay(player, "Yawgmoth Demon");
 
 		for(int i = 0; i < cards.size(); i++) {
@@ -1041,10 +1041,10 @@ public class GameActionUtil {
 					artifacts = artifacts.filter(AllZoneUtil.artifacts);
 					
 					if(player.isHuman()) {
-						AllZone.InputControl.setInput( new Input() {
+						AllZone.getInputControl().setInput( new Input() {
 							private static final long serialVersionUID = -1698502376924356936L;
 							public void showMessage() {
-								AllZone.Display.showMessage("Yawgmoth Demon - Select one artifact to sacrifice or be dealt 2 damage");
+								AllZone.getDisplay().showMessage("Yawgmoth Demon - Select one artifact to sacrifice or be dealt 2 damage");
 								ButtonUtil.enableOnlyCancel();
 							}
 							public void selectButtonCancel() {
@@ -1055,7 +1055,7 @@ public class GameActionUtil {
 								//probably need to restrict by controller also
 								if(artifact.isArtifact() && zone.is(Constant.Zone.Battlefield)
 										&& zone.getPlayer().isHuman()) {
-									AllZone.GameAction.sacrifice(artifact);
+									AllZone.getGameAction().sacrifice(artifact);
 									stop();
 								}
 							}//selectCard()
@@ -1066,7 +1066,7 @@ public class GameActionUtil {
 						if(null == target) {
 							tapAndDamage(player);
 						}
-						else AllZone.GameAction.sacrifice(target);
+						else AllZone.getGameAction().sacrifice(target);
 					}
 				}//resolve
 
@@ -1081,7 +1081,7 @@ public class GameActionUtil {
 			sb.append(c.getName()).append(" becomes tapped and deals 2 damage to you.");
 			sacrificeArtifact.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(sacrificeArtifact);
+            AllZone.getStack().addSimultaneousStackEntry(sacrificeArtifact);
 
 		}//end for
 	}
@@ -1091,7 +1091,7 @@ public class GameActionUtil {
 		 * At the beginning of your upkeep, sacrifice a creature other than
 		 * Lord of the Pit. If you can't, Lord of the Pit deals 7 damage to you.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList lords = AllZoneUtil.getPlayerCardsInPlay(player, "Lord of the Pit");
 		lords.addAll(AllZoneUtil.getPlayerCardsInPlay(player, "Liege of the Pit"));
 		final CardList cards = lords;
@@ -1107,11 +1107,11 @@ public class GameActionUtil {
 					CardList creatures = AllZoneUtil.getCreaturesInPlay(player);
 					creatures.remove(c);
 					if(player.isHuman()) {
-        				AllZone.InputControl.setInput(CardFactoryUtil.input_sacrificePermanent(creatures, c.getName()+" - Select a creature to sacrifice."));
+        				AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanent(creatures, c.getName()+" - Select a creature to sacrifice."));
         			}
 					else { //computer
 						Card target = CardFactoryUtil.AI_getWorstCreature(creatures);
-						AllZone.GameAction.sacrifice(target);
+						AllZone.getGameAction().sacrifice(target);
 					}
 				}//resolve
 			};
@@ -1132,7 +1132,7 @@ public class GameActionUtil {
 				sb.append(c.getName()).append(" - deals 7 damage to controller");
 				sevenDamage.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(sevenDamage);
+                AllZone.getStack().addSimultaneousStackEntry(sevenDamage);
 
 			}
 			else {
@@ -1141,7 +1141,7 @@ public class GameActionUtil {
 				sb.append(c.getName()).append(" - sacrifice a creature.");
 				sacrificeCreature.setStackDescription(sb.toString());
 				
-				AllZone.Stack.addSimultaneousStackEntry(sacrificeCreature);
+				AllZone.getStack().addSimultaneousStackEntry(sacrificeCreature);
 
 			}
 		}//end for
@@ -1153,7 +1153,7 @@ public class GameActionUtil {
 		 * least power. It can't be regenerated. If two or more creatures
 		 * are tied for least power, you choose one of them.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList drops = AllZoneUtil.getPlayerCardsInPlay(player, "Drop of Honey");
 		drops.addAll(AllZoneUtil.getPlayerCardsInPlay(player, "Porphyry Nodes"));
 		final CardList cards = drops;
@@ -1169,11 +1169,11 @@ public class GameActionUtil {
 						CardListUtil.sortAttackLowFirst(creatures);
 						int power = creatures.get(0).getNetAttack();
 						if(player.isHuman()) {
-							AllZone.InputControl.setInput(CardFactoryUtil.input_destroyNoRegeneration(getLowestPowerList(creatures), "Select creature with power: "+power+" to sacrifice."));
+							AllZone.getInputControl().setInput(CardFactoryUtil.input_destroyNoRegeneration(getLowestPowerList(creatures), "Select creature with power: "+power+" to sacrifice."));
 						}
 						else { //computer
 							Card compyTarget = getCompyCardToDestroy(creatures);
-							AllZone.GameAction.destroyNoRegeneration(compyTarget);
+							AllZone.getGameAction().destroyNoRegeneration(compyTarget);
 						}
 					}
 				}//resolve
@@ -1211,7 +1211,7 @@ public class GameActionUtil {
 			sb.append(c.getName()).append(" - destroy 1 creature with lowest power.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//end for
 	}// upkeep_Drop_of_Honey()
@@ -1223,7 +1223,7 @@ public class GameActionUtil {
 		 * tap Demonic Hordes and sacrifice a land of an opponent's choice.
 		 */
 		
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final CardList cards = AllZoneUtil.getPlayerCardsInPlay(player, "Demonic Hordes");
 		
 		for(int i = 0; i < cards.size(); i++) {
@@ -1239,12 +1239,12 @@ public class GameActionUtil {
 						c.tap();
 						if (c.getController().isComputer()){
 							if (playerLand.size() > 0)
-								AllZone.InputControl.setInput(CardFactoryUtil.input_sacrificePermanent(playerLand, c.getName()+" - Select a land to sacrifice."));
+								AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanent(playerLand, c.getName()+" - Select a land to sacrifice."));
 						}
 						else {
 								Card target = CardFactoryUtil.AI_getBestLand(playerLand);
 								
-								AllZone.GameAction.sacrifice(target);
+								AllZone.getGameAction().sacrifice(target);
 						}
 					} //end resolve()
 			}; //end noPay ability
@@ -1264,7 +1264,7 @@ public class GameActionUtil {
                     }; //end pay ability
                     pay.setStackDescription("Demonic Hordes - Upkeep Cost");
 
-                    AllZone.Stack.addSimultaneousStackEntry(pay);
+                    AllZone.getStack().addSimultaneousStackEntry(pay);
 
                 } //end choice
                 else {
@@ -1272,7 +1272,7 @@ public class GameActionUtil {
                     sb.append(c.getName()).append(" - is tapped and you must sacrifice a land of opponent's choice");
                     noPay.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(noPay);
+                    AllZone.getStack().addSimultaneousStackEntry(noPay);
 
                 }
             } //end human
@@ -1286,11 +1286,11 @@ public class GameActionUtil {
 					};
 					computerPay.setStackDescription("Computer pays Demonic Hordes upkeep cost");
 
-                    AllZone.Stack.addSimultaneousStackEntry(computerPay);
+                    AllZone.getStack().addSimultaneousStackEntry(computerPay);
 
 				} 
 				else {
-                    AllZone.Stack.addSimultaneousStackEntry(noPay);
+                    AllZone.getStack().addSimultaneousStackEntry(noPay);
 
 				}
 			} //end computer
@@ -1305,7 +1305,7 @@ public class GameActionUtil {
 
     public static void endOfTurn_Wall_Of_Reverence()
     {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Wall of Reverence");
 
         Ability ability;
@@ -1346,18 +1346,18 @@ public class GameActionUtil {
             sb.append(card).append(" - ").append(player).append(" gains life equal to target creature's power.");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }
     }//endOfTurn_Wall_Of_Reverence()
 	
 	public static void endOfTurn_Predatory_Advantage()
 	{
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player.getOpponent(), "Predatory Advantage");
 		for (int i = 0; i < list.size(); i++) {
             final Player controller = list.get(i).getController();
-		    if((player.isHuman() && Phase.PlayerCreatureSpellCount == 0) || (player.isComputer() && Phase.ComputerCreatureSpellCount == 0))
+		    if((player.isHuman() && Phase.getPlayerCreatureSpellCount() == 0) || (player.isComputer() && Phase.getComputerCreatureSpellCount() == 0))
             {
                 Ability abTrig = new Ability(list.get(i),"0") {
                     public void resolve()
@@ -1368,14 +1368,14 @@ public class GameActionUtil {
                 abTrig.setTrigger(true);
                 abTrig.setStackDescription("At the beginning of each opponent's end step, if that player didn't cast a creature spell this turn, put a 2/2 green Lizard creature token onto the battlefield.");
 
-                AllZone.GameAction.playSpellAbility(abTrig);
+                AllZone.getGameAction().playSpellAbility(abTrig);
             }
 		}
 	}
 	
 	public static void endOfTurn_Lighthouse_Chronologist() 
 	{
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final Player opponent = player.getOpponent();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(opponent);
 		
@@ -1395,7 +1395,7 @@ public class GameActionUtil {
 			{
 				public void resolve()
 				{
-					 AllZone.Phase.addExtraTurn(card.getController());
+					 AllZone.getPhase().addExtraTurn(card.getController());
 				}
 			};
 			
@@ -1403,14 +1403,14 @@ public class GameActionUtil {
 			sb.append(card).append(" - ").append(card.getController()).append(" takes an extra turn.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}
 	}
 
 	public static void endOfTurn_Krovikan_Horror()
 	{
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final Player opponent = player.getOpponent();
 		horrorReturn(player);
 		horrorReturn(opponent);
@@ -1431,7 +1431,7 @@ public class GameActionUtil {
                 if (player.isHuman()) {
                     String question = "Return Krovikan Horror to your hand?";
                     if (GameActionUtil.showYesNoDialog(c, question)) {
-                        AllZone.GameAction.moveToHand(c);
+                        AllZone.getGameAction().moveToHand(c);
                         grave.remove(c);
                     }
                     // increment counter to next occurance of Krovikan Horror
@@ -1441,7 +1441,7 @@ public class GameActionUtil {
                 }
                 // player is computer
                 else {
-                    AllZone.GameAction.moveToHand(c);
+                    AllZone.getGameAction().moveToHand(c);
                     grave.remove(c);
                 }
             }
@@ -1453,7 +1453,7 @@ public class GameActionUtil {
 
 	public static void removeAttackedBlockedThisTurn() {
 		// resets the status of attacked/blocked this turn
-		Player player = AllZone.Phase.getPlayerTurn();
+		Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getCreaturesInPlay(player);
 
 		for(int i = 0; i < list.size(); i++) {
@@ -1465,12 +1465,12 @@ public class GameActionUtil {
 			if(c.getCreatureGotBlockedThisCombat()) c.setCreatureGotBlockedThisCombat(false);
 		}
 		
-		AllZone.GameInfo.setAssignedFirstStrikeDamageThisCombat(false);
-		AllZone.GameInfo.setResolvedFirstStrikeDamageThisCombat(false);
+		AllZone.getGameInfo().setAssignedFirstStrikeDamageThisCombat(false);
+		AllZone.getGameInfo().setResolvedFirstStrikeDamageThisCombat(false);
 	}
 	
     public static boolean showYesNoDialog(Card c, String question) {
-        AllZone.Display.setCard(c);
+        AllZone.getDisplay().setCard(c);
         StringBuilder title = new StringBuilder();
         title.append(c.getName()).append(" - Ability");
         
@@ -1514,7 +1514,7 @@ public class GameActionUtil {
 	}
 	
 	private static boolean showLandfallDialog(Card c) {
-		AllZone.Display.setCard(c);
+		AllZone.getDisplay().setCard(c);
 		String[] choices = {"Yes", "No"};
 
 		Object q = null;
@@ -1547,7 +1547,7 @@ public class GameActionUtil {
 		ability.setStackDescription(sb.toString());
 
 		if(c.getController().isHuman()) {
-			if(showLandfallDialog(c)) AllZone.Stack.addSimultaneousStackEntry(ability);
+			if(showLandfallDialog(c)) AllZone.getStack().addSimultaneousStackEntry(ability);
 		}
 		else{
 			// TODO: once AI has a mana pool he should choose add Ability and choose a mana as appropriate
@@ -1589,7 +1589,7 @@ public class GameActionUtil {
             sb.append(affected.getName()+" - Deals ").append(stuffyDamage).append(" damage to ").append(opponent);
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }
         
@@ -1605,7 +1605,7 @@ public class GameActionUtil {
         	sb2.append(source.getName()).append(" - gets a +1/+1 counter");
         	ability2.setStackDescription(sb2.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
+            AllZone.getStack().addSimultaneousStackEntry(ability2);
 
         }
         
@@ -1623,19 +1623,19 @@ public class GameActionUtil {
         	int amount = affected.getAmountOfKeyword("Whenever CARDNAME is dealt damage, put a +1/+1 counter on it.");
             
             for(int i=0 ; i < amount ; i++)
-                AllZone.Stack.addSimultaneousStackEntry(ability2);
+                AllZone.getStack().addSimultaneousStackEntry(ability2);
 
         }
         
         if(affected.hasStartOfKeyword("When CARDNAME is dealt damage, destroy it.")) {
 	        final Ability ability = new Ability(source, "0") {
 	        	@Override
-	        	public void resolve() { AllZone.GameAction.destroy(affected); }
+	        	public void resolve() { AllZone.getGameAction().destroy(affected); }
 	        };
 	        
 	        final Ability ability2 = new Ability(source, "0") {
 	        	@Override
-	        	public void resolve() { AllZone.GameAction.destroyNoRegeneration(affected); }
+	        	public void resolve() { AllZone.getGameAction().destroyNoRegeneration(affected); }
 	        };
 	    
 	        StringBuilder sb = new StringBuilder();
@@ -1647,18 +1647,18 @@ public class GameActionUtil {
 	        	int amount = affected.getAmountOfKeyword("When CARDNAME is dealt damage, destroy it. It can't be regenerated.");
 	            
 	            for(int i=0 ; i < amount ; i++)
-                    AllZone.Stack.addSimultaneousStackEntry(ability2);
+                    AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 	    	}
 	    	int amount = affected.getAmountOfKeyword("When CARDNAME is dealt damage, destroy it.");
             
             for(int i=1 ; i < amount ; i++)
-                AllZone.Stack.addSimultaneousStackEntry(ability); AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability); AllZone.getStack().addSimultaneousStackEntry(ability);
         }
         
         if (source.hasKeyword("Deathtouch") 
         		&& affected.isCreature()) 
-        	AllZone.GameAction.destroy(affected);
+        	AllZone.getGameAction().destroy(affected);
 
 
 	}
@@ -1672,7 +1672,7 @@ public class GameActionUtil {
 				if(target != null){
                     if(AllZoneUtil.isCardInPlayerGraveyard(src.getController(), target)) {
                         PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, src.getController());
-                        AllZone.GameAction.moveTo(hand, target);
+                        AllZone.getGameAction().moveTo(hand, target);
                     }
 				}
 				
@@ -1688,7 +1688,7 @@ public class GameActionUtil {
                  list = list.filter(AllZoneUtil.creatures);
                  
                  if(list.isEmpty()) {
-                     AllZone.Stack.addSimultaneousStackEntry(ability);
+                     AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 	 return;
                  }
@@ -1697,7 +1697,7 @@ public class GameActionUtil {
                      Object o = GuiUtils.getChoiceOptional("Select target card", list.toArray());
                      if(o != null) {
                          ability.setTargetCard((Card) o);
-                         AllZone.Stack.addSimultaneousStackEntry(ability);
+                         AllZone.getStack().addSimultaneousStackEntry(ability);
 
                      }
                  }//if
@@ -1705,7 +1705,7 @@ public class GameActionUtil {
                  {
                      Card best = CardFactoryUtil.AI_getBestCreature(list);
                      ability.setTargetCard(best);
-                     AllZone.Stack.addSimultaneousStackEntry(ability);
+                     AllZone.getStack().addSimultaneousStackEntry(ability);
 
                  }
              }//execute()
@@ -1747,7 +1747,7 @@ public class GameActionUtil {
                 }
                 ability2.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability2);
+                AllZone.getStack().addSimultaneousStackEntry(ability2);
 
             }
         }
@@ -1787,7 +1787,7 @@ public class GameActionUtil {
 					
 					//Backfire triggers only if its controller is damaged
 					if(aura.getController().isPlayer(player))
-                        AllZone.Stack.addSimultaneousStackEntry(ability);
+                        AllZone.getStack().addSimultaneousStackEntry(ability);
 
 				}
 			}//auras > 0
@@ -1830,7 +1830,7 @@ public class GameActionUtil {
 				sb.append(" sacrifices ").append(damage).append(" nontoken Permanents.");
 				ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
     	}
@@ -1838,8 +1838,8 @@ public class GameActionUtil {
     	if(c.getName().equals("Whirling Dervish") || c.getName().equals("Dunerider Outlaw")) 
 			playerCombatDamage_Whirling_Dervish(c);
     	
-    	if (player.isPlayer(AllZone.HumanPlayer)) c.setDealtDmgToHumanThisTurn(true);
-    	if (player.isPlayer(AllZone.ComputerPlayer)) c.setDealtDmgToComputerThisTurn(true);
+    	if (player.isPlayer(AllZone.getHumanPlayer())) c.setDealtDmgToHumanThisTurn(true);
+    	if (player.isPlayer(AllZone.getComputerPlayer())) c.setDealtDmgToComputerThisTurn(true);
     }
     
     
@@ -1855,13 +1855,13 @@ public class GameActionUtil {
     				@Override
     				public void resolve() {
     					if(AllZoneUtil.isCardInPlay(zone)) {
-        					AllZone.GameAction.changeController(new CardList(zone), zone.getController(), c.getController());
+        					AllZone.getGameAction().changeController(new CardList(zone), zone.getController(), c.getController());
     					}
     				}
     			};
     			ability.setStackDescription(zone+" - "+c.getController()+" gains control of "+zone);
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
     		}
     	}
@@ -1882,9 +1882,9 @@ public class GameActionUtil {
 					final Player opponent = player.getOpponent();
 
 					if(opponent.isHuman()) 
-						AllZone.HumanPlayer.addPoisonCounters(poison);
+						AllZone.getHumanPlayer().addPoisonCounters(poison);
 					else
-						AllZone.ComputerPlayer.addPoisonCounters(poison);
+						AllZone.getComputerPlayer().addPoisonCounters(poison);
 				}
 			};
 
@@ -1902,7 +1902,7 @@ public class GameActionUtil {
 			for (int i=0;i<keywords.size();i++)
 			{
 				if (keywords.get(i).startsWith("Poisonous"))
-					AllZone.Stack.addSimultaneousStackEntry(ability);
+					AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -1948,7 +1948,7 @@ public class GameActionUtil {
 				};
 				doubleLife.setStackDescription(aura.getName()+" - "+enchanted.getController()+" doubles his or her life total.");
 
-                AllZone.Stack.addSimultaneousStackEntry(doubleLife);
+                AllZone.getStack().addSimultaneousStackEntry(doubleLife);
 
 			}
 		}
@@ -1968,21 +1968,21 @@ public class GameActionUtil {
 		};
 		ability.setStackDescription("Farsight Mask - You may draw a card.");
 
-		AllZone.Stack.addSimultaneousStackEntry(ability);
+		AllZone.getStack().addSimultaneousStackEntry(ability);
 
 	}
 
 
 	private static void playerCombatDamage_Treva(Card c) {
 		SpellAbility[] sa = c.getSpellAbility();
-		if(c.getController().isHuman()) AllZone.GameAction.playSpellAbility(sa[1]);
+		if(c.getController().isHuman()) AllZone.getGameAction().playSpellAbility(sa[1]);
 		else ComputerUtil.playNoStack(sa[1]);
 
 	}
 
 	private static void playerCombatDamage_Rith(Card c) {
 		SpellAbility[] sa = c.getSpellAbility();
-		if(c.getController().isHuman()) AllZone.GameAction.playSpellAbility(sa[1]);
+		if(c.getController().isHuman()) AllZone.getGameAction().playSpellAbility(sa[1]);
 		else ComputerUtil.playNoStack(sa[1]);
 	}
 	
@@ -2006,11 +2006,11 @@ public class GameActionUtil {
 				private static final long serialVersionUID = 2200679209414069339L;
 
 				public void execute() {
-					AllZone.Stack.addSimultaneousStackEntry(ability2);
+					AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 				}
 			};
-			AllZone.EndOfTurn.addAt(dealtDmg);
+			AllZone.getEndOfTurn().addAt(dealtDmg);
 
 		} // if
 	}
@@ -2026,17 +2026,17 @@ public class GameActionUtil {
 					int x = 0;
 					int y = 0;
 					if(player.isHuman()) {
-						y = (AllZone.ComputerPlayer.getLife() % 2);
+						y = (AllZone.getComputerPlayer().getLife() % 2);
 						if(!(y == 0)) y = 1;
 						else y = 0;
 
-						x = (AllZone.ComputerPlayer.getLife() / 2) + y;
+						x = (AllZone.getComputerPlayer().getLife() / 2) + y;
 					} else {
-						y = (AllZone.HumanPlayer.getLife() % 2);
+						y = (AllZone.getHumanPlayer().getLife() % 2);
 						if(!(y == 0)) y = 1;
 						else y = 0;
 
-						x = (AllZone.HumanPlayer.getLife() / 2) + y;
+						x = (AllZone.getHumanPlayer().getLife() / 2) + y;
 					}
 					opponent.loseLife(x, F_card);
 
@@ -2048,7 +2048,7 @@ public class GameActionUtil {
 			sb.append(" loses half his or her life, rounded up.");
 			ability2.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
+            AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 		}
 	}
@@ -2095,7 +2095,7 @@ public class GameActionUtil {
 
 					for(int j = 0; j < max; j++) {
 						Card c = libList.get(j);
-						AllZone.GameAction.exile(c);
+						AllZone.getGameAction().exile(c);
 					}
 				}
 			};// ability
@@ -2106,7 +2106,7 @@ public class GameActionUtil {
 			sb.append("If two or more of those cards have the same name, repeat this process.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}
 	}
@@ -2132,7 +2132,7 @@ public class GameActionUtil {
 		sb.append(c.getName()).append(" - ").append(player).append(" puts copy onto the battlefield.");
 		ability2.setStackDescription(sb.toString());
 
-        AllZone.Stack.addSimultaneousStackEntry(ability2);
+        AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 	}
 	
@@ -2156,7 +2156,7 @@ public class GameActionUtil {
                         return;
 					Card top = lib.get(0);
 					player[0].gainLife(CardUtil.getConvertedManaCost(top.getManaCost()), crd);
-					AllZone.GameAction.moveToHand(top);
+					AllZone.getGameAction().moveToHand(top);
 				}
 			};// ability2
 
@@ -2168,7 +2168,7 @@ public class GameActionUtil {
 			sb.append("He gain life equal to its converted mana cost.");
 			ability2.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
+            AllZone.getStack().addSimultaneousStackEntry(ability2);
 
 		}
 	}
@@ -2178,7 +2178,7 @@ public class GameActionUtil {
 		if (alurens.size() == 0)
 			return;
 		
-		CardList inHand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+		CardList inHand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
 		inHand = inHand.getType("Creature");
 		CardList playable = new CardList();
 
@@ -2187,12 +2187,12 @@ public class GameActionUtil {
 				playable.add(c);
 
 		for(Card c : playable)
-			AllZone.GameAction.playSpellAbilityForFree(c.getSpellPermanent());
+			AllZone.getGameAction().playSpellAbilityForFree(c.getSpellPermanent());
 	}
 
 		
 	private static void upkeep_Dance_of_the_Dead() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		
 		CardList dances = AllZoneUtil.getPlayerCardsInPlay(player, "Dance of the Dead");
 		for(Card dance:dances) {
@@ -2217,13 +2217,13 @@ public class GameActionUtil {
 							sb.append("Untap ").append(creature);
 							untap.setStackDescription(sb.toString());
 							
-							AllZone.GameAction.playSpellAbility(untap);
+							AllZone.getGameAction().playSpellAbility(untap);
 						}
 					}
 				};
 				vaultChoice.setStackDescription(source.getName()+" - Untap creature during Upkeep?");
 
-                AllZone.Stack.addSimultaneousStackEntry(vaultChoice);
+                AllZone.getStack().addSimultaneousStackEntry(vaultChoice);
 
 			}
 		}
@@ -2231,7 +2231,7 @@ public class GameActionUtil {
 	
 	private static void upkeep_Farmstead() {
 		final String auraName = "Farmstead";
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
@@ -2260,7 +2260,7 @@ public class GameActionUtil {
 							sb.append(land).append(" - gain 1 life.");
 							gain.setStackDescription(sb.toString());
 
-							AllZone.GameAction.playSpellAbility(gain);
+							AllZone.getGameAction().playSpellAbility(gain);
 						}
 					}
 				};
@@ -2269,7 +2269,7 @@ public class GameActionUtil {
 				sb.append(land.getName()).append(" -  activate Life gain ability?");
 				ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -2281,7 +2281,7 @@ public class GameActionUtil {
     
     
     private static void upkeep_Ink_Dissolver() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         final Player opponent = player.getOpponent();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Ink Dissolver");
         
@@ -2349,14 +2349,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Ink_Dissolver()
     
     
     private static void upkeep_Kithkin_Zephyrnaut() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Kithkin Zephyrnaut");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -2422,7 +2422,7 @@ public class GameActionUtil {
                                 k.removeExtrinsicKeyword("Vigilance");
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }// resolve()
                 
@@ -2439,14 +2439,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Kithkin_Zephyrnaut()
     
     
     private static void upkeep_Leaf_Crowned_Elder() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Leaf-Crowned Elder");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -2498,7 +2498,7 @@ public class GameActionUtil {
                     if (wantToPlayCard) {
                         if (player.isHuman()) {
                             Card c = library.get(0);
-                            AllZone.GameAction.playCardNoCost(c);
+                            AllZone.getGameAction().playCardNoCost(c);
                         }
                         // player isComputer()
                         else {
@@ -2528,14 +2528,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Leaf_Crowned_Elder()
     
     
     private static void upkeep_Mudbutton_Clanger() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Mudbutton Clanger");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -2596,7 +2596,7 @@ public class GameActionUtil {
                                 k.addTempDefenseBoost(-1);
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }// resolve()
                 
@@ -2613,14 +2613,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Mudbutton_Clanger()
     
     
     private static void upkeep_Nightshade_Schemers() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Nightshade Schemers");
         final Player opponent = player.getOpponent();
         
@@ -2686,14 +2686,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Nightshade_Schemers()
     
     
     private static void upkeep_Pyroclast_Consul() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Pyroclast Consul");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -2719,11 +2719,11 @@ public class GameActionUtil {
                     boolean wantDamageCreatures = false;
                     String[] smallCreatures = { "Creature.toughnessLE2" };
                     
-                    CardList humanCreatures = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+                    CardList humanCreatures = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
                     humanCreatures = humanCreatures.getValidCards(smallCreatures,k.getController(),k);
                     humanCreatures = humanCreatures.getNotKeyword("Indestructible");
                     
-                    CardList computerCreatures = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+                    CardList computerCreatures = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
                     computerCreatures = computerCreatures.getValidCards(smallCreatures,k.getController(),k);
                     computerCreatures = computerCreatures.getNotKeyword("Indestructible");
                     
@@ -2774,14 +2774,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Pyroclast_Consul()
     
     
     private static void upkeep_Sensation_Gorger() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Sensation Gorger");
         final Player opponent = player.getOpponent();
         
@@ -2855,14 +2855,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Sensation_Gorger()
     
     
     private static void upkeep_Squeaking_Pie_Grubfellows() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Squeaking Pie Grubfellows");
         final Player opponent = player.getOpponent();
         
@@ -2930,14 +2930,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Squeaking_Pie_Grubfellows()
     
     
     private static void upkeep_Wandering_Graybeard() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Wandering Graybeard");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -3002,14 +3002,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Wandering_Graybeard()
     
     
     private static void upkeep_Waterspout_Weavers() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Waterspout Weavers");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -3078,7 +3078,7 @@ public class GameActionUtil {
                                 }
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }// resolve()
                 
@@ -3095,14 +3095,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Waterspout_Weavers()
     
     
     private static void upkeep_Winnower_Patrol() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Winnower Patrol");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -3167,14 +3167,14 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Winnower_Patrol()
     
     
     private static void upkeep_Wolf_Skull_Shaman() {
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Wolf-Skull Shaman");
         
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, player);
@@ -3241,7 +3241,7 @@ public class GameActionUtil {
             sb.append(" triggers Kinship");
             ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
         }// for
     }// upkeep_Wolf_Skull_Shaman()
@@ -3253,7 +3253,7 @@ public class GameActionUtil {
 
 
 	private static void upkeep_Dark_Confidant() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
@@ -3271,7 +3271,7 @@ public class GameActionUtil {
 					CardList lib = AllZoneUtil.getPlayerCardsInLibrary(player);
 					if(lib.size() > 0) {
 						Card toMove = lib.get(0);
-						AllZone.GameAction.moveToHand(toMove);
+						AllZone.getGameAction().moveToHand(toMove);
 						player.loseLife(toMove.getCMC(), F_card);
 					}
 				}// resolve()
@@ -3281,13 +3281,13 @@ public class GameActionUtil {
 			sb.append(F_card).append(" - ").append("At the beginning of your upkeep, reveal the top card of your library and put that card into your hand. You lose life equal to its converted mana cost.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// for
 	}// upkeep_Dark_Confidant()
 
 	private static void upkeep_Oversold_Cemetery() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList cemeteryList = AllZoneUtil.getPlayerCardsInPlay(player, "Oversold Cemetery");
 		if (cemeteryList.isEmpty())
 			return;
@@ -3308,19 +3308,19 @@ public class GameActionUtil {
 								if(o != null) {
 									Card card = (Card) o;
 
-									AllZone.GameAction.moveToHand(card);
+									AllZone.getGameAction().moveToHand(card);
 								}
 							} 
 							else if(player.isComputer()) {
 								Card card = graveyardCreatures.get(0);
-								AllZone.GameAction.moveToHand(card);
+								AllZone.getGameAction().moveToHand(card);
 							}
 						}
 					}
 				};// Ability
 				ability.setStackDescription("Oversold Cemetary returns creature from the graveyard to its owner's hand.");
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -3328,7 +3328,7 @@ public class GameActionUtil {
 
 
 	public static void upkeep_Suspend() {
-		Player player = AllZone.Phase.getPlayerTurn();
+		Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInExile(player);
 		
@@ -3348,7 +3348,7 @@ public class GameActionUtil {
 	
 	private static void upkeep_Vanishing() {
 
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
 			public boolean addCard(Card c) {
@@ -3370,7 +3370,7 @@ public class GameActionUtil {
 				sb.append("When the last is removed, sacrifice it.)");
 				ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -3378,7 +3378,7 @@ public class GameActionUtil {
 	
 	private static void upkeep_Fading() {
 
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
 			public boolean addCard(Card c) {
@@ -3393,7 +3393,7 @@ public class GameActionUtil {
 					public void resolve() {
 						int fadeCounters = card.getCounters(Counters.FADE);
 						if (fadeCounters <= 0)
-							AllZone.GameAction.sacrifice(card);
+							AllZone.getGameAction().sacrifice(card);
 						else
 							card.subtractCounter(Counters.FADE, 1);
 					}
@@ -3404,7 +3404,7 @@ public class GameActionUtil {
 				sb.append("If you can't, sacrifice it.)");
 				ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -3415,7 +3415,7 @@ public class GameActionUtil {
         if (oathList.isEmpty())
             return;
         
-        final Player player = AllZone.Phase.getPlayerTurn();
+        final Player player = AllZone.getPhase().getPlayerTurn();
 
         if (AllZoneUtil.compareTypeAmountInPlay(player, "Creature") < 0) {
             for (int i = 0; i < oathList.size(); i++) {
@@ -3455,11 +3455,11 @@ public class GameActionUtil {
                                    Card c = libraryList.get(i);
                                    cardsToReveal.add(c);
                                    if (c.isCreature()) {
-                                       AllZone.GameAction.moveTo(battlefield, c);
+                                       AllZone.getGameAction().moveTo(battlefield, c);
                                        break;   
                                    } 
                                    else {
-                                       AllZone.GameAction.moveToGraveyard(c);
+                                       AllZone.getGameAction().moveToGraveyard(c);
                                    }
                                }// for loop
                                if (cardsToReveal.size() > 0)
@@ -3477,7 +3477,7 @@ public class GameActionUtil {
                 sb.append("battlefield and all other cards revealed this way into his or her graveyard.");
                 ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
             }
         }
@@ -3488,7 +3488,7 @@ public class GameActionUtil {
 		if (oathList.isEmpty())
 			return;
 		
-		final Player player = AllZone.Phase.getPlayerTurn();	
+		final Player player = AllZone.getPhase().getPlayerTurn();	
 		
 		if (AllZoneUtil.compareTypeAmountInGraveyard(player, "Creature") > 0)
 		{
@@ -3506,13 +3506,13 @@ public class GameActionUtil {
 								if(o != null) {
 									Card card = (Card) o;
 
-									AllZone.GameAction.moveToHand(card);
+									AllZone.getGameAction().moveToHand(card);
 								}
 							} 
 							else if(player.isComputer()) {
 								Card card = graveyardCreatures.get(0);
 
-								AllZone.GameAction.moveToHand(card);
+								AllZone.getGameAction().moveToHand(card);
 							}
 						}
 					}
@@ -3523,7 +3523,7 @@ public class GameActionUtil {
 				sb.append("from their graveyard to owner's hand if they have more than an opponent.");
 				ability.setStackDescription(sb.toString());
 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}
@@ -3531,7 +3531,7 @@ public class GameActionUtil {
 	
 		
 	private static void upkeep_Karma() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList karmas = AllZoneUtil.getCardsInPlay("Karma");
 		CardList swamps = AllZoneUtil.getPlayerTypeInPlay(player, "Swamp");
 		
@@ -3557,7 +3557,7 @@ public class GameActionUtil {
 					sb.append("Karma deals ").append(damage).append(" damage to ").append(player);
 					ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
 				}
 			}
@@ -3566,7 +3566,7 @@ public class GameActionUtil {
 
 	
 	private static void upkeep_Dega_Sanctuary() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Dega Sanctuary");
 
@@ -3589,13 +3589,13 @@ public class GameActionUtil {
 			sb.append("if you control a black or red permanent, you gain 2 life. If you control a black permanent and a red permanent, you gain 4 life instead.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//for
 	}//upkeep_Dega_Sanctuary()
 	
 	private static void upkeep_Ceta_Sanctuary() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Ceta Sanctuary");
 
@@ -3623,7 +3623,7 @@ public class GameActionUtil {
 			sb.append("At the beginning of your upkeep, if you control a red or green permanent, draw a card, then discard a card. If you control a red permanent and a green permanent, instead draw two cards, then discard a card.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//for
 	}//upkeep_Ceta_Sanctuary()
@@ -3634,7 +3634,7 @@ public class GameActionUtil {
 		 * damage to that player, where X is the number of untapped
 		 * lands he or she controlled at the beginning of this turn.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getCardsInPlay("Power Surge");
 		final int damage = player.getNumPowerSurgeLands();
 
@@ -3652,14 +3652,14 @@ public class GameActionUtil {
 			ability.setStackDescription(sb.toString());
 			
 			if(damage > 0) {
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
 
 			}
 		}// for
 	}// upkeep_Power_Surge()
 
 	private static void upkeep_Felidar_Sovereign() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Felidar Sovereign");
 
@@ -3677,13 +3677,13 @@ public class GameActionUtil {
 			sb.append("Felidar Sovereign - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Felidar_Sovereign
 
 	private static void upkeep_Battle_of_Wits() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		PlayerZone libraryZone = AllZone.getZone(Constant.Zone.Library, player);
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Battle of Wits");
@@ -3703,13 +3703,13 @@ public class GameActionUtil {
 			sb.append("Battle of Wits - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Battle_of_Wits
 	
 	private static void upkeep_Mortal_Combat() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Mortal Combat");
 		CardList grave = AllZoneUtil.getPlayerGraveyard(player);
@@ -3731,13 +3731,13 @@ public class GameActionUtil {
 			sb.append("Mortal Combat - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Mortal Combat
 
 	private static void upkeep_Helix_Pinnacle() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Helix Pinnacle");
 
@@ -3756,7 +3756,7 @@ public class GameActionUtil {
 			sb.append("Helix Pinnacle - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Helix_Pinnacle
@@ -3765,7 +3765,7 @@ public class GameActionUtil {
 		/*
 		 * At the beginning of your upkeep, if you have exactly 1 life, you win the game.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Near-Death Experience");
 
@@ -3783,7 +3783,7 @@ public class GameActionUtil {
 			sb.append("Near-Death Experience - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Near_Death_Experience
@@ -3792,7 +3792,7 @@ public class GameActionUtil {
 		/*
 		 * At the beginning of your upkeep, if you have 50 or more life, you win the game.
 		 */
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Test of Endurance");
 		
@@ -3810,14 +3810,14 @@ public class GameActionUtil {
 			sb.append(list.get(0)).append(" - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Test_of_Endurance
 
 
 	private static void upkeep_Barren_Glory() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		PlayerZone handZone = AllZone.getZone(Constant.Zone.Hand, player);
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -3849,13 +3849,13 @@ public class GameActionUtil {
 			sb.append("Barren Glory - ").append(player).append(" wins the game");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// if
 	}// upkeep_Barren_Glory
 
 	private static void upkeep_Sleeper_Agent() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Sleeper Agent");
 
@@ -3871,13 +3871,13 @@ public class GameActionUtil {
 
 			ability.setStackDescription("Sleeper Agent deals 2 damage to its controller.");
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}
 	}//upkeep_Sleeper_Agent
 	
 	private static void upkeep_Shapeshifter() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Shapeshifter");
 		list = list.filter(AllZoneUtil.nonToken);
 
@@ -3903,14 +3903,14 @@ public class GameActionUtil {
 			};
 			ability.setStackDescription(c.getName()+" - choose a new number");
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//foreach(Card)
 	}//upkeep_Shapeshifter
 	
 	private static void upkeep_Vesuvan_Doppelganger_Keyword() {
 		// TODO: what about enchantments? i dont know how great this solution is
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		final String keyword = "At the beginning of your upkeep, you may have this creature become a copy of target creature except it doesn't copy that creature's color. If you do, this creature gains this ability.";
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(AllZoneUtil.getKeywordFilter(keyword));
@@ -3936,7 +3936,7 @@ public class GameActionUtil {
 								 * 6. add new to play
 								 */
 								
-								Card newCopy = AllZone.CardFactory.getCard(newTarget[0].getName(), player);
+								Card newCopy = AllZone.getCardFactory().getCard(newTarget[0].getName(), player);
 								newCopy.setCurSetCode(newTarget[0].getCurSetCode());
 								newCopy.setImageFilename(newTarget[0].getImageFilename());
 
@@ -3960,12 +3960,12 @@ public class GameActionUtil {
 						}
 					};
 					
-					AllZone.InputControl.setInput(new Input() {
+					AllZone.getInputControl().setInput(new Input() {
 						private static final long serialVersionUID = 5662272658873063221L;
 
 						@Override
 						public void showMessage() {
-							AllZone.Display.showMessage(c.getName()+" - Select new target creature.  (Click Cancel to remain as is.)");
+							AllZone.getDisplay().showMessage(c.getName()+" - Select new target creature.  (Click Cancel to remain as is.)");
 							ButtonUtil.enableOnlyCancel();
 						}
 						
@@ -3980,7 +3980,7 @@ public class GameActionUtil {
 								StringBuilder sb = new StringBuilder();
 			                    sb.append(c.getCloneOrigin()).append(" - switching to copy "+selectedCard.getName()+".");
 			                    switchTargets.setStackDescription(sb.toString());
-								AllZone.Stack.add(switchTargets);
+								AllZone.getStack().add(switchTargets);
 								stop();
 							}
 						}
@@ -3989,13 +3989,13 @@ public class GameActionUtil {
 			};
 			ability.setStackDescription(c.getName()+" - you may have this creature become a copy of target creature.");
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//foreach(Card)
 	}//upkeep_Vesuvan_Doppelganger_Keyword
 	
 	private static void upkeep_Tangle_Wire() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList wires = AllZoneUtil.getCardsInPlay("Tangle Wire");
 
 		for(final Card source:wires) {
@@ -4018,7 +4018,7 @@ public class GameActionUtil {
 							}
 						}
 						else {
-							AllZone.InputControl.setInput(new Input() {
+							AllZone.getInputControl().setInput(new Input() {
 								private static final long serialVersionUID = 5313424586016061612L;
 								public void showMessage() {
 									if(list.size() == 0)
@@ -4026,11 +4026,11 @@ public class GameActionUtil {
                                         stop();
                                         return;
                                     }
-						             AllZone.Display.showMessage(source.getName()+" - Select "+num+" untapped artifact(s), creature(s), or land(s) you control");
+						             AllZone.getDisplay().showMessage(source.getName()+" - Select "+num+" untapped artifact(s), creature(s), or land(s) you control");
 						             ButtonUtil.disableAll();
 						          }
 								public void selectCard(Card card, PlayerZone zone) {
-						        	  if(zone.is(Constant.Zone.Battlefield, AllZone.HumanPlayer) && list.contains(card)) {
+						        	  if(zone.is(Constant.Zone.Battlefield, AllZone.getHumanPlayer()) && list.contains(card)) {
 						                card.tap();
 						                list.remove(card);
 						                stop();
@@ -4043,13 +4043,13 @@ public class GameActionUtil {
 			};
 			ability.setStackDescription(source.getName()+" - "+player+" taps X artifacts, creatures or lands he or she controls.");
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//foreach(wire)
 	}//upkeep_Tangle_Wire()
 
 	private static void upkeep_Pillory_of_the_Sleepless() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
@@ -4076,7 +4076,7 @@ public class GameActionUtil {
 						};
 						ability.setStackDescription("Pillory of the Sleepless  - enchanted creature's controller loses 1 life.");
 
-                        AllZone.Stack.addSimultaneousStackEntry(ability);
+                        AllZone.getStack().addSimultaneousStackEntry(ability);
 
 					}
 				}
@@ -4088,7 +4088,7 @@ public class GameActionUtil {
 
 	
 	private static void upkeep_Masticore() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Masticore");
 
@@ -4101,7 +4101,7 @@ public class GameActionUtil {
 
 				@Override
 				public void showMessage() {
-					AllZone.Display.showMessage(crd + " - Discard a card from your hand");
+					AllZone.getDisplay().showMessage(crd + " - Discard a card from your hand");
 					ButtonUtil.enableOnlyCancel();
 				}
 
@@ -4115,7 +4115,7 @@ public class GameActionUtil {
 
 				@Override
 				public void selectButtonCancel() {
-					AllZone.GameAction.sacrifice(crd);
+					AllZone.getGameAction().sacrifice(crd);
 					stop();
 				}
 			};//Input
@@ -4124,14 +4124,14 @@ public class GameActionUtil {
 				@Override
 				public void resolve() {
 					if(crd.getController().isHuman()) {
-						if(AllZone.Human_Hand.size() == 0) AllZone.GameAction.sacrifice(crd);
-						else AllZone.InputControl.setInput(discard);
+						if(AllZone.getHumanHand().size() == 0) AllZone.getGameAction().sacrifice(crd);
+						else AllZone.getInputControl().setInput(discard);
 					} else //comp
 					{
-						CardList list = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+						CardList list = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
 
 						if(list.size() != 0) list.get(0).getController().discard(list.get(0),this);
-						else AllZone.GameAction.sacrifice(crd);
+						else AllZone.getGameAction().sacrifice(crd);
 					}//else
 				}//resolve()
 			};//Ability
@@ -4140,14 +4140,14 @@ public class GameActionUtil {
 			sb.append(crd).append(" - sacrifice Masticore unless you discard a card.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// for
 	}//upkeep_Masticore
 
 
 	private static void upkeep_Eldrazi_Monument() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Eldrazi Monument");
 
@@ -4160,7 +4160,7 @@ public class GameActionUtil {
 					CardList creats = AllZoneUtil.getCreaturesInPlay(player);
 
 					if(creats.size() < 1) {
-						AllZone.GameAction.sacrifice(card);
+						AllZone.getGameAction().sacrifice(card);
 						return;
 					}
 
@@ -4172,11 +4172,11 @@ public class GameActionUtil {
 							creats.shuffle();
 							sac = creats.get(0);
 						}
-						AllZone.GameAction.sacrifice(sac);
+						AllZone.getGameAction().sacrifice(sac);
 					} else//computer
 					{
 						CardListUtil.sortAttackLowFirst(creats);
-						AllZone.GameAction.sacrifice(creats.get(0));
+						AllZone.getGameAction().sacrifice(creats.get(0));
 					}
 				}
 			};// ability
@@ -4185,14 +4185,14 @@ public class GameActionUtil {
 			sb.append("Eldrazi Monument - ").append(player).append(" sacrifices a creature.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}
 
 	}//upkeep_Eldrazi_Monument
 
 	private static void upkeep_Blaze_Counters() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList blaze = AllZoneUtil.getPlayerCardsInPlay(player);
 		blaze = blaze.filter(new CardListFilter() {
@@ -4215,7 +4215,7 @@ public class GameActionUtil {
 			sb.append(player).append(".");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}
 	}
@@ -4274,8 +4274,8 @@ public class GameActionUtil {
 
 						@Override
 						public boolean canPlay() {
-							return AllZone.Phase.getPlayerTurn().equals(card.getController())
-							&& card.isFaceDown() && !AllZone.Phase.getPhase().equals("End of Turn")
+							return AllZone.getPhase().getPlayerTurn().equals(card.getController())
+							&& card.isFaceDown() && !AllZone.getPhase().getPhase().equals("End of Turn")
 							&& AllZoneUtil.isCardInPlay(card);
 						}
 
@@ -4314,7 +4314,7 @@ public class GameActionUtil {
 
 								numCreatures[0] = creatsToSac.size();
 								for(int m = 0; m < creatsToSac.size(); m++) {
-									AllZone.GameAction.sacrifice(creatsToSac.get(m));
+									AllZone.getGameAction().sacrifice(creatsToSac.get(m));
 								}
 
 							}//human
@@ -4323,13 +4323,13 @@ public class GameActionUtil {
 								for(int i = 0; i < creats.size(); i++) {
 									Card crd = creats.get(i);
 									if(crd.getNetAttack() <= 1 && crd.getNetDefense() <= 2) {
-										AllZone.GameAction.sacrifice(crd);
+										AllZone.getGameAction().sacrifice(crd);
 										count++;
 									}
 								}
 								numCreatures[0] = count;
 							}
-                            AllZone.Stack.addSimultaneousStackEntry(devour);
+                            AllZone.getStack().addSimultaneousStackEntry(devour);
 
 						}
 					};
@@ -4342,12 +4342,12 @@ public class GameActionUtil {
 					c.addSpellAbility(devour);
 					c.addComesIntoPlayCommand(intoPlay);
 
-					AllZone.GameAction.moveToPlay(c);
+					AllZone.getGameAction().moveToPlay(c);
 				}
 			};// Ability
 			ability.setStackDescription("Dragon Broodmother - put a 1/1 red and green Dragon token onto the battlefield.");
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}// for
 	}// upkeep_Dragon_Broodmother()
@@ -4373,13 +4373,13 @@ public class GameActionUtil {
 							player.drawCards(2);
 							for(int i = 0; i < 2; i++) {
 								final String prompt = source.getName()+" - Select a card drawn this turn: "+(2-i)+" of 2";
-								AllZone.InputControl.setInput(new Input() {
+								AllZone.getInputControl().setInput(new Input() {
 									private static final long serialVersionUID = -3389565833121544797L;
 
 									@Override
 						            public void showMessage() {
-						            	if (AllZone.Human_Hand.size() == 0) stop();
-						                AllZone.Display.showMessage(prompt);
+						            	if (AllZone.getHumanHand().size() == 0) stop();
+						                AllZone.getDisplay().showMessage(prompt);
 						                ButtonUtil.disableAll();
 						            }
 						            
@@ -4392,7 +4392,7 @@ public class GameActionUtil {
 						                		//card stays in hand
 						                	}
 						                	else {
-						                		AllZone.GameAction.moveToLibrary(card);
+						                		AllZone.getGameAction().moveToLibrary(card);
 						                	}
 						                	stop();
 						                	////////////////////////////////////
@@ -4412,13 +4412,13 @@ public class GameActionUtil {
 			sb.append("At the beginning of your draw step, you may draw two additional cards. If you do, choose two cards in your hand drawn this turn. For each of those cards, pay 4 life or put the card on top of your library.");
 			ability.setStackDescription(sb.toString());
 
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		}//end for
 	}
 
 	private static void upkeep_Carnophage() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Carnophage");
 		if(player.isHuman()) {
@@ -4432,13 +4432,13 @@ public class GameActionUtil {
 		}
 		else if(player.isComputer()) for(int i = 0; i < list.size(); i++) {
 			Card c = list.get(i);
-			if(AllZone.ComputerPlayer.getLife() > 1) player.loseLife(1, c);
+			if(AllZone.getComputerPlayer().getLife() > 1) player.loseLife(1, c);
 			else c.tap();
 		}
 	}// upkeep_Carnophage
 
 	private static void upkeep_Sangrophage() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Sangrophage");
 		if(player.isHuman()) {
@@ -4452,13 +4452,13 @@ public class GameActionUtil {
 		}
 		else if(player.isComputer()) for(int i = 0; i < list.size(); i++) {
 			Card c = list.get(i);
-			if(AllZone.ComputerPlayer.getLife() > 2) player.loseLife(2,c);
+			if(AllZone.getComputerPlayer().getLife() > 2) player.loseLife(2,c);
 			else c.tap();
 		}
 	}// upkeep_Carnophage
 	
 	private static void upkeep_Fallen_Empires_Storage_Lands() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList all = AllZoneUtil.getPlayerCardsInPlay(player, "Bottomless Vault");
 		all.addAll(AllZoneUtil.getPlayerCardsInPlay(player, "Dwarven Hold"));
@@ -4472,16 +4472,16 @@ public class GameActionUtil {
 	} //upkeep_Fallen_Empires_Storage_Lands
 
 	private static void upkeep_Vampire_Lacerator() {
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Vampire Lacerator");
 
 		for(int i = 0; i < list.size(); i++) {
 			final Card F_card = list.get(i);
-			if(player.isHuman() && AllZone.ComputerPlayer.getLife() > 10) {
+			if(player.isHuman() && AllZone.getComputerPlayer().getLife() > 10) {
 				player.loseLife(1, F_card);
 			} else {
-				if(player.isComputer() && AllZone.HumanPlayer.getLife() > 10) {
+				if(player.isComputer() && AllZone.getHumanPlayer().getLife() > 10) {
 					player.loseLife(1, F_card);
 				}
 			}
@@ -4490,7 +4490,7 @@ public class GameActionUtil {
 	
 	private static void upkeep_Mirror_Sigil_Sergeant()
 	{
-		final Player player = AllZone.Phase.getPlayerTurn();
+		final Player player = AllZone.getPhase().getPlayerTurn();
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 
 		list = list.getName("Mirror-Sigil Sergeant");
@@ -4514,7 +4514,7 @@ public class GameActionUtil {
 
 			ability.setStackDescription("Mirror-Sigil Sergeant - put a token onto the battlefield that's a copy of Mirror-Sigil Sergeant.");
 
-			AllZone.Stack.addSimultaneousStackEntry(ability);
+			AllZone.getStack().addSimultaneousStackEntry(ability);
 
 		} // for
 	} //upkeep_Mirror_Sigil_Sergeant
@@ -4827,8 +4827,8 @@ public class GameActionUtil {
 					          CardList list = CardFactoryUtil.AI_getHumanCreature(1, c, true);
 					          list.shuffle();
 
-					          if (list.isEmpty() || AllZone.HumanPlayer.getLife() < 5)
-					            setTargetPlayer(AllZone.HumanPlayer);
+					          if (list.isEmpty() || AllZone.getHumanPlayer().getLife() < 5)
+					            setTargetPlayer(AllZone.getHumanPlayer());
 					          else
 					            setTargetCard(list.get(0));
 					        }
@@ -5078,15 +5078,15 @@ public class GameActionUtil {
       			if (Keyword_Details.length >= 2 
       					&& (Keyword_Details[2].contains("Flash") 
       					|| Keyword_Details[2].contains("CARDNAME can't be countered."))) {
-      				Cards_inZone.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
-      				Cards_inZone.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
+      				Cards_inZone.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
+      				Cards_inZone.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
       				Cards_inZone.addAll(AllZoneUtil.getCardsInGraveyard());
       			}
       			//hack for Molten Disaster
       			/*
       			 // TODO for future use
       			if(Keyword_Details.length >= 2 && Keyword_Details[2].contains("Split second")) {
-      				Cards_inZone.add(AllZone.Stack.getSpellCardsOnStack());
+      				Cards_inZone.add(AllZone.getStack().getSpellCardsOnStack());
       			}
       			*/
       		}
@@ -5223,10 +5223,10 @@ public class GameActionUtil {
 	      		if (!SourceCard.isValid(Requirements, SourceCard.getController(), SourceCard)) return false;
 	      	}
 	      	if(SpecialConditions.contains("isYourTurn")) {
-	      		if( !AllZone.Phase.isPlayerTurn(SourceCard.getController())) return false;
+	      		if( !AllZone.getPhase().isPlayerTurn(SourceCard.getController())) return false;
 	      	}
 	      	if(SpecialConditions.contains("notYourTurn")) {
-	      		if( !AllZone.Phase.isPlayerTurn(SourceCard.getController().getOpponent())) return false;
+	      		if( !AllZone.getPhase().isPlayerTurn(SourceCard.getController().getOpponent())) return false;
 	      	}
 	      	if(SpecialConditions.contains("OppPoisoned")) {
 	      		if( SourceCard.getController().getOpponent().getPoisonCounters() == 0) return false;
@@ -5382,7 +5382,7 @@ public class GameActionUtil {
 									altCondition = true;
 								}
 								else if(condition.equals("isYourTurn")
-										&& AllZone.Phase.isPlayerTurn(card.getController())) {
+										&& AllZone.getPhase().isPlayerTurn(card.getController())) {
 									altCondition = true;
 								}
 								else if(condition.startsWith("LevelGE")) {
@@ -5609,7 +5609,7 @@ public class GameActionUtil {
 			for(int i = 0; i < size; i++) {
 				Card c = creature.get(i);
 				if(!phylacteryExists(c) && c.getFinishedEnteringBF()) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5668,7 +5668,7 @@ public class GameActionUtil {
 				Card c = creature.get(i);
 				islands = countIslands(c);
 				if(islands == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5695,7 +5695,7 @@ public class GameActionUtil {
 
 			for(Card c:creature) {
 				if(AllZoneUtil.getPlayerTypeInPlay(c.getController(), "Forest").size() == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5716,7 +5716,7 @@ public class GameActionUtil {
 
 			for(Card c:creature) {
 				if(AllZoneUtil.getPlayerTypeInPlay(c.getController(), "Swamp").size() == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5740,7 +5740,7 @@ public class GameActionUtil {
 				Card c = list.get(i);
 				artifacts = AllZoneUtil.getPlayerTypeInPlay(c.getController(), "Artifact").size();
 				if(artifacts == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5764,7 +5764,7 @@ public class GameActionUtil {
 				Card c = list.get(i);
 				enchs = AllZoneUtil.getPlayerTypeInPlay(c.getController(), "Enchantment").size();
 				if(enchs == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5785,7 +5785,7 @@ public class GameActionUtil {
 
 			for(Card c:cards) {
 				if(AllZoneUtil.getLandsInPlay().size() == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5806,7 +5806,7 @@ public class GameActionUtil {
 
 			for(Card c:cards) {
 				if(AllZoneUtil.getCreaturesInPlay().size() == 0) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5827,7 +5827,7 @@ public class GameActionUtil {
 
 			for(Card c:cards) {
 				if(AllZoneUtil.getCreaturesInPlay(c.getController()).size() == 1) {
-					AllZone.GameAction.sacrifice(c);
+					AllZone.getGameAction().sacrifice(c);
 				}
 			}
 
@@ -5949,9 +5949,9 @@ public class GameActionUtil {
 			// reset creatures
 			removeSwampwalk(old);
 
-			if(isInGrave(AllZone.ComputerPlayer)) addSwampwalk(AllZone.ComputerPlayer);
+			if(isInGrave(AllZone.getComputerPlayer())) addSwampwalk(AllZone.getComputerPlayer());
 
-			if(isInGrave(AllZone.HumanPlayer)) addSwampwalk(AllZone.HumanPlayer);
+			if(isInGrave(AllZone.getHumanPlayer())) addSwampwalk(AllZone.getHumanPlayer());
 			}
 		}// execute()
 
@@ -6007,9 +6007,9 @@ public class GameActionUtil {
 			// reset creatures
 			removeFirstStrike(old);
 
-			if(isInGrave(AllZone.ComputerPlayer)) addFirstStrike(AllZone.ComputerPlayer);
+			if(isInGrave(AllZone.getComputerPlayer())) addFirstStrike(AllZone.getComputerPlayer());
 
-			if(isInGrave(AllZone.HumanPlayer)) addFirstStrike(AllZone.HumanPlayer);
+			if(isInGrave(AllZone.getHumanPlayer())) addFirstStrike(AllZone.getHumanPlayer());
 			}
 		}// execute()
 
@@ -6066,9 +6066,9 @@ public class GameActionUtil {
 			// reset creatures
 			removeHaste(old);
 
-			if(isInGrave(AllZone.ComputerPlayer)) addHaste(AllZone.ComputerPlayer);
+			if(isInGrave(AllZone.getComputerPlayer())) addHaste(AllZone.getComputerPlayer());
 
-			if(isInGrave(AllZone.HumanPlayer)) addHaste(AllZone.HumanPlayer);
+			if(isInGrave(AllZone.getHumanPlayer())) addHaste(AllZone.getHumanPlayer());
 			}
 		}// execute()
 
@@ -6124,9 +6124,9 @@ public class GameActionUtil {
 			// reset creatures
 			removeFlying(old);
 
-			if(isInGrave(AllZone.ComputerPlayer)) addFlying(AllZone.ComputerPlayer);
+			if(isInGrave(AllZone.getComputerPlayer())) addFlying(AllZone.getComputerPlayer());
 
-			if(isInGrave(AllZone.HumanPlayer)) addFlying(AllZone.HumanPlayer);
+			if(isInGrave(AllZone.getHumanPlayer())) addFlying(AllZone.getHumanPlayer());
 			}
 		}// execute()
 
@@ -6182,9 +6182,9 @@ public class GameActionUtil {
 			// reset creatures
 			removeTrample(old);
 
-			if(isInGrave(AllZone.ComputerPlayer)) addTrample(AllZone.ComputerPlayer);
+			if(isInGrave(AllZone.getComputerPlayer())) addTrample(AllZone.getComputerPlayer());
 
-			if(isInGrave(AllZone.HumanPlayer)) addTrample(AllZone.HumanPlayer);
+			if(isInGrave(AllZone.getHumanPlayer())) addTrample(AllZone.getHumanPlayer());
 			}
 		}// execute()
 
@@ -6286,10 +6286,10 @@ public class GameActionUtil {
 				final Card crd = cl.get(i);
 
 				CardList spells = new CardList();
-				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
-				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
-				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
-				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer));
+				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer()));
 				spells = spells.filter(new CardListFilter() {
 					public boolean addCard(Card c) {
 						return !c.isLand()
@@ -6330,10 +6330,10 @@ public class GameActionUtil {
 
 			for(int i = 0; i < cl.size(); i++) {
 				CardList spells = new CardList();
-				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
-				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
-				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
-				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer));
+				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
+				spells.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer()));
 
 				spells = spells.filter(new CardListFilter() {
 					public boolean addCard(Card c) {
@@ -6409,7 +6409,7 @@ public class GameActionUtil {
 	}; //end Iona, Shield of Emeria
 	
 	// returns all PlayerZones that has at least 1 Glorious Anthem
-	// if Computer has 2 Glorious Anthems, AllZone.Computer_Play will be
+	// if Computer has 2 Glorious Anthems, AllZone.getComputerPlay() will be
 	// returned twice
 	private static PlayerZone[] getZone(String cardName) {
 		CardList all = AllZoneUtil.getCardsInPlay();
@@ -6747,8 +6747,8 @@ public class GameActionUtil {
 		for(Card c:lands) c.tap();
 		
 		//empty mana pool
-		if(p.isHuman()) AllZone.ManaPool.clearPool();
-		else AllZone.Computer_ManaPool.clearPool();
+		if(p.isHuman()) AllZone.getManaPool().clearPool();
+		else AllZone.getComputerManaPool().clearPool();
 	}
 
 }//end class GameActionUtil

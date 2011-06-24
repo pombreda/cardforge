@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.lang.reflect.Method;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -150,7 +151,10 @@ public class GUI_Filter extends javax.swing.JDialog {
             this.setTitle("Filter");
             // pack();
             try {
-                this.setIconImage(null);
+                // Call Java 6 method without making the Java 5 compiler 
+                // unhappy:
+                Method method = this.getClass().getMethod("setIconImage");
+                method.invoke(this, new Object[] { null });
             } catch(NoSuchMethodError err) {
                 // setIconImage is @since 1.6
                 err.printStackTrace();
@@ -651,7 +655,7 @@ public class GUI_Filter extends javax.swing.JDialog {
         
         String name = NameText.getText();
         String cText = cardText.getText();
-        CardList filterCardList = AllZone.CardFactory.getAllCards();
+        CardList filterCardList = AllZone.getCardFactory().getAllCards();
         CardFilter filter = new CardFilter();
         Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
         g.blackCheckBox.setSelected(true);

@@ -363,7 +363,7 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
     	mCard[] cardTokenLQ = readFile(CARD_PICTURES_TOKEN_LQ);
         
     	ArrayList<mCard> CList = new ArrayList<mCard>();
-    	CardList AllCards = AllZone.CardFactory.getAllCards();
+    	CardList AllCards = AllZone.getCardFactory().getAllCards();
     	//Log.error("AllCards.size: " + AllCards.size());
     	
     	//File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);
