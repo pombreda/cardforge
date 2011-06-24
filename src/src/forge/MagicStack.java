@@ -488,11 +488,17 @@ public class MagicStack extends MyObservable {
             {
                 for(Target_Choices tc : chosenTargets)
                 {
-                    for(Object tgt : tc.getTargets())
+                    if(tc != null)
                     {
-                        runParams.put("Target",tgt);
+                        if(tc.getTargetCards() != null)
+                        {
+                            for(Object tgt : tc.getTargets())
+                            {
+                                runParams.put("Target",tgt);
 
-                        AllZone.getTriggerHandler().runTrigger("BecomesTarget",runParams);
+                                AllZone.getTriggerHandler().runTrigger("BecomesTarget",runParams);
+                            }
+                        }
                     }
                 }
             }
