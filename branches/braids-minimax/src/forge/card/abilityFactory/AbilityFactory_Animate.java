@@ -136,7 +136,7 @@ public class AbilityFactory_Animate {
 		if (tgt != null)
 			tgts = tgt.getTargetCards();
 		else
-			tgts = AbilityFactory.getDefinedCards(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgts = AbilityFactory.getDefinedCards(sa.getSourceCard(), params.get("Defined"), sa);
 
 		for(Card c : tgts) {
 			sb.append(c).append(" ");
@@ -189,12 +189,18 @@ public class AbilityFactory_Animate {
 		//TODO - add some kind of check to answer "Am I going to attack with this?"
 		//TODO - add some kind of check for during human turn to answer "Can I use this to block something?"
 		
+		//don't use instant speed animate abilities outside computers Combat_Begin phase
+		if((!AllZone.Phase.is(Constant.Phase.Combat_Begin) || AllZone.Phase.isPlayerTurn(AllZone.HumanPlayer))
+				&& !AbilityFactory.isSorcerySpeed(sa) && !params.containsKey("ActivatingPhases")
+				&& !params.containsKey("Permanent"))
+			return false;
+		
 		//don't activate during main2 unless this effect is permanent
-		if(AllZone.Phase.getPhase().equals(Constant.Phase.Main2) && !params.containsKey("Permanent"))
+		if(AllZone.Phase.is(Constant.Phase.Main2) && !params.containsKey("Permanent"))
         	return false;
 		
 		if(null == tgt) {
-			ArrayList<Card> defined = AbilityFactory.getDefinedCards(source, af.getMapParams().get("Defined"), sa);
+			ArrayList<Card> defined = AbilityFactory.getDefinedCards(source, params.get("Defined"), sa);
 			
 			boolean bFlag = false;
 			for(Card c : defined) {
@@ -272,6 +278,12 @@ public class AbilityFactory_Animate {
 		final ArrayList<String> types = new ArrayList<String>();
 		if(params.containsKey("Types")) types.addAll(Arrays.asList(params.get("Types").split(",")));
 		
+		//allow ChosenType - overrides anything else specified
+		if(types.contains("ChosenType")) {
+			types.clear();
+			types.add(host.getChosenType());
+		}
+		
 		final ArrayList<String> keywords = new ArrayList<String>();
 		if(params.containsKey("Keywords")) keywords.addAll(Arrays.asList(params.get("Keywords").split(" & ")));
 		//allow SVar substitution for keywords
@@ -284,8 +296,17 @@ public class AbilityFactory_Animate {
 		}
 		
 		//colors to be added or changed to
-		final String finalDesc = params.containsKey("Colors") ? 
-			CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("Colors").split(",")))) : "";
+		String tmpDesc = "";
+		if(params.containsKey("Colors")) {
+			String colors = params.get("Colors");
+			if(colors.equals("ChosenColor")) {
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(host.getChosenColor().split(","))));
+			}
+			else{
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(colors.split(","))));
+			}
+		}
+		final String finalDesc = tmpDesc;
 		
 		//abilities to add to the animated being
 		ArrayList<String> abilities = new ArrayList<String>();
@@ -569,6 +590,12 @@ public class AbilityFactory_Animate {
 		final ArrayList<String> types = new ArrayList<String>();
 		if(params.containsKey("Types")) types.addAll(Arrays.asList(params.get("Types").split(",")));
 		
+		//allow ChosenType - overrides anything else specified
+		if(types.contains("ChosenType")) {
+			types.clear();
+			types.add(host.getChosenType());
+		}
+		
 		final ArrayList<String> keywords = new ArrayList<String>();
 		if(params.containsKey("Keywords")) keywords.addAll(Arrays.asList(params.get("Keywords").split(" & ")));
 		//allow SVar substitution for keywords
@@ -581,8 +608,17 @@ public class AbilityFactory_Animate {
 		}
 		
 		//colors to be added or changed to
-		final String finalDesc = params.containsKey("Colors") ? 
-			CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("Colors").split(",")))) : "";
+		String tmpDesc = "";
+		if(params.containsKey("Colors")) {
+			String colors = params.get("Colors");
+			if(colors.equals("ChosenColor")) {
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(host.getChosenColor().split(","))));
+			}
+			else{
+				tmpDesc = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(colors.split(","))));
+			}
+		}
+		final String finalDesc = tmpDesc;
 		
 		//abilities to add to the animated being
 		ArrayList<String> abilities = new ArrayList<String>();

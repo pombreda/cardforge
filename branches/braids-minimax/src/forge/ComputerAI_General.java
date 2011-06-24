@@ -47,55 +47,60 @@ public class ComputerAI_General implements Computer {
     private SpellAbility[] getMain1() {
     	//Card list of all cards to consider
     	CardList hand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+    	
+    	if (AllZone.Computer_ManaPool.isEmpty())
+	    	hand = hand.filter(new CardListFilter() {
+	    		public boolean addCard(Card c) {
 
-    	hand = hand.filter(new CardListFilter() {
-    		// Beached As Start
-    		public boolean addCard(Card c) {
-    			//Collection<Card> play = playMain1Cards;
-    			if (c.getSVar("PlayMain1").equals("TRUE"))
-    				return true;
-
-    			if (c.isCreature() 
-    					&& (c.hasKeyword("Haste")) || c.hasKeyword("Exalted")) return true;
-
-    			CardList buffed = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer); //get all cards the computer controls with BuffedBy
-    			for(int j = 0; j < buffed.size(); j++) {
-    				Card buffedcard = buffed.get(j);
-    				if (buffedcard.getSVar("BuffedBy").length() > 0) {
-    					String buffedby = buffedcard.getSVar("BuffedBy");
-    					String bffdby[] = buffedby.split(",");
-    					if (c.isValidCard(bffdby,c.getController(),c)) return true;
-    				}       
-    			}//BuffedBy
-
-    			CardList antibuffed = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer); //get all cards the human controls with AntiBuffedBy
-    			for(int k = 0; k < antibuffed.size(); k++) {
-    				Card buffedcard = antibuffed.get(k);
-    				if (buffedcard.getSVar("AntiBuffedBy").length() > 0) {
-    					String buffedby = buffedcard.getSVar("AntiBuffedBy");
-    					String bffdby[] = buffedby.split(",");
-    					if (c.isValidCard(bffdby,c.getController(),c)) return true;
-    				}       
-    			}//AntiBuffedBy
-
-    			if(c.isLand()) return false;
-
-    			CardList vengevines = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer, "Vengevine");
-    			if(vengevines.size() > 0) {
-    				CardList creatures = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
-    				CardList creatures2 = new CardList();
-    				for(int i = 0; i < creatures.size(); i++) {
-    					if(creatures.get(i).getType().contains("Creature") && CardUtil.getConvertedManaCost(creatures.get(i).getManaCost()) <= 3) {
-    						creatures2.add(creatures.get(i));
-    					}
-    				}
-    				if(creatures2.size() + Phase.ComputerCreatureSpellCount > 1 
-    					&& c.getType().contains("Creature") && CardUtil.getConvertedManaCost(c.getManaCost()) <= 3) return true;	
-    			} // AI Improvement for Vengevine
-    			// Beached As End
-    			return false;
-    		}
-    	});
+	    			if (c.getSVar("PlayMain1").equals("TRUE"))
+	    				return true;
+	    			
+	    			if (c.isSorcery()) //timing should be handled by the AF's
+	    				return true;
+	
+	    			if (c.isCreature() 
+	    					&& (c.hasKeyword("Haste")) || c.hasKeyword("Exalted")) return true;
+	
+	    			CardList buffed = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer); //get all cards the computer controls with BuffedBy
+	    			for (int j = 0; j < buffed.size(); j++) {
+	    				Card buffedcard = buffed.get(j);
+	    				if (buffedcard.getSVar("BuffedBy").length() > 0) {
+	    					String buffedby = buffedcard.getSVar("BuffedBy");
+	    					String bffdby[] = buffedby.split(",");
+	    					if (c.isValidCard(bffdby,c.getController(),c)) return true;
+	    				}       
+	    			}//BuffedBy
+	
+	    			CardList antibuffed = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer); //get all cards the human controls with AntiBuffedBy
+	    			for(int k = 0; k < antibuffed.size(); k++) {
+	    				Card buffedcard = antibuffed.get(k);
+	    				if (buffedcard.getSVar("AntiBuffedBy").length() > 0) {
+	    					String buffedby = buffedcard.getSVar("AntiBuffedBy");
+	    					String bffdby[] = buffedby.split(",");
+	    					if (c.isValidCard(bffdby,c.getController(),c)) return true;
+	    				}       
+	    			}//AntiBuffedBy
+	
+	    			if(c.isLand()) return false;
+	
+	    			CardList vengevines = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer, "Vengevine");
+	    			if (vengevines.size() > 0) {
+	    				CardList creatures = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+	    				CardList creatures2 = new CardList();
+	    				for (int i = 0; i < creatures.size(); i++) {
+	    					if (creatures.get(i).isCreature() 
+	    							&& CardUtil.getConvertedManaCost(creatures.get(i).getManaCost()) <= 3) {
+	    						creatures2.add(creatures.get(i));
+	    					}
+	    				}
+	    				if (creatures2.size() + Phase.ComputerCreatureSpellCount > 1 
+	    						&& c.isCreature() 
+	    						&& CardUtil.getConvertedManaCost(c.getManaCost()) <= 3) return true;	
+	    			} // AI Improvement for Vengevine
+	    			// Beached As End
+	    			return false;
+	    		}
+	    	});
     	CardList all = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
     	all.addAll(hand);
 
@@ -149,7 +154,7 @@ public class ComputerAI_General implements Computer {
     			return (c.canAnyPlayerActivate());
     		}
     	});
-    	all.addAll(humanPlayable.toArray());
+    	all.addAll(humanPlayable);
 
     	return getPlayable(all);
     }//getMain2()
@@ -179,7 +184,7 @@ public class ComputerAI_General implements Computer {
     			return (c.canAnyPlayerActivate());
     		}
     	});
-    	all.addAll(humanPlayable.toArray());
+    	all.addAll(humanPlayable);
     	return all;
     }
     
@@ -206,7 +211,7 @@ public class ComputerAI_General implements Computer {
                 //This try/catch should fix the "computer is thinking" bug
                 try {
                 	sa.setActivatingPlayer(AllZone.ComputerPlayer);
-                    if(sa.canPlay() && ComputerUtil.canPayCost(sa) && sa.canPlayAI()){
+                    if(ComputerUtil.canBePlayedAndPayedByAI(sa)){
                     	spellAbility.add(sa);
                     }
                 } catch(Exception ex) {
@@ -318,9 +323,8 @@ public class ComputerAI_General implements Computer {
     		return;
     	}
     	
-    	SpellAbility topSA = AllZone.Stack.peek();
     	// if top of stack is owned by me
-    	if (topSA.getActivatingPlayer().isComputer()){
+    	if (AllZone.Stack.peekInstance().getActivatingPlayer().isComputer()){
     		// probably should let my stuff resolve to force Human to respond to it
     		AllZone.Phase.passPriority();
     		return;
@@ -346,16 +350,8 @@ public class ComputerAI_General implements Computer {
     	sas = getOtherPhases();
     	if (sas.length > 0){
 			// Spell not Countered 
-    		// each AF should check the Stack/Phase on it's own
-			
-			//ArrayList<Object> targets = topSA.getTarget().getTargets();
-	    	// does it target me or something I own?
-	    	// can i protect it? can I counter it?
-	    	
-	    	// if i can't save it, can I activate an ability on that card in response? sacrifice etc?
-	    	
-	    	// does it target his stuff? can I kill it in response?
-
+    		if (!ComputerUtil.playCards(sas))
+    			return;
     	}
     	// if this hasn't been covered above, just PassPriority()
     	AllZone.Phase.passPriority();

@@ -40,13 +40,12 @@ public class GameActionUtil {
 		upkeep_Carnophage();
 		upkeep_Sangrophage();
 		upkeep_Dega_Sanctuary();
+		upkeep_Ceta_Sanctuary();
 		upkeep_Tangle_Wire();
 		upkeep_Dance_of_the_Dead();
-		upkeep_Mana_Crypt();
 		upkeep_Farmstead();
 		
-		upkeep_Greener_Pastures();
-		upkeep_Heartmender();
+		
 		upkeep_Shapeshifter();
 		upkeep_Vesuvan_Doppelganger_Keyword();
 		
@@ -118,12 +117,8 @@ public class GameActionUtil {
 		playCard_Ripple(c);
         playCard_Storm(sa);
 
-		playCard_Dovescape(c); //keep this one top
-		playCard_Chalice_of_the_Void(c);
 		playCard_Vengevine(c);
-		playCard_Demigod_of_Revenge(c);
 		playCard_Standstill(c);
-		playCard_Sigil_of_the_Empty_Throne(c);
 		playCard_Curse_of_Wizardry(c);
 		playCard_Venser_Emblem(c);
 		playCard_Ichneumon_Druid(c);
@@ -276,27 +271,28 @@ public class GameActionUtil {
 							CardList topOfLibrary = AllZoneUtil.getPlayerCardsInLibrary(controller);
 							CardList revealed = new CardList();
 							int RippleNumber = RippleCount;
-							if(topOfLibrary.size() == 0) return;
+							if (topOfLibrary.size() == 0) return;
 							int RippleMax = 10; // Shouldn't Have more than Ripple 10, seeing as no cards exist with a ripple greater than 4
 							Card[] RippledCards = new Card[RippleMax]; 
 							Card crd;
-							if(topOfLibrary.size() < RippleNumber) RippleNumber = topOfLibrary.size();
+							if (topOfLibrary.size() < RippleNumber) RippleNumber = topOfLibrary.size();
 
 							for(int i = 0; i < RippleNumber; i++){
 								crd = topOfLibrary.get(i);
 								revealed.add(crd);
-								if(crd.getName().equals(RippleCard.getName())) RippledCards[i] = crd;
+								if (crd.getName().equals(RippleCard.getName())) RippledCards[i] = crd;
 							}//For
 							GuiUtils.getChoiceOptional("Revealed cards:", revealed.toArray());
-							for(int i = 0; i < RippleMax; i++) {
-								if(RippledCards[i] != null && !RippledCards[i].isUnCastable()) {
+							for (int i = 0; i < RippleMax; i++) {
+								if (RippledCards[i] != null 
+										&& !RippledCards[i].isUnCastable()) {
 
-									if(RippledCards[i].getController().isHuman()) {
+									if (RippledCards[i].getController().isHuman()) {
 										Object[] possibleValues = {"Yes", "No"};
 										Object q = JOptionPane.showOptionDialog(null, "Cast " + RippledCards[i].getName() + "?", "Ripple", 
 												JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
 												null, possibleValues, possibleValues[0]);
-										if(q.equals(0)) {
+										if (q.equals(0)) {
 											AllZone.GameAction.playCardNoCost(RippledCards[i]);
 											revealed.remove(RippledCards[i]);
 										}
@@ -304,8 +300,9 @@ public class GameActionUtil {
 									{
 										ArrayList<SpellAbility> choices = RippledCards[i].getBasicSpells();
 
-										for(SpellAbility sa:choices) {
-											if(sa.canPlayAI() && !sa.getSourceCard().getType().contains("Legendary")) {
+										for (SpellAbility sa:choices) {
+											if (sa.canPlayAI() 
+													&& !sa.getSourceCard().isType("Legendary")) {
 												ComputerUtil.playStackFree(sa);
 												revealed.remove(RippledCards[i]);
 												break;
@@ -315,7 +312,7 @@ public class GameActionUtil {
 								}
 							}
 							revealed.shuffle();
-							for(Card bottom:revealed) {
+							for (Card bottom:revealed) {
 								AllZone.GameAction.moveToBottomOfLibrary(bottom);
 							}
 						}
@@ -482,109 +479,7 @@ public class GameActionUtil {
 			}
 		}
 	}
-	
-	public static void playCard_Chalice_of_the_Void(Card c) {
-		CardList list = AllZoneUtil.getCardsInPlay();
-		list = list.getName("Chalice of the Void");
 
-		if(list.size() > 0) {
-			for(int i = 0; i < list.size(); i++) {
-				final Card card = list.get(i);
-				final SpellAbility sa = AllZone.Stack.peek();
-				Ability ability2 = new Ability(card, "0") {
-					@Override
-					public void resolve() {
-						AllZone.Stack.pop();
-						AllZone.GameAction.moveToGraveyard(sa.getSourceCard());
-					}
-				}; // ability2
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append(card.getName()).append(" - ").append(c.getController());
-				sb.append(" played a spell with same amount of charge counters on Chalice of the Void. The spell is countered");
-				ability2.setStackDescription(sb.toString());
-                
-				int convertedManaSpell = CardUtil.getConvertedManaCost(sa.getSourceCard().getManaCost());								
-				if(sa.isSpell() == true && card.getCounters(Counters.CHARGE) == convertedManaSpell)
-                    AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-			}					
-		}//if
-	} // Chalice_of_the_Void 
-
-	public static void playCard_Demigod_of_Revenge(final Card c) {
-		// not enough boom stick references in this block of code
-		if(c.getName().equals("Demigod of Revenge")) {
-			Ability ability2 = new Ability(c, "0") {
-				@Override
-				public void resolve() {
-					CardList evildead = AllZoneUtil.getPlayerGraveyard(c.getController(), "Demigod of Revenge");
-
-					for(Card c : evildead){
-						AllZone.GameAction.moveToPlay(c);
-					}
-				}
-			}; // ability2
-			
-			StringBuilder sb = new StringBuilder();
-			sb.append(c.getName()).append(" - ").append(c.getController());
-			sb.append(" casts Demigod of Revenge, returns all cards named Demigod ");
-			sb.append("of Revenge from your graveyard to the battlefield.");
-			ability2.setStackDescription(sb.toString());
-
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-
-		}//if					
-	}// Demigod of Revenge
-
-	public static void playCard_Dovescape(final Card c) {
-		CardList list = AllZoneUtil.getCardsInPlay();
-		final int cmc = CardUtil.getConvertedManaCost(c.getManaCost());
-		list = list.getName("Dovescape");
-		final CardList cl = list;
-		if(!c.getType().contains("Creature") && list.size() > 0) {
-			final Card card = list.get(0);
-
-			Ability ability2 = new Ability(card, "0") {
-				@Override
-				public void resolve() {
-
-					SpellAbility sa = AllZone.Stack.peek();
-
-					if(sa.getSourceCard().equals(c)) {
-						sa = AllZone.Stack.pop();
-
-						AllZone.GameAction.moveToGraveyard(sa.getSourceCard());
-
-						for(int j = 0; j < cl.size() * cmc; j++) {
-							CardFactoryUtil.makeToken("Bird", "WU 1 1 Bird", sa.getSourceCard().getController(), "W U", new String[] {
-								"Creature", "Bird"}, 1, 1, new String[] {"Flying"});
-						}
-
-						/*
-                        SpellAbility sa = AllZone.Stack.peek
-                        if (!sa.getSourceCard().isCreature() && sa.isSpell())
-                        {
-
-                        }
-						 */
-					} else //TODO 
-					{
-						;
-					}
-
-
-				}
-			}; // ability2
-
-			ability2.setStackDescription("Dovescape Ability");
-
-            AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-
-		}
-	} // Dovescape
 
 	public static void playCard_Standstill(Card c) {
 		CardList list = AllZoneUtil.getCardsInPlay("Standstill");
@@ -614,32 +509,7 @@ public class GameActionUtil {
 
 	}
 
-	public static void playCard_Sigil_of_the_Empty_Throne(Card c) {
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(c.getController(), "Sigil of the Empty Throne");
-
-		if(c.isEnchantment()) {
-			for(int i = 0; i < list.size(); i++) {
-				final Card card = list.get(0);
-
-				Ability ability2 = new Ability(card, "0") {
-					@Override
-					public void resolve() {
-						CardFactoryUtil.makeToken("Angel", "W 4 4 Angel", card.getController(), "W", new String[] {
-								"Creature", "Angel"}, 4, 4, new String[] {"Flying"});
-					}
-				}; // ability2
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append(card).append(" - ").append(c.getController());
-				sb.append(" puts a 4/4 White Angel token with flying onto the battlefield.");
-				ability2.setStackDescription(sb.toString());
-
-                AllZone.Stack.addSimultaneousStackEntry(ability2);
-
-
-			} // for
-		}// if isEnchantment()
-	}
+	
 	
 	public static void playCard_Curse_of_Wizardry(final Card c) {
 		CardList list = AllZoneUtil.getCardsInPlay("Curse of Wizardry");
@@ -1630,11 +1500,11 @@ public class GameActionUtil {
     	}
 
     	if( (flip == true && choice.equals("heads")) || (flip == false && choice.equals("tails"))) {
-    		JOptionPane.showMessageDialog(null, source.getName()+" - "+source.getController()+" wins flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
+    		JOptionPane.showMessageDialog(null, source.getName()+" - "+caller+" wins flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
     		return true;
     	}
     	else{
-    		JOptionPane.showMessageDialog(null, source.getName()+" - "+source.getController()+" loses flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
+    		JOptionPane.showMessageDialog(null, source.getName()+" - "+caller+" loses flip.", source.getName(), JOptionPane.PLAIN_MESSAGE);
     		return false;
     	}
     }
@@ -1964,9 +1834,6 @@ public class GameActionUtil {
 
 			}
     	}
-		
-    	if (c.hasKeyword("Whenever this creature deals damage to a player, that player gets a poison counter."))
-			playerCombatDamage_PoisonCounter(c, 1);
     
     	if(c.getName().equals("Whirling Dervish") || c.getName().equals("Dunerider Outlaw")) 
 			playerCombatDamage_Whirling_Dervish(c);
@@ -2085,11 +1952,6 @@ public class GameActionUtil {
 
 			}
 		}
-	}
-
-	private static void playerCombatDamage_PoisonCounter(Card c, int n) {
-		final Player opponent = c.getController().getOpponent();
-		opponent.addPoisonCounters(n);
 	}
 	
 	private static void playerDamage_Farsight_Mask(final Player player, final Card c, final Card crd)
@@ -2367,30 +2229,6 @@ public class GameActionUtil {
 		}
 	}
 	
-	private static void upkeep_Mana_Crypt() {
-		final Player player = AllZone.Phase.getPlayerTurn();
-
-		CardList crypts = AllZoneUtil.getPlayerCardsInPlay(player, "Mana Crypt");
-		for(final Card crypt:crypts) {
-			SpellAbility ab = new Ability(crypt, "0"){
-
-				@Override
-				public void resolve(){
-					if(flipACoin(crypt.getController().getOpponent(), crypt)) {
-						//do nothing
-					}
-					else {
-						crypt.getController().addDamage(3, crypt);
-					}
-				}
-			};
-			ab.setStackDescription(crypt.getName()+" - Flip a coin.");
-
-            AllZone.Stack.addSimultaneousStackEntry(ab);
-
-		}
-	}//upkeep_Mana_Crypt
-	
 	private static void upkeep_Farmstead() {
 		final String auraName = "Farmstead";
 		final Player player = AllZone.Phase.getPlayerTurn();
@@ -2436,42 +2274,6 @@ public class GameActionUtil {
 			}
 		}
 	}//upkeep_Farmstead()
-	
-	private static void upkeep_Heartmender() {
-		final Player player = AllZone.Phase.getPlayerTurn();
-
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Heartmender");
-
-		if(list.size() > 0) {
-			for(int i = 0; i < list.size(); i++) {
-
-				Ability ability = new Ability(list.get(i), "0") {
-					@Override
-					public void resolve() {
-						CardList creats = AllZoneUtil.getPlayerCardsInPlay(player);
-						creats = creats.filter(new CardListFilter() {
-
-							public boolean addCard(Card c) {
-								return c.getCounters(Counters.M1M1) > 0;
-							}
-
-						});
-
-						for(int j = 0; j < creats.size(); j++) {
-							Card c = creats.get(j);
-							if(c.getCounters(Counters.M1M1) > 0) c.subtractCounter(Counters.M1M1,1);
-						}
-
-					}
-
-				};// Ability
-				ability.setStackDescription("Heartmender - Remove a -1/-1 counter from each creature you control.");
-
-                AllZone.Stack.addSimultaneousStackEntry(ability);
-
-			} // for
-		} // if creatures > 0
-	}//upkeep_Heartmender
 	
     /////////////////////////
     // Start of Kinship cards
@@ -3652,7 +3454,7 @@ public class GameActionUtil {
                                for (int i = 0; i < max; i++) {
                                    Card c = libraryList.get(i);
                                    cardsToReveal.add(c);
-                                   if (c.getType().contains("Creature")) {
+                                   if (c.isCreature()) {
                                        AllZone.GameAction.moveTo(battlefield, c);
                                        break;   
                                    } 
@@ -3791,6 +3593,40 @@ public class GameActionUtil {
 
 		}//for
 	}//upkeep_Dega_Sanctuary()
+	
+	private static void upkeep_Ceta_Sanctuary() {
+		final Player player = AllZone.Phase.getPlayerTurn();
+
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Ceta Sanctuary");
+
+		for(Card sanc:list) {
+			final Card source = sanc;
+			final Ability ability = new Ability(source, "0") {
+				public void resolve() {
+					int draw = 0;
+					CardList play = AllZoneUtil.getPlayerCardsInPlay(player);
+					CardList green = play.filter(AllZoneUtil.green);
+					CardList red = play.filter(AllZoneUtil.red);
+					
+					if(green.size() > 0 && red.size() > 0) draw = 2;
+					else if(green.size() > 0 || red.size() > 0) draw = 1;
+					
+					if(draw > 0) {
+						player.drawCards(draw);
+						player.discard(1, this, true);
+					}
+				}
+			};//Ability
+			
+			StringBuilder sb = new StringBuilder();
+			sb.append(source).append(" - ");
+			sb.append("At the beginning of your upkeep, if you control a red or green permanent, draw a card, then discard a card. If you control a red permanent and a green permanent, instead draw two cards, then discard a card.");
+			ability.setStackDescription(sb.toString());
+
+            AllZone.Stack.addSimultaneousStackEntry(ability);
+
+		}//for
+	}//upkeep_Ceta_Sanctuary()
 		
 	private static void upkeep_Power_Surge() {
 		/*
@@ -4250,47 +4086,7 @@ public class GameActionUtil {
 	}//cursed land
 
 
-	private static void upkeep_Greener_Pastures() {
-		final Player player = AllZone.Phase.getPlayerTurn();
-
-		CardList self = AllZoneUtil.getPlayerCardsInPlay(player);
-		CardList opp = AllZoneUtil.getPlayerCardsInPlay(player.getOpponent());
-
-		self = self.getType("Land");
-		opp = opp.getType("Land");
-
-		if((self.size() == opp.size()) || opp.size() > self.size()) return;
-		else //active player has more lands
-		{
-			Player mostLandsPlayer = null;
-			if(self.size() > opp.size()) mostLandsPlayer = player;
-
-			final Player mostLands = mostLandsPlayer;
-
-			CardList list = AllZoneUtil.getCardsInPlay("Greener Pastures");
-
-			Ability ability;
-
-			for(int i = 0; i < list.size(); i++) {
-				//final Card crd = list.get(i);
-				ability = new Ability(list.get(i), "0") {
-					@Override
-					public void resolve() {
-						CardFactoryUtil.makeTokenSaproling(mostLands);
-					}// resolve()
-				};// Ability
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append("Greener Pastures - ").append(mostLands).append(" puts a 1/1 green Saproling token onto the battlefield.");
-				ability.setStackDescription(sb.toString());
-
-                AllZone.Stack.addSimultaneousStackEntry(ability);
-
-			}// for
-
-		}//else
-	}// upkeep_Greener_Pastures()
-
+	
 	private static void upkeep_Masticore() {
 		final Player player = AllZone.Phase.getPlayerTurn();
 
@@ -5006,11 +4802,11 @@ public class GameActionUtil {
 				{
 					public boolean addCard(Card crd)
 					{
-						return crd.getType().contains("Mountain");
+						return crd.isType("Mountain");
 					}
 				});
 				
-				for(int j = 0; j < mountains.size(); j++) {
+				for (int j = 0; j < mountains.size(); j++) {
 					final Card c = mountains.get(j);
 					boolean hasAbility = false;
 					SpellAbility[] sas = c.getSpellAbility();
@@ -5020,7 +4816,7 @@ public class GameActionUtil {
 							hasAbility = true;
 					}
 					
-					if(!hasAbility) {
+					if (!hasAbility) {
 						Cost abCost = new Cost("T", c.getName(), true);
 						Target target = new Target(c,"TgtCP");
 						final Ability_Activated ability = new Ability_Activated(c, abCost, target)
@@ -5031,7 +4827,7 @@ public class GameActionUtil {
 					          CardList list = CardFactoryUtil.AI_getHumanCreature(1, c, true);
 					          list.shuffle();
 
-					          if(list.isEmpty() || AllZone.HumanPlayer.getLife() < 5)
+					          if (list.isEmpty() || AllZone.HumanPlayer.getLife() < 5)
 					            setTargetPlayer(AllZone.HumanPlayer);
 					          else
 					            setTargetCard(list.get(0));
@@ -5446,6 +5242,30 @@ public class GameActionUtil {
 		private static final long serialVersionUID = 8005448956536998277L;
 
 		public void execute() {
+			
+			
+			HashMap<String,String> produces = new HashMap<String,String>();
+			/*
+			 * for future use
+			boolean naked = AllZoneUtil.isCardInPlay("Naked Singularity");
+			boolean twist = AllZoneUtil.isCardInPlay("Reality Twist");
+			//set up what they produce
+			produces.put("Forest", naked || twist ? "B" : "G");
+			produces.put("Island", naked == true ? "G" : "U");
+			if(naked) produces.put("Mountain", "U");
+			else if(twist) produces.put("Mountain", "W");
+			else produces.put("Mountain", "R");
+			produces.put("Plains", naked || twist ? "R" : "W");
+			if(naked) produces.put("Swamp", "W");
+			else if(twist) produces.put("Swamp", "G");
+			else produces.put("Swamp", "B");
+			*/
+			produces.put("Forest", "G");
+			produces.put("Island", "U");
+			produces.put("Mountain", "R");
+			produces.put("Plains", "W");
+			produces.put("Swamp", "B");
+			
 			CardList lands = AllZoneUtil.getCardsInGame();
 			lands = lands.filter(AllZoneUtil.lands);
 			
@@ -5463,31 +5283,31 @@ public class GameActionUtil {
 			for(Card land : lands) {
 				if(land.isType("Swamp")) {
 					AbilityFactory AF = new AbilityFactory();
-					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ B | SpellDescription$ Add B to your mana pool.", land);
+					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ "+produces.get("Swamp")+" | SpellDescription$ Add "+produces.get("Swamp")+" to your mana pool.", land);
 					sa.setType("BasicLandTypeMana");
 					land.addSpellAbility(sa);
 				}
 				if(land.isType("Forest")) {
 					AbilityFactory AF = new AbilityFactory();
-					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ G | SpellDescription$ Add G to your mana pool.", land);
+					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ "+produces.get("Forest")+" | SpellDescription$ Add "+produces.get("Forest")+" to your mana pool.", land);
 					sa.setType("BasicLandTypeMana");
 					land.addSpellAbility(sa);
 				}
 				if(land.isType("Island")) {
 					AbilityFactory AF = new AbilityFactory();
-					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ U | SpellDescription$ Add U to your mana pool.", land);
+					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ "+produces.get("Island")+" | SpellDescription$ Add "+produces.get("Island")+" to your mana pool.", land);
 					sa.setType("BasicLandTypeMana");
 					land.addSpellAbility(sa);
 				}
 				if(land.isType("Mountain")) {
 					AbilityFactory AF = new AbilityFactory();
-					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ R | SpellDescription$ Add R to your mana pool.", land);
+					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ "+produces.get("Mountain")+" | SpellDescription$ Add "+produces.get("Mountain")+" to your mana pool.", land);
 					sa.setType("BasicLandTypeMana");
 					land.addSpellAbility(sa);
 				}
 				if(land.isType("Plains")) {
 					AbilityFactory AF = new AbilityFactory();
-					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ W | SpellDescription$ Add W to your mana pool.", land);
+					SpellAbility sa = AF.getAbility("AB$ Mana | Cost$ T | Produced$ "+produces.get("Plains")+" | SpellDescription$ Add "+produces.get("Plains")+" to your mana pool.", land);
 					sa.setType("BasicLandTypeMana");
 					land.addSpellAbility(sa);
 				}
@@ -5624,7 +5444,7 @@ public class GameActionUtil {
 		public void execute() {
 			CardList list = gloriousAnthemList;
 			// reset all cards in list - aka "old" cards
-			for(int i2 = 0; i2 < list.size(); i2++) {
+			for (int i2 = 0; i2 < list.size(); i2++) {
 				list.get(i2).addSemiPermanentAttackBoost(-1);
 				list.get(i2).addSemiPermanentDefenseBoost(-1);
 			}
@@ -5633,10 +5453,10 @@ public class GameActionUtil {
 			PlayerZone[] zone = getZone("Coat of Arms");
 
 			// for each zone found add +1/+1 to each card
-			for(int outer = 0; outer < zone.length; outer++) {
+			for (int outer = 0; outer < zone.length; outer++) {
 				CardList creature = AllZoneUtil.getCardsInPlay();
 
-				for(int i = 0; i < creature.size(); i++) {
+				for (int i = 0; i < creature.size(); i++) {
 					final Card crd = creature.get(i);
 					CardList Type = AllZoneUtil.getCardsInPlay();
 					Type = Type.filter(new CardListFilter() {
@@ -5645,13 +5465,13 @@ public class GameActionUtil {
 						}
 					});
 					CardList Already_Added = new CardList();
-					for(int x = 0; x < Type.size(); x++) {
+					for (int x = 0; x < Type.size(); x++) {
 						Already_Added.clear();
-						for(int x2 = 0; x2 < Type.get(x).getType().size(); x2++) {
-							if(!Already_Added.contains(Type.get(x))) {
-								if(!Type.get(x).getType().get(x2).equals("Creature") && !Type.get(x).getType().get(x2).equals("Legendary") 
+						for (int x2 = 0; x2 < Type.get(x).getType().size(); x2++) {
+							if (!Already_Added.contains(Type.get(x))) {
+								if (!Type.get(x).getType().get(x2).equals("Creature") && !Type.get(x).getType().get(x2).equals("Legendary") 
 										&& !Type.get(x).getType().get(x2).equals("Artifact") ) {	
-									if (crd.getType().contains(Type.get(x).getType().get(x2)) 
+									if (crd.isType(Type.get(x).getType().get(x2)) 
 											|| crd.hasKeyword("Changeling")
 											|| Type.get(x).hasKeyword("Changeling")) {					
 										Already_Added.add(Type.get(x));

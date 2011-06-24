@@ -279,20 +279,92 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         });
     }// addListeners()
     
-    @SuppressWarnings("unused")
-    // setupSealed
     private void setupSealed() {
         Deck deck = new Deck(Constant.GameType.Sealed);
         
-        ReadBoosterPack booster = new ReadBoosterPack();
-        CardList pack = booster.getBoosterPack5();
+        //ReadBoosterPack booster = new ReadBoosterPack();
+        //CardList pack = booster.getBoosterPack5();
         
-        for(int i = 0; i < pack.size(); i++)
-            deck.addSideboard(pack.get(i).getName());
+        ArrayList<String> sealedTypes = new ArrayList<String>();
+        sealedTypes.add("Full Cardpool");
+        sealedTypes.add("Block / Set");
+        sealedTypes.add("Custom");
         
-        Constant.Runtime.HumanDeck[0] = deck;
+        String prompt = "Choose Sealed Deck Format:";
+        Object o = GuiUtils.getChoice(prompt, sealedTypes.toArray());
+        
+        SealedDeck sd = null;
+        
+        if (o.toString().equals(sealedTypes.get(0)))
+        	sd = new SealedDeck("Full");
+        
+        else if (o.toString().equals(sealedTypes.get(1)))
+        	sd = new SealedDeck("Block");
+        
+        else if (o.toString().equals(sealedTypes.get(2)))
+        	sd = new SealedDeck("Custom");
+
+        CardList sDeck = sd.getCardpool();
+        
+        if (sDeck.size() > 1){ 
+        
+	        for (int i=0; i<sDeck.size(); i++)
+	            deck.addSideboard(sDeck.get(i).getName() + "|" + sDeck.get(i).getCurSetCode());
+	        
+	        for (int i=0; i<Constant.Color.BasicLands.length; i++) {
+	        	for (int j=0; j<18; j++)
+	        		deck.addSideboard(Constant.Color.BasicLands[i] + "|" + sd.LandSetCode[0]);
+	        }
+	        
+	        String sDeckName = JOptionPane.showInputDialog(null, ForgeProps.getLocalized(NEW_GAME_TEXT.SAVE_SEALED_MSG),
+	                ForgeProps.getLocalized(NEW_GAME_TEXT.SAVE_SEALED_TTL), JOptionPane.QUESTION_MESSAGE);
+	        deck.setName(sDeckName);
+	        deck.addMetaData("PlayerType", "Human");
+	        
+	        Constant.Runtime.HumanDeck[0] = deck;
+	        Constant.Runtime.GameType[0] = Constant.GameType.Sealed;
+	
+	        Deck aiDeck = sd.buildAIDeck(sd.getCardpool());
+	        aiDeck.setName("AI_" + sDeckName);
+	        aiDeck.addMetaData("PlayerType", "AI");
+	        deckManager.addDeck(aiDeck);
+	        deckManager.close();
+	        
+	        deckEditorButton_actionPerformed(null);
+	        editor.customMenu.setCurrentGameType(Constant.GameType.Sealed);
+	        editor.customMenu.showSealedDeck(deck);
+	        
+	        
+	        Constant.Runtime.ComputerDeck[0] = aiDeck;
+        }
+        else
+        	new Gui_NewGame();
     }
     
+    private void setupDraft() {
+    	Gui_BoosterDraft draft = new Gui_BoosterDraft();
+    	
+        //determine what kind of booster draft to run
+        ArrayList<String> draftTypes = new ArrayList<String>();
+        draftTypes.add("Full Cardpool");
+        draftTypes.add("Block / Set");
+        draftTypes.add("Custom");
+        
+        String prompt = "Choose Draft Format:";
+        Object o = GuiUtils.getChoice(prompt, draftTypes.toArray());
+        
+        if (o.toString().equals(draftTypes.get(0)))
+        	draft.showGui(new BoosterDraft_1("Full"));
+        
+        else if (o.toString().equals(draftTypes.get(1)))
+        	draft.showGui(new BoosterDraft_1("Block"));
+        
+        else if (o.toString().equals(draftTypes.get(2)))
+        	draft.showGui(new BoosterDraft_1("Custom"));
+
+    }
+    
+    	
     private void jbInit() throws Exception {
     	
     	/*
@@ -486,6 +558,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     
     void deckEditorButton_actionPerformed(ActionEvent e) {
         if(editor == null) {
+        	
             editor = new Gui_DeckEditor();
             
             {
@@ -530,28 +603,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         if(draftRadioButton.isSelected()) {
             if(human.equals("New Draft")) {
                 dispose();
-                Gui_BoosterDraft draft = new Gui_BoosterDraft();
-                //draft.showGui(new BoosterDraft_1());
                 
-                //determine what kind of booster draft to run
-                ArrayList<String> draftTypes = new ArrayList<String>();
-                draftTypes.add("Full Cardpool Draft");
-                draftTypes.add("Block Draft");
-                draftTypes.add("Custom Draft");
-                
-                String prompt = "Choose Draft Type:";
-                Object o = GuiUtils.getChoice(prompt, draftTypes.toArray());
-                
-                if (o.toString().equals("Full Cardpool Draft"))
-                	draft.showGui(new BoosterDraft_1("Full"));
-                
-                else if (o.toString().equals("Block Draft"))
-                	draft.showGui(new BoosterDraft_1("Block"));
-                
-                else if (o.toString().equals("Custom Draft"))
-                	draft.showGui(new BoosterDraft_1("Custom"));
+                setupDraft();
                 
                 return;
+                
             } else//load old draft
             {
                 Deck[] deck = deckManager.getDraftDeck(human);
@@ -564,62 +620,66 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
                         "Gui_NewGame : startButton() error - computer deck is null");
             }// else - load old draft
         }// if
+        else if (sealedRadioButton.isSelected()) {
+        	if (human.equals("New Sealed")) {
+        		dispose();
+        		
+        		setupSealed();
+        		
+        		return;
+        	}
+        	else {
+        		Constant.Runtime.HumanDeck[0] = deckManager.getDeck(human);
+        		
+        	}
+        	
+        	if (!computer.equals("New Sealed")) {
+        		Constant.Runtime.ComputerDeck[0] = deckManager.getDeck(computer);
+        	}
+        }
         else {
             // non-draft decks
             String format = Constant.Runtime.GameType[0];
-            boolean sealed = Constant.GameType.Sealed.equals(format);
+            //boolean sealed = Constant.GameType.Sealed.equals(format);
             boolean constructed = Constant.GameType.Constructed.equals(format);
             
             boolean humanGenerate = human.equals("Generate Deck");
-/*            boolean humanGenerateMulti3 = human.equals("Generate 3-Color Deck");
-            boolean humanGenerateMulti5 = human.equals("Generate 5-Color Gold Deck");
-            boolean humanGenerateTheme = human.equals("Generate Theme Deck");
-            boolean humanGenerate2Color = human.equals("Generate 2 Color Deck");*/
             boolean humanRandom = human.equals("Random");
+
             if(humanGenerate) {
-                if(constructed) genDecks("H"); //Constant.Runtime.HumanDeck[0] = generateConstructedDeck();
-                else if(sealed) Constant.Runtime.HumanDeck[0] = generateSealedDeck();
-            } /*else if(humanGenerateMulti3) {
-                if(constructed) Constant.Runtime.HumanDeck[0] = generateConstructed3ColorDeck();
-            } else if(humanGenerateMulti5) {
-                if(constructed) Constant.Runtime.HumanDeck[0] = generateConstructed5ColorDeck();
-            } else if (humanGenerateTheme) {
-            	if (constructed) Constant.Runtime.HumanDeck[0] = generateConstructedThemeDeck();
-            } else if (humanGenerate2Color) {
-            	if (constructed) Constant.Runtime.HumanDeck[0] = generate2ColorDeck("H");
-            }*/ else if(humanRandom) {
+                if(constructed) 
+                	genDecks("H");
+                //else if(sealed) 
+                	//Constant.Runtime.HumanDeck[0] = generateSealedDeck();
+            }
+            else if(humanRandom) {
                 Constant.Runtime.HumanDeck[0] = getRandomDeck(getDecks(format));
+                
                 JOptionPane.showMessageDialog(null, String.format("You are using deck: %s",
                         Constant.Runtime.HumanDeck[0].getName()), "Deck Name", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+            } 
+            else {
                 Constant.Runtime.HumanDeck[0] = deckManager.getDeck(human);
             }
 
 
             assert computer != null;
             boolean computerGenerate = computer.equals("Generate Deck");
-/*            boolean computerGenerateMulti3 = computer.equals("Generate 3-Color Deck");
-            boolean computerGenerateMulti5 = computer.equals("Generate 5-Color Gold Deck");
-            boolean computerGenerateTheme = computer.equals("Generate Theme Deck");
-            boolean computerGenerate2Color = computer.equals("Generate 2 Color Deck");
-*/            
             boolean computerRandom = computer.equals("Random");
+
             if(computerGenerate) {
-                if(constructed) genDecks("C"); //Constant.Runtime.ComputerDeck[0] = generateConstructedDeck();
-                else if(sealed) Constant.Runtime.ComputerDeck[0] = generateSealedDeck();
-            } /*else if(computerGenerateMulti3) {
-                if(constructed) Constant.Runtime.ComputerDeck[0] = generateConstructed3ColorDeck();
-            } else if(computerGenerateMulti5) {
-                if(constructed) Constant.Runtime.ComputerDeck[0] = generateConstructed5ColorDeck();
-            } else if (computerGenerateTheme) {
-            	if (constructed) Constant.Runtime.ComputerDeck[0] = generateConstructedThemeDeck();
-            } else if (computerGenerate2Color) {
-            	if (constructed) Constant.Runtime.ComputerDeck[0] = generate2ColorDeck("C");
-            }*/ else if(computerRandom) {
+                if(constructed)
+                	genDecks("C"); //Constant.Runtime.ComputerDeck[0] = generateConstructedDeck();
+                //else if(sealed)
+                	//Constant.Runtime.ComputerDeck[0] = generateSealedDeck();
+            } 
+            else if(computerRandom) {
                 Constant.Runtime.ComputerDeck[0] = getRandomDeck(getDecks(format));
+                
                 JOptionPane.showMessageDialog(null, String.format("The computer is using deck: %s",
                         Constant.Runtime.ComputerDeck[0].getName()), "Deck Name", JOptionPane.INFORMATION_MESSAGE);
-            } else {
+            } 
+            else {
                 Constant.Runtime.ComputerDeck[0] = deckManager.getDeck(computer);
             }
         }// else
@@ -638,7 +698,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         dispose();
     }//startButton_actionPerformed()
     
-    private Deck generateSealedDeck() {
+/*    private Deck generateSealedDeck() {
         GenerateSealedDeck gen = new GenerateSealedDeck();
         CardList name = gen.generateDeck();
         Deck deck = new Deck(Constant.GameType.Sealed);
@@ -647,7 +707,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             deck.addMain(name.get(i).getName());
         return deck;
     }
-    
+*/    
     private void genDecks(String p)
     {
     	Deck d = null;
@@ -859,23 +919,33 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         humanComboBox.removeAllItems();
         computerComboBox.removeAllItems();
         
-        if(Constant.GameType.Sealed.equals(Constant.Runtime.GameType[0])
-                || Constant.GameType.Constructed.equals(Constant.Runtime.GameType[0])) {
+        if(Constant.GameType.Sealed.equals(Constant.Runtime.GameType[0])) {
+        	humanComboBox.addItem("New Sealed");
+        	computerComboBox.addItem("New Sealed");
+        	
+            for (Deck allDeck : allDecks) {
+                if (allDeck.getDeckType().equals(Constant.GameType.Sealed)) {
+                    if (allDeck.getMetadata("PlayerType").equals("Human"))
+                    	humanComboBox.addItem(allDeck.getName());
+                    else if (allDeck.getMetadata("PlayerType").equals("AI"))
+                    	computerComboBox.addItem(allDeck.getName());
+                }
+            }//for
+        }
+        else if (Constant.GameType.Constructed.equals(Constant.Runtime.GameType[0])) {
             humanComboBox.addItem("Generate Deck");
             computerComboBox.addItem("Generate Deck");
                         
             humanComboBox.addItem("Random");
             computerComboBox.addItem("Random");
+        
+	        for (Deck allDeck : allDecks) {
+	            if (allDeck.getDeckType().equals(Constant.GameType.Constructed)) {
+	                humanComboBox.addItem(allDeck.getName());
+                	computerComboBox.addItem(allDeck.getName());
+	            }
+	        }//for
         }
-        
-
-        for (Deck allDeck : allDecks) {
-            if (allDeck.getDeckType().equals(Constant.Runtime.GameType[0])) {
-                humanComboBox.addItem(allDeck.getName());
-                computerComboBox.addItem(allDeck.getName());
-            }
-        }//for
-        
         //not sure if the code below is useful or not
         //this will select the deck that you previously used
         

@@ -53,12 +53,12 @@ class CardFactory_Planeswalkers {
 				@Override
                 public void resolve() {
                     turn[0] = AllZone.Phase.getTurn();
+                    final Card c = getTargetCard();
                     
                     final Command eot = new Command() {
                         private static final long serialVersionUID = 94488363210770877L;
                         
                         public void execute() {
-                            Card c = getTargetCard();
                             if(AllZoneUtil.isCardInPlay(c)) {
                                 c.addTempAttackBoost(-3);
                                 c.addTempDefenseBoost(-3);
@@ -66,8 +66,6 @@ class CardFactory_Planeswalkers {
                             }
                         }//execute()
                     };//Command
-                    
-                    Card c = getTargetCard();
                     if(AllZoneUtil.isCardInPlay(c) && CardFactoryUtil.canTarget(card, c)) {
                         c.addTempAttackBoost(3);
                         c.addTempDefenseBoost(3);
@@ -409,10 +407,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -482,10 +478,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -565,11 +559,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -791,10 +782,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
@@ -1575,8 +1564,7 @@ class CardFactory_Planeswalkers {
                 		{
                 			public boolean addCard(Card c)
                 			{
-                				return c.hasKeyword("When CARDNAME enters the battlefield, draw a card.") 
-                						|| c.getName().equals("Venerated Teacher") 
+                				return c.getName().equals("Venerated Teacher") 
                 						|| c.getName().equals("Stoneforge Mystic") 
                 						|| c.getName().equals("Sun Titan") 
                 						|| c.isType("Ally");
@@ -1596,10 +1584,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)

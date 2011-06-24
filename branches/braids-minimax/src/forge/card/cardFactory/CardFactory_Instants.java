@@ -398,7 +398,7 @@ public class CardFactory_Instants {
                     //in case human player only has a few creatures in play, target anything
                     if(out.isEmpty() && 0 < CardFactoryUtil.AI_getHumanCreature(2, card, true).size()
                             && 3 > CardFactoryUtil.AI_getHumanCreature(card, true).size()) {
-                        out.addAll(CardFactoryUtil.AI_getHumanCreature(2, card, true).toArray());
+                        out.addAll(CardFactoryUtil.AI_getHumanCreature(2, card, true));
                         CardListUtil.sortFlying(out);
                     }
                     return out;
@@ -872,7 +872,7 @@ public class CardFactory_Instants {
         //*************** START *********** START **************************
         else if (cardName.equals("Suffer the Past"))
         {
-        	Cost cost = new Cost("2 U B", cardName, false);
+        	Cost cost = new Cost("X B", cardName, false);
         	Target tgt = new Target(card, "Select a Player", "Player");
         	final SpellAbility spell = new Spell(card, cost, tgt){
 				private static final long serialVersionUID = 1168802375190293222L;
@@ -1053,90 +1053,6 @@ public class CardFactory_Instants {
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
             card.clearFirstSpellAbility();
             card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-        
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Mana Short")) {
-            /*
-             * Tap all lands target player controls and empty his or her mana pool.
-             */
-        	Target t = new Target(card, "Select target player", "Player");
-        	Cost cost = new Cost("2 U", cardName, false);
-        	
-            final SpellAbility spell = new Spell(card, cost, t) {
-				private static final long serialVersionUID = -2175586347805121896L;
-
-				@Override
-                public boolean canPlayAI() {
-                    CardList lands = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
-                    lands = lands.filter(AllZoneUtil.untapped);
-                    return lands.size() > 0 || !AllZone.ManaPool.isEmpty();
-                }
-				
-                @Override
-                public void resolve() {
-                	CardList lands = AllZoneUtil.getPlayerLandsInPlay(getTargetPlayer());
-                	for(Card c:lands) c.tap();
-                	if(getTargetPlayer().isHuman()) AllZone.ManaPool.clearPool();
-                }//resolve()
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-
-            spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-        }//*************** END ************ END **************************
-        
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Berserk")) {
-        	Cost cost = new Cost("G", cardName, false);
-        	final SpellAbility spell = new Spell(card, cost, new Target(card, "TgtC")) {
-				private static final long serialVersionUID = 6480841474890362249L;
-
-				@Override
-                public boolean canPlayAI() {
-                	//computer doesn't use x spells very effectively
-                    return false;
-                }//canPlayAI()
-                
-				@Override
-				public void resolve() {
-					final Card target = getTargetCard();
-					final int x = target.getNetAttack();
-					final Command untilEOT = new Command() {
-						private static final long serialVersionUID = -3673524041113224182L;
-
-						public void execute() {
-							if(AllZoneUtil.isCardInPlay(target)) {
-								target.addTempAttackBoost(-x);
-								target.removeExtrinsicKeyword("Trample");
-								target.removeExtrinsicKeyword("At the beginning of the next end step, destroy CARDNAME if it attacked this turn.");
-							}
-						}
-					};
-
-
-					if(AllZoneUtil.isCardInPlay(target) && CardFactoryUtil.canTarget(card, target)) {
-						target.addTempAttackBoost(x);
-						target.addExtrinsicKeyword("Trample");
-						target.addExtrinsicKeyword("At the beginning of the next end step, destroy CARDNAME if it attacked this turn.");
-
-						AllZone.EndOfTurn.addUntil(untilEOT);
-					}
-				}//resolve()
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-            
-            card.setSVar("PlayMain1", "TRUE");
-            
-            String phase = AllZone.Phase.buildActivateString(Constant.Phase.Upkeep, Constant.Phase.Combat_Declare_Blockers_InstantAbility);
-            spell.getRestrictions().setActivatePhases(phase);
         }//*************** END ************ END **************************
         
         
@@ -1377,7 +1293,7 @@ public class CardFactory_Instants {
         			for(int i = 0; i <card.getChoices().size(); i++) {
         				if(card.getChoice(i).equals(cardChoice[0])) {
         					if(AllZone.Stack.size() > 0) {
-        						SpellAbility sa = AllZone.Stack.peek();
+        						SpellAbility sa = AllZone.Stack.peekAbility();
         						if(sa.isSpell()) {
         							AllZone.Stack.pop();
         							AllZone.GameAction.moveToGraveyard(sa.getSourceCard());

@@ -19,7 +19,6 @@ import forge.ButtonUtil;
 import forge.Card;
 import forge.CardList;
 import forge.CardListFilter;
-import forge.CardListUtil;
 import forge.CardUtil;
 import forge.Command;
 import forge.ComputerUtil;
@@ -31,8 +30,11 @@ import forge.HandSizeOp;
 import forge.Player;
 import forge.PlayerZone;
 import forge.ReadCard;
+
 import forge.card.abilityFactory.AbilityFactory;
+
 import forge.card.mana.ManaCost;
+
 import forge.card.spellability.Ability;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Mana;
@@ -43,11 +45,16 @@ import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Spell_Permanent;
 import forge.card.spellability.Target;
+
 import forge.card.trigger.Trigger;
+
 import forge.error.ErrorViewer;
+
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCostUtil;
+import forge.gui.input.Input_PayManaCost;
+
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
@@ -136,31 +143,32 @@ public class CardFactory implements NewConstants {
         }
     }// readCard()
     
+    //TODO - this can probably be deleted.  I don't think it's used.
     final public Card dynamicCopyCard(Card in)
     {
-    	if(in.isType("Creature")) {
+    	if (in.isCreature()) {
             Card card2 = new Card();
             card2 = CardFactory_Creatures.getCard(in, in.getName(), in.getOwner(), this);
             
             return card2;
-        } else if(in.isType("Aura")) {
+        } else if (in.isAura()) {
             Card card2 = new Card();
             card2 = CardFactory_Auras.getCard(in, in.getName(), in.getOwner());
             
             return card2;
-        } else if(in.isType("Equipment")) {
+        } else if (in.isEquipment()) {
             Card card2 = new Card();
             card2 = CardFactory_Equipment.getCard(in, in.getName(), in.getOwner());
             
             return card2;
-        } else if(in.isType("Planeswalker")) {
+        } else if (in.isPlaneswalker()) {
             Card card2 = new Card();
             card2 = CardFactory_Planeswalkers.getCard(in, in.getName(), in.getOwner());
             
             return card2;
-        } else if(in.isType("Land")) {
+        } else if (in.isLand()) {
             Card card2 = new Card();
-            card2 = CardFactory_Lands.getCard(in, in.getName(), in.getOwner());
+            card2 = CardFactory_Lands.getCard(in, in.getName(), in.getOwner(), this);
             
             return card2;
         }
@@ -181,11 +189,12 @@ public class CardFactory implements NewConstants {
         out.setSets(in.getSets());
         out.setCurSetCode(in.getCurSetCode());
         out.setImageFilename(in.getImageFilename());
-        out.setAllTriggeringObjects(in.getAllTriggeringObjects());
         out.setEquipping(in.getEquipping());
         out.setEquippedBy(in.getEquippedBy());
         out.setEnchantedBy(in.getEnchantedBy());
         out.setEnchanting(in.getEnchanting());
+        out.setClones(in.getClones());
+        out.setCounters(in.getCounters());
         return out;
     	
     }
@@ -223,21 +232,8 @@ public class CardFactory implements NewConstants {
     	c.setController(source.getController());
     	c.setCopiedSpell(true);
     	
-    	SpellAbility[] sas = c.getSpellAbility();
-    	SpellAbility copySA = null;
-    	for(int i = 0; i < sas.length; i++) {
-    		if(original.getAbilityUsed() == i) {
-    			copySA = sas[i];
-    		}
-    	}
-
-    	if (copySA == null){
-    		StringBuilder sb = new StringBuilder();
-    		sb.append("Couldn't find matching SpellAbility to copy Source: ").append(source);
-    		sb.append(" Spell to Copy: ").append(source);
-    		System.out.println(sb.toString());
-    		return;
-    	}
+    	SpellAbility copySA = sa.copy();	
+    	copySA.setSourceCard(c);
     	
     	if (bCopyDetails){
     		c.addXManaCostPaid(original.getXManaCostPaid());
@@ -429,7 +425,7 @@ public class CardFactory implements NewConstants {
         	Command sunburstCIP = new Command() {
 				private static final long serialVersionUID = 1489845860231758299L;
 				public void execute() {
-					if(card.isType("Creature")) {
+					if (card.isCreature()) {
 						card.addCounter(Counters.P1P1, card.getSunburstValue());
 					}						
 					else {
@@ -563,7 +559,7 @@ public class CardFactory implements NewConstants {
             if(n != -1) {
                 
                 String parse = card.getKeyword().get(n).toString();
-                card.removeIntrinsicKeyword(parse);
+                // card.removeIntrinsicKeyword(parse);
                 
                 String k[] = parse.split(":");
                 final String magnitude = k[1];
@@ -818,40 +814,24 @@ public class CardFactory implements NewConstants {
         //******************************************************************
         //************** Link to different CardFactories ******************* 
         Card card2 = null;
-        if(card.isType("Creature")) {
+        if (card.isCreature()) {
             card2 = CardFactory_Creatures.getCard(card, cardName, owner, this);
-        } else if(card.isType("Aura")) {
+        } else if (card.isAura()) {
             card2 = CardFactory_Auras.getCard(card, cardName, owner);
-        } else if(card.isType("Equipment")) {
+        } else if (card.isEquipment()) {
             card2 = CardFactory_Equipment.getCard(card, cardName, owner);
-        } else if(card.isType("Planeswalker")) {
+        } else if (card.isPlaneswalker()) {
             card2 = CardFactory_Planeswalkers.getCard(card, cardName, owner);
-        } else if(card.isType("Land")) {
-            card2 = CardFactory_Lands.getCard(card, cardName, owner);
-        } else if (card.isType("Instant")) {
+        } else if (card.isLand()) {
+            card2 = CardFactory_Lands.getCard(card, cardName, owner, this);
+        } else if (card.isInstant()) {
         	card2 = CardFactory_Instants.getCard(card, cardName, owner);
-        } else if (card.isType("Sorcery")) {
+        } else if (card.isSorcery()) {
         	card2 = CardFactory_Sorceries.getCard(card, cardName, owner);
         }
         
         if (card2 != null)
         	return postFactoryKeywords(card2);
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Pestilence") || cardName.equals("Pyrohemia")) {
-            SpellAbility spell = new Spell_Permanent(card) {
-                private static final long serialVersionUID = 7254358703158629514L;
-                
-                @Override
-                public boolean canPlayAI() {
-                	CardList creatures = AllZoneUtil.getCreaturesInPlay();
-                	return creatures.size() > 0;
-                }
-            };
-            card.clearFirstSpellAbility();
-            card.addFirstSpellAbility(spell);
-        }
-        //*************** END ************ END *************************
                 
         
         //*************** START *********** START **************************
@@ -1006,76 +986,6 @@ public class CardFactory implements NewConstants {
             
         }//*************** END ************ END **************************
         
-        /*
-        //*************** START *********** START **************************
-        else if(cardName.equals("Oubliette")) {
-            final SpellAbility enchantment = new Spell(card) {
-                private static final long serialVersionUID = -6751177094537759827L;
-                
-                @Override
-                public void resolve() {
-                    if(AllZoneUtil.isCardInPlay(getTargetCard())
-                            && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        AllZone.GameAction.exile(getTargetCard());
-                        
-                        //put permanent onto the battlefield
-                        AllZone.GameAction.moveToPlay(card);
-                    }
-                }//resolve()
-                
-                @Override
-                public boolean canPlayAI() {
-                    //try to target human creature
-                    CardList human = CardFactoryUtil.AI_getHumanCreature(card, true);
-                    Card target = CardFactoryUtil.AI_getBestCreature(human);//returns null if list is empty
-                    
-                    if(target == null) return false;
-                    else {
-                        setTargetCard(target);
-                        return true;
-                    }
-                }//canPlayAI()
-            };//SpellAbility enchantment
-
-            Command commandLeavesPlay = new Command() {
-                private static final long serialVersionUID = -2535098005246027777L;
-                
-                public void execute() {
-                    Object o = enchantment.getTargetCard();
-                    if(o == null || ((Card) o).isToken() || !AllZoneUtil.isCardExiled((Card) o)) return;
-                    
-                    SpellAbility ability = new Ability(card, "0") {
-                        @Override
-                        public void resolve() {
-                            //copy card to reset card attributes like attack and defense
-                            Card c = enchantment.getTargetCard();
-                            if(!c.isToken()) {
-                                c = AllZone.CardFactory.copyCard(c);
-                                c.setController(c.getOwner());
-                                AllZone.GameAction.moveToPlay(c);
-                            }
-                        }//resolve()
-                    };//SpellAbility
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(card.getName()).append(" - returning creature to the battlefield");
-                    ability.setStackDescription(sb.toString());
-
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
-
-                }//execute()
-            };//Command
-            
-            card.addLeavesPlayCommand(commandLeavesPlay);
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(enchantment);
-            
-            card.setSVar("PlayMain1", "TRUE");
-            
-            enchantment.setBeforePayMana(CardFactoryUtil.input_targetCreature(enchantment));
-        }//*************** END ************ END **************************
-		*/
 
         //*************** START *********** START **************************
         else if(cardName.equals("That Which Was Taken")) {
@@ -1237,7 +1147,7 @@ public class CardFactory implements NewConstants {
 							chooseGrave = grave;
 						else{
 							chooseGrave = aiGrave;
-							chooseGrave.addAll(grave.toArray());
+							chooseGrave.addAll(grave);
 						}
 						
 						Object o = GuiUtils.getChoice("Choose first creature to exile", chooseGrave.toArray());
@@ -1354,99 +1264,25 @@ public class CardFactory implements NewConstants {
             ability.setBeforePayMana(payLife);
             
         }//*************** END ************ END **************************
-
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Chalice of the Void")) {
-            Command intoPlay = new Command() {
-                private static final long serialVersionUID = -7679939432259603542L;
-                
-                public void execute() {
-                	int XCounters = card.getXManaCostPaid();
-                	card.addCounter(Counters.CHARGE, XCounters);                
-                }
-            };
-            card.addComesIntoPlayCommand(intoPlay);
-        }//*************** END ************ END **************************     
-
-        
-        //*************** START *********** START **************************
-        else if(cardName.equals("Counterbalance")) {
-        	Player player = card.getController();
-            final SpellAbility ability = new Ability(card, "0") {
-                @Override
-                public void resolve() {
-                    PlayerZone lib = AllZone.getZone(Constant.Zone.Library, card.getController());
-                    
-                    Card topCard = lib.get(0);
-                    
-                    SpellAbility sa = AllZone.Stack.peek();
-                    
-
-                    int convertedManaTopCard = CardUtil.getConvertedManaCost(topCard.getManaCost());
-                    int convertedManaSpell = CardUtil.getConvertedManaCost(sa.getSourceCard().getManaCost());
-                    
-                    CardList showTop = new CardList();
-                    showTop.add(topCard);
-                    GuiUtils.getChoiceOptional("Revealed top card: ", showTop.toArray());
-                    
-                    if(convertedManaTopCard == convertedManaSpell) {
-                        
-                        AllZone.Stack.pop();
-                        AllZone.GameAction.moveToGraveyard(sa.getSourceCard());
-                    }
-                }
-                
-                @Override
-                public boolean canPlayAI() {
-                    return false;
-                    
-                }
-                
-                @Override
-                public boolean canPlay() {
-                	Player player = card.getController();
-                    PlayerZone lib = AllZone.getZone(Constant.Zone.Library, player);
-                    
-                    if(AllZone.Stack.size() == 0 || lib.size() == 0) return false;
-                    
-                    //see if spell is on stack and that opponent played it
-                    Player opponent = card.getController().getOpponent();
-                    SpellAbility sa = AllZone.Stack.peek();
-                    
-                    if(AllZone.getZone(card).is(Constant.Zone.Battlefield) && sa.isSpell()
-                            && opponent.equals(sa.getSourceCard().getController())
-                            && CardFactoryUtil.isCounterable(sa.getSourceCard())) return true;
-                    else return false;
-                }//canPlay()
-            };//SpellAbility ability
-            
-            StringBuilder sb = new StringBuilder();
-            sb.append("Counterbalance - ").append(player);
-            sb.append(" reveals top card and counters spell if it has the same converted manacost");
-            ability.setStackDescription(sb.toString());
-            
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
         
         
         //*************** START *********** START **************************
-        else if(cardName.equals("Aluren")) {
+        else if (cardName.equals("Aluren")) {
             final Ability ability1 = new Ability(card, "0") {
                 @Override
                 public void resolve() {
                     PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, AllZone.HumanPlayer);
                     
-                    if(hand.size() == 0) return;
+                    if (hand.size() == 0) return;
                     
                     CardList creatures = new CardList();
                     
-                    for(int i = 0; i < hand.size(); i++) {
-                        if (hand.get(i).isType("Creature")
+                    for (int i = 0; i < hand.size(); i++) {
+                        if (hand.get(i).isCreature()
                                 && CardUtil.getConvertedManaCost(hand.get(i).getManaCost()) <= 3) creatures.add(hand.get(i));
                     }
                     
-                    if(creatures.size() == 0) return;
+                    if (creatures.size() == 0) return;
                     
 
                     Object o = GuiUtils.getChoiceOptional("Select target creature to play",
@@ -1709,151 +1545,6 @@ public class CardFactory implements NewConstants {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-	  
-        //*************** START *********** START **************************
-        else if(cardName.equals("Isochron Scepter"))
-        {
-        	Cost abCost = new Cost("2 T", cardName, true);
-        	final Ability_Activated freeCast = new Ability_Activated(card, abCost, null)
-        	{
-
-        		private static final long serialVersionUID = 4455819149429678456L;
-
-        		@Override
-        		public void resolve() {
-        			if(getSourceCard().getAttachedCards().length == 0)
-        			{
-        				//AllZone.Display.showMessage("You have not exiled a card.");
-        				return;
-        			}
-        			Card c = copyCard(getSourceCard().getAttachedCards()[0]);
-        			if(getSourceCard().getController().isComputer())
-        			{
-        				for(SpellAbility sa:getSourceCard().getAttachedCards()[0].getSpellAbility())
-        					if(sa.canPlayAI())
-        					{
-        						ComputerUtil.playStackFree(sa);
-        						return;
-        					}
-        			}
-        			else AllZone.GameAction.playCardNoCost(c);
-        		}
-			
-        		public boolean canPlay()
-        		{
-        			if (!super.canPlay())
-        				return false;
-				
-        			if (getSourceCard().getAttachedCards().length > 0)
-        			{
-        				// Isochron Scepter might be broken?
-        				Card c = copyCard(getSourceCard().getAttachedCards()[0]);
-        				SpellAbility sa = c.getSpellAbility()[0];
-    					return sa.canPlay();
-        			}
-        			else
-        				return false;
-        		}
-			
-        		public boolean canPlayAI()
-        		{
-        			if (getSourceCard().getAttachedCards().length == 0)
-        				return false;
-        			for(SpellAbility sa:getSourceCard().getAttachedCards()[0].getSpellAbility())
-        				if(sa.canPlayAI())
-        					return true;
-        			return false;
-        		}
-        	};
-        	freeCast.setDescription(abCost+"You may copy the exiled card. If you do, you may cast the copy without paying its mana cost");
-        	freeCast.setStackDescription("Copy the exiled card and cast the copy without paying its mana cost.");
-          
-        	final Input exile = new Input() {
-        		private static final long serialVersionUID = -6392468000100283596L;
-              
-        		@Override
-        		public void showMessage() {
-        			AllZone.Display.showMessage("You may exile an Instant with converted mana cost two or less from your hand");
-        			ButtonUtil.enableOnlyCancel();
-        		}
-              
-        		@Override
-        		public void selectCard(Card c, PlayerZone zone) {
-        			if(zone.is(Constant.Zone.Hand) && c.isInstant() && CardUtil.getConvertedManaCost(c) <= 2)
-        			{
-        				AllZone.GameAction.moveTo(AllZone.Human_Exile, c);
-        				card.attachCard(c);
-        				stop();
-        			}
-        		}
-              
-        		@Override
-        		public void selectButtonCancel() {
-        			stop();
-        		}
-        	};//Input
-          
-        	final SpellAbility ability = new Ability(card, "0") {
-        		@Override
-        		public void resolve() {
-        			if(card.getController().isHuman()) {
-        				if(AllZone.Human_Hand.size() > 0)
-        					AllZone.InputControl.setInput(exile);
-        			} else {
-        				CardList list = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
-        				list = list.filter( new CardListFilter(){
-        					public boolean addCard(Card c)
-        					{
-        						return c.isInstant() && CardUtil.getConvertedManaCost(c) <=2 ;
-        					}
-        				});
-        				CardListUtil.sortCMC(list);
-        				list.reverse();
-        				Card c = list.get(0);
-        				AllZone.GameAction.moveTo(AllZone.Computer_Exile, c);
-        				card.attachCard(c);
-        			}//else
-        		}//resolve()
-        	};//SpellAbility
-        	
-        	Command intoPlay = new Command() {
-        		private static final long serialVersionUID = 9202753910259054021L;
-              
-        		public void execute() {
-            	  
-        			StringBuilder sb = new StringBuilder();
-        			sb.append("Imprint - ").append(card.getController());
-        			sb.append(" may exile an instant card with converted mana cost 2 or less from their hand.");
-        			ability.setStackDescription(sb.toString());
-
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
-
-        		}
-        	};
-        	
-        	SpellAbility spell = new Spell_Permanent(card) {
-        		private static final long serialVersionUID = -2940969025405788931L;
-              
-        		//could never get the AI to work correctly
-        		//it always played the same card 2 or 3 times
-        		@Override
-        		public boolean canPlayAI() {
-        			for(Card c : AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer))
-        				if(c.isInstant() && CardUtil.getConvertedManaCost(c) <=2)
-        					return true;
-        			return false;
-        		}
-        	};
-          
-        	card.addComesIntoPlayCommand(intoPlay);
-          
-        	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
-        	card.clearFirstSpellAbility();
-        	card.addSpellAbility(spell);
-        	card.addSpellAbility(freeCast);
-        }//*************** END ************ END **************************
-        
-      
         //*************** START *********** START **************************
         else if(cardName.equals("Lodestone Bauble")) {
         	/* 1, Tap, Sacrifice Lodestone Bauble: Put up to four target basic
@@ -2862,6 +2553,101 @@ public class CardFactory implements NewConstants {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
         
+        
+        //*************** START *********** START **************************
+        else if(cardName.equals("Copy Artifact") || cardName.equals("Sculpting Steel")) {
+        	final CardFactory cfact = this;
+        	final Card[] copyTarget = new Card[1];
+        	final Card[] cloned = new Card[1];
+        	
+        	final Command leaves = new Command() {
+				private static final long serialVersionUID = 6212378498863558380L;
+
+				public void execute() {
+                    //Slight hack if the cloner copies a card with triggers
+                    AllZone.TriggerHandler.removeAllFromCard(cloned[0]);
+                    
+                    Card orig = cfact.getCard(card.getName(), card.getController());
+                    PlayerZone dest = AllZone.getZone(card.getCurrentlyCloningCard());
+                    AllZone.GameAction.moveTo(dest, orig);
+                    dest.remove(card.getCurrentlyCloningCard());
+
+                }
+            };
+        	
+        	final SpellAbility copy = new Spell(card) {
+				private static final long serialVersionUID = 4236580139968159802L;
+
+				@Override
+        		public boolean canPlayAI() {
+        			CardList arts = AllZoneUtil.getTypeInPlay("Artifact");
+					return !arts.isEmpty();
+        		}
+
+				@Override
+                public void resolve() {
+					if (card.getController().isComputer()) {
+						CardList arts = AllZoneUtil.getTypeInPlay("Artifact");
+						if(!arts.isEmpty()) {
+							copyTarget[0] = CardFactoryUtil.AI_getBestArtifact(arts);
+						}
+					}
+					
+					if (copyTarget[0] != null) {
+						cloned[0] = CardFactory.copyStats(copyTarget[0]);
+						cloned[0].setOwner(card.getController());
+						cloned[0].setController(card.getController());
+						if(cardName.equals("Copy Artifact")) cloned[0].addType("Enchantment");
+						cloned[0].setCloneOrigin(card);
+						cloned[0].addLeavesPlayCommand(leaves);
+						cloned[0].setCloneLeavesPlayCommand(leaves);
+						cloned[0].setCurSetCode(copyTarget[0].getCurSetCode());
+						cloned[0].setImageFilename(copyTarget[0].getImageFilename());
+						
+						for(SpellAbility sa : copyTarget[0].getSpellAbilities()) {
+							cloned[0].addSpellAbility(sa);
+						}
+						
+						//Slight hack in case the cloner copies a card with triggers
+						for(Trigger t : cloned[0].getTriggers())
+						{
+							AllZone.TriggerHandler.registerTrigger(t);
+						}
+						
+						AllZone.GameAction.moveToPlay(cloned[0]);
+						card.setCurrentlyCloningCard(cloned[0]);
+					}
+                }
+            };//SpellAbility
+            
+            Input runtime = new Input() {
+				private static final long serialVersionUID = 8117808324791871452L;
+
+				@Override
+            	public void showMessage() {
+            		AllZone.Display.showMessage(cardName+" - Select an artifact on the battlefield");
+            		ButtonUtil.enableOnlyCancel();
+            	}
+				
+				@Override
+				public void selectButtonCancel() { stop(); }
+            	
+            	@Override
+            	public void selectCard(Card c, PlayerZone z) {
+            		if( z.is(Constant.Zone.Battlefield) && c.isArtifact()) {
+            			copyTarget[0] = c;
+            			stopSetNext(new Input_PayManaCost(copy));
+            		}
+            	}
+            };
+            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
+            card.clearFirstSpellAbility();
+            card.addSpellAbility(copy);
+            copy.setStackDescription(cardName+" - enters the battlefield as a copy of selected card.");
+            copy.setBeforePayMana(runtime);
+        }//*************** END ************ END **************************
+        
+        
 
         return postFactoryKeywords(card);
     }//getCard2
@@ -2933,6 +2719,13 @@ public class CardFactory implements NewConstants {
                 	card.setEvoked(true);
                     AllZone.GameAction.moveToPlay(card);
                 }
+                
+				@Override
+        		public boolean canPlayAI() {
+					if (!Spell_Permanent.checkETBEffects(card, this, null))
+			        	return false;
+					return super.canPlayAI();
+        		}
             };
             String parse = card.getKeyword().get(evokeKeyword).toString();
             card.removeIntrinsicKeyword(parse);
@@ -3020,21 +2813,6 @@ public class CardFactory implements NewConstants {
            card.addDestroyCommand(CardFactoryUtil.ability_Soulshift(card, manacost));
            shiftPos = hasKeyword(card, "Soulshift", n+1);
         }//Soulshift
-        
-        /*
-        while(hasKeyword(card, "Soulshift") != -1) {
-            int n = hasKeyword(card, "Soulshift");
-            if(n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                card.removeIntrinsicKeyword(parse);
-                
-                String k[] = parse.split(":");
-                final String manacost = k[1];
-                
-                card.addDestroyCommand(CardFactoryUtil.ability_Soulshift(card, manacost));
-            }
-        }//Soulshift
-        */
         
         if(hasKeyword(card, "Echo") != -1) {
             int n = hasKeyword(card, "Echo");
@@ -3255,7 +3033,6 @@ public class CardFactory implements NewConstants {
         c.setCurSetCode(sim.getCurSetCode());
         c.setImageFilename(sim.getImageFilename());
         c.setTriggers(sim.getTriggers());
-        
         
         return c;
     }// copyStats()

@@ -83,7 +83,8 @@ class BoosterDraft_1 implements BoosterDraft
           
           ArrayList<String> setCombos = new ArrayList<String>();
           
-          if (blockSets.get(1).equals("") && blockSets.get(2).equals("")) { // Block only has one set
+          //if (blockSets.get(1).equals("") && blockSets.get(2).equals("")) { // Block only has one set
+          if (blockSets.size() == 1) {
         	  BoosterGenerator bpOne = new BoosterGenerator(blockSets.get(0));
         	  int n = 0;
         	  for (int i=0; i<nPacks; i++) {
@@ -93,14 +94,23 @@ class BoosterDraft_1 implements BoosterDraft
         	  stopCount = n;
           }
           else {
-        	  if (!blockSets.get(1).equals("") && blockSets.get(2).equals("")) { // Block only has two sets
+        	  //if (!blockSets.get(1).equals("") && blockSets.get(2).equals("")) { // Block only has two sets
+        	  if (blockSets.size() == 2) {
         		  setCombos.add(String.format("%s/%s/%s", blockSets.get(0), blockSets.get(0), blockSets.get(0)));
         		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(0), blockSets.get(0)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(1), blockSets.get(0)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(1), blockSets.get(1)));
         	  }
-        	  else if (!blockSets.get(1).equals("") && !blockSets.get(2).equals("")) { // Block has three sets
+        	  //else if (!blockSets.get(1).equals("") && !blockSets.get(2).equals("")) { // Block has three sets
+          	  else if (blockSets.size() == 3) {
         		  setCombos.add(String.format("%s/%s/%s", blockSets.get(0), blockSets.get(0), blockSets.get(0)));
         		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(0), blockSets.get(0)));
         		  setCombos.add(String.format("%s/%s/%s", blockSets.get(2), blockSets.get(1), blockSets.get(0)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(1), blockSets.get(0)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(1), blockSets.get(1), blockSets.get(1)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(2), blockSets.get(2), blockSets.get(0)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(2), blockSets.get(2), blockSets.get(1)));
+        		  setCombos.add(String.format("%s/%s/%s", blockSets.get(2), blockSets.get(2), blockSets.get(2)));
         	  }
         	  
         	  Object p = GuiUtils.getChoice("Choose Set Combination", setCombos.toArray());
@@ -239,8 +249,8 @@ class BoosterDraft_1 implements BoosterDraft
     
     if (packNum < packs.size()) {
     for(int i = 0; i < list.length; i++)
-      //list[i].addAll(pack.getBoosterPack().toArray());
-    	list[i].addAll(packs.get(packNum).getBoosterPack().toArray());
+      //list[i].addAll(pack.getBoosterPack());
+    	list[i].addAll(packs.get(packNum).getBoosterPack());
     }
     
     packNum++;

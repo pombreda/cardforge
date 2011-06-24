@@ -28,7 +28,7 @@ public class BoosterGenerator {
 	private int numMythics = 0;
 	private int numSpecials = 0;
 
-	private Random r  = new Random();
+	//private Random r  = new Random();
 
 	public BoosterGenerator() {
 		numCommons = 11;
@@ -226,7 +226,7 @@ public class BoosterGenerator {
 		for (i=0; i<numRares; i++) {
 			if (numMythics > 0) {
 				if (mythics.size() > numMythics) {
-					if (r.nextInt(8) <= 1) {
+					if (MyRandom.random.nextInt(8) <= 1) {
 						if (iMythics >= mythics.size())
 							iMythics = 0;
 
