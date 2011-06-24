@@ -151,7 +151,7 @@ public class AbilityFactory_Clash {
                     win.setActivatingPlayer(AF.getHostCard().getController());
                     ((Ability_Sub)win).setParent(SA);
 
-                    win.resolve();
+                    AbilityFactory.resolve(win);
                 }
                 runParams.put("Won","True");
         }
@@ -163,7 +163,7 @@ public class AbilityFactory_Clash {
                     otherwise.setActivatingPlayer(AF.getHostCard().getController());
                     ((Ability_Sub)otherwise).setParent(SA);
 
-                    otherwise.resolve();
+                    AbilityFactory.resolve(otherwise);
                 }
                 runParams.put("Won","False");
         }
