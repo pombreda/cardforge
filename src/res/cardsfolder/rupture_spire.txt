@@ -13,4 +13,5 @@ A:AB$ Mana | Cost$ T | Produced$ G | SpellDescription$ Add G to your mana pool.
 SVar:NeedsToPlay:Land.untapped+YouCtrl
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/rupture_spire.jpg
+SetInfo:CFX|Common|http://magiccards.info/scans/en/cfx/144.jpg
 End
