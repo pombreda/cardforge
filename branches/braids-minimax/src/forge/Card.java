@@ -547,7 +547,7 @@ public class Card extends MyObservable {
         HashMap<String,Object> runParams = new HashMap<String,Object>();
         runParams.put("Card", this);
         runParams.put("CounterType", counterName);
-        AllZone.TriggerHandler.runTrigger("CounterAdded", runParams);
+        AllZone.getTriggerHandler().runTrigger("CounterAdded", runParams);
         */
         
         this.updateObservers();
@@ -570,10 +570,10 @@ public class Card extends MyObservable {
         runParams.put("CounterType", counterName);
         for(int i=0;i<(multiplier*n);i++)
         {
-            AllZone.TriggerHandler.runTrigger("CounterAdded", runParams);
+            AllZone.getTriggerHandler().runTrigger("CounterAdded", runParams);
         }
 
-        AllZone.GameAction.checkStateEffects();
+        AllZone.getGameAction().checkStateEffects();
         
         this.updateObservers();
     }
@@ -589,7 +589,7 @@ public class Card extends MyObservable {
 				boolean hasVanish = CardFactory.hasKeyword(this, "Vanishing") != -1;
 
 				if(hasVanish && AllZoneUtil.isCardInPlay(this))
-					AllZone.GameAction.sacrifice(this);
+					AllZone.getGameAction().sacrifice(this);
 				
 				if(hasSuspend() && AllZoneUtil.isCardExiled(this))
 				{
@@ -599,12 +599,12 @@ public class Card extends MyObservable {
 					// set activating player for base spell ability
 					c.getSpellAbility()[0].setActivatingPlayer(c.getOwner());
 					// Any trigger should cause the phase not to skip
-					AllZone.Phase.setSkipPhase(false);
-					AllZone.GameAction.playCardNoCost(c);
+					AllZone.getPhase().setSkipPhase(false);
+					AllZone.getGameAction().playCardNoCost(c);
 				}
 			}
 
-            AllZone.GameAction.checkStateEffects();
+            AllZone.getGameAction().checkStateEffects();
 
             this.updateObservers();
         }
@@ -623,6 +623,13 @@ public class Card extends MyObservable {
     
     public boolean hasCounters()
     {
+    	// First, delete any keys in counters where the value < 1:
+    	for (Counters key : counters.keySet()) {
+    		if (counters.get(key) < 1) {
+    			counters.remove(key);
+    		}
+    	}
+    	
     	return counters.size() > 0;
     }
     
@@ -752,7 +759,7 @@ public class Card extends MyObservable {
     		return new Card_Color(this);
     	}
     	Card_Color colors = null;
-    	ArrayList<Card_Color> globalChanges = AllZone.GameInfo.getColorChanges();
+    	ArrayList<Card_Color> globalChanges = AllZone.getGameInfo().getColorChanges();
     	colors = determineColor(globalChanges);
     	colors.fixColorless();
     	return colors;
@@ -1328,8 +1335,12 @@ public class Card extends MyObservable {
     
     public void addSpellAbility(SpellAbility a) {
         a.setSourceCard(this);
-        if(a instanceof Ability_Mana) manaAbility.add((Ability_Mana) a);
-        else spellAbility.add(a);
+        if(a instanceof Ability_Mana) {  
+        	manaAbility.add((Ability_Mana) a);
+        }
+        else {
+        	spellAbility.add(a);
+        }
     }
     
     public void removeSpellAbility(SpellAbility a) {
@@ -1549,7 +1560,7 @@ public class Card extends MyObservable {
     
     public void executeTrigger(ZCTrigger type) {
         for(Ability_Triggered t:zcTriggers)
-            if(t.trigger.equals(type) && t.isBasic()) t.execute();//AllZone.Stack.addSimultaneousStackEntry(t);
+            if(t.trigger.equals(type) && t.isBasic()) t.execute();//AllZone.getStack().addSimultaneousStackEntry(t);
     }
     
     public void clearTriggers() {
@@ -1583,7 +1594,7 @@ public class Card extends MyObservable {
         //Run triggers
         HashMap<String,Object> runParams = new HashMap<String,Object>();
         runParams.put("Card", this);
-        AllZone.TriggerHandler.runTrigger("TurnFaceUp", runParams);
+        AllZone.getTriggerHandler().runTrigger("TurnFaceUp", runParams);
     }
     
     public void addDestroyCommand(Command c) {
@@ -1827,7 +1838,7 @@ public class Card extends MyObservable {
         HashMap<String,Object> runParams = new HashMap<String,Object>();
         runParams.put("Equipment", this);
         runParams.put("Card", c);
-        AllZone.TriggerHandler.runTrigger("Unequip", runParams);
+        AllZone.getTriggerHandler().runTrigger("Unequip", runParams);
     }
     
     public void unEquipAllCards() {
@@ -2207,7 +2218,7 @@ public class Card extends MyObservable {
     		//Run triggers
     		HashMap<String,Object> runParams = new HashMap<String,Object>();
     		runParams.put("Card", this);
-    		AllZone.TriggerHandler.runTrigger("Taps", runParams);
+    		AllZone.getTriggerHandler().runTrigger("Taps", runParams);
     	}
     	setTapped(true);
     }
@@ -2217,7 +2228,7 @@ public class Card extends MyObservable {
     		//Run triggers
     		HashMap<String,Object> runParams = new HashMap<String,Object>();
     		runParams.put("Card", this);
-    		AllZone.TriggerHandler.runTrigger("Untaps", runParams);
+    		AllZone.getTriggerHandler().runTrigger("Untaps", runParams);
 
     	}
 
@@ -2836,10 +2847,10 @@ public class Card extends MyObservable {
          else if(Property.startsWith("hasLevelUp"))
          	{ if(!hasLevelUp()) return false; }
          else if (Property.startsWith("enteredBattlefieldThisTurn"))
-         	{ if(!(getTurnInZone() == AllZone.Phase.getTurn())) return false;}
+         	{ if(!(getTurnInZone() == AllZone.getPhase().getTurn())) return false;}
          else if (Property.startsWith("dealtDamageToYouThisTurn")){
-        	 if(!(dealtDmgToHumanThisTurn && getController().isPlayer(AllZone.ComputerPlayer))
-        			 && !(dealtDmgToComputerThisTurn && getController().isPlayer(AllZone.HumanPlayer))) return false;}
+        	 if(!(dealtDmgToHumanThisTurn && getController().isPlayer(AllZone.getComputerPlayer()))
+        			 && !(dealtDmgToComputerThisTurn && getController().isPlayer(AllZone.getHumanPlayer()))) return false;}
          else if (Property.startsWith("wasDealtDamageThisTurn")){
         	 if((getReceivedDamageFromThisTurn().keySet()).isEmpty())return false;}
          
@@ -2938,11 +2949,11 @@ public class Card extends MyObservable {
 		
              else if (Property.startsWith("notblocking")) { if(isBlocking())  return false;}
 		
-             else if (Property.startsWith("blocked")) { if(!AllZone.Combat.isBlocked(this))  return false;}
+             else if (Property.startsWith("blocked")) { if(!AllZone.getCombat().isBlocked(this))  return false;}
         
              else if (Property.startsWith("blockedBySource")) { if(!isBlockedBy(source))  return false;}
         
-             else if (Property.startsWith("unblocked")) { if(!AllZone.Combat.isUnblocked(this))  return false;}
+             else if (Property.startsWith("unblocked")) { if(!AllZone.getCombat().isUnblocked(this))  return false;}
         
              else if (Property.startsWith("kicked")) { if(!isKicked()) return false; }
         
@@ -3039,20 +3050,20 @@ public class Card extends MyObservable {
 	}
 	
 	public boolean isAttacking() {
-		return AllZone.Combat.isAttacking(this);
+		return AllZone.getCombat().isAttacking(this);
 	}
 	
 	public boolean isBlocking() {
-		CardList blockers = AllZone.Combat.getAllBlockers();
+		CardList blockers = AllZone.getCombat().getAllBlockers();
      	return blockers.contains(this);
 	}
 	
 	public boolean isBlocking(Card attacker) {
-     	return attacker.equals(AllZone.Combat.getAttackerBlockedBy(this));
+     	return attacker.equals(AllZone.getCombat().getAttackerBlockedBy(this));
 	}
 	
 	public boolean isBlockedBy(Card blocker) {
-     	return this.equals(AllZone.Combat.getAttackerBlockedBy(blocker));
+     	return this.equals(AllZone.getCombat().getAttackerBlockedBy(blocker));
 	}
 	
 	///////////////////////////
@@ -3061,7 +3072,7 @@ public class Card extends MyObservable {
 	//
 	//////////////////////////
 	
-	//all damage to cards is now handled in Card.java, no longer AllZone.GameAction...
+	//all damage to cards is now handled in Card.java, no longer AllZone.getGameAction()...
 	public void addReceivedDamageFromThisTurn(Card c, int damage) {
         receivedDamageFromThisTurn.put(c, damage);
     }
@@ -3493,7 +3504,7 @@ public class Card extends MyObservable {
         runParams.put("DamageTarget", this);
         runParams.put("DamageAmount", damageToAdd);
         runParams.put("IsCombatDamage",isCombat);
-        AllZone.TriggerHandler.runTrigger("DamageDone", runParams);
+        AllZone.getTriggerHandler().runTrigger("DamageDone", runParams);
         
         if(this.isPlaneswalker()) {
         	this.subtractCounter(Counters.LOYALTY, damageToAdd);

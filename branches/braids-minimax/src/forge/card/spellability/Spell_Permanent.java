@@ -2,7 +2,11 @@
 package forge.card.spellability;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -28,6 +32,7 @@ public class Spell_Permanent extends Spell {
     private String championValidDesc = "";
     
     
+
     final Input championInputComes = new Input() {
 		private static final long serialVersionUID = -7503268232821397107L;
 
@@ -39,6 +44,12 @@ public class Spell_Permanent extends Spell {
                     "Select another "+championValidDesc+" you control to exile", false, false));
             ButtonUtil.disableAll(); //target this card means: sacrifice this card
         }
+
+		@Override
+		public Collection<MinimaxMove> getMoves() {
+			// TODO Auto-generated method stub
+			throw new NotImplementedError();
+		}
     };
     
     private final CommandReturn championGetCreature = new CommandReturn() {
@@ -57,13 +68,13 @@ public class Spell_Permanent extends Spell {
         	
             CardList creature = (CardList) championGetCreature.execute();
             if(creature.size() == 0) {
-                AllZone.GameAction.sacrifice(source);
+                AllZone.getGameAction().sacrifice(getSourceCard());
                 return;
             } else if(controller.isHuman()) {
-            	AllZone.InputControl.setInput(championInputComes);
+            	AllZone.getInputControl().setInput(championInputComes);
             }
             else { //Computer
-                CardList computer = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                CardList computer = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                 computer = computer.getValidCards(championValid, controller, source);
                 computer.remove(source);
                 
@@ -72,17 +83,17 @@ public class Spell_Permanent extends Spell {
                     Card c = computer.get(0);
                     source.setChampionedCard(c);
                     if(AllZoneUtil.isCardInPlay(c)) {
-                        AllZone.GameAction.exile(c);
+                        AllZone.getGameAction().exile(c);
                     }
                     
                     //Run triggers
                     HashMap<String,Object> runParams = new HashMap<String,Object>();
                     runParams.put("Card", source);
                     runParams.put("Championed", source.getChampionedCard());
-                    AllZone.TriggerHandler.runTrigger("Championed", runParams);
+                    AllZone.getTriggerHandler().runTrigger("Championed", runParams);
                 }
                 else
-                	AllZone.GameAction.sacrifice(getSourceCard());
+                	AllZone.getGameAction().sacrifice(getSourceCard());
             }//computer
         }//resolve()
     };
@@ -95,7 +106,7 @@ public class Spell_Permanent extends Spell {
         	StringBuilder sb = new StringBuilder();
             sb.append(getSourceCard()).append(" - When CARDNAME enters the battlefield, sacrifice it unless you exile another Faerie you control.");
             championAbilityComes.setStackDescription(sb.toString());
-        	AllZone.Stack.addSimultaneousStackEntry(championAbilityComes);
+        	AllZone.getStack().addSimultaneousStackEntry(championAbilityComes);
         }//execute()
     };//championCommandComes
     
@@ -110,7 +121,7 @@ public class Spell_Permanent extends Spell {
                 public void resolve() {
                 	Card c = getSourceCard().getChampionedCard();
                     if(c != null && !c.isToken() && AllZoneUtil.isCardExiled(c)) {
-                    	AllZone.GameAction.moveToPlay(c);
+                    	AllZone.getGameAction().moveToPlay(c);
                     }
                 }//resolve()
             };//SpellAbility
@@ -119,7 +130,7 @@ public class Spell_Permanent extends Spell {
             sb.append(getSourceCard()).append(" - When CARDNAME leaves the battlefield, exiled card returns to the battlefield.");
             ability.setStackDescription(sb.toString());
             
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
         }//execute()
     };//championCommandLeavesPlay
     
@@ -167,9 +178,9 @@ public class Spell_Permanent extends Spell {
     @Override
     public boolean canPlay() {
     	Card source = getSourceCard();
-    	if(AllZone.Stack.isSplitSecondOnStack() || source.isUnCastable()) return false;
+    	if(AllZone.getStack().isSplitSecondOnStack() || source.isUnCastable()) return false;
     	
-    	Player turn = AllZone.Phase.getPlayerTurn();
+    	Player turn = AllZone.getPhase().getPlayerTurn();
 
     	if(source.getName().equals("Serra Avenger")) {
         	if (turn.equals(source.getController()) && turn.getTurn() <= 3)
@@ -192,12 +203,12 @@ public class Spell_Permanent extends Spell {
     	
         //check on legendary
         if (card.isType("Legendary")) {
-        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
             if (list.containsName(card.getName()))
             	return false;
         }
         if (card.isPlaneswalker()) {
-        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         	list = list.getType("Planeswalker");
         	
         	for (int i=0;i<list.size();i++)
@@ -211,7 +222,7 @@ public class Spell_Permanent extends Spell {
         	}
         }
         if (card.isType("World")) {
-        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+        	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         	list = list.getType("World");
         	if(list.size() > 0) return false;
         }
@@ -289,6 +300,6 @@ public class Spell_Permanent extends Spell {
     @Override
     public void resolve() {
         Card c = getSourceCard();
-        AllZone.GameAction.moveToPlay(c);
+        AllZone.getGameAction().moveToPlay(c);
     }
 }

@@ -1,100 +1,181 @@
 package forge;
 
 
+import java.util.Iterator;
+import java.util.Map;
+
+import forge.ai.minimax.Unstatic;
 import forge.card.cardFactory.CardFactory;
 import forge.card.mana.ManaPool;
 import forge.card.trigger.TriggerHandler;
 import forge.gui.input.InputControl;
-import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
-
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 
 public class AllZone implements NewConstants {
     //only for testing, should read decks from local directory
 //  public static final IO IO = new IO("all-decks");
 	
-	public static final Player					HumanPlayer				= new HumanPlayer("Human");
-    public static final Player					ComputerPlayer			= new AIPlayer("Computer");
-    
-    public static forge.quest.data.QuestData     QuestData          = null;
-    public static Quest_Assignment 			     QuestAssignment    = null;
-    public static final NameChanger              NameChanger        = new NameChanger();
-    
-    public static EndOfTurn                      EndOfTurn          = new EndOfTurn();
-    public static EndOfCombat					 EndOfCombat		= new EndOfCombat();
-
-    public static final Phase                    Phase              = new Phase();
-    
-    // Phase is now a prerequisite for CardFactory
-    public static final CardFactory              CardFactory        = new CardFactory(ForgeProps.getFile(CARDSFOLDER));
-    
-    public static final MagicStack               Stack              = new MagicStack();
-    public static final InputControl             InputControl       = new InputControl();
-    public static final GameAction               GameAction         = new GameAction();
-    public static final StaticEffects        	 StaticEffects      = new StaticEffects();
-    public static final GameInfo				 GameInfo 			= new GameInfo();
-    
-    public static final TriggerHandler			 TriggerHandler		= new TriggerHandler();
-
-    //initialized at Runtime since it has to be the last object constructed
-
-    public static ComputerAI_Input Computer;
-
-    //shared between Input_Attack, Input_Block, Input_CombatDamage , InputState_Computer
-    
-    public static Combat Combat   = new Combat();
-
-    //Human_Play, Computer_Play is different because Card.comesIntoPlay() is called when a card is added by PlayerZone.add(Card)
-    public final static PlayerZone Human_Battlefield	= new PlayerZone_ComesIntoPlay(Constant.Zone.Battlefield, AllZone.HumanPlayer);
-    public final static PlayerZone Human_Hand      		= new DefaultPlayerZone(Constant.Zone.Hand      , AllZone.HumanPlayer);
-    public final static PlayerZone Human_Graveyard 		= new DefaultPlayerZone(Constant.Zone.Graveyard , AllZone.HumanPlayer);
-    public final static PlayerZone Human_Library   		= new DefaultPlayerZone(Constant.Zone.Library   , AllZone.HumanPlayer);
-    public final static PlayerZone Human_Exile   		= new DefaultPlayerZone(Constant.Zone.Exile, AllZone.HumanPlayer);
-    public final static PlayerZone Human_Command   		= new DefaultPlayerZone(Constant.Zone.Command, AllZone.HumanPlayer);
-
-    public final static PlayerZone Computer_Battlefield	= new PlayerZone_ComesIntoPlay(Constant.Zone.Battlefield      , AllZone.ComputerPlayer);
-    public final static PlayerZone Computer_Hand      	= new DefaultPlayerZone(Constant.Zone.Hand      , AllZone.ComputerPlayer);
-    public final static PlayerZone Computer_Graveyard 	= new DefaultPlayerZone(Constant.Zone.Graveyard , AllZone.ComputerPlayer);
-    public final static PlayerZone Computer_Library   	= new DefaultPlayerZone(Constant.Zone.Library   , AllZone.ComputerPlayer);
-    public final static PlayerZone Computer_Exile   	= new DefaultPlayerZone(Constant.Zone.Exile, AllZone.ComputerPlayer);
-    public final static PlayerZone Computer_Command   	= new DefaultPlayerZone(Constant.Zone.Command, AllZone.ComputerPlayer);
-    
-    public final static PlayerZone Stack_Zone   = new DefaultPlayerZone(Constant.Zone.Stack, null);
-    
-    public static final ManaPool ManaPool = new ManaPool(AllZone.HumanPlayer);
-    public static final ManaPool Computer_ManaPool = new ManaPool(AllZone.ComputerPlayer);
-    
-    public static Display Display;
-
-    private final static Map<String,PlayerZone> map = new HashMap<String,PlayerZone>();
-
-    static
-    {
-		map.put(Constant.Zone.Graveyard         + AllZone.HumanPlayer, Human_Graveyard);
-		map.put(Constant.Zone.Hand              + AllZone.HumanPlayer, Human_Hand);
-		map.put(Constant.Zone.Library           + AllZone.HumanPlayer, Human_Library);
-		map.put(Constant.Zone.Battlefield		+ AllZone.HumanPlayer, Human_Battlefield);
-		map.put(Constant.Zone.Exile 			+ AllZone.HumanPlayer, Human_Exile);
-		map.put(Constant.Zone.Command 			+ AllZone.HumanPlayer, Human_Command);
+	public static Player getHumanPlayer() {
+		return Unstatic.getGlobalGameState().getHumanPlayer();
+	}
 	
-		map.put(Constant.Zone.Graveyard         + AllZone.ComputerPlayer, Computer_Graveyard);
-		map.put(Constant.Zone.Hand              + AllZone.ComputerPlayer, Computer_Hand);
-		map.put(Constant.Zone.Library           + AllZone.ComputerPlayer, Computer_Library);
-		map.put(Constant.Zone.Battlefield       + AllZone.ComputerPlayer, Computer_Battlefield);
-		map.put(Constant.Zone.Exile 			+ AllZone.ComputerPlayer, Computer_Exile);
-		map.put(Constant.Zone.Command 			+ AllZone.ComputerPlayer, Computer_Command);
-		
-		map.put(Constant.Zone.Stack				+ null					, Stack_Zone);
-		
+    public static Player getComputerPlayer() {
+         return Unstatic.getGlobalGameState().getComputerPlayer(); 
+    }
+
+    public static forge.quest.data.QuestData getQuestData() {
+         return Unstatic.getGlobalGameState().getQuestData(); 
     }
     
+    public static void setQuestData(forge.quest.data.QuestData questData) {
+    	Unstatic.getGlobalGameState().setQuestData(questData);
+    }
+    
+    public static Quest_Assignment getQuestAssignment() {
+         return Unstatic.getGlobalGameState().getQuestAssignment(); 
+    }
+	
+    public static void setQuestAssignment(Quest_Assignment assignment) {
+		Unstatic.getGlobalGameState().setQuestAssignment(assignment);
+	}
+    
+    public static NameChanger getNameChanger() {
+         return Unstatic.getGlobalGameState().getNameChanger(); 
+    }
+    
+    public static EndOfTurn getEndOfTurn() {
+         return Unstatic.getGlobalGameState().getEndOfTurn(); 
+    }
+    
+    public static forge.EndOfCombat getEndOfCombat() {
+         return Unstatic.getGlobalGameState().getEndOfCombat(); 
+    }
+    
+    public static Phase getPhase() {
+         return Unstatic.getGlobalGameState().getPhase(); 
+    }
+    
+    public static CardFactory getCardFactory() {
+         return Unstatic.getCardFactory(); 
+    }
+    
+    public static MagicStack getStack() {
+         return Unstatic.getGlobalGameState().getStack(); 
+    }
+    
+    public static InputControl getInputControl() {
+         return Unstatic.getGlobalGameState().getInputControl(); 
+    }
+    
+    public static GameAction getGameAction() {
+         return Unstatic.getGlobalGameState().getGameAction(); 
+    }
+    
+    public static StaticEffects getStaticEffects() {
+         return Unstatic.getGlobalGameState().getStaticEffects(); 
+    }
+    
+    public static GameInfo getGameInfo() {
+         return Unstatic.getGlobalGameState().getGameInfo(); 
+    }
+    
+    public static TriggerHandler getTriggerHandler() {
+         return Unstatic.getGlobalGameState().getTriggerHandler(); 
+    }
+    
+    public static ComputerAI_Input getComputer() {
+         return Unstatic.getGlobalGameState().getComputer(); 
+    }
+	
+    public static void setComputer(ComputerAI_Input input) {
+		Unstatic.getGlobalGameState().setComputer(input);		
+	}
+
+    public static Combat getCombat() {
+         return Unstatic.getGlobalGameState().getCombat(); 
+    }
+	
+    public static void setCombat(Combat attackers) {
+		Unstatic.getGlobalGameState().setCombat(attackers);
+	}
+
+    //Human_Play, Computer_Play is different because Card.comesIntoPlay() is called when a card is added by PlayerZone.add(Card)
+    public static PlayerZone getHumanBattlefield() {
+         return Unstatic.getGlobalGameState().getHumanBattlefield(); 
+    }
+    
+    public static PlayerZone getHumanHand() {
+         return Unstatic.getGlobalGameState().getHumanHand(); 
+    }
+    
+    public static PlayerZone getHumanGraveyard() {
+         return Unstatic.getGlobalGameState().getHumanGraveyard(); 
+    }
+    
+    public static PlayerZone getHumanLibrary() {
+         return Unstatic.getGlobalGameState().getHumanLibrary(); 
+    }
+    
+    public static PlayerZone getHumanExile() {
+         return Unstatic.getGlobalGameState().getHumanExile(); 
+    }
+    
+    public static PlayerZone getHumanCommand() {
+         return Unstatic.getGlobalGameState().getHumanCommand(); 
+    }
+    
+    public static PlayerZone getComputerBattlefield() {
+         return Unstatic.getGlobalGameState().getComputerBattlefield(); 
+    }
+    
+    public static PlayerZone getComputerHand() {
+         return Unstatic.getGlobalGameState().getComputerHand(); 
+    }
+    
+    public static PlayerZone getComputerGraveyard() {
+         return Unstatic.getGlobalGameState().getComputerGraveyard(); 
+    }
+    
+    public static PlayerZone getComputerLibrary() {
+         return Unstatic.getGlobalGameState().getComputerLibrary(); 
+    }
+    
+    public static PlayerZone getComputerExile() {
+         return Unstatic.getGlobalGameState().getComputerExile(); 
+    }
+    
+    public static PlayerZone getComputerCommand() {
+         return Unstatic.getGlobalGameState().getComputerCommand(); 
+    }
+    
+    public static PlayerZone getStackZone() {
+         return Unstatic.getGlobalGameState().getStackZone(); 
+    }
+    
+    public static ManaPool getManaPool() {
+         return Unstatic.getGlobalGameState().getManaPool(); 
+    }
+    
+    public static ManaPool getComputerManaPool() {
+         return Unstatic.getGlobalGameState().getComputerManaPool(); 
+    }
+    
+    public static Display getDisplay() {
+         return Unstatic.getGlobalGameState().getDisplay(); 
+    }
+	
+    public static void setDisplay(Display display) {
+		Unstatic.getGlobalGameState().setDisplay(display);
+	}
+
+    private static Map<String,PlayerZone> getMap() {
+         return Unstatic.getGlobalGameState().getNamesToZones(); 
+    }
+
     public static PlayerZone getZone(Card c)
     {
-		Iterator<PlayerZone> it = map.values().iterator();
+		Iterator<PlayerZone> it = getMap().values().iterator();
 		PlayerZone p;
 		while(it.hasNext())
 		{
@@ -109,7 +190,7 @@ public class AllZone implements NewConstants {
     public static PlayerZone getZone(String zone, Player player)
     {
     	if(zone.equals("Stack")) player = null;
-		Object o = map.get(zone + player);
+		Object o = getMap().get(zone + player);
 		if(o == null)
 		    throw new RuntimeException("AllZone : getZone() invalid parameters " +zone +" " +player);
 	
@@ -118,15 +199,15 @@ public class AllZone implements NewConstants {
 
     public static void resetZoneMoveTracking()
     {
-        ((DefaultPlayerZone)Human_Command).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Human_Library).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Human_Hand).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Human_Battlefield).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Human_Graveyard).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Computer_Command).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Computer_Library).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Computer_Hand).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Computer_Battlefield).resetCardsAddedThisTurn();
-        ((DefaultPlayerZone)Computer_Graveyard).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getHumanCommand()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getHumanLibrary()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getHumanHand()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getHumanBattlefield()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getHumanGraveyard()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getComputerCommand()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getComputerLibrary()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getComputerHand()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getComputerBattlefield()).resetCardsAddedThisTurn();
+        ((DefaultPlayerZone)getComputerGraveyard()).resetCardsAddedThisTurn();
     }
 }//AllZone

@@ -77,7 +77,7 @@ public class QuestFrame extends JFrame {
 
 
     public void returnToMainMenu() {
-        AllZone.QuestData.saveData();
+        AllZone.getQuestData().saveData();
         (new Gui_NewGame()).setVisible(true) ;
         this.dispose();
     }

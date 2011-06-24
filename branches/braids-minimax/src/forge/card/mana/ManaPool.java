@@ -1,6 +1,7 @@
 
 package forge.card.mana;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +18,11 @@ import forge.gui.GuiUtils;
 import forge.gui.input.Input_PayManaCostUtil;
 
 
-public class ManaPool extends Card {
+public class ManaPool extends Card implements Serializable {
 	// current paying moved to SpellAbility
 	
+	private static final long serialVersionUID = -6677833329334656158L;
+
 	private ArrayList<Mana> floatingMana = new ArrayList<Mana>();
 	private int[] floatingTotals = new int[7];	// WUBRGCS
 	private final static Map<String,Integer> map = new HashMap<String,Integer>();
@@ -173,7 +176,7 @@ public class ManaPool extends Card {
     	for(Mana m : manaList){
     		addManaToPool(floatingMana, m);
     	}
-    	AllZone.GameAction.checkStateEffects();
+    	AllZone.getGameAction().checkStateEffects();
     }
     
     public static ArrayList<Mana> convertStringToMana(String manaStr, Card card){

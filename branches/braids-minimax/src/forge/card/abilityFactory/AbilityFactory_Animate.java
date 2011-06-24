@@ -190,13 +190,13 @@ public class AbilityFactory_Animate {
 		//TODO - add some kind of check for during human turn to answer "Can I use this to block something?"
 		
 		//don't use instant speed animate abilities outside computers Combat_Begin phase
-		if((!AllZone.Phase.is(Constant.Phase.Combat_Begin) || AllZone.Phase.isPlayerTurn(AllZone.HumanPlayer))
+		if((!AllZone.getPhase().is(Constant.Phase.Combat_Begin) || AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
 				&& !AbilityFactory.isSorcerySpeed(sa) && !params.containsKey("ActivatingPhases")
 				&& !params.containsKey("Permanent"))
 			return false;
 		
 		//don't activate during main2 unless this effect is permanent
-		if(AllZone.Phase.is(Constant.Phase.Main2) && !params.containsKey("Permanent"))
+		if(AllZone.getPhase().is(Constant.Phase.Main2) && !params.containsKey("Permanent"))
         	return false;
 		
 		if(null == tgt) {
@@ -350,7 +350,7 @@ public class AbilityFactory_Animate {
 					String actualTrigger = host.getSVar(s);
 					Trigger parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
 					addedTriggers.add(c.addTrigger(parsedTrigger));
-					AllZone.TriggerHandler.registerTrigger(parsedTrigger);
+					AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
 				}
 			}
 
@@ -363,8 +363,8 @@ public class AbilityFactory_Animate {
 			};
 
 			if(!permanent) {
-				if(params.containsKey("UntilEndOfCombat")) AllZone.EndOfCombat.addUntil(unanimate);
-				else AllZone.EndOfTurn.addUntil(unanimate);
+				if(params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(unanimate);
+				else AllZone.getEndOfTurn().addUntil(unanimate);
 			}
 		}
 	}//animateResolve
@@ -431,7 +431,7 @@ public class AbilityFactory_Animate {
 		}
 		
 		for(Trigger t : addedTriggers) {
-			AllZone.TriggerHandler.removeRegisteredTrigger(t);
+			AllZone.getTriggerHandler().removeRegisteredTrigger(t);
 			c.removeTrigger(t);
 		}
 
@@ -662,7 +662,7 @@ public class AbilityFactory_Animate {
 					String actualTrigger = host.getSVar(s);
 					Trigger parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
 					addedTriggers.add(c.addTrigger(parsedTrigger));
-					AllZone.TriggerHandler.registerTrigger(parsedTrigger);
+					AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
 				}
 			}
 
@@ -675,8 +675,8 @@ public class AbilityFactory_Animate {
 			};
 
 			if(!permanent) {
-				if(params.containsKey("UntilEndOfCombat")) AllZone.EndOfCombat.addUntil(unanimate);
-				else AllZone.EndOfTurn.addUntil(unanimate);
+				if(params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(unanimate);
+				else AllZone.getEndOfTurn().addUntil(unanimate);
 			}
 		}
 	}//animateResolve

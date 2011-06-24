@@ -89,6 +89,6 @@ public class AbilityFactory_DelayedTrigger {
 
         Trigger delTrig = TriggerHandler.parseTrigger(mapParams,AF.getHostCard());
 
-        AllZone.TriggerHandler.registerDelayedTrigger(delTrig);
+        AllZone.getTriggerHandler().registerDelayedTrigger(delTrig);
     }
 }

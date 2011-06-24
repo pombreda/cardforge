@@ -149,7 +149,7 @@ public class AbilityFactory_Copy {
 		//TODO - I'm sure someone can do this AI better
 		
 		HashMap<String,String> params = af.getMapParams();
-		if(params.containsKey("AtEOT") && !AllZone.Phase.is(Constant.Phase.Main1)) {
+		if(params.containsKey("AtEOT") && !AllZone.getPhase().is(Constant.Phase.Main1)) {
 			return false;
 		}
 		else return copyPermanentTriggerAI(af, sa, false);
@@ -262,7 +262,7 @@ public class AbilityFactory_Copy {
 					Card copy;
 					if(!c.isToken()) {
 						//copy creature and put it onto the battlefield
-						copy = AllZone.CardFactory.getCard(c.getName(), sa.getActivatingPlayer());
+						copy = AllZone.getCardFactory().getCard(c.getName(), sa.getActivatingPlayer());
 
 						//when copying something stolen:
 						copy.setController(sa.getActivatingPlayer());
@@ -296,7 +296,7 @@ public class AbilityFactory_Copy {
 
 					//Slight hack in case we copy a creature with triggers.
 					for(Trigger t : copy.getTriggers()) {
-						AllZone.TriggerHandler.registerTrigger(t);
+						AllZone.getTriggerHandler().registerTrigger(t);
 					}
 
 					copy.setCurSetCode(c.getCurSetCode());
@@ -314,7 +314,7 @@ public class AbilityFactory_Copy {
 						copy.setCurSetCode("");
 						copy.setImageFilename("morph.jpg");
 					}
-					copy = AllZone.GameAction.moveToPlay(copy);
+					copy = AllZone.getGameAction().moveToPlay(copy);
 					
 					copy.setCloneOrigin(hostCard);
 					sa.getSourceCard().addClone(copy);
@@ -335,14 +335,14 @@ public class AbilityFactory_Copy {
 							//and the token shouldn't be sacrificed
 							if(AllZoneUtil.isCardInPlay(target[index])) {
 								if(params.get("AtEOT").equals("Sacrifice")) {
-									AllZone.GameAction.sacrifice(target[index]); //maybe do a setSacrificeAtEOT, but probably not.
+									AllZone.getGameAction().sacrifice(target[index]); //maybe do a setSacrificeAtEOT, but probably not.
 								}
 								else if(params.get("AtEOT").equals("Exile")) {
-									AllZone.GameAction.exile(target[index]);
+									AllZone.getGameAction().exile(target[index]);
 								}
 								
 								//Slight hack in case we copy a creature with triggers
-								AllZone.TriggerHandler.removeAllFromCard(target[index]);
+								AllZone.getTriggerHandler().removeAllFromCard(target[index]);
 							}
 						}
 					};
@@ -352,11 +352,11 @@ public class AbilityFactory_Copy {
 
 						public void execute() {
 							sac.setStackDescription(params.get("AtEOT")+" "+target[index]+".");
-							AllZone.Stack.addSimultaneousStackEntry(sac);
+							AllZone.getStack().addSimultaneousStackEntry(sac);
 						}
 					};//Command
 					if(params.containsKey("AtEOT")) {
-						AllZone.EndOfTurn.addAt(atEOT);
+						AllZone.getEndOfTurn().addAt(atEOT);
 					}
 					//end copied Kiki code
 
@@ -524,7 +524,7 @@ public class AbilityFactory_Copy {
 			chosenSA = tgtSpells.get(0);
 		
 		if (tgt == null || CardFactoryUtil.canTarget(card, chosenSA.getSourceCard())) 
-			AllZone.CardFactory.copySpellontoStack(card, chosenSA.getSourceCard(), chosenSA, true);	
+			AllZone.getCardFactory().copySpellontoStack(card, chosenSA.getSourceCard(), chosenSA, true);	
 	}//end resolve
 
 }//end class AbilityFactory_Copy

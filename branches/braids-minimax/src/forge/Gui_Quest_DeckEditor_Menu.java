@@ -19,7 +19,7 @@ import java.util.Collections;
 import java.util.List;
 
 
-//presumes AllZone.QuestData is not null
+//presumes AllZone.getQuestData() is not null
 public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     private static final long   serialVersionUID  = -4052319220021158574L;
     
@@ -52,7 +52,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         deckDisplay = d;
         d.setTitle(deckEditorName);
         
-        questData = AllZone.QuestData;
+        questData = AllZone.getQuestData();
         
         exitCommand = exit;
         
@@ -263,7 +263,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         CardList all = new CardList();
         for(int i = 0; i < aDeck.countMain(); i++) {
             String cardName = aDeck.getMain(i);
-            Card c = AllZone.CardFactory.getCard(cardName, null);
+            Card c = AllZone.getCardFactory().getCard(cardName, null);
             
             all.add(c);
         }
@@ -440,11 +440,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
                     //setCode = s[1];
                 }
 
-                cardpool.add(AllZone.CardFactory.getCard(cardName, null));
+                cardpool.add(AllZone.getCardFactory().getCard(cardName, null));
             }
         } else {
             QuestBattleManager.addAIDeck(deck);
-            cardpool = AllZone.CardFactory.getAllCards();
+            cardpool = AllZone.getCardFactory().getAllCards();
         }
 
         //convert Deck main to CardList
@@ -459,7 +459,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
             	//setCode = s[1];
             }
 
-        	deckList.add(AllZone.CardFactory.getCard(cardName, null));
+        	deckList.add(AllZone.getCardFactory().getCard(cardName, null));
         }
         //update gui
         deckDisplay.updateDisplay(cardpool, deckList);
@@ -542,9 +542,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
                     	//setCode = s[1];
                     }
 
-                	deck.add(AllZone.CardFactory.getCard(cardName, null));
+                	deck.add(AllZone.getCardFactory().getCard(cardName, null));
                 }
-                CardList cardpool = AllZone.CardFactory.getAllCards();
+                CardList cardpool = AllZone.getCardFactory().getAllCards();
                 
                 deckDisplay.updateDisplay(cardpool, deck);
                 
@@ -554,7 +554,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         //AI
         new2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                deckDisplay.updateDisplay(AllZone.CardFactory.getAllCards(), new CardList());
+                deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), new CardList());
                 
                 setComputerPlayer("");
             }
@@ -636,7 +636,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
                 QuestBattleManager.removeAIDeck(currentDeck.getName());
                 
                 //show card pool
-                CardList cardpool = AllZone.CardFactory.getAllCards();
+                CardList cardpool = AllZone.getCardFactory().getAllCards();
                 deckDisplay.updateDisplay(cardpool, new CardList());
                 
                 setComputerPlayer("");
@@ -691,7 +691,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
             	//setCode = s[1];
             }
         	
-        	deck.add(AllZone.CardFactory.getCard(cardName, null));
+        	deck.add(AllZone.getCardFactory().getCard(cardName, null));
         }    
             //remove any cards that are in the deck from the card pool
             cardpool.remove(d.getMain(i));
@@ -724,7 +724,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         	public void actionPerformed(ActionEvent a)
         	{
         		//sort cards by card name
-        		CardList cardList = AllZone.CardFactory.getAllCards();
+        		CardList cardList = AllZone.getCardFactory().getAllCards();
         		TableSorter sorter = new TableSorter(cardList, 1, true);
         		cardList.sort(sorter);
 
@@ -1057,7 +1057,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         CardList c = new CardList();
         Card card;
         for (String aList : list) {
-            card = AllZone.CardFactory.getCard(aList, null);
+            card = AllZone.getCardFactory().getCard(aList, null);
             c.add(card);
         }
         

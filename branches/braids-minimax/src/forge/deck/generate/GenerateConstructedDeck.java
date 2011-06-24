@@ -55,17 +55,17 @@ public class GenerateConstructedDeck
     Card land;
     for(int i = 0; i < 13; i++)
     {
-      land = AllZone.CardFactory.getCard(map.get(color1).toString(), AllZone.ComputerPlayer);
+      land = AllZone.getCardFactory().getCard(map.get(color1).toString(), AllZone.getComputerPlayer());
       list.add(land);
 
-      land = AllZone.CardFactory.getCard(map.get(color2).toString(), AllZone.ComputerPlayer);
+      land = AllZone.getCardFactory().getCard(map.get(color2).toString(), AllZone.getComputerPlayer());
       list.add(land);
     }
   }//addLand()
   
   private CardList getCards()
   {
-    return filterBadCards(AllZone.CardFactory.getAllCards());
+    return filterBadCards(AllZone.getCardFactory().getAllCards());
   }//getCards()
   
   private CardList get2ColorDeck()

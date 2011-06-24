@@ -168,7 +168,7 @@ public class AbilityFactory_AlterLife {
 		HashMap<String,String> params = af.getMapParams();
 		Cost abCost = sa.getPayCosts();
 		final Card source = sa.getSourceCard();
-		int life = AllZone.ComputerPlayer.getLife();
+		int life = AllZone.getComputerPlayer().getLife();
 		int lifeAmount = AbilityFactory.calculateAmount(af.getHostCard(), params.get("LifeAmount"), sa);
 		String amountStr = params.get("LifeAmount");
 		
@@ -182,7 +182,7 @@ public class AbilityFactory_AlterLife {
 				else {
 					//only sacrifice something that's supposed to be sacrificed 
 					String type = abCost.getSacType();
-				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 				    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 				    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 				    	return false;
@@ -207,11 +207,11 @@ public class AbilityFactory_AlterLife {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 
-		if (!AllZone.ComputerPlayer.canGainLife())
+		if (!AllZone.getComputerPlayer().canGainLife())
 			return false;
 		
 		//Don't use lifegain before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -228,9 +228,9 @@ public class AbilityFactory_AlterLife {
 		if (tgt != null){
 			tgt.resetTargets();
 			if (tgt.canOnlyTgtOpponent())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);		
+				tgt.addTarget(AllZone.getComputerPlayer());		
 		}
 
 		if (amountStr.equals("X") && source.getSVar(amountStr).equals("Count$xPaid")){
@@ -258,9 +258,9 @@ public class AbilityFactory_AlterLife {
 		if (tgt != null){
 			tgt.resetTargets();
 			if (tgt.canOnlyTgtOpponent())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);		
+				tgt.addTarget(AllZone.getComputerPlayer());		
 		}
 
 		Card source = sa.getSourceCard();
@@ -439,8 +439,8 @@ public class AbilityFactory_AlterLife {
 		Cost abCost = sa.getPayCosts();
 		final Card source = sa.getSourceCard();
 		HashMap<String,String> params = af.getMapParams();
-		int humanLife = AllZone.HumanPlayer.getLife();
-		int aiLife = AllZone.ComputerPlayer.getLife();
+		int humanLife = AllZone.getHumanPlayer().getLife();
+		int aiLife = AllZone.getComputerPlayer().getLife();
 
 		String amountStr = params.get("LifeAmount");
 		
@@ -455,7 +455,7 @@ public class AbilityFactory_AlterLife {
 				if (!abCost.getSacThis()){
 					//only sacrifice something that's supposed to be sacrificed 
 					String type = abCost.getSacType();
-				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 				    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 				    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 				    	return false;
@@ -477,11 +477,11 @@ public class AbilityFactory_AlterLife {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 		
-		if (!AllZone.HumanPlayer.canLoseLife())
+		if (!AllZone.getHumanPlayer().canLoseLife())
 			return false;
 		
 		//Don't use loselife before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -495,7 +495,7 @@ public class AbilityFactory_AlterLife {
 		 
 		 if (sa.getTarget() != null){
 			 tgt.resetTargets();
-			 sa.getTarget().addTarget(AllZone.HumanPlayer);
+			 sa.getTarget().addTarget(AllZone.getHumanPlayer());
 		 }
 		 
 		 if (amountStr.equals("X") && source.getSVar(amountStr).equals("Count$xPaid")){
@@ -519,7 +519,7 @@ public class AbilityFactory_AlterLife {
 		
 		 Target tgt = sa.getTarget();
 		 if (tgt != null){
-			 tgt.addTarget(AllZone.HumanPlayer);
+			 tgt.addTarget(AllZone.getHumanPlayer());
 		 }
 		 
 		 Card source = sa.getSourceCard();
@@ -541,9 +541,9 @@ public class AbilityFactory_AlterLife {
 			tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
 		
 		
-		if (tgtPlayers.contains(AllZone.ComputerPlayer)){
+		if (tgtPlayers.contains(AllZone.getComputerPlayer())){
 			// For cards like Foul Imp, ETB you lose life
-			if (amount + 3 > AllZone.ComputerPlayer.getLife())
+			if (amount + 3 > AllZone.getComputerPlayer().getLife())
 				return false;
 		}
 		 
@@ -681,7 +681,7 @@ public class AbilityFactory_AlterLife {
 
 		Target tgt = sa.getTarget();
 		if (tgt != null){
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		else{
 			ArrayList<Player> players = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
@@ -766,10 +766,10 @@ public class AbilityFactory_AlterLife {
 		Cost abCost = sa.getPayCosts();
 		final Card source = af.getHostCard();
 		HashMap<String,String> params = af.getMapParams();
-		//int humanPoison = AllZone.HumanPlayer.getPoisonCounters();
-		//int humanLife = AllZone.HumanPlayer.getLife();
-		//int aiPoison = AllZone.ComputerPlayer.getPoisonCounters();
-		int aiLife = AllZone.ComputerPlayer.getLife();
+		//int humanPoison = AllZone.getHumanPlayer().getPoisonCounters();
+		//int humanLife = AllZone.getHumanPlayer().getLife();
+		//int aiPoison = AllZone.getComputerPlayer().getPoisonCounters();
+		int aiLife = AllZone.getComputerPlayer().getLife();
 		String amountStr = params.get("Num");
 
 		// TODO handle proper calculation of X values based on Cost and what would be paid
@@ -783,7 +783,7 @@ public class AbilityFactory_AlterLife {
 				if (!abCost.getSacThis()){
 					//only sacrifice something that's supposed to be sacrificed 
 					String type = abCost.getSacType();
-				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+				    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 				    typeList = typeList.getValidCards(type.split(","), source.getController(), source);
 				    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 				    	return false;
@@ -796,7 +796,7 @@ public class AbilityFactory_AlterLife {
 			return false;
 		
 		//Don't use poison before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 		
 		//Don't tap creatures that may be able to block
@@ -807,7 +807,7 @@ public class AbilityFactory_AlterLife {
 		 
 		 if (sa.getTarget() != null){
 			 tgt.resetTargets();
-			 sa.getTarget().addTarget(AllZone.HumanPlayer);
+			 sa.getTarget().addTarget(AllZone.getHumanPlayer());
 		 }
 		 
 		 return true;
@@ -945,19 +945,19 @@ public class AbilityFactory_AlterLife {
 		Random r = MyRandom.random;
 		//Ability_Cost abCost = sa.getPayCosts();
 		final Card source = sa.getSourceCard();
-		int life = AllZone.ComputerPlayer.getLife();
-		int hlife = AllZone.HumanPlayer.getLife();
+		int life = AllZone.getComputerPlayer().getLife();
+		int hlife = AllZone.getHumanPlayer().getLife();
 		HashMap<String,String> params = af.getMapParams();
 		String amountStr = params.get("LifeAmount");
 
 		if(!ComputerUtil.canPayCost(sa))
 			return false;
 
-		if(!AllZone.ComputerPlayer.canGainLife())
+		if(!AllZone.getComputerPlayer().canGainLife())
 			return false;
 		
 		//Don't use setLife before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases"))
         	return false;
 
 		// TODO handle proper calculation of X values based on Cost and what would be paid
@@ -979,15 +979,15 @@ public class AbilityFactory_AlterLife {
 		if(tgt != null){
 			tgt.resetTargets();
 			if(tgt.canOnlyTgtOpponent()) {
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 				//if we can only target the human, and the Human's life would go up, don't play it.
 				//possibly add a combo here for Magister Sphinx and Higedetsu's (sp?) Second Rite
-				if(amount > hlife || !AllZone.HumanPlayer.canLoseLife()) return false;
+				if(amount > hlife || !AllZone.getHumanPlayer().canLoseLife()) return false;
 			}
 			else {
-				if(amount > life && life <= 10) tgt.addTarget(AllZone.ComputerPlayer);
-				else if(hlife > amount) tgt.addTarget(AllZone.HumanPlayer);
-				else if(amount > life) tgt.addTarget(AllZone.ComputerPlayer);
+				if(amount > life && life <= 10) tgt.addTarget(AllZone.getComputerPlayer());
+				else if(hlife > amount) tgt.addTarget(AllZone.getHumanPlayer());
+				else if(amount > life) tgt.addTarget(AllZone.getComputerPlayer());
 				else return false;
 			}
 		}
@@ -1008,8 +1008,8 @@ public class AbilityFactory_AlterLife {
 	}
 
 	private static boolean setLifeDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory){
-		int life = AllZone.ComputerPlayer.getLife();
-		int hlife = AllZone.HumanPlayer.getLife();
+		int life = AllZone.getComputerPlayer().getLife();
+		int hlife = AllZone.getHumanPlayer().getLife();
 		Card source = sa.getSourceCard();
 		HashMap<String,String> params = af.getMapParams();
 		String amountStr = params.get("LifeAmount");
@@ -1027,7 +1027,7 @@ public class AbilityFactory_AlterLife {
 			amount = AbilityFactory.calculateAmount(af.getHostCard(), amountStr, sa);
 		
 		if(source.getName().equals("Eternity Vessel") && 
-				(AllZoneUtil.isCardInPlay("Vampire Hexmage", AllZone.HumanPlayer) || (source.getCounters(Counters.CHARGE) == 0))) return false;
+				(AllZoneUtil.isCardInPlay("Vampire Hexmage", AllZone.getHumanPlayer()) || (source.getCounters(Counters.CHARGE) == 0))) return false;
 
 		// If the Target is gaining life, target self.
 		// if the Target is modifying how much life is gained, this needs to be handled better
@@ -1035,11 +1035,11 @@ public class AbilityFactory_AlterLife {
 		if (tgt != null){
 			tgt.resetTargets();
 			if (tgt.canOnlyTgtOpponent())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else {
-				if(amount > life && life <= 10) tgt.addTarget(AllZone.ComputerPlayer);
-				else if(hlife > amount) tgt.addTarget(AllZone.HumanPlayer);
-				else if(amount > life) tgt.addTarget(AllZone.ComputerPlayer);
+				if(amount > life && life <= 10) tgt.addTarget(AllZone.getComputerPlayer());
+				else if(hlife > amount) tgt.addTarget(AllZone.getHumanPlayer());
+				else if(amount > life) tgt.addTarget(AllZone.getComputerPlayer());
 				else return false;
 			}
 		}

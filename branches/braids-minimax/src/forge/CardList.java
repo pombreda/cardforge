@@ -2,6 +2,7 @@
 package forge;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -9,9 +10,11 @@ import java.util.Iterator;
 import forge.card.cardFactory.CardFactoryUtil;
 
 
-public class CardList implements Iterable<Card> {
+public class CardList implements Iterable<Card>, Serializable {
     
-    public Iterator<Card> iterator() {
+	private static final long serialVersionUID = -7030569788920343618L;
+
+	public Iterator<Card> iterator() {
         return list.iterator();
     }
     

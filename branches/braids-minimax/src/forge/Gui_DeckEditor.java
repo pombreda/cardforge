@@ -133,9 +133,9 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         topModel.clear();
         bottomModel.clear();
         
-        if(AllZone.NameChanger.shouldChangeCardName()) {
-            top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
-            bottom = new CardList(AllZone.NameChanger.changeCard(bottom.toArray()));
+        if(AllZone.getNameChanger().shouldChangeCardName()) {
+            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
+            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
         
         Card c;
@@ -154,7 +154,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             
             // add rarity to card if this is a sealed card pool
             
-            cardName = AllZone.NameChanger.getOriginalName(c.getName());
+            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
             if(!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
@@ -238,9 +238,9 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         
         topModel.clear();
         
-        if(AllZone.NameChanger.shouldChangeCardName()) {
-            top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
-            bottom = new CardList(AllZone.NameChanger.changeCard(bottom.toArray()));
+        if(AllZone.getNameChanger().shouldChangeCardName()) {
+            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
+            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
         
         Card c;
@@ -253,7 +253,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             
             // add rarity to card if this is a sealed card pool
             
-            cardName = AllZone.NameChanger.getOriginalName(c.getName());
+            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
             if(!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
@@ -1045,7 +1045,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         Card c;
         //ReadBoosterPack pack = new ReadBoosterPack();
         for(int i = 0; i < deck.countMain(); i++) {
-            c = AllZone.CardFactory.getCard(deck.getMain(i), AllZone.HumanPlayer);
+            c = AllZone.getCardFactory().getCard(deck.getMain(i), AllZone.getHumanPlayer());
             
             //add rarity to card if this is a sealed card pool
             //if(Constant.Runtime.GameType[0].equals(Constant.GameType.Sealed))
@@ -1057,12 +1057,12 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         if(deck.isSealed() || deck.isDraft()) {
             //add sideboard to GUI
             for(int i = 0; i < deck.countSideboard(); i++) {
-                c = AllZone.CardFactory.getCard(deck.getSideboard(i), AllZone.HumanPlayer);
+                c = AllZone.getCardFactory().getCard(deck.getSideboard(i), AllZone.getHumanPlayer());
                 //c.setRarity(pack.getRarity(c.getName()));
                 topModel.addCard(c);
             }
         } else {
-            CardList all = AllZone.CardFactory.getAllCards();
+            CardList all = AllZone.getCardFactory().getAllCards();
             for(int i = 0; i < all.size(); i++)
             {
                 c = all.get(i);

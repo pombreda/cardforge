@@ -71,8 +71,8 @@ abstract public class Ability_Mana extends Ability_Activated implements java.io.
 		final Card source = this.getSourceCard();
 		ManaPool manaPool;
 		if (player.isHuman())
-			manaPool = AllZone.ManaPool;
-		else manaPool = AllZone.Computer_ManaPool;
+			manaPool = AllZone.getManaPool();
+		else manaPool = AllZone.getComputerManaPool();
 		// change this, once ManaPool moves to the Player
 		// this.getActivatingPlayer().ManaPool.addManaToFloating(origProduced, getSourceCard());
 		manaPool.addManaToFloating(produced, source);
@@ -96,7 +96,7 @@ abstract public class Ability_Mana extends Ability_Activated implements java.io.
         runParams.put("Player", player);
         runParams.put("Ability_Mana", this);
         runParams.put("Produced", produced);
-        AllZone.TriggerHandler.runTrigger("TapsForMana", runParams);
+        AllZone.getTriggerHandler().runTrigger("TapsForMana", runParams);
         
 	}//end produceMana(String)
 	

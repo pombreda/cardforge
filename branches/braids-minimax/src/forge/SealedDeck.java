@@ -21,7 +21,7 @@ public class SealedDeck
 		  for (int i=0; i<6; i++)
 			  packs.add(bpFull);
 		  
-		  LandSetCode[0] = AllZone.CardFactory.getCard("Plains", AllZone.HumanPlayer).getMostRecentSet();
+		  LandSetCode[0] = AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()).getMostRecentSet();
 	  }
 	  else if (sealedType.equals("Block")) {
           ArrayList<String> bNames = SetInfoUtil.getBlockNameList();
@@ -351,7 +351,7 @@ public class SealedDeck
 							System.out.println("Basics[" + ClrCnts[i].Color + "]:" + nLand);
 				
 						for (int j=0; j<=nLand; j++) {
-							Card c = AllZone.CardFactory.getCard(ClrCnts[i].Color, AllZone.ComputerPlayer);
+							Card c = AllZone.getCardFactory().getCard(ClrCnts[i].Color, AllZone.getComputerPlayer());
 							c.setCurSetCode(this.LandSetCode[0]);
 							deck.add(c);
 							landsNeeded--;
@@ -361,7 +361,7 @@ public class SealedDeck
 				int n = 0;
 				while (landsNeeded > 0) {
 					if (ClrCnts[n].Count > 0) {
-						Card c = AllZone.CardFactory.getCard(ClrCnts[n].Color, AllZone.ComputerPlayer);
+						Card c = AllZone.getCardFactory().getCard(ClrCnts[n].Color, AllZone.getComputerPlayer());
 						c.setCurSetCode(this.LandSetCode[0]);
 						deck.add(c);
 						landsNeeded--;
@@ -398,7 +398,7 @@ public class SealedDeck
 		public int NumUncommons = 3;
 		public int NumCommons = 11;
 		public int NumPacks = 3;
-		public String LandSetCode = AllZone.CardFactory.getCard("Plains", AllZone.HumanPlayer).getMostRecentSet();
+		public String LandSetCode = AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()).getMostRecentSet();
 	}
   class DeckColors {
 		public String Color1 = "none";

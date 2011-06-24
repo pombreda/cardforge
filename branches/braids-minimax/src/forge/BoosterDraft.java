@@ -67,7 +67,7 @@ class BoosterDraft_1 implements BoosterDraft
 		  for (int i=0; i<3; i++)
 			  packs.add(bpFull);
 		  
-		  LandSetCode[0] = AllZone.CardFactory.getCard("Plains", AllZone.HumanPlayer).getMostRecentSet();
+		  LandSetCode[0] = AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()).getMostRecentSet();
 	  }
 	  
 	  else if (draftType.equals("Block")) {	// Draft from cards by block or set
@@ -296,7 +296,7 @@ class CustomDraft {
 	public int NumUncommons = 3;
 	public int NumCommons = 11;
 	public int NumPacks = 3;
-	public String LandSetCode = AllZone.CardFactory.getCard("Plains", AllZone.HumanPlayer).getMostRecentSet();
+	public String LandSetCode = AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()).getMostRecentSet();
 }
 
 class BoosterDraftTest implements BoosterDraft

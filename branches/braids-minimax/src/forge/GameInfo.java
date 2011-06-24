@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import forge.card.mana.ManaCost;
 
-public class GameInfo {
+public class GameInfo implements java.io.Serializable {
+
+	private static final long serialVersionUID = -742597048716043910L;
+
 	private boolean computerStartedThisGame = false;
 	
 	private int humanNumberOfTimesMulliganed;

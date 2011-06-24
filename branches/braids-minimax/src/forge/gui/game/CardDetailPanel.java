@@ -121,7 +121,7 @@ public class CardDetailPanel extends JPanel implements CardContainer {
         this.card = card;
         if(card == null) return;
         
-        boolean faceDown = card.isFaceDown() && card.getController() != AllZone.HumanPlayer;
+        boolean faceDown = card.isFaceDown() && card.getController() != AllZone.getHumanPlayer();
         if(!faceDown) {
             if(card.isLand()) cdLabel1.setText(card.getName());
             else cdLabel1.setText(card.getName() + "  - " + card.getManaCost());

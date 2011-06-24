@@ -24,7 +24,7 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
     private JLabel creditLabel = new JLabel();
     private JPanel inventoryPanel = new JPanel();
 
-    protected QuestData questData = AllZone.QuestData;
+    protected QuestData questData = AllZone.getQuestData();
 
     protected QuestBazaarStall(String name, String stallName, String iconName, String fluff) {
         this.name = name;

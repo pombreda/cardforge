@@ -38,6 +38,6 @@ public class ButtonUtil
     	getCancel().setSelectable(false);
     }
     
-    private static MyButton getOK()  {return AllZone.Display.getButtonOK();}
-    private static MyButton getCancel()  {return AllZone.Display.getButtonCancel();}
+    private static MyButton getOK()  {return AllZone.getDisplay().getButtonOK();}
+    private static MyButton getCancel()  {return AllZone.getDisplay().getButtonCancel();}
 }

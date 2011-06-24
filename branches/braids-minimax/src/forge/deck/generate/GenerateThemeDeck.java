@@ -150,7 +150,7 @@ public class GenerateThemeDeck
 					throw new RuntimeException("GenerateThemeDeck : getThemeDeck -- looped too much -- filename is " + tFile.getAbsolutePath());
 				
 				int n = CardCounts.get(s);
-				tDeck.add(AllZone.CardFactory.getCard(s, AllZone.ComputerPlayer));
+				tDeck.add(AllZone.getCardFactory().getCard(s, AllZone.getComputerPlayer()));
 				CardCounts.put(s, n + 1);
 				tmpDeck += s + "\n";
 
@@ -218,7 +218,7 @@ public class GenerateThemeDeck
 				
 					CardCounts.put(ClrCnts[i].Color, 2);
 					for (int j=0; j<nLand; j++)
-						tDeck.add(AllZone.CardFactory.getCard(ClrCnts[i].Color, AllZone.ComputerPlayer));
+						tDeck.add(AllZone.getCardFactory().getCard(ClrCnts[i].Color, AllZone.getComputerPlayer()));
 				}
 			}
 		}
@@ -236,7 +236,7 @@ public class GenerateThemeDeck
 					s = tDeck.get(r.nextInt(tDeck.size())).getName();
 				
 				int n = CardCounts.get(s);
-				tDeck.add(AllZone.CardFactory.getCard(s, AllZone.ComputerPlayer));
+				tDeck.add(AllZone.getCardFactory().getCard(s, AllZone.getComputerPlayer()));
 				CardCounts.put(s, n + 1);
 				tmpDeck += "Added:" + s + "\n";
 			}

@@ -7,7 +7,11 @@ import forge.card.cardFactory.CardFactoryUtil;
 
 
 public class StaticEffects
+	implements java.io.Serializable
 {
+
+	private static final long serialVersionUID = -7182922786421192710L;
+
 	//this is used to keep track of all state-based effects in play:
 	private HashMap<String, Integer> stateBasedMap = new HashMap<String, Integer>();
 	

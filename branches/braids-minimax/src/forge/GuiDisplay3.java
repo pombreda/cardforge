@@ -59,7 +59,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
     //private CardList multiBlockers = new CardList();
     
     public GuiDisplay3() {
-    	AllZone.Display = this;
+    	AllZone.setDisplay(this);
         setupActions();
         initComponents();
         
@@ -73,7 +73,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
     public void setVisible(boolean visible) {
         if(visible) {
             //causes an error if put in the constructor, causes some random null pointer exception
-            AllZone.InputControl.updateObservers();
+            AllZone.getInputControl().updateObservers();
             
             //Use both so that when "un"maximizing, the frame isn't tiny
             setSize(1024, 740);
@@ -103,15 +103,15 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
     */
 
     private void setupActions() {
-        HUMAN_GRAVEYARD_ACTION = new ZoneAction(AllZone.Human_Graveyard, HUMAN_GRAVEYARD);
-        HUMAN_REMOVED_ACTION = new ZoneAction(AllZone.Human_Exile, HUMAN_REMOVED);
-        HUMAN_FLASHBACK_ACTION = new ZoneAction(AllZone.Human_Exile, HUMAN_FLASHBACK) {
+        HUMAN_GRAVEYARD_ACTION = new ZoneAction(AllZone.getHumanGraveyard(), HUMAN_GRAVEYARD);
+        HUMAN_REMOVED_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_REMOVED);
+        HUMAN_FLASHBACK_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_FLASHBACK) {
             
             private static final long serialVersionUID = 8120331222693706164L;
             
             @Override
             protected Card[] getCards() {
-                return CardFactoryUtil.getGraveyardActivationCards(AllZone.HumanPlayer).toArray();
+                return CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).toArray();
             }
             
             @Override
@@ -119,15 +119,15 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
             	if(!c.isLand())
             	{
 	                SpellAbility[] sa = c.getSpellAbility();
-	                sa[1].setActivatingPlayer(AllZone.HumanPlayer);
-	                if(sa[1].canPlay() && !c.isUnCastable()) AllZone.GameAction.playSpellAbility(sa[1]);
+	                sa[1].setActivatingPlayer(AllZone.getHumanPlayer());
+	                if(sa[1].canPlay() && !c.isUnCastable()) AllZone.getGameAction().playSpellAbility(sa[1]);
             	}
             	else	// PlayLand checks if the land can be played
-            		AllZone.HumanPlayer.playLand(c);
+            		AllZone.getHumanPlayer().playLand(c);
             }
         };
-        COMPUTER_GRAVEYARD_ACTION = new ZoneAction(AllZone.Computer_Graveyard, COMPUTER_GRAVEYARD);
-        COMPUTER_REMOVED_ACTION = new ZoneAction(AllZone.Computer_Exile, COMPUTER_REMOVED);
+        COMPUTER_GRAVEYARD_ACTION = new ZoneAction(AllZone.getComputerGraveyard(), COMPUTER_GRAVEYARD);
+        COMPUTER_REMOVED_ACTION = new ZoneAction(AllZone.getComputerExile(), COMPUTER_REMOVED);
         CONCEDE_ACTION = new ConcedeAction();
     }
     
@@ -168,9 +168,9 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         if (Constant.Runtime.DevMode[0]){
         	canLoseByDecking.setSelected(Constant.Runtime.Mill[0]);
         	
-            Action viewAIHand = new ZoneAction(AllZone.Computer_Hand, COMPUTER_HAND.BASE);
-            Action viewAILibrary = new ZoneAction(AllZone.Computer_Library, COMPUTER_LIBRARY.BASE);
-            Action viewHumanLibrary = new ZoneAction(AllZone.Human_Library, HUMAN_LIBRARY.BASE);
+            Action viewAIHand = new ZoneAction(AllZone.getComputerHand(), COMPUTER_HAND.BASE);
+            Action viewAILibrary = new ZoneAction(AllZone.getComputerLibrary(), COMPUTER_LIBRARY.BASE);
+            Action viewHumanLibrary = new ZoneAction(AllZone.getHumanLibrary(), HUMAN_LIBRARY.BASE);
             ForgeAction generateMana = new ForgeAction(MANAGEN) {
 				private static final long serialVersionUID = 7171104690016706405L;
 
@@ -287,7 +287,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         Border border = null;
         int thickness = 3;
         
-        if (AllZone.Stack.size() > 0 && AllZone.Stack.peekInstance().getActivatingPlayer().isComputer())
+        if (AllZone.getStack().size() > 0 && AllZone.getStack().peekInstance().getActivatingPlayer().isComputer())
         	border = BorderFactory.createLineBorder(new Color(0, 255, 255), thickness);
         else if (s.contains("Main"))
         	border = BorderFactory.createLineBorder(new Color(30, 0, 255), thickness);
@@ -320,7 +320,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
             
             @Override
             public void mousePressed(MouseEvent e) {
-                inputControl.selectPlayer(AllZone.ComputerPlayer);
+                inputControl.selectPlayer(AllZone.getComputerPlayer());
             }
         });
         
@@ -329,7 +329,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
             
             @Override
             public void mousePressed(MouseEvent e) {
-                inputControl.selectPlayer(AllZone.HumanPlayer);
+                inputControl.selectPlayer(AllZone.getHumanPlayer());
             }
         });
         
@@ -360,7 +360,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                         }
                     }
                     
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.Human_Battlefield);
+                    inputControl.selectCard(cardPanel.getCard(), AllZone.getHumanBattlefield());
                     
                 }
             }
@@ -374,8 +374,8 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 if(o instanceof CardPanel) {
                     CardPanel cardPanel = (CardPanel) o;
                     
-                    CardList att = new CardList(AllZone.Combat.getAttackers());
-                    //CardList block = AllZone.Combat.getAllBlockers();
+                    CardList att = new CardList(AllZone.getCombat().getAttackers());
+                    //CardList block = AllZone.getCombat().getAllBlockers();
                     
                     if ((cardPanel.getCard().isTapped() 
                     		|| cardPanel.getCard().hasSickness() 
@@ -394,18 +394,18 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                         		&& (inputControl.input instanceof Input_Attack) 
                         		&& !cardPanel.getCard().hasKeyword("CARDNAME attacks each turn if able."))  {
                             cardPanel.getCard().untap();
-                            AllZone.Combat.removeFromCombat(cardPanel.getCard());
+                            AllZone.getCombat().removeFromCombat(cardPanel.getCard());
                         }
                         
                         else if (inputControl.input instanceof Input_Block){
                         	Card crd = cardPanel.getCard();
                         	if(crd.getController().isHuman())
-                        		AllZone.Combat.removeFromCombat(crd);
+                        		AllZone.getCombat().removeFromCombat(crd);
                         	((Input_Block)inputControl.input).removeFromAllBlocking(crd);
                         }
                     }
 
-                    else inputControl.selectCard(cardPanel.getCard(), AllZone.Human_Battlefield);
+                    else inputControl.selectCard(cardPanel.getCard(), AllZone.getHumanBattlefield());
                 }
             }
         });
@@ -417,7 +417,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 Object o = playerHandPanel.getComponentAt(e.getPoint());
                 if(o instanceof CardPanel) {
                     CardContainer cardPanel = (CardContainer) o;
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.Human_Hand);
+                    inputControl.selectCard(cardPanel.getCard(), AllZone.getHumanHand());
                     okButton.requestFocusInWindow();
                 }
             }
@@ -434,7 +434,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 Object o = oppLandPanel.getComponentAt(e.getPoint());
                 if(o instanceof CardPanel) {
                     CardContainer cardPanel = (CardContainer) o;
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.Computer_Battlefield);
+                    inputControl.selectCard(cardPanel.getCard(), AllZone.getComputerBattlefield());
                 }
             }
         });
@@ -447,7 +447,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 Object o = oppCreaturePanel.getComponentAt(e.getPoint());
                 if(o instanceof CardPanel) {
                     CardContainer cardPanel = (CardContainer) o;
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.Computer_Battlefield);
+                    inputControl.selectCard(cardPanel.getCard(), AllZone.getComputerBattlefield());
                 }
             }
         });
@@ -469,46 +469,46 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         {//make sure to not interfer with anything below, since this is a very long method
             Observer o = new Observer() {
                 public void update(Observable a, Object b) {
-                    playerHandValue.setText("" + AllZone.Human_Hand.size());
-                    playerGraveValue.setText("" + AllZone.Human_Graveyard.size());
-                    playerLibraryValue.setText("" + AllZone.Human_Library.size());
-                    playerFBValue.setText("" + CardFactoryUtil.getGraveyardActivationCards(AllZone.HumanPlayer).size());
-                    playerRemovedValue.setText("" + AllZone.Human_Exile.size());
+                    playerHandValue.setText("" + AllZone.getHumanHand().size());
+                    playerGraveValue.setText("" + AllZone.getHumanGraveyard().size());
+                    playerLibraryValue.setText("" + AllZone.getHumanLibrary().size());
+                    playerFBValue.setText("" + CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).size());
+                    playerRemovedValue.setText("" + AllZone.getHumanExile().size());
                     
                 }
             };
-            AllZone.Human_Hand.addObserver(o);
-            AllZone.Human_Graveyard.addObserver(o);
-            AllZone.Human_Library.addObserver(o);
+            AllZone.getHumanHand().addObserver(o);
+            AllZone.getHumanGraveyard().addObserver(o);
+            AllZone.getHumanLibrary().addObserver(o);
         }
         
         //opponent Hand, Graveyard, and Library totals
         {//make sure to not interfer with anything below, since this is a very long method
             Observer o = new Observer() {
                 public void update(Observable a, Object b) {
-                    oppHandValue.setText("" + AllZone.Computer_Hand.size());
-                    oppGraveValue.setText("" + AllZone.Computer_Graveyard.size());
-                    oppLibraryValue.setText("" + AllZone.Computer_Library.size());
-                    oppRemovedValue.setText("" + AllZone.Computer_Exile.size());
+                    oppHandValue.setText("" + AllZone.getComputerHand().size());
+                    oppGraveValue.setText("" + AllZone.getComputerGraveyard().size());
+                    oppLibraryValue.setText("" + AllZone.getComputerLibrary().size());
+                    oppRemovedValue.setText("" + AllZone.getComputerExile().size());
                 }
             };
-            AllZone.Computer_Hand.addObserver(o);
-            AllZone.Computer_Graveyard.addObserver(o);
-            AllZone.Computer_Library.addObserver(o);
+            AllZone.getComputerHand().addObserver(o);
+            AllZone.getComputerGraveyard().addObserver(o);
+            AllZone.getComputerLibrary().addObserver(o);
         }
         
 
         //opponent life
-        oppLifeLabel.setText("" + AllZone.ComputerPlayer.getLife());
-        AllZone.ComputerPlayer.addObserver(new Observer() {
+        oppLifeLabel.setText("" + AllZone.getComputerPlayer().getLife());
+        AllZone.getComputerPlayer().addObserver(new Observer() {
             public void update(Observable a, Object b) {
-                int life = AllZone.ComputerPlayer.getLife();
+                int life = AllZone.getComputerPlayer().getLife();
                 oppLifeLabel.setText("" + life);
             }
         });
-        AllZone.ComputerPlayer.updateObservers();
+        AllZone.getComputerPlayer().updateObservers();
         
-        if (AllZone.QuestData != null) {
+        if (AllZone.getQuestData() != null) {
         	File base = ForgeProps.getFile(IMAGE_ICON);
         	String iconName = "";
         	if (Constant.Quest.oppIconName[0] != null) {
@@ -521,39 +521,39 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         	}
         }
         
-        oppPCLabel.setText("Poison Counters: " + AllZone.ComputerPlayer.getPoisonCounters());
-        AllZone.ComputerPlayer.addObserver(new Observer() {
+        oppPCLabel.setText("Poison Counters: " + AllZone.getComputerPlayer().getPoisonCounters());
+        AllZone.getComputerPlayer().addObserver(new Observer() {
             public void update(Observable a, Object b) {
-                int pcs = AllZone.ComputerPlayer.getPoisonCounters();
+                int pcs = AllZone.getComputerPlayer().getPoisonCounters();
                 oppPCLabel.setText("Poison Counters: " + pcs);
             }
         });
-        AllZone.ComputerPlayer.updateObservers();
+        AllZone.getComputerPlayer().updateObservers();
         
         //player life
-        playerLifeLabel.setText("" + AllZone.HumanPlayer.getLife());
-        AllZone.HumanPlayer.addObserver(new Observer() {
+        playerLifeLabel.setText("" + AllZone.getHumanPlayer().getLife());
+        AllZone.getHumanPlayer().addObserver(new Observer() {
             public void update(Observable a, Object b) {
-                int life = AllZone.HumanPlayer.getLife();
+                int life = AllZone.getHumanPlayer().getLife();
                 playerLifeLabel.setText("" + life);
             }
         });
-        AllZone.HumanPlayer.updateObservers();
+        AllZone.getHumanPlayer().updateObservers();
         
-        playerPCLabel.setText("Poison Counters: " + AllZone.HumanPlayer.getPoisonCounters());
-        AllZone.HumanPlayer.addObserver(new Observer() {
+        playerPCLabel.setText("Poison Counters: " + AllZone.getHumanPlayer().getPoisonCounters());
+        AllZone.getHumanPlayer().addObserver(new Observer() {
             public void update(Observable a, Object b) {
-                int pcs = AllZone.HumanPlayer.getPoisonCounters();
+                int pcs = AllZone.getHumanPlayer().getPoisonCounters();
                 playerPCLabel.setText("Poison Counters: " + pcs);
             }
         });
-        AllZone.HumanPlayer.updateObservers();
+        AllZone.getHumanPlayer().updateObservers();
         
         //stack
-        AllZone.Stack.addObserver(new Observer() {
+        AllZone.getStack().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 stackPanel.removeAll();
-                MagicStack stack = AllZone.Stack;
+                MagicStack stack = AllZone.getStack();
                 int count = 1;
                 JLabel label;
                 
@@ -583,12 +583,12 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 
             }
         });
-        AllZone.Stack.updateObservers();
+        AllZone.getStack().updateObservers();
         //END, stack
         
 
         //self hand
-        AllZone.Human_Hand.addObserver(new Observer() {
+        AllZone.getHumanHand().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 PlayerZone pZone = (PlayerZone) a;
                 JPanel p = playerHandPanel;
@@ -605,70 +605,70 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 p.repaint();
             }
         });
-        AllZone.Human_Hand.updateObservers();
+        AllZone.getHumanHand().updateObservers();
         //END, self hand
         
         //self play (land)
-        AllZone.Human_Battlefield.addObserver(new Observer() {
+        AllZone.getHumanBattlefield().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 //PlayerZone pZone = (PlayerZone) a; //unused
                 JPanel p = playerLandPanel;
                 p.removeAll();
                 
-                GuiDisplayUtil.setupLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer).toArray());
+                GuiDisplayUtil.setupLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer()).toArray());
                 p.revalidate();
                 p.repaint();
             }
         });
-        AllZone.Human_Battlefield.updateObservers();
+        AllZone.getHumanBattlefield().updateObservers();
         //END - self play (only land)
         
 
         //self play (no land)
-        AllZone.Human_Battlefield.addObserver(new Observer() {
+        AllZone.getHumanBattlefield().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 //PlayerZone pZone = (PlayerZone) a; //unused
                 JPanel p = playerCreaturePanel;
                 p.removeAll();
                 
-                GuiDisplayUtil.setupNoLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer).toArray());
+                GuiDisplayUtil.setupNoLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer()).toArray());
                 p.revalidate();
                 p.repaint();
             }
         });
-        AllZone.Human_Battlefield.updateObservers();
+        AllZone.getHumanBattlefield().updateObservers();
         //END - self play (no land)
         
 
         //computer play (no land)
-        AllZone.Computer_Battlefield.addObserver(new Observer() {
+        AllZone.getComputerBattlefield().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 //PlayerZone pZone = (PlayerZone) a; //unused
                 JPanel p = oppCreaturePanel;
                 p.removeAll();
                 
-                GuiDisplayUtil.setupNoLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer).toArray());
+                GuiDisplayUtil.setupNoLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()).toArray());
                 
                 p.revalidate();
                 p.repaint();
             }
         });
-        AllZone.Computer_Battlefield.updateObservers();
+        AllZone.getComputerBattlefield().updateObservers();
         //END - computer play (no land)
         
         //computer play (land)
-        AllZone.Computer_Battlefield.addObserver(new Observer() {
+        AllZone.getComputerBattlefield().addObserver(new Observer() {
             public void update(Observable a, Object b) {
                 //PlayerZone pZone = (PlayerZone) a; //unused
                 JPanel p = oppLandPanel;
                 p.removeAll();
                 
-                GuiDisplayUtil.setupLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer).toArray());
+                GuiDisplayUtil.setupLandPanel(p, AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()).toArray());
                 p.revalidate();
                 p.repaint();
             }
         });
-        AllZone.Computer_Battlefield.updateObservers();
+        AllZone.getComputerBattlefield().updateObservers();
         //END - computer play (only land)
         
     }//addObservers()
@@ -785,10 +785,10 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
             public void actionPerformed(ActionEvent evt) {
                 okButtonActionPerformed(evt);
                 
-                if(AllZone.Phase.isNeedToNextPhase()) {
+                if(AllZone.getPhase().isNeedToNextPhase()) {
                     //for debugging: System.out.println("There better be no nextPhase in the stack.");
-                    AllZone.Phase.setNeedToNextPhase(false);
-                    AllZone.Phase.nextPhase();
+                    AllZone.getPhase().setNeedToNextPhase(false);
+                    AllZone.getPhase().nextPhase();
                 }
                 okButton.requestFocusInWindow();
             }
@@ -1003,14 +1003,14 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         	new Gui_WinLose();
         else {
         	//new Gui_WinLose(Constant.Quest.humanList[0], Constant.Quest.computerList[0],Constant.Quest.humanLife[0], Constant.Quest.computerLife[0]);
-        	CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.QuestData, AllZone.QuestAssignment);
-    		CardList computerList = forge.quest.data.QuestUtil.getComputerCreatures(AllZone.QuestData, AllZone.QuestAssignment);
+        	CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.getQuestData(), AllZone.getQuestAssignment());
+    		CardList computerList = forge.quest.data.QuestUtil.getComputerCreatures(AllZone.getQuestData(), AllZone.getQuestAssignment());
     		
-    		int humanLife = AllZone.QuestData.getLife();
+    		int humanLife = AllZone.getQuestData().getLife();
     		int computerLife = 20;
     		
-    		if (AllZone.QuestAssignment!=null)
-    			computerLife = AllZone.QuestAssignment.getComputerLife();
+    		if (AllZone.getQuestAssignment()!=null)
+    			computerLife = AllZone.getQuestAssignment().getComputerLife();
     		new Gui_WinLose(humanList, computerList, humanLife, computerLife);
         }
     }
@@ -1151,7 +1151,7 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
         public void actionPerformed(ActionEvent e) {
             Card[] c = getCards();
             
-            if(AllZone.NameChanger.shouldChangeCardName()) c = AllZone.NameChanger.changeCard(c);
+            if(AllZone.getNameChanger().shouldChangeCardName()) c = AllZone.getNameChanger().changeCard(c);
             
             if(c.length == 0) GuiUtils.getChoiceOptional(title, new String[] {"no cards"});
             else {
@@ -1212,10 +1212,10 @@ class Gui_MultipleBlockers3 extends JFrame {
     
     public static void main(String[] args) {
         CardList list = new CardList();
-        list.add(AllZone.CardFactory.getCard("Elvish Piper", null));
-        list.add(AllZone.CardFactory.getCard("Lantern Kami", null));
-        list.add(AllZone.CardFactory.getCard("Frostling", null));
-        list.add(AllZone.CardFactory.getCard("Frostling", null));
+        list.add(AllZone.getCardFactory().getCard("Elvish Piper", null));
+        list.add(AllZone.getCardFactory().getCard("Lantern Kami", null));
+        list.add(AllZone.getCardFactory().getCard("Frostling", null));
+        list.add(AllZone.getCardFactory().getCard("Frostling", null));
         
         for(int i = 0; i < 2; i++)
             new Gui_MultipleBlockers3(null, list, i + 1, null);
@@ -1314,7 +1314,7 @@ class Gui_MultipleBlockers3 extends JFrame {
             		&& att.hasKeyword("Trample") 
             		&& assignedLethalDamageToAllBlockers)
             {
-            	AllZone.Combat.addDefendingDamage(1, att);
+            	AllZone.getCombat().addDefendingDamage(1, att);
             	c.addAssignedDamage(1, att);
             }
             else if (!c.getName().equals("Player")){

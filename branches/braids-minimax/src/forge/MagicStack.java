@@ -1,8 +1,12 @@
 package forge;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Stack;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -22,7 +26,10 @@ import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost_Ability;
 
-public class MagicStack extends MyObservable {
+public class MagicStack extends MyObservable implements java.io.Serializable {
+
+	private static final long serialVersionUID = -5047177444644836532L;
+
 	private ArrayList<SpellAbility> simultaneousStackEntryList = new ArrayList<SpellAbility>();
 
 	private Stack<SpellAbility_StackInstance> stack = new Stack<SpellAbility_StackInstance>();
@@ -85,7 +92,7 @@ public class MagicStack extends MyObservable {
 		if (ability.isSpell()){
 			Card source = ability.getSourceCard();
 			if (!source.isCopiedSpell() && !AllZone.getZone(source).is(Constant.Zone.Stack))
-				AllZone.GameAction.moveToStack(source);
+				AllZone.getGameAction().moveToStack(source);
 		}
 
 		if (ability.isTrigger())
@@ -100,7 +107,7 @@ public class MagicStack extends MyObservable {
 			this.add(sa);
 		}
 		if (checkState)
-			AllZone.GameAction.checkStateEffects();
+			AllZone.getGameAction().checkStateEffects();
 	}
 
 	public void clearFrozen() {
@@ -137,7 +144,7 @@ public class MagicStack extends MyObservable {
 		ManaCost manaCost = new ManaCost(sa.getManaCost());
 		String Mana = manaCost.toString();
 
-		int MultiKickerPaid = AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid;
+		int MultiKickerPaid = AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid;
 
 		String Number_ManaCost = " ";
 
@@ -156,13 +163,13 @@ public class MagicStack extends MyObservable {
 
 				if (check - MultiKickerPaid < 0) {
 					MultiKickerPaid = MultiKickerPaid - check;
-					AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid = MultiKickerPaid;
+					AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid = MultiKickerPaid;
 					Mana = Mana.replaceFirst(String.valueOf(check), "0");
 				} 
 				else {
 					Mana = Mana.replaceFirst(String.valueOf(check), String.valueOf(check - MultiKickerPaid));
 					MultiKickerPaid = 0;
-					AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid = MultiKickerPaid;
+					AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid = MultiKickerPaid;
 				}
 			}
 			Mana = Mana.trim();
@@ -170,14 +177,14 @@ public class MagicStack extends MyObservable {
 				Mana = "0";
 			manaCost = new ManaCost(Mana);
 		}
-		String Color_cut = AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored;
+		String Color_cut = AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored;
 
 		for (int Colored_Cut = 0; Colored_Cut < Color_cut.length(); Colored_Cut++) {
 			if ("WUGRB".contains(Color_cut.substring(Colored_Cut, Colored_Cut + 1))) {
 
 				if (!Mana.equals(Mana.replaceFirst((Color_cut.substring(Colored_Cut, Colored_Cut + 1)), ""))) {
 					Mana = Mana.replaceFirst(Color_cut.substring(Colored_Cut, Colored_Cut + 1), "");
-					AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored = AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored
+					AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored = AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored
 					.replaceFirst(Color_cut.substring(Colored_Cut, Colored_Cut + 1), "");
 					Mana = Mana.trim();
 					if (Mana.equals(""))
@@ -217,13 +224,13 @@ public class MagicStack extends MyObservable {
 			System.out.println(sp.getSourceCard().getName() + " - activatingPlayer not set before adding to stack.");
 		}
 
-		if (AllZone.Phase.is(Constant.Phase.Cleanup)){	// If something triggers during Cleanup, need to repeat
-			AllZone.Phase.repeatPhase();
+		if (AllZone.getPhase().is(Constant.Phase.Cleanup)){	// If something triggers during Cleanup, need to repeat
+			AllZone.getPhase().repeatPhase();
 		}
 
 		// TODO: triggered abilities need to be fixed 
 		if (!(sp instanceof Ability_Triggered || sp instanceof Ability_Static))	
-			AllZone.Phase.setPriority(sp.getActivatingPlayer());	// when something is added we need to setPriority
+			AllZone.getPhase().setPriority(sp.getActivatingPlayer());	// when something is added we need to setPriority
 
 		if (sp instanceof Ability_Triggered || sp instanceof Ability_Static)
 			// TODO make working triggered ability
@@ -275,7 +282,7 @@ public class MagicStack extends MyObservable {
 					public void execute() {
 						ability.resolve();
 						Card crd = sa.getSourceCard();
-						AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Pay X cost for " + crd.getName()
+						AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Pay X cost for " + crd.getName()
 								+ " (X=" + crd.getXManaCostPaid() + ")\r\n", 
 								ability.getManaCost(), this, unpaidCommand, true));
 					}
@@ -283,7 +290,7 @@ public class MagicStack extends MyObservable {
 
 				Card crd = sa.getSourceCard();
 				if (sp.getSourceCard().getController().isHuman()) {
-					AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Pay X cost for " +
+					AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Pay X cost for " +
 							sp.getSourceCard().getName() + " (X=" + crd.getXManaCostPaid() + ")\r\n", 
 							ability.getManaCost(), paidCommand, unpaidCommand, true));
 				} 
@@ -327,21 +334,21 @@ public class MagicStack extends MyObservable {
 						if (manaCost.isPaid()) {
 							this.execute();
 						} else {
-							if (AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid == 0
-									&& AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
+							if (AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid == 0
+									&& AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
 
-								AllZone.InputControl.setInput(new Input_PayManaCost_Ability(
+								AllZone.getInputControl().setInput(new Input_PayManaCost_Ability(
 										"Multikicker for "+ sa.getSourceCard() + "\r\n"
 										+ "Times Kicked: " + sa.getSourceCard().getMultiKickerMagnitude() + "\r\n", 
 										manaCost.toString(), this, unpaidCommand));
 							} 
 
 							else {
-								AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Multikicker for "
+								AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Multikicker for "
 										+ sa.getSourceCard() + "\r\n" + "Mana in Reserve: "
-										+ ((AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid != 0) ? 
-												AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid : "")
-												+ AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored + "\r\n"
+										+ ((AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid != 0) ? 
+												AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid : "")
+												+ AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored + "\r\n"
 												+ "Times Kicked: " + sa.getSourceCard().getMultiKickerMagnitude() + "\r\n", 
 												manaCost.toString(), this, unpaidCommand));
 							}
@@ -350,24 +357,24 @@ public class MagicStack extends MyObservable {
 				};
 
 				if (sp.getSourceCard().getController().equals(
-						AllZone.HumanPlayer)) {
+						AllZone.getHumanPlayer())) {
 					ManaCost manaCost = getMultiKickerSpellCostChange(ability);
 
 					if (manaCost.isPaid()) {
 						paidCommand.execute();
 					} else {
-						if (AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid == 0
-								&& AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
-							AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Multikicker for "
+						if (AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid == 0
+								&& AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
+							AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Multikicker for "
 									+ sa.getSourceCard() + "\r\n" + "Times Kicked: " 
 									+ sa.getSourceCard().getMultiKickerMagnitude() + "\r\n", 
 									manaCost.toString(), paidCommand, unpaidCommand));
 						} else {
-							AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Multikicker for "
+							AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Multikicker for "
 									+ sa.getSourceCard() + "\r\n" + "Mana in Reserve: " + 
-									((AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid != 0) ? 
-											AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid: "")
-											+ AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored
+									((AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid != 0) ? 
+											AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid: "")
+											+ AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored
 											+ "\r\n" + "Times Kicked: " + sa.getSourceCard().getMultiKickerMagnitude() + "\r\n", 
 											manaCost.toString(), paidCommand, unpaidCommand));
 						}
@@ -399,7 +406,7 @@ public class MagicStack extends MyObservable {
 					public void execute() {
 						push(sa);
 						for(int i = 0; i < sp.getSourceCard().getReplicateMagnitude(); i++) {
-							AllZone.CardFactory.copySpellontoStack(sp.getSourceCard(), sp.getSourceCard(), false);
+							AllZone.getCardFactory().copySpellontoStack(sp.getSourceCard(), sp.getSourceCard(), false);
 						}
 					}
 				};
@@ -414,17 +421,17 @@ public class MagicStack extends MyObservable {
 							this.execute();
 						} else {
 							/*
-								if (AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid == 0
-										&& AllZone.GameAction.CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
+								if (AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid == 0
+										&& AllZone.getGameAction().CostCutting_GetMultiMickerManaCostPaid_Colored.equals("")) {
 
-									AllZone.InputControl.setInput(new Input_PayManaCost_Ability(
+									AllZone.getInputControl().setInput(new Input_PayManaCost_Ability(
 											"Replicate for "+ sa.getSourceCard() + "\r\n"
 											+ "Times Kicked: " + sa.getSourceCard().getMultiKickerMagnitude() + "\r\n", 
 											manaCost.toString(), this, unpaidCommand));
 								} 
 
 								else {*/
-							AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Replicate for "
+							AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Replicate for "
 									+ sa.getSourceCard() + "\r\n" 
 									+ "Times Replicated: " + sa.getSourceCard().getReplicateMagnitude() + "\r\n", 
 									manaCost.toString(), this, unpaidCommand));
@@ -434,13 +441,13 @@ public class MagicStack extends MyObservable {
 				};
 
 				if (sp.getSourceCard().getController().equals(
-						AllZone.HumanPlayer)) {
+						AllZone.getHumanPlayer())) {
 					ManaCost manaCost = getMultiKickerSpellCostChange(ability);
 
 					if (manaCost.isPaid()) {
 						paidCommand.execute();
 					} else {
-						AllZone.InputControl.setInput(new Input_PayManaCost_Ability("Replicate for "
+						AllZone.getInputControl().setInput(new Input_PayManaCost_Ability("Replicate for "
 								+ sa.getSourceCard() + "\r\n" + 
 								"Times Replicated: " + sa.getSourceCard().getReplicateMagnitude() + "\r\n", 
 								manaCost.toString(), paidCommand, unpaidCommand));
@@ -465,23 +472,23 @@ public class MagicStack extends MyObservable {
 			runParams.put("Player", sp.getSourceCard().getController());
 			runParams.put("Activator", sp.getActivatingPlayer());
 			runParams.put("CastSA", sp);
-			AllZone.TriggerHandler.runTrigger("SpellAbilityCast", runParams);
+			AllZone.getTriggerHandler().runTrigger("SpellAbilityCast", runParams);
 
 			if(sp.isSpell())
 			{
 				runParams.put("Cost", sp.getPayCosts());
-				AllZone.TriggerHandler.runTrigger("SpellCast", runParams);
+				AllZone.getTriggerHandler().runTrigger("SpellCast", runParams);
 			}
 			if(sp.isAbility())
 			{
 				runParams.put("Cost", sp.getPayCosts());
-				AllZone.TriggerHandler.runTrigger("AbilityCast", runParams);
+				AllZone.getTriggerHandler().runTrigger("AbilityCast", runParams);
 			}
 			if(sp.isCycling())
 			{
 				runParams.clear();
 				runParams.put("Card", sp.getSourceCard());
-				AllZone.TriggerHandler.runTrigger("Cycled", runParams);
+				AllZone.getTriggerHandler().runTrigger("Cycled", runParams);
 			}
 		}
 
@@ -494,14 +501,14 @@ public class MagicStack extends MyObservable {
 
 						@Override
 						public void showMessage() {
-							AllZone.Display.showMessage("Mana Vortex - select a land to sacrifice");
+							AllZone.getDisplay().showMessage("Mana Vortex - select a land to sacrifice");
 							ButtonUtil.enableOnlyCancel();
 						}
 
 						@Override
 						public void selectButtonCancel() {
-							AllZone.Stack.pop();
-							AllZone.GameAction.moveToGraveyard(sp.getSourceCard());
+							AllZone.getStack().pop();
+							AllZone.getGameAction().moveToGraveyard(sp.getSourceCard());
 							stop();
 						}
 
@@ -509,24 +516,30 @@ public class MagicStack extends MyObservable {
 						public void selectCard(Card c, PlayerZone zone) {
 							if(zone.is(Constant.Zone.Battlefield) && c.getController().isHuman()
 									&& c.isLand()) {
-								AllZone.GameAction.sacrifice(c);
+								AllZone.getGameAction().sacrifice(c);
 								stop();
 							}
+						}
+
+						@Override
+						public Collection<MinimaxMove> getMoves() {
+							// TODO Auto-generated method stub
+							throw new NotImplementedError();
 						}
 					};
 					SpellAbility_StackInstance prev = peekInstance();
 					if(prev.isSpell() && prev.getSourceCard().getName().equals("Mana Vortex")) {
 						if(sp.getSourceCard().getController().isHuman()) {
-							AllZone.InputControl.setInput(in);
+							AllZone.getInputControl().setInput(in);
 						}
 						else {//Computer
-							CardList lands = AllZoneUtil.getPlayerLandsInPlay(AllZone.ComputerPlayer);
+							CardList lands = AllZoneUtil.getPlayerLandsInPlay(AllZone.getComputerPlayer());
 							if(!lands.isEmpty()) {
-								AllZone.ComputerPlayer.sacrificePermanent("prompt", lands);
+								AllZone.getComputerPlayer().sacrificePermanent("prompt", lands);
 							}
 							else {
-								AllZone.Stack.pop();
-								AllZone.GameAction.moveToGraveyard(sp.getSourceCard());
+								AllZone.getStack().pop();
+								AllZone.getGameAction().moveToGraveyard(sp.getSourceCard());
 							}
 						}
 					}
@@ -558,7 +571,7 @@ public class MagicStack extends MyObservable {
 					final SpellAbility counter = new Ability(bazaar, "0") {
 						@Override
 						public void resolve() {
-							if(AllZone.Stack.size() > 0) AllZone.Stack.pop();
+							if(AllZone.getStack().size() > 0) AllZone.getStack().pop();
 						}//resolve()
 					};//SpellAbility
 					counter.setStackDescription(bazaar.getName()+" - counter "+sp.getSourceCard().getName()+".");
@@ -578,13 +591,13 @@ public class MagicStack extends MyObservable {
 				if(lurkingPredators.get(i).getController().isHuman())
 				{
 					revealMsg.append("You reveal: ");
-					if(AllZone.Human_Library.size() == 0)
+					if(AllZone.getHumanLibrary().size() == 0)
 					{
 						revealMsg.append("Nothing!");
 						GameActionUtil.showInfoDialg(revealMsg.toString());
 						continue;
 					}
-					Card revealed = AllZone.Human_Library.get(0);
+					Card revealed = AllZone.getHumanLibrary().get(0);
 
 					revealMsg.append(revealed.getName());
 					if (!revealed.isCreature())
@@ -592,46 +605,46 @@ public class MagicStack extends MyObservable {
 						revealMsg.append("\n\rPut it on the bottom of your library?");
 						if(GameActionUtil.showYesNoDialog(lurkingPredators.get(i), revealMsg.toString()))
 						{
-							AllZone.GameAction.moveToBottomOfLibrary(revealed);
+							AllZone.getGameAction().moveToBottomOfLibrary(revealed);
 						}
 						else
 						{
-							AllZone.GameAction.moveToLibrary(revealed);
+							AllZone.getGameAction().moveToLibrary(revealed);
 						}
 					}
 					else
 					{
 						GameActionUtil.showInfoDialg(revealMsg.toString());
-						AllZone.GameAction.moveToPlay(revealed);
+						AllZone.getGameAction().moveToPlay(revealed);
 					}
 				}
 				else
 				{
 					revealMsg.append("Computer reveals: ");
-					if(AllZone.Computer_Library.size() == 0)
+					if(AllZone.getComputerLibrary().size() == 0)
 					{
 						revealMsg.append("Nothing!");
 						GameActionUtil.showInfoDialg(revealMsg.toString());
 						continue;
 					}
-					Card revealed = AllZone.Computer_Library.get(0);
+					Card revealed = AllZone.getComputerLibrary().get(0);
 					revealMsg.append(revealed.getName());
 					if (!revealed.isCreature())
 					{
 						GameActionUtil.showInfoDialg(revealMsg.toString());
 						if(lurkingPredators.size() > i)
 						{
-							AllZone.GameAction.moveToBottomOfLibrary(revealed);
+							AllZone.getGameAction().moveToBottomOfLibrary(revealed);
 						}
 						else
 						{
-							AllZone.GameAction.moveToLibrary(revealed);
+							AllZone.getGameAction().moveToLibrary(revealed);
 						}
 					}
 					else
 					{
 						GameActionUtil.showInfoDialg(revealMsg.toString());
-						AllZone.GameAction.moveToPlay(revealed);
+						AllZone.getGameAction().moveToPlay(revealed);
 					}
 
 				}
@@ -642,7 +655,7 @@ public class MagicStack extends MyObservable {
 			CardFactoryUtil.checkTargetingEffects(sp, sp.getTargetCard());
 
 		if(simultaneousStackEntryList.size() > 0)
-			AllZone.Phase.passPriority();
+			AllZone.getPhase().passPriority();
 	}
 
 	public int size() {
@@ -676,9 +689,9 @@ public class MagicStack extends MyObservable {
 		this.freezeStack();	// freeze the stack while we're in the middle of resolving
 		setResolving(true);
 
-		SpellAbility sa = AllZone.Stack.pop();
+		SpellAbility sa = AllZone.getStack().pop();
 
-		AllZone.Phase.resetPriority();	// ActivePlayer gains priority first after Resolve
+		AllZone.getPhase().resetPriority();	// ActivePlayer gains priority first after Resolve
 		Card source = sa.getSourceCard();
 
 		if (hasFizzled(sa, source)) {//Fizzle
@@ -706,11 +719,11 @@ public class MagicStack extends MyObservable {
 		}
 		// Handle cards that need to be moved differently
 		else if (sa.isBuyBackAbility() && !fizzle){
-			AllZone.GameAction.moveToHand(source);
+			AllZone.getGameAction().moveToHand(source);
 		}
 
 		else if (sa.isFlashBackAbility()){
-			AllZone.GameAction.exile(source);
+			AllZone.getGameAction().exile(source);
 			sa.setFlashBackAbility(false);
 		}
 
@@ -718,7 +731,7 @@ public class MagicStack extends MyObservable {
 		else if (!source.isCopiedSpell() && (source.isInstant() || source.isSorcery() || fizzle) && 
 				AllZone.getZone(source).is(Constant.Zone.Stack)){
 			if (source.getReplaceMoveToGraveyard().size() == 0)
-				AllZone.GameAction.moveToGraveyard(source);
+				AllZone.getGameAction().moveToGraveyard(source);
 			else{
 				source.replaceMoveToGraveyard();
 			}
@@ -735,11 +748,11 @@ public class MagicStack extends MyObservable {
 		this.unfreezeStack(); 
 		sa.resetOnceResolved();
 
-		AllZone.GameAction.checkStateEffects();
+		AllZone.getGameAction().checkStateEffects();
 
-		AllZone.Phase.setNeedToNextPhase(false);
+		AllZone.getPhase().setNeedToNextPhase(false);
 
-		if (AllZone.Phase.inCombat()) 
+		if (AllZone.getPhase().inCombat()) 
 			CombatUtil.showCombat();
 
 		GuiDisplayUtil.updateGUI();
@@ -875,8 +888,13 @@ public class MagicStack extends MyObservable {
 
 	public void chooseOrderOfSimultaneousStackEntryAll()
 	{
-		chooseOrderOfSimultaneousStackEntry(AllZone.Phase.getPlayerTurn());
-		chooseOrderOfSimultaneousStackEntry(AllZone.Phase.getPlayerTurn().getOpponent());
+		chooseOrderOfSimultaneousStackEntryAll(AllZone.getPhase());
+	}
+
+	public void chooseOrderOfSimultaneousStackEntryAll(Phase phase)
+	{
+		chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn());
+		chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn().getOpponent());
 	}
 
 	public void chooseOrderOfSimultaneousStackEntry(Player activePlayer)
@@ -926,21 +944,21 @@ public class MagicStack extends MyObservable {
 
 				if(next.isTrigger())
 				{
-					System.out.println("Stack order: AllZone.GameAction.playSpellAbility(next)");
-					AllZone.GameAction.playSpellAbility(next);
+					System.out.println("Stack order: AllZone.getGameAction().playSpellAbility(next)");
+					AllZone.getGameAction().playSpellAbility(next);
 				}
 				else
 				{
-					System.out.println("Stack order: AllZone.Stack.add(next)");
+					System.out.println("Stack order: AllZone.getStack().add(next)");
 					add(next);
 				}
 			}
 
 			if(activePlayerSAs.get(0).isTrigger())
-				AllZone.GameAction.playSpellAbility(activePlayerSAs.get(0));
+				AllZone.getGameAction().playSpellAbility(activePlayerSAs.get(0));
 			else
 				add(activePlayerSAs.get(0));
-			//AllZone.GameAction.playSpellAbility(activePlayerSAs.get(0));
+			//AllZone.getGameAction().playSpellAbility(activePlayerSAs.get(0));
 		}
 	}
 
