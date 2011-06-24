@@ -1,0 +1,339 @@
+Forge Beta: 06-24-2011 ver 1.0.14 SVN rev 10003
+
+(Quest icons used created by Teekatas, from his Legendora set 
+
+http://raindropmemory.deviantart.com)
+
+8437 cards in total.
+
+This version is based upon the revision # 10003 which is found on our SVN.
+
+
+This version features a complete rewrite of Sealed Deck mode. Full cardpool, block and custom modes are supported. Custom sealed files in the res/sealed folder are exactly the same as custom draft files, except the file extension ".sealed".
+
+A distinction may now be made between AI decks and Human decks, with the addition of a deck Metadata "PlayerType", which right now just helps by sorting human decks into the human combo box and AI decks into the AI combo box.
+
+Rob fixed the main Deck Editor's bad behavior with cards reappearing in the top after clearing the filter. A similar change should be easy to apply to the quest deck editor.
+
+A number of bugs are fixed in this version. This includes the multi-targeting bug and the Trigger issue is now fixed. Many of the auras were missing potions of the descriptive text which appears in the card detail panel. After a lot of head scratching we believe that we have implemented a quick fix for this version.
+
+The keyword "CARDNAME can't be the target of spells or abilities your opponents control." was replaced with the new shortened "Hexproof" keyword. There are several new and sveral revamped quest opponent decks.
+
+
+We have changed the archiving format to ".tar.bz2". There are utilities for Windows, Mac OS and the various *nix's that can be used to decompress these archives.
+
+
+The Mac OS application version:
+
+We have packaged the Forge 06/24/2011 BETA version as a Mac OS application. You can double click the Forge.app icon to launch the forge application on your Apple computer running Mac OS. This application will automatically increase the java heap space memory for you as it launches. This version does not require the forge.command file and it does not need to start the Terminal application as part of the start up process. This version should only require java 1.5.
+
+You can move a copy of your pictures and decks over to the Forge.app application. Right click or control click on the Forge.app icon. Select Show Package Contents form the contextual menu. A Finder window will open and will display a folder named Contents. Navigate to the folder:
+
+/Contents/Resources/Java/res/
+
+Your decks can be placed in the decks folder, your pics can be placed in the pics folder, etc.
+
+
+Fixes/Features:
+
+- Removed some redundant SVars.
+- Fixed Mayael the Anima. Thanks lazylockie.
+- Fixed subabilities of Mana abilities.
+- Some cleanup.
+- Fixed AI double blocking creatures with "CARDNAME can't be blocked by more than one creature."
+- Fixed relic of Leyline of Singularity.
+- Fixed relic of Plague Rats.
+- Added SVar:NeedsToPlay to two more cards.
+- Choices of a Target are now handled by a separate Class. (Target_Choices)
+- Activating an Ability that targets multiple times now handled properly (Fix for Multi-Targeting Bug)
+- Stack now uses SA_StackInstances instead of SAs.
+- Implement the "intervening 'if' clause" of four triggers.
+- More love for "intervening 'if' clause's".
+- Cleanup regarding params in in some of the AFs.
+- AF_Debuff tweaks.
+- Cost_Payment.payTapXTypeList is no longer Static.
+- Ran Set Info Script.
+- Fixed the etb trigger of the allies.
+- Fixed cost description of Kaervek's Spite.
+- Added support for targeting and Defined parameters to AF ManaReflected.
+- Fixed Winter's Night.
+- Fixed Slag Fiend, its power should now be equal to the number of artifact cards in all graveyards.
+- Added the option "Produced" to the ReflectProperty paramter in AF ManaReflected.
+- Converted Mirari's Wake to script.
+- Fixed Winter's Night.
+- The option "Produced" in AF ManaReflected now works with colorless mana.
+- Added RemDeckAI to Adarkar Windform.
+- Updated the SVars for a bunch of Snow cards.
+- Text tweak for Gangrenous Zombies.
+- Small tweak in PhaseUtil.java.
+- Converted Goblin Skycutter to AF.
+- Fixed the subability of Brainstorm not being Mandatory.
+- Added AF_DebuffAll.
+- Fixed Exception when using Count$TimesKicked.
+- Fixed Cost for Suffer the Past (in CF_Instants.java).
+- Fixed NPE error in AI when using AF_Discard with "Mode$ RevealDiscardAll".
+- Improved error handling when opening game state file.
+- Reverted JuzamJediCube.dck from r9675.
+- Ran Set Info Script.
+- Fixed type of Skyshooter.
+- Small tweaks for CardList operations in some CardFactory files.
+- Small tweaks for CardList operations in some AbilityFactory files.
+- Small tweaks for CardList operations in some deck generation files.
+- Small tweaks for CardList operations in some Booster draft files.
+- Small tweaks for CardList operations in some source files.
+- Small tweaks for CardList operations in some source files.
+- Small tweaks for CardList operations in Combat.java.
+- Small tweaks for CardList operations in GameAction.java.
+- Cleanup in Card class.
+- Fixed the spell type in isValid.
+- Updated some card text files.
+- Fixed Lavamancer's Skill.
+- Ran Set Info Script.
+- Tweak for handing Defined in AF_GainControl.
+- Error message improvement in AF.getAbility() parsing.
+- Added PLAGUE counters.
+- Fixed some wrongly assigned isPresent conditions of triggers.
+- Removed the rarities of Illumination and Mask of Intolerance.
+- Converted Astral Slide to triggers.
+- Repaired my Hunted Dragon token image name fix.
+- The AI will now respect restrictions of mana abilities.
+- Removed SVar:RemAIDeck:True from the Tainted lands.
+- Added a medium version of the Professor X deck.
+- Removed SVar:RemAIDeck:True from Nimbus Maze.
+- Submitted the fix for triggered abilities involving counters getting messed up by changeZone.
+- Allow AF_Animate to accept ChosenType for Types$ => host.getChosenType().
+- Converted Berserk to script.
+- Fixed Everglades.
+- Fixed executable permissions. reprintSetInfo now takes a parameter for the set instead of it being hardcoded.
+- Ran Set Info Script.
+- Added an InvalidTypes param to AF_Choose for things like "Choose a creature type other than Wall..."
+- Added SHRED counters.
+- Bugfix: Multi-triggering should now function as intended.
+- Moved TriggerObjects to the SA and saved through the StackInstance.
+- Changed Count$Triggered to TriggerCount$ since Count doesn't have access to where the TriggerObjects live anymore.
+- Removed spaces.
+- Changed the type for Soul Spike from Sorcery to Instant.
+- Updated some card text files.
+- Fixed Warpath.
+- Updated the Joe Kidd decks.
+- Fixed a NPE in SpellAbility_Restriction.
+- Ran Set Info Script.
+- Fixed Slithery Stalker.
+- Fixed the unless cost for abilities.
+- Fixed the unless cost for spells. [Big changes in MagicStack included!]
+- Added the Color-changing instants from Legends by Starcrash.
+- Bring Conditions syntax more in line with Restrictions for Abilities. Wiki updates forthcoming. Card.txt changes coming up in a bit.
+- Converted cards for Condition syntax updates.
+- Converted Planar Void to script.
+- Small tweaks in SA_Condition.
+- Some Imprint tweaks in AF_ChangeZone to more closely match Remembered. Still doesn't fix Prototype Portal and friends.
+- Converted Mana Crypt to script.
+- Cleanup of deprecated keywords.
+- Ran Set Info Script.
+- Added a DB to AF_GainControl.
+- Added ChooseColor to AF_Choose.
+- Support ChosenColor in AF_Animate and AF_AnimateAll.
+- Color checking update in CardUtil.
+- Fixed AllZoneUtil.nonlands filter.
+- Converted Feudkiller's Verdict to script.
+- BoosterDraftAI - Use MyRandom
+- BoosterGenerator - Use MyRandom
+- Constant - Add Basic Lands List
+- Gui_DeckEditor - Add Progress Bar During Load; Only Load ALL Cards in Constructed mode; Fixed duplication of cards added to main deck, re-appearing in sideboard after clearing the filter; Removed references to ReadBoosterPack for rarity.
+- Gui_DeckEditor_Menu - Added PlayerType ("Human" / "AI") to Deck Metadata; Support reading setcode for sealed decks; removed "New Draft" and "New Sealed" menu items.
+- Gui_NewGame - Rewrite Sealed mode; Move draft options to setupDraft method; removed Generate Sealed Deck option; display AI sealed decks separate from Human sealed decks.
+- Gui_ProgressBarWindow - new; first used for "Loading Deck Editor" progress.
+- SealedDeck - new; handles cardpool generation and AI deck build.
+- Deck - add getMetadata(String) method.
+- GenerateSealedDeck - delete.
+- NewConstants - add localization strings for saving sealed deck prompt.
+- Updated some card text files.
+- Added an easy version of the Kang deck.
+- Ran Set Info Script.
+- The AI can now use mana abilities with (non-mana) costs.
+- Removed SVar:RemAIDeck:True from some cards.
+- Small logic tweak for Computer paying for Mana Abilities, since canPayAdditionalCosts already handles if a card is tapped with a tap ability.
+- Little cleanup for Java warnings.
+- Added a new option for Dev Mode "Tutor for Card". It allows you to search your library for a card and put it into your hand.
+- Added Legendary type to Atogatog.
+- Updated determineLeftoverMana for the new AI compatible mana abilities (for X costs).
+- Some cleanup.
+- Move site plugin into profile since Linux only supports Maven2. This allows OSX to build full docs. Move Windows exe generation into window profile.
+- Proper type comparison.
+- Removed always false branch.
+- Fixed Aombie Trailblazer.
+- Small addition to CardFactoryUtil.
+- Fixed the Devour keyword and it will now appear in the card detail panel.
+- Progress Bar now centers itself on the screen.
+- Initial work on non-Counter Stack Responses from the AI. If Top Card on the Stack will deal lethal damage to a Regenerating creature, AI will regenerate it if it doesn't have a regeneration shield.
+- Small fix to Divine Congregation.
+- Added targeting (Player) to AF_TapAll; AI still needs some tweaks.
+- Converted Dawnglare Invoker to script.
+- Ran Set Info Script.
+- Mana abilities activated by the AI will now trigger subabilities.
+- Code cleanup in AF_PermanentState (TapOrUntap).
+- Added an AF to empty target player's mana pool ("DrainMana").
+- Converted Mana Short to script.
+- Fixed Dance of the Dead not returning creature to play tapped.
+- Fixed AI choosing mana abilities.
+- Added IsCurse$ True to Choking Fumes.
+- The AI will now check drawback subabilities before using them.
+- Removed RemAIdeck from some cards.
+- Removed RemAIdeck from some more cards.
+- Fixed name of Flowstone Channeler.
+- Cleanup in AF_Regenerate.
+- Fixed Corpse Cur.
+- Improved AI selecting mana sources for paying costs.
+- Ran Set Info Script.
+- Fixed typo in spell description.
+- Fixed Might of Old Krosa.
+- Little fix to Molder
+- Fixed Error with PredictThreatened for non-AF SAs.
+- Updated some card text files.
+- Combined duplicate code in ComputerUtil.
+- Ran Set Info Script.
+- The AI will now use animate abilities only during the combat begin phase (if possible).
+- Fixed card text.
+- Fixed cards moving to library not removing counters.
+- Fix for Teferi's Puzzle Box (and others) Triggered Objects now live on the Root SA, so when a SubAbility tries to read them, we must bubble up to be able to retrieve these objects.
+- Updated some tier 1 and 2 decks.
+- Smolder Initiate was missing it's trigger cost.
+- Ran Set Info Script.
+- Updated the Magnum decks.
+- Converted Sigil of the Empty Throne to script.
+- Converted Demigod of Revenge to script.
+- Fixed error on opening decks.
+- Now 50/50 chance to download set pics from cardforge.org.
+- Ran Set Info Script.
+- Updated determineLeftoverMana (for AI paying X costs).
+- Cleanup of AI canPlay checks.
+- Updated the Wilma Flintstone decks.
+- Updated the Hercules decks.
+- Converted Roiling Terrain to script.
+- Fixed Turntimber Grove.
+- Little fix.
+- Ran Set Info Script.
+- Converted Pulse of the Tangle to script.
+- Added AF SacrificeAll.
+- Converted All Is Dust to script.
+- Added support for RememberSacrificed to AF SacrificeAll.
+- Converted Hellion Eruption to script.
+- Added targeting support to AF DamageAll.
+- Put checkStateEffects into handleBeginPhase.
+- Added the option "Targeted" to ValidPlayers in AF DamageAll.
+- Converted Lavalanche to script.
+- Added two medium decks.
+- Ran Set Info Script.
+- Little fix.
+- Added UnderFlow's note explaining how to submit a bug report via google code.
+- Updated some card text files.
+- Converted cards to the new keyword Hexproof.
+- Converted Champion keyword to use a "valid" expression instead of just a type; converted Lightning Crafter to Champion keyword.
+- Bugfix for Prototype Portal, now Imprinting after the card has moved zones.
+- Converted Isochron Scepter to AF_CopySpell.
+- Some tweaks in CopySpell to allow it to Copy Charms (although the Description needs some improvement in those cases.)
+- Sword of Kaldra will now display "Equipped creature gets +5/+5."
+- Reverted to download Set pics to cardforge.org server.
+- Reduced the random time delay between card requests.
+- Added RemRandomDeck:True to Blizzard.
+- Fixed for the card text of auras.
+- Added SVar:NeedsToPlay:Creature to some cards.
+- Removed the hardcoded rests of Pestilence and Pyrohemia.
+- Fixed and improvemented the AI combat bonus predictions.
+- Fixed Quicksilver Dagger.
+- Fixed and improvemented Championing. The "enters the battlefield" part now uses the stack. You can now champion a card with shroud (it is no longer targeted). Added a Trigger for "Championed"; converted Mistbind Clique to triggers. Still a small bug when the Championed trigger fires - it doesn't go on the stack right away. Looks like a problem similar to other things we've seen with the stack.
+- Converted Greener Pastures to script.
+- Corrected the casting cost for Noxious Field.
+- Ran Set Info Script.
+- Little cleanup.
+- Fixed a NPE in getDefinedCards.
+- Addded the Reverend Lovejoy 2 deck.
+- Added some text.
+- Fixed Rage Extractor triggering when either player played a phyrexianmana spell.
+- Fixed the URL listed in the readme file. Thank you Rob.
+- Hopefully fixes for Imprinting and friends.
+- Fixed Riddlekeeper.
+- Fixed the spell description for Flameshot.
+- Converted Living Death to script.
+- Fixed Martial Coup.
+- Converted the keywords "When enchanted creature becomes the target of a spell or ability,..." to the trigger system.
+- Fixed Kalastria Highborn.
+- Added an easy version of the Aragorn deck.
+- Made Mystifying Maze AI compatible.
+- Removed RemAIDeck from some cards.
+- Fixed keywords having the cards name replaced by CARDNAME screwing up any keywords that used the named property. Fixes Shield of Kaldra.
+- Converted Vigilance to script.
+- Ran Set Info Script.
+- Converted Lifelink to script.
+- Cleanup in CF_Sorceries.
+- Converted Fear to script.
+- Converted some cards with "When CARDNAME becomes the target of a spell or ability, sacrifice it." to the new trigger system.
+- Converted Brood Birthing to script.
+- Converted Boneshard Slasher and Horobi, Death's Wail to script.
+- Removed the keywords "When CARDNAME becomes the target of a spell or ability, destroy CARDNAME." and "When CARDNAME becomes the target of a spell or ability, sacrifice it.".
+- Reverted Brood Birthing back to code.
+- Restored Recall code.
+- Removed the keyword "When CARDNAME becomes the target of a spell or ability, return CARDNAME to its owner's hand.".
+- Removed checkTargetingEffects.
+- Reverted some of the last changes to keep the functionality of the hardcoded cards Cowardice and Horobi, Death's Wail.
+- Reinserted the calls for checkTargetingEffects.
+- The CostChange keyword will now look for the SVar X on the card with the keyword (and not on the card to cast).
+- Created a private branch of trunk (aka src) for longer term minimax AI development.
+- Created wiki page through web user interface.
+- Edited wiki page SourceCodeControl2 through web user interface.
+- Fixed 6ED SetInfo pic link for Skull Catapult.
+- This edit should fix most of the aura spell description issues.
+- Fixed a couple other 6ED SetInfo pic links.
+- Ran Set Info Script.
+- Removed the extra spell description from Drake Umbra.
+- Tweaked the text on a couple Auras.
+- Fixed SpellAbilityCast not properly triggering due to Multitarget changes.
+- Small code tweaks in AF_PermState to be more consistent with other AFs.
+- Fixed Mirozel and Petrahydrox.
+- Converted City of Traitors to script.
+- Added the keyword "Creatures can't attack unless their controller pays".
+- Converted 4 hardcoded cards to script.
+- Ran Set Info Script.
+- Fixed Sleight of Hand.
+- Small code tweaks in AF_ZoneAffecting to be more consistent with other AFs.
+- Added BecomesTarget trigger mode. Converted Cowardice as an example.
+- Converted Horobi, Death's Wail to script.
+- Removed checkTargetingEffects again.
+- Converted Elven Warhounds to script.
+- Level four Plant Wall no longer has First Strike.
+- Added SVar:RemAIDeck:True to two cards.
+- Converted Frost Titan to script.
+- Fixed Spell Contortion, it now displays the Multikicker keyword and the cost in the card detail panel.
+- Edited wiki page SourceCodeControl through web user interface. (Also making sure my commit access is good; i've been having trouble.)
+- Deleted wiki page SourceCodeControl2 through web user interface.
+- Added SVar:RemAIDeck:True to Glarewielder.
+- Fixed Weed-Pruner Poplar.
+- checkStateEffects will no longer iterate through the static effects twice if nothing changed the board.
+- Fixed bug with X in CostChange.
+- Ran Set Info Script.
+
+
+Many people helped with this version. A special thank you goes out to them:
+
+Sloth
+Friar Sol
+Slapshot5
+Rob Cashwalker
+JenDave
+Braids
+Hellfish
+Agetian
+Jeff Wadsworth
+Jaedayr
+LazyLockie
+Starcrash
+UnderFlow
+Chris H
+
+
+Added many cards, including:
+
+Aisling LeprechaunAkron LegionnaireAlabaster PotionAlchor's TombAncient KavuAnimar, Soul of ElementsAvatar of SlaughterBlazing Blade AskariBrainwashBurrenton Shield BearersCelestial ForceCephalid SnitchCephalid VandalCeta SanctuaryChampion's HelmCrash LandingCyclopean GiantDarksteel PendantDawn of the DeadDeath Pit OfferingDeep-Sea KrakenDemonic CollusionDivine Congregation.Dominaria's JudgmentDowndraftDrooling OgreDrowned RusalkaDurkwood TrackerDwarven SongEdric, Spymaster of TrestElder Land WurmElephant GrassEmerald CharmEndbringer's RevelEngulfing SlagwurmExcavationFlame WaveFlickering SpiritFloodchaserFloral SpuzzemFlowstone ChannelerFlusterstormGargoyle SentinelGemini EngineGhitu FirebreathingGhost Council of OrzhovaGhostly WingsGhosts of the DamnedGhostwayGoblin LegionnaireGreat DefenderHaunting WindHazezon TamarHeaven's GateHornet QueenHunters' FeastHydra OmnivoreHypochondriaIn the Eye of ChaosInciteJuju BubbleKavu HowlerLightmine FieldLightning AxeMagmatic ForceMight of Old KrosaMilitant MonkMistform DreamerMistform MutantMistform ShriekerMistform SkyreaverMistform StalkerMolderMothdust ChangelingMystical TeachingsMystifying MazeNantuko ShamanNecra DiscipleNoble VestigeNorin the WaryOasisOblationOrim, Samite HealerPendelhaven ElderPetrified FieldPhantatogPhthisisPhyrexian MarauderPhyrexian TotemPlanar GuidePortcullisPrimal ForcemagePulsating IllusionPulse of the FieldsRadjan SpiritRaging SpiritRaka DiscipleRecuperateReinforced BulwarkRiddlekeeperRivalryRuhan of the FomoriRummaging WizardRupture SpireRustSamite ArcherSanctum CustodianScarwood HagSea Kings' BlessingSengir NosferatuShade's BreathShinewendSimoonSkittering MonstrositySkyshooterSlaughter PactSlithermuseSmogsteed RiderSnarling UndorakSoul SnareSoulshriekSpell CrumpleStenchskipperStingmoggieStrength in NumbersStronghold OverseerSudden ShockSunfire BalmSunken FieldSwell of CourageSylvan ParadiseSynod ArtificerTalruum ChampionTanglewalkerThunder TotemThundercloud ElementalTolarian SentinelTomb of UramiTouch of DarknessTraitor's ClutchTrespasser il-VecTriassic EggTribute to the WildUnifying TheoryUnstoppable AshUrborgVitality CharmVoidmage HusherVoodoo DollVorinclex, Voice of HungerVow of DutyVow of FlightVow of LightningVow of MaliceVow of WildnessWalk the AeonsWalking DesecrationWave of IndifferenceWheel of FateWhirlpool DrakeWind ShearWirefly HiveWithering HexWorkfang BehemothWorldgorger DragonWurmcallingYukora, the PrisonerZealot il-VecZombie Trailblazer
+
+
+end
