@@ -1,0 +1,11 @@
+Name:Razormane Masticore
+ManaCost:4
+Types:Artifact Creature Masticore
+Text:At the beginning of your upkeep, sacrifice Razormane Masticore unless you discard a card.
+PT:5/5
+K:First Strike
+T:Mode$Phase | Phase$ Draw | OptionalDecider$ You | Execute$ TrigDealDamage | TriggerDescription$ At the beginning of your draw step, you may have CARDNAME deal 3 damage to target creature.
+SVar:TrigDealDamage:AB$DealDamage | Cost$ 0 | Tgt$ TgtC | NumDmg$ 3
+SVar:Rarity:Rare
+SVar:Picture:http://www.wizards.com/global/images/magic/general/razormane_masticore.jpg
+End
