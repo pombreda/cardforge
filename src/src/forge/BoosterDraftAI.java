@@ -458,7 +458,7 @@ public class BoosterDraftAI
 				//CardCounts.put(ClrCnts[i].Color, nLand);
 		
 				for (int j=0; j<=nLand; j++) {
-					Card c = AllZone.CardFactory.getCard(ClrCnts[i].Color, AllZone.ComputerPlayer);
+					Card c = AllZone.getCardFactory().getCard(ClrCnts[i].Color, AllZone.getComputerPlayer());
 					c.setCurSetCode(BoosterDraft.LandSetCode[0]);
 					outList.add(c);
 					landsNeeded--;
@@ -468,7 +468,7 @@ public class BoosterDraftAI
 		int n = 0;
 		while (landsNeeded > 0) {
 			if (ClrCnts[n].Count > 0) {
-				Card c = AllZone.CardFactory.getCard(ClrCnts[n].Color, AllZone.ComputerPlayer);
+				Card c = AllZone.getCardFactory().getCard(ClrCnts[n].Color, AllZone.getComputerPlayer());
 				c.setCurSetCode(BoosterDraft.LandSetCode[0]);
 				outList.add(c);
 				landsNeeded--;
@@ -523,14 +523,14 @@ public class BoosterDraftAI
     Card land;
     for(int i = 0; i < 9; i++)
     {
-      land = AllZone.CardFactory.getCard(colorToLand.get(color[0]).toString(), AllZone.ComputerPlayer);
+      land = AllZone.getCardFactory().getCard(colorToLand.get(color[0]).toString(), AllZone.getComputerPlayer());
       
       land.setCurSetCode(land.getMostRecentSet());
       land.setImageFilename(CardUtil.buildFilename(land));
       
       list.add(land);
 
-      land = AllZone.CardFactory.getCard(colorToLand.get(color[1]).toString(), AllZone.ComputerPlayer);
+      land = AllZone.getCardFactory().getCard(colorToLand.get(color[1]).toString(), AllZone.getComputerPlayer());
       
       land.setCurSetCode(land.getMostRecentSet());
       land.setImageFilename(CardUtil.buildFilename(land));

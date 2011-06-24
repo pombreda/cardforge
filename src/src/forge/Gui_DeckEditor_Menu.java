@@ -103,7 +103,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         clearfilter.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ev) {
 
-                //CardList all = AllZone.CardFactory.getAllCards();
+                //CardList all = AllZone.getCardFactory().getAllCards();
                 //deckDisplay.updateDisplay(all, deckDisplay.getBottom());
                 deckDisplay.updateDisplay(deckDisplay.getTop(), deckDisplay.getBottom());
                 Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
@@ -274,7 +274,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentGameType = Constant.GameType.Constructed;
         setDeckData("", false);
 
-        deckDisplay.updateDisplay(AllZone.CardFactory.getAllCards(), new CardList());
+        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), new CardList());
     }//new constructed
 
     private void newRandomConstructed() {
@@ -288,7 +288,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentGameType = Constant.GameType.Constructed;
         setDeckData("", false);
 
-        CardList all = AllZone.CardFactory.getAllCards();
+        CardList all = AllZone.getCardFactory().getAllCards();
         all.shuffle();
         CardList random = new CardList();
 
@@ -296,13 +296,13 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
             random.add(all.remove(0));
         }
 
-        random.add(AllZone.CardFactory.getCard("Forest", AllZone.HumanPlayer));
-        random.add(AllZone.CardFactory.getCard("Island", AllZone.HumanPlayer));
-        random.add(AllZone.CardFactory.getCard("Plains", AllZone.HumanPlayer));
-        random.add(AllZone.CardFactory.getCard("Mountain", AllZone.HumanPlayer));
-        random.add(AllZone.CardFactory.getCard("Swamp", AllZone.HumanPlayer));
+        random.add(AllZone.getCardFactory().getCard("Forest", AllZone.getHumanPlayer()));
+        random.add(AllZone.getCardFactory().getCard("Island", AllZone.getHumanPlayer()));
+        random.add(AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()));
+        random.add(AllZone.getCardFactory().getCard("Mountain", AllZone.getHumanPlayer()));
+        random.add(AllZone.getCardFactory().getCard("Swamp", AllZone.getHumanPlayer()));
 
-        random.add(AllZone.CardFactory.getCard("Terramorphic Expanse", AllZone.HumanPlayer));
+        random.add(AllZone.getCardFactory().getCard("Terramorphic Expanse", AllZone.getHumanPlayer()));
 
 
         deckDisplay.updateDisplay(random, new CardList());
@@ -322,7 +322,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         GenerateConstructedDeck gen = new GenerateConstructedDeck();
 
-        deckDisplay.updateDisplay(AllZone.CardFactory.getAllCards(), gen.generateDeck());
+        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), gen.generateDeck());
     }//new sealed
 
 
@@ -364,7 +364,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+            top.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         for (int i = 0; i < deck.countSideboard(); i++) {
@@ -376,7 +376,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 setCode = s[1];
             }
 
-            top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+            top.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         deckDisplay.updateDisplay(top, new CardList());
@@ -659,7 +659,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            Card c = AllZone.CardFactory.getCard(cardName, null);
+            Card c = AllZone.getCardFactory().getCard(cardName, null);
 
             all.add(c);
         }
@@ -810,7 +810,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 setCode = s[1];
             }
 
-            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
 
             if (!setCode.equals("")) {
                 c.setCurSetCode(setCode);
@@ -822,7 +822,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
             main.add(c);
         }
-        deckDisplay.updateDisplay(AllZone.CardFactory.getAllCards(), main);
+        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), main);
     }//showConstructedDeck()
 
     private void openSealed() {
@@ -862,7 +862,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 	                cardName = s[0];
 	                setCode = s[1];
 	            }
-	            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+	            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
 	            c.setCurSetCode(setCode);
 	            top.add(c);
 	        }
@@ -877,7 +877,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 	                cardName = s[0];
 	                setCode = s[1];
 	            }
-	            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+	            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
 	            c.setCurSetCode(setCode);
 	            bottom.add(c);
 	        }
@@ -915,7 +915,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            top.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+            top.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         CardList bottom = new CardList();
@@ -926,7 +926,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            bottom.add(AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer));
+            bottom.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         deckDisplay.updateDisplay(top, bottom);
@@ -1140,7 +1140,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
             else {
                 cardName = list.get(i).getName();
             }
-            deck.addMain(AllZone.NameChanger.getOriginalName(cardName));
+            deck.addMain(AllZone.getNameChanger().getOriginalName(cardName));
         }
 
         //if sealed or draft, move "top" to sideboard
@@ -1148,7 +1148,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
             list = deckDisplay.getTop();
             for (int i = 0; i < list.size(); i++) {
                 cardName = list.get(i).getName() + "|" + list.get(i).getCurSetCode();
-                deck.addSideboard(AllZone.NameChanger.getOriginalName(cardName));
+                deck.addSideboard(AllZone.getNameChanger().getOriginalName(cardName));
             }
             if (currentGameType.equals(Constant.GameType.Sealed))
             	deck.addMetaData("PlayerType", currentDeckPlayerType);

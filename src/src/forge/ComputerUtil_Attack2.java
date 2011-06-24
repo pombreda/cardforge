@@ -7,7 +7,7 @@ import java.util.Random;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.trigger.Trigger;
 
-//doesHumanAttackAndWin() uses the global variable AllZone.ComputerPlayer
+//doesHumanAttackAndWin() uses the global variable AllZone.getComputerPlayer()
 public class ComputerUtil_Attack2 {
 
 	//possible attackers and blockers
@@ -50,7 +50,7 @@ public class ComputerUtil_Attack2 {
 
 		//Cards with triggers should come first (for Battle Cry)
 		for(Card attacker:in) {
-			ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+			ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 			for(Trigger trigger : registeredTriggers)
 			{
 				HashMap<String,String> trigParams = trigger.getMapParams();
@@ -69,10 +69,10 @@ public class ComputerUtil_Attack2 {
 	//Is there any reward for attacking? (for 0/1 creatures there is not)
 	public boolean isEffectiveAttacker(Card attacker, Combat combat)
 	{
-		if (CombatUtil.damageIfUnblocked(attacker, AllZone.HumanPlayer, combat) > 0) return true;
-		if (CombatUtil.poisonIfUnblocked(attacker, AllZone.HumanPlayer, combat) > 0) return true;
+		if (CombatUtil.damageIfUnblocked(attacker, AllZone.getHumanPlayer(), combat) > 0) return true;
+		if (CombatUtil.poisonIfUnblocked(attacker, AllZone.getHumanPlayer(), combat) > 0) return true;
 
-		ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+		ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 		for(Trigger trigger : registeredTriggers)
 			if (CombatUtil.combatTriggerWillTrigger(attacker,null,trigger, combat) 
 					&& trigger.getHostCard().getController().isComputer()) return true;
@@ -135,10 +135,10 @@ public class ComputerUtil_Attack2 {
 		// (human will get an extra first attack with a creature that untaps)
 		// In addition, if the computer guesses it needs no blockers, make sure that
 		// it won't be surprised by Exalted
-		int humanExaltedBonus = countExaltedBonus(AllZone.HumanPlayer);
+		int humanExaltedBonus = countExaltedBonus(AllZone.getHumanPlayer());
 
 		if (humanExaltedBonus > 0) {
-			int nFinestHours = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer, "Finest Hour").size();
+			int nFinestHours = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer(), "Finest Hour").size();
 
 			if ( (blockersNeeded == 0 || nFinestHours > 0) && humanList.size() > 0) {
 				//
@@ -148,9 +148,9 @@ public class ComputerUtil_Attack2 {
 					// For Finest Hour, one creature could attack and get the bonus TWICE
 					humanBaseAttack = humanBaseAttack + humanExaltedBonus;
 				}	
-				int totalExaltedAttack = AllZoneUtil.isCardInPlay("Rafiq of the Many", AllZone.HumanPlayer) ? 
+				int totalExaltedAttack = AllZoneUtil.isCardInPlay("Rafiq of the Many", AllZone.getHumanPlayer()) ? 
 						2 * humanBaseAttack: humanBaseAttack;
-				if ((AllZone.ComputerPlayer.getLife() - 3) <= totalExaltedAttack) {
+				if ((AllZone.getComputerPlayer().getLife() - 3) <= totalExaltedAttack) {
 					// We will lose if there is an Exalted attack -- keep one blocker
 					if (blockersNeeded == 0 && notNeededAsBlockers.size() > 0)
 						notNeededAsBlockers.remove(0);
@@ -184,14 +184,14 @@ public class ComputerUtil_Attack2 {
 		//originally -3 so the computer will try to stay at 3 life
 		//0 now to prevent the AI from not attacking when it's got low life
 		//(seems to happen too often)
-		return AllZone.ComputerPlayer.getLife() <= totalAttack;
+		return AllZone.getComputerPlayer().getLife() <= totalAttack;
 	}
 
 	private boolean doAssault()
 	{
 		//Beastmaster Ascension
-		if(AllZoneUtil.isCardInPlay("Beastmaster Ascension", AllZone.ComputerPlayer) && attackers.size() > 1) {
-			CardList beastions = AllZoneUtil.getCardsInZone(Constant.Zone.Battlefield, AllZone.ComputerPlayer).
+		if(AllZoneUtil.isCardInPlay("Beastmaster Ascension", AllZone.getComputerPlayer()) && attackers.size() > 1) {
+			CardList beastions = AllZoneUtil.getCardsInZone(Constant.Zone.Battlefield, AllZone.getComputerPlayer()).
 			getName("Beastmaster Ascension");
 			int minCreatures = 7;
 			for(Card beastion:beastions) {
@@ -238,13 +238,13 @@ public class ComputerUtil_Attack2 {
 		//randomInt is used so that the computer doesn't always
 		//do the same thing on turn 3 if he had the same creatures in play
 		//I know this is a little confusing
-		random.setSeed(AllZone.Phase.getTurn() + randomInt);
+		random.setSeed(AllZone.getPhase().getTurn() + randomInt);
 
 		Combat combat = new Combat();
-		combat.setAttackingPlayer(AllZone.Combat.getAttackingPlayer());
-		combat.setDefendingPlayer(AllZone.Combat.getDefendingPlayer());
+		combat.setAttackingPlayer(AllZone.getCombat().getAttackingPlayer());
+		combat.setDefendingPlayer(AllZone.getCombat().getDefendingPlayer());
 
-		combat.setDefenders(AllZone.Combat.getDefenders());
+		combat.setDefenders(AllZone.getCombat().getDefenders());
 
 		boolean bAssault = doAssault();
 		// Determine who will be attacked
@@ -297,7 +297,7 @@ public class ComputerUtil_Attack2 {
 		// find the potential counter attacking damage compared to AI life total
 		double aiLifeToPlayerDamageRatio = 1000000;
 		if(candidateCounterAttackDamage > 0)
-			aiLifeToPlayerDamageRatio = (double) AllZone.ComputerPlayer.life / candidateCounterAttackDamage;
+			aiLifeToPlayerDamageRatio = (double) AllZone.getComputerPlayer().life / candidateCounterAttackDamage;
 
 		// get the potential damage and strength of the AI forces
 		CardList candidateAttackers = new CardList();
@@ -308,7 +308,7 @@ public class ComputerUtil_Attack2 {
 
 				candidateAttackers.add(pCard);
 				if(pCard.getNetCombatDamage() > 0){
-					candidateUnblockedDamage += CombatUtil.damageIfUnblocked(pCard,AllZone.HumanPlayer,combat);
+					candidateUnblockedDamage += CombatUtil.damageIfUnblocked(pCard,AllZone.getHumanPlayer(),combat);
 					computerForces += 1;
 				}
 
@@ -318,7 +318,7 @@ public class ComputerUtil_Attack2 {
 		// find the potential damage ratio the AI can cause
 		double playerLifeToDamageRatio = 1000000;
 		if(candidateUnblockedDamage > 0)
-			playerLifeToDamageRatio = (double) AllZone.HumanPlayer.life / candidateUnblockedDamage;
+			playerLifeToDamageRatio = (double) AllZone.getHumanPlayer().life / candidateUnblockedDamage;
 
 		/*System.out.println(String.valueOf(aiLifeToPlayerDamageRatio) + " = ai life to player damage ratio");
            System.out.println(String.valueOf(playerLifeToDamageRatio) + " = player life ai player damage ratio");*/
@@ -341,7 +341,7 @@ public class ComputerUtil_Attack2 {
 		// get list of attackers ordered from low power to high
 		CardListUtil.sortAttackLowFirst(attackers);
 		// get player life total
-		int playerLife = AllZone.HumanPlayer.life;
+		int playerLife = AllZone.getHumanPlayer().life;
 		// get the list of attackers up to the first blocked one
 		CardList attritionalAttackers = new CardList();
 		for(int x = 0; x < attackers.size() - playerForces; x++){
@@ -386,11 +386,11 @@ public class ComputerUtil_Attack2 {
 				}
 			}
 			if(isUnblockableCreature){
-				unblockableDamage += CombatUtil.damageIfUnblocked(attacker,AllZone.HumanPlayer,combat);
+				unblockableDamage += CombatUtil.damageIfUnblocked(attacker,AllZone.getHumanPlayer(),combat);
 			}
 		}
-		if(unblockableDamage > 0){turnsUntilDeathByUnblockable = AllZone.HumanPlayer.life/unblockableDamage;}
-		if(unblockableDamage > AllZone.HumanPlayer.life){doUnblockableAttack = true;}
+		if(unblockableDamage > 0){turnsUntilDeathByUnblockable = AllZone.getHumanPlayer().life/unblockableDamage;}
+		if(unblockableDamage > AllZone.getHumanPlayer().life){doUnblockableAttack = true;}
 		// *****************
 		// end see how long until unblockable attackers will be fatal
 		// *****************
@@ -422,11 +422,11 @@ public class ComputerUtil_Attack2 {
 		// ****************
 
 		//Exalted
-		if (combat.getAttackers().length == 0 && (countExaltedBonus(AllZone.ComputerPlayer) >= 3 ||
-				AllZoneUtil.isCardInPlay("Rafiq of the Many", AllZone.ComputerPlayer) ||
-				AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, "Battlegrace Angel").size() >= 2 ||
-				(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, "Finest Hour").size()>=1) &&
-				AllZone.Phase.isFirstCombat())
+		if (combat.getAttackers().length == 0 && (countExaltedBonus(AllZone.getComputerPlayer()) >= 3 ||
+				AllZoneUtil.isCardInPlay("Rafiq of the Many", AllZone.getComputerPlayer()) ||
+				AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), "Battlegrace Angel").size() >= 2 ||
+				(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), "Finest Hour").size()>=1) &&
+				AllZone.getPhase().isFirstCombat())
 				&& !bAssault)
 		{
 			int biggest = 0;
@@ -467,7 +467,7 @@ public class ComputerUtil_Attack2 {
 				Card attacker = attackersLeft.get(i);
 				int totalFirstStrikeBlockPower = 0;
 				if (!attacker.hasFirstStrike() && !attacker.hasDoubleStrike())
-					totalFirstStrikeBlockPower = CombatUtil.getTotalFirstStrikeBlockPower(attacker, AllZone.HumanPlayer);
+					totalFirstStrikeBlockPower = CombatUtil.getTotalFirstStrikeBlockPower(attacker, AllZone.getHumanPlayer());
 
 				if (shouldAttack(attacker,blockers,combat) &&	(totalFirstStrikeBlockPower < attacker.getKillDamage() || aiAggression == 5)
 						&& CombatUtil.canAttack(attacker, combat))

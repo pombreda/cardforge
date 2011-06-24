@@ -110,7 +110,7 @@ public class Generate2ColorDeck
 		int SpellPercentage = 24;
 		
 		// start with all cards
-		CardList AllCards = AllZone.CardFactory.getAllCards();
+		CardList AllCards = AllZone.getCardFactory().getAllCards();
 
 		// remove cards that generated decks don't like
 		AllCards = AllCards.filter(new CardListFilter(){
@@ -221,7 +221,7 @@ public class Generate2ColorDeck
 			if (lc > 100)
 				throw new RuntimeException("Generate2ColorDeck : get2ColorDeck -- looped too much -- Cr12");
 			
-			tDeck.add(AllZone.CardFactory.getCard(c.getName(), AllZone.ComputerPlayer));
+			tDeck.add(AllZone.getCardFactory().getCard(c.getName(), AllZone.getComputerPlayer()));
 			int n = CardCounts.get(c.getName());
 			CardCounts.put(c.getName(), n + 1);
 			tmpDeck += c.getName() + " " + c.getManaCost() + "\n";
@@ -240,7 +240,7 @@ public class Generate2ColorDeck
 			if (lc > 100)
 				throw new RuntimeException("Generate2ColorDeck : get2ColorDeck -- looped too much -- Sp12");
 			
-			tDeck.add(AllZone.CardFactory.getCard(c.getName(), AllZone.ComputerPlayer));
+			tDeck.add(AllZone.getCardFactory().getCard(c.getName(), AllZone.getComputerPlayer()));
 			int n = CardCounts.get(c.getName());
 			CardCounts.put(c.getName(), n + 1);
 			tmpDeck += c.getName() + " " + c.getManaCost() + "\n";
@@ -272,7 +272,7 @@ public class Generate2ColorDeck
 			if (lc > 20)
 				throw new RuntimeException("Generate2ColorDeck : get2ColorDeck -- looped too much -- DL");
 			
-			tDeck.add(AllZone.CardFactory.getCard(s, AllZone.HumanPlayer));
+			tDeck.add(AllZone.getCardFactory().getCard(s, AllZone.getHumanPlayer()));
 			int n = CardCounts.get(s);
 			CardCounts.put(s, n + 1);
 			tmpDeck += s + "\n";
@@ -334,7 +334,7 @@ public class Generate2ColorDeck
 					CardCounts.put(ClrCnts[i].Color, nLand);
 			
 					for (int j=0; j<=nLand; j++)
-						tDeck.add(AllZone.CardFactory.getCard(ClrCnts[i].Color, AllZone.ComputerPlayer));
+						tDeck.add(AllZone.getCardFactory().getCard(ClrCnts[i].Color, AllZone.getComputerPlayer()));
 				}
 			}
 		}
@@ -359,7 +359,7 @@ public class Generate2ColorDeck
 					throw new RuntimeException("Generate2ColorDeck : get2ColorDeck -- looped too much -- undersize");
 				
 				int n = CardCounts.get(c.getName());
-				tDeck.add(AllZone.CardFactory.getCard(c.getName(), AllZone.ComputerPlayer));
+				tDeck.add(AllZone.getCardFactory().getCard(c.getName(), AllZone.getComputerPlayer()));
 				CardCounts.put(c.getName(), n + 1);
 				tmpDeck += "Added:" + c.getName() + "\n";
 			}

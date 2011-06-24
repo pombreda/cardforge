@@ -37,7 +37,7 @@ public class BoosterGenerator {
 		numMythics = 0;
 		numSpecials = 0;
 
-		CardList tList = AllZone.CardFactory.getAllCards();
+		CardList tList = AllZone.getCardFactory().getAllCards();
 		for (int i=0; i<tList.size(); i++) {
 			Card c = tList.get(i);
 			SetInfo si = SetInfoUtil.getSetInfo_Code(c.getSets(), SetInfoUtil.getMostRecentSet(c.getSets()));
@@ -74,7 +74,7 @@ public class BoosterGenerator {
             	setCode = s[1];
             }
 
-            Card c = AllZone.CardFactory.getCard(cardName, AllZone.HumanPlayer);
+            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
 
             if (!setCode.equals(""))
             	c.setCurSetCode(setCode);
@@ -109,7 +109,7 @@ public class BoosterGenerator {
 		numMythics = 0;
 		numSpecials = 0;
 		
-		CardList tList = AllZone.CardFactory.getAllCards();
+		CardList tList = AllZone.getCardFactory().getAllCards();
 		for (int i=0; i<tList.size(); i++) {
 			Card c = tList.get(i);
 			SetInfo si = SetInfoUtil.getSetInfo_Code(c.getSets(), SetCode);

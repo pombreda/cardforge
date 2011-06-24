@@ -168,7 +168,7 @@ public class AbilityFactory_Clash {
                 runParams.put("Won","False");
         }
 
-        AllZone.TriggerHandler.runTrigger("Clashed",runParams);
+        AllZone.getTriggerHandler().runTrigger("Clashed",runParams);
     }
     
     // *************************************************************************
@@ -329,7 +329,7 @@ public class AbilityFactory_Clash {
     		//runParams.put("Won","False");
     	}
 
-    	//AllZone.TriggerHandler.runTrigger("FlipsACoin",runParams);
+    	//AllZone.getTriggerHandler().runTrigger("FlipsACoin",runParams);
     }
 
 }//end class AbilityFactory_Clash

@@ -191,8 +191,8 @@ public class Gui_QuestOptions extends JFrame {
     
     void continueQuestButton_actionPerformed(ActionEvent e) {
         //set global variable
-        AllZone.QuestData = QuestDataIO.loadData();
-        AllZone.QuestData.setDifficultyIndex();
+        AllZone.setQuestData(QuestDataIO.loadData());
+        AllZone.getQuestData().setDifficultyIndex();
         dispose();
         
             new QuestFrame();
@@ -233,7 +233,7 @@ public class Gui_QuestOptions extends JFrame {
         
         
         //set global variable
-        AllZone.QuestData = questData;
+        AllZone.setQuestData(questData);
         
         dispose();
         new QuestFrame();

@@ -18,7 +18,7 @@ public class AIPlayer extends Player{
 	}
 	
 	public Player getOpponent() {
-		return AllZone.HumanPlayer;
+		return AllZone.getHumanPlayer();
 	}
 	
 	////////////////
@@ -41,7 +41,7 @@ public class AIPlayer extends Player{
 	
 	////////////////////////////////
 	///
-	/// replaces AllZone.GameAction.draw* methods
+	/// replaces AllZone.getGameAction().draw* methods
 	///
 	////////////////////////////////
 	
@@ -50,7 +50,7 @@ public class AIPlayer extends Player{
 	}
 	
 	public void mayDrawCards(int n) {
-		if(AllZone.Computer_Library.size() > n) {
+		if(AllZone.getComputerLibrary().size() > n) {
 			drawCards(n);
 		}
 	}
@@ -64,13 +64,13 @@ public class AIPlayer extends Player{
 			dredgers.shuffle();
 			Card c = dredgers.get(0);
 			//rule 702.49a
-			if(getDredgeNumber(c) <= AllZone.Computer_Library.size() ) {
+			if(getDredgeNumber(c) <= AllZone.getComputerLibrary().size() ) {
 				//dredge library, put card in hand
-				AllZone.GameAction.moveToHand(c);
+				AllZone.getGameAction().moveToHand(c);
 				//put dredge number in graveyard
 				for(int i = 0; i < getDredgeNumber(c); i++) {
-					Card c2 = AllZone.Computer_Library.get(0);
-					AllZone.GameAction.moveToGraveyard(c2);
+					Card c2 = AllZone.getComputerLibrary().get(0);
+					AllZone.getGameAction().moveToGraveyard(c2);
 				}
 			return true;
 			}
@@ -80,7 +80,7 @@ public class AIPlayer extends Player{
 	
 	////////////////////////////////
 	///
-	/// replaces AllZone.GameAction.discard* methods
+	/// replaces AllZone.getGameAction().discard* methods
 	///
 	////////////////////////////////
 	
@@ -126,7 +126,7 @@ public class AIPlayer extends Player{
             tHand.get(0).getController().discard(tHand.get(0), sa);  //this got changed to doDiscard basically
             return;
         }
-        AllZone.ComputerPlayer.discard(num, sa, false);
+        AllZone.getComputerPlayer().discard(num, sa, false);
 	}
 	
 	public void handToLibrary(final int numToLibrary, final String libPosIn) {
@@ -145,9 +145,9 @@ public class AIPlayer extends Player{
 				else 
 					position = -1;
 			}
-			CardList hand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+			CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
 
-			CardList blIP = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			CardList blIP = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			
 			blIP = blIP.getType("Basic");
 			if(blIP.size() > 5) {
@@ -155,19 +155,19 @@ public class AIPlayer extends Player{
 				if(blIH.size() > 0) {
 					Card card = blIH.get(CardUtil.getRandomIndex(blIH));
 					
-					AllZone.GameAction.moveToLibrary(card, position);
+					AllZone.getGameAction().moveToLibrary(card, position);
 				}
 				else {
 					CardListUtil.sortAttackLowFirst(hand);
 					CardListUtil.sortNonFlyingFirst(hand);
 					
-					AllZone.GameAction.moveToLibrary(hand.get(0), position);
+					AllZone.getGameAction().moveToLibrary(hand.get(0), position);
 				}
 			} 
 			else {
 				CardListUtil.sortCMC(hand); 
 				
-				AllZone.GameAction.moveToLibrary(hand.get(0), position);
+				AllZone.getGameAction().moveToLibrary(hand.get(0), position);
 			}
         }
 	}
@@ -180,7 +180,7 @@ public class AIPlayer extends Player{
 		for (int i = 0; i < num; i++) {
             boolean bottom = false;
             if (topN.get(i).isBasicLand()) {
-                CardList bl = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                CardList bl = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                 bl = bl.filter(new CardListFilter() {
                     public boolean addCard(Card c) {
                         if (c.isBasicLand()) return true;
@@ -191,7 +191,7 @@ public class AIPlayer extends Player{
                 
                 bottom = bl.size() > 5; // if control more than 5 Basic land, probably don't need more
             } else if (topN.get(i).isCreature()) {
-                CardList cl = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                CardList cl = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                 cl = cl.filter(new CardListFilter() {
                     public boolean addCard(Card c) {
                         if (c.isCreature()) return true;
@@ -204,7 +204,7 @@ public class AIPlayer extends Player{
             }
             if (bottom) {
             	Card c = topN.get(i);
-            	AllZone.GameAction.moveToBottomOfLibrary(c);
+            	AllZone.getGameAction().moveToBottomOfLibrary(c);
                 //topN.remove(c);
             }
         }
@@ -214,7 +214,7 @@ public class AIPlayer extends Player{
             Random rndm = MyRandom.random;
             int r = rndm.nextInt(topN.size());
             Card c = topN.get(r);
-            AllZone.GameAction.moveToLibrary(c);
+            AllZone.getGameAction().moveToLibrary(c);
             topN.remove(r);
         }
 	}
@@ -223,13 +223,13 @@ public class AIPlayer extends Player{
 		if(choices.size() > 0) {
 			//TODO - this could probably use better AI
 			Card c = CardFactoryUtil.AI_getWorstPermanent(choices,false,false,false,false);
-			AllZone.GameAction.sacrificeDestroy(c);
+			AllZone.getGameAction().sacrificeDestroy(c);
 		}
 	}
 	
 	protected void clashMoveToTopOrBottom(Card c) {
 		//computer just puts the card back until such time it can make a smarter decision
-		AllZone.GameAction.moveToLibrary(c);
+		AllZone.getGameAction().moveToLibrary(c);
 	}
 	
 }//end AIPlayer class

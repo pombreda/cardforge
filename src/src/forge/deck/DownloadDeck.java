@@ -95,7 +95,7 @@ public class DownloadDeck {
     }
 
     public boolean isCardSupport(String CardName) {
-        CardList all = AllZone.CardFactory.getAllCards();
+        CardList all = AllZone.getCardFactory().getAllCards();
 
         Card gCard;
         for (int i = 0; i < all.size(); i++) {
@@ -108,7 +108,7 @@ public class DownloadDeck {
     }
 
     public Card getCardDownload(Card c, String CardName) {
-        CardList all = AllZone.CardFactory.getAllCards();
+        CardList all = AllZone.getCardFactory().getAllCards();
 
         Card newCard = null;
 

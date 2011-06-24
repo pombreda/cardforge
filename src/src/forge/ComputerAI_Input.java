@@ -26,8 +26,8 @@ public class ComputerAI_Input extends Input {
     	/*
     	 * //put this back in
         ButtonUtil.disableAll();
-        AllZone.Display.showMessage("Phase: "
-                + AllZone.Phase.getPhase()
+        AllZone.getDisplay().showMessage("Phase: "
+                + AllZone.getPhase().getPhase()
                 + "\nAn error may have occurred. Please send the \"Stack Report\" and the \"Detailed Error Trace\" to the Forge forum.");
         */
         think();
@@ -39,9 +39,9 @@ public class ComputerAI_Input extends Input {
     
     private void think() {
     	//TODO: instead of setNextPhase, pass priority
-        final String phase = AllZone.Phase.getPhase();
+        final String phase = AllZone.getPhase().getPhase();
         
-        if (AllZone.Stack.size() > 0)
+        if (AllZone.getStack().size() > 0)
         	computer.stack_not_empty();
         else if(phase.equals(Constant.Phase.Main1)) {
         	Log.debug("Computer main1");

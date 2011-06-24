@@ -20,7 +20,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
 	{
 		SpellAbility SA = (SpellAbility)runParams.get("CastSA");
 		Card cast = SA.getSourceCard();
-		SpellAbility_StackInstance si = AllZone.Stack.getInstanceFromSpellAbility(SA);
+		SpellAbility_StackInstance si = AllZone.getStack().getInstanceFromSpellAbility(SA);
 		
 		if(mapParams.get("Mode").equals("SpellCast"))
 		{

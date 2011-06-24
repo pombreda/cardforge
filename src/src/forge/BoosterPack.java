@@ -14,14 +14,14 @@ public class BoosterPack
 
   public static CardList getBoosterPack()
   {
-    CardList all = AllZone.CardFactory.getAllCards();
+    CardList all = AllZone.getCardFactory().getAllCards();
     CardList pack = new CardList();
 
     for(int i = 0; i < 10; i++)
       pack.add(all.get(MyRandom.random.nextInt(all.size())));
 
     for(int i = 0; i < 5; i++)
-      pack.add(AllZone.CardFactory.copyCard(pack.get(i)));
+      pack.add(AllZone.getCardFactory().copyCard(pack.get(i)));
 
     return pack;
   }//getBoosterPack()

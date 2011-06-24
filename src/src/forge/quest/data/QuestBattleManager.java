@@ -55,7 +55,7 @@ public class QuestBattleManager {
     public static String getOpponent(List<String> aiDeck, int number) {
         //This is to make sure that the opponents do not change when the deck editor is launched.
         List<String> deckListCopy = new ArrayList<String>(aiDeck);
-        Collections.shuffle(deckListCopy, new Random(AllZone.QuestData.getRandomSeed()));
+        Collections.shuffle(deckListCopy, new Random(AllZone.getQuestData().getRandomSeed()));
 
         return deckListCopy.get(number);
 
@@ -63,37 +63,37 @@ public class QuestBattleManager {
 
 
     public static String[] getOpponents() {
-        int index = AllZone.QuestData.getDifficultyIndex();
+        int index = AllZone.getQuestData().getDifficultyIndex();
 
-        if (AllZone.QuestData.getWin() < QuestPreferences.getWinsForMediumAI(index)) {
+        if (AllZone.getQuestData().getWin() < QuestPreferences.getWinsForMediumAI(index)) {
             return new String[]{
                     getOpponent(easyAIDecks, 0),
                     getOpponent(easyAIDecks, 1),
                     getOpponent(easyAIDecks, 2)};
         }
 
-        if (AllZone.QuestData.getWin() == QuestPreferences.getWinsForMediumAI(index)) {
+        if (AllZone.getQuestData().getWin() == QuestPreferences.getWinsForMediumAI(index)) {
             return new String[]{
                     getOpponent(easyAIDecks, 0),
                     getOpponent(mediumAIDecks, 0),
                     getOpponent(mediumAIDecks, 1)};
         }
 
-        if (AllZone.QuestData.getWin() < QuestPreferences.getWinsForHardAI(index)) {
+        if (AllZone.getQuestData().getWin() < QuestPreferences.getWinsForHardAI(index)) {
             return new String[]{
                     getOpponent(mediumAIDecks, 0),
                     getOpponent(mediumAIDecks, 1),
                     getOpponent(mediumAIDecks, 2)};
         }
 
-        if (AllZone.QuestData.getWin() == QuestPreferences.getWinsForHardAI(index)) {
+        if (AllZone.getQuestData().getWin() == QuestPreferences.getWinsForHardAI(index)) {
             return new String[]{
                     getOpponent(mediumAIDecks, 0),
                     getOpponent(hardAIDecks, 0),
                     getOpponent(hardAIDecks, 1)};
         }
 
-        if (AllZone.QuestData.getWin() >= QuestPreferences.getWinsForVeryHardAI(index)) {
+        if (AllZone.getQuestData().getWin() >= QuestPreferences.getWinsForVeryHardAI(index)) {
             return new String[]{
                     getOpponent(hardAIDecks, 0),
                     getOpponent(hardAIDecks, 1),

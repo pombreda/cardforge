@@ -9,8 +9,8 @@ public class QuestPetWolf extends QuestPetAbstract{
         Card petCard = new Card();
 
         petCard.setName("Wolf Pet");
-        petCard.setController(AllZone.HumanPlayer);
-        petCard.setOwner(AllZone.HumanPlayer);
+        petCard.setController(AllZone.getHumanPlayer());
+        petCard.setOwner(AllZone.getHumanPlayer());
 
         petCard.addColor("G");
         petCard.setToken(true);

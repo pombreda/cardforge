@@ -20,13 +20,13 @@ public class PhaseUtil {
 	}
 	
 	public static void handleUntap(){
-		Player turn = AllZone.Phase.getPlayerTurn();
+		Player turn = AllZone.getPhase().getPlayerTurn();
 
-        AllZone.Phase.turnReset();
+        AllZone.getPhase().turnReset();
         
-        AllZone.Combat.reset();
-        AllZone.Combat.setAttackingPlayer(turn);
-        AllZone.Combat.setDefendingPlayer(turn.getOpponent());
+        AllZone.getCombat().reset();
+        AllZone.getCombat().setAttackingPlayer(turn);
+        AllZone.getCombat().setDefendingPlayer(turn.getOpponent());
         
         // For tokens a player starts the game with they don't recover from Sum. Sickness on first turn
         if (turn.getTurn() > 0){
@@ -36,7 +36,7 @@ public class PhaseUtil {
         }
         turn.incrementTurn();
         
-        AllZone.GameAction.resetActivationsPerTurn();
+        AllZone.getGameAction().resetActivationsPerTurn();
 		
         CardList lands = AllZoneUtil.getPlayerLandsInPlay(turn);
         lands = lands.filter(AllZoneUtil.untapped);
@@ -45,7 +45,7 @@ public class PhaseUtil {
         // anything before this point happens regardless of whether the Untap phase is skipped
         
 		if (skipUntap(turn)){
-    		AllZone.Phase.setNeedToNextPhase(true);
+    		AllZone.getPhase().setNeedToNextPhase(true);
     		return;
     	}
 
@@ -54,20 +54,20 @@ public class PhaseUtil {
         doUntap();
         
         //otherwise land seems to stay tapped when it is really untapped
-        AllZone.Human_Battlefield.updateObservers();
+        AllZone.getHumanBattlefield().updateObservers();
         
-        AllZone.Phase.setNeedToNextPhase(true);
+        AllZone.getPhase().setNeedToNextPhase(true);
 	}
 	
     private static void doUntap()
     {
-    	Player player = AllZone.Phase.getPlayerTurn();
+    	Player player = AllZone.getPhase().getPlayerTurn();
     	CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
 
     	for(Card c : list) {
     		if (c.getBounceAtUntap() && c.getName().contains("Undiscovered Paradise") )
     		{
-    			AllZone.GameAction.moveToHand(c);
+    			AllZone.getGameAction().moveToHand(c);
     		}
     	}  	
 		
@@ -130,9 +130,9 @@ public class PhaseUtil {
     	//end opponent untapping during your untap phase
     	
     	if( canOnlyUntapOneLand()) {
-    		if( AllZone.Phase.getPlayerTurn().isComputer()) {
+    		if( AllZone.getPhase().getPlayerTurn().isComputer()) {
     			//search for lands the computer has and only untap 1
-    			CardList landList = AllZoneUtil.getPlayerLandsInPlay(AllZone.ComputerPlayer);
+    			CardList landList = AllZoneUtil.getPlayerLandsInPlay(AllZone.getComputerPlayer());
     			landList = landList.filter(AllZoneUtil.tapped);
     			if( landList.size() > 0 ) {
     				landList.get(0).untap();
@@ -142,7 +142,7 @@ public class PhaseUtil {
     			Input target = new Input() {
     				private static final long serialVersionUID = 6653677835629939465L;
     				public void showMessage() {
-    					AllZone.Display.showMessage("Select one tapped land to untap");
+    					AllZone.getDisplay().showMessage("Select one tapped land to untap");
     					ButtonUtil.enableOnlyCancel();
     				}
     				public void selectButtonCancel() {stop();}
@@ -153,16 +153,16 @@ public class PhaseUtil {
     					}
     				}//selectCard()
     			};//Input
-    			CardList landList = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
+    			CardList landList = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
     			landList = landList.filter(AllZoneUtil.tapped);
     			if( landList.size() > 0 ) {
-    				AllZone.InputControl.setInput(target);
+    				AllZone.getInputControl().setInput(target);
     			}
     		}
     	}
     	if( AllZoneUtil.isCardInPlay("Damping Field") || AllZoneUtil.isCardInPlay("Imi Statue")) {
-    		if( AllZone.Phase.getPlayerTurn().isComputer() ) {
-    			CardList artList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+    		if( AllZone.getPhase().getPlayerTurn().isComputer() ) {
+    			CardList artList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
     			artList = artList.filter(AllZoneUtil.artifacts);
     			artList = artList.filter(AllZoneUtil.tapped);
     			if( artList.size() > 0 ) {
@@ -173,7 +173,7 @@ public class PhaseUtil {
     			Input target = new Input() {
 					private static final long serialVersionUID = 5555427219659889707L;
 					public void showMessage() {
-    					AllZone.Display.showMessage("Select one tapped artifact to untap");
+    					AllZone.getDisplay().showMessage("Select one tapped artifact to untap");
     					ButtonUtil.enableOnlyCancel();
     				}
     				public void selectButtonCancel() {stop();}
@@ -185,17 +185,17 @@ public class PhaseUtil {
     					}
     				}//selectCard()
     			};//Input
-    			CardList artList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+    			CardList artList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
     			artList = artList.filter(AllZoneUtil.artifacts);
     			artList = artList.filter(AllZoneUtil.tapped);
     			if( artList.size() > 0 ) {
-    				AllZone.InputControl.setInput(target);
+    				AllZone.getInputControl().setInput(target);
     			}
     		}
     	}
     	if((AllZoneUtil.isCardInPlay("Smoke") || AllZoneUtil.isCardInPlay("Stoic Angel")) ) {
-    		if( AllZone.Phase.getPlayerTurn().isComputer() ) {
-    			CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+    		if( AllZone.getPhase().getPlayerTurn().isComputer() ) {
+    			CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
     			creatures = creatures.filter(AllZoneUtil.tapped);
     			if( creatures.size() > 0 ) {
     				creatures.get(0).untap();
@@ -205,7 +205,7 @@ public class PhaseUtil {
     			Input target = new Input() {
 					private static final long serialVersionUID = 5555427219659889707L;
 					public void showMessage() {
-    					AllZone.Display.showMessage("Select one creature to untap");
+    					AllZone.getDisplay().showMessage("Select one creature to untap");
     					ButtonUtil.enableOnlyCancel();
     				}
     				public void selectButtonCancel() {stop();}
@@ -217,10 +217,10 @@ public class PhaseUtil {
     					}
     				}//selectCard()
     			};//Input
-    			CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+    			CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
     			creatures = creatures.filter(AllZoneUtil.tapped);
     			if( creatures.size() > 0 ) {
-    				AllZone.InputControl.setInput(target);
+    				AllZone.getInputControl().setInput(target);
     			}
     		}
     	}
@@ -260,7 +260,7 @@ public class PhaseUtil {
     	if (AllZoneUtil.getCardsInPlay("Hokori, Dust Drinker").size() > 0)
     		return true;
     	
-    	if (AllZoneUtil.getPlayerCardsInPlay(AllZone.Phase.getPlayerTurn(), "Mungha Wurm").size() > 0)
+    	if (AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn(), "Mungha Wurm").size() > 0)
     		return true;
     	
     	return false;
@@ -287,10 +287,10 @@ public class PhaseUtil {
 	public static void handleUpkeep(){
 		if (skipUpkeep()){
 			// Slowtrips all say "on the next turn's upkeep" if there is no upkeep next turn, the trigger will never occur.
-			Player turn = AllZone.Phase.getPlayerTurn();
+			Player turn = AllZone.getPhase().getPlayerTurn();
 			turn.clearSlowtripList();
 			turn.getOpponent().clearSlowtripList();
-	        AllZone.Phase.setNeedToNextPhase(true);
+	        AllZone.getPhase().setNeedToNextPhase(true);
 	        return;
 		}
 		
@@ -302,7 +302,7 @@ public class PhaseUtil {
     	if (AllZoneUtil.isCardInPlay("Eon Hub"))
     		return true;
     	
-    	Player turn = AllZone.Phase.getPlayerTurn();
+    	Player turn = AllZone.getPhase().getPlayerTurn();
 
     	if (AllZoneUtil.getPlayerHand(turn).size() == 0 && AllZoneUtil.isCardInPlay("Gibbering Descent", turn))
     		return true;
@@ -312,10 +312,10 @@ public class PhaseUtil {
     
 	// ******* DRAW PHASE *****
 	public static void handleDraw(){
-    	Player playerTurn = AllZone.Phase.getPlayerTurn();
+    	Player playerTurn = AllZone.getPhase().getPlayerTurn();
     	
     	if (skipDraw(playerTurn)){
-    		AllZone.Phase.setNeedToNextPhase(true);
+    		AllZone.getPhase().setNeedToNextPhase(true);
     		return;
     	}
 
@@ -325,7 +325,7 @@ public class PhaseUtil {
     
 	private static boolean skipDraw(Player player){
 		// starting player skips his draw
-    	if(AllZone.Phase.getTurn() == 1){
+    	if(AllZone.getPhase().getTurn() == 1){
             return true;
     	}
     	
@@ -343,14 +343,14 @@ public class PhaseUtil {
 	// ********* Declare Attackers ***********
 	
 	public static void verifyCombat(){
-        AllZone.Combat.verifyCreaturesInPlay();
+        AllZone.getCombat().verifyCreaturesInPlay();
         CombatUtil.showCombat();
 	}
 	
 	public static void handleDeclareAttackers(){
 		verifyCombat();
     	CardList list = new CardList();
-        list.addAll(AllZone.Combat.getAttackers());
+        list.addAll(AllZone.getCombat().getAttackers());
         
         // TODO move propaganda to happen as the Attacker is Declared
         // Remove illegal Propaganda attacks first only for attacking the Player
@@ -365,12 +365,12 @@ public class PhaseUtil {
 	
 	public static void handleAttackingTriggers(){
     	CardList list = new CardList();
-        list.addAll(AllZone.Combat.getAttackers());
-        AllZone.Stack.freezeStack();
+        list.addAll(AllZone.getCombat().getAttackers());
+        AllZone.getStack().freezeStack();
         // Then run other Attacker bonuses
         //check for exalted:
         if (list.size() == 1){
-            Player attackingPlayer = AllZone.Combat.getAttackingPlayer();
+            Player attackingPlayer = AllZone.getCombat().getAttackingPlayer();
             
             CardList exalted = AllZoneUtil.getPlayerCardsInPlay(attackingPlayer);
             exalted = exalted.getKeyword("Exalted");
@@ -382,18 +382,18 @@ public class PhaseUtil {
         
         for(Card c:list)
             CombatUtil.checkDeclareAttackers(c);
-        AllZone.Stack.unfreezeStack();
+        AllZone.getStack().unfreezeStack();
 	}
 	
 	public static void handleDeclareBlockers(){
 		verifyCombat();
      	
-    	AllZone.Stack.freezeStack();
+    	AllZone.getStack().freezeStack();
     	
-    	AllZone.Combat.setUnblocked();
+    	AllZone.getCombat().setUnblocked();
     	
     	CardList list = new CardList();
-        list.addAll(AllZone.Combat.getAllBlockers());
+        list.addAll(AllZone.getCombat().getAllBlockers());
 
         list = list.filter(new CardListFilter(){
         	public boolean addCard(Card c)
@@ -403,17 +403,17 @@ public class PhaseUtil {
         });
         
         CardList attList = new CardList();
-        attList.addAll(AllZone.Combat.getAttackers());
+        attList.addAll(AllZone.getCombat().getAttackers());
 
         CombatUtil.checkDeclareBlockers(list);
         
         for (Card a:attList){
-        	CardList blockList = AllZone.Combat.getBlockers(a);
+        	CardList blockList = AllZone.getCombat().getBlockers(a);
         	for (Card b:blockList)
         		CombatUtil.checkBlockedAttackers(a, b);
         }
         
-        AllZone.Stack.unfreezeStack();
+        AllZone.getStack().unfreezeStack();
         CombatUtil.showCombat();
 	}
 	
@@ -421,7 +421,7 @@ public class PhaseUtil {
 	// ***** Combat Utility **********
 	// TODO: the below functions should be removed and the code blocks that use them should instead use SA_Restriction
 	public static boolean isBeforeAttackersAreDeclared() {
-		String phase = AllZone.Phase.getPhase();
+		String phase = AllZone.getPhase().getPhase();
 		return phase.equals(Constant.Phase.Untap) || phase.equals(Constant.Phase.Upkeep)
 			|| phase.equals(Constant.Phase.Draw) || phase.equals(Constant.Phase.Main1)
 			|| phase.equals(Constant.Phase.Combat_Begin);

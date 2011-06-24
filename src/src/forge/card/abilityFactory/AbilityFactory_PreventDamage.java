@@ -169,11 +169,11 @@ public class AbilityFactory_PreventDamage {
 			// As far as I can tell these Defined Cards will only have one of them
 			ArrayList<Object> objects = AbilityFactory.getDefinedObjects(sa.getSourceCard(), params.get("Defined"), sa);
 			
-			if (AllZone.Stack.size() > 0){
+			if (AllZone.getStack().size() > 0){
 			// check stack for something that will kill this
 			}
 			else{
-				if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+				if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 					boolean flag = false;
 					for(Object o : objects){
 						if (o instanceof Card){
@@ -181,7 +181,7 @@ public class AbilityFactory_PreventDamage {
 							flag |= CombatUtil.combatantWouldBeDestroyed(c);
 						}else if (o instanceof Player){
 							Player p = (Player)o;
-							flag |= (p.isComputer() && CombatUtil.lifeInDanger(AllZone.Combat));
+							flag |= (p.isComputer() && CombatUtil.lifeInDanger(AllZone.getCombat()));
 						}
 					}
 					
@@ -192,18 +192,18 @@ public class AbilityFactory_PreventDamage {
 				}
 			}
 		}
-		else if (AllZone.Stack.size() == 0 && AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+		else if (AllZone.getStack().size() == 0 && AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 			tgt.resetTargets();
 			
-			if(tgt.canTgtPlayer() && CombatUtil.wouldLoseLife(AllZone.Combat)
-					&& (CombatUtil.lifeInDanger(AllZone.Combat) || sa.isAbility())) {
-				tgt.addTarget(AllZone.ComputerPlayer);
+			if(tgt.canTgtPlayer() && CombatUtil.wouldLoseLife(AllZone.getCombat())
+					&& (CombatUtil.lifeInDanger(AllZone.getCombat()) || sa.isAbility())) {
+				tgt.addTarget(AllZone.getComputerPlayer());
 				chance = true;
 			}
 			else {
 				// filter AIs battlefield by what I can target
-				CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
-				targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, hostCard);
+				CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+				targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), hostCard);
 				
 				if (targetables.size() == 0)
 					return false;
@@ -255,8 +255,8 @@ public class AbilityFactory_PreventDamage {
 		tgt.resetTargets();
 		// filter AIs battlefield by what I can target
 		CardList targetables = AllZoneUtil.getCardsInPlay();
-		targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, hostCard);
-		CardList compTargetables = targetables.getController(AllZone.ComputerPlayer);
+		targetables = targetables.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), hostCard);
+		CardList compTargetables = targetables.getController(AllZone.getComputerPlayer());
 		
 		if (targetables.size() == 0)
 			return false;
@@ -267,7 +267,7 @@ public class AbilityFactory_PreventDamage {
 		if (compTargetables.size() > 0){
 			CardList combatants = compTargetables.getType("Creature");
 			CardListUtil.sortByEvaluateCreature(combatants);
-			if (AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
+			if (AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 				for(Card c : combatants){
 					if (CombatUtil.combatantWouldBeDestroyed(c)){
 						tgt.addTarget(c);

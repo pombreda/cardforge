@@ -52,7 +52,7 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     final Card c = getTargetCard();
                     
                     final Command eot = new Command() {
@@ -71,7 +71,7 @@ class CardFactory_Planeswalkers {
                         c.addTempDefenseBoost(3);
                         c.addExtrinsicKeyword("Flying");
                         
-                        AllZone.EndOfTurn.addUntil(eot);
+                        AllZone.getEndOfTurn().addUntil(eot);
                     }
                 }//resolve()
                 
@@ -85,7 +85,7 @@ class CardFactory_Planeswalkers {
                     
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                     
 
@@ -99,7 +99,7 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     Card emblem = new Card();
                     //should we even name this permanent?
@@ -112,11 +112,11 @@ class CardFactory_Planeswalkers {
                     emblem.setController(card.getController());
                     emblem.setOwner(card.getOwner());
                     
-                    AllZone.GameAction.moveToPlay(emblem);
+                    AllZone.getGameAction().moveToPlay(emblem);
                     
-                    //AllZone.GameAction.checkStateEffects();
-                    AllZone.StaticEffects.rePopulateStateBasedList();
-                    for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+                    //AllZone.getGameAction().checkStateEffects();
+                    AllZone.getStaticEffects().rePopulateStateBasedList();
+                    for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
                         Command com = GameActionUtil.commands.get(effect);
                         com.execute();
                     }  
@@ -126,13 +126,13 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 8 <= card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter(){
                     	public boolean addCard(Card c)
                     	{
@@ -151,7 +151,7 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     CardFactoryUtil.makeToken("Soldier", "W 1 1 Soldier", card.getController(), "W", new String[] {
                             "Creature", "Soldier"}, 1, 1, new String[] {""});
@@ -170,7 +170,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };//SpellAbility ability1
@@ -221,7 +221,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 1);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     Player player = card.getController();
                     CardList creatures = AllZoneUtil.getCreaturesInPlay(player);
@@ -232,7 +232,7 @@ class CardFactory_Planeswalkers {
                         card.addExtrinsicKeyword("Vigilance");
                     }
                     
-                    AllZone.EndOfTurn.addUntil(untilEOT);
+                    AllZone.getEndOfTurn().addUntil(untilEOT);
                 }
                 
                 @Override
@@ -245,7 +245,7 @@ class CardFactory_Planeswalkers {
                     
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                     
                 }//canPlay()
@@ -257,10 +257,10 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    if(check != AllZone.Phase.getTurn()) {
-                        check = AllZone.Phase.getTurn();
-                        turn[0] = AllZone.Phase.getTurn();
-                        AllZone.Stack.add(ability2);
+                    if(check != AllZone.getPhase().getTurn()) {
+                        check = AllZone.getPhase().getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
+                        AllZone.getStack().add(ability2);
                     }
                     stop();
                 }//showMessage()
@@ -271,7 +271,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 6);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     //Create token
                     int n = card.getController().getLife();
@@ -284,7 +284,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 6 <= card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
@@ -301,10 +301,10 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    if(check != AllZone.Phase.getTurn()) {
-                        check = AllZone.Phase.getTurn();
-                        turn[0] = AllZone.Phase.getTurn();
-                        AllZone.Stack.add(ability3);
+                    if(check != AllZone.getPhase().getTurn()) {
+                        check = AllZone.getPhase().getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
+                        AllZone.getStack().add(ability3);
                     }
                     stop();
                 }//showMessage()
@@ -315,11 +315,11 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.addCounterFromNonEffect(Counters.LOYALTY, 1);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
 
                     card.getController().gainLife(2, card);
-                    Log.debug("Ajani Goldmane", "current phase: " + AllZone.Phase.getPhase());
+                    Log.debug("Ajani Goldmane", "current phase: " + AllZone.getPhase().getPhase());
                 }
                 
                 @Override
@@ -335,7 +335,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };//SpellAbility ability1
@@ -347,10 +347,10 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    if(check != AllZone.Phase.getTurn()) {
-                        check = AllZone.Phase.getTurn();
-                        turn[0] = AllZone.Phase.getTurn();
-                        AllZone.Stack.add(ability1);
+                    if(check != AllZone.getPhase().getTurn()) {
+                        check = AllZone.getPhase().getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
+                        AllZone.getStack().add(ability1);
                     }
                     stop();
                 }//showMessage()
@@ -390,7 +390,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.addCounterFromNonEffect(Counters.LOYALTY, 1);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     if(getTargetCard() != null) {
                         if(AllZoneUtil.isCardInPlay(getTargetCard())
@@ -407,19 +407,19 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                    setTargetPlayer(AllZone.HumanPlayer);
-                    setStackDescription("Chandra Nalaar - deals 1 damage to " + AllZone.HumanPlayer);
+                    setTargetPlayer(AllZone.getHumanPlayer());
+                    setStackDescription("Chandra Nalaar - deals 1 damage to " + AllZone.getHumanPlayer());
                     return card.getCounters(Counters.LOYALTY) < 8;
                 }
             };//SpellAbility ability1
@@ -429,7 +429,7 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    AllZone.Display.showMessage("Select target Player or Planeswalker");
+                    AllZone.getDisplay().showMessage("Select target Player or Planeswalker");
                     ButtonUtil.enableOnlyCancel();
                 }
                 
@@ -444,7 +444,7 @@ class CardFactory_Planeswalkers {
                        CardFactoryUtil.canTarget(card, card)) {
                         ability1.setTargetCard(card);
                         //stopSetNext(new Input_PayManaCost(ability1));
-                        AllZone.Stack.add(ability1);
+                        AllZone.getStack().add(ability1);
                         stop();
                     }
                 }//selectCard()
@@ -453,7 +453,7 @@ class CardFactory_Planeswalkers {
                 public void selectPlayer(Player player) {
                     ability1.setTargetPlayer(player);
                     //stopSetNext(new Input_PayManaCost(ability1));
-                    AllZone.Stack.add(ability1);
+                    AllZone.getStack().add(ability1);
                     stop();
                 }
             };
@@ -468,7 +468,7 @@ class CardFactory_Planeswalkers {
             final SpellAbility ability2 = new Ability(card, "0") {
                 @Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     card.subtractCounter(Counters.LOYALTY, damage2[0]);
                     getTargetCard().addDamage(damage2[0], card);
@@ -478,12 +478,12 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }
                 
@@ -498,7 +498,7 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    AllZone.Display.showMessage("Select target creature");
+                    AllZone.getDisplay().showMessage("Select target creature");
                     ButtonUtil.enableOnlyCancel();
                 }
                 
@@ -510,9 +510,9 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void selectCard(Card c, PlayerZone zone) {
                     if(!CardFactoryUtil.canTarget(card, c)) {
-                        AllZone.Display.showMessage("Cannot target this card (Shroud? Protection?).");
+                        AllZone.getDisplay().showMessage("Cannot target this card (Shroud? Protection?).");
                     } else if(c.isCreature()) {
-                        turn[0] = AllZone.Phase.getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
                         
 
                         damage2[0] = getDamage();
@@ -520,7 +520,7 @@ class CardFactory_Planeswalkers {
                         ability2.setTargetCard(c);
                         ability2.setStackDescription("Chandra Nalaar - deals damage to " + c);
                         
-                        AllZone.Stack.add(ability2);
+                        AllZone.getStack().add(ability2);
                         stop();
                     }
                 }//selectCard()
@@ -547,7 +547,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 8);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     getTargetPlayer().addDamage(10, card);
                     
@@ -559,24 +559,24 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && 7 < card.getCounters(Counters.LOYALTY)
                             && Phase.canCastSorcery(card.getController());
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                    setTargetPlayer(AllZone.HumanPlayer);
+                    setTargetPlayer(AllZone.getHumanPlayer());
                     StringBuilder sb = new StringBuilder();
-                    sb.append("Chandra Nalaar - deals 10 damage to ").append(AllZone.HumanPlayer);
+                    sb.append("Chandra Nalaar - deals 10 damage to ").append(AllZone.getHumanPlayer());
                     sb.append(" and each creature he or she controls.");
                     setStackDescription(sb.toString());
-                    //setStackDescription("Chandra Nalaar - deals 10 damage to " + AllZone.HumanPlayer
+                    //setStackDescription("Chandra Nalaar - deals 10 damage to " + AllZone.getHumanPlayer()
                     //        + " and each creature he or she controls.");
                     return true;
                 }
@@ -587,7 +587,7 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    AllZone.Display.showMessage("Select target player");
+                    AllZone.getDisplay().showMessage("Select target player");
                     ButtonUtil.enableOnlyCancel();
                 }
                 
@@ -598,7 +598,7 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void selectPlayer(Player player) {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     ability3.setTargetPlayer(player);
                     
@@ -609,7 +609,7 @@ class CardFactory_Planeswalkers {
                     //ability3.setStackDescription("Chandra Nalaar - deals 10 damage to " + player
                     //        + " and each creature he or she controls.");
                     
-                    AllZone.Stack.add(ability3);
+                    AllZone.getStack().add(ability3);
                     stop();
                 }
             };//Input target
@@ -640,13 +640,13 @@ class CardFactory_Planeswalkers {
                     land = land.getType("Land");
                     
                     for(Card c:land) {
-                        AllZone.GameAction.destroy(c);
+                        AllZone.getGameAction().destroy(c);
                     }
                 }//resolve()
                 
                 @Override
                 public boolean canPlayAI() {
-                	Player player = AllZone.HumanPlayer;
+                	Player player = AllZone.getHumanPlayer();
                     CardList land = AllZoneUtil.getPlayerCardsInPlay(player);
                     land = land.getType("Land");
                     
@@ -674,10 +674,10 @@ class CardFactory_Planeswalkers {
                 public void resolve() {
                     card.addCounterFromNonEffect(Counters.LOYALTY, 1);
                     
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     //only computer uses the stack
-                    CardList tapped = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList tapped = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     tapped = tapped.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.isArtifact() && c.isTapped() && CardFactoryUtil.canTarget(card, c);
@@ -691,13 +691,13 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlayAI() {
                     return card.getCounters(Counters.LOYALTY) <= 6
-                            && AllZone.Phase.getPhase().equals(Constant.Phase.Main2);
+                            && AllZone.getPhase().getPhase().equals(Constant.Phase.Main2);
                 }
                 
                 @Override
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -708,7 +708,7 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    AllZone.Display.showMessage("Select an artifact to untap");
+                    AllZone.getDisplay().showMessage("Select an artifact to untap");
                     ButtonUtil.disableAll();
                 }
                 
@@ -722,7 +722,7 @@ class CardFactory_Planeswalkers {
                     //doesn't use the stack, its just easier this way
                     if(count == 2) {
                         count = 0;
-                        turn[0] = AllZone.Phase.getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
                         card.addCounterFromNonEffect(Counters.LOYALTY, 1);
                         stop();
                     }
@@ -749,7 +749,7 @@ class CardFactory_Planeswalkers {
             final SpellAbility ability2 = new Ability(card, "0") {
                 @Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     int size = card.getCounters(Counters.LOYALTY) + 1;
                     Object choice[] = new Object[size];
@@ -774,7 +774,7 @@ class CardFactory_Planeswalkers {
                         if(o != null) {
                             Card c = (Card) o;
                             if(list.contains(c)) {
-                                AllZone.GameAction.moveToPlay(c);
+                                AllZone.getGameAction().moveToPlay(c);
                             }
                         }
                     }
@@ -782,12 +782,12 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }
                 
@@ -810,7 +810,7 @@ class CardFactory_Planeswalkers {
                     
                     card.subtractCounter(Counters.LOYALTY, 5);
                     
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     CardList list = AllZoneUtil.getPlayerCardsInPlay(card.getController());
                     list = list.getType("Artifact");
@@ -852,7 +852,7 @@ class CardFactory_Planeswalkers {
                                 art[0].setBaseAttack(5);
                                 art[0].setBaseDefense(5);
                                 
-                                AllZone.EndOfTurn.addUntil(creatureUntilEOT);
+                                AllZone.getEndOfTurn().addUntil(creatureUntilEOT);
                             } else {
                             	final Command nonCreatureUntilEOT = new Command() {
                             		private static final long serialVersionUID = 248122386218960073L;
@@ -868,7 +868,7 @@ class CardFactory_Planeswalkers {
                             	art[0].setBaseAttack(5);
                             	art[0].setBaseDefense(5);
 
-                            	AllZone.EndOfTurn.addUntil(nonCreatureUntilEOT);
+                            	AllZone.getEndOfTurn().addUntil(nonCreatureUntilEOT);
                             }//noncreature artifact
                             
                         }
@@ -878,14 +878,14 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && card.getCounters(Counters.LOYALTY) >= 5
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.isArtifact()
@@ -893,7 +893,7 @@ class CardFactory_Planeswalkers {
                                     && !c.hasSickness();
                         }
                     });
-                    return list.size() > 4 && AllZone.Phase.getPhase().equals("Main1")
+                    return list.size() > 4 && AllZone.getPhase().getPhase().equals("Main1")
                             && card.getCounters(Counters.LOYALTY) > 5;
                 }
             };
@@ -923,7 +923,7 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     //card.addCounterFromNonEffect(Counters.LOYALTY, 2);
                     Player targetPlayer = getTargetPlayer();
                     
@@ -939,31 +939,31 @@ class CardFactory_Planeswalkers {
                         question.append(c.getController()).append("'s library?");
                         
                         if (GameActionUtil.showYesNoDialog(card, question.toString())) {
-                            AllZone.GameAction.moveToBottomOfLibrary(c);
+                            AllZone.getGameAction().moveToBottomOfLibrary(c);
                         }
                         
                     }
                     else //compy
                     {
-                        CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
+                        CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
                         
                         //TODO: improve this:
                         if(land.size() > 4 && c.isLand()) ;
                         else {
-                        	AllZone.GameAction.moveToBottomOfLibrary(c);
+                        	AllZone.getGameAction().moveToBottomOfLibrary(c);
                         }
                     }
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                    return card.getCounters(Counters.LOYALTY) < 12 && AllZone.Human_Library.size() > 2;
+                    return card.getCounters(Counters.LOYALTY) < 12 && AllZone.getHumanLibrary().size() > 2;
                 }
                 
                 @Override
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -978,7 +978,7 @@ class CardFactory_Planeswalkers {
             final Ability ability2 = new Ability(card, "0") {
                 @Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     card.getController().drawCards(3);
                     
                     Player player = card.getController();
@@ -988,25 +988,25 @@ class CardFactory_Planeswalkers {
                 }
                 
                 public void humanResolve() {
-                    CardList putOnTop = AllZoneUtil.getPlayerHand(AllZone.HumanPlayer);
+                    CardList putOnTop = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
                     
                     if(putOnTop.size() > 0) {
                     Object o = GuiUtils.getChoice("First card to put on top: ", putOnTop.toArray());
 	                    if(o != null) {
 	                        Card c1 = (Card) o;
 	                        putOnTop.remove(c1);
-	                        AllZone.GameAction.moveToLibrary(c1);
+	                        AllZone.getGameAction().moveToLibrary(c1);
 	                    }
                     }
                     
-                    putOnTop = AllZoneUtil.getPlayerHand(AllZone.HumanPlayer);
+                    putOnTop = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
                     
                     if(putOnTop.size() > 0) {
                     	Object o = GuiUtils.getChoice("Second card to put on top: ", putOnTop.toArray());
 	                    if(o != null) {
 	                        Card c2 = (Card) o;
 	                        putOnTop.remove(c2);
-	                        AllZone.GameAction.moveToLibrary(c2);
+	                        AllZone.getGameAction().moveToLibrary(c2);
 	                    }
                     }
                 }
@@ -1019,7 +1019,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -1037,12 +1037,12 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     //card.subtractCounter(Counters.LOYALTY, 1);
                     
                     if(AllZoneUtil.isCardInPlay(getTargetCard())
                             && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                            AllZone.GameAction.moveToHand(getTargetCard());
+                            AllZone.getGameAction().moveToHand(getTargetCard());
                     }//if
                 }//resolve()
                 
@@ -1055,7 +1055,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return card.getCounters(Counters.LOYALTY) >= 1
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }
             };
@@ -1072,7 +1072,7 @@ class CardFactory_Planeswalkers {
 
 				@Override
                 public void resolve() {
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     //card.subtractCounter(Counters.LOYALTY, 12);
                     
                     Player player = getTargetPlayer();
@@ -1081,18 +1081,18 @@ class CardFactory_Planeswalkers {
                     CardList handList = AllZoneUtil.getPlayerHand(player);
                     
                     for(Card c:libList)
-                        AllZone.GameAction.exile(c);
+                        AllZone.getGameAction().exile(c);
                     
                     for(Card c:handList) {
-                        AllZone.GameAction.moveToLibrary(c);
+                        AllZone.getGameAction().moveToLibrary(c);
                     }
                     player.shuffle();
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                    int libSize = AllZone.Human_Library.size();
-                    int handSize = AllZone.Human_Hand.size();
+                    int libSize = AllZone.getHumanLibrary().size();
+                    int handSize = AllZone.getHumanHand().size();
                     return libSize > 0 && (libSize >= handSize);
                 }
                 
@@ -1100,7 +1100,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return card.getCounters(Counters.LOYALTY) >= 12
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }
             };
@@ -1134,7 +1134,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.addCounterFromNonEffect(Counters.LOYALTY, 0);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     final Player player = card.getController();
                     PlayerZone lib = AllZone.getZone(Constant.Zone.Library, player);
@@ -1146,7 +1146,7 @@ class CardFactory_Planeswalkers {
                     GuiUtils.getChoiceOptional("Revealed top card: ", showTop.toArray());
                     
                     //now, move it to player's hand                
-                    AllZone.GameAction.moveToHand(topCard);
+                    AllZone.getGameAction().moveToHand(topCard);
                     
                     //now, do X damage to Sarkhan
                     card.addDamage(convertedManaTopCard, card);
@@ -1165,7 +1165,7 @@ class CardFactory_Planeswalkers {
                 	//looks like standard Planeswalker stuff...
                 	//maybe should check if library is empty, or 1 card?
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -1187,10 +1187,10 @@ class CardFactory_Planeswalkers {
 				@Override
                 public void resolve() {
                     //card.subtractCounter(Counters.LOYALTY, 2);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     Card target = getTargetCard();
-                    AllZone.GameAction.sacrifice(target);
+                    AllZone.getGameAction().sacrifice(target);
                     //in makeToken, use target for source, so it goes into the correct Zone
                     CardFactoryUtil.makeToken("Dragon", "R 5 5 Dragon", target.getController(), "R", new String[] {"Creature", "Dragon"}, 5, 5, new String[] {"Flying"});
                     
@@ -1198,13 +1198,13 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+                    CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
                 	return creatures.size() >= 1;
                 }
                 
                 @Override
                 public void chooseTargetAI() {
-                    CardList cards = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList cards = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     //avoid targeting the dragon tokens we just put in play...
                     cards = cards.filter(new CardListFilter() {
                     	public boolean addCard(Card c) {
@@ -1220,7 +1220,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
                             && card.getCounters(Counters.LOYALTY) >= 2
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -1239,7 +1239,7 @@ class CardFactory_Planeswalkers {
 				@Override
                 public void resolve() {
                     //card.subtractCounter(Counters.LOYALTY, 4);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     final Player target = getTargetPlayer();
                     final Player player = card.getController();
@@ -1254,8 +1254,8 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public boolean canPlayAI() {
-                    setTargetPlayer(AllZone.HumanPlayer);
-                    CardList dragons = AllZoneUtil.getPlayerTypeInPlay(AllZone.ComputerPlayer, "Dragon");
+                    setTargetPlayer(AllZone.getHumanPlayer());
+                    CardList dragons = AllZoneUtil.getPlayerTypeInPlay(AllZone.getComputerPlayer(), "Dragon");
                     return card.getCounters(Counters.LOYALTY) >= 4 && dragons.size() >= 1;
                 }
                 
@@ -1263,7 +1263,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
                             && card.getCounters(Counters.LOYALTY) >= 4
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };
@@ -1294,9 +1294,9 @@ class CardFactory_Planeswalkers {
                     
                     card.subtractCounter(Counters.LOYALTY, 2);
                     
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
                     list = list.filter(new CardListFilter()
                     {
                     	public boolean addCard(Card crd)
@@ -1323,7 +1323,7 @@ class CardFactory_Planeswalkers {
                     
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                     
                 }//canPlay()
@@ -1334,7 +1334,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 5);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     Card emblem = new Card();
 
@@ -1347,11 +1347,11 @@ class CardFactory_Planeswalkers {
                     emblem.setOwner(card.getOwner());
                     
                     // TODO: Emblems live in the command zone
-                    AllZone.GameAction.moveToPlay(emblem);
+                    AllZone.getGameAction().moveToPlay(emblem);
                     
-                    //AllZone.GameAction.checkStateEffects();
-                    AllZone.StaticEffects.rePopulateStateBasedList();
-                    for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+                    //AllZone.getGameAction().checkStateEffects();
+                    AllZone.getStaticEffects().rePopulateStateBasedList();
+                    for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
                         Command com = GameActionUtil.commands.get(effect);
                         com.execute();
                     }  
@@ -1361,13 +1361,13 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 5 <= card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter(){
                     	public boolean addCard(Card c)
                     	{
@@ -1385,10 +1385,10 @@ class CardFactory_Planeswalkers {
                 
                 @Override
                 public void showMessage() {
-                    if(check != AllZone.Phase.getTurn()) {
-                        check = AllZone.Phase.getTurn();
-                        turn[0] = AllZone.Phase.getTurn();
-                        AllZone.Stack.add(ability3);
+                    if(check != AllZone.getPhase().getTurn()) {
+                        check = AllZone.getPhase().getTurn();
+                        turn[0] = AllZone.getPhase().getTurn();
+                        AllZone.getStack().add(ability3);
                     }
                     stop();
                 }//showMessage()
@@ -1399,7 +1399,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.addCounterFromNonEffect(Counters.LOYALTY, 1);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     final Card card[] = new Card[1];
                     card[0] = getTargetCard();
@@ -1432,13 +1432,13 @@ class CardFactory_Planeswalkers {
 	                            card[0].removeType("Elemental");
 	                        }
 	                    };
-	                    AllZone.EndOfTurn.addUntil(untilEOT);
+	                    AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                 	list = list.filter(new CardListFilter()
                 	{
                 		public boolean addCard(Card crd)
@@ -1448,7 +1448,7 @@ class CardFactory_Planeswalkers {
                 		}
                 	});
                 	
-                	CardList mountains = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                	CardList mountains = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                 	mountains = mountains.filter(new CardListFilter()
                 	{
                 		public boolean addCard(Card crd)
@@ -1474,7 +1474,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlay() {
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
             };//SpellAbility ability1
@@ -1533,16 +1533,16 @@ class CardFactory_Planeswalkers {
 							public void execute() {
                                  if(AllZoneUtil.isCardExiled(c)) {
                                      PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, c.getOwner());
-                                	 AllZone.GameAction.moveTo(play, AllZoneUtil.getCardState(c));
+                                	 AllZone.getGameAction().moveTo(play, AllZoneUtil.getCardState(c));
                                  }
                              }//execute()
                          };//Command
                 		
 	                    card.addCounterFromNonEffect(Counters.LOYALTY, 2);
-	                    turn[0] = AllZone.Phase.getTurn();
+	                    turn[0] = AllZone.getPhase().getTurn();
 	                    
-	                    AllZone.GameAction.exile(c);
-	                    AllZone.EndOfTurn.addAt(eot);
+	                    AllZone.getGameAction().exile(c);
+	                    AllZone.getEndOfTurn().addAt(eot);
                 	}
                 	
                 }
@@ -1579,17 +1579,17 @@ class CardFactory_Planeswalkers {
                 	}
                 	
                     return card.getCounters(Counters.LOYALTY) < 8 && list.size() > 0 &&
-                    	   AllZone.Phase.getPhase().equals("Main2");
+                    	   AllZone.getPhase().getPhase().equals("Main2");
                 }
                 
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     return 0 < card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
@@ -1618,7 +1618,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 1);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     CardList list = AllZoneUtil.getCardsInPlay();
                     list = list.getType("Creature");
@@ -1639,7 +1639,7 @@ class CardFactory_Planeswalkers {
                         
                         if(AllZoneUtil.isCardInPlay(target[0])) {
                             target[0].addExtrinsicKeyword("Unblockable");
-                            AllZone.EndOfTurn.addUntil(untilEOT);
+                            AllZone.getEndOfTurn().addUntil(untilEOT);
                         }//if
                     }//for
                     
@@ -1648,7 +1648,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlay() {
                     return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && card.getCounters(Counters.LOYALTY) >= 1
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
@@ -1656,7 +1656,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlayAI() {
                     
-                	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter()
                     {
                     	public boolean addCard(Card crd)
@@ -1666,7 +1666,7 @@ class CardFactory_Planeswalkers {
                     	}
                     });
                 	
-                    CardList creatList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList creatList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     creatList = creatList.filter(new CardListFilter()
                     {
                     	public boolean addCard(Card crd)
@@ -1678,7 +1678,7 @@ class CardFactory_Planeswalkers {
                     return list.size() >= 1 
                     		&& card.getCounters(Counters.LOYALTY) > 2 
                     		&& creatList.size() >= 3 
-                    		&& AllZone.Phase.getPhase().equals("Main1");
+                    		&& AllZone.getPhase().getPhase().equals("Main1");
                     
                 }
             };//SpellAbility ability2
@@ -1689,7 +1689,7 @@ class CardFactory_Planeswalkers {
                 @Override
                 public void resolve() {
                     card.subtractCounter(Counters.LOYALTY, 8);
-                    turn[0] = AllZone.Phase.getTurn();
+                    turn[0] = AllZone.getPhase().getTurn();
                     
                     Card emblem = new Card();
                     //should we even name this permanent?
@@ -1702,14 +1702,14 @@ class CardFactory_Planeswalkers {
                     emblem.setController(card.getController());
                     emblem.setOwner(card.getOwner());
                     
-                    AllZone.GameAction.moveToPlay(emblem);        
+                    AllZone.getGameAction().moveToPlay(emblem);        
                 }
                 
                 @Override
                 public boolean canPlay() {
                     return 8 <= card.getCounters(Counters.LOYALTY)
                             && AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.Phase.getTurn()
+                            && turn[0] != AllZone.getPhase().getTurn()
                             && Phase.canCastSorcery(card.getController());
                 }//canPlay()
                 
@@ -1717,7 +1717,7 @@ class CardFactory_Planeswalkers {
                 public boolean canPlayAI() {
                 	//multiple venser emblems are NOT redundant
                 	/*
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter(){
                     	public boolean addCard(Card c)
                     	{

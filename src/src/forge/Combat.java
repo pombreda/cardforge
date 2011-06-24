@@ -57,7 +57,7 @@ public class Combat {
 		currentDefender = 0;
 		nextDefender = 0;
 		
-		initiatePossibleDefenders(AllZone.Phase.getPlayerTurn().getOpponent());
+		initiatePossibleDefenders(AllZone.getPhase().getPlayerTurn().getOpponent());
 	}
 
 	public void initiatePossibleDefenders(Player defender){
@@ -319,7 +319,7 @@ public class Combat {
 				if (getBlockers(a).contains(c)){
 					getList(a).remove(c);
 					// TODO if Declare Blockers and Declare Blockers (Abilities) merge this logic needs to be tweaked
-					if (getBlockers(a).size() == 0 && AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers))
+					if (getBlockers(a).size() == 0 && AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers))
 						blocked.remove(a);
 				}
 		}
@@ -350,7 +350,7 @@ public class Combat {
 				//Run Unblocked Trigger
 				HashMap<String,Object> runParams = new HashMap<String,Object>();
 				runParams.put("Attacker", attacker);
-				AllZone.TriggerHandler.runTrigger("AttackerUnblocked", runParams);
+				AllZone.getTriggerHandler().runTrigger("AttackerUnblocked", runParams);
 
 			}
 		}
@@ -390,7 +390,7 @@ public class Combat {
 				needFirstStrike = true;
 				if (getAttackingPlayer().isHuman()) {// human attacks
 					if (attacker.hasKeyword("Trample") || block.size() > 1)
-						AllZone.Display.assignDamage(attacker, block, damageDealt);
+						AllZone.getDisplay().assignDamage(attacker, block, damageDealt);
 					else block.get(0).addAssignedDamage(damageDealt, attacking.get(i));
 				}
 				else  {// computer attacks
@@ -432,7 +432,7 @@ public class Combat {
 				if (getAttackingPlayer().isHuman()) {// human attacks
 					
 					if (attacker.hasKeyword("Trample") || block.size() > 1)
-						AllZone.Display.assignDamage(attacker, block, damageDealt);
+						AllZone.getDisplay().assignDamage(attacker, block, damageDealt);
 					else block.get(0).addAssignedDamage(damageDealt, attacking.get(i));
 				}
 				else  {// computer attacks
@@ -506,18 +506,18 @@ public class Combat {
 
 	public static void dealAssignedDamage(){
 		// This function handles both Regular and First Strike combat assignment
-        Player player = AllZone.Combat.getDefendingPlayer();
+        Player player = AllZone.getCombat().getDefendingPlayer();
         
-        boolean bFirstStrike = AllZone.Phase.is(Constant.Phase.Combat_FirstStrikeDamage);
+        boolean bFirstStrike = AllZone.getPhase().is(Constant.Phase.Combat_FirstStrikeDamage);
         
-        HashMap<Card, Integer> defMap = AllZone.Combat.getDefendingDamageMap();
+        HashMap<Card, Integer> defMap = AllZone.getCombat().getDefendingDamageMap();
         
         for(Entry<Card, Integer> entry : defMap.entrySet()) {
         	player.addCombatDamage(entry.getValue(), entry.getKey());
         }
         
-        CardList unblocked = new CardList(bFirstStrike ? AllZone.Combat.getUnblockedAttackers() : 
-        	AllZone.Combat.getUnblockedFirstStrikeAttackers());
+        CardList unblocked = new CardList(bFirstStrike ? AllZone.getCombat().getUnblockedAttackers() : 
+        	AllZone.getCombat().getUnblockedFirstStrikeAttackers());
         
         for(int j = 0; j < unblocked.size(); j++) {
         	if (bFirstStrike)
@@ -531,9 +531,9 @@ public class Combat {
         // this can be much better below here...
         
         CardList combatants = new CardList();
-        combatants.addAll(AllZone.Combat.getAttackers());
-        combatants.addAll(AllZone.Combat.getAllBlockers());
-        combatants.addAll(AllZone.Combat.getDefendingPlaneswalkers());
+        combatants.addAll(AllZone.getCombat().getAttackers());
+        combatants.addAll(AllZone.getCombat().getAllBlockers());
+        combatants.addAll(AllZone.getCombat().getDefendingPlaneswalkers());
 
         Card c;
         for(int i = 0; i < combatants.size(); i++) {

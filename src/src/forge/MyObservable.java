@@ -8,11 +8,11 @@ public class MyObservable extends Observable
 		this.setChanged();
 		this.notifyObservers();
 		
-		if(AllZone.Phase != null && AllZone.Phase.isNeedToNextPhase()){
-		    	if(AllZone.Phase.isNeedToNextPhaseInit()){
+		if(AllZone.getPhase() != null && AllZone.getPhase().isNeedToNextPhase()){
+		    	if(AllZone.getPhase().isNeedToNextPhaseInit()){
 		    		// this is used.
-		    		AllZone.Phase.setNeedToNextPhase(false);
-		    		AllZone.Phase.nextPhase();
+		    		AllZone.getPhase().setNeedToNextPhase(false);
+		    		AllZone.getPhase().nextPhase();
 		    }
 		}
 	}

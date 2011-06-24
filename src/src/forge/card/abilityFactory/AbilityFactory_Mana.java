@@ -185,7 +185,7 @@ public class AbilityFactory_Mana {
 			int num = card.getCounters(Counters.getType(deplete));
 			if (num == 0){
 				abMana.setUndoable(false);
-				AllZone.GameAction.sacrifice(card);
+				AllZone.getGameAction().sacrifice(card);
 			}
 		}
 		
@@ -654,13 +654,13 @@ public class AbilityFactory_Mana {
 			//TODO - check for things with untap abilities, and don't tap those.
 			ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
 			
-			if(!defined.contains(AllZone.HumanPlayer)) {
+			if(!defined.contains(AllZone.getHumanPlayer())) {
 				return false;
 			}
 		}
 		else{
 			tgt.resetTargets();
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		
         Ability_Sub subAb = sa.getSubAbility();
@@ -686,7 +686,7 @@ public class AbilityFactory_Mana {
 			else {
 				ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
 				
-				if(!defined.contains(AllZone.HumanPlayer)) {
+				if(!defined.contains(AllZone.getHumanPlayer())) {
 					return false;
 				}
 			}
@@ -695,7 +695,7 @@ public class AbilityFactory_Mana {
 		}
 		else {
 			tgt.resetTargets();
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		
 		return true;
@@ -712,13 +712,13 @@ public class AbilityFactory_Mana {
 		if (tgt == null){
 			ArrayList<Player> defined = AbilityFactory.getDefinedPlayers(source, params.get("Defined"), sa);
 			
-			if(defined.contains(AllZone.ComputerPlayer)) {
+			if(defined.contains(AllZone.getComputerPlayer())) {
 				return false;
 			}
 		}
 		else{
 			tgt.resetTargets();
-			tgt.addTarget(AllZone.HumanPlayer);
+			tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		
         Ability_Sub subAb = sa.getSubAbility();
@@ -743,10 +743,10 @@ public class AbilityFactory_Mana {
 		for(Player p : tgtPlayers){
 			if (tgt == null || p.canTarget(af.getHostCard())) {
 				if(p.isHuman()) {
-					AllZone.ManaPool.clearPool();
+					AllZone.getManaPool().clearPool();
 				}
 				else if(p.isComputer()) {
-					AllZone.Computer_ManaPool.clearPool();
+					AllZone.getComputerManaPool().clearPool();
 				}
 			}
 		}

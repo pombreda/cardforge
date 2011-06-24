@@ -152,7 +152,7 @@ public class AbilityFactory_Turns {
 
 		if(sa.getTarget() != null){
 			tgt.resetTargets();
-			sa.getTarget().addTarget(AllZone.ComputerPlayer);
+			sa.getTarget().addTarget(AllZone.getComputerPlayer());
 		}
 		else{
 			ArrayList<Player> tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
@@ -179,7 +179,7 @@ public class AbilityFactory_Turns {
 		for(Player p : tgtPlayers) {
 			if (tgt == null || p.canTarget(af.getHostCard())) {
 				for(int i = 0; i < numTurns; i++) {
-					AllZone.Phase.addExtraTurn(p);
+					AllZone.getPhase().addExtraTurn(p);
 				}
 			}
 		}

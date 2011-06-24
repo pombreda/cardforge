@@ -103,7 +103,7 @@ public class Target_Selection {
 		}
 		
 		if (zone.equals(Constant.Zone.Battlefield)){
-			AllZone.InputControl.setInput(input_targetSpecific(choices, true, mandatory));
+			AllZone.getInputControl().setInput(input_targetSpecific(choices, true, mandatory));
 		}
 		else
 			chooseCardFromList(choices, true, mandatory);
@@ -127,7 +127,7 @@ public class Target_Selection {
 				sb.append("\n");
 				sb.append(tgt.getVTSelection());
 				
-                AllZone.Display.showMessage(sb.toString());     
+                AllZone.getDisplay().showMessage(sb.toString());     
                
                 // If reached Minimum targets, enable OK button
                 if (!tgt.isMinTargetsChosen(sa.getSourceCard(), sa))
@@ -156,7 +156,7 @@ public class Target_Selection {
             public void selectCard(Card card, PlayerZone zone) {
             	// leave this in temporarily, there some seriously wrong things going on here
                 if(targeted && !CardFactoryUtil.canTarget(sa, card)) {
-                    AllZone.Display.showMessage("Cannot target this card (Shroud? Protection? Restrictions?).");
+                    AllZone.getDisplay().showMessage("Cannot target this card (Shroud? Protection? Restrictions?).");
                 } 
                 else if(choices.contains(card)) {
                 	tgt.addTarget(card);
@@ -250,8 +250,8 @@ public class Target_Selection {
     public static ArrayList<SpellAbility> getTargetableOnStack(SpellAbility sa, Target tgt){
 		ArrayList<SpellAbility> choosables = new ArrayList<SpellAbility>();
 
-		for(int i = 0; i < AllZone.Stack.size(); i++) {
-			choosables.add(AllZone.Stack.peekAbility(i));
+		for(int i = 0; i < AllZone.getStack().size(); i++) {
+			choosables.add(AllZone.getStack().peekAbility(i));
 		}
 		
 		for(int i = 0; i < choosables.size(); i++) {

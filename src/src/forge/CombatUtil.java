@@ -210,7 +210,7 @@ public class CombatUtil {
 	// Has the player chosen all mandatory blocks?
     public static boolean finishedMandatotyBlocks(Combat combat) {
     	
-    	CardList blockers = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+    	CardList blockers = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
   	  	CardList attackers = new CardList(combat.getAttackers());
     	
     	//if a creature does not block but should, return false
@@ -559,14 +559,14 @@ public class CombatUtil {
         
         if (AllZoneUtil.isCardInPlay("Ensnaring Bridge")) {
         	int limit = Integer.MAX_VALUE;
-        	CardList Human = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+        	CardList Human = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         	if (Human.getName("Ensnaring Bridge").size() > 0) {
-        		CardList Hand = AllZoneUtil.getPlayerHand(AllZone.HumanPlayer);
+        		CardList Hand = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
         		limit = Hand.size();
         	}
-        	CardList Compi = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+        	CardList Compi = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         	if (Compi.getName("Ensnaring Bridge").size() > 0) {
-        		CardList Hand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+        		CardList Hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
         		if (Hand.size() < limit) limit = Hand.size();
         	}
         	if (c.getNetAttack() > limit) return false;
@@ -683,11 +683,11 @@ public class CombatUtil {
  			  }
  	   }
  	   
- 	   damage += sumDamageIfUnblocked(unblocked, AllZone.ComputerPlayer);
+ 	   damage += sumDamageIfUnblocked(unblocked, AllZone.getComputerPlayer());
  	   
- 	   if(!AllZone.ComputerPlayer.canLoseLife()) damage = 0;
+ 	   if(!AllZone.getComputerPlayer().canLoseLife()) damage = 0;
  	   
-	   return AllZone.ComputerPlayer.getLife() - damage;
+	   return AllZone.getComputerPlayer().getLife() - damage;
     }
     
     //calculates the amount of poison counters after the attack  
@@ -711,37 +711,37 @@ public class CombatUtil {
  			  }
  	   }
  	   
- 	   poison += sumPoisonIfUnblocked(unblocked, AllZone.ComputerPlayer);
+ 	   poison += sumPoisonIfUnblocked(unblocked, AllZone.getComputerPlayer());
  	   
-	   return AllZone.ComputerPlayer.getPoisonCounters() + poison;
+	   return AllZone.getComputerPlayer().getPoisonCounters() + poison;
     }
     
     //Checks if the life of the attacked Player/Planeswalker is in danger 
     public static boolean lifeInDanger(Combat combat) {
   	   // life in danger only cares about the player's life. Not about a Planeswalkers life
- 	   if(AllZone.ComputerPlayer.cantLose())
+ 	   if(AllZone.getComputerPlayer().cantLose())
  		   return false;
  	   
- 	   if (lifeThatWouldRemain(combat) < Math.min(4, AllZone.ComputerPlayer.getLife()) 
- 			   && !AllZone.ComputerPlayer.cantLoseForZeroOrLessLife())
+ 	   if (lifeThatWouldRemain(combat) < Math.min(4, AllZone.getComputerPlayer().getLife()) 
+ 			   && !AllZone.getComputerPlayer().cantLoseForZeroOrLessLife())
  		   return true;
  	   
-	   return (resultingPoison(combat) > Math.max(7,AllZone.ComputerPlayer.getPoisonCounters()));
+	   return (resultingPoison(combat) > Math.max(7,AllZone.getComputerPlayer().getPoisonCounters()));
     }
     
     //Checks if the life of the attacked Player would be reduced
     public static boolean wouldLoseLife(Combat combat) {
  	   
-	   return (lifeThatWouldRemain(combat) < AllZone.ComputerPlayer.getLife());
+	   return (lifeThatWouldRemain(combat) < AllZone.getComputerPlayer().getLife());
     }
     
     //Checks if the life of the attacked Player/Planeswalker is in danger 
     public static boolean lifeInSeriousDanger(Combat combat) {
   	   // life in danger only cares about the player's life. Not about a Planeswalkers life
-  	   if(AllZone.ComputerPlayer.cantLose())
+  	   if(AllZone.getComputerPlayer().cantLose())
  		   return false;
  	   
- 	   if (lifeThatWouldRemain(combat) < 1 && !AllZone.ComputerPlayer.cantLoseForZeroOrLessLife())
+ 	   if (lifeThatWouldRemain(combat) < 1 && !AllZone.getComputerPlayer().cantLoseForZeroOrLessLife())
  		   return true;
  	   
 	   return (resultingPoison(combat) > 9);
@@ -839,10 +839,10 @@ public class CombatUtil {
     
     //For AI safety measures like Regeneration
     public static boolean attackerWouldBeDestroyed(Card attacker) {
-    	CardList blockers = AllZone.Combat.getBlockers(attacker);
+    	CardList blockers = AllZone.getCombat().getBlockers(attacker);
     	
     	for (Card defender:blockers) {
-    			if (CombatUtil.canDestroyAttacker(attacker, defender, AllZone.Combat, true) 
+    			if (CombatUtil.canDestroyAttacker(attacker, defender, AllZone.getCombat(), true) 
     					&& !(defender.hasKeyword("Wither") || defender.hasKeyword("Infect")))
     				return true;
     	}
@@ -855,7 +855,7 @@ public class CombatUtil {
 		HashMap<String,String> trigParams = trigger.getMapParams();
 		boolean willTrigger = false;
 		Card source = trigger.getHostCard();
-		if (combat == null) combat = AllZone.Combat;
+		if (combat == null) combat = AllZone.getCombat();
 		
 		if (!trigger.zonesCheck()) return false;
 		if (!trigger.requirementsCheck()) return false;
@@ -921,7 +921,7 @@ public class CombatUtil {
         	
         power += defender.getKeywordMagnitude("Bushido");
         
-        ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 		for(Trigger trigger : registeredTriggers)
 		{
 			HashMap<String,String> trigParams = trigger.getMapParams();
@@ -969,7 +969,7 @@ public class CombatUtil {
         	
         toughness += defender.getKeywordMagnitude("Bushido");
         
-        ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 		for(Trigger trigger : registeredTriggers)
 		{
 			HashMap<String,String> trigParams = trigger.getMapParams();
@@ -1022,7 +1022,7 @@ public class CombatUtil {
         	power -= defender.getNetCombatDamage();
         }
         
-        ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 		for(Trigger trigger : registeredTriggers)
 		{
 			HashMap<String,String> trigParams = trigger.getMapParams();
@@ -1073,7 +1073,7 @@ public class CombatUtil {
         	
         toughness += attacker.getKeywordMagnitude("Bushido");
         
-        ArrayList<Trigger> registeredTriggers = AllZone.TriggerHandler.getRegisteredTriggers();
+        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
 		for(Trigger trigger : registeredTriggers)
 		{
 			HashMap<String,String> trigParams = trigger.getMapParams();
@@ -1191,9 +1191,9 @@ public class CombatUtil {
     
     //For AI safety measures like Regeneration
     public static boolean blockerWouldBeDestroyed(Card blocker) {
-    	Card attacker = AllZone.Combat.getAttackerBlockedBy(blocker);
+    	Card attacker = AllZone.getCombat().getAttackerBlockedBy(blocker);
     	
-    	if(canDestroyBlocker(blocker, attacker, AllZone.Combat, true) && 
+    	if(canDestroyBlocker(blocker, attacker, AllZone.getCombat(), true) && 
     					!(attacker.hasKeyword("Wither") || attacker.hasKeyword("Infect")))
     			return true;
     	return false;
@@ -1276,15 +1276,15 @@ public class CombatUtil {
     }
     
     public static void showCombat() {
-        AllZone.Display.showCombat("");
+        AllZone.getDisplay().showCombat("");
 
         Card defend[] = null;
         StringBuilder display = new StringBuilder();
         
         // Loop through Defenders
         // Append Defending Player/Planeswalker
-        ArrayList<Object> defenders = AllZone.Combat.getDefenders();
-        CardList attackers[] = AllZone.Combat.sortAttackerByDefender();
+        ArrayList<Object> defenders = AllZone.getCombat().getDefenders();
+        CardList attackers[] = AllZone.getCombat().sortAttackerByDefender();
         
         // Not a big fan of the triple nested loop here
         for(int def = 0; def < defenders.size(); def++){
@@ -1305,7 +1305,7 @@ public class CombatUtil {
 	            display.append("-> ");
 	        	display.append(combatantToString(c)).append("\n");
 	
-	            defend = AllZone.Combat.getBlockers(c).toArray();
+	            defend = AllZone.getCombat().getBlockers(c).toArray();
 	            
 	            //loop through blockers
 	            for(int inner = 0; inner < defend.length; inner++) {
@@ -1314,7 +1314,7 @@ public class CombatUtil {
 	            }
 	        }//loop through attackers
         }
-        AllZone.Display.showCombat(display.toString().trim());
+        AllZone.getDisplay().showCombat(display.toString().trim());
         
     }//showBlockers()
     
@@ -1347,7 +1347,7 @@ public class CombatUtil {
         
         final Card crd = c;
 
-        String phase = AllZone.Phase.getPhase();
+        String phase = AllZone.getPhase().getPhase();
         
         if(phase.equals(Constant.Phase.Combat_Declare_Attackers) || phase.equals(Constant.Phase.Combat_Declare_Attackers_InstantAbility)) {
             if(!cost.equals("0")) {
@@ -1363,7 +1363,7 @@ public class CombatUtil {
                     private static final long serialVersionUID = -6483405139208343935L;
                     
                     public void execute() {
-                        AllZone.Combat.removeFromCombat(crd);
+                        AllZone.getCombat().removeFromCombat(crd);
                         
                         if (bLast)
                         	PhaseUtil.handleAttackingTriggers();
@@ -1384,7 +1384,7 @@ public class CombatUtil {
                 };
                 
                 if (c.getController().isHuman()) {
-                    AllZone.InputControl.setInput(new Input_PayManaCost_Ability(c + " - Pay to Attack\r\n",
+                    AllZone.getInputControl().setInput(new Input_PayManaCost_Ability(c + " - Pay to Attack\r\n",
                             ability.getManaCost(), paidCommand, unpaidCommand));
                 } 
                 else { //computer
@@ -1395,7 +1395,7 @@ public class CombatUtil {
                     }
                     else {
                         // TODO: remove the below line after Propaganda occurs during Declare_Attackers
-                        AllZone.Combat.removeFromCombat(crd);
+                        AllZone.getCombat().removeFromCombat(crd);
                     }
                 }
             }
@@ -1407,10 +1407,10 @@ public class CombatUtil {
         	//Run triggers
         	HashMap<String,Object> runParams = new HashMap<String,Object>();
         	runParams.put("Attacker", c);
-        	CardList otherAttackers = new CardList(AllZone.Combat.getAttackers());
+        	CardList otherAttackers = new CardList(AllZone.getCombat().getAttackers());
         	otherAttackers.remove(c);
             runParams.put("OtherAttackers",otherAttackers);
-        	AllZone.TriggerHandler.runTrigger("Attacks", runParams);
+        	AllZone.getTriggerHandler().runTrigger("Attacks", runParams);
         	
         	//Annihilator:
         	if (!c.getCreatureAttackedThisCombat())
@@ -1433,12 +1433,12 @@ public class CombatUtil {
 	                    	{
 	                    		if (crd.getController().isHuman())
 	                    		{
-	                    			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+	                    			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 	                    			ComputerUtil.sacrificePermanents(a, list);
 	                    		}
 	                    		else
 	                    		{
-	                    			AllZone.InputControl.setInput(CardFactoryUtil.input_sacrificePermanents(a));
+	                    			AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanents(a));
 	                    		}
 	                    			
 	                    	}
@@ -1447,7 +1447,7 @@ public class CombatUtil {
 	                    sb.append("Annihilator - Defending player sacrifices ").append(a).append(" permanents.");
 	                    ability.setStackDescription(sb.toString());
 	                    
-	                    AllZone.Stack.add(ability);
+	                    AllZone.getStack().add(ability);
 	        		} //find
 	        	} //for
         	}//creatureAttacked
@@ -1459,7 +1459,7 @@ public class CombatUtil {
   					//attack as normal
   				}
   				else{
-  					AllZone.Combat.removeFromCombat(c);
+  					AllZone.getCombat().removeFromCombat(c);
   					c.tap();
   				}
             }//Mijae Djinn
@@ -1482,7 +1482,7 @@ public class CombatUtil {
                                 enchantments.toArray());
                         if (o != null) {
                             Card crd = (Card) o;
-                            AllZone.GameAction.moveToPlay(crd);
+                            AllZone.getGameAction().moveToPlay(crd);
                             
                             if (crd.isAura()) {
                                 Object obj = null;
@@ -1505,7 +1505,7 @@ public class CombatUtil {
                             }
                             c.getController().shuffle();
                             //we have to have cards like glorious anthem take effect immediately:
-                            for (String effect : AllZone.StaticEffects.getStateBasedMap().keySet()) {
+                            for (String effect : AllZone.getStaticEffects().getStateBasedMap().keySet()) {
                                 Command com = GameActionUtil.commands.get(effect);
                                 com.execute();
                             }
@@ -1520,7 +1520,7 @@ public class CombatUtil {
                         });
                         if(enchantments.size() > 0) {
                             Card card = CardFactoryUtil.AI_getBestEnchantment(enchantments, c, false);
-                            AllZone.GameAction.moveToPlay(card);
+                            AllZone.getGameAction().moveToPlay(card);
                             c.getController().shuffle();
                             //we have to have cards like glorious anthem take effect immediately:
                             GameActionUtil.executeCardStateEffects();
@@ -1571,7 +1571,7 @@ public class CombatUtil {
                         if(AllZoneUtil.isCardInPlay(charger)) {
                             charger.addIntrinsicKeyword("Trample");
                             
-                            AllZone.EndOfTurn.addUntil(untilEOT);
+                            AllZone.getEndOfTurn().addUntil(untilEOT);
                         }
                     }//resolve
                 };//ability
@@ -1580,7 +1580,7 @@ public class CombatUtil {
                 sb2.append(c.getName()).append(" - gains trample until end of turn if its power is 10 or greater.");
                 ability2.setStackDescription(sb2.toString());
                 
-                AllZone.Stack.add(ability2);
+                AllZone.getStack().add(ability2);
                 
             }//Witch-Maw Nephilim
             
@@ -1596,20 +1596,20 @@ public class CombatUtil {
                                 soldiers.toArray());
                         if(o != null) {
                             Card card = (Card) o;
-                            AllZone.GameAction.moveToPlay(card);
+                            AllZone.getGameAction().moveToPlay(card);
                             
                             card.tap();
-                            AllZone.Combat.addAttacker(card);
+                            AllZone.getCombat().addAttacker(card);
 
                             card.setCreatureAttackedThisCombat(true);
                         }
                     } else if(c.getController().isComputer()) {
                         Card card = CardFactoryUtil.AI_getBestCreature(soldiers);
                         if (card != null){
-	                        AllZone.GameAction.moveToPlay(card);
+	                        AllZone.getGameAction().moveToPlay(card);
 	                        
 	                        card.tap();
-	                        AllZone.Combat.addAttacker(card);
+	                        AllZone.getCombat().addAttacker(card);
 	                        card.setCreatureAttackedThisCombat(true);
                         }
                     }
@@ -1632,7 +1632,7 @@ public class CombatUtil {
 	                    player.gainLife(top.getBaseDefense(), c);
 	                    player.loseLife(top.getBaseAttack(), c);
 	
-	                    AllZone.GameAction.moveToHand(top);
+	                    AllZone.getGameAction().moveToHand(top);
 	                }
                 }
             }//Sapling of Colfenor
@@ -1645,14 +1645,14 @@ public class CombatUtil {
     	//Run triggers
     	HashMap<String,Object> runParams = new HashMap<String,Object>();
     	runParams.put("Card", c);
-    	AllZone.TriggerHandler.runTrigger("AttackerUnblocked", runParams);
+    	AllZone.getTriggerHandler().runTrigger("AttackerUnblocked", runParams);
     }
     
     public static void checkDeclareBlockers(CardList cl) {
     	for (Card c:cl) {
     		if (!c.getCreatureBlockedThisCombat()) {
     			for(Ability ab:CardFactoryUtil.getBushidoEffects(c)) {
-    				AllZone.Stack.add(ab);
+    				AllZone.getStack().add(ab);
     			}
     		}
     		
@@ -1668,16 +1668,16 @@ public class CombatUtil {
 		HashMap<String, Object> runParams = new HashMap<String,Object>();
 		runParams.put("Attacker",a);
 		runParams.put("Blocker",b);
-		AllZone.TriggerHandler.runTrigger("Blocks", runParams);
+		AllZone.getTriggerHandler().runTrigger("Blocks", runParams);
     	
         if(!a.getCreatureGotBlockedThisCombat()) {
-        	final int blockers = AllZone.Combat.getBlockers(a).size();
+        	final int blockers = AllZone.getCombat().getBlockers(a).size();
         	runParams.put("NumBlockers", blockers);
-    		AllZone.TriggerHandler.runTrigger("AttackerBlocked", runParams);
+    		AllZone.getTriggerHandler().runTrigger("AttackerBlocked", runParams);
     	
     		//Bushido
             for(Ability ab:CardFactoryUtil.getBushidoEffects(a))
-                AllZone.Stack.add(ab);
+                AllZone.getStack().add(ab);
         	
         	//Rampage
         	ArrayList<String> keywords = a.getKeyword();
@@ -1688,7 +1688,7 @@ public class CombatUtil {
         		if (m.find()){
         			String k[] = keyword.split(" ");
         			final int magnitude = Integer.valueOf(k[1]);
-        			final int numBlockers = AllZone.Combat.getBlockers(a).size();
+        			final int numBlockers = AllZone.getCombat().getBlockers(a).size();
         			if(numBlockers > 1) {
         				executeRampageAbility(a, magnitude, numBlockers);
         			}
@@ -1728,7 +1728,7 @@ public class CombatUtil {
                         blocker.addTempAttackBoost(-mag);
                         blocker.addTempDefenseBoost(-mag);
                         
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                         System.out.println("Flanking!");
                     }
                 }//resolve
@@ -1739,7 +1739,7 @@ public class CombatUtil {
             sb2.append(b.getName()).append(" - gets -").append(mag).append("/-").append(mag).append(" until EOT.");
             ability2.setStackDescription(sb2.toString());
             
-            AllZone.Stack.add(ability2);
+            AllZone.getStack().add(ability2);
             Log.debug("Adding Flanking!");
             
         }//flanking
@@ -1782,7 +1782,7 @@ public class CombatUtil {
                         crd.addTempAttackBoost(1);
                         crd.addTempDefenseBoost(1);
                         
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }//resolve
                 
@@ -1792,13 +1792,13 @@ public class CombatUtil {
             sb.append(c).append(" - (Exalted) gets +1/+1 until EOT.");
             ability.setStackDescription(sb.toString());
             
-            AllZone.Stack.addSimultaneousStackEntry(ability);
+            AllZone.getStack().addSimultaneousStackEntry(ability);
         }
         
         Player phasingPlayer = c.getController();
         // Finest Hour untaps the creature on the first combat phase
 		if ((AllZoneUtil.getPlayerCardsInPlay(phasingPlayer, "Finest Hour").size() > 0) &&
-				AllZone.Phase.isFirstCombat()) {
+				AllZone.getPhase().isFirstCombat()) {
 			// Untap the attacking creature
 			Ability fhUntap = new Ability(c, "0") {
 				public void resolve() {
@@ -1810,13 +1810,13 @@ public class CombatUtil {
 			sbUntap.append(c).append(" - (Exalted) untap.");
 			fhUntap.setStackDescription(sbUntap.toString());
 			
-			AllZone.Stack.addSimultaneousStackEntry(fhUntap);
+			AllZone.getStack().addSimultaneousStackEntry(fhUntap);
 		
 			// If any Finest Hours, queue up a new combat phase
 			for (int ix = 0; ix < AllZoneUtil.getPlayerCardsInPlay(phasingPlayer, "Finest Hour").size(); ix++) {
 				Ability fhAddCombat = new Ability(c, "0") {
 					public void resolve() {
-						AllZone.Phase.addExtraCombat();				
+						AllZone.getPhase().addExtraCombat();				
 					}
 				};
 				
@@ -1824,7 +1824,7 @@ public class CombatUtil {
 				sbACom.append(c).append(" - (Exalted) ").append(phasingPlayer).append(" gets Extra Combat Phase.");
 				fhAddCombat.setStackDescription(sbACom.toString());
 				
-				AllZone.Stack.addSimultaneousStackEntry(fhAddCombat);
+				AllZone.getStack().addSimultaneousStackEntry(fhAddCombat);
 			}
 		}
         
@@ -1863,7 +1863,7 @@ public class CombatUtil {
 	                        Enchantment = CardFactoryUtil.AI_getBestEnchantment(enchantments,attacker, false);
 	                    }
 	                    if(Enchantment != null && AllZoneUtil.isCardInPlay(attacker)){
-	                    	AllZone.GameAction.moveToPlay(Enchantment);
+	                    	AllZone.getGameAction().moveToPlay(Enchantment);
 	                    	Enchantment.enchantCard(attacker);
 	                    }
                         attacker.getController().shuffle();	                    
@@ -1875,7 +1875,7 @@ public class CombatUtil {
             sb4.append("put it onto the battlefield attached to that creature, then shuffles library.");
             ability4.setStackDescription(sb4.toString());
             
-            AllZone.Stack.addSimultaneousStackEntry(ability4);
+            AllZone.getStack().addSimultaneousStackEntry(ability4);
             } // For
         }
     }
@@ -1912,7 +1912,7 @@ public class CombatUtil {
     					crd.addTempAttackBoost(pump);
     					crd.addTempDefenseBoost(pump);
 
-    					AllZone.EndOfTurn.addUntil(untilEOT);
+    					AllZone.getEndOfTurn().addUntil(untilEOT);
     				}
     			}//resolve
 
@@ -1922,7 +1922,7 @@ public class CombatUtil {
     		sb.append(c).append(" - (Rampage) gets +").append(pump).append("/+").append(pump).append(" until EOT.");
     		ability.setStackDescription(sb.toString());
     		
-    		AllZone.Stack.add(ability);
+    		AllZone.getStack().add(ability);
     	}
     }
     

@@ -169,7 +169,7 @@ public class AbilityFactory_Sacrifice {
 			num = (num == null) ? "1" : num;
 			int amount = AbilityFactory.calculateAmount(sa.getSourceCard(), num, sa);		
 			
-			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 			list = list.getValidCards(valid.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 			
 			if (list.size() == 0)
@@ -237,8 +237,8 @@ public class AbilityFactory_Sacrifice {
 		
 		if (tgt != null){
 			tgt.resetTargets();
-			if (AllZone.HumanPlayer.canTarget(sa.getSourceCard()))
-				tgt.addTarget(AllZone.HumanPlayer);
+			if (AllZone.getHumanPlayer().canTarget(sa.getSourceCard()))
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
 				return false;
 		}
@@ -262,9 +262,9 @@ public class AbilityFactory_Sacrifice {
 					amount = Math.min(ComputerUtil.determineLeftoverMana(sa), amount);
 				}
 				
-				CardList humanList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+				CardList humanList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 				humanList = humanList.getValidCards(valid.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
-				CardList computerList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+				CardList computerList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 				computerList = computerList.getValidCards(valid.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 				
 				//Since all of the cards have remAIDeck:True, I enabled 1 for 1 (or X for X) trades for special decks
@@ -302,19 +302,19 @@ public class AbilityFactory_Sacrifice {
 
 		if (valid.equals("Self")){
 			if (AllZone.getZone(sa.getSourceCard()).is(Constant.Zone.Battlefield))
-				AllZone.GameAction.sacrifice(sa.getSourceCard());
+				AllZone.getGameAction().sacrifice(sa.getSourceCard());
 		}
 		//TODO - maybe this can be done smarter...
 		else if(valid.equals("Card.AttachedBy")) {
 			Card toSac = sa.getSourceCard().getEnchantingCard();
 			if (AllZone.getZone(sa.getSourceCard()).is(Constant.Zone.Battlefield) && AllZoneUtil.isCardInPlay(toSac)) {
-				AllZone.GameAction.sacrifice(toSac);
+				AllZone.getGameAction().sacrifice(toSac);
 			}
 		}
 		else if( valid.equals("TriggeredCard")) {
 			Card equipee = (Card)sa.getTriggeringObject("Card");
 			if(tgts.contains(card.getController()) && AllZoneUtil.isCardInPlay(equipee)) {
-				AllZone.GameAction.sacrifice(equipee);
+				AllZone.getGameAction().sacrifice(equipee);
 			}
 		}
 		else{
@@ -341,7 +341,7 @@ public class AbilityFactory_Sacrifice {
 		list = list.getValidCards(valid.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 		
 		// TODO: Wait for Input to finish before moving on with the rest of Resolution
-		AllZone.InputControl.setInput(CardFactoryUtil.input_sacrificePermanentsFromList(amount, list, message), true);
+		AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanentsFromList(amount, list, message), true);
 	}
 	
 	
@@ -477,8 +477,8 @@ public class AbilityFactory_Sacrifice {
 			Valid = Valid.replace("X", Integer.toString(xPay));
 		}
 
-		CardList humanlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		CardList computerlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		CardList humanlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+		CardList computerlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
 		humanlist = humanlist.getValidCards(Valid.split(","), source.getController(), source);
 		computerlist = computerlist.getValidCards(Valid.split(","), source.getController(), source);
@@ -489,7 +489,7 @@ public class AbilityFactory_Sacrifice {
 				//OK
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) ;//OK
@@ -548,7 +548,7 @@ public class AbilityFactory_Sacrifice {
 		list = list.getValidCards(Valid.split(","), card.getController(), card);
 		
  		for(int i = 0; i < list.size(); i++) 
- 			if(AllZone.GameAction.sacrifice(list.get(i)) && remSacrificed)
+ 			if(AllZone.getGameAction().sacrifice(list.get(i)) && remSacrificed)
 				card.addRemembered(list.get(i));
      }
 	

@@ -146,7 +146,7 @@ public class AbilityFactory_Choose {
 
 		if (sa.getTarget() != null){
 			tgt.resetTargets();
-			sa.getTarget().addTarget(AllZone.ComputerPlayer);
+			sa.getTarget().addTarget(AllZone.getComputerPlayer());
 		}
 		else{
 			ArrayList<Player> tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
@@ -343,7 +343,7 @@ public class AbilityFactory_Choose {
 
 		if (sa.getTarget() != null){
 			tgt.resetTargets();
-			sa.getTarget().addTarget(AllZone.ComputerPlayer);
+			sa.getTarget().addTarget(AllZone.getComputerPlayer());
 		}
 		else{
 			ArrayList<Player> tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);

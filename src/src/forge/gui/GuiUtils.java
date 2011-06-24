@@ -124,8 +124,8 @@ public class GuiUtils {
         final JList list = c.getJList();
         list.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent ev) {
-                if(list.getSelectedValue() instanceof Card && AllZone.Display != null) {
-                		AllZone.Display.setCard((Card) list.getSelectedValue());
+                if(list.getSelectedValue() instanceof Card && AllZone.getDisplay() != null) {
+                		AllZone.getDisplay().setCard((Card) list.getSelectedValue());
                 }
             }
         });

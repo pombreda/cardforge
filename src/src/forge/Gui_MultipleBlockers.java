@@ -34,10 +34,10 @@ public class Gui_MultipleBlockers extends JFrame {
     
     public static void main(String[] args) {
         CardList list = new CardList();
-        list.add(AllZone.CardFactory.getCard("Elvish Piper", null));
-        list.add(AllZone.CardFactory.getCard("Lantern Kami", null));
-        list.add(AllZone.CardFactory.getCard("Frostling", null));
-        list.add(AllZone.CardFactory.getCard("Frostling", null));
+        list.add(AllZone.getCardFactory().getCard("Elvish Piper", null));
+        list.add(AllZone.getCardFactory().getCard("Lantern Kami", null));
+        list.add(AllZone.getCardFactory().getCard("Frostling", null));
+        list.add(AllZone.getCardFactory().getCard("Frostling", null));
         
 
         for(int i = 0; i < 2; i++)

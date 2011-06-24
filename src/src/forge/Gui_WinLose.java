@@ -116,7 +116,7 @@ public class Gui_WinLose extends JFrame implements NewConstants {
     }
     
     private void setup() {
-    	AllZone.GameInfo.clearColorChanges();
+    	AllZone.getGameInfo().clearColorChanges();
         QuestMatchState winLose = Constant.Runtime.matchState;
         Phase.setGameBegins(0);
         //3 is the match length, 3 is the number of games
@@ -141,25 +141,25 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         	int game = 0;
         	if (winLose.getWinTurns()[0] != 0)
         		game = 1;
-        	int turn = AllZone.Phase.getTurn();
-        	if (AllZone.GameInfo.isComputerStartedThisGame())
+        	int turn = AllZone.getPhase().getTurn();
+        	if (AllZone.getGameInfo().isComputerStartedThisGame())
         		turn--;
         	
         	if (turn < 1)
         		turn = 1;
         	
         	winLose.setWinTurn(game, turn);
-        	winLose.setMulliganedToZero(game, AllZone.GameInfo.getHumanMulliganedToZero());
+        	winLose.setMulliganedToZero(game, AllZone.getGameInfo().getHumanMulliganedToZero());
         	
-        	//winLose.setWinTurn(winLose.countWinLose()-1, AllZone.Phase.getTurn());
+        	//winLose.setWinTurn(winLose.countWinLose()-1, AllZone.getPhase().getTurn());
         	
         	//System.out.println("CountwinLose:" + winLose.countWinLose());
-        	//System.out.println("You won by turn: " + AllZone.Phase.getTurn());
+        	//System.out.println("You won by turn: " + AllZone.getPhase().getTurn());
         }
         else 
         {
         	titleLabel.setText(ForgeProps.getLocalized(WINLOSE_TEXT.LOSE));
-        	//System.out.println("You lost by turn: " + AllZone.Phase.getTurn());
+        	//System.out.println("You lost by turn: " + AllZone.getPhase().getTurn());
         }
     }//setup();
     
@@ -224,30 +224,30 @@ public class Gui_WinLose extends JFrame implements NewConstants {
     
     void continueButton_actionPerformed(ActionEvent e) {
         //open up "Game" screen
-    	//AllZone.Computer_Play.reset();//sometimes computer has creature in play in the 2nd game of the match
+    	//AllZone.getComputerPlay().reset();//sometimes computer has creature in play in the 2nd game of the match
         
     	if (!Constant.Quest.fantasyQuest[0])
-    		AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
+    		AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
     	else{
     		int extraLife = 0;
-    		if (AllZone.QuestAssignment != null) {
-    			forge.quest.data.QuestUtil.setupQuest(AllZone.QuestAssignment);
-    			if (AllZone.QuestData.getInventory().hasItem("Zeppelin"))
+    		if (AllZone.getQuestAssignment() != null) {
+    			forge.quest.data.QuestUtil.setupQuest(AllZone.getQuestAssignment());
+    			if (AllZone.getQuestData().getInventory().hasItem("Zeppelin"))
     				extraLife = 3;
     		}
-    		//AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife);
-    		CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.QuestData, AllZone.QuestAssignment);
+    		//AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife);
+    		CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.getQuestData(), AllZone.getQuestAssignment());
     		CardList computerList = new CardList();
     		
 
-    		int humanLife = AllZone.QuestData.getLife() + extraLife;
+    		int humanLife = AllZone.getQuestData().getLife() + extraLife;
     		int computerLife = 20;
-    		if (AllZone.QuestAssignment!=null)
-    			computerLife = AllZone.QuestAssignment.getComputerLife();
+    		if (AllZone.getQuestAssignment()!=null)
+    			computerLife = AllZone.getQuestAssignment().getComputerLife();
     		
-    		AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife, AllZone.QuestAssignment);
+    		AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife, AllZone.getQuestAssignment());
     	}
-        AllZone.Display.setVisible(true);
+        AllZone.getDisplay().setVisible(true);
         
         dispose();
     }
@@ -256,29 +256,29 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         Constant.Runtime.matchState.reset();
         
         if (!Constant.Quest.fantasyQuest[0])
-    		AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
+    		AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
     	else{
     		int extraLife = 0;
-    		//AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife);
-    		if (AllZone.QuestAssignment != null) {
-    			forge.quest.data.QuestUtil.setupQuest(AllZone.QuestAssignment);
-    			if (AllZone.QuestData.getInventory().hasItem("Zeppelin"))
+    		//AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife);
+    		if (AllZone.getQuestAssignment() != null) {
+    			forge.quest.data.QuestUtil.setupQuest(AllZone.getQuestAssignment());
+    			if (AllZone.getQuestData().getInventory().hasItem("Zeppelin"))
     				extraLife = 3;
     		}
     			
-    		CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.QuestData, AllZone.QuestAssignment);
-    		//CardList computerList = QuestUtil.getComputerCreatures(AllZone.QuestData, AllZone.QuestAssignment);
+    		CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.getQuestData(), AllZone.getQuestAssignment());
+    		//CardList computerList = QuestUtil.getComputerCreatures(AllZone.getQuestData(), AllZone.getQuestAssignment());
     		CardList computerList = new CardList();
     		
-    		int humanLife = AllZone.QuestData.getLife() +extraLife;
+    		int humanLife = AllZone.getQuestData().getLife() +extraLife;
     		int computerLife = 20;
     		
-    		if (AllZone.QuestAssignment!=null)
-    			computerLife = AllZone.QuestAssignment.getComputerLife();
+    		if (AllZone.getQuestAssignment()!=null)
+    			computerLife = AllZone.getQuestAssignment().getComputerLife();
     		
-    		AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife, AllZone.QuestAssignment);
+    		AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0], humanList, computerList, humanLife, computerLife, AllZone.getQuestAssignment());
     	}
-        AllZone.Display.setVisible(true);
+        AllZone.getDisplay().setVisible(true);
         
         dispose();
     }
@@ -392,12 +392,12 @@ public class Gui_WinLose extends JFrame implements NewConstants {
     
     void quitButton_actionPerformed(ActionEvent e) {
         //are we on a quest?
-        if(AllZone.QuestData == null) {
+        if(AllZone.getQuestData() == null) {
         	new Gui_NewGame();
         }
         else { //Quest
             QuestMatchState matchState = Constant.Runtime.matchState;
-            forge.quest.data.QuestData quest = AllZone.QuestData;
+            forge.quest.data.QuestData quest = AllZone.getQuestData();
             
             boolean wonMatch = false;
             if(matchState.getWin() == 2){
@@ -406,12 +406,12 @@ public class Gui_WinLose extends JFrame implements NewConstants {
             }
             else quest.addLost();
             
-            //System.out.println("QuestData cardpoolsize:" + AllZone.QuestData.getCardpool().size());
-            if(AllZone.QuestData.getShopList()!= null)
-            	AllZone.QuestData.clearShopList();
+            //System.out.println("QuestData cardpoolsize:" + AllZone.getQuestData().getCardpool().size());
+            if(AllZone.getQuestData().getShopList()!= null)
+            	AllZone.getQuestData().clearShopList();
             
-            if(AllZone.QuestData.getAvailableQuests()!= null)
-            	AllZone.QuestData.clearAvailableQuests();
+            if(AllZone.getQuestData().getAvailableQuests()!= null)
+            	AllZone.getQuestData().clearAvailableQuests();
             
             if(quest.shouldAddCards(wonMatch)) {
                 quest.addCards();
@@ -443,10 +443,10 @@ public class Gui_WinLose extends JFrame implements NewConstants {
             		JOptionPane.showMessageDialog(null, "You just won 10 random rares!", "",  JOptionPane.INFORMATION_MESSAGE, icon);
             	}
             	
-            	if (AllZone.QuestAssignment!=null)
+            	if (AllZone.getQuestAssignment()!=null)
             	{
-            		AllZone.QuestData.addQuestsPlayed();
-            		Quest_Assignment qa = AllZone.QuestAssignment;
+            		AllZone.getQuestData().addQuestsPlayed();
+            		Quest_Assignment qa = AllZone.getQuestAssignment();
             		
             		StringBuilder sb = new StringBuilder();
             		sb.append("Quest Completed - \r\n");
@@ -459,22 +459,22 @@ public class Gui_WinLose extends JFrame implements NewConstants {
             				sb.append(cardName);
             				sb.append("\r\n");
             				
-            				AllZone.QuestData.addCard(cardName);
+            				AllZone.getQuestData().addCard(cardName);
             			}
-            			AllZone.QuestData.addToNewList(qa.getCardRewardList());
+            			AllZone.getQuestData().addToNewList(qa.getCardRewardList());
             			sb.append("\r\n");
             		}
             		sb.append("Quest Bounty: ");
             		sb.append(qa.getCreditsReward());
             		
-            		AllZone.QuestData.addCredits(qa.getCreditsReward());
+            		AllZone.getQuestData().addCredits(qa.getCreditsReward());
             		
             		fileName = "BoxIcon.png";
             		icon = getIcon(fileName);
             		JOptionPane.showMessageDialog(null, sb.toString(), "Quest Rewards for " +qa.getName() ,  JOptionPane.INFORMATION_MESSAGE, icon);
             	}/* 
             	else if(quest.getDifficultyIndex() == 4) {
-                    Card c = AllZone.CardFactory.getCard(quest.addRandomRare(), AllZone.HumanPlayer);
+                    Card c = AllZone.getCardFactory().getCard(quest.addRandomRare(), AllZone.getHumanPlayer());
                     c.setCurSetCode(c.getMostRecentSet());
                 	fileName = CardUtil.buildFilename(c) +".jpg";
                 	icon = getCardIcon(fileName);
@@ -493,7 +493,7 @@ public class Gui_WinLose extends JFrame implements NewConstants {
             }
             
             if(quest.shouldAddAdditionalCards(wonMatch)) {
-                Card c = AllZone.CardFactory.getCard(quest.addRandomRare(), AllZone.HumanPlayer);
+                Card c = AllZone.getCardFactory().getCard(quest.addRandomRare(), AllZone.getHumanPlayer());
                 c.setCurSetCode(c.getMostRecentSet());
             	String fileName = CardUtil.buildFilename(c) +".jpg";
             	ImageIcon icon = getCardIcon(fileName);
@@ -503,7 +503,7 @@ public class Gui_WinLose extends JFrame implements NewConstants {
             
             matchState.reset();
             
-            AllZone.QuestAssignment = null;
+            AllZone.setQuestAssignment(null);
             
             quest.saveData();
 

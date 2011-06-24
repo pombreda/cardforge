@@ -65,7 +65,7 @@ public class QuestData_BoosterPack implements NewConstants {
         
         Card c;
         for(int i = 0; i < list.size(); i++) {
-            c = AllZone.CardFactory.getCard(list.get(i).toString(), null);
+            c = AllZone.getCardFactory().getCard(list.get(i).toString(), null);
             
             if(c.isCreature()) nCreature++;
             else nSpell++;
@@ -96,7 +96,7 @@ public class QuestData_BoosterPack implements NewConstants {
         //setup(ForgeProps.getFile(QUEST.UNCOMMON), uncommonCreature, uncommonSpell);
         //setup(ForgeProps.getFile(QUEST.RARE), rareCreature, rareSpell);
         
-        CardList AllCards = new CardList(AllZone.CardFactory.getAllCards().toArray());
+        CardList AllCards = new CardList(AllZone.getCardFactory().getAllCards().toArray());
         
         for (int i=0; i<AllCards.size(); i++)
         {
@@ -218,7 +218,7 @@ public class QuestData_BoosterPack implements NewConstants {
         String s;
         for(int i = 0; i < list.size(); i++) {
             s = list.get(i).toString();
-            c = AllZone.CardFactory.getCard(s, null);
+            c = AllZone.getCardFactory().getCard(s, null);
             if(getColor(c).equals(color)) return s;
         }
         //just get a random card
@@ -280,7 +280,7 @@ public class QuestData_BoosterPack implements NewConstants {
         for(int i = 0; i < all.size(); i++) {
             s = all.get(i).toString();
             
-            c = AllZone.CardFactory.getCard(s, "");
+            c = AllZone.getCardFactory().getCard(s, "");
             if(c.isCreature()) creatureList.add(s);
             else spellList.add(s);
         }

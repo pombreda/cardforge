@@ -119,7 +119,7 @@ public class QuestData {
     public void newGame(int difficulty, String m, boolean standardStart) {
         setDifficulty(difficulty);
 
-        CardList allCards = AllZone.CardFactory.getCards();
+        CardList allCards = AllZone.getCardFactory().getCards();
 
         ArrayList<String> list = new ArrayList<String>();
 
@@ -267,7 +267,7 @@ public class QuestData {
     //(I chose 11 cards instead of 15 in order to make things more challenging)
 
     public void addCards() {
-        CardList cards = AllZone.CardFactory.getCards();
+        CardList cards = AllZone.getCardFactory().getCards();
         int nCommon = QuestPreferences.getNumCommon();
         int nUncommon = QuestPreferences.getNumUncommon();
         int nRare = QuestPreferences.getNumRare();
@@ -286,7 +286,7 @@ public class QuestData {
 
     public ArrayList<String> addRandomRare(int n) {
         ArrayList<String> newCards = new ArrayList<String>();
-        newCards.addAll(boosterPack.generateCards(AllZone.CardFactory.getCards(), n, Constant.Rarity.Rare, null));
+        newCards.addAll(boosterPack.generateCards(AllZone.getCardFactory().getCards(), n, Constant.Rarity.Rare, null));
 
         cardPool.addAll(newCards);
         newCardList.addAll(newCards);

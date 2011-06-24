@@ -100,7 +100,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     
                     return list.containsName("Glorious Anthem") || list.containsName("Gaea's Anthem");
                 }
@@ -133,7 +133,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void chooseTargetAI() {
-                    CardList perms = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList perms = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     perms = perms.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.sumAllCounters() > 0 && CardFactoryUtil.canTarget(card, c);
@@ -145,7 +145,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList perms = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                	CardList perms = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     perms = perms.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.sumAllCounters() > 0 && CardFactoryUtil.canTarget(card, c);
@@ -196,7 +196,7 @@ public class CardFactory_Creatures {
                 	sb.append(card.getName()).append(" - choose: 3/3, 2/2 flying, 1/6 defender");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -219,7 +219,7 @@ public class CardFactory_Creatures {
                 	sb.append(card.getName()).append(" - ").append(card.getOwner()).append(" creatures have Trample.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -243,7 +243,7 @@ public class CardFactory_Creatures {
                 	sb.append(" creatures have Swampwalk.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -289,8 +289,8 @@ public class CardFactory_Creatures {
 						color = (String)o;
 					}
 					else {
-						CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer);
-						list.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
+						CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer());
+						list.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
 
 						if (list.size() > 0) {  
 							String mpcolor = CardFactoryUtil.getMostProminentColor(list);
@@ -329,7 +329,7 @@ public class CardFactory_Creatures {
                         		!target.hasKeyword(kboost)) {
                             target.addExtrinsicKeyword(kboost);
                             
-                            AllZone.EndOfTurn.addUntil(untilEOT);
+                            AllZone.getEndOfTurn().addUntil(untilEOT);
                         }//if
                     }//for
 				}//resolve
@@ -372,7 +372,7 @@ public class CardFactory_Creatures {
                 	sb.append(" creatures have Haste.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -396,7 +396,7 @@ public class CardFactory_Creatures {
                 	sb.append(" creatures have First Strike.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -420,7 +420,7 @@ public class CardFactory_Creatures {
                 	sb.append(" creatures have Flying.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -470,7 +470,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void showMessage() {
-                    AllZone.Display.showMessage("Select a noncreature card to discard");
+                    AllZone.getDisplay().showMessage("Select a noncreature card to discard");
                     ButtonUtil.enableOnlyCancel();
                 }
                 
@@ -484,7 +484,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void selectButtonCancel() {
-                    AllZone.GameAction.sacrifice(card);
+                    AllZone.getGameAction().sacrifice(card);
                     stop();
                 }
             };//Input
@@ -493,10 +493,10 @@ public class CardFactory_Creatures {
                 @Override
                 public void resolve() {
                     if(card.getController().isHuman()) {
-                        if(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer).size() == 0) AllZone.GameAction.sacrifice(card);
-                        else AllZone.InputControl.setInput(discard);
+                        if(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()).size() == 0) AllZone.getGameAction().sacrifice(card);
+                        else AllZone.getInputControl().setInput(discard);
                     } else {
-                        CardList list = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+                        CardList list = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
                         list = list.filter(new CardListFilter() {
                             public boolean addCard(Card c) {
                                 return (!c.isCreature());
@@ -515,7 +515,7 @@ public class CardFactory_Creatures {
                 	sb.append(card.getController()).append(" sacrifices Drekavac unless he discards a noncreature card");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -563,7 +563,7 @@ public class CardFactory_Creatures {
         				reqHand++;
         			
         			// Don't play if it would sacrifice as soon as it comes into play
-        			return AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.ComputerPlayer).size() > reqHand;
+        			return AllZoneUtil.getCardsInZone(Constant.Zone.Hand, AllZone.getComputerPlayer()).size() > reqHand;
         		}
         	};
         	card.clearFirstSpellAbility();
@@ -575,7 +575,7 @@ public class CardFactory_Creatures {
                 public void resolve() {
                 	CardList hand = AllZoneUtil.getPlayerHand(card.getController());
                     if(hand.size() == 0) 
-                    	AllZone.GameAction.sacrifice(card);
+                    	AllZone.getGameAction().sacrifice(card);
                     else 
                     	card.getController().discardRandom(this);
                 }
@@ -589,7 +589,7 @@ public class CardFactory_Creatures {
                 	sb.append(card.getController()).append(" - discards at random or sacrifices ").append(cardName);
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -603,7 +603,7 @@ public class CardFactory_Creatures {
                 @Override
                 public void resolve() {
                 	// TODO: this need to be targeted
-                	AllZone.GameAction.changeController(new CardList(card), card.getController(), card.getController().getOpponent());
+                	AllZone.getGameAction().changeController(new CardList(card), card.getController(), card.getController().getOpponent());
                 }
             };
             
@@ -612,7 +612,7 @@ public class CardFactory_Creatures {
                 private static final long serialVersionUID = -3934471871041458847L;
                 
                 public void execute() {
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }//execute()
             };
@@ -625,7 +625,7 @@ public class CardFactory_Creatures {
             final CommandReturn getArt = new CommandReturn() {
                 //get target card, may be null
                 public Object execute() {
-                    CardList art = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList art = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     art = art.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.isArtifact();
@@ -670,7 +670,7 @@ public class CardFactory_Creatures {
 
 						@Override
                         public void showMessage() {
-                            AllZone.Display.showMessage("Select target artifact you control");
+                            AllZone.getDisplay().showMessage("Select target artifact you control");
                             ButtonUtil.disableAll();
                         }
                         
@@ -678,7 +678,7 @@ public class CardFactory_Creatures {
                         public void selectCard(Card card, PlayerZone zone) {
                             if(card.isArtifact() && zone.is(Constant.Zone.Battlefield) && card.getController().isHuman()) {
                                 ability.setTargetCard(card);
-                                AllZone.Stack.add(ability);
+                                AllZone.getStack().add(ability);
                                 stop();
                             }
                         }
@@ -686,9 +686,9 @@ public class CardFactory_Creatures {
                     
 
                     if(card.getController().isHuman()) {
-                    	CardList artifacts = AllZoneUtil.getPlayerTypeInPlay(AllZone.HumanPlayer, "Artifact");
+                    	CardList artifacts = AllZoneUtil.getPlayerTypeInPlay(AllZone.getHumanPlayer(), "Artifact");
                         
-                        if(artifacts.size() != 0) AllZone.InputControl.setInput(target);
+                        if(artifacts.size() != 0) AllZone.getInputControl().setInput(target);
 
                     } 
                     else{ //computer
@@ -696,7 +696,7 @@ public class CardFactory_Creatures {
                         if(o != null)//should never happen, but just in case
                         {
                             ability.setTargetCard((Card) o);
-                            AllZone.Stack.addSimultaneousStackEntry(ability);
+                            AllZone.getStack().addSimultaneousStackEntry(ability);
 
                         }
                     }//else
@@ -728,7 +728,7 @@ public class CardFactory_Creatures {
                     PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
                     CardList hand = AllZoneUtil.getPlayerHand(card.getController());
                     for(int i = 0; i < hand.size(); i++) {
-                        AllZone.GameAction.moveTo(library, hand.get(i));
+                        AllZone.getGameAction().moveTo(library, hand.get(i));
                     }
                     card.getController().shuffle();
                     
@@ -747,7 +747,7 @@ public class CardFactory_Creatures {
                 	sb.append(" shuffles the cards from his hand into his library, then draws that many cards.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability );
+                    AllZone.getStack().addSimultaneousStackEntry(ability );
 
                 }
             };
@@ -767,7 +767,7 @@ public class CardFactory_Creatures {
                     CardList list = AllZoneUtil.getCardsInPlay();
                     list = list.getValidCards("Card.Other+YouCtrl".split(","),card.getController(), card);
 
-                    AllZone.GameAction.changeController(list, card.getController(), opp);
+                    AllZone.getGameAction().changeController(list, card.getController(), opp);
                 }//resolve()
             };//SpellAbility
             
@@ -780,7 +780,7 @@ public class CardFactory_Creatures {
                 	sb.append(" gains control of all other permanents you control");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -817,7 +817,7 @@ public class CardFactory_Creatures {
                 public void showMessage()
                 {
                 	ButtonUtil.disableAll();
-                    AllZone.Display.showMessage("Exile a nonland card from your hand.");
+                    AllZone.getDisplay().showMessage("Exile a nonland card from your hand.");
                 }
                 
                 @Override
@@ -825,10 +825,10 @@ public class CardFactory_Creatures {
                 {
                 	if(zone.is(Constant.Zone.Hand) && !c.isLand())
                 	{
-                		AllZone.GameAction.exile(c);
+                		AllZone.getGameAction().exile(c);
                 		chosen.push(c);
                 		ability.setStackDescription(card.toString() + " - Suspending " + c.toString());
-                		AllZone.Stack.add(ability);
+                		AllZone.getStack().add(ability);
                 		stop();
                 	}
                 }
@@ -860,7 +860,7 @@ public class CardFactory_Creatures {
                 }
                 
                 CardList getCreature() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.isCreature() 
@@ -894,7 +894,7 @@ public class CardFactory_Creatures {
                                 }
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(EOT);
+                        AllZone.getEndOfTurn().addUntil(EOT);
 
                     }//if (card is in play)
                 }//resolve()
@@ -957,7 +957,7 @@ public class CardFactory_Creatures {
                                 }
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(EOT);
+                        AllZone.getEndOfTurn().addUntil(EOT);
                     }//is card in play?
                 }//resolve()
             };//SpellAbility
@@ -1016,12 +1016,12 @@ public class CardFactory_Creatures {
 					
 					if (basicGrab != null){
 						// put basic in hand
-						AllZone.GameAction.moveToHand(basicGrab);
+						AllZone.getGameAction().moveToHand(basicGrab);
 						revealed.remove(basicGrab);
 					}
 					// place revealed cards in graveyard (TODO: player should choose order)
 					for(Card c : revealed){
-						AllZone.GameAction.moveToGraveyard(c);
+						AllZone.getGameAction().moveToGraveyard(c);
 					}
                 }
             };
@@ -1085,7 +1085,7 @@ public class CardFactory_Creatures {
                                 }
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(EOT);
+                        AllZone.getEndOfTurn().addUntil(EOT);
                     }//is card in play?
                 }//resolve()
             };//SpellAbility
@@ -1119,8 +1119,8 @@ public class CardFactory_Creatures {
                     if(crd0 != null && crd1 != null) {
                     	Player p0 = crd0.getController();
                     	Player p1 = crd1.getController();
-                    	AllZone.GameAction.changeController(new CardList(crd0), p0, p1);
-                    	AllZone.GameAction.changeController(new CardList(crd1), p1, p0);
+                    	AllZone.getGameAction().changeController(new CardList(crd0), p0, p1);
+                    	AllZone.getGameAction().changeController(new CardList(crd1), p1, p0);
                     }
                     
                 }//resolve()
@@ -1133,8 +1133,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void showMessage() {
-                    if(index[0] == 0) AllZone.Display.showMessage("Select target land you control.");
-                    else AllZone.Display.showMessage("Select target land opponent controls.");
+                    if(index[0] == 0) AllZone.getDisplay().showMessage("Select target land you control.");
+                    else AllZone.getDisplay().showMessage("Select target land opponent controls.");
                     
                     ButtonUtil.enableOnlyCancel();
                 }
@@ -1160,7 +1160,7 @@ public class CardFactory_Creatures {
                         showMessage();
                         
                         if(index[0] == target.length) {
-                            AllZone.Stack.add(ability);
+                            AllZone.getStack().add(ability);
                             stop();
                         }
                     }
@@ -1172,7 +1172,7 @@ public class CardFactory_Creatures {
                 
                 public void execute() {
                     index[0] = 0;
-                    if(card.getController().isHuman()) AllZone.InputControl.setInput(input);
+                    if(card.getController().isHuman()) AllZone.getInputControl().setInput(input);
                 }
             };
             
@@ -1193,7 +1193,7 @@ public class CardFactory_Creatures {
                 @Override
                 public boolean canPlayAI() {
                     return (CardFactoryUtil.AI_getHumanCreature(1, card, true).size() != 0)
-                            && (AllZone.Phase.getPhase().equals(Constant.Phase.Main2));
+                            && (AllZone.getPhase().getPhase().equals(Constant.Phase.Main2));
                 }
                 
                 @Override
@@ -1250,7 +1250,7 @@ public class CardFactory_Creatures {
                 
                 public void execute() {
 
-                    AllZone.Stack.addSimultaneousStackEntry(new Ability(card, "0", "Adarkar Valkyrie - Return " + target[0] + " from graveyard to the battlefield") {
+                    AllZone.getStack().addSimultaneousStackEntry(new Ability(card, "0", "Adarkar Valkyrie - Return " + target[0] + " from graveyard to the battlefield") {
                         @Override
                         public void resolve() {
                             PlayerZone grave = AllZone.getZone(target[0]);
@@ -1259,7 +1259,7 @@ public class CardFactory_Creatures {
                             if(grave != null && AllZoneUtil.isCardInZone(grave, target[0])) {
                                 PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, card.getController());
                                 target[0].setController(card.getController());
-                                AllZone.GameAction.moveTo(play, target[0]);
+                                AllZone.getGameAction().moveTo(play, target[0]);
                             }
                         }
                     });
@@ -1286,7 +1286,7 @@ public class CardFactory_Creatures {
                         target[0] = getTargetCard();
                         
                         if (!target[0].isToken()){	// not necessary, but will help speed up stack resolution
-	                        AllZone.EndOfTurn.addUntil(untilEOT);
+	                        AllZone.getEndOfTurn().addUntil(untilEOT);
 	                        target[0].addDestroyCommand(destroy);
                         }
                     }//if
@@ -1318,14 +1318,14 @@ public class CardFactory_Creatures {
                 public boolean canPlayAI() {
                     if(CardFactoryUtil.AI_doesCreatureAttack(card)) return false;
                     
-                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
+                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
                     return land.size() != 0;
                 }
                 
                 @Override
                 public void chooseTargetAI() {
                     //target basic land that Human only has 1 or 2 in play
-                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
+                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
                     
                     Card target = null;
                     
@@ -1355,7 +1355,7 @@ public class CardFactory_Creatures {
                 public void resolve() {
                     if(AllZoneUtil.isCardInPlay(getTargetCard())
                             && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        AllZone.GameAction.destroy(getTargetCard());
+                        AllZone.getGameAction().destroy(getTargetCard());
                         
                         //if non-basic, untap Helldozer
                         if(!getTargetCard().isBasicLand()) card.untap();
@@ -1382,13 +1382,13 @@ public class CardFactory_Creatures {
 
 				@Override
                 public boolean canPlayAI() {
-                    CardList hand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+                    CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
                     return CardFactoryUtil.AI_doesCreatureAttack(card) && (hand.size() > 3);
                 }
                 
                 @Override
                 public void chooseTargetAI() {
-                    AllZone.ComputerPlayer.discardRandom(this);
+                    AllZone.getComputerPlayer().discardRandom(this);
                 }
                 
                 @Override
@@ -1405,9 +1405,9 @@ public class CardFactory_Creatures {
                         } else { 
                         	// wild mongrel will choose a color that appears the most, but that might not be right way to choose
                         	CardList list = new CardList();
-                            list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.ComputerPlayer));
-                            list.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
-                            list.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer));
+                            list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.getComputerPlayer()));
+                            list.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
+                            list.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
                             
                             color[0] = Constant.Color.White;
                             int max = list.getKeywordsContain(color[0]).size();
@@ -1439,7 +1439,7 @@ public class CardFactory_Creatures {
                             }
                         };
                         
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }//resolve()
             };//SpellAbility
@@ -1492,7 +1492,7 @@ public class CardFactory_Creatures {
                                 }
                             };
                             
-                            AllZone.EndOfTurn.addUntil(untilEOT);
+                            AllZone.getEndOfTurn().addUntil(untilEOT);
                         }
                     }
                 }//resolve()
@@ -1525,9 +1525,9 @@ public class CardFactory_Creatures {
                     } else {
                     	// AI chooses the color that appears in the keywords of the most cards in its deck, hand and on battlefield
                     	CardList list = new CardList();
-                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.ComputerPlayer));
-                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer));
-                        list.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer));
+                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.getComputerPlayer()));
+                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
+                        list.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
 
                         color[0] = Constant.Color.White;
                         int max =  list.getKeywordsContain(color[0]).size();
@@ -1544,7 +1544,7 @@ public class CardFactory_Creatures {
                     }
 
                     String s = CardUtil.getShortColor(color[0]);
-                    timeStamp[0] = AllZone.GameInfo.addColorChanges(s, card, true, true);
+                    timeStamp[0] = AllZone.getGameInfo().addColorChanges(s, card, true, true);
                 }
             };//Command
 
@@ -1553,7 +1553,7 @@ public class CardFactory_Creatures {
 
 				public void execute(){
             		String s = CardUtil.getShortColor(color[0]);
-            		AllZone.GameInfo.removeColorChanges(s, card, true, timeStamp[0]);
+            		AllZone.getGameInfo().removeColorChanges(s, card, true, timeStamp[0]);
             	}
             };
 
@@ -1577,8 +1577,8 @@ public class CardFactory_Creatures {
                 @Override
                 public boolean canPlayAI() { 
                 	/*
-                    CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
-                    String phase = AllZone.Phase.getPhase();
+                    CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
+                    String phase = AllZone.getPhase().getPhase();
                     return phase.equals(Constant.Phase.Main2) && list.size() != 0;
                     */
                     return false;
@@ -1586,12 +1586,12 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void chooseTargetAI() {
-                    AllZone.GameAction.sacrifice(card);
+                    AllZone.getGameAction().sacrifice(card);
                 }
                 
                 @Override
                 public void resolve() {
-                    AllZone.EndOfTurn.addAt(atEOT);
+                    AllZone.getEndOfTurn().addAt(atEOT);
                 }//resolve()
             };//SpellAbility
             
@@ -1602,8 +1602,8 @@ public class CardFactory_Creatures {
                 private static final long serialVersionUID = -6553009833190713980L;
                 
                 public void execute() {
-                    AllZone.GameAction.sacrifice(card);
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getGameAction().sacrifice(card);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             }));
@@ -1644,7 +1644,7 @@ public class CardFactory_Creatures {
                 }
                 
                 CardList getCreature() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
                     list = list.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
                             return c.isCreature() && (!c.isArtifact()) && CardFactoryUtil.canTarget(card, c);
@@ -1672,7 +1672,7 @@ public class CardFactory_Creatures {
                         private static final long serialVersionUID = 3367390368512271319L;
                         
                         public void execute() {
-                            if(AllZoneUtil.isCardInPlay(card)) AllZone.GameAction.sacrifice(card);
+                            if(AllZoneUtil.isCardInPlay(card)) AllZone.getGameAction().sacrifice(card);
                         }
                     });
                 }
@@ -1683,7 +1683,7 @@ public class CardFactory_Creatures {
                 private static final long serialVersionUID = 6667896040611028600L;
                 
                 public void execute() {
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             });
@@ -1694,7 +1694,7 @@ public class CardFactory_Creatures {
                 public void execute() {
                     CardList list = AllZoneUtil.getCardsInPlay("Stangg Twin");
                     
-                    if(list.size() == 1) AllZone.GameAction.exile(list.get(0));
+                    if(list.size() == 1) AllZone.getGameAction().exile(list.get(0));
                 }
             });            
         }//*************** END ************ END **************************
@@ -1742,7 +1742,7 @@ public class CardFactory_Creatures {
                                 	setTargetCard(human.get(0));
                                 }
                                 
-                                CardList assassins = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                                CardList assassins = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                                 assassins = assassins.filter(new CardListFilter() {
                                     public boolean addCard(Card c) {
                                         return c.isCreature() 
@@ -1756,7 +1756,7 @@ public class CardFactory_Creatures {
                                 Combat attackers = ComputerUtil.getAttackers();
                                 CardList list = new CardList(attackers.getAttackers());
                             	
-                                return (AllZone.Phase.getPhase().equals(Constant.Phase.Main1) && AllZone.Phase.getPlayerTurn().equals(card.getController()) && 
+                                return (AllZone.getPhase().getPhase().equals(Constant.Phase.Main1) && AllZone.getPhase().getPlayerTurn().equals(card.getController()) && 
                                 		human.size() > 0 && (assassins.size() > 0 || !list.contains(card)));
                                 
                             }//canPlayAI
@@ -1770,7 +1770,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    return super.canPlayAI() && AllZone.Phase.getPhase().equals(Constant.Phase.Main2);
+                    return super.canPlayAI() && AllZone.getPhase().getPhase().equals(Constant.Phase.Main2);
                 }
             };//SpellAbility
             
@@ -1801,7 +1801,7 @@ public class CardFactory_Creatures {
                     
                     if(AllZoneUtil.isCardInPlayerGraveyard(card.getController(), c)) {
                         PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, c.getController());
-                        AllZone.GameAction.moveTo(play, c);
+                        AllZone.getGameAction().moveTo(play, c);
                     }
                 }//resolve()
                 
@@ -1867,12 +1867,12 @@ public class CardFactory_Creatures {
                     copy.setBaseAttack(token.getBaseAttack());
                     copy.setBaseDefense(token.getBaseDefense());
                     
-                    AllZone.GameAction.moveToPlay(copy);
+                    AllZone.getGameAction().moveToPlay(copy);
                 }
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList allTokens = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+                	CardList allTokens = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
                     allTokens = allTokens.filter(AllZoneUtil.token);
                 	
                     return allTokens.size() >= 2;
@@ -2008,7 +2008,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList wolves = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList wolves = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     wolves = wolves.getType("Wolf");
                     
                     wolves = wolves.filter(new CardListFilter() {
@@ -2025,7 +2025,7 @@ public class CardFactory_Creatures {
                     
                     final int totalPower = power;
                     
-                    CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+                    CardList targetables = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
                     
                     targetables = targetables.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
@@ -2068,12 +2068,12 @@ public class CardFactory_Creatures {
 
                     if (target.getController().isHuman()){	// Human choose spread damage
                          for(int x = 0; x < target.getNetAttack() ; x++) {
-                        	 AllZone.InputControl.setInput(CardFactoryUtil.MasteroftheWildHunt_input_targetCreature(this, wolves, new Command() {
+                        	 AllZone.getInputControl().setInput(CardFactoryUtil.MasteroftheWildHunt_input_targetCreature(this, wolves, new Command() {
                                  private static final long serialVersionUID = -328305150127775L;
                                  
                                  public void execute() {
                                 	 getTargetCard().addDamage(1,target);
-                                	 AllZone.GameAction.checkStateEffects();
+                                	 AllZone.getGameAction().checkStateEffects();
                                  }
                              }));
                         }               
@@ -2154,7 +2154,7 @@ public class CardFactory_Creatures {
 
 				@Override
         		public boolean canPlayAI(){
-        			Player p = AllZone.HumanPlayer;
+        			Player p = AllZone.getHumanPlayer();
         			
         			if (!p.canTarget(card))
         				return false;
@@ -2188,7 +2188,7 @@ public class CardFactory_Creatures {
                                 land.setSickness(true);
                             }
                             
-                            AllZone.GameAction.changeController(new CardList(land), land.getController(), card.getController());
+                            AllZone.getGameAction().changeController(new CardList(land), land.getController(), card.getController());
                         }//if
                     }
                 }
@@ -2333,7 +2333,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.getType("Artifact");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2351,7 +2351,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                     list = list.getType("Enchantment");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2369,8 +2369,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
-                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
+                    CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
+                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
                     list = list.getType("Enchantment");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2388,8 +2388,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
-                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
+                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
+                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
                     list = list.getType("Land");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2407,8 +2407,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
-                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
+                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
+                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
                     list = list.getType("Creature");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2426,8 +2426,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
-                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
+                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
+                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
                     list = list.getType("Instant");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2445,8 +2445,8 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public boolean canPlayAI() {
-                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
-                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.HumanPlayer));
+                	CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
+                    list.addAll(AllZoneUtil.getPlayerGraveyard(AllZone.getHumanPlayer()));
                     list = list.getType("Sorcery");
                     return super.canPlayAI() && list.size() > 0;
                 }
@@ -2487,7 +2487,7 @@ public class CardFactory_Creatures {
                 @Override
                 public void resolve() {
                 	int XCounters = card.getXManaCostPaid();
-                    Card c =  AllZone.GameAction.moveToPlay(getSourceCard());
+                    Card c =  AllZone.getGameAction().moveToPlay(getSourceCard());
                 	
                 	if(XCounters >= 5) XCounters = 2 * XCounters;
                     c.addCounter(Counters.P1P1, XCounters);   
@@ -2518,7 +2518,7 @@ public class CardFactory_Creatures {
                 
                 @Override
                 public void chooseTargetAI() {
-                    if(AllZone.HumanPlayer.getLife() < card.getCounters(Counters.P1P1)) setTargetPlayer(AllZone.HumanPlayer);
+                    if(AllZone.getHumanPlayer().getLife() < card.getCounters(Counters.P1P1)) setTargetPlayer(AllZone.getHumanPlayer());
                     else {
                         CardList list = getCreature();
                         list.shuffle();
@@ -2580,9 +2580,9 @@ public class CardFactory_Creatures {
                         
                         if (GameActionUtil.showYesNoDialog(card, question.toString())) {
                             if (card.getName().equals("Academy Rector")) {
-                                AllZone.GameAction.exile(card);
+                                AllZone.getGameAction().exile(card);
                             }
-                            CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer);
+                            CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer());
                             list = list.getType("Enchantment");
                             
                             if (list.size() > 0) {
@@ -2591,7 +2591,7 @@ public class CardFactory_Creatures {
                                 if (objectSelected != null) {
 
                                     final Card c = (Card) objectSelected;
-                                    AllZone.GameAction.moveToPlay(c);
+                                    AllZone.getGameAction().moveToPlay(c);
                                     
                                     if (c.isAura()) {
                                         
@@ -2650,12 +2650,12 @@ public class CardFactory_Creatures {
                                             final CardList choices = allCards.getValidCards(enchantThisType[0], card.getController(), card);
                                             final String msg = message[0];
                                         
-                                            AllZone.InputControl.setInput(new Input() {
+                                            AllZone.getInputControl().setInput(new Input() {
                                                 private static final long serialVersionUID = -6271957194091955059L;
 
                                                 @Override
                                                 public void showMessage() {
-                                                    AllZone.Display.showMessage(msg);
+                                                    AllZone.getDisplay().showMessage(msg);
                                                     ButtonUtil.enableOnlyOK();
                                                 }
                                             
@@ -2687,7 +2687,7 @@ public class CardFactory_Creatures {
                     
                     // player is the computer
                     else {
-                        CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.ComputerPlayer);
+                        CardList list = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getComputerPlayer());
                         list = list.filter(new CardListFilter() {
                             public boolean addCard(Card c) {
                                 return c.isEnchantment() && !c.isAura();
@@ -2697,9 +2697,9 @@ public class CardFactory_Creatures {
                         if (list.size() > 0) {
                             Card c = CardFactoryUtil.AI_getBestEnchantment(list, card, false);
 
-                            AllZone.GameAction.moveToPlay(c);
+                            AllZone.getGameAction().moveToPlay(c);
                             if (card.getName().equals("Academy Rector")) {
-                                AllZone.GameAction.exile(card);
+                                AllZone.getGameAction().exile(card);
                             }
                             card.getController().shuffle();
                         }
@@ -2723,10 +2723,10 @@ public class CardFactory_Creatures {
                     
                     if (card.getName().equals("Lost Auramancers") 
                             && card.getCounters(Counters.TIME) <= 0) {
-                        AllZone.Stack.addSimultaneousStackEntry(ability);
+                        AllZone.getStack().addSimultaneousStackEntry(ability);
 
                     } else if (card.getName().equals("Academy Rector")) {
-                        AllZone.Stack.addSimultaneousStackEntry(ability);
+                        AllZone.getStack().addSimultaneousStackEntry(ability);
 
                     }
                     
@@ -2792,7 +2792,7 @@ public class CardFactory_Creatures {
                                 }
                             }
                         };//Command
-                        AllZone.EndOfTurn.addUntil(atEOT);
+                        AllZone.getEndOfTurn().addUntil(atEOT);
                     }
                 }
             };
@@ -2827,8 +2827,8 @@ public class CardFactory_Creatures {
                         String s = "Ancestral Recall";
                         
                         CardList list = new CardList();
-                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
-                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer));
+                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
+                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer()));
                         list = list.filter(new CardListFilter() {
                             public boolean addCard(Card c) {
                                 return !c.isLand() && !c.isUnCastable();
@@ -2863,7 +2863,7 @@ public class CardFactory_Creatures {
                 private static final long serialVersionUID = 8485080996453793968L;
                 
                 public void execute() {
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };//Command
@@ -2889,8 +2889,8 @@ public class CardFactory_Creatures {
                         card.setChosenColor(color);
                     } else {
                         CardList list = new CardList();
-                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer));
-                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.HumanPlayer));
+                        list.addAll(AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer()));
+                        list.addAll(AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()));
 
                         if(list.size() > 0) {
                             String color = CardFactoryUtil.getMostProminentColor(list);
@@ -2928,7 +2928,7 @@ public class CardFactory_Creatures {
                 
                 public void execute() {
                     ability.setStackDescription("When CARDNAME enters the battlefield, target player reveals a card at random from his or her hand, then loses life equal to that card's converted mana cost.");
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
                 }
             };
             card.addComesIntoPlayCommand(intoPlay);
@@ -2958,9 +2958,9 @@ public class CardFactory_Creatures {
                     if(AllZoneUtil.isCardInPlay(card)) {
                         card.addTempAttackBoost(3);
                         card.addTempDefenseBoost(3);
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                         
-                        AllZone.Phase.skipTurn(card.getController());
+                        AllZone.getPhase().skipTurn(card.getController());
                     }
                 }
                 
@@ -3010,7 +3010,7 @@ public class CardFactory_Creatures {
                 
                 public void execute() {
                     ability.setStackDescription("Kinsbaile Borderguard enters the battlefield with a +1/+1 counter on it for each other Kithkin you control.");
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -3035,7 +3035,7 @@ public class CardFactory_Creatures {
                 public void execute() {
                     ability2.setStackDescription("When Kinsbaile Borderguard is put into a graveyard from play, put a 1/1 white " +
                     		"Kithkin Soldier creature token onto the battlefield for each counter on it.");
-                    AllZone.Stack.addSimultaneousStackEntry(ability2);
+                    AllZone.getStack().addSimultaneousStackEntry(ability2);
 
                 }
             };
@@ -3064,7 +3064,7 @@ public class CardFactory_Creatures {
                 	sb.append(card.getName()).append(" - gain 2 life for each age counter on it.");
                 	ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };//command
@@ -3081,13 +3081,13 @@ public class CardFactory_Creatures {
                 @Override
                 public void resolve() {
                     card.setKicked(true);
-                    AllZone.GameAction.moveToPlay(card);
+                    AllZone.getGameAction().moveToPlay(card);
                 }
                 
                 @Override
                 public boolean canPlay() {
-                    return super.canPlay() && AllZone.Phase.getPlayerTurn().equals(card.getController())
-                            && !AllZone.Phase.getPhase().equals("End of Turn")
+                    return super.canPlay() && AllZone.getPhase().getPlayerTurn().equals(card.getController())
+                            && !AllZone.getPhase().getPhase().equals("End of Turn")
                             && !AllZoneUtil.isCardInPlay(card);
                 }
                 
@@ -3119,7 +3119,7 @@ public class CardFactory_Creatures {
                 public void execute() {
                     if(card.isKicked()) {
                             ability.setStackDescription("Kavu Titan gets 3 +1/+1 counters and gains trample.");
-                            AllZone.Stack.addSimultaneousStackEntry(ability);
+                            AllZone.getStack().addSimultaneousStackEntry(ability);
 
                     }
                 }//execute()
@@ -3150,7 +3150,7 @@ public class CardFactory_Creatures {
 				private static final long serialVersionUID = 4245563898487609274L;
 
 				public void execute() {
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
@@ -3208,7 +3208,7 @@ public class CardFactory_Creatures {
         						c.addTempDefenseBoost(pump);
         						c.addExtrinsicKeyword("Trample");
         					}
-        					AllZone.EndOfTurn.addUntil(eot);
+        					AllZone.getEndOfTurn().addUntil(eot);
         				}
         			};//SpellAbility
         			
@@ -3216,7 +3216,7 @@ public class CardFactory_Creatures {
         			sb.append(card.getName()).append(" - chosen type gets +2/+2 and Trample until EOT");
         			ability.setStackDescription(sb.toString());
 
-                    AllZone.Stack.addSimultaneousStackEntry(ability);
+                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
         		}//execute
         	};//command
@@ -3231,7 +3231,7 @@ public class CardFactory_Creatures {
         		
         		@Override
         		public boolean canPlayAI() {
-    			CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+    			CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
                 CardListUtil.sortAttack(human);
         		 return (human.get(0).getNetAttack() < Phase.getStormCount() && Phase.getStormCount() > 1);
         		}
@@ -3247,7 +3247,7 @@ public class CardFactory_Creatures {
 				private static final long serialVersionUID = -3734151854295L;
 
 				public void execute() {
-        			AllZone.Stack.addSimultaneousStackEntry(intoPlay);
+        			AllZone.getStack().addSimultaneousStackEntry(intoPlay);
 
         		}
         	};
@@ -3275,7 +3275,7 @@ public class CardFactory_Creatures {
         		public boolean canPlayAI() {
         			
         			//Dark Depths:
-        			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer, "Dark Depths");
+        			CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer(), "Dark Depths");
         			list = list.filter(new CardListFilter(){
         				public boolean addCard(Card crd)
         				{
@@ -3290,7 +3290,7 @@ public class CardFactory_Creatures {
         			}
         			
         			//Get rid of Planeswalkers:
-        			list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+        			list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         			list = list.filter(new CardListFilter(){
         				public boolean addCard(Card crd)
         				{
@@ -3349,7 +3349,7 @@ public class CardFactory_Creatures {
         					  for(int m = 0; m < selection.size(); m++) {
         						  intermSumPower += selection.get(m).getBaseAttack();
         						  intermSumToughness += selection.get(m).getBaseDefense();
-        						  AllZone.GameAction.exile(selection.get(m));
+        						  AllZone.getGameAction().exile(selection.get(m));
         					  }
         				  }
 
@@ -3361,11 +3361,11 @@ public class CardFactory_Creatures {
         					  if(c.getNetAttack() <= 2 && c.getNetDefense() <= 3) {
         						  intermSumPower += c.getBaseAttack();
         						  intermSumToughness += c.getBaseDefense();
-        						  AllZone.GameAction.exile(c);
+        						  AllZone.getGameAction().exile(c);
         						  count++;
         					  }
         					  //is this needed?
-        					  AllZone.Computer_Battlefield.updateObservers();
+        					  AllZone.getComputerBattlefield().updateObservers();
         				  }
         				  numCreatures[0] = count;
         			  }
@@ -3384,7 +3384,7 @@ public class CardFactory_Creatures {
         		  @Override
         		  public boolean canPlayAI() {
         			  //get all creatures
-        			  CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.ComputerPlayer);
+        			  CardList list = AllZoneUtil.getPlayerGraveyard(AllZone.getComputerPlayer());
         			  list = list.filter(AllZoneUtil.creatures);
         			  return 0 < list.size();
         		  }
@@ -3443,7 +3443,7 @@ public class CardFactory_Creatures {
 				private static final long serialVersionUID = 931101364538995898L;
 
 				public void execute() {
-        			AllZone.Stack.addSimultaneousStackEntry(ability);
+        			AllZone.getStack().addSimultaneousStackEntry(ability);
 
         		}
         	};
@@ -3540,7 +3540,7 @@ public class CardFactory_Creatures {
         		
         		@Override
         		public void resolve() {
-        			AllZone.InputControl.setInput(new Input() {
+        			AllZone.getInputControl().setInput(new Input() {
 						private static final long serialVersionUID = 6150236529653275947L;
         				CardList revealed = new CardList();
 
@@ -3549,7 +3549,7 @@ public class CardFactory_Creatures {
         					//in case hand is empty, don't do anything
         					if (AllZoneUtil.getPlayerHand(card.getController()).size() == 0) stop();
 
-        					AllZone.Display.showMessage(card.getName()+" - Reveal an artifact.  Revealed "+revealed.size()+" so far.  Click OK when done.");
+        					AllZone.getDisplay().showMessage(card.getName()+" - Reveal an artifact.  Revealed "+revealed.size()+" so far.  Click OK when done.");
         					ButtonUtil.enableOnlyOK();
         				}
 
@@ -3625,7 +3625,7 @@ public class CardFactory_Creatures {
                     if(AllZoneUtil.isCardInPlay(card)) {
                         card.addTempAttackBoost(2);
                         card.addTempDefenseBoost(2);
-                        AllZone.EndOfTurn.addUntil(untilEOT);
+                        AllZone.getEndOfTurn().addUntil(untilEOT);
                     }
                 }
             };
@@ -3643,13 +3643,13 @@ public class CardFactory_Creatures {
             				break;
             			}
             		}
-            		AllZone.Display.showMessage(card.getName()+" - Select OK to exile "+topCreature+".");
+            		AllZone.getDisplay().showMessage(card.getName()+" - Select OK to exile "+topCreature+".");
             		ButtonUtil.enableAll();
             	}
             	
             	public void selectButtonOK() {
-            		AllZone.GameAction.exile(topCreature);
-            		AllZone.Stack.add(ability);
+            		AllZone.getGameAction().exile(topCreature);
+            		AllZone.getStack().add(ability);
             		stop();
             	}
             	
@@ -3678,7 +3678,7 @@ public class CardFactory_Creatures {
 				@Override
                 public void resolve() {
                     card.setKicked(true);
-                    AllZone.GameAction.moveToPlay(card);
+                    AllZone.getGameAction().moveToPlay(card);
                     card.addCounterFromNonEffect(Counters.P1P1, 2);
                 }
                 
@@ -3725,7 +3725,7 @@ public class CardFactory_Creatures {
                 @Override
                 public void showMessage() {
                     if(targetPerms.size() == 5) done();
-                	AllZone.Display.showMessage("Select up to 5 target permanents.  Selected ("+targetPerms.size()+") so far.  Click OK when done.");
+                	AllZone.getDisplay().showMessage("Select up to 5 target permanents.  Selected ("+targetPerms.size()+") so far.  Click OK when done.");
                     ButtonUtil.enableOnlyOK();
                 }
                 
@@ -3739,7 +3739,7 @@ public class CardFactory_Creatures {
                 	StringBuilder sb = new StringBuilder();
                 	sb.append(card.getName()).append(" - tap up to 5 permanents target player controls. Target player skips his or her next untap step.");
                 	ability.setStackDescription(sb.toString());
-                	AllZone.Stack.add(ability);
+                	AllZone.getStack().add(ability);
                 	stop();
                 }
                 
@@ -3759,7 +3759,7 @@ public class CardFactory_Creatures {
 
 				@Override
             	public void showMessage() {
-            		AllZone.Display.showMessage(card.getName()+" - Select target player");
+            		AllZone.getDisplay().showMessage(card.getName()+" - Select target player");
             		ButtonUtil.enableOnlyCancel();
             	}
             	
@@ -3782,11 +3782,11 @@ public class CardFactory_Creatures {
                 	Player player = card.getController();
                     CardList list = CardFactoryUtil.AI_getHumanCreature(card, true);
                     
-                    if(player.isHuman()) AllZone.InputControl.setInput(playerInput);
+                    if(player.isHuman()) AllZone.getInputControl().setInput(playerInput);
                     else if(list.size() != 0) {
                         Card target = CardFactoryUtil.AI_getBestCreature(list);
                         ability.setTargetCard(target);
-                        AllZone.Stack.addSimultaneousStackEntry(ability);
+                        AllZone.getStack().addSimultaneousStackEntry(ability);
 
                     }
                 }//execute()
@@ -3813,7 +3813,7 @@ public class CardFactory_Creatures {
         						String toDisplay = cardName+" - Select any number of creatures to sacrifice.  ";
         						toDisplay += "Currently, ("+toSac.size()+") selected with a total power of: "+getTotalPower();
         						toDisplay += "  Click OK when Done.";
-        						AllZone.Display.showMessage(toDisplay);
+        						AllZone.getDisplay().showMessage(toDisplay);
         						ButtonUtil.enableAll();
         					}
         					
@@ -3825,13 +3825,13 @@ public class CardFactory_Creatures {
         					@Override
         					public void selectButtonCancel() {
         						toSac.clear();
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					
         					@Override
         					public void selectCard(Card c, PlayerZone zone) {
-        						if(c.isCreature() && zone.is(Constant.Zone.Battlefield, AllZone.HumanPlayer)
+        						if(c.isCreature() && zone.is(Constant.Zone.Battlefield, AllZone.getHumanPlayer())
         								&& !toSac.contains(c)) {
         							toSac.add(c);
         						}
@@ -3840,16 +3840,16 @@ public class CardFactory_Creatures {
         					
         					private void done() {
         						if(getTotalPower() >= 12) {
-        							for(Card sac:toSac) AllZone.GameAction.sacrifice(sac);
+        							for(Card sac:toSac) AllZone.getGameAction().sacrifice(sac);
         						}
         						else {
-        							AllZone.GameAction.sacrifice(card);
+        							AllZone.getGameAction().sacrifice(card);
         						}
         						toSac.clear();
         						stop();
         					}
         				};//Input
-        				AllZone.InputControl.setInput(target);
+        				AllZone.getInputControl().setInput(target);
         			}
         		}//end resolve
         		
@@ -3867,7 +3867,7 @@ public class CardFactory_Creatures {
         		
         		public void execute() {
         			sacOrSac.setStackDescription("When "+cardName+" enters the battlefield, sacrifice it unless you sacrifice any number of creatures with total power 12 or greater.");
-        			AllZone.Stack.addSimultaneousStackEntry(sacOrSac);
+        			AllZone.getStack().addSimultaneousStackEntry(sacOrSac);
 
         		}
         	};
@@ -3890,7 +3890,7 @@ public class CardFactory_Creatures {
                 public void resolve() {
                     Card orig = cfact.getCard(card.getName(), card.getController());
                     PlayerZone dest = AllZone.getZone(card.getCurrentlyCloningCard());
-                    AllZone.GameAction.moveTo(dest, orig);
+                    AllZone.getGameAction().moveTo(dest, orig);
                     dest.remove(card.getCurrentlyCloningCard());
                 }
             };//SpellAbility
@@ -3904,9 +3904,9 @@ public class CardFactory_Creatures {
                     copyBack.setStackDescription(sb.toString());
                     
                     //Slight hack if the cloner copies a card with triggers
-                    AllZone.TriggerHandler.removeAllFromCard(cloned[0]);
+                    AllZone.getTriggerHandler().removeAllFromCard(cloned[0]);
                     
-                    AllZone.Stack.addSimultaneousStackEntry(copyBack);
+                    AllZone.getStack().addSimultaneousStackEntry(copyBack);
 
                 }
             };
@@ -3949,10 +3949,10 @@ public class CardFactory_Creatures {
 						//Slight hack in case the cloner copies a card with triggers
 						for(Trigger t : cloned[0].getTriggers())
 						{
-							AllZone.TriggerHandler.registerTrigger(t);
+							AllZone.getTriggerHandler().registerTrigger(t);
 						}
 						
-						AllZone.GameAction.moveToPlay(cloned[0]);
+						AllZone.getGameAction().moveToPlay(cloned[0]);
 						card.setCurrentlyCloningCard(cloned[0]);
 					}
                 }
@@ -3966,7 +3966,7 @@ public class CardFactory_Creatures {
 					String message = "Select a creature ";
 					if(cardName.equals("Phyrexian Metamorph")) message += "or artifact ";
 					message += "on the battlefield";
-            		AllZone.Display.showMessage(cardName+" - "+message);
+            		AllZone.getDisplay().showMessage(cardName+" - "+message);
             		ButtonUtil.enableOnlyCancel();
             	}
 				
@@ -4060,7 +4060,7 @@ public class CardFactory_Creatures {
         	final SpellAbility toPlay = new Ability(card, "0") {
                 @Override
                 public void resolve() {
-                    AllZone.GameAction.moveToPlay(card);
+                    AllZone.getGameAction().moveToPlay(card);
                 }
             }; //ability
             StringBuilder sb = new StringBuilder();
@@ -4071,7 +4071,7 @@ public class CardFactory_Creatures {
 				private static final long serialVersionUID = 911163814565333484L;
 
 				public void execute() {
-            		AllZone.Stack.addSimultaneousStackEntry(toPlay);
+            		AllZone.getStack().addSimultaneousStackEntry(toPlay);
 
             	}
             };
@@ -4081,8 +4081,8 @@ public class CardFactory_Creatures {
 				private static final long serialVersionUID = 7850843970664800204L;
 
 				public void resolve() {
-        			AllZone.GameAction.exile(card);
-        			AllZone.EndOfTurn.addAt(eot);
+        			AllZone.getGameAction().exile(card);
+        			AllZone.getEndOfTurn().addAt(eot);
         		}
         	};
         	toExile.setDescription(abCost+"Exile CARDNAME. Return it to the battlefield under its owner's control at the beginning of the next end step.");
@@ -4114,9 +4114,9 @@ public class CardFactory_Creatures {
 	                    private static final long serialVersionUID = 8094833091127334678L;
 	                    
 	                    public void execute() {
-	                    	AllZone.Stack.remove(tgtSA);
+	                    	AllZone.getStack().remove(tgtSA);
 	                    	if(tgtSA.isSpell())
-	                    		AllZone.GameAction.moveToGraveyard(tgtSA.getSourceCard());
+	                    		AllZone.getGameAction().moveToGraveyard(tgtSA.getSourceCard());
 	                    }
 	                };
 	                
@@ -4129,9 +4129,9 @@ public class CardFactory_Creatures {
 	                {
 	                	if(ComputerUtil.canPayCost(ability)) ComputerUtil.playNoStack(ability);
 	                    else {
-	                    	AllZone.Stack.remove(tgtSA);
+	                    	AllZone.getStack().remove(tgtSA);
 	                    	if(tgtSA.isSpell())
-	                    		AllZone.GameAction.moveToGraveyard(tgtSA.getSourceCard());
+	                    		AllZone.getGameAction().moveToGraveyard(tgtSA.getSourceCard());
 	                    }
 	                }
 				}
@@ -4222,7 +4222,7 @@ public class CardFactory_Creatures {
         				target.addCounter(Counters.M1M1, 1);
         				if(target.getNetDefense() >= 1) {
         					target.addShield();
-        					AllZone.EndOfTurn.addUntil(new Command() {
+        					AllZone.getEndOfTurn().addUntil(new Command() {
         						private static final long serialVersionUID = -3332692040606224591L;
 
         						public void execute() {
@@ -4283,7 +4283,7 @@ public class CardFactory_Creatures {
                                 }
                             }
                         };
-                        AllZone.EndOfTurn.addUntil(EOT);
+                        AllZone.getEndOfTurn().addUntil(EOT);
 
                     }//if (card is in play)
                 }//resolve()
