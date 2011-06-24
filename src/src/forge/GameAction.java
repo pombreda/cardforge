@@ -1705,7 +1705,7 @@ public class GameAction {
     							}
 
     							String[] Numbers = new String[Max];
-    							if("X".equals(k[3])) {
+    							/*if("X".equals(k[3])) {
     								for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
     								String Number_ManaCost = " ";
     								if(Mana.toString().length() == 1) {
@@ -1727,8 +1727,15 @@ public class GameAction {
     									if(Mana.equals("")) Mana = "0";
     									manaCost = new ManaCost(Mana);	
     								}
-    							}
-    							else if(!"WUGRB".contains(k[3])) {
+    							}*/
+    							if(!"WUGRB".contains(k[3])) {
+    								
+    								int value = 0;
+    								if ("X".equals(k[3]))
+    									value = CardFactoryUtil.xCount(card, card.getSVar("X"));
+    								else 
+    									value = Integer.valueOf(k[3]);
+    								
     								for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
     								String Number_ManaCost = " ";
     								if(Mana.toString().length() == 1) Number_ManaCost = Mana.toString().substring(0, 1);
@@ -1738,9 +1745,10 @@ public class GameAction {
 
     								for(int check = 0; check < Max; check ++) {
     									if(Number_ManaCost.equals(Numbers[check])) {
-    										if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
-    										if(check - Integer.valueOf(k[3]) < 0) k[3] = String.valueOf(check);
-    										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - Integer.valueOf(k[3])));	                  		
+    										if((spell.isXCost()) || (spell.isMultiKicker()) && (check - value) < 0)
+    											XBonus = XBonus - check + value;
+    										if(check - value < 0) value = check;
+    										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - value));	                  		
     									}
     									if(Mana.equals("")) Mana = "0";
     									manaCost = new ManaCost(Mana);	
