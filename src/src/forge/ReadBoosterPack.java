@@ -134,47 +134,41 @@ public class ReadBoosterPack implements NewConstants {
         return pack;
     }
     
-    public CardList getShopCards(int numberWins)
-    {
+    public CardList getShopCards(int numberWins, int questLevel) {
     	CardList list = new CardList();
     	
-    	int numberRares = 1 + numberWins / 15;
-    	if (numberRares > 10 )
-    		numberRares = 10;
+    	// Number of Packs granted 
+    	int levelPacks = questLevel > 0 ? 8 / questLevel / 2 : 4;
+    	int winPacks = numberWins / 15;
     	
-    	for (int i=0;i<numberRares;i++)
+    	int totalPacks = Math.min(levelPacks+winPacks, 6);
+
+    	for (int i=0; i < totalPacks; i++) {
+        	// TODO: Balance CardPool Availability
+    		// Each "Pack" yields 1 Rare, 3 Uncommon, 7 Commons
     		list.add(getRandomCard(rareList));
-    	
-    	int numberUncommons = 3 + numberWins/10;
-    	if (numberUncommons > 20)
-    		numberUncommons = 20;
-    	
-    	for(int i = 0; i < numberUncommons; i++)
-            list.add(getRandomCard(uncommonList));
-    	
-    	int numberCommons = 5 + numberWins/5;
-    	if (numberCommons > 35)
-    		numberCommons = 35;
-    	
-    	for(int i = 0; i < numberCommons; i++)
-            list.add(getRandomCard(commonList));
-    	
-    	for (int i = 0;i<10;i++)
-    	{
+    		for(int j=0; j < 7; j++){
+    			if (j < 3)
+    				list.add(getRandomCard(uncommonList));
+    			
+    			list.add(getRandomCard(commonList));
+    		}
+    	}
+
+    	for (int i = 0; i < 10; i++) {
+    		// Add basic land availability
 	    	list.add(AllZone.getCardFactory().getCard("Forest", AllZone.getHumanPlayer()));
 	        list.add(AllZone.getCardFactory().getCard("Island", AllZone.getHumanPlayer()));
 	        list.add(AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()));
 	        list.add(AllZone.getCardFactory().getCard("Mountain", AllZone.getHumanPlayer()));
 	        list.add(AllZone.getCardFactory().getCard("Swamp", AllZone.getHumanPlayer()));
-    	}
-    	
-    	for (int i = 0;i<5;i++)
-    	{
-    		list.add(AllZone.getCardFactory().getCard("Snow-Covered Forest", AllZone.getHumanPlayer()));
-            list.add(AllZone.getCardFactory().getCard("Snow-Covered Island", AllZone.getHumanPlayer()));
-            list.add(AllZone.getCardFactory().getCard("Snow-Covered Plains", AllZone.getHumanPlayer()));
-            list.add(AllZone.getCardFactory().getCard("Snow-Covered Mountain", AllZone.getHumanPlayer()));
-            list.add(AllZone.getCardFactory().getCard("Snow-Covered Swamp", AllZone.getHumanPlayer()));
+	        if (i < 5){
+	    		list.add(AllZone.getCardFactory().getCard("Snow-Covered Forest", AllZone.getHumanPlayer()));
+	            list.add(AllZone.getCardFactory().getCard("Snow-Covered Island", AllZone.getHumanPlayer()));
+	            list.add(AllZone.getCardFactory().getCard("Snow-Covered Plains", AllZone.getHumanPlayer()));
+	            list.add(AllZone.getCardFactory().getCard("Snow-Covered Mountain", AllZone.getHumanPlayer()));
+	            list.add(AllZone.getCardFactory().getCard("Snow-Covered Swamp", AllZone.getHumanPlayer()));
+	    	}
     	}
     	
     	return list;
