@@ -2544,7 +2544,7 @@ public class CardFactoryUtil {
         //Count$ThisTurnEntered <ZoneDestination <Valid>
         if(sq[0].startsWith("ThisTurnEntered"))
         {
-            String[] workingCopy = sq[0].split(" ");
+            String[] workingCopy = l[0].split(" ");
             String destination,origin,validFilter;
 
             destination = workingCopy[1];

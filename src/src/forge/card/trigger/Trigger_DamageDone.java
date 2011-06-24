@@ -2,6 +2,7 @@ package forge.card.trigger;
 
 import java.util.HashMap;
 
+import forge.AllZoneUtil;
 import forge.Card;
 import forge.card.spellability.SpellAbility;
 
@@ -55,31 +56,8 @@ public class Trigger_DamageDone extends Trigger {
             int operand = Integer.parseInt(fullParam.substring(2));
             int actualAmount = (Integer)runParams.get("DamageAmount");
 
-            if(operator.equals("LT"))
-            {
-                if(!(actualAmount < operand))
-                    return false;
-            }
-            else if (operator.equals("LE"))
-            {
-                if(!(actualAmount <= operand))
-                    return false;
-            }
-            else if (operator.equals("EQ"))
-            {
-                if(!(actualAmount == operand))
-                    return false;
-            }
-            else if (operator.equals("GE"))
-            {
-                if(!(actualAmount >= operand))
-                    return false;
-            }
-            else if (operator.equals("GT"))
-            {
-                if(!(actualAmount > operand))
-                    return false;
-            }
+            if(AllZoneUtil.compare(actualAmount,operator,operand))
+                return false;
 
             System.out.print("DamageDone Amount Operator: ");
             System.out.println(operator);
