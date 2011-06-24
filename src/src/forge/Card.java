@@ -2898,7 +2898,7 @@ public class Card extends MyObservable {
 	         	} else
 	         		x = Integer.parseInt(Property.substring(z));
 	         	
-	         	if (!compare(y, Property, x))
+	         	if (!AllZoneUtil.compare(y, Property, x))
 	         		return false;
 	         }
         
@@ -2929,7 +2929,7 @@ public class Card extends MyObservable {
               	String comparator = Property.substring(8,10); // comparator = EQ, LE, GE etc.
              	int actualnumber = getCounters(Counters.getType(type));
              	
-             	if (!compare(actualnumber, comparator, number))
+             	if (!AllZoneUtil.compare(actualnumber, comparator, number))
              		return false;
              }
  			
@@ -2974,24 +2974,6 @@ public class Card extends MyObservable {
        return true;
 	}//hasProperty
 
-	public static boolean compare(int leftSide, String comp, int rightSide){
-		// should this function be somewhere else?
-		// leftSide COMPARED to rightSide:
-		if (comp.contains("LT")) return leftSide < rightSide;
-		
-		else if (comp.contains("LE")) return leftSide <= rightSide;
-		
-		else if (comp.contains("EQ")) return leftSide == rightSide;
-		
-		else if (comp.contains("GE")) return leftSide >= rightSide;
-		
-		else if (comp.contains("GT")) return leftSide > rightSide;
-		
-		else if (comp.contains("NE")) return leftSide != rightSide; // not equals
-		
-		return false;
-	}
-	
 	public void setImmutable(boolean isImmutable) {
 		this.isImmutable = isImmutable;
 	}

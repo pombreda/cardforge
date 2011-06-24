@@ -841,4 +841,22 @@ public class AllZoneUtil {
 		return list;
 	}
 
+    public static boolean compare(int leftSide, String comp, int rightSide){
+		// should this function be somewhere else?
+		// leftSide COMPARED to rightSide:
+		if (comp.contains("LT")) return leftSide < rightSide;
+
+		else if (comp.contains("LE")) return leftSide <= rightSide;
+
+		else if (comp.contains("EQ")) return leftSide == rightSide;
+
+		else if (comp.contains("GE")) return leftSide >= rightSide;
+
+		else if (comp.contains("GT")) return leftSide > rightSide;
+
+		else if (comp.contains("NE")) return leftSide != rightSide; // not equals
+
+		return false;
+	}
+
 }//end class AllZoneUtil
