@@ -7,4 +7,5 @@ A:SP$Token | Cost$ 1 G | CheckSVar$ ArtifactsEntered | TokenAmount$ 1 | TokenNam
 SVar:ArtifactsEntered:Count$ThisTurnEntered Battlefield Artifact.YouDontCtrl
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/baloth_cage_trap.jpg
+SetInfo:ZEN|Uncommon|http://magiccards.info/scans/en/zen/156.jpg
 End

@@ -7,4 +7,5 @@ K:stPumpEquipped:Creature:0/0/SVar=ABDestroy:no Condition:Equipped creature gets
 SVar:ABDestroy:AB$Destroy | Cost$ T | ValidTgts$ Equipment | TgtPrompt$ Select target equipment. | SpellDescription$ Destroy target Equipment.
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/manriki_gusari.jpg
+SetInfo:SOK|Uncommon|http://magiccards.info/scans/en/sok/156.jpg
 End
