@@ -27,8 +27,6 @@ public class Card extends MyObservable {
     
     private long						 value;
     
-    //private Collection keyword   = new TreeSet();
-    //private ArrayList<String> keyword = new ArrayList<String>();
     private HashMap<String,Object>        triggeringObjects                 = new HashMap<String,Object>();
     private ArrayList<Trigger>			triggers						= new ArrayList<Trigger>();
     private ArrayList<String>			 intrinsicAbility				   = new ArrayList<String>();
@@ -54,6 +52,7 @@ public class Card extends MyObservable {
     
     private ArrayList<Object>			rememberedObjects					= new ArrayList<Object>();
     private ArrayList<Card>				imprintedCards						= new ArrayList<Card>();
+    private Card						championedCard						= null;
     
     private HashMap<Card, Integer>       receivedDamageFromThisTurn        = new HashMap<Card, Integer>();
     private HashMap<Card, Integer>		 dealtDamageToThisTurn			   = new HashMap<Card, Integer>();
@@ -147,8 +146,6 @@ public class Card extends MyObservable {
     private String                       text                              = "";
     private String                       manaCost                          = "";
     private String                       upkeepCost                        = "";
-    //private String                       tabernacleUpkeepCost              = "";
-    //private String                       magusTabernacleUpkeepCost         = "";
     private String                       echoCost                          = "";
     private String						 madnessCost					   = "";
     private String                       chosenType                        = "";
@@ -157,6 +154,7 @@ public class Card extends MyObservable {
     private String						 topCardName					   = "";
     private String						 reflectableMana				   = "";
     private Card						cloneOrigin							= null;
+    private ArrayList<Card>				clones								= new ArrayList<Card>();
     private Card						currentlyCloningCard				= null;
     private Command						cloneLeavesPlayCommand				= null;
     private ArrayList<Card>				gainControlTargets					= new ArrayList<Card>();	
@@ -221,6 +219,14 @@ public class Card extends MyObservable {
     	imprintedCards.clear();
     }
     
+    public void setChampionedCard(Card c) {
+    	championedCard = c;
+    }
+    
+    public Card getChampionedCard() {
+    	return championedCard;
+    }
+    
     public Trigger addTrigger(Trigger t)
     {
     	Trigger newtrig = t.getCopy();
@@ -269,31 +275,10 @@ public class Card extends MyObservable {
     	triggers.clear();
     }
 
-    public void setTriggeringObject(String type,Object o)
-    {
-        triggeringObjects.put(type,o);
-    }
-
     public Object getTriggeringObject(String type)
     {
         return triggeringObjects.get(type);
     }
-
-    public boolean hasTriggeringObject(String type)
-    {
-        return triggeringObjects.containsKey(type);
-    }
-
-    public void setAllTriggeringObjects(HashMap<String, Object> map)
-    {
-        triggeringObjects = map;
-    }
-
-    public HashMap<String, Object> getAllTriggeringObjects()
-    {
-        return triggeringObjects;
-    }
-
 
     public void setAbilityUsed(int i) {
         abilityUsed = i;
@@ -424,6 +409,27 @@ public class Card extends MyObservable {
     
     public boolean getSirenAttackOrDestroy() {
     	return sirenAttackOrDestroy;
+    }
+    
+    public ArrayList<Card> getClones() {
+    	return clones;
+    }
+    
+    public void setClones(ArrayList<Card> c) {
+    	clones.clear();
+    	clones.addAll(c);
+    }
+    
+    public void addClone(Card c) {
+    	clones.add(c);
+    }
+    
+    public void addClones(ArrayList<Card> c) {
+    	clones.addAll(c);
+    }
+    
+    public void clearClones() {
+    	clones.clear();
     }
     
     public Card getCloneOrigin() {
@@ -610,6 +616,11 @@ public class Card extends MyObservable {
         } else return 0;
     }
     
+    //get all counters from a card
+    public Hashtable<Counters, Integer> getCounters() {
+        return counters;
+    }
+    
     public boolean hasCounters()
     {
     	return counters.size() > 0;
@@ -628,6 +639,16 @@ public class Card extends MyObservable {
 	        	subtractCounter(counterName, num - n);
 	    }
         this.updateObservers();
+    }
+    
+    //get all counters from a card
+    public  void setCounters(Hashtable<Counters, Integer> allCounters) {
+        counters = allCounters;
+    }
+    
+    //get all counters from a card
+    public  void clearCounters() {
+        counters = new Hashtable<Counters, Integer>();
     }
     
     /**
@@ -804,22 +825,6 @@ public class Card extends MyObservable {
     public boolean hasUpkeepCost() {
         return upkeepCost.length() > 0 && !upkeepCost.equals("0");
     }
-    /*
-    public void setTabernacleUpkeepCost(String s) {
-        tabernacleUpkeepCost = s;
-    }
-    
-    public String getTabernacleUpkeepCost() {
-        return tabernacleUpkeepCost;
-    }
-    
-    public void setMagusTabernacleUpkeepCost(String s) {
-        magusTabernacleUpkeepCost = s;
-    }
-    
-    public String getMagusTabernacleUpkeepCost() {
-        return magusTabernacleUpkeepCost;
-    }*/
     
     //used for cards like Belbe's Portal, Conspiracy, Cover of Darkness, etc.
     public String getChosenType() {
@@ -1000,7 +1005,8 @@ public class Card extends MyObservable {
                 } else if (keyword.get(i).startsWith("Soulshift") || keyword.get(i).startsWith("Cumulative upkeep") 
                         || keyword.get(i).startsWith("Echo")      || keyword.get(i).startsWith("Fading") 
                         || keyword.get(i).startsWith("Ripple")    || keyword.get(i).startsWith("Unearth") 
-                        || keyword.get(i).startsWith("Vanishing") || keyword.get(i).startsWith("Madness")) {
+                        || keyword.get(i).startsWith("Vanishing") || keyword.get(i).startsWith("Madness")
+                        || keyword.get(i).startsWith("Devour")) {
                     String k = keyword.get(i);
                     k = k.replace(":", " ");
                     sbLong.append(k).append("\r\n");
@@ -1008,6 +1014,8 @@ public class Card extends MyObservable {
                 else if (keyword.get(i).startsWith("Champion")) {
                 	String k = getKeyword().get(i);
                 	String kk[] = k.split(":");
+                	String types = kk[1];
+                	if(kk.length > 2) types = kk[2];
                 	if (kk[1].equals("Creature")) kk[1] = kk[1].toLowerCase();
                 	sbLong.append("Champion a");
                 	if (kk[1].toLowerCase().startsWith("a") 
@@ -1017,8 +1025,8 @@ public class Card extends MyObservable {
                 			|| kk[1].toLowerCase().startsWith("u")) {
                 		sbLong.append("n");
                 	}
-                	sbLong.append(" ").append(kk[1]);
-                	sbLong.append(" (When this enters the battlefield, sacrifice it unless you exile another ").append(kk[1]);
+                	sbLong.append(" ").append(types);
+                	sbLong.append(" (When this enters the battlefield, sacrifice it unless you exile another ").append(types);
                 	sbLong.append(" you control. When this leaves the battlefield, that card returns to the battlefield.)\r\n");
                 } else if (keyword.get(i).endsWith(".")) {
                     sbLong.append(keyword.get(i).toString()).append("\r\n");
@@ -1098,7 +1106,7 @@ public class Card extends MyObservable {
                 }
             }
             
-            // Draw a card. + Changeling + CARDNAME can't be countered. + Cascade
+            //Changeling + CARDNAME can't be countered. + Cascade
             for (int i = 0; i < kw.size(); i++) {
                 if ((kw.get(i).contains("Changeling") && !sb.toString().contains("Changeling")) 
                         || (kw.get(i).contains("CARDNAME can't be countered.") && !sb.toString().contains("CARDNAME can't be countered.")) 
@@ -1151,6 +1159,13 @@ public class Card extends MyObservable {
         sb.append("\r\n");
         sb.append(text.replaceAll("\\\\r\\\\n", "\r\n"));
         sb.append("\r\n");
+        
+        /*
+         * if(isAura()) {
+            // Give spellText line breaks for easier reading
+            sb.append(getSpellText().replaceAll("\\\\r\\\\n", "\r\n")).append("\r\n");
+        }
+        */
 
         // Triggered abilities
         for(Trigger trig : triggers)
@@ -1169,7 +1184,7 @@ public class Card extends MyObservable {
         	if (!isPermanent())
         		continue;
         	
-        	if (sa instanceof Spell_Permanent && primaryCost){
+        	if (sa instanceof Spell_Permanent && primaryCost && !isAura()){
         		// For Alt costs, make sure to display the cost!
         		primaryCost = false;
         		continue;
@@ -1183,13 +1198,16 @@ public class Card extends MyObservable {
         		addedManaStrings.add(sAbility);
             }
 
-            if (sa instanceof Spell_Permanent){
+            if (sa instanceof Spell_Permanent && !isAura()){
             	sb.insert(0, "\r\n");
             	sb.insert(0, sAbility);
             }
-            else{
-	            sb.append(sAbility);
-	            sb.append("\r\n");
+            else if (! sAbility.endsWith(getName())) {
+                sb.append(sAbility);
+                sb.append("\r\n");
+                // The test above appears to prevent the card name from showing and therefore it no longer needs to be deleted from the stringbuilder
+                //if (sb.toString().endsWith("CARDNAME")) 
+                //    sb.replace(sb.toString().lastIndexOf("CARDNAME"), sb.toString().lastIndexOf("CARDNAME") + name.length() - 1, "");
             }
         }
         
@@ -1239,7 +1257,7 @@ public class Card extends MyObservable {
     public ArrayList<Ability_Mana> getAIPlayableMana() {
         ArrayList<Ability_Mana> res = new ArrayList<Ability_Mana>();
     	for(Ability_Mana am:getManaAbility())
-    		if(am.isBasic() && am.isUndoable() && !res.contains(am)) {
+    		if(am.isBasic() && !res.contains(am)) {
     			res.add(am);
     		} else if (am.isReflectedMana() && !res.contains(am)) {
     			res.add(am);
@@ -1702,9 +1720,6 @@ public class Card extends MyObservable {
         return rarity;
     }
     
-    
-    
-    
     public void setImageName(String s) {
         imageName = s;
     }
@@ -1820,8 +1835,6 @@ public class Card extends MyObservable {
             equippedBy.get(0).unEquipCard(this);
         }
     }
-    
-    //
     
     public ArrayList<Card> getEnchantedBy() {
         return enchantedBy;
@@ -1997,7 +2010,7 @@ public class Card extends MyObservable {
         this.updateObservers();
     }
     
-  //values that are printed on card
+    //values that are printed on card
     public String getBaseAttackString() {
         return (null == baseAttackString) ? ""+getBaseAttack() : baseAttackString;
     }
@@ -2097,8 +2110,6 @@ public class Card extends MyObservable {
     	return replicateMagnitude;
     }
     
-    //public int getAttack(){return attack;}
-    
     //for cards like Giant Growth, etc.
     public int getTempAttackBoost() {
         return tempAttackBoost;
@@ -2177,9 +2188,6 @@ public class Card extends MyObservable {
     public void setOtherDefenseBoost(int n) {
         otherDefenseBoost = n;
     }
-    
-    //public void setAttack(int n)    {attack  = n; this.updateObservers();}
-    //public void setDefense(int n)  {defense = n; this.updateObservers();}
     
     public boolean isUntapped() {
         return !tapped;
@@ -2267,13 +2275,6 @@ public class Card extends MyObservable {
     	return intrinsicAbility;
     }
     
-    //public void setKeyword(ArrayList a) {keyword = new ArrayList(a); this.updateObservers();}
-    //public void addKeyword(String s)     {keyword.add(s);                    this.updateObservers();}
-    //public void removeKeyword(String s) {keyword.remove(s);              this.updateObservers();}
-    //public int getKeywordSize() 	{return keyword.size();}
-    
-    //public String[] basics = {"Plains", "Island", "Swamp", "Mountain", "Forest"};
-    
     public ArrayList<String> getIntrinsicKeyword() {
         return new ArrayList<String>(intrinsicKeyword);
     }
@@ -2301,7 +2302,8 @@ public class Card extends MyObservable {
     
     public void addIntrinsicKeyword(String s) {
         if (s.trim().length()!=0)
-        	intrinsicKeyword.add((getName().trim().length()== 0 ? s :s.replaceAll(getName(), "CARDNAME")));
+        	intrinsicKeyword.add(s);
+        	//intrinsicKeyword.add((getName().trim().length()== 0 ? s :s.replaceAll(getName(), "CARDNAME")));
     }
     
     public void addIntrinsicAbility(String s)
@@ -2338,8 +2340,9 @@ public class Card extends MyObservable {
     public void addExtrinsicKeyword(String s) {
         //if(!hasKeyword(s)){
     	if (s.startsWith("HIDDEN")) addHiddenExtrinsicKeyword(s);
-        else 
-        	extrinsicKeyword.add((getName().trim().length()==0 ? s :s.replaceAll(getName(), "CARDNAME")));
+        else
+            extrinsicKeyword.add(s);
+        	//extrinsicKeyword.add((getName().trim().length()==0 ? s :s.replaceAll(getName(), "CARDNAME")));
         //}
     }
     
@@ -2454,7 +2457,7 @@ public class Card extends MyObservable {
     }
     
     public boolean isInstant() {
-        return type.contains("Instant") /*|| hasKeyword("Flash")*/;
+        return type.contains("Instant");
     }
     
     public boolean isArtifact() {
@@ -2486,16 +2489,12 @@ public class Card extends MyObservable {
         return typeContains("Enchantment");
     }
     
-    public boolean isLocalEnchantment() {
-        return typeContains("Aura");
-    }
-    
     public boolean isAura() {
         return typeContains("Aura");
     }
     
     public boolean isGlobalEnchantment() {
-        return typeContains("Enchantment") && (!isLocalEnchantment());
+        return typeContains("Enchantment") && (!isAura());
     }
     
     private boolean typeContains(String s) {
@@ -2524,6 +2523,7 @@ public class Card extends MyObservable {
     {
     	return value;
     }
+    
     @Override
     public boolean equals(Object o) {
         if(o instanceof Card) {
@@ -2738,19 +2738,22 @@ public class Card extends MyObservable {
         
             String incR[] = Restriction.split("\\."); // Inclusive restrictions are Card types
         
-            if (incR[0].equals("Spell") && isType("Land"))
+            if (incR[0].equals("Spell") && !isSpell())
             	return false;
-            if (incR[0].equals("Permanent") && (isType("Instant") || isType("Sorcery")))
+            if (incR[0].equals("Permanent") && (isInstant() || isSorcery()))
             	return false;
-            if(!incR[0].equals("card") && !incR[0].equals("Card") && !incR[0].equals("Spell") 
-            		&& !incR[0].equals("Permanent") && !(isType(incR[0])))
+            if (!incR[0].equals("card") 
+            		&& !incR[0].equals("Card") 
+            		&& !incR[0].equals("Spell") 
+            		&& !incR[0].equals("Permanent") 
+            		&& !(isType(incR[0])))
             	return false; //Check for wrong type
             
-            if(incR.length > 1) {
+            if (incR.length > 1) {
                 final String excR = incR[1];
                 String exR[] = excR.split("\\+"); // Exclusive Restrictions are ...
-                for(int j = 0; j < exR.length; j++)
-                    if(hasProperty(exR[j],sourceController,source) == false) return false;
+                for (int j = 0; j < exR.length; j++)
+                    if (hasProperty(exR[j],sourceController,source) == false) return false;
             }
             return true;
     }//isValidCard(String Restriction)
@@ -2758,17 +2761,18 @@ public class Card extends MyObservable {
     // Takes arguments like Blue or withFlying
 	public boolean hasProperty(String Property, final Player sourceController, final Card source) {
 		//by name can also have color names, so needs to happen before colors.
-        if(Property.startsWith("named")) { if(!getName().equals(Property.substring(5))) return false; }
-        else if(Property.startsWith("sameName")) { if(!getName().equals(source.getName())) return false; }
-        
-        else if (Property.contains("White") || // ... Card colors
-                Property.contains("Blue") ||
-                Property.contains("Black") ||
-                Property.contains("Red") ||
-                Property.contains("Green") ||
-                Property.contains("Colorless")) 
+        if (Property.startsWith("named")) { if(!getName().equals(Property.substring(5))) return false; }
+        else if (Property.startsWith("notnamed")) { if(getName().equals(Property.substring(8))) return false; }
+        else if (Property.startsWith("sameName")) { if(!getName().equals(source.getName())) return false; }
+        // ... Card colors
+        else if (Property.contains("White") 
+        			|| Property.contains("Blue") 
+        			|| Property.contains("Black") 
+        			|| Property.contains("Red") 
+        			|| Property.contains("Green") 
+        			|| Property.contains("Colorless")) 
  			{
-					if(Property.startsWith("non"))
+					if (Property.startsWith("non"))
 					{	
 						if (CardUtil.getColors(this).contains(Property.substring(3).toLowerCase())) return false;
 					}	
@@ -2805,6 +2809,10 @@ public class Card extends MyObservable {
         	if (!equippedBy.contains(source) && !enchantedBy.contains(source)) return false; }
         else if (Property.startsWith("Attached")) {
         	if (!equipping.contains(source) && !enchanting.contains(source)) return false; }
+        
+        else if(Property.startsWith("Cloned")) {
+        	if(cloneOrigin == null || !cloneOrigin.equals(source)) return false;
+        }
 
         else if (Property.startsWith("DamagedBy")) {
         	if(!receivedDamageFromThisTurn.containsKey(source)) return false; }
@@ -2880,8 +2888,9 @@ public class Card extends MyObservable {
 	         	
 	         	if (Property.substring(z).equals("X")) {
 	         		x = CardFactoryUtil.xCount(source, source.getSVar("X"));
-	         	}
-	         	else
+	         	} else if (Property.substring(z).equals("Y")) {
+	         		x = CardFactoryUtil.xCount(source, source.getSVar("Y"));
+	         	} else
 	         		x = Integer.parseInt(Property.substring(z));
 	         	
 	         	if (!compare(y, Property, x))
@@ -2948,18 +2957,6 @@ public class Card extends MyObservable {
              else if(Property.equals("CostsPhyrexianMana"))
              {
                      if(!manaCost.contains("P")) return false;
-             }
-             else if(Property.startsWith("IsTriggered"))
-             {
-                 if(!source.hasTriggeringObject(Property.substring(11)))
-                     return false;
-
-                 Object TriggeredObject = source.getTriggeringObject(Property.substring(11));
-                 if(!(TriggeredObject instanceof Card))
-                     return false;
-
-                 if(!TriggeredObject.equals(this))
-                     return false;
              }
              else {
             	 if(Property.equals("ChosenType")) {

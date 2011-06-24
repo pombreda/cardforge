@@ -465,7 +465,7 @@ public class AbilityFactory_ChangeZone {
 	
 	private static void changeHiddenOriginResolveHuman(AbilityFactory af, SpellAbility sa, Player player){
 		HashMap<String,String> params = af.getMapParams();
-        Card card = af.getHostCard();
+        Card card = sa.getSourceCard();
 		Target tgt = af.getAbTgt();
 		if (tgt != null){
 			ArrayList<Player> players = tgt.getTargetPlayers();
@@ -505,7 +505,6 @@ public class AbilityFactory_ChangeZone {
         	}
         }
         
-
 		CardList fetchList = AllZoneUtil.getCardsInZone(origin, player);
         if (origin.contains("Library"))	// Look at whole library before moving onto choosing a card{
         	GuiUtils.getChoiceOptional(af.getHostCard().getName() + " - Looking at Library", AllZoneUtil.getCardsInZone("Library", player).toArray());
@@ -534,29 +533,32 @@ public class AbilityFactory_ChangeZone {
             if (o != null) {
                 Card c = (Card) o;
                 fetchList.remove(c);
-                if (remember != null)
-                	card.addRemembered(c);
-
+                Card movedCard = null;
+                
                 if (destination.equals("Library")) {
                     // do not shuffle the library once we have placed a fetched card on top.
                     if (origin.contains("Library") && i < 1) {
                         player.shuffle();
                     }
-                    AllZone.GameAction.moveToLibrary(c, libraryPos);
+                    movedCard = AllZone.GameAction.moveToLibrary(c, libraryPos);
                 }
                 else if (destination.equals("Battlefield")){
-		        		if (params.containsKey("Tapped"))
-		        			c.tap();
-		        		if (params.containsKey("GainControl"))
-		        			c.setController(sa.getActivatingPlayer());
-		        	
-		        		AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
-		    		}
+	        		if (params.containsKey("Tapped"))
+	        			c.tap();
+	        		if (params.containsKey("GainControl"))
+	        			c.setController(sa.getActivatingPlayer());
+	        	
+	        		movedCard = AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
+	    		}
 		    	else
-                	AllZone.GameAction.moveTo(destZone, c);
+		    		movedCard = AllZone.GameAction.moveTo(destZone, c);
                 
+                if (remember != null)
+                	card.addRemembered(movedCard);
                 //for imprinted since this doesn't use Target
-                if(params.containsKey("Imprint")) card.addImprinted(c);
+                if(params.containsKey("Imprint"))
+                	card.addImprinted(movedCard);
+                
             }
             else{
             	StringBuilder sb = new StringBuilder();
@@ -634,8 +636,6 @@ public class AbilityFactory_ChangeZone {
         		c = fetchList.get(0);
         	}
 
-            if (remember != null)
-            	card.addRemembered(c);
         	fetched.add(c);
         	fetchList.remove(c);
         }
@@ -644,6 +644,7 @@ public class AbilityFactory_ChangeZone {
         	player.shuffle();
         
         for(Card c : fetched){
+        	Card newCard = null;
         	if ("Library".equals(destination)){
         		int libraryPos = params.containsKey("LibraryPosition") ? Integer.parseInt(params.get("LibraryPosition")) : 0;
         		AllZone.GameAction.moveToLibrary(c, libraryPos);
@@ -654,13 +655,15 @@ public class AbilityFactory_ChangeZone {
         		if (params.containsKey("GainControl"))
         			c.setController(sa.getActivatingPlayer());
 
-        		AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
+        		newCard = AllZone.GameAction.moveTo(AllZone.getZone(destination, c.getController()),c);
         	}
         	else
-        		AllZone.GameAction.moveTo(destZone, c);
-        	
-        	//for imprinted since this doesn't use Target
-            if(params.containsKey("Imprint")) card.addImprinted(c);
+        		newCard = AllZone.GameAction.moveTo(destZone, c);
+        
+            if (remember != null)
+            	card.addRemembered(newCard);
+            //for imprinted since this doesn't use Target
+            if(params.containsKey("Imprint")) card.addImprinted(newCard);
         }
         
         if (!"Battlefield".equals(destination) && !"Card".equals(type)){
@@ -682,7 +685,7 @@ public class AbilityFactory_ChangeZone {
 		
 		Card source = sa.getSourceCard();
 		if (type.contains("Triggered")){
-			Object o = source.getTriggeringObject("Card");
+			Object o = sa.getTriggeringObject("Card");
 			
 			// I won't the card attached to the Triggering object
 			if (!(o instanceof Card))
@@ -820,12 +823,12 @@ public class AbilityFactory_ChangeZone {
 		else{
 			// non-targeted retrieval
 			CardList retrieval = null;
-			if (af.getMapParams().containsKey("Defined")){
+			if (params.containsKey("Defined")){
 				// add hooks into AF_Defined function
 				retrieval = knownDetermineDefined(sa, params.get("Defined"), origin);
 			}
 			
-			if (retrieval == null)
+			if (retrieval == null || retrieval.isEmpty())
 				return false;
 			
 			if (retrieval.get(0) == source){

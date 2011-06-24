@@ -2,6 +2,7 @@
 package forge.card.spellability;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import forge.Card;
 import forge.CardList;
@@ -37,6 +38,7 @@ public abstract class SpellAbility {
     private Card            sourceCard;
     
     private CardList        targetList;
+    // targetList doesn't appear to be used anymore
     
     private boolean         spell;
     private boolean			trigger 		   = false;
@@ -57,10 +59,11 @@ public abstract class SpellAbility {
     private Input           afterResolve;
     private Input           afterPayMana;
     
-    protected Cost	payCosts		   = null;
+    protected Cost			payCosts		   = null;
     protected Target		chosenTarget	   = null;
     
     private SpellAbility_Restriction restrictions = new SpellAbility_Restriction();
+    private SpellAbility_Condition	conditions = new SpellAbility_Condition();
     private Ability_Sub 	subAbility 			= null;
     
     private AbilityFactory  abilityFactory 	   = null;
@@ -68,12 +71,11 @@ public abstract class SpellAbility {
     private ArrayList<Mana> payingMana = new ArrayList<Mana>();
     private ArrayList<Ability_Mana> paidAbilities = new ArrayList<Ability_Mana>();
     
-    private CardList 		sacrificedCards	   = null;
-    private CardList 		discardedCards	   = null;
-    private CardList		exiledCards			 = null;
-    private CardList		tappedCards			= null;
+    private HashMap<String, CardList> paidLists = new HashMap<String, CardList>();
     
-    private Command         cancelCommand      = Command.Blank;
+    private HashMap<String,Object> triggeringObjects = new HashMap<String,Object>();
+
+	private Command         cancelCommand      = Command.Blank;
     private Command         beforePayManaAI    = Command.Blank;
     
     private CommandArgs     randomTarget       = new CommandArgs() {
@@ -293,6 +295,14 @@ public abstract class SpellAbility {
     	return restrictions;
     }
     
+    public void setConditions(SpellAbility_Condition condition) {
+    	conditions = condition;
+    }
+    
+    public SpellAbility_Condition getConditions() {
+    	return conditions;
+    }
+    
     public void setAbilityFactory(AbilityFactory af){
     	abilityFactory = af;
     }
@@ -309,73 +319,68 @@ public abstract class SpellAbility {
     	return paidAbilities;
     }
     
-    public void addSacrificedCost(Card c){
-    	if (sacrificedCards == null)
-    		sacrificedCards = new CardList();
-    	
-    	sacrificedCards.add(c);
+    // Combined PaidLists
+    public void setPaidHash(HashMap<String, CardList> hash){
+    	paidLists = hash;
     }
     
-    public CardList getSacrificedCost(){
-    	return sacrificedCards;
+    public HashMap<String, CardList> getPaidHash(){
+    	return paidLists;
     }
     
-    public void resetSacrificedCost(){
-    	sacrificedCards = null;
+    // Paid List are for things ca
+    public void setPaidList(CardList list, String str){
+    	paidLists.put(str, list);
     }
     
-    public void addExiledCost(Card c){
-    	if (exiledCards == null)
-    		exiledCards = new CardList();
-    	
-    	exiledCards.add(c);
+    public CardList getPaidList(String str){
+    	return paidLists.get(str);
     }
     
-    public CardList getExiledCost(){
-    	return exiledCards;
+    public void addCostToHashList(Card c, String str){
+    	if (!paidLists.containsKey(str))
+    		paidLists.put(str, new CardList());
+    		
+    	paidLists.get(str).add(c);
     }
     
-    public void resetExiledCost(){
-    	exiledCards = null;
+    public void resetPaidHash(){
+    	paidLists = new HashMap<String, CardList>();
+    }
+
+    public HashMap<String, Object> getTriggeringObjects() {
+		return triggeringObjects;
+	}
+
+	public void setAllTriggeringObjects(HashMap<String, Object> triggeredObjects) {
+		this.triggeringObjects = triggeredObjects;
+	}
+	
+	public void setTriggeringObject(String type,Object o) {
+		this.triggeringObjects.put(type, o);
+	}
+	
+    public Object getTriggeringObject(String type)
+    {
+        return triggeringObjects.get(type);
+    }
+
+    public boolean hasTriggeringObject(String type)
+    {
+        return triggeringObjects.containsKey(type);
     }
     
-    public void addTappedCost(Card c){
-    	if (tappedCards == null)
-    		tappedCards = new CardList();
-    	
-    	tappedCards.add(c);
-    }
-    
-    public CardList getTappedCost(){
-    	return tappedCards;
-    }
-    
-    public void resetTappedCost(){
-    	tappedCards = null;
-    }
-    
-    public void addDiscardedCost(Card c){
-    	if (discardedCards == null)
-    		discardedCards = new CardList();
-    	discardedCards.add(c);
-    }
-    
-    public CardList getDiscardedCost(){
-    	return discardedCards;
-    }
-    
-    public void resetDiscardedCost(){
-    	discardedCards = null;
+    public void resetTriggeringObjects(){
+    	triggeringObjects = new HashMap<String, Object>();
     }
     
     public void resetOnceResolved(){
-    	resetDiscardedCost();
-    	resetSacrificedCost();
-    	resetExiledCost();
-    	resetTappedCost();
+    	resetPaidHash();
 
     	if (chosenTarget != null)
     		chosenTarget.resetTargets();
+    	
+    	resetTriggeringObjects();
     }
     
     public Input getAfterResolve() {
@@ -600,5 +605,15 @@ public abstract class SpellAbility {
 
     public boolean isMandatory() {
         return mandatory;
+    }
+    
+    public SpellAbility getRootSpellAbility(){
+    	if (this instanceof Ability_Sub){
+    		SpellAbility parent = ((Ability_Sub)this).getParent();
+    		if (parent != null)
+    			return parent.getRootSpellAbility();
+    	}
+    	
+    	return this;
     }
 }

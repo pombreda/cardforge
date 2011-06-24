@@ -29,7 +29,7 @@ import forge.gui.input.Input;
 
 class CardFactory_Lands {
 
-    public static Card getCard(final Card card, final String cardName, Player owner) {
+    public static Card getCard(final Card card, final String cardName, Player owner, CardFactory cf) {
 
 
         //*************** START *********** START **************************
@@ -203,10 +203,8 @@ class CardFactory_Lands {
             final SpellAbility ability = new Ability(card, "3") {
                 @Override
                 public boolean canPlay() {
-                    SpellAbility sa;
                     for(int i = 0; i < AllZone.Stack.size(); i++) {
-                        sa = AllZone.Stack.peek(i);
-                        if(sa.getSourceCard().equals(card)) return false;
+                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     if(card.getCounters(Counters.ICE) > 0 && AllZoneUtil.isCardInPlay(card) && super.canPlay()) return true;
@@ -820,7 +818,7 @@ class CardFactory_Lands {
       
         //*************** START *********** START **************************
         else if(cardName.equals("Coral Atoll") 		|| cardName.equals("Dormant Volcano")
-        		|| cardName.equals("Evergaldes")	|| cardName.equals("Jungle Basin")
+        		|| cardName.equals("Everglades")	|| cardName.equals("Jungle Basin")
         		|| cardName.equals("Karoo")) {
         	
         	final String[] type = new String[1];

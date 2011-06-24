@@ -548,7 +548,7 @@ class CardFactory_Auras {
         //******************************************************************
         // This card can't be converted to keyword, problem with CARDNME   *
         //*************** START *********** START **************************
-        else if(cardName.equals("Vigilance")) {
+        /*else if(cardName.equals("Vigilance")) {
         	Cost cost = new Cost(card.getManaCost(), cardName, false);
         	Target tgt = new Target(card, "C");
         	final SpellAbility spell = new Spell_Permanent(card, cost, tgt) {
@@ -683,7 +683,7 @@ class CardFactory_Auras {
                     /*
                      *  else target another creature
                      *  Do not enchant card with Defender or Lifelink or enchant card already enchanted
-                     */
+                     
                     CardListUtil.sortAttack(list);
                     CardListUtil.sortFlying(list);
                     
@@ -758,7 +758,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        
+        */
         
         //*************** START *********** START **************************
         else if(cardName.equals("Animate Dead") || cardName.equals("Dance of the Dead")) {
@@ -814,7 +814,7 @@ class CardFactory_Auras {
         	Cost cost = new Cost("1 B", cardName, false);
         	animate.setPayCosts(cost);
         	
-        	animate.getRestrictions().setActivateZone(Constant.Zone.Hand);
+        	animate.getRestrictions().setZone(Constant.Zone.Hand);
             
         	final Ability attach = new Ability(card, "0") {
 				private static final long serialVersionUID = 222308932796127795L;
@@ -839,6 +839,7 @@ class CardFactory_Auras {
                     // Bring creature onto the battlefield under your control (should trigger etb Abilities)
                     animated.setController(card.getController());
                     AllZone.GameAction.moveToPlay(animated, card.getController());
+                    if(cardName.equals("Dance of the Dead")) animated.tap();
                     card.enchantCard(animated);	// Attach before Targeting so detach Command will trigger
                     
                     if(CardFactoryUtil.hasProtectionFrom(card, animated)) {
@@ -982,6 +983,7 @@ class CardFactory_Auras {
             card.setSVar("PlayMain1", "TRUE");
         }//*************** END ************ END **************************
         
+        /*
         //**************************************************************
         // This card can't be converted to keyword, problem with Fear  *
         //*************** START *********** START **********************
@@ -1015,7 +1017,7 @@ class CardFactory_Auras {
                     /*
                      *  else target another creature
                      *  Do not enchant card with Defender or Fear or enchant card already enchanted
-                     */
+                     
                     CardListUtil.sortAttack(list);
                     CardListUtil.sortFlying(list);
                     
@@ -1091,7 +1093,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(onUnEnchant);
             card.addLeavesPlayCommand(onLeavesPlay);
         }//*************** END ************ END **************************
-        
+        */
         //*************** START *********** START **************************
         else if (cardName.equals("Entangling Vines") || cardName.equals("Glimmerdust Nap") || 
         		 cardName.equals("Melancholy") || cardName.equals("Mystic Restraints") || 

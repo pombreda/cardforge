@@ -60,6 +60,10 @@ public class GameAction {
     	else{
     		copied = AllZone.CardFactory.copyCard(c);
     		
+    		//remove counters if destination is not the battlefield
+    		if(!zone.is(Constant.Zone.Battlefield))
+    			copied.clearCounters();
+    		
     		// todo: improve choices here
     		// Certain attributes need to be copied from Hand->Stack and Stack->Battlefield
 	    	if (c.wasSuspendCast())			// these probably can be moved back to SubtractCounters
@@ -67,6 +71,11 @@ public class GameAction {
 	        copied.setUnearthed(c.isUnearthed());	// this might be unnecessary	
     	}
 
+    	// This is the fix for Isochron Scepter and friends, we need to test other situations
+    	// To make sure it doesn't break anything serious
+    	for(Trigger trigger : c.getTriggers())
+    		trigger.setHostCard(copied);
+    	
     	if (suppress)
 	        AllZone.TriggerHandler.suppressMode("ChangesZone");
 
@@ -183,35 +192,13 @@ public class GameAction {
     	if(c.hasKeyword("If CARDNAME is put into a graveyard this turn, its controller gets a poison counter.")) {
     		c.getController().addPoisonCounters(1);
     	}
-    	
-    	if (AllZoneUtil.isCardInPlay("Planar Void")) {
-    		CardList pVoids = AllZoneUtil.getCardsInPlay("Planar Void");
-    		for(int i = 0; i < pVoids.size(); i++) {
-    			Card pVoid = pVoids.get(i);
-    			final Card voidingCard = c;
-    			if (!c.equals(pVoid)) {
-		    		Ability ability = new Ability(pVoid, "0") {
-						@Override
-						public void resolve() {
-							if(AllZoneUtil.isCardInZone(grave, voidingCard))
-								moveTo(AllZone.getZone(Constant.Zone.Exile, voidingCard.getOwner()), voidingCard);
-						}
-		
-					};// Ability
-					StringBuilder sb = new StringBuilder();
-	    			sb.append("Planar Void - exile ").append(c);
-	    			ability.setStackDescription(sb.toString());
-	    			
-	    			AllZone.Stack.add(ability);
-    			}
-    		}
-    	}
 
 		//must put card in OWNER's graveyard not controller's
 		c = moveTo(grave, c);
 		
 		//Recover keyword
-		if(c.isType("Creature") && origZone.is(Constant.Zone.Battlefield))
+		if (c.isCreature() 
+				&& origZone.is(Constant.Zone.Battlefield))
 		{
 			for(final Card recoverable : AllZoneUtil.getPlayerGraveyard(c.getOwner()))
 		    {
@@ -333,6 +320,8 @@ public class GameAction {
         
         if (p != null && p.is(Constant.Zone.Battlefield))
         	c = AllZone.CardFactory.copyCard(c);
+        
+        c.clearCounters(); //remove all counters
         
         if (libPosition == -1 || libPosition > library.size())
         	libPosition = library.size();
@@ -525,12 +514,12 @@ public class GameAction {
         			}
         		}//if isEquipped()
 
-        		if(c.isEquipping()) {
+        		if( c.isEquipping()) {
         			Card equippedCreature = c.getEquipping().get(0);
-        			if(!AllZoneUtil.isCardInPlay(equippedCreature)) c.unEquipCard(equippedCreature);
+        			if (!AllZoneUtil.isCardInPlay(equippedCreature)) c.unEquipCard(equippedCreature);
 
         			//make sure any equipment that has become a creature stops equipping
-        			if(c.isCreature()) c.unEquipCard(equippedCreature);
+        			if (c.isCreature()) c.unEquipCard(equippedCreature);
         		}//if isEquipping()
 
         		if (c.isAura()) {
@@ -539,7 +528,7 @@ public class GameAction {
         				if (!AllZoneUtil.isCardInPlay(perm)
         						|| CardFactoryUtil.hasProtectionFrom(c, perm)
         						|| ((c.hasKeyword("Enchant creature") || c.hasKeyword("Enchant tapped creature") ) 
-        								&& !perm.getType().contains("Creature"))
+        								&& !perm.isCreature())
         								|| (c.hasKeyword("Enchant tapped creature") && perm.isUntapped() ) ) {
         					c.unEnchantCard(perm);
         					//changed from destroy (and rules-wise, I don't think it's a sacrifice)
@@ -609,10 +598,10 @@ public class GameAction {
         }
     }//destroyLegendaryCreatures()
     
-    public void sacrifice(Card c) {
+    public boolean sacrifice(Card c) {
     	if(c.getName().equals("Mana Pool")) {
     		System.out.println("Trying to sacrifice mana pool...");
-    		return;
+    		return false;
     	}
         sacrificeDestroy(c);
         
@@ -621,7 +610,7 @@ public class GameAction {
         runParams.put("Card", c);
         AllZone.TriggerHandler.runTrigger("Sacrificed", runParams);
 
-
+        return true;
     }
     
     public boolean destroyNoRegeneration(Card c) {
@@ -830,7 +819,7 @@ public class GameAction {
         AllZone.HumanPlayer.setLife(humanLife, null);
         
         if (qa != null){
-        	computer.addAll(forge.quest.data.QuestUtil.getComputerCreatures(AllZone.QuestData, AllZone.QuestAssignment).toArray());
+        	computer.addAll(forge.quest.data.QuestUtil.getComputerCreatures(AllZone.QuestData, AllZone.QuestAssignment));
         }
 
         for (Card c : human)
@@ -1567,7 +1556,7 @@ public class GameAction {
     							Number_ManaCost = Number_ManaCost.trim();
     							for(int check = 0; check < Max; check ++) {
     								if(Number_ManaCost.equals(Numbers[check])) {
-    									int xValue = CardFactoryUtil.xCount(originalCard, originalCard.getSVar("X"));
+    									int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
     									//if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
     									Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check + xValue));
     								}
@@ -1716,7 +1705,7 @@ public class GameAction {
     								Number_ManaCost = Number_ManaCost.trim();
     								for(int check = 0; check < Max; check ++) {
     									if(Number_ManaCost.equals(Numbers[check])) {
-    										int xValue = CardFactoryUtil.xCount(originalCard, originalCard.getSVar("X"));
+    										int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
     										//if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
     										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - xValue));
     									}

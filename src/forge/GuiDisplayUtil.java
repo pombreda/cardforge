@@ -11,6 +11,7 @@ import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,6 +32,7 @@ import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaPool;
 import forge.card.spellability.Ability_Mana;
 import forge.card.trigger.Trigger;
+import forge.gui.GuiUtils;
 import forge.gui.game.CardPanel;
 import forge.properties.NewConstants;
 
@@ -1001,10 +1003,14 @@ public class GuiDisplayUtil implements NewConstants {
     		  }
     		      		  
     		  in.close();
-    	} catch (Exception e) {
-    		  JOptionPane.showMessageDialog(null, "Error loading battle setup file!");
-    		  return;
-        }
+    	} 
+    	catch( FileNotFoundException fnfe ) {
+    		JOptionPane.showMessageDialog(null, "File not found: "+fc.getSelectedFile().getAbsolutePath());
+    	}
+    	catch (Exception e) {
+    		JOptionPane.showMessageDialog(null, "Error loading battle setup file!");
+    		return;
+    	}
 
 		int setHumanLife = Integer.parseInt(t_humanLife);
 		int setComputerLife = Integer.parseInt(t_computerLife);
@@ -1152,4 +1158,15 @@ public class GuiDisplayUtil implements NewConstants {
         }
         return cl;
     }
-}
+    
+    public static void devModeTutor(){
+    	CardList lib = AllZoneUtil.getPlayerCardsInLibrary(AllZone.HumanPlayer);
+    	Object o = GuiUtils.getChoiceOptional("Choose a card", lib.toArray());
+    	if(null == o) return;
+    	else {
+    		Card c = (Card)o;
+    		AllZone.GameAction.moveToHand(c);
+    	}
+    }
+    
+}//end class GuiDisplayUtil

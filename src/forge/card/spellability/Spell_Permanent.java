@@ -24,26 +24,9 @@ public class Spell_Permanent extends Spell {
     private static final long serialVersionUID = 2413495058630644447L;
     
     private boolean willChampion = false;
-    private String championType = null;
+    private String championValid = null;
+    private String championValidDesc = "";
     
-    /////////////////////
-    ///////
-    private final CommandReturn championGetCreature = new CommandReturn() {
-        public Object execute() {
-            return AllZoneUtil.getPlayerTypeInPlay(getSourceCard().getController(), championType);
-        }
-    };//CommandReturn
-    
-    final SpellAbility championAbilityComes = new Ability(getSourceCard(), "0") {
-        @Override
-        public void resolve() {
-            if(getTargetCard() == null || getTargetCard() == getSourceCard()) AllZone.GameAction.sacrifice(getSourceCard());
-            
-            else if(AllZoneUtil.isCardInPlay(getTargetCard())) {
-                AllZone.GameAction.exile(getTargetCard());
-            }
-        }//resolve()
-    };
     
     final Input championInputComes = new Input() {
 		private static final long serialVersionUID = -7503268232821397107L;
@@ -53,42 +36,66 @@ public class Spell_Permanent extends Spell {
             CardList choice = (CardList) championGetCreature.execute();
             
             stopSetNext(CardFactoryUtil.input_targetChampionSac(getSourceCard(), championAbilityComes, choice,
-                    "Select another "+championType+" you control to exile", false, false));
+                    "Select another "+championValidDesc+" you control to exile", false, false));
             ButtonUtil.disableAll(); //target this card means: sacrifice this card
         }
     };
+    
+    private final CommandReturn championGetCreature = new CommandReturn() {
+        public Object execute() {
+        	CardList cards = AllZoneUtil.getPlayerCardsInPlay(getSourceCard().getController());
+        	return cards.getValidCards(championValid, getSourceCard().getController(), getSourceCard());
+        }
+    };//CommandReturn
+    
+    final SpellAbility championAbilityComes = new Ability(getSourceCard(), "0") {
+        @Override
+        public void resolve() {
+        	
+        	Card source = getSourceCard();
+        	Player controller = source.getController();
+        	
+            CardList creature = (CardList) championGetCreature.execute();
+            if(creature.size() == 0) {
+                AllZone.GameAction.sacrifice(source);
+                return;
+            } else if(controller.isHuman()) {
+            	AllZone.InputControl.setInput(championInputComes);
+            }
+            else { //Computer
+                CardList computer = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+                computer = computer.getValidCards(championValid, controller, source);
+                computer.remove(source);
+                
+                computer.shuffle();
+                if(computer.size() != 0) {
+                    Card c = computer.get(0);
+                    source.setChampionedCard(c);
+                    if(AllZoneUtil.isCardInPlay(c)) {
+                        AllZone.GameAction.exile(c);
+                    }
+                    
+                    //Run triggers
+                    HashMap<String,Object> runParams = new HashMap<String,Object>();
+                    runParams.put("Card", source);
+                    runParams.put("Championed", source.getChampionedCard());
+                    AllZone.TriggerHandler.runTrigger("Championed", runParams);
+                }
+                else
+                	AllZone.GameAction.sacrifice(getSourceCard());
+            }//computer
+        }//resolve()
+    };
+    
     Command championCommandComes = new Command() {
         
         private static final long serialVersionUID = -3580408066322945328L;
         
         public void execute() {
-            CardList creature = (CardList) championGetCreature.execute();
-            Player s = getSourceCard().getController();
-            if(creature.size() == 0) {
-                AllZone.GameAction.sacrifice(getSourceCard());
-                return;
-            } else if(s.isHuman()) {
-            	AllZone.InputControl.setInput(championInputComes);
-            }
-            else { //Computer
-                Card target;
-                CardList computer = AllZoneUtil.getPlayerTypeInPlay(AllZone.ComputerPlayer, championType);
-                computer.remove(getSourceCard());
-                
-                computer.shuffle();
-                if(computer.size() != 0) {
-                    target = computer.get(0);
-                    championAbilityComes.setTargetCard(target);
-                    AllZone.Stack.addSimultaneousStackEntry(championAbilityComes);
-                    if(getSourceCard().getName().equals("Mistbind Clique")) {
-                    	//TODO this needs to target
-                    	CardList list = AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer);
-                    	for(Card c:list) c.tap();
-                    }
-                }
-                else
-                	AllZone.GameAction.sacrifice(getSourceCard());
-            }//computer
+        	StringBuilder sb = new StringBuilder();
+            sb.append(getSourceCard()).append(" - When CARDNAME enters the battlefield, sacrifice it unless you exile another Faerie you control.");
+            championAbilityComes.setStackDescription(sb.toString());
+        	AllZone.Stack.addSimultaneousStackEntry(championAbilityComes);
         }//execute()
     };//championCommandComes
     
@@ -97,24 +104,19 @@ public class Spell_Permanent extends Spell {
         private static final long serialVersionUID = -5903638227914705191L;
         
         public void execute() {
-            //System.out.println(abilityComes.getTargetCard().getName());
-            Object o = championAbilityComes.getTargetCard();
-            
-            if(o == null || ((Card) o).isToken() || !AllZoneUtil.isCardExiled((Card) o)) return;
             
             SpellAbility ability = new Ability(getSourceCard(), "0") {
                 @Override
                 public void resolve() {
-                    Card c = championAbilityComes.getTargetCard();
-                    if(!c.isToken()) {
+                	Card c = getSourceCard().getChampionedCard();
+                    if(c != null && !c.isToken() && AllZoneUtil.isCardExiled(c)) {
                     	AllZone.GameAction.moveToPlay(c);
-                        
                     }
                 }//resolve()
             };//SpellAbility
             
             StringBuilder sb = new StringBuilder();
-            sb.append(getSourceCard().getName()).append(" - returning card to battlefield.");
+            sb.append(getSourceCard()).append(" - When CARDNAME leaves the battlefield, exiled card returns to the battlefield.");
             ability.setStackDescription(sb.toString());
             
             AllZone.Stack.addSimultaneousStackEntry(ability);
@@ -135,9 +137,14 @@ public class Spell_Permanent extends Spell {
         if(CardFactory.hasKeyword(sourceCard,"Champion") != -1) {
         	int n = CardFactory.hasKeyword(sourceCard, "Champion");
             
-            String parse = sourceCard.getKeyword().get(n).toString();
+            String toParse = sourceCard.getKeyword().get(n).toString();
+            String parsed[] = toParse.split(":");
         	willChampion = true;
-        	championType = parse.split(":")[1];
+        	championValid = parsed[1];
+        	if(parsed.length > 2) {
+        		championValidDesc = parsed[2];
+        	}
+        	else championValidDesc = championValid;
         }
         
         if(sourceCard.isCreature()) {
@@ -156,7 +163,6 @@ public class Spell_Permanent extends Spell {
         }
         
     }//Spell_Permanent()
-    
     
     @Override
     public boolean canPlay() {
@@ -190,7 +196,7 @@ public class Spell_Permanent extends Spell {
             if (list.containsName(card.getName()))
             	return false;
         }
-        if (card.isType("Planeswalker")) {
+        if (card.isPlaneswalker()) {
         	CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
         	list = list.getType("Planeswalker");
         	
@@ -210,7 +216,7 @@ public class Spell_Permanent extends Spell {
         	if(list.size() > 0) return false;
         }
         
-        if (card.isType("Creature") 
+        if (card.isCreature() 
         		&& card.getNetDefense() <= 0 
         		&& !card.hasStartOfKeyword("etbCounter") 
         		&& !card.getText().contains("Modular"))

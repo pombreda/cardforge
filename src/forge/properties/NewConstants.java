@@ -270,6 +270,13 @@ public interface NewConstants {
             	public static final String BUTTON = "%s/Display/setupbattlefield/button";
             	public static final String MENU = "%s/Display/setupbattlefield/menu";
             }
+            
+            public static final String TUTOR = "%s/Display/tutor";
+            
+            public static interface TUTOR {
+                public static final String BUTTON = "%s/Display/tutor/button";
+                public static final String MENU   = "%s/Display/tutor/menu";
+            }
         }
         
         public static interface Gui_DownloadPictures {
@@ -318,6 +325,8 @@ public interface NewConstants {
                 public static final String DEV_MODE         = "%s/NewGame/devmode";
                 public static final String QUEST_MODE         = "%s/NewGame/questmode";
                 public static final String START_GAME         = "%s/NewGame/startgame";
+                public static final String SAVE_SEALED_MSG  = "%s/NewGame/savesealed_msg";
+                public static final String SAVE_SEALED_TTL  = "%s/NewGame/savesealed_ttl";
                 
         	}
             public static interface MENU_BAR {

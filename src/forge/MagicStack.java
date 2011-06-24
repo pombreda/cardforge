@@ -2,7 +2,7 @@ package forge;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Stack;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -14,6 +14,7 @@ import forge.card.spellability.Ability_Mana;
 import forge.card.spellability.Ability_Static;
 import forge.card.spellability.Ability_Triggered;
 import forge.card.spellability.SpellAbility;
+import forge.card.spellability.SpellAbility_StackInstance;
 import forge.card.spellability.Spell_Permanent;
 import forge.card.spellability.Target;
 import forge.card.spellability.Target_Selection;
@@ -24,11 +25,12 @@ import forge.gui.input.Input_PayManaCost_Ability;
 public class MagicStack extends MyObservable {
 	private ArrayList<SpellAbility> simultaneousStackEntryList = new ArrayList<SpellAbility>();
 
-	private ArrayList<SpellAbility> stack = new ArrayList<SpellAbility>();
-	private ArrayList<SpellAbility> frozenStack = new ArrayList<SpellAbility>();
+	private Stack<SpellAbility_StackInstance> stack = new Stack<SpellAbility_StackInstance>();
+	private Stack<SpellAbility_StackInstance> frozenStack = new Stack<SpellAbility_StackInstance>();
+
 	private boolean frozen = false;
 	private boolean bResolving = false;
-	private boolean splitSecondOnStack = false;
+	private int splitSecondOnStack = 0;
 
 	public boolean isFrozen() {
 		return frozen;
@@ -41,23 +43,26 @@ public class MagicStack extends MyObservable {
 	public void reset() {
 		stack.clear();
 		frozen = false;
-		splitSecondOnStack = false;
+		splitSecondOnStack = 0;
 		frozenStack.clear();
 		this.updateObservers();
 	}
 
 	public boolean isSplitSecondOnStack() {
-		return splitSecondOnStack;
+		return splitSecondOnStack > 0;
 	}
 
-	public void setSplitSecondOnStack() {
-		for(SpellAbility sa:stack) {
-			if(sa.getSourceCard().hasKeyword("Split second")) {
-				splitSecondOnStack = true;
-				return;
-			}
-		}
-		splitSecondOnStack = false;
+	public void incrementSplitSecond(SpellAbility sp){
+		if (sp.getSourceCard().hasKeyword("Split Second"))
+			splitSecondOnStack++;
+	}
+	
+	public void decrementSplitSecond(SpellAbility sp){
+		if (sp.getSourceCard().hasKeyword("Split Second"))
+			splitSecondOnStack--;
+		
+		if (splitSecondOnStack < 0)
+			splitSecondOnStack = 0;
 	}
 
 	public void freezeStack() {
@@ -91,8 +96,7 @@ public class MagicStack extends MyObservable {
 		frozen = false;
 		boolean checkState = !frozenStack.isEmpty();
 		while (!frozenStack.isEmpty()) {
-			SpellAbility sa = frozenStack.get(0);
-			frozenStack.remove(0);
+			SpellAbility sa = frozenStack.pop().getSpellAbility();
 			this.add(sa);
 		}
 		if (checkState)
@@ -201,7 +205,8 @@ public class MagicStack extends MyObservable {
 		}
 
 		if (frozen) {
-			frozenStack.add(sp);
+			SpellAbility_StackInstance si = new SpellAbility_StackInstance(sp);
+			frozenStack.push(si);
 			return;
 		}
 
@@ -509,8 +514,8 @@ public class MagicStack extends MyObservable {
 							}
 						}
 					};
-					SpellAbility prev = peek();
-					if(prev instanceof Spell_Permanent && prev.getSourceCard().getName().equals("Mana Vortex")) {
+					SpellAbility_StackInstance prev = peekInstance();
+					if(prev.isSpell() && prev.getSourceCard().getName().equals("Mana Vortex")) {
 						if(sp.getSourceCard().getController().isHuman()) {
 							AllZone.InputControl.setInput(in);
 						}
@@ -582,7 +587,7 @@ public class MagicStack extends MyObservable {
 					Card revealed = AllZone.Human_Library.get(0);
 
 					revealMsg.append(revealed.getName());
-					if(!revealed.isType("Creature"))
+					if (!revealed.isCreature())
 					{
 						revealMsg.append("\n\rPut it on the bottom of your library?");
 						if(GameActionUtil.showYesNoDialog(lurkingPredators.get(i), revealMsg.toString()))
@@ -611,7 +616,7 @@ public class MagicStack extends MyObservable {
 					}
 					Card revealed = AllZone.Computer_Library.get(0);
 					revealMsg.append(revealed.getName());
-					if(!revealed.isType("Creature"))
+					if (!revealed.isCreature())
 					{
 						GameActionUtil.showInfoDialg(revealMsg.toString());
 						if(lurkingPredators.size() > i)
@@ -650,16 +655,16 @@ public class MagicStack extends MyObservable {
 			sp.setActivatingPlayer(sp.getSourceCard().getController());
 			System.out.println(sp.getSourceCard().getName() + " - activatingPlayer not set before adding to stack.");
 		}
-
-		stack.add(0, sp);
-		setSplitSecondOnStack();
+		
+		incrementSplitSecond(sp);
+		
+		SpellAbility_StackInstance si = new SpellAbility_StackInstance(sp);
+		stack.push(si);
 
 		this.updateObservers();
 
 		if (sp.isSpell() && !sp.getSourceCard().isCopiedSpell()) {
 			Phase.increaseSpellCount(sp);
-
-			// attempt to counter human spell 
 
 			GameActionUtil.executePlayCardEffects(sp);
 		}
@@ -675,66 +680,56 @@ public class MagicStack extends MyObservable {
 
 		AllZone.Phase.resetPriority();	// ActivePlayer gains priority first after Resolve
 		Card source = sa.getSourceCard();
-		boolean fizzle = hasFizzled(sa, source);
-		Command buyback = null;
 
-
-		if (!fizzle) {
-			final Card crd = source;
-			if (sa.isBuyBackAbility()) {
-				buyback = new Command() {
-					private static final long serialVersionUID = -2559488318473330418L;
-
-					public void execute() {
-						AllZone.GameAction.moveToHand(crd);
-					}
-				};
-				source.addReplaceMoveToGraveyardCommand(buyback);
-			}
-
-			// To stop Copied Spells from going into the graveyard.
-			if (sa.getSourceCard().isCopiedSpell()) {
-				source.addReplaceMoveToGraveyardCommand(new Command() {
-					private static final long serialVersionUID = -2559488318473330418L;
-
-					public void execute() {
-					}
-				});
-			}
+		if (hasFizzled(sa, source)) {//Fizzle
+			// TODO: Spell fizzles, what's the best way to alert player?
+			Log.debug(source.getName() + " ability fizzles.");
+			finishResolving(sa, true);
+		}
+		
+		else 
 			if(sa.getAbilityFactory() != null) {
 				AbilityFactory.handleRemembering(sa.getAbilityFactory());
 				AbilityFactory.resolve(sa);
-			} else
+			} else {
 				sa.resolve();
-		} else {
-			// TODO: Spell fizzles, what's the best way to alert player?
-			Log.debug(source.getName() + " ability fizzles.");
+				finishResolving(sa, false);
+			}
+		
+	}
+	
+	public void removeCardFromStack(SpellAbility sa, boolean fizzle) {
+		Card source = sa.getSourceCard();
+		
+		//do nothing
+		if (sa.getSourceCard().isCopiedSpell() || sa.isAbility()){
+		}
+		// Handle cards that need to be moved differently
+		else if (sa.isBuyBackAbility() && !fizzle){
+			AllZone.GameAction.moveToHand(source);
 		}
 
-		// Handle cards that need to be moved differently
-		if (sa.isFlashBackAbility()){
+		else if (sa.isFlashBackAbility()){
 			AllZone.GameAction.exile(source);
 			sa.setFlashBackAbility(false);
 		}
 
-		else if (fizzle && sa.isSpell())
-			AllZone.GameAction.moveToGraveyard(source);
-
-		else if (sa.isAbility())
-		{}	// don't send to graveyard if the spell is using an ability
-
 		// If Spell and still on the Stack then let it goto the graveyard or replace its own movement
-		else if (!source.isCopiedSpell() && (source.isInstant() || source.isSorcery()) && 
+		else if (!source.isCopiedSpell() && (source.isInstant() || source.isSorcery() || fizzle) && 
 				AllZone.getZone(source).is(Constant.Zone.Stack)){
 			if (source.getReplaceMoveToGraveyard().size() == 0)
 				AllZone.GameAction.moveToGraveyard(source);
 			else{
 				source.replaceMoveToGraveyard();
-				if (buyback != null)
-					source.getReplaceMoveToGraveyard().remove(buyback);
 			}
 		}
-
+	}
+	
+	public void finishResolving(SpellAbility sa, boolean fizzle) {
+		
+		//remove card from the stack
+		removeCardFromStack(sa, fizzle);
+		
 		// After SA resolves we have to do a handful of things
 		setResolving(false);
 		this.unfreezeStack(); 
@@ -748,6 +743,19 @@ public class MagicStack extends MyObservable {
 			CombatUtil.showCombat();
 
 		GuiDisplayUtil.updateGUI();
+		
+		//TODO - this is a huge hack.  Why is this necessary?
+		//hostCard in AF is not the same object that's on the battlefield
+		//verified by System.identityHashCode(card);
+		Card tmp = sa.getSourceCard();
+		if(tmp.getClones().size() > 0) {
+			for(Card c : AllZoneUtil.getCardsInPlay()) {
+				if(c.equals(tmp)) {
+					c.setClones(tmp.getClones());
+				}
+			}
+			
+		}
 	}
 
 	public boolean hasFizzled(SpellAbility sa, Card source){
@@ -805,40 +813,54 @@ public class MagicStack extends MyObservable {
 		return fizzle;
 	}
 
-
 	public SpellAbility pop() {
-		SpellAbility sp = (SpellAbility) stack.remove(0);
+		SpellAbility sp = stack.pop().getSpellAbility();
+		decrementSplitSecond(sp);
 		this.updateObservers();
-		setSplitSecondOnStack();
 		return sp;
 	}
 
+	// CAREFUL! Peeking while an SAs Targets are being choosen may cause issues 
 	// index = 0 is the top, index = 1 is the next to top, etc...
-	public SpellAbility peek(int index) {
-		return (SpellAbility) stack.get(index);
+	public SpellAbility_StackInstance peekInstance(int index) {
+		return stack.get(index);
 	}
-
-	public SpellAbility peek() {
-		return peek(0);
+	
+	public SpellAbility peekAbility(int index) {
+		return stack.get(index).getSpellAbility();
+	}
+	
+	public SpellAbility_StackInstance peekInstance() {
+		return stack.peek();
+	}
+	
+	public SpellAbility peekAbility() {
+		return stack.peek().getSpellAbility();
 	}
 
 	public void remove(SpellAbility sa) {
-		stack.remove(sa);
-		frozenStack.remove(sa);
+		SpellAbility_StackInstance si = getInstanceFromSpellAbility(sa);
+		if (si == null)
+			return;
+			
+		remove(si);
+	}
+	
+	public void remove(SpellAbility_StackInstance si) {
+		if (stack.remove(si)){
+			decrementSplitSecond(si.getSpellAbility());
+		}
+		frozenStack.remove(si);
 		this.updateObservers();
 	}
-
-	public boolean contains(SpellAbility sa) {
-		return stack.contains(sa);
-	}
-
-	public ArrayList<Card> getSourceCards() {
-		ArrayList<Card> a = new ArrayList<Card>();
-		Iterator<SpellAbility> it = stack.iterator();
-		while (it.hasNext())
-			a.add(((SpellAbility) it.next()).getSourceCard());
-
-		return a;
+	
+	public SpellAbility_StackInstance getInstanceFromSpellAbility(SpellAbility sa) {
+		// TODO: Confirm this works!
+		for(SpellAbility_StackInstance si : stack){
+			if (si.getSpellAbility().equals(sa))
+				return si;
+		}
+		return null;
 	}
 
 	public boolean hasSimultaneousStackEntries()

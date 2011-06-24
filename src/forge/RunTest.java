@@ -20,23 +20,23 @@ public class RunTest
 	    check("1", c.getOwner().isComputer());
 	    check("1.1", c.getName().equals("Elvish Warrior"));
 	    check("2", c.getManaCost().equals("G G"));
-	    check("2.1", c.getType().contains("Creature"));
-	    check("2.2", c.getType().contains("Elf"));
-	    check("2.3", c.getType().contains("Warrior"));
+	    check("2.1", c.isCreature());
+	    check("2.2", c.isType("Elf"));
+	    check("2.3", c.isType("Warrior"));
 	    check("3", c.getText().equals(""));
 	    check("4", c.getNetAttack() == 2);
 	    check("5", c.getNetDefense() == 3);
 	    check("6", c.getKeyword().isEmpty());
 	    
 	    c = cf.getCard("Shock", null);
-	    check("14", c.getType().contains("Instant"));
+	    check("14", c.isInstant());
 	    //check("15", c.getText().equals("Shock deals 2 damge to target creature or player."));
 	    
 	    c = cf.getCard("Bayou", null);
 	    check("17", c.getManaCost().equals(""));
-	    check("18", c.getType().contains("Land"));
-	    check("19", c.getType().contains("Swamp"));
-	    check("20", c.getType().contains("Forest"));
+	    check("18", c.isLand());
+	    check("19", c.isType("Swamp"));
+	    check("20", c.isType("Forest"));
 	    
 	    //********* test ManaCost
 	    ManaCost manaCost = new ManaCost("G");
@@ -169,7 +169,7 @@ public class RunTest
 	    check("74", ! c.isGlobalEnchantment());
 	    check("75", ! c.isInstant());
 	    check("76", ! c.isLand());
-	    check("77", ! c.isLocalEnchantment());
+	    check("77", ! c.isAura());
 	    check("78", c.isPermanent());
 	    check("79", ! c.isSorcery());
 	    check("80", ! c.isTapped());
@@ -191,7 +191,7 @@ public class RunTest
 	    check("90", ! c.isGlobalEnchantment());
 	    check("91", c.isInstant());
 	    check("92", ! c.isLand());
-	    check("93", ! c.isLocalEnchantment());
+	    check("93", ! c.isAura());
 	    check("94", ! c.isPermanent());
 	    check("95", ! c.isSorcery());
 	    check("96", ! c.isTapped());
