@@ -133,8 +133,7 @@ public class QuestData {
         mode = m;
         if (mode.equals(FANTASY)) {
             life = 15;
-        }
-        else {
+        } else {
             life = 20;
         }
     }
@@ -162,8 +161,7 @@ public class QuestData {
     public List<String> getShopList() {
         if (shopList != null) {
             return new ArrayList<String>(shopList);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -176,8 +174,7 @@ public class QuestData {
     public List<Integer> getAvailableQuests() {
         if (availableQuests != null) {
             return new ArrayList<Integer>(availableQuests);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -193,8 +190,7 @@ public class QuestData {
     public List<Integer> getCompletedQuests() {
         if (completedQuests != null) {
             return new ArrayList<Integer>(completedQuests);
-        }
-        else {
+        } else {
             return null;
         }
     }
@@ -355,11 +351,9 @@ public class QuestData {
             if (s != null) {
                 if (s.equals("Poison Counters")) {
                     creds += QuestPreferences.getMatchRewardPoisonWinBonus();
-                }
-                else if (s.equals("Milled")) {
+                } else if (s.equals("Milled")) {
                     creds += QuestPreferences.getMatchRewardMilledWinBonus();
-                }
-                else if (s.equals("Battle of Wits") || s.equals("Felidar Sovereign") || s.equals("Helix Pinnacle") ||
+                } else if (s.equals("Battle of Wits") || s.equals("Felidar Sovereign") || s.equals("Helix Pinnacle") ||
                         s.equals("Epic Struggle") || s.equals("Door to Nothingness") || s.equals("Barren Glory") ||
                         s.equals("Near-Death Experience") || s.equals("Mortal Combat") || s.equals("Test of Endurance")) {
                     creds += QuestPreferences.getMatchRewardAltWinBonus();
@@ -369,14 +363,11 @@ public class QuestData {
         for (int i : winTurns) {
             if (i == 1) {
                 creds += QuestPreferences.getMatchRewardWinFirst();
-            }
-            else if (i <= 5) {
+            } else if (i <= 5) {
                 creds += QuestPreferences.getMatchRewardWinByFifth();
-            }
-            else if (i <= 10) {
+            } else if (i <= 10) {
                 creds += QuestPreferences.getMatchRewardWinByTen();
-            }
-            else if (i <= 15) {
+            } else if (i <= 15) {
                 creds += QuestPreferences.getMatchRewardWinByFifteen();
             }
         }
@@ -390,11 +381,9 @@ public class QuestData {
 
         if (inventory.getItemLevel("Estates") == 1) {
             creds *= 1.1;
-        }
-        else if (inventory.getItemLevel("Estates") == 2) {
+        } else if (inventory.getItemLevel("Estates") == 2) {
             creds *= 1.15;
-        }
-        else if (inventory.getItemLevel("Estates") == 3) {
+        } else if (inventory.getItemLevel("Estates") == 3) {
             creds *= 1.2;
         }
 
@@ -526,10 +515,10 @@ public class QuestData {
         return rankArray[rankIndex];
     }
 
-    public int getLevel(){
-    	return rankIndex;
+    public int getLevel() {
+        return rankIndex;
     }
-    
+
     //add cards after a certain number of wins or losses
 
     public boolean shouldAddCards(boolean didWin) {
@@ -537,8 +526,7 @@ public class QuestData {
 
         if (didWin) {
             return getWin() % n == 0;
-        }
-        else {
+        } else {
             return getLost() % n == 0;
         }
     }
@@ -548,14 +536,12 @@ public class QuestData {
         if (inventory.getItemLevel("Lucky Coin") == 1) {
             chance = 0.65f;
         }
-        
+
         float r = MyRandom.random.nextFloat();
 
         if (didWin) {
             return r <= chance;
-        }
-
-        else {
+        } else {
             return false;
         }
     }

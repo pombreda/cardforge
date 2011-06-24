@@ -1,6 +1,8 @@
 package forge.quest.data.pet;
 
-import forge.*;
+import forge.AllZone;
+import forge.Card;
+import forge.Constant;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Cost;
 import forge.card.spellability.SpellAbility;
@@ -22,48 +24,43 @@ public class QuestPetPlant extends QuestPetAbstract {
         petCard.addType("Creature");
         petCard.addType("Plant");
         petCard.addType("Wall");
-        
+
         petCard.addIntrinsicKeyword("Defender");
 
         if (level == 1) {
             petCard.setImageName("G 0 1 Plant Wall");
             petCard.setBaseAttack(0);
             petCard.setBaseDefense(1);
-        }
-        else if (level == 2) {
+        } else if (level == 2) {
             petCard.setImageName("G 0 2 Plant Wall");
             petCard.setBaseAttack(0);
             petCard.setBaseDefense(2);
-        }
-        else if (level == 3) {
+        } else if (level == 3) {
             petCard.setImageName("G 0 3 Plant Wall");
             petCard.setBaseAttack(0);
             petCard.setBaseDefense(3);
-        }
-        else if (level == 4) {
+        } else if (level == 4) {
             petCard.setImageName("G 1 3 Plant Wall");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(3);
             // petCard.addIntrinsicKeyword("First Strike");
-        }
-        else if (level == 5) {
+        } else if (level == 5) {
             petCard.setImageName("G 1 3 Plant Wall Deathtouch");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(3);
             petCard.addIntrinsicKeyword("Deathtouch");
-        }
-        else if (level == 6) {
+        } else if (level == 6) {
             petCard.setImageName("G 1 4 Plant Wall");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(4);
             petCard.addIntrinsicKeyword("Deathtouch");
 
 
-        	Cost abCost = new Cost("T", petCard.getName(), true);
-        	final SpellAbility ability = new Ability_Activated(petCard, abCost, null){
-				private static final long serialVersionUID = 7546242087593613719L;
+            Cost abCost = new Cost("T", petCard.getName(), true);
+            final SpellAbility ability = new Ability_Activated(petCard, abCost, null) {
+                private static final long serialVersionUID = 7546242087593613719L;
 
-				@Override
+                @Override
                 public boolean canPlayAI() {
                     return AllZone.getPhase().getPhase().equals(Constant.Phase.Main2);
                 }
@@ -74,11 +71,11 @@ public class QuestPetPlant extends QuestPetAbstract {
                 }
             };
             petCard.addSpellAbility(ability);
-        	ability.setDescription("tap: You gain 1 life.");
+            ability.setDescription("tap: You gain 1 life.");
 
-        	StringBuilder sb = new StringBuilder();
-        	sb.append("Plant Wall - ").append(petCard.getController()).append(" gains 1 life.");
-        	ability.setStackDescription(sb.toString());
+            StringBuilder sb = new StringBuilder();
+            sb.append("Plant Wall - ").append(petCard.getController()).append(" gains 1 life.");
+            ability.setStackDescription(sb.toString());
 
             petCard.setText("tap: You gain 1 life.");
         }

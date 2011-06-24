@@ -15,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 
 
-
 public class GuiUtils {
 
     /**
@@ -80,8 +79,7 @@ public class GuiUtils {
         File file = new File(base, iconName);
         if (iconName.equals("") || !file.exists()) {
             return null;
-        }
-        else {
+        } else {
             return new ImageIcon(file.toString());
         }
     }
@@ -93,39 +91,39 @@ public class GuiUtils {
     public static ImageIcon getEmptyIcon(int width, int height) {
         return new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
     }
-    
+
     //returned Object could be null
     public static <T> T getChoiceOptional(String message, T... choices) {
-        if(choices == null || choices.length == 0) return null;
+        if (choices == null || choices.length == 0) return null;
         List<T> choice = getChoices(message, 0, 1, choices);
-        return choice.isEmpty()? null:choice.get(0);
+        return choice.isEmpty() ? null : choice.get(0);
     }//getChoiceOptional()
-   
+
     // returned Object will never be null
     public static <T> T getChoice(String message, T... choices) {
         List<T> choice = getChoices(message, 1, 1, choices);
         assert choice.size() == 1;
         return choice.get(0);
     }//getChoice()
-   
+
     // returned Object will never be null
     public static <T> List<T> getChoicesOptional(String message, T... choices) {
         return getChoices(message, 0, choices.length, choices);
     }//getChoice()
-   
+
     // returned Object will never be null
     public static <T> List<T> getChoices(String message, T... choices) {
         return getChoices(message, 1, choices.length, choices);
     }//getChoice()
-   
+
     // returned Object will never be null
     public static <T> List<T> getChoices(String message, int min, int max, T... choices) {
         ListChooser<T> c = new ListChooser<T>(message, min, max, choices);
         final JList list = c.getJList();
         list.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent ev) {
-                if(list.getSelectedValue() instanceof Card && AllZone.getDisplay() != null) {
-                		AllZone.getDisplay().setCard((Card) list.getSelectedValue());
+                if (list.getSelectedValue() instanceof Card && AllZone.getDisplay() != null) {
+                    AllZone.getDisplay().setCard((Card) list.getSelectedValue());
                 }
             }
         });
@@ -135,6 +133,7 @@ public class GuiUtils {
 
     /**
      * Centers a frame on the screen based on its current size
+     *
      * @param frame a fully laid-out frame
      */
     public static void centerFrame(Frame frame) {

@@ -1,4 +1,3 @@
-
 package forge;
 
 import forge.card.cardFactory.CardFactoryUtil;
@@ -7,141 +6,144 @@ import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 
 
-public class HumanPlayer extends Player{
-	
-	public HumanPlayer(String myName) {
-		this(myName, 20, 0);
-	}
-	
-	public HumanPlayer(String myName, int myLife, int myPoisonCounters) {
-		super(myName, myLife, myPoisonCounters);
-	}
-	
-	public Player getOpponent() {
-		return AllZone.getComputerPlayer();
-	}
-	
-	////////////////
-	///
-	/// Methods to ease transition to Abstract Player class
-	///
-	///////////////
-	
-	public boolean isHuman() { return true; }
-	public boolean isComputer() { return false; }
-	public boolean isPlayer(Player p1) {
-		return p1.getName().equals(this.name);
-	}
-	
-	///////////////
-	///
-	/// End transition methods
-	///
-	///////////////
-	
-	public void mayDrawCards(int n) {
-		String[] choices = {"Yes", "No"};
-		Object choice = GuiUtils.getChoice("Draw "+n+" cards?", choices);
-		if(choice.equals("Yes")) 
-			drawCards(n);
-	}
-	
-	public void mayDrawCard() {
-		mayDrawCards(1);
-	}
-	
-	public boolean dredge() {
-		boolean dredged = false;
-		String choices[] = {"Yes", "No"};
-		Object o = GuiUtils.getChoice("Do you want to dredge?", choices);
-		if(o.equals("Yes")) {
-			Card c = (Card) GuiUtils.getChoice("Select card to dredge", getDredge().toArray());
-			//rule 702.49a
-			if(getDredgeNumber(c) <= AllZone.getHumanLibrary().size()) {
+public class HumanPlayer extends Player {
 
-				//might have to make this more sophisticated
-				//dredge library, put card in hand
-				AllZone.getGameAction().moveToHand(c);
+    public HumanPlayer(String myName) {
+        this(myName, 20, 0);
+    }
 
-				for(int i = 0; i < getDredgeNumber(c); i++) {
-					Card c2 = AllZone.getHumanLibrary().get(0);
-					AllZone.getGameAction().moveToGraveyard(c2);
-				}
-				dredged = true;
-			}
-			else {
-				dredged = false;
-			}
-		}
-		return dredged;
-	}
-	
-	public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
-		AllZone.getInputControl().setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
-		
-		// why is CardList returned?
-		return new CardList();	
-	}
-	
-	public void discardUnless(int num, String uType, SpellAbility sa) {
-		AllZone.getInputControl().setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
-	}
-	
-	public void handToLibrary(final int numToLibrary, String libPos) {
-		if(libPos.equals("Top") || libPos.equals("Bottom")) libPos = libPos.toLowerCase();
+    public HumanPlayer(String myName, int myLife, int myPoisonCounters) {
+        super(myName, myLife, myPoisonCounters);
+    }
+
+    public Player getOpponent() {
+        return AllZone.getComputerPlayer();
+    }
+
+    ////////////////
+    ///
+    /// Methods to ease transition to Abstract Player class
+    ///
+    ///////////////
+
+    public boolean isHuman() {
+        return true;
+    }
+
+    public boolean isComputer() {
+        return false;
+    }
+
+    public boolean isPlayer(Player p1) {
+        return p1.getName().equals(this.name);
+    }
+
+    ///////////////
+    ///
+    /// End transition methods
+    ///
+    ///////////////
+
+    public void mayDrawCards(int n) {
+        String[] choices = {"Yes", "No"};
+        Object choice = GuiUtils.getChoice("Draw " + n + " cards?", choices);
+        if (choice.equals("Yes"))
+            drawCards(n);
+    }
+
+    public void mayDrawCard() {
+        mayDrawCards(1);
+    }
+
+    public boolean dredge() {
+        boolean dredged = false;
+        String choices[] = {"Yes", "No"};
+        Object o = GuiUtils.getChoice("Do you want to dredge?", choices);
+        if (o.equals("Yes")) {
+            Card c = (Card) GuiUtils.getChoice("Select card to dredge", getDredge().toArray());
+            //rule 702.49a
+            if (getDredgeNumber(c) <= AllZone.getHumanLibrary().size()) {
+
+                //might have to make this more sophisticated
+                //dredge library, put card in hand
+                AllZone.getGameAction().moveToHand(c);
+
+                for (int i = 0; i < getDredgeNumber(c); i++) {
+                    Card c2 = AllZone.getHumanLibrary().get(0);
+                    AllZone.getGameAction().moveToGraveyard(c2);
+                }
+                dredged = true;
+            } else {
+                dredged = false;
+            }
+        }
+        return dredged;
+    }
+
+    public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
+        AllZone.getInputControl().setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
+
+        // why is CardList returned?
+        return new CardList();
+    }
+
+    public void discardUnless(int num, String uType, SpellAbility sa) {
+        AllZone.getInputControl().setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
+    }
+
+    public void handToLibrary(final int numToLibrary, String libPos) {
+        if (libPos.equals("Top") || libPos.equals("Bottom")) libPos = libPos.toLowerCase();
         else {
             String s = "card";
-            if(numToLibrary > 1) s += "s";
-            
+            if (numToLibrary > 1) s += "s";
+
             Object o = GuiUtils.getChoice("Do you want to put the " + s
-                    + " on the top or bottom of your library?", new Object[] {"top", "bottom"});
+                    + " on the top or bottom of your library?", new Object[]{"top", "bottom"});
             libPos = o.toString();
         }
         AllZone.getInputControl().setInput(CardFactoryUtil.input_putFromHandToLibrary(libPos, numToLibrary));
-	}
-	
-	protected void doScry(final CardList topN, final int N) {
-		int num = N;
-		for(int i = 0; i < num; i++) {
-            Object o = GuiUtils.getChoiceOptional("Put on bottom of library.",topN.toArray());
-            if(o != null) {
+    }
+
+    protected void doScry(final CardList topN, final int N) {
+        int num = N;
+        for (int i = 0; i < num; i++) {
+            Object o = GuiUtils.getChoiceOptional("Put on bottom of library.", topN.toArray());
+            if (o != null) {
                 Card c = (Card) o;
                 topN.remove(c);
                 AllZone.getGameAction().moveToBottomOfLibrary(c);
-            } 
-            else // no card chosen for the bottom
-            	break;
+            } else // no card chosen for the bottom
+                break;
         }
         num = topN.size();
-        for(int i = 0; i < num; i++) {
+        for (int i = 0; i < num; i++) {
             Object o;
             o = GuiUtils.getChoice("Put on top of library.", topN.toArray());
-            if(o != null) {
+            if (o != null) {
                 Card c = (Card) o;
                 topN.remove(c);
                 AllZone.getGameAction().moveToLibrary(c);
             }
             // no else - a card must have been chosen
         }
-	}
-	
-	public void sacrificePermanent(String prompt, CardList choices) {
-		Input in = CardFactoryUtil.input_sacrificePermanent(choices, prompt);
-        AllZone.getInputControl().setInput(in);
-	}
-	
-	protected void clashMoveToTopOrBottom(Card c) {
-		String choice = "";
-    	String choices[] = {"top","bottom"};
-    	AllZone.getDisplay().setCard(c);
-        choice = (String) GuiUtils.getChoice(c.getName()+" - Top or bottom of Library", choices);
+    }
 
-    	if(choice.equals("bottom"))  {
-    		AllZone.getGameAction().moveToBottomOfLibrary(c);
-    	}
-    	else{
-    		AllZone.getGameAction().moveToLibrary(c);
-    	}
-	}
-	
+    public void sacrificePermanent(String prompt, CardList choices) {
+        Input in = CardFactoryUtil.input_sacrificePermanent(choices, prompt);
+        AllZone.getInputControl().setInput(in);
+    }
+
+    protected void clashMoveToTopOrBottom(Card c) {
+        String choice = "";
+        String choices[] = {"top", "bottom"};
+        AllZone.getDisplay().setCard(c);
+        choice = (String) GuiUtils.getChoice(c.getName() + " - Top or bottom of Library", choices);
+
+        if (choice.equals("bottom")) {
+            AllZone.getGameAction().moveToBottomOfLibrary(c);
+        } else {
+            AllZone.getGameAction().moveToLibrary(c);
+        }
+    }
+
 }//end HumanPlayer class

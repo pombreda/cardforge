@@ -2,12 +2,12 @@ package forge.quest.data.pet;
 
 import forge.AllZone;
 import forge.Card;
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.trigger.Trigger;
 import forge.card.trigger.TriggerHandler;
-import forge.card.abilityFactory.*;
 
-public class QuestPetHound extends QuestPetAbstract{
-    public QuestPetHound(){
+public class QuestPetHound extends QuestPetAbstract {
+    public QuestPetHound() {
         super("Hound", "Dogs are said to be man's best friend. Definitely not this one.", 4);
     }
 
@@ -26,41 +26,33 @@ public class QuestPetHound extends QuestPetAbstract{
         petCard.addType("Hound");
         petCard.addType("Pet");
 
-        if (level == 1)
-		{
-			petCard.setImageName("R 1 1 Hound Pet");
+        if (level == 1) {
+            petCard.setImageName("R 1 1 Hound Pet");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(1);
-		}
-		else if (level == 2)
-		{
+        } else if (level == 2) {
             petCard.setImageName("R 1 1 Hound Pet Haste");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(1);
             petCard.addIntrinsicKeyword("Haste");
-		}
-		else if (level == 3)
-		{
+        } else if (level == 3) {
             petCard.setImageName("R 2 1 Hound Pet");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(1);
             petCard.addIntrinsicKeyword("Haste");
 
-		}
-		else if (level == 4)
-		{
+        } else if (level == 4) {
             petCard.setImageName("R 2 1 Hound Pet Alone");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(1);
             petCard.addIntrinsicKeyword("Haste");
             //petCard.addIntrinsicKeyword("Whenever this creature attacks alone, it gets +2/+0 until end of turn.");
-            
+
             final Trigger myTrigger = TriggerHandler.parseTrigger("Mode$ Attacks | ValidCard$ Card.Self | Alone$ True | TriggerDescription$ Whenever CARDNAME attacks alone, it gets +2/+0 until end of turn.", petCard);
             AbilityFactory af = new AbilityFactory();
             myTrigger.setOverridingAbility(af.getAbility("AB$Pump | Cost$ 0 | Defined$ Self | NumAtt$ 2", petCard));
             petCard.addTrigger(myTrigger);
-		}
-
+        }
 
 
         return petCard;
@@ -84,10 +76,10 @@ public class QuestPetHound extends QuestPetAbstract{
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a hound",
-        "1/1, R",
-        "1/1, R, Haste",
-        "2/1, R, Haste",
-        "2/1, R, Haste, Whenever this creature attacks alone, it gets +2/+0 until end of turn."};
+                "1/1, R",
+                "1/1, R, Haste",
+                "2/1, R, Haste",
+                "2/1, R, Haste, Whenever this creature attacks alone, it gets +2/+0 until end of turn."};
     }
 
     @Override
@@ -98,6 +90,6 @@ public class QuestPetHound extends QuestPetAbstract{
                 "r_1_1_hound_pet_haste_small.jpg",
                 "r_2_1_hound_pet_small.jpg",
                 "r_2_1_hound_pet_alone_small.jpg"
-        };       
+        };
     }
 }

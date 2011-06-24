@@ -1,28 +1,17 @@
-
 package forge;
 
 
-import java.awt.Dimension;
+import com.cloudgarden.layout.AnchorConstraint;
+import com.cloudgarden.layout.AnchorLayout;
+
+import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.lang.reflect.Method;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-
-import com.cloudgarden.layout.AnchorConstraint;
-import com.cloudgarden.layout.AnchorLayout;
 
 
 /**
@@ -34,50 +23,50 @@ import com.cloudgarden.layout.AnchorLayout;
  * COMMERCIAL PURPOSE.
  */
 public class GUI_Filter extends javax.swing.JDialog {
-    
+
     private static final long serialVersionUID = -8475271235196182185L;
-    private JLabel            jLabel1;
-    private JTextField        NameText;
-    private JLabel            jLabel5;
-    private JTextField        cardText;
+    private JLabel jLabel1;
+    private JTextField NameText;
+    private JLabel jLabel5;
+    private JTextField cardText;
     @SuppressWarnings("unused")
-    private JTextField        cardType;
-    private JPanel            jPanel1;
-    private JCheckBox         jCheckBoxColorless;
-    private JCheckBox         jCheckBoxWhite;
-    private JCheckBox         jCheckBoxRed;
-    private JCheckBox         jCheckBoxGreen;
-    private JCheckBox         jCheckBoxBlue;
-    private JSeparator        jSeparator1;
-    private JLabel            jLabel2;
-    private JLabel            jLabel3;
-    private JLabel            jLabel4;
-    private JCheckBox         jCheckBoxPlaneswalker;
-    private JCheckBox         jCheckBoxArtifact;
-    private JCheckBox         jCheckBoxCreature;
-    private JCheckBox         jCheckBoxEnchant;
-    private JCheckBox         jCheckBoxInstant;
-    private JCheckBox         jCheckBoxLand;
-    private JCheckBox         jCheckBoxSorcery;
-    private JSeparator        jSeparator2;
-    private JPanel            jPanel2;
-    private JCheckBox         jCheckBoxBlack;
-    private JButton           jButtonOk;
+    private JTextField cardType;
+    private JPanel jPanel1;
+    private JCheckBox jCheckBoxColorless;
+    private JCheckBox jCheckBoxWhite;
+    private JCheckBox jCheckBoxRed;
+    private JCheckBox jCheckBoxGreen;
+    private JCheckBox jCheckBoxBlue;
+    private JSeparator jSeparator1;
+    private JLabel jLabel2;
+    private JLabel jLabel3;
+    private JLabel jLabel4;
+    private JCheckBox jCheckBoxPlaneswalker;
+    private JCheckBox jCheckBoxArtifact;
+    private JCheckBox jCheckBoxCreature;
+    private JCheckBox jCheckBoxEnchant;
+    private JCheckBox jCheckBoxInstant;
+    private JCheckBox jCheckBoxLand;
+    private JCheckBox jCheckBoxSorcery;
+    private JSeparator jSeparator2;
+    private JPanel jPanel2;
+    private JCheckBox jCheckBoxBlack;
+    private JButton jButtonOk;
     //private ButtonGroup buttonGroup1;
-    private DeckDisplay       deckDisplay;
-    public CardList           filterCardList;
-    int                       kCode;
-    
-    
+    private DeckDisplay deckDisplay;
+    public CardList filterCardList;
+    int kCode;
+
+
     public GUI_Filter(JFrame g, DeckDisplay display) {
         super(g);
         deckDisplay = display;
         initGUI();
     }
-    
+
     private void initGUI() {
         try {
-            
+
             AnchorLayout thisLayout = new AnchorLayout();
             getContentPane().setLayout(thisLayout);
             {
@@ -106,8 +95,8 @@ public class GUI_Filter extends javax.swing.JDialog {
                 NameText.addKeyListener(new java.awt.event.KeyAdapter() {
                     @Override
                     public void keyPressed(java.awt.event.KeyEvent e) {
-                        
-                        if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                             FilterCardTable();
                         }
                     }
@@ -138,7 +127,7 @@ public class GUI_Filter extends javax.swing.JDialog {
             }
             setVisible(true);
             this.setPreferredSize(new java.awt.Dimension(280, 300));
-            
+
             Dimension screen = getToolkit().getScreenSize();
             // int x = (screen.width - 280) / 2;
             // int y = (screen.height - 300) / 2;
@@ -154,21 +143,21 @@ public class GUI_Filter extends javax.swing.JDialog {
                 // Call Java 6 method without making the Java 5 compiler 
                 // unhappy:
                 Method method = this.getClass().getMethod("setIconImage");
-                method.invoke(this, new Object[] { null });
-            } catch(NoSuchMethodError err) {
+                method.invoke(this, new Object[]{null});
+            } catch (NoSuchMethodError err) {
                 // setIconImage is @since 1.6
                 err.printStackTrace();
             }
             this.addWindowListener(new WListener());
-            
 
-        } catch(Exception e) {
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     private JPanel getJPanel1() {
-        if(jPanel1 == null) {
+        if (jPanel1 == null) {
             jPanel1 = new JPanel();
             AnchorLayout jPanel1Layout = new AnchorLayout();
             jPanel1.setPreferredSize(new java.awt.Dimension(121, 183));
@@ -195,9 +184,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jPanel1;
     }
-    
+
     private JLabel getJLabel2() {
-        if(jLabel2 == null) {
+        if (jLabel2 == null) {
             jLabel2 = new JLabel();
             jLabel2.setText("Color");
             jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -207,18 +196,18 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jLabel2;
     }
-    
+
     private JSeparator getJSeparator1() {
-        if(jSeparator1 == null) {
+        if (jSeparator1 == null) {
             jSeparator1 = new JSeparator();
             jSeparator1.setPreferredSize(new java.awt.Dimension(117, 6));
             jSeparator1.setLayout(null);
         }
         return jSeparator1;
     }
-    
+
     private JCheckBox getJCheckBoxBlue() {
-        if(jCheckBoxBlue == null) {
+        if (jCheckBoxBlue == null) {
             jCheckBoxBlue = new JCheckBox();
             jCheckBoxBlue.setLayout(null);
             jCheckBoxBlue.setText("Blue");
@@ -228,8 +217,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxBlue.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -237,9 +226,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxBlue;
     }
-    
+
     private JCheckBox getJCheckBoxGreen() {
-        if(jCheckBoxGreen == null) {
+        if (jCheckBoxGreen == null) {
             jCheckBoxGreen = new JCheckBox();
             jCheckBoxGreen.setLayout(null);
             jCheckBoxGreen.setText("Green");
@@ -249,8 +238,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxGreen.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -258,9 +247,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxGreen;
     }
-    
+
     private JCheckBox getJCheckBoxRed() {
-        if(jCheckBoxRed == null) {
+        if (jCheckBoxRed == null) {
             jCheckBoxRed = new JCheckBox();
             jCheckBoxRed.setLayout(null);
             jCheckBoxRed.setText("Red");
@@ -270,8 +259,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxRed.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -279,9 +268,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxRed;
     }
-    
+
     private JCheckBox getJCheckBoxWhite() {
-        if(jCheckBoxWhite == null) {
+        if (jCheckBoxWhite == null) {
             jCheckBoxWhite = new JCheckBox();
             jCheckBoxWhite.setLayout(null);
             jCheckBoxWhite.setText("White");
@@ -291,8 +280,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxWhite.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -300,9 +289,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxWhite;
     }
-    
+
     private JCheckBox getJCheckBoxColorless() {
-        if(jCheckBoxColorless == null) {
+        if (jCheckBoxColorless == null) {
             jCheckBoxColorless = new JCheckBox();
             jCheckBoxColorless.setLayout(null);
             jCheckBoxColorless.setText("Colorless");
@@ -312,8 +301,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxColorless.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -321,9 +310,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxColorless;
     }
-    
+
     private JButton getJButtonOk() {
-        if(jButtonOk == null) {
+        if (jButtonOk == null) {
             jButtonOk = new JButton();
             jButtonOk.setLayout(null);
             jButtonOk.setText("OK");
@@ -332,9 +321,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jButtonOk;
     }
-    
+
     private JCheckBox getJCheckBoxBlack() {
-        if(jCheckBoxBlack == null) {
+        if (jCheckBoxBlack == null) {
             jCheckBoxBlack = new JCheckBox();
             jCheckBoxBlack.setLayout(null);
             jCheckBoxBlack.setText("Black");
@@ -344,8 +333,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxBlack.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -353,9 +342,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxBlack;
     }
-    
+
     private JPanel getJPanel2() {
-        if(jPanel2 == null) {
+        if (jPanel2 == null) {
             jPanel2 = new JPanel();
             AnchorLayout jPanel2Layout = new AnchorLayout();
             jPanel2.setPreferredSize(new java.awt.Dimension(121, 183));
@@ -385,9 +374,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jPanel2;
     }
-    
+
     private JLabel getJLabel3() {
-        if(jLabel3 == null) {
+        if (jLabel3 == null) {
             jLabel3 = new JLabel();
             jLabel3.setText("Color");
             jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -397,9 +386,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jLabel3;
     }
-    
+
     private JLabel getJLabel4() {
-        if(jLabel4 == null) {
+        if (jLabel4 == null) {
             jLabel4 = new JLabel();
             jLabel4.setText("Type");
             jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -409,18 +398,18 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jLabel4;
     }
-    
+
     private JSeparator getJSeparator2() {
-        if(jSeparator2 == null) {
+        if (jSeparator2 == null) {
             jSeparator2 = new JSeparator();
             jSeparator2.setPreferredSize(new java.awt.Dimension(116, 10));
             jSeparator2.setLayout(null);
         }
         return jSeparator2;
     }
-    
+
     private JCheckBox getJCheckBox1() {
-        if(jCheckBoxSorcery == null) {
+        if (jCheckBoxSorcery == null) {
             jCheckBoxSorcery = new JCheckBox();
             jCheckBoxSorcery.setLayout(null);
             jCheckBoxSorcery.setText("Sorcery");
@@ -430,8 +419,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxSorcery.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -439,9 +428,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxSorcery;
     }
-    
+
     private JCheckBox getJCheckBox2() {
-        if(jCheckBoxPlaneswalker == null) {
+        if (jCheckBoxPlaneswalker == null) {
             jCheckBoxPlaneswalker = new JCheckBox();
             jCheckBoxPlaneswalker.setLayout(null);
             jCheckBoxPlaneswalker.setText("Planeswalker");
@@ -451,8 +440,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxPlaneswalker.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -460,9 +449,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxPlaneswalker;
     }
-    
+
     private JCheckBox getJCheckBox3() {
-        if(jCheckBoxLand == null) {
+        if (jCheckBoxLand == null) {
             jCheckBoxLand = new JCheckBox();
             jCheckBoxLand.setLayout(null);
             jCheckBoxLand.setText("Land");
@@ -472,8 +461,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxLand.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -481,9 +470,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxLand;
     }
-    
+
     private JCheckBox getJCheckBox4() {
-        if(jCheckBoxInstant == null) {
+        if (jCheckBoxInstant == null) {
             jCheckBoxInstant = new JCheckBox();
             jCheckBoxInstant.setLayout(null);
             jCheckBoxInstant.setText("Instant");
@@ -493,8 +482,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxInstant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -502,9 +491,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxInstant;
     }
-    
+
     private JCheckBox getJCheckBox5() {
-        if(jCheckBoxEnchant == null) {
+        if (jCheckBoxEnchant == null) {
             jCheckBoxEnchant = new JCheckBox();
             jCheckBoxEnchant.setLayout(null);
             jCheckBoxEnchant.setText("Enchant");
@@ -514,8 +503,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxEnchant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -523,9 +512,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxEnchant;
     }
-    
+
     private JCheckBox getJCheckBox6() {
-        if(jCheckBoxCreature == null) {
+        if (jCheckBoxCreature == null) {
             jCheckBoxCreature = new JCheckBox();
             jCheckBoxCreature.setLayout(null);
             jCheckBoxCreature.setText("Creature");
@@ -535,8 +524,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxCreature.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -544,9 +533,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxCreature;
     }
-    
+
     private JCheckBox getJCheckBox7() {
-        if(jCheckBoxArtifact == null) {
+        if (jCheckBoxArtifact == null) {
             jCheckBoxArtifact = new JCheckBox();
             jCheckBoxArtifact.setLayout(null);
             jCheckBoxArtifact.setText("Artifact");
@@ -556,8 +545,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             jCheckBoxArtifact.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -565,16 +554,16 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jCheckBoxArtifact;
     }
-    
+
     private JTextField getJTextField1() {
-        if(cardText == null) {
+        if (cardText == null) {
             cardText = new JTextField();
             cardText.setPreferredSize(new java.awt.Dimension(168, 30));
             cardText.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
-                    
-                    if(e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
                         FilterCardTable();
                     }
                 }
@@ -582,9 +571,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return cardText;
     }
-    
+
     private JLabel getJLabel5() {
-        if(jLabel5 == null) {
+        if (jLabel5 == null) {
             jLabel5 = new JLabel();
             jLabel5.setText("Card Text:");
             jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
@@ -594,65 +583,65 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
         return jLabel5;
     }
-    
-    
+
+
     public class CustomListener implements MouseListener {
-        
+
         public void mouseClicked(MouseEvent e) {
             FilterCardTable();
         }
-        
+
         public void mouseEntered(MouseEvent e) {
 
         }
-        
+
         public void mouseExited(MouseEvent e) {
 
         }
-        
+
         public void mousePressed(MouseEvent e) {
 
         }
-        
+
         public void mouseReleased(MouseEvent e) {
 
         }
     }
-    
+
     public class WListener implements WindowListener {
-        
+
         public void windowActivated(WindowEvent arg0) {
 
         }
-        
+
         public void windowClosed(WindowEvent arg0) {
 
         }
-        
+
         public void windowClosing(WindowEvent arg0) {
             Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
             g.setEnabled(true);
         }
-        
+
         public void windowDeactivated(WindowEvent arg0) {
 
         }
-        
+
         public void windowDeiconified(WindowEvent arg0) {
 
         }
-        
+
         public void windowIconified(WindowEvent arg0) {
 
         }
-        
+
         public void windowOpened(WindowEvent arg0) {
 
         }
     }
-    
+
     private void FilterCardTable() {
-        
+
         String name = NameText.getText();
         String cText = cardText.getText();
         CardList filterCardList = AllZone.getCardFactory().getAllCards();
@@ -685,79 +674,79 @@ public class GUI_Filter extends javax.swing.JDialog {
         g.sorceryCheckBox.setSelected(true);
         g.sorceryCheckBox.setEnabled(true);
         g.setEnabled(true);
-        if(name != "") {
-            if(cText != "") {
+        if (name != "") {
+            if (cText != "") {
                 filterCardList = filter.CardListNameFilter(filterCardList, name);
-                if(filterCardList.size() == 0) {
+                if (filterCardList.size() == 0) {
                     JOptionPane.showMessageDialog(null, "Sorry, cards with name: " + name + " not found.",
                             "Filter", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     filterCardList = filter.CardListTextFilter(filterCardList, cText);
-                    if(filterCardList.size() == 0) {
+                    if (filterCardList.size() == 0) {
                         JOptionPane.showMessageDialog(null, "Sorry, cards with text: " + cText + " not found.",
                                 "Filter", JOptionPane.INFORMATION_MESSAGE);
                     } else {
-                        if(jCheckBoxBlack.isSelected() == false) {
+                        if (jCheckBoxBlack.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "black");
                             g.blackCheckBox.setSelected(false);
                             g.blackCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxBlue.isSelected() == false) {
+                        if (jCheckBoxBlue.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "blue");
                             g.blueCheckBox.setSelected(false);
                             g.blueCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxGreen.isSelected() == false) {
+                        if (jCheckBoxGreen.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "green");
                             g.greenCheckBox.setSelected(false);
                             g.greenCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxRed.isSelected() == false) {
+                        if (jCheckBoxRed.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "red");
                             g.redCheckBox.setSelected(false);
                             g.redCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxWhite.isSelected() == false) {
+                        if (jCheckBoxWhite.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "white");
                             g.whiteCheckBox.setSelected(false);
                             g.whiteCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxColorless.isSelected() == false) {
+                        if (jCheckBoxColorless.isSelected() == false) {
                             filterCardList = filter.CardListColorFilter(filterCardList, "colorless");
                             g.colorlessCheckBox.setSelected(false);
                             g.colorlessCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxArtifact.isSelected() == false) {
+                        if (jCheckBoxArtifact.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "artifact");
                             g.artifactCheckBox.setSelected(false);
                             g.artifactCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxCreature.isSelected() == false) {
+                        if (jCheckBoxCreature.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "creature");
                             g.creatureCheckBox.setSelected(false);
                             g.creatureCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxEnchant.isSelected() == false) {
+                        if (jCheckBoxEnchant.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "enchantment");
                             g.enchantmentCheckBox.setSelected(false);
                             g.enchantmentCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxInstant.isSelected() == false) {
+                        if (jCheckBoxInstant.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "instant");
                             g.instantCheckBox.setSelected(false);
                             g.instantCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxLand.isSelected() == false) {
+                        if (jCheckBoxLand.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "land");
                             g.landCheckBox.setSelected(false);
                             g.landCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxPlaneswalker.isSelected() == false) {
+                        if (jCheckBoxPlaneswalker.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "planeswalker");
                             g.planeswalkerCheckBox.setSelected(false);
                             g.planeswalkerCheckBox.setEnabled(false);
                         }
-                        if(jCheckBoxSorcery.isSelected() == false) {
+                        if (jCheckBoxSorcery.isSelected() == false) {
                             filterCardList = filter.CardListTypeFilter(filterCardList, "sorcery");
                             g.sorceryCheckBox.setSelected(false);
                             g.sorceryCheckBox.setEnabled(false);
@@ -766,11 +755,11 @@ public class GUI_Filter extends javax.swing.JDialog {
                     }
                 }
             }
-            
+
         }
-        
+
         dispose();
-        
+
     }
-    
+
 }

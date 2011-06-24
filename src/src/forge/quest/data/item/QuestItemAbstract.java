@@ -3,7 +3,7 @@ package forge.quest.data.item;
 import forge.AllZone;
 import forge.quest.data.bazaar.QuestStallPurchasable;
 
-public abstract class QuestItemAbstract implements QuestStallPurchasable{
+public abstract class QuestItemAbstract implements QuestStallPurchasable {
     private int level = 0;
     private String name;
     private String shopName;
@@ -24,14 +24,14 @@ public abstract class QuestItemAbstract implements QuestStallPurchasable{
     /**
      * This is the name shared across all item levels e.g., "Estates"
      */
-    public final String getName(){
+    public final String getName() {
         return name;
     }
 
     /**
      * This is the name used in purchasing the item e.g.,"Estates Training 1"
      */
-    public String getPurchaseName(){
+    public String getPurchaseName() {
         return name;
     }
 
@@ -45,27 +45,27 @@ public abstract class QuestItemAbstract implements QuestStallPurchasable{
      */
     public void onPurchase() {
         int currentLevel = AllZone.getQuestData().getInventory().getItemLevel(name);
-        AllZone.getQuestData().getInventory().setItemLevel(name, currentLevel +1);
+        AllZone.getQuestData().getInventory().setItemLevel(name, currentLevel + 1);
     }
 
 
-    public boolean isAvailableForPurchase(){
+    public boolean isAvailableForPurchase() {
         return AllZone.getQuestData().getInventory().getItemLevel(name) < maxLevel;
     }
 
-    public int getLevel(){
+    public int getLevel() {
         return level;
     }
 
     public void setLevel(int level) {
         this.level = level;
     }
-    
+
     public int getMaxLevel() {
         return maxLevel;
     }
 
-    public boolean isLeveledItem(){
+    public boolean isLeveledItem() {
         return maxLevel == 1;
     }
 

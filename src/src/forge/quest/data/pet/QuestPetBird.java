@@ -3,11 +3,11 @@ package forge.quest.data.pet;
 import forge.AllZone;
 import forge.Card;
 
-public class QuestPetBird extends QuestPetAbstract{
+public class QuestPetBird extends QuestPetAbstract {
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
-        
+
         petCard.setName("Bird Pet");
         petCard.setController(AllZone.getHumanPlayer());
         petCard.setOwner(AllZone.getHumanPlayer());
@@ -22,31 +22,24 @@ public class QuestPetBird extends QuestPetAbstract{
         petCard.addIntrinsicKeyword("Flying");
 
 
-        if (level == 1)
-		{
-			petCard.setImageName("W 0 1 Bird Pet");
+        if (level == 1) {
+            petCard.setImageName("W 0 1 Bird Pet");
             petCard.setBaseAttack(0);
             petCard.setBaseDefense(1);
-		}
-		else if (level == 2)
-		{
+        } else if (level == 2) {
             petCard.setImageName("W 1 1 Bird Pet");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(1);
-		}
-		else if (level == 3)
-		{
+        } else if (level == 3) {
             petCard.setImageName("W 2 1 Bird Pet");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(1);
-		}
-		else if (level == 4)
-		{
+        } else if (level == 4) {
             petCard.setImageName("W 2 1 Bird Pet First Strike");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(1);
             petCard.addIntrinsicKeyword("First Strike");
-		}
+        }
 
         return petCard;
     }
@@ -75,10 +68,10 @@ public class QuestPetBird extends QuestPetAbstract{
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a bird",
-        "0/1, W, Flying",
-        "1/1, W, Flying",
-        "2/1, W, Flying",
-        "2/1, W, Flying, First Strike"};
+                "0/1, W, Flying",
+                "1/1, W, Flying",
+                "2/1, W, Flying",
+                "2/1, W, Flying, First Strike"};
     }
 
     @Override
@@ -89,6 +82,6 @@ public class QuestPetBird extends QuestPetAbstract{
                 "w_1_1_bird_pet_small.jpg",
                 "w_2_1_bird_pet_small.jpg",
                 "w_2_1_bird_pet_first_strike_small.jpg"
-        };       
+        };
     }
 }

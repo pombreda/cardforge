@@ -2,7 +2,7 @@ package forge.quest.data.pet;
 
 import java.util.*;
 
-public class QuestPetManager{
+public class QuestPetManager {
 
     public Map<String, QuestPetAbstract> pets = new HashMap<String, QuestPetAbstract>();
     public QuestPetAbstract selectedPet;
@@ -31,8 +31,7 @@ public class QuestPetManager{
     public void addPlantLevel() {
         if (plant == null) {
             plant = new QuestPetPlant();
-        }
-        else {
+        } else {
             plant.incrementLevel();
         }
     }
@@ -77,7 +76,7 @@ public class QuestPetManager{
     public Set<String> getAvailablePetNames() {
         SortedSet<String> set = new TreeSet<String>();
         for (Map.Entry<String, QuestPetAbstract> pet : pets.entrySet()) {
-            if (pet.getValue().getLevel() > 0){
+            if (pet.getValue().getLevel() > 0) {
                 set.add(pet.getKey());
             }
         }
@@ -86,7 +85,7 @@ public class QuestPetManager{
 
 
     public Collection<QuestPetAbstract> getPetsAndPlants() {
-        Set <QuestPetAbstract> petsAndPlants = new HashSet<QuestPetAbstract>(pets.values());
+        Set<QuestPetAbstract> petsAndPlants = new HashSet<QuestPetAbstract>(pets.values());
         petsAndPlants.add(plant);
 
         return petsAndPlants;

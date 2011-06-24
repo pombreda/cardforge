@@ -1,5 +1,5 @@
 package forge;
-public interface CommandReturn
-{
-  public Object execute();
+
+public interface CommandReturn {
+    public Object execute();
 }

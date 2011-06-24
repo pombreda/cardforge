@@ -1,28 +1,25 @@
 package forge;
 
 
-public class BoosterPack
-{
-  public static CardList getBoosterPack(int number)
-  {
-    CardList all = new CardList();
-    for(int i = 0; i < number; i++)
-      all.addAll(getBoosterPack());
+public class BoosterPack {
+    public static CardList getBoosterPack(int number) {
+        CardList all = new CardList();
+        for (int i = 0; i < number; i++)
+            all.addAll(getBoosterPack());
 
-    return all;
-  }
+        return all;
+    }
 
-  public static CardList getBoosterPack()
-  {
-    CardList all = AllZone.getCardFactory().getAllCards();
-    CardList pack = new CardList();
+    public static CardList getBoosterPack() {
+        CardList all = AllZone.getCardFactory().getAllCards();
+        CardList pack = new CardList();
 
-    for(int i = 0; i < 10; i++)
-      pack.add(all.get(MyRandom.random.nextInt(all.size())));
+        for (int i = 0; i < 10; i++)
+            pack.add(all.get(MyRandom.random.nextInt(all.size())));
 
-    for(int i = 0; i < 5; i++)
-      pack.add(AllZone.getCardFactory().copyCard(pack.get(i)));
+        for (int i = 0; i < 5; i++)
+            pack.add(AllZone.getCardFactory().copyCard(pack.get(i)));
 
-    return pack;
-  }//getBoosterPack()
+        return pack;
+    }//getBoosterPack()
 }

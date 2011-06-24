@@ -1,36 +1,43 @@
 package forge;
+
 import java.util.Observer;
 
 //PlayerZone observers the cards that are added to its zone
-abstract public class PlayerZone extends MyObservable implements IPlayerZone, Observer
-{
+abstract public class PlayerZone extends MyObservable implements IPlayerZone, Observer {
 
 }
 
-interface IPlayerZone
-{
-  public void setUpdate(boolean b);
-  public boolean getUpdate();
+interface IPlayerZone {
+    public void setUpdate(boolean b);
 
-  public int size();
-  public void add(Object o);
-  public void add(Card c, int index);
-  public void addOnce(Object o);
+    public boolean getUpdate();
 
-  public Card get(int index);
-  public void remove(Object o);
+    public int size();
 
-  public void setCards(Card c[]);
-  public Card[] getCards();
+    public void add(Object o);
 
-  //removes all cards
-  public void reset();
+    public void add(Card c, int index);
 
-  public boolean is(String zone);
-  public boolean is(String zone, Player player);
+    public void addOnce(Object o);
 
-  public Player getPlayer();//the Player that owns this zone
-  public String getZoneName();//returns the Zone's name like Graveyard
-  
-  public String toString();
+    public Card get(int index);
+
+    public void remove(Object o);
+
+    public void setCards(Card c[]);
+
+    public Card[] getCards();
+
+    //removes all cards
+    public void reset();
+
+    public boolean is(String zone);
+
+    public boolean is(String zone, Player player);
+
+    public Player getPlayer();//the Player that owns this zone
+
+    public String getZoneName();//returns the Zone's name like Graveyard
+
+    public String toString();
 }

@@ -3,7 +3,7 @@ package forge.quest.data.pet;
 import forge.AllZone;
 import forge.Card;
 
-public class QuestPetWolf extends QuestPetAbstract{
+public class QuestPetWolf extends QuestPetAbstract {
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
@@ -19,31 +19,24 @@ public class QuestPetWolf extends QuestPetAbstract{
         petCard.addType("Wolf");
         petCard.addType("Pet");
 
-        if (level == 1)
-		{
-			petCard.setImageName("G 1 1 Wolf Pet");
+        if (level == 1) {
+            petCard.setImageName("G 1 1 Wolf Pet");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(1);
-		}
-		else if (level == 2)
-		{
+        } else if (level == 2) {
             petCard.setImageName("G 1 2 Wolf Pet");
             petCard.setBaseAttack(1);
             petCard.setBaseDefense(2);
-		}
-		else if (level == 3)
-		{
+        } else if (level == 3) {
             petCard.setImageName("G 2 2 Wolf Pet");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(2);
-		}
-		else if (level == 4)
-		{
+        } else if (level == 4) {
             petCard.setImageName("G 2 2 Wolf Pet Flanking");
             petCard.setBaseAttack(2);
             petCard.setBaseDefense(2);
             petCard.addIntrinsicKeyword("Flanking");
-		}
+        }
 
         return petCard;
     }
@@ -72,10 +65,10 @@ public class QuestPetWolf extends QuestPetAbstract{
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a wolf",
-        "1/1, G",
-        "1/2, G",
-        "2/2, G",
-        "2/2, G, Flanking"};
+                "1/1, G",
+                "1/2, G",
+                "2/2, G",
+                "2/2, G, Flanking"};
     }
 
     @Override
@@ -86,6 +79,6 @@ public class QuestPetWolf extends QuestPetAbstract{
                 "g_1_2_wolf_pet_small.jpg",
                 "g_2_2_wolf_pet_small.jpg",
                 "g_2_2_wolf_pet_flanking_small.jpg"
-        };       
+        };
     }
 }

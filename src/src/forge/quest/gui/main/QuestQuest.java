@@ -13,20 +13,18 @@ import java.util.Collections;
 import java.util.List;
 
 public class QuestQuest extends QuestSelectablePanel {
-	private static final long serialVersionUID = -162817410327650160L;
-	
-	Quest_Assignment assignment;
+    private static final long serialVersionUID = -162817410327650160L;
+
+    Quest_Assignment assignment;
 
     public QuestQuest(Quest_Assignment assignment) {
         super(assignment.getName(), assignment.getDifficulty(), assignment.getDesc(), GuiUtils.getIconFromFile(assignment.getIconName()));
         this.assignment = assignment;
 
         JLabel repeatabilityLabel;
-        if (assignment.isRepeatable()){
+        if (assignment.isRepeatable()) {
             repeatabilityLabel = new JLabel("This quest is repeatable");
-        }
-
-        else{
+        } else {
             repeatabilityLabel = new JLabel("This quest is not repeatable");
         }
 
@@ -53,11 +51,10 @@ public class QuestQuest extends QuestSelectablePanel {
         List<Quest_Assignment> questsToDisplay = new ArrayList<Quest_Assignment>();
 
         if (questData.getAvailableQuests() != null && questData.getAvailableQuests().size() > 0) {
-           List<Quest_Assignment> availableQuests = read.getQuestsByIds(questData.getAvailableQuests());
+            List<Quest_Assignment> availableQuests = read.getQuestsByIds(questData.getAvailableQuests());
             questsToDisplay = availableQuests;
 
-        }
-        else {
+        } else {
             List<Quest_Assignment> allAvailableQuests = read.getQuests();
 
             List<Integer> availableInts = new ArrayList<Integer>();

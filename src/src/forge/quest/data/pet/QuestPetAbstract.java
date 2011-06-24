@@ -5,7 +5,7 @@ import forge.Card;
 import forge.quest.data.bazaar.QuestStallManager;
 import forge.quest.data.bazaar.QuestStallPurchasable;
 
-public abstract class QuestPetAbstract implements QuestStallPurchasable{
+public abstract class QuestPetAbstract implements QuestStallPurchasable {
     int level;
     private int maxLevel;
     private String name;
@@ -14,27 +14,32 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
     public abstract Card getPetCard();
 
     public abstract int[] getAllUpgradePrices();
-    public int getPrice(){
+
+    public int getPrice() {
         return getAllUpgradePrices()[level];
     }
 
     public abstract String[] getAllUpgradeDescriptions();
-    public String getUpgradeDescription(){
+
+    public String getUpgradeDescription() {
         return getAllUpgradeDescriptions()[level];
     }
 
 
     public abstract String[] getAllImageNames();
-    public String getImageName(){
+
+    public String getImageName() {
         return getAllImageNames()[level];
     }
 
     public abstract String[] getAllStats();
-    public String getStats(){
+
+    public String getStats() {
         return getAllStats()[level];
     }
-    public String getUpgradedStats(){
-        return getAllStats()[level+1];
+
+    public String getUpgradedStats() {
+        return getAllStats()[level + 1];
     }
 
 
@@ -42,13 +47,13 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
         return level;
     }
 
-    public void incrementLevel(){
-        if (level < maxLevel){
+    public void incrementLevel() {
+        if (level < maxLevel) {
             level++;
         }
     }
 
-    public int getMaxLevel(){
+    public int getMaxLevel() {
         return maxLevel;
     }
 
@@ -58,13 +63,13 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
         this.maxLevel = maxLevel;
     }
 
-    public void setLevel(int level){
+    public void setLevel(int level) {
         this.level = level;
     }
 
     public String getPurchaseDescription() {
-        return "<em>"+getDescription()+"</em><br>" + getUpgradeDescription()+
-                "<br><br><u>Current stats:</u> " + getStats()+
+        return "<em>" + getDescription() + "</em><br>" + getUpgradeDescription() +
+                "<br><br><u>Current stats:</u> " + getStats() +
                 "<br><u>Upgraded stats:</u> " + getUpgradedStats();
 
     }
@@ -96,7 +101,7 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
 
     public boolean isAvailableForPurchase() {
         QuestPetAbstract pet = AllZone.getQuestData().getPetManager().getPet(name);
-        if (pet == null){
+        if (pet == null) {
             return true;
         }
         return pet.level < pet.getMaxLevel();

@@ -6,13 +6,13 @@ import forge.Constant;
 import java.io.Serializable;
 import java.util.*;
 
-public class Deck implements Comparable<Deck>, Serializable{
+public class Deck implements Comparable<Deck>, Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7478025567887481994L;
+     *
+     */
+    private static final long serialVersionUID = -7478025567887481994L;
 
-	//gameType is from Constant.GameType, like Constant.GameType.Regular
+    //gameType is from Constant.GameType, like Constant.GameType.Regular
 
     private Map<String, String> metadata = new HashMap<String, String>();
 
@@ -168,26 +168,26 @@ public class Deck implements Comparable<Deck>, Serializable{
     }
 
     public int compareTo(Deck d) {
-    	return getName().compareTo(d.getName());
-    }
-    
-    public boolean equals(Object o) {
-    	if(o instanceof Deck){
-    		Deck d = (Deck)o;
-    		return getName().equals(d.getName());
-    	}
-    	return false;
+        return getName().compareTo(d.getName());
     }
 
-    public Set<Map.Entry<String,String>> getMetadata() {
+    public boolean equals(Object o) {
+        if (o instanceof Deck) {
+            Deck d = (Deck) o;
+            return getName().equals(d.getName());
+        }
+        return false;
+    }
+
+    public Set<Map.Entry<String, String>> getMetadata() {
         return metadata.entrySet();
     }
-    
+
     public String getMetadata(String key) {
-    	if (metadata.containsKey(key))
-    		return metadata.get(key);
-    	
-    	return "";
+        if (metadata.containsKey(key))
+            return metadata.get(key);
+
+        return "";
     }
 
     public void addMetaData(String key, String value) {

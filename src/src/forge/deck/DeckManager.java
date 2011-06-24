@@ -43,8 +43,7 @@ public class DeckManager {
 
             if (deckDir.isFile()) {
                 throw new IOException("Not a directory");
-            }
-            else {
+            } else {
                 deckDir.mkdirs();
                 if (!deckDir.isDirectory()) {
                     throw new IOException("Directory can't be created");
@@ -185,8 +184,8 @@ public class DeckManager {
         Deck d = new Deck();
 
         //read metadata
-        while(!(line = lineIterator.next()).equals("[main]")){
-            String[] linedata = line.split("=",2);
+        while (!(line = lineIterator.next()).equals("[main]")) {
+            String[] linedata = line.split("=", 2);
             d.addMetaData(linedata[0], linedata[1]);
         }
 
@@ -207,8 +206,7 @@ public class DeckManager {
         while ((line = iterator.next()) != null && !line.equals("[general]")) {
             if (comment == null) {
                 comment = line;
-            }
-            else {
+            } else {
                 comment += "\n" + line;
             }
         }
@@ -337,15 +335,14 @@ public class DeckManager {
             Integer dstValue = result.get(s);
             if (dstValue == null) {
                 result.put(s, 1);
-            }
-            else {
+            } else {
                 result.put(s, dstValue + 1);
             }
         }
         return result;
     }
 
-    public static void writeDeck(Deck d, File f){
+    public static void writeDeck(Deck d, File f) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(f));
             writeDeck(d, writer);

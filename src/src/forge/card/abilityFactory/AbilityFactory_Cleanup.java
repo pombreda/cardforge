@@ -10,12 +10,11 @@ import java.util.HashMap;
 // After the effect finishes resolving. 
 public class AbilityFactory_Cleanup {
 
-    public static Ability_Sub getDrawback(final AbilityFactory AF)
-    {
-        final Ability_Sub drawback = new Ability_Sub(AF.getHostCard(),AF.getAbTgt()) {
-			private static final long serialVersionUID = 6192972525033429820L;
+    public static Ability_Sub getDrawback(final AbilityFactory AF) {
+        final Ability_Sub drawback = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
+            private static final long serialVersionUID = 6192972525033429820L;
 
-			@Override
+            @Override
             public boolean chkAI_Drawback() {
                 return true;
             }
@@ -27,18 +26,17 @@ public class AbilityFactory_Cleanup {
 
             @Override
             public void resolve() {
-                doResolve(AF,this);
+                doResolve(AF, this);
             }
         };
 
         return drawback;
     }
 
-    private static void doResolve(AbilityFactory AF,SpellAbility sa)
-    {
-        HashMap<String,String> params = AF.getMapParams();
+    private static void doResolve(AbilityFactory AF, SpellAbility sa) {
+        HashMap<String, String> params = AF.getMapParams();
 
         if (params.containsKey("ClearRemembered"))
-        	sa.getSourceCard().clearRemembered();
+            sa.getSourceCard().clearRemembered();
     }
 }

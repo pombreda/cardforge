@@ -10,9 +10,9 @@ import java.util.List;
 import java.util.TreeMap;
 
 public class QuestBattle extends QuestSelectablePanel {
-	private static final long serialVersionUID = 3112668476017792084L;
+    private static final long serialVersionUID = 3112668476017792084L;
 
-	static TreeMap<String, DeckInfo> nameDeckMap = new TreeMap<String, DeckInfo>();
+    static TreeMap<String, DeckInfo> nameDeckMap = new TreeMap<String, DeckInfo>();
 
     String deckName;
 
@@ -37,7 +37,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Atomic Robo 1", "easy", "Artifact Singleton deck");
 //        addToDeckList("Atomic Robo 2", "medium", "Artifact Singleton deck");
         addToDeckList("Atomic Robo 3", "hard", "UB artifact sacrifice deck with Thopter Foundry and Sword of the Meek");
-        
+
         addToDeckList("Bamm Bamm Rubble 1", "easy", "WUBRG Domain deck");
         addToDeckList("Barney Rubble 1", "easy", "WU Sovereigns of Lost Alara deck with walls and auras");
         addToDeckList("Barney Rubble 2", "medium", "WU Sovereigns of Lost Alara deck with walls and auras");
@@ -63,7 +63,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Buffy 1", "easy", "Mono B Zombie deck");
         addToDeckList("Buffy 2", "medium", "Mono B Zombie deck");
         addToDeckList("Buffy 3", "hard", "Mono B Zombie deck");
-        
+
         addToDeckList("C3PO 1", "easy", "BR Goblin deck with Goblin Ringleader, Mad Auntie and Sensation Gorger");
         addToDeckList("C3PO 2", "medium", "BR Goblin deck with Goblin Ringleader, Kiki-Jiki, Mad Auntie and Sensation Gorger");
         addToDeckList("C3PO 3", "hard", "BR Goblin deck with Goblin Ringleader, Kiki-Jiki, Mad Auntie and Sensation Gorger");
@@ -75,7 +75,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Catwoman 2", "medium", "WRG Cat deck with Lightning Helix");
         addToDeckList("Cave Troll 2", "medium", "Mono B Quest for the Nihil Stone deck with The Rack and Bottomless Pit");
         addToDeckList("Cave Troll 3", "hard", "Mono B Quest for the Nihil Stone deck with The Rack, Bottomless Pit and Nyxathid");
-        
+
 //        addToDeckList("Colbert 2", "medium", "WG Cats deck");
 //        addToDeckList("Colbert 3", "hard", "WUR Extended deck");
 //        addToDeckList("Colossus 2", "medium", "RG Changeling deck");
@@ -87,7 +87,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Crocodile Dundee 3", "hard", "Mono R deck with Mudbrawler Cohort and Bloodmark Mentor");
         addToDeckList("Cyclops 2", "medium", "WUBRG Sliver deck with four copies of almost every sliver");
         addToDeckList("Cyclops 3", "hard", "WUBRG Sliver deck with a few spells");
-        
+
         addToDeckList("Da Vinci 1", "easy", "Mono B deck with Ashenmoor Cohort, Badmoon and some Fear");
         addToDeckList("Da Vinci 2", "medium", "Mono B deck with Korlash, Heir to Blackblade, Badmoon and threat removal");
         addToDeckList("Da Vinci 3", "hard", "Mono B deck with Korlash, Heir to Blackblade, Badmoon and threat removal");
@@ -117,7 +117,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Dr Fate 3", "hard", "UB Infect");
         addToDeckList("Dr No 3", "hard", "WUB Combo & Control deck with The Rack, Balance, Propaganda and discard spells");
         addToDeckList("Dr Strangelove 3", "hard", "Mono U Sanity Grinding deck");
-        
+
         addToDeckList("Electro 2", "medium", "WRG Naya deck with creatures with power 5 or greater");
         addToDeckList("Electro 3", "hard", "WRG Naya deck with creatures with power 5 or greater");
         addToDeckList("Elrond 1", "easy", "WG Aura deck with Rabid Wombat");
@@ -129,7 +129,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Endora 3", "hard", "WG Enchantress deck with enchantments and cards with enchantment effects");
         addToDeckList("Eomer 2", "medium", "Mono W flanking deck");
         addToDeckList("Ezio 3", "hard", "Mono B Assassin deck");
-        
+
         addToDeckList("Fat Albert 1", "easy", "WBRG Winter Orb deck with Keldon Warlord and mana Elves/Slivers");
         addToDeckList("Fat Albert 2", "medium", "WUBRG Winter Orb deck with Keldon Warlord and mana Elves/Slivers");
         addToDeckList("Fat Albert 3", "hard", "UG Winter Orb deck with Kalonian Behemoth and mana Elves/Slivers");
@@ -141,7 +141,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Frodo 1", "easy", "WRG Zoo deck with some threat removal");
         addToDeckList("Frodo 2", "medium", "WRG Zoo deck with some threat removal and Glorious Anthem");
         addToDeckList("Frodo 3", "hard", "WRG Zoo deck with threat removal and Glorious Anthems");
-        
+
         addToDeckList("Galadriel 2", "medium", "Mono G Deck with Amulet of Vigor, mana ramp, Time Vault and Howl of the Night Pack");
         addToDeckList("Galahad 1", "easy", "WB Knight deck with Kinsbaile Cavalier and Knight Exemplar");
         addToDeckList("Galahad 2", "medium", "WB Knight deck with Kinsbaile Cavalier and Knight Exemplar");
@@ -170,7 +170,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Green Arrow 2", "medium", "Mono G Archer deck");
         addToDeckList("Green Lantern 3", "hard", "UBR Deathtouch deck with auras and several equipments");
 //        addToDeckList("Gunslinger 3", "hard", "WBRG Cascade deck");
-        
+
         addToDeckList("Hagrid 2", "medium", "Mono R Giants deck");
         addToDeckList("Han Solo 3", "hard", "WU Enchanted Evening deck with lots of enchantment removal");
         addToDeckList("Hans 3", "hard", "WRG Allies deck");
@@ -190,12 +190,12 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Homer Simpson 3", "hard", "UBR Sacrifice deck with Mortician Beetle");
 //        addToDeckList("Hulk 2", "medium", "G Men with Pants deck");
 //        addToDeckList("Hulk 3", "hard", "G Midrange deck");
-        
+
         addToDeckList("Iceman 3", "hard", "UB Bounce deck with Warped Devotion");
         addToDeckList("Indiana Jones 1", "easy", "UBR Sol'kanar the Swamp King and buff");
         addToDeckList("Indiana Jones 2", "medium", "UBR Sol'kanar the Swamp King, buff and Raise Dead");
         addToDeckList("Indiana Jones 3", "hard", "UBR Sol'kanar the Swamp King, buff and Terminate");
-        
+
         addToDeckList("Jabba the Hut 3", "hard", "Mono B Infect deck");
 //        addToDeckList("Jack 2", "medium", "BG Aggressive deck");
 //        addToDeckList("Jack 3", "hard", "WUB Sphinx Cascade deck");
@@ -212,7 +212,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Joker 2", "medium", "WG Novablast deck");
 //        addToDeckList("Jon Stewart 2", "medium", "WG Midrange deck");
 //        addToDeckList("Jon Stewart 3", "hard", "WG Extended deck");
-        
+
         addToDeckList("Kang 1", "easy", "UB deck with Gravelgill Duo and Dire Undercurrents");
         addToDeckList("Kang 2", "medium", "UB deck with Glen Elendra Liege, Gravelgill Duo and Dire Undercurrents");
         addToDeckList("Kang 3", "hard", "UB deck with Glen Elendra Liege and Dire Undercurrents");
@@ -230,14 +230,14 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Kojak 2", "medium", "Mono U deck with Sunken City, Inundate, counterspells and bounce");
         addToDeckList("Kojak 3", "hard", "Mono U deck with Sunken City, Inundate, counterspells and bounce");
 //        addToDeckList("Krypto 3", "hard", "UBG Standard Constructed deck");
-        
+
 //        addToDeckList("Lex 3", "hard", "Ninjas deck");
 //        addToDeckList("Link 3", "hard", "GUR Standard Constructed deck");
         addToDeckList("Lisa Simpson 2", "medium", "WG Devour deck with tokens, Skullmulcher and Mycoloth");
 //        addToDeckList("Lucifer 2", "medium", "W Sacrifice deck");
 //        addToDeckList("Lucifer 3", "hard", "W Sacrifice deck");
         addToDeckList("Luke Skywalker 3", "hard", "WU Rebels deck with Training Grounds");
-        
+
         addToDeckList("Maggie Simpson 3", "hard", "BRG jund deck with Sprouting Thrinax, Jund Hackblade and Bloodbraid Elf");
         addToDeckList("Magneto 3", "hard", "Mono B Shriekmaw deck with creature removal and re-animation");
         addToDeckList("Magnum 1", "easy", "UG deck with Sturdy Hatchling and Shorecrasher Mimic");
@@ -249,7 +249,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Mr Slate 2", "medium", "WUG Merfolk deck with Lord of Atlantis, Stonybrook Banneret and Stonybrook Schoolmaster");
         addToDeckList("Mr Slate 3", "hard", "WUG Merfolk deck with Lord of Atlantis, Stonybrook Banneret and Stonybrook Schoolmaster");
 //        addToDeckList("Mummy 1", "easy", "W Life deck");
-        
+
         addToDeckList("Nagini 2", "medium", "Mono G Snake deck");
 //        addToDeckList("Namor 2", "medium", "U Control deck");
 //        addToDeckList("Namor 3", "hard", "U Standard Constructed deck");
@@ -261,7 +261,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Neo 2", "medium", "RG deck with Boartusk Liege, Jund Hackblade and Naya Hushblade");
         addToDeckList("Neo 3", "hard", "RG deck with Boartusk Liege, Jund Hackblade and Naya Hushblade");
         addToDeckList("Newton 3", "hard", "WB Relentless Rats deck with Thrumming Stone, Vindicate and Swords to Plowshares");
-        
+
         addToDeckList("Oberon 1", "easy", "UB Faerie deck");
         addToDeckList("Oberon 2", "medium", "UB Faerie deck");
         addToDeckList("Oberon 3", "hard", "UB Faerie deck");
@@ -269,7 +269,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Optimus Prime 3", "hard", "Mono U deck with Modular creatures and proliferate spells");
 //        addToDeckList("Owlman 2", "medium", "U Ebony Owl deck");
 //        addToDeckList("Owlman 3", "hard", "B Control Standard deck");
-        
+
         addToDeckList("Pebbles Flintstone 2", "medium", "WU Meekstone deck with Meekstone, Marble Titan and creatures with vigilance");
         addToDeckList("Pebbles Flintstone 3", "hard", "WU Meekstone deck with Meekstone, Marble Titan and creatures with vigilance");
 //        addToDeckList("Phoenix 3", "hard", "R Burn");
@@ -281,7 +281,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Princess Selenia 1", "easy", "BUG Song of Serenity deck");
         addToDeckList("Professor X 2", "medium", "WUB Esper Artifacts deck with Master of Etherium and Esper Stormblade");
         addToDeckList("Professor X 3", "hard", "WUB Esper Artifacts deck with Master of Etherium and Esper Stormblade");
-        
+
         addToDeckList("R2-D2 3", "hard", "Mono U Black Vise deck with bounce (Boomerang) spells and Howling Mine");
         addToDeckList("Radagast 2", "medium", "Mono G Muraganda Petroglyphs deck with vanilla creatures and a few tokens");
         addToDeckList("Radiant 3", "hard", "WUB flying creature deck with Radiant, Archangel, Gravitational Shift and Moat");
@@ -302,7 +302,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Rocky 2", "medium", "WUR Pro red deck with Flamebreak, Tremor, Pyroclasm");
         addToDeckList("Rocky 3", "hard", "WUR Pro red deck with Flamebreak, Tremor, Pyroclasm");
         addToDeckList("Rogue 3", "hard", "Mono R Dragon deck with Tarox Bladewing, Dragon Roost and Chandra Nalaar");
-        
+
 //        addToDeckList("Sabertooth 2", "medium", "G Smokestack deck");
         addToDeckList("Samantha Stephens 1", "easy", "WU Painter's Servant anti-red deck");
         addToDeckList("Samantha Stephens 2", "medium", "WU Painter's Servant anti-red deck");
@@ -343,7 +343,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Swamp Thing 1", "easy", "BG deck");
 //        addToDeckList("Swamp Thing 2", "medium", "BG deck");
 //        addToDeckList("Swamp Thing 3", "hard", "BG deck");
-        
+
         addToDeckList("Tarzan 1", "easy", "WR Ape tribal deck with Ancient Silverback, Earthbind, Claws of Wirewood and pump spells");
         addToDeckList("Tarzan 2", "medium", "WR Ape tribal deck with Ancient Silverback, Raking Canopy and Treetop Village");
         addToDeckList("Terminator 3", "hard", "Mono B artifact deck with The Abyss");
@@ -360,12 +360,12 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Treebeard 1", "easy", "Mono G Treefolk deck with Bosk Banneret, Dauntless Dourbark and Leaf-Crowned Elder");
         addToDeckList("Treebeard 2", "medium", "WBG Treefolk deck with Bosk Banneret, Dauntless Dourbark, Timber Protector, Leaf-Crowned Elder and Doran");
         addToDeckList("Treebeard 3", "hard", "WBG Treefolk deck with Bosk Banneret, Dauntless Dourbark, Timber Protector, Leaf-Crowned Elder and Doran");
-        
+
         addToDeckList("Uncle Owen 3", "hard", "WUB Control deck");
-        
+
 //        addToDeckList("Vampire 2", "medium", "Vampire Singleton");
 //        addToDeckList("Vampire 3", "hard", "Vampire Constructed");
-        
+
         addToDeckList("Walle 2", "medium", "Mono W Myr deck");
         addToDeckList("Wally 3", "hard", "WB Artifact deck with Tempered Steel");
 //        addToDeckList("Werewolf 2", "medium", "UGB UBG Fungal Shambler deck");
@@ -380,7 +380,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Wyatt Earp 1", "easy", "Mono W deck with Crovax, Ascendant Hero, Crusade and small to medium sized creatures.");
         addToDeckList("Wyatt Earp 2", "medium", "Mono W deck with Crovax, Ascendant Hero, Crusade and small to medium sized creatures.");
         addToDeckList("Wyatt Earp 3", "hard", "Mono W deck with Crovax, Ascendant Hero, Honor of the Pure and small to medium sized creatures.");
-        
+
 //        addToDeckList("Xavier 2", "medium", "UR Twitch");
     }
 
@@ -389,12 +389,10 @@ public class QuestBattle extends QuestSelectablePanel {
     }
 
     public static String getDescription(String deckName) {
-        if (nameDeckMap.containsKey(deckName)){
+        if (nameDeckMap.containsKey(deckName)) {
             return nameDeckMap.get(deckName).description;
-        }
-
-        else{
-            System.out.println("Deck " +deckName+" does not have a description.");
+        } else {
+            System.out.println("Deck " + deckName + " does not have a description.");
             return "";
         }
     }
@@ -411,22 +409,21 @@ public class QuestBattle extends QuestSelectablePanel {
         }
     }
 
-    public static List<QuestSelectablePanel> getBattles(){
+    public static List<QuestSelectablePanel> getBattles() {
         List<QuestSelectablePanel> opponentList = new ArrayList<QuestSelectablePanel>();
 
         String[] opponentNames = QuestBattleManager.getOpponents();
         for (String opponentName : opponentNames) {
 
-                String oppIconName = opponentName.substring(0, opponentName.length() - 1).trim() + ".jpg";
-                ImageIcon icon = GuiUtils.getIconFromFile(oppIconName);
+            String oppIconName = opponentName.substring(0, opponentName.length() - 1).trim() + ".jpg";
+            ImageIcon icon = GuiUtils.getIconFromFile(oppIconName);
 
             try {
                 opponentList.add(new QuestBattle(opponentName,
                         nameDeckMap.get(opponentName).difficulty,
                         nameDeckMap.get(opponentName).description,
                         icon));
-            }
-            catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 System.out.println("Missing Deck Description. Fix me:" + opponentName);
                 opponentList.add(new QuestBattle(opponentName,
                         "<<Unknown>>",
@@ -440,7 +437,7 @@ public class QuestBattle extends QuestSelectablePanel {
     }
 
     private QuestBattle(String name, String difficulty, String description, ImageIcon icon) {
-        super(name.substring(0, name.length()-2), difficulty, description, icon);
+        super(name.substring(0, name.length() - 2), difficulty, description, icon);
 
         this.deckName = name;
     }
