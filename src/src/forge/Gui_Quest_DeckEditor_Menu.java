@@ -3,8 +3,11 @@ package forge;
 
 
 import forge.deck.Deck;
+import forge.deck.DeckManager;
 import forge.error.ErrorViewer;
 import forge.gui.GuiUtils;
+import forge.properties.ForgeProps;
+import forge.properties.NewConstants;
 import forge.quest.data.QuestBattleManager;
 
 import javax.swing.*;
@@ -14,6 +17,7 @@ import javax.swing.filechooser.FileFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.nio.channels.FileChannel;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -215,7 +219,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         
         import2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                importDeck(isHumanMenu);
+                importDeck();//importDeck(isHumanMenu);
             }
         });//import
         
@@ -359,12 +363,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         FileFilter filter = new FileFilter() {
             @Override
             public boolean accept(File f) {
-                return f.getName().endsWith(".deck") || f.isDirectory();
+                return f.getName().endsWith(".dck") || f.isDirectory();
             }
             
             @Override
             public String getDescription() {
-                return "Deck File .deck";
+                return "Deck File .dck";
             }
         };
         
@@ -396,6 +400,52 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         return null;
     }//getExportFilename()
 
+    private void importDeck() {
+        File file = getImportFilename();
+
+        if (file == null) {
+        }
+        else if (file.getName().endsWith(".dck")) {
+            try {
+                Deck newDeck = DeckManager.readDeck(file);
+                questData.addDeck(newDeck);
+
+                CardList cardpool = new CardList();
+                CardList decklist = new CardList();
+                for(String s : newDeck.getMain())
+                {
+                    Card c = null;
+                    if (s.contains("|")) {
+                        String split[] = s.split("\\|", 2);
+                        c = AllZone.CardFactory.getCard(split[0],null);
+                        decklist.add(c);
+                        cardpool.add(c);
+                        //setCode = s[1];
+                    }
+                    else
+                    {
+                        c = AllZone.CardFactory.getCard(s,null);
+                    }
+
+                    decklist.add(c);
+                    cardpool.add(c);
+                    questData.addCard(c);
+                }
+                for(String s : questData.getCardpool())
+                {
+                    cardpool.add(AllZone.CardFactory.getCard(s,null));
+                }
+
+                deckDisplay.updateDisplay(cardpool,decklist);
+
+            } catch (Exception ex) {
+                ErrorViewer.showError(ex);
+                throw new RuntimeException("Gui_DeckEditor_Menu : importDeck() error, " + ex);
+            }
+        }
+
+    }//importDeck()
+    /*
     private void importDeck(boolean isHumanDeck) {
         File file = getImportFilename();
 
@@ -465,7 +515,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         deckDisplay.updateDisplay(cardpool, deckList);
 
     }//importDeck()
-
+    */
 
     private File getImportFilename() {
         JFileChooser chooser = new JFileChooser(previousDirectory);
@@ -681,7 +731,7 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         Deck d = questData.getDeck(deckName);
         CardList deck = new CardList();
         
-        for(int i = 0; i < d.countMain(); i++) { {
+        for(int i = 0; i < d.countMain(); i++) {
         	String cardName = d.getMain(i);
         	//String setCode = "";
             if (cardName.contains("|"))
@@ -689,12 +739,17 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
             	String s[] = cardName.split("\\|",2);
             	cardName = s[0];
             	//setCode = s[1];
+                cardpool.remove(s[0]);
+            }
+            else
+            {
+                cardpool.remove(d.getMain(i));
             }
         	
         	deck.add(AllZone.CardFactory.getCard(cardName, null));
-        }    
+
             //remove any cards that are in the deck from the card pool
-            cardpool.remove(d.getMain(i));
+
         }
         
         deckDisplay.updateDisplay(cardpool, deck);
