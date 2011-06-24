@@ -8,4 +8,5 @@ A:AB$ Debuff | Cost$ T | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/urborg.jpg
+SetInfo:LEG|Uncommon|http://magiccards.info/scans/en/lg/255.jpg
 End

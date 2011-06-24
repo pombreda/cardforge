@@ -8,4 +8,5 @@ A:AB$ ChangeZone | Cost$ Sac<1/CARDNAME> | IsPresent$ Card.Self+countersGE2HATCH
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/triassic_egg.jpg
+SetInfo:LEG|Rare|http://magiccards.info/scans/en/lg/242.jpg
 End
