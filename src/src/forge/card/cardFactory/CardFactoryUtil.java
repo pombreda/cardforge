@@ -905,7 +905,17 @@ public class CardFactoryUtil {
             
             @Override
             public boolean canPlayAI() {
-            	//TODO: When should AI Cycle?
+            	
+            	//The AI should cycle lands if it has 6 already and no cards in hand with higher CMC
+            	CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
+            	CardList lands = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+            	lands.addAll(hand);
+            	lands = lands.getType("Land");
+            	
+            	if(sourceCard.isLand() && lands.size() >= Math.max(hand.getHighestConvertedManaCost(), 6))
+            		return true;
+            	
+            	//TODO: When else should AI Cycle?
                 return false;
             }
             
