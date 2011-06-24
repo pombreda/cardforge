@@ -485,7 +485,10 @@ public class GameAction {
         }
         
         //do this twice, sometimes creatures/permanents will survive when they shouldn't
-        for (int q = 0; q < 2; q++) {
+        for (int q = 0; q < 9; q++) {
+        	
+        	boolean checkAgain = false;
+        	
         	//card state effects like Glorious Anthem
         	for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
         		Command com = GameActionUtil.commands.get(effect);
@@ -510,16 +513,23 @@ public class GameAction {
         				Card equipment = c.getEquippedBy().get(i);
         				if(!AllZoneUtil.isCardInPlay(equipment)) {
         					equipment.unEquipCard(c);
+        					checkAgain = true;
         				}
         			}
         		}//if isEquipped()
 
         		if( c.isEquipping()) {
         			Card equippedCreature = c.getEquipping().get(0);
-        			if (!AllZoneUtil.isCardInPlay(equippedCreature)) c.unEquipCard(equippedCreature);
+        			if (!AllZoneUtil.isCardInPlay(equippedCreature)) {
+        				c.unEquipCard(equippedCreature);
+        				checkAgain = true;
+        			}
 
         			//make sure any equipment that has become a creature stops equipping
-        			if (c.isCreature()) c.unEquipCard(equippedCreature);
+        			if (c.isCreature()) {
+        				c.unEquipCard(equippedCreature);
+        				checkAgain = true;
+        			}
         		}//if isEquipping()
 
         		if (c.isAura()) {
@@ -533,6 +543,7 @@ public class GameAction {
         					c.unEnchantCard(perm);
         					//changed from destroy (and rules-wise, I don't think it's a sacrifice)
         					moveToGraveyard(c);
+        					checkAgain = true;
         				}
         			}
         		}//if isAura
@@ -542,14 +553,18 @@ public class GameAction {
         				&& !c.hasKeyword("Indestructible")) {
         			destroy(c);
         			AllZone.Combat.removeFromCombat(c); //this is untested with instants and abilities but required for First Strike combat phase
+        			checkAgain = true;
         		}
 
         		else if (c.isCreature() && c.getNetDefense() <= 0) {
         			destroy(c);
         			AllZone.Combat.removeFromCombat(c);
+        			checkAgain = true;
         		}
 
         	}//while it.hasNext()
+        	
+        	if (!checkAgain) break; //do not continue the loop
 
         }//for q=0;q<2
         
