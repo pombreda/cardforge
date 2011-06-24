@@ -1,7 +1,7 @@
 Name:Masticore
 ManaCost:4
 Types:Artifact Creature Masticore
-Text:Choose and discard a card during your upkeep, or sacrifice Masticore.
+Text:At the beginning of your upkeep, sacrifice Masticore unless you discard a card.
 PT:4/4
 A:AB$ Regenerate | Cost$ 2 | SpellDescription$ Regenerate CARDNAME.
 A:AB$ DealDamage | Cost$ 2 | ValidTgts$ Creature | TgtPrompt$ Select target creature | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to target creature.

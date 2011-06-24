@@ -4091,6 +4091,8 @@ public class GameActionUtil {
 		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Masticore");
+        list.addAll(AllZoneUtil.getPlayerCardsInPlay(player,"Molten-Tail Masticore"));
+        list.addAll(AllZoneUtil.getPlayerCardsInPlay(player,"Razormane Masticore"));
 
 		Ability ability;
 		for(int i = 0; i < list.size(); i++) {
@@ -4137,8 +4139,9 @@ public class GameActionUtil {
 			};//Ability
 			
 			StringBuilder sb = new StringBuilder();
-			sb.append(crd).append(" - sacrifice Masticore unless you discard a card.");
+			sb.append(crd).append(" - sacrifice ").append(crd).append(" unless you discard a card.");
 			ability.setStackDescription(sb.toString());
+            ability.setDescription(sb.toString());
 
             AllZone.getStack().addSimultaneousStackEntry(ability);
 
