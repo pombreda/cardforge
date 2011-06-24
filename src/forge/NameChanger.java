@@ -12,8 +12,11 @@ import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
 
-public class NameChanger implements NewConstants {
-    private Map<String, String> mutatedMap  = new HashMap<String, String>();
+public class NameChanger implements NewConstants, java.io.Serializable {
+	
+	private static final long serialVersionUID = -5729070249660760292L;
+
+	private Map<String, String> mutatedMap  = new HashMap<String, String>();
     private Map<String, String> originalMap = new HashMap<String, String>();
     
     private boolean             changeCardName;

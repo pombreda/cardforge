@@ -170,12 +170,12 @@ public class AbilityFactory_Reveal {
 		boolean randomReturn = r.nextFloat() <= Math.pow(chance, source.getAbilityUsed() + 1);
 		
 		Target tgt = sa.getTarget();
-		Player libraryOwner = AllZone.ComputerPlayer;
+		Player libraryOwner = AllZone.getComputerPlayer();
 		
 		if (sa.getTarget() != null){
 			tgt.resetTargets();
-			sa.getTarget().addTarget(AllZone.HumanPlayer);
-			libraryOwner = AllZone.HumanPlayer;
+			sa.getTarget().addTarget(AllZone.getHumanPlayer());
+			libraryOwner = AllZone.getHumanPlayer();
 		}
 		
 		//return false if nothing to dig into
@@ -203,7 +203,7 @@ public class AbilityFactory_Reveal {
 
 		if (sa.getTarget() != null){
 			tgt.resetTargets();
-			sa.getTarget().addTarget(AllZone.ComputerPlayer);
+			sa.getTarget().addTarget(AllZone.getComputerPlayer());
 		}
 
 		return true;
@@ -262,7 +262,7 @@ public class AbilityFactory_Reveal {
 					
 					if(params.containsKey("Reveal")) {
 						GuiUtils.getChoice("Revealing cards from library", top.toArray());
-						//AllZone.GameAction.revealToCopmuter(top.toArray()); - for when it exists
+						//AllZone.getGameAction().revealToCopmuter(top.toArray()); - for when it exists
 					}
 					else if (player.isHuman()){
 						//show the user the revealed cards
@@ -297,10 +297,10 @@ public class AbilityFactory_Reveal {
 								if(c.equals(dummy)) continue;
 								PlayerZone zone = AllZone.getZone(destZone1, c.getOwner());
 								if(zone.is("Library")) {
-									AllZone.GameAction.moveToLibrary(c, libraryPosition);
+									AllZone.getGameAction().moveToLibrary(c, libraryPosition);
 								}
 								else {
-									AllZone.GameAction.moveTo(zone, c);
+									AllZone.getGameAction().moveTo(zone, c);
 								}
 							}
 						}
@@ -326,15 +326,15 @@ public class AbilityFactory_Reveal {
 									PlayerZone zone = AllZone.getZone(destZone1, chosen.getOwner());
 									if(zone.is("Library")) {
 										//System.out.println("Moving to lib position: "+libraryPosition);
-										AllZone.GameAction.moveToLibrary(chosen, libraryPosition);
+										AllZone.getGameAction().moveToLibrary(chosen, libraryPosition);
 									}
 									else {
-										Card c = AllZone.GameAction.moveTo(zone, chosen);
+										Card c = AllZone.getGameAction().moveTo(zone, chosen);
 										if(destZone1.equals("Battlefield") && !keywords.isEmpty()) {
 											for(String kw : keywords) c.addExtrinsicKeyword(kw);
 										}
 									}
-									//AllZone.GameAction.revealToComputer() - for when this exists
+									//AllZone.getGameAction().revealToComputer() - for when this exists
 									j++;
 								}
 							}//human
@@ -346,9 +346,9 @@ public class AbilityFactory_Reveal {
 									if(chosen.equals(dummy)) break;
 									PlayerZone zone = AllZone.getZone(destZone1, chosen.getOwner());
 									if(zone.is("Library")) {
-										AllZone.GameAction.moveToLibrary(chosen, libraryPosition);
+										AllZone.getGameAction().moveToLibrary(chosen, libraryPosition);
 									} else 
-										AllZone.GameAction.moveTo(zone, chosen);
+										AllZone.getGameAction().moveTo(zone, chosen);
 									if (changeValid.length() > 0)
 										GuiUtils.getChoice("Computer picked: ", chosen);
 									valid.remove(chosen);
@@ -374,7 +374,7 @@ public class AbilityFactory_Reveal {
 								else {
 									chosen = rest.get(0);
 								}
-								AllZone.GameAction.moveToLibrary(chosen, libraryPosition2);
+								AllZone.getGameAction().moveToLibrary(chosen, libraryPosition2);
 								rest.remove(chosen);
 							}
 						}
@@ -383,7 +383,7 @@ public class AbilityFactory_Reveal {
 							for(int i = 0; i < rest.size(); i++) {
 								Card c = rest.get(i);
 								PlayerZone toZone = AllZone.getZone(destZone2, c.getOwner());
-								c = AllZone.GameAction.moveTo(toZone, c);
+								c = AllZone.getGameAction().moveTo(toZone, c);
 								if(destZone2.equals("Battlefield") && !keywords.isEmpty()) {
 									for(String kw : keywords) c.addExtrinsicKeyword(kw);
 								}
@@ -542,7 +542,7 @@ public class AbilityFactory_Reveal {
 				return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) 	return false;
@@ -574,18 +574,18 @@ public class AbilityFactory_Reveal {
 		Target tgt = af.getAbTgt();
 		Card source = sa.getSourceCard();
 
-		int humanHandSize = AllZoneUtil.getPlayerHand(AllZone.HumanPlayer).size();
+		int humanHandSize = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer()).size();
 
 		if (tgt != null) {
 			// ability is targeted
 			tgt.resetTargets();
 
-			boolean canTgtHuman = AllZone.HumanPlayer.canTarget(source);
+			boolean canTgtHuman = AllZone.getHumanPlayer().canTarget(source);
 
 			if (!canTgtHuman || humanHandSize == 0)
 				return false;
 			else
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 		}
 		else {
 			//if it's just defined, no big deal
@@ -755,7 +755,7 @@ public class AbilityFactory_Reveal {
 			// ability is targeted
 			tgt.resetTargets();
 
-			tgt.addTarget(AllZone.ComputerPlayer);
+			tgt.addTarget(AllZone.getComputerPlayer());
 		}
 
 		return true;
@@ -1042,7 +1042,7 @@ public class AbilityFactory_Reveal {
 			if(o == null) break;
 			Card c_1 = (Card) o;
 			topCards.remove(c_1);
-			AllZone.GameAction.moveToLibrary(c_1, i - 1);
+			AllZone.getGameAction().moveToLibrary(c_1, i - 1);
 		}
 		if(mayshuffle) {
 			if(GameActionUtil.showYesNoDialog(src, "Do you want to shuffle the library?"))

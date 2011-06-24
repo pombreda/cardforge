@@ -8,8 +8,8 @@ public class QuestPetCrocodile extends QuestPetAbstract{
     public Card getPetCard() {
         Card petCard = new Card();
         petCard.setName("Crocodile Pet");
-        petCard.setController(AllZone.HumanPlayer);
-        petCard.setOwner(AllZone.HumanPlayer);
+        petCard.setController(AllZone.getHumanPlayer());
+        petCard.setOwner(AllZone.getHumanPlayer());
 
         petCard.addColor("B");
         petCard.setToken(true);

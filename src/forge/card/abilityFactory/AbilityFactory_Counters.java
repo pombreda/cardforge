@@ -1,8 +1,14 @@
 package forge.card.abilityFactory;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Random;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.UtilFunctions;
+import net.slightlymagic.braids.util.lambda.Lambda1;
+import net.slightlymagic.braids.util.lambda.Null;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -16,6 +22,9 @@ import forge.Counters;
 import forge.MyRandom;
 import forge.Player;
 import forge.PlayerZone;
+import forge.ai.minimax.GenericInputMove;
+import forge.ai.minimax.Unstatic;
+import forge.ai.minimax.substitutes.GuiUtilsGetChoiceSubstitute;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Sub;
@@ -169,7 +178,7 @@ public class AbilityFactory_Counters {
 		String type = params.get("CounterType");
 		String amountStr = params.get("CounterNum");
 
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 
 
 		list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -197,7 +206,7 @@ public class AbilityFactory_Counters {
 			if (abCost.getSacCost() && (!abCost.getSacThis() || source.isCreature())){
 				//only sacrifice something that's supposed to be sacrificed 
 				String sacType = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
@@ -281,7 +290,7 @@ public class AbilityFactory_Counters {
 		}
 		
 		//Don't use non P1P1/M1M1 counters before main 2 if possible
-		if(AllZone.Phase.isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases")
+		if(AllZone.getPhase().isBefore(Constant.Phase.Main2) && !params.containsKey("ActivatingPhases")
 				&& !(type.equals("P1P1") || type.equals("M1M1")) )
         	return false;
 		
@@ -306,7 +315,7 @@ public class AbilityFactory_Counters {
 		String amountStr = params.get("CounterNum");
 		final int amount = AbilityFactory.calculateAmount(af.getHostCard(), amountStr, sa);
 		
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		list = AllZoneUtil.getPlayerCardsInPlay(player);
 		list = list.filter(new CardListFilter() {
@@ -374,7 +383,7 @@ public class AbilityFactory_Counters {
 		boolean chance = true;
 		boolean preferred = true;
 		CardList list;
-		Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		String type = params.get("CounterType");
 		String amountStr = params.get("CounterNum");
 		final int amount = AbilityFactory.calculateAmount(af.getHostCard(), amountStr, sa);
@@ -648,7 +657,7 @@ public class AbilityFactory_Counters {
 		
 		//TODO - currently, not targeted, only for Self
 		
-		//Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		//Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		
 		if (abCost != null){
@@ -656,7 +665,7 @@ public class AbilityFactory_Counters {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String sacType = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
@@ -711,7 +720,7 @@ public class AbilityFactory_Counters {
 		
 		//TODO - currently, not targeted, only for Self
 		
-		//Player player = af.isCurse() ? AllZone.HumanPlayer : AllZone.ComputerPlayer;
+		//Player player = af.isCurse() ? AllZone.getHumanPlayer() : AllZone.getComputerPlayer();
 		
 		// TODO handle proper calculation of X values based on Cost
 		//final int amount = calculateAmount(af.getHostCard(), amountStr, sa);
@@ -911,68 +920,127 @@ public class AbilityFactory_Counters {
 	}
 	
 	private static void proliferateResolve(final AbilityFactory AF, SpellAbility sa) {
-		CardList hperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		hperms = hperms.filter(new CardListFilter() {
-			public boolean addCard(Card crd)
-			{
-				return !crd.getName().equals("Mana Pool") /*&& crd.hasCounters()*/;
-			}
-		});
-		
-		CardList cperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
-		cperms = cperms.filter(new CardListFilter() {
-			public boolean addCard(Card crd)
-			{
-				return !crd.getName().equals("Mana Pool") /*&& crd.hasCounters()*/;
-			}
-		});
-		
-		if (AF.getHostCard().getController().isHuman()) {	
-			cperms.addAll(hperms);
-			final CardList unchosen = cperms;
-			AllZone.InputControl.setInput(new Input() {
-				private static final long serialVersionUID = -1779224307654698954L;
+		Collection<Player> nonOustedPlayers = 
+			Unstatic.getGlobalGameState().getNonOustedPlayers();
 
-				@Override
-				public void showMessage() {
-					ButtonUtil.enableOnlyCancel();
-					AllZone.Display.showMessage("Proliferate: Choose permanents and/or players");
-				}
-
-				@Override
-				public void selectButtonCancel() {
-                    AllZone.Stack.chooseOrderOfSimultaneousStackEntryAll(); //Hacky intermittent solution to triggers that look for counters being put on. They used to wait for another priority passing after proliferate finished.
-					stop();
-				}
-
-				@Override
-				public void selectCard(Card card, PlayerZone zone)
-				{
-					if(!unchosen.contains(card)) return;
-					unchosen.remove(card);
-					ArrayList<String> choices = new ArrayList<String>();
-					for(Counters c_1:Counters.values())
-						if(card.getCounters(c_1) != 0) choices.add(c_1.getName());
-					if (choices.size() > 0)
-						card.addCounter(Counters.getType((choices.size() == 1 ? choices.get(0) : GuiUtils.getChoice("Select counter type", choices.toArray()).toString())), 1);
-				}
-				boolean selComputer = false;
-				boolean selHuman = false;
-				@Override
-				public void selectPlayer(Player player) {
-					if (player.isHuman() && selHuman == false) {
-						selHuman = true;
-						if (AllZone.HumanPlayer.getPoisonCounters() > 0)
-							AllZone.HumanPlayer.addPoisonCounters(1);
-					}
-					if (player.isComputer() && selComputer == false) {
-						selComputer = true;
-						if (AllZone.ComputerPlayer.getPoisonCounters() > 0)
-							AllZone.ComputerPlayer.addPoisonCounters(1);
-					}
-				}
-			});
+		final CardList unchosenPermanents = new CardList();
+		for (Player player : nonOustedPlayers) {
+			unchosenPermanents.addAll(getPermanentsWithCountersOnThemControlledBy(player));
 		}
+		
+		final Collection<Player> unchosenPlayers = 
+			new ArrayList<Player>(nonOustedPlayers);
+
+		for (Player player : unchosenPlayers) {
+			if (!player.hasCounters()) {
+				unchosenPlayers.remove(player);  // Remove from list of candidates
+			}
+		}
+
+		
+		AllZone.getInputControl().setInput(new Input() {
+			private static final long serialVersionUID = -1779224307654698954L;
+
+			@Override
+			public void showMessage() {
+				if (!isSilent()) {
+					ButtonUtil.enableOnlyCancel();
+					AllZone.getDisplay().showMessage("Proliferate: Choose permanents and/or players");
+				}
+			}
+
+			@Override
+			public void selectButtonCancel() {
+                AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll(); //Hacky intermittent solution to triggers that look for counters being put on. They used to wait for another priority passing after proliferate finished.
+				stop();
+			}
+
+			@Override
+			public void selectCard(Card card, PlayerZone zone)
+			{
+				if(!unchosenPermanents.contains(card)) return;
+				unchosenPermanents.remove(card);
+				ArrayList<String> choices = new ArrayList<String>();
+				for(Counters c_1:Counters.values())
+					if(card.getCounters(c_1) != 0)  choices.add(c_1.getName());
+				
+				if (choices.size() > 0) {
+					String counterName = null;
+					final Card finalCard = card;
+
+					// effectProc defines what happens when you select a 
+					// counter type on a card.
+					Lambda1<Null,String> effectProc = (new Lambda1<Null,String>() {
+							public Null apply(String counterName) {
+								finalCard.addCounter(Counters.getType(counterName), 1);
+								return null;
+							}
+						});
+					
+					if (choices.size() == 1) {
+						counterName = choices.get(0);
+						effectProc.apply(counterName);
+					} else if (!isSilent()) {
+						counterName = GuiUtils.getChoice("Select counter type", choices.toArray()).toString();
+						effectProc.apply(counterName);
+					} else {
+						// This temporarily overtakes the AllZone.getInput()
+						// to allow the Minimax AI to choose a type of
+						// counter.
+						// After invocation, it resets the input to this
+						// (anonymous Input instance).
+						AllZone.getInputControl().setInput(
+								new GuiUtilsGetChoiceSubstitute(choices, this, effectProc));
+					}
+
+				}
+				else {
+					// It is bad for the Minimax AI to have choices available 
+					// that do absolutely nothing!
+					
+					throw new IllegalStateException(
+					 "Card " + UtilFunctions.safeToString(card) + " has no counters; unchosenPermanents has not effectively policed this situation."
+					);
+				}
+			}
+
+			
+			@Override
+			public void selectPlayer(Player player) {
+				if (unchosenPlayers.contains(player)) {
+					player.addPoisonCounters(1);
+				}
+				unchosenPlayers.remove(player);
+			}
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				int resultSize = unchosenPermanents.size();
+				resultSize += unchosenPlayers.size();
+				resultSize += 1;  // for Cancel
+				
+				ArrayList<MinimaxMove> result = 
+					new ArrayList<MinimaxMove>(resultSize); 
+				
+				for (Card card : unchosenPermanents) {
+					result.add(new GenericInputMove(this, card));
+				}
+
+				for (Player player : unchosenPlayers) {
+					result.add(new GenericInputMove(this, player));
+				}
+				
+				// Add Cancel action
+				result.add(new GenericInputMove(this, false));
+				
+				return result;
+			}
+		});
+	
+
+		/* 
+		Begin first-generation AI code for choosing proliferation targets.
+		
 		else { //Compy
 			cperms = cperms.filter(new CardListFilter() {
 				public boolean addCard(Card crd) {
@@ -1008,7 +1076,7 @@ public class AbilityFactory_Counters {
 			
 			StringBuilder sb = new StringBuilder();
 			sb.append("<html>Proliferate: <br>Computer selects ");
-			if (cperms.size() == 0 && hperms.size() == 0 && AllZone.HumanPlayer.getPoisonCounters() == 0)
+			if (cperms.size() == 0 && hperms.size() == 0 && AllZone.getHumanPlayer().getPoisonCounters() == 0)
 				sb.append("<b>nothing</b>.");
 			else {
 				if (cperms.size()>0) {
@@ -1027,7 +1095,7 @@ public class AbilityFactory_Counters {
 					}
 					sb.append("</b><br>");
 				}
-				if (AllZone.HumanPlayer.getPoisonCounters() > 0)
+				if (AllZone.getHumanPlayer().getPoisonCounters() > 0)
 					sb.append("<b>Human Player</b>.");
 			}//else
 			sb.append("</html>");
@@ -1046,10 +1114,24 @@ public class AbilityFactory_Counters {
 			}
 			
 			//give human a poison counter, if he has one
-			if (AllZone.HumanPlayer.getPoisonCounters() > 0)
-        		AllZone.HumanPlayer.addPoisonCounters(1);
+			if (AllZone.getHumanPlayer().getPoisonCounters() > 0)
+        		AllZone.getHumanPlayer().addPoisonCounters(1);
 			
 		} //comp
+		End first-generation AI code for choosing proliferation targets.
+		*/
+		
+	}
+
+	protected static CardList getPermanentsWithCountersOnThemControlledBy(Player controller) {
+		CardList result = AllZoneUtil.getPlayerCardsInPlay(controller);
+		result = result.filter(new CardListFilter() {
+			public boolean addCard(Card crd)
+			{
+				return !crd.getName().equals("Mana Pool") && crd.hasCounters();
+			}
+		});
+		return result;
 	}
 	
 	// *******************************************
@@ -1174,8 +1256,8 @@ public class AbilityFactory_Counters {
 		boolean curse = af.isCurse();
 		Target tgt = sa.getTarget();
 
-		hList = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		cList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		hList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+		cList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
 		hList = hList.getValidCards(valid, source.getController(), source);
 		cList = cList.getValidCards(valid, source.getController(), source);
@@ -1195,9 +1277,9 @@ public class AbilityFactory_Counters {
 		if (tgt != null){
 			Player pl;
 			if (curse)
-				pl = AllZone.HumanPlayer;
+				pl = AllZone.getHumanPlayer();
 			else
-				pl = AllZone.ComputerPlayer;
+				pl = AllZone.getComputerPlayer();
 			
 			tgt.addTarget(pl);
 			

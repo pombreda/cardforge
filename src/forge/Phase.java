@@ -1,27 +1,22 @@
 package forge;
-
 import java.util.HashMap;
 import java.util.Observer;
 import java.util.Stack;
 
 import com.esotericsoftware.minlog.Log;
 
+import forge.ai.minimax.FGameState;
+import forge.ai.minimax.Unstatic;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Spell_Permanent;
 
-public class Phase extends MyObservable
+public class Phase extends MyObservable implements java.io.Serializable
 {
+
+	private static final long serialVersionUID = 5207222278370963197L;
+
 	private int phaseIndex;
 	private int turn;
-
-	private static int	 	GameBegins = 0;
-    private static int	   StormCount;
-    static int	   PlayerSpellCount;
-    static int	   PlayerCreatureSpellCount;
-    static int		PlayerInstantSpellCount;
-    static int	   ComputerSpellCount;
-    static int	   ComputerCreatureSpellCount;
-    static int		ComputerInstantSpellCount;
 
     private Stack<Player> extraTurns = new Stack<Player>();
     
@@ -29,7 +24,7 @@ public class Phase extends MyObservable
 	
 	private int nCombatsThisTurn;
 	
-    private Player playerTurn = AllZone.HumanPlayer;
+    private Player playerTurn;
     public boolean isPlayerTurn(Player player) {
         return playerTurn.isPlayer(player);
     }
@@ -44,7 +39,8 @@ public class Phase extends MyObservable
     
     // priority player
     
-    private Player pPlayerPriority = AllZone.HumanPlayer;
+    private Player pPlayerPriority;
+
     public Player getPriorityPlayer() {
     	return pPlayerPriority;
     }
@@ -53,7 +49,7 @@ public class Phase extends MyObservable
     	pPlayerPriority = p;
     }
     
-    private Player pFirstPriority = AllZone.HumanPlayer;
+    private Player pFirstPriority;
     public Player getFirstPriority() {
     	return pFirstPriority;
     }
@@ -63,8 +59,12 @@ public class Phase extends MyObservable
     }
     
     public void setPriority(Player p) {
-        if(AllZone.Stack != null)
-            AllZone.Stack.chooseOrderOfSimultaneousStackEntryAll();
+    	setPriority(p, AllZone.getStack());
+    }
+
+    protected void setPriority(Player p, MagicStack stack) {
+        if(stack != null)
+            stack.chooseOrderOfSimultaneousStackEntryAll(this);
 
     	pFirstPriority = p;
     	pPlayerPriority = p;
@@ -72,6 +72,10 @@ public class Phase extends MyObservable
     
     public void resetPriority() {
     	setPriority(playerTurn);
+    }
+
+    protected void resetPriority(MagicStack stack) {
+    	setPriority(playerTurn, stack);
     }
     
 	private boolean bPhaseEffects = true;
@@ -124,14 +128,26 @@ public class Phase extends MyObservable
 			Constant.Phase.Cleanup
 	};
     
-    public Phase() {
-        reset();
+
+	public Phase() {
+		this(AllZone.getHumanPlayer(), AllZone.getStack());
+	}
+	
+    public Phase(Player humanPlayer, MagicStack stack) {
+    	pFirstPriority = humanPlayer;
+    	pPlayerPriority = humanPlayer;
+    	playerTurn = humanPlayer;
+    	reset(humanPlayer, stack);
     }
     
+    
     public void reset() {
+        reset(AllZone.getHumanPlayer(), AllZone.getStack());
+    }
+    
+    protected void reset(Player playerTurn, MagicStack stack) {
         turn = 1;
-        playerTurn = AllZone.HumanPlayer;
-        resetPriority();
+        resetPriority(stack);
         bPhaseEffects = true;
         needToNextPhase = false;
         setGameBegins(0);
@@ -146,22 +162,22 @@ public class Phase extends MyObservable
     
     public void turnReset(){
     	setStormCount(0);
-        PlayerSpellCount = 0;
-        PlayerCreatureSpellCount = 0;
-        PlayerInstantSpellCount = 0;
-        ComputerSpellCount = 0;
-        ComputerCreatureSpellCount = 0;
-        ComputerInstantSpellCount = 0;
+        setPlayerSpellCount(0);
+        setPlayerCreatureSpellCount(0);
+        setPlayerInstantSpellCount(0);
+        setComputerSpellCount(0);
+        setComputerCreatureSpellCount(0);
+        setComputerInstantSpellCount(0);
         playerTurn.setNumLandsPlayed(0);
     }
 
 	public void handleBeginPhase(){
-		AllZone.Phase.setPhaseEffects(false);
+		AllZone.getPhase().setPhaseEffects(false);
 		// Handle effects that happen at the beginning of phases
-        final String phase = AllZone.Phase.getPhase();
-        final Player turn = AllZone.Phase.getPlayerTurn();
-        AllZone.Phase.setSkipPhase(true);
-        AllZone.GameAction.checkStateEffects();
+        final String phase = AllZone.getPhase().getPhase();
+        final Player turn = AllZone.getPhase().getPlayerTurn();
+        AllZone.getPhase().setSkipPhase(true);
+        AllZone.getGameAction().checkStateEffects();
 
         if(phase.equals(Constant.Phase.Untap)) {
             PhaseUtil.handleUntap();
@@ -183,7 +199,7 @@ public class Phase extends MyObservable
             	PhaseUtil.handleDeclareAttackers();
             }
             else
-            	AllZone.Phase.setNeedToNextPhase(true);
+            	AllZone.getPhase().setNeedToNextPhase(true);
 	    }
         
         // we can skip AfterBlockers and AfterAttackers if necessary
@@ -192,13 +208,13 @@ public class Phase extends MyObservable
 	            PhaseUtil.verifyCombat();
             }
             else
-            	AllZone.Phase.setNeedToNextPhase(true);
+            	AllZone.getPhase().setNeedToNextPhase(true);
         }
         
 	    else if (phase.equals(Constant.Phase.Combat_Declare_Blockers_InstantAbility)){
 	    	// After declare blockers are finished being declared mark them blocked and trigger blocking things
             if(!inCombat()) 
-            	AllZone.Phase.setNeedToNextPhase(true);
+            	AllZone.getPhase().setNeedToNextPhase(true);
             else{
             	PhaseUtil.handleDeclareBlockers();
             }
@@ -206,19 +222,19 @@ public class Phase extends MyObservable
         
 	    else if (phase.equals(Constant.Phase.Combat_FirstStrikeDamage)){
 	    	if(!inCombat())
-	    		AllZone.Phase.setNeedToNextPhase(true);
+	    		AllZone.getPhase().setNeedToNextPhase(true);
 	    	else{
-	    		AllZone.Combat.verifyCreaturesInPlay();
+	    		AllZone.getCombat().verifyCreaturesInPlay();
 
 				// no first strikers, skip this step
-				if (!AllZone.Combat.setAssignedFirstStrikeDamage())		
-					AllZone.Phase.setNeedToNextPhase(true);
+				if (!AllZone.getCombat().setAssignedFirstStrikeDamage())		
+					AllZone.getPhase().setNeedToNextPhase(true);
 				
 				else{
-			    	if (!AllZone.GameInfo.isPreventCombatDamageThisTurn())
+			    	if (!AllZone.getGameInfo().isPreventCombatDamageThisTurn())
 			    		 Combat.dealAssignedDamage();
 			        
-			        AllZone.GameAction.checkStateEffects();
+			        AllZone.getGameAction().checkStateEffects();
 			        CombatUtil.showCombat();
 				}
 	    	}
@@ -226,16 +242,16 @@ public class Phase extends MyObservable
 	    	
 	    else if (phase.equals(Constant.Phase.Combat_Damage)){
 	    	if(!inCombat())
-	    		AllZone.Phase.setNeedToNextPhase(true);
+	    		AllZone.getPhase().setNeedToNextPhase(true);
 	    	else{
-	    		AllZone.Combat.verifyCreaturesInPlay();
+	    		AllZone.getCombat().verifyCreaturesInPlay();
 	    		
-		        AllZone.Combat.setAssignedDamage();
+		        AllZone.getCombat().setAssignedDamage();
 	            
-	    		if (!AllZone.GameInfo.isPreventCombatDamageThisTurn())
+	    		if (!AllZone.getGameInfo().isPreventCombatDamageThisTurn())
 	    			Combat.dealAssignedDamage();
 	    			
-	    		AllZone.GameAction.checkStateEffects();
+	    		AllZone.getGameAction().checkStateEffects();
 		        CombatUtil.showCombat();
 	    	}
 	    }
@@ -243,19 +259,19 @@ public class Phase extends MyObservable
 	    else if (phase.equals(Constant.Phase.Combat_End))
         {
 	    	// End Combat always happens
-			AllZone.EndOfCombat.executeUntil();
-			AllZone.EndOfCombat.executeAt();
+			AllZone.getEndOfCombat().executeUntil();
+			AllZone.getEndOfCombat().executeAt();
         }
 
 	    else if(phase.equals(Constant.Phase.End_Of_Turn)) {
-	    	AllZone.EndOfTurn.executeAt();
+	    	AllZone.getEndOfTurn().executeAt();
         }
         
 	    else if(phase.equals(Constant.Phase.Cleanup)){
-	    	AllZone.Phase.getPlayerTurn().setAssignedDamage(0);
+	    	AllZone.getPhase().getPlayerTurn().setAssignedDamage(0);
 	    	
 	    	//reset dealt damage to vars
-	    	Player opp = AllZone.Phase.getPlayerTurn().getOpponent();
+	    	Player opp = AllZone.getPhase().getPlayerTurn().getOpponent();
 			CardList oppList = AllZoneUtil.getCreaturesInPlay(opp);
 			for(int i = 0; i < oppList.size(); i++) {
 				Card c = oppList.get(i);
@@ -270,29 +286,29 @@ public class Phase extends MyObservable
 				c.resetReceivedDamageFromThisTurn();
 				c.resetDealtDamageToThisTurn();
 			}
-			AllZone.HumanPlayer.resetPreventNextDamage();
-			AllZone.ComputerPlayer.resetPreventNextDamage();
+			AllZone.getHumanPlayer().resetPreventNextDamage();
+			AllZone.getComputerPlayer().resetPreventNextDamage();
 
-	    	AllZone.EndOfTurn.executeUntil();
-	    	CardList cHand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
-	    	CardList hHand = AllZoneUtil.getPlayerHand(AllZone.HumanPlayer);
+	    	AllZone.getEndOfTurn().executeUntil();
+	    	CardList cHand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
+	    	CardList hHand = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
 	    	for(Card c:cHand) c.setDrawnThisTurn(false);
 	    	for(Card c:hHand) c.setDrawnThisTurn(false);
-	    	AllZone.HumanPlayer.resetNumDrawnThisTurn();
-	    	AllZone.ComputerPlayer.resetNumDrawnThisTurn();
+	    	AllZone.getHumanPlayer().resetNumDrawnThisTurn();
+	    	AllZone.getComputerPlayer().resetNumDrawnThisTurn();
 	    }
         
-        if (!AllZone.Phase.isNeedToNextPhase()){
+        if (!AllZone.getPhase().isNeedToNextPhase()){
             // Run triggers if phase isn't being skipped
             HashMap<String,Object> runParams = new HashMap<String,Object>();
     		runParams.put("Phase", phase);
     		runParams.put("Player", turn);
-    		AllZone.TriggerHandler.runTrigger("Phase", runParams);
+    		AllZone.getTriggerHandler().runTrigger("Phase", runParams);
             
         }
 
         //This line fixes Combat Damage triggers not going off when they should
-        AllZone.Stack.unfreezeStack();
+        AllZone.getStack().unfreezeStack();
 
         if(!phase.equals(Constant.Phase.Untap)) //Nobody recieves priority during untap
 		    resetPriority();
@@ -300,7 +316,7 @@ public class Phase extends MyObservable
 	
     public void nextPhase() {
         //experimental, add executeCardStateEffects() here:
-        for(String effect:AllZone.StaticEffects.getStateBasedMap().keySet()) {
+        for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
             Command com = GameActionUtil.commands.get(effect);
             com.execute();
         }
@@ -310,18 +326,18 @@ public class Phase extends MyObservable
         needToNextPhase = false;
 
         // If the Stack isn't empty why is nextPhase being called?
-        if(AllZone.Stack.size() != 0) {
+        if(AllZone.getStack().size() != 0) {
         	Log.debug("Phase.nextPhase() is called, but Stack isn't empty.");
             return;
         }
         this.bPhaseEffects = true;
 		if(!AllZoneUtil.isCardInPlay("Upwelling")) {
-			AllZone.ManaPool.clearPool();
-			AllZone.Computer_ManaPool.clearPool();
+			AllZone.getManaPool().clearPool();
+			AllZone.getComputerManaPool().clearPool();
 		}
         
         if (getPhase().equals(Constant.Phase.Combat_Declare_Attackers)) {
-        	AllZone.Stack.unfreezeStack();
+        	AllZone.getStack().unfreezeStack();
         	nCombatsThisTurn++;
         } 
         else if (getPhase().equals(Constant.Phase.Untap)) {
@@ -329,18 +345,23 @@ public class Phase extends MyObservable
         }
         
         if (getPhase().equals(Constant.Phase.Combat_End)) {
-            AllZone.Combat.reset();
-            AllZone.Display.showCombat("");
+            AllZone.getCombat().reset();
+            
+            Display display = AllZone.getDisplay();
+            if (display != null) {
+            	display.showCombat("");
+            }
+			
         	resetAttackedThisCombat(getPlayerTurn());
         	this.bCombat = false;
         }
         
         if (phaseOrder[phaseIndex].equals(Constant.Phase.Cleanup))
         	if (!bRepeat)
-        		AllZone.Phase.setPlayerTurn(handleNextTurn());
+        		AllZone.getPhase().setPlayerTurn(handleNextTurn());
         
         if (is(Constant.Phase.Combat_Declare_Blockers)){        	
-         	AllZone.Stack.unfreezeStack();
+         	AllZone.getStack().unfreezeStack();
         }
         
         if (is(Constant.Phase.Combat_End) && extraCombats > 0){
@@ -352,9 +373,9 @@ public class Phase extends MyObservable
 
         	bCombat = true;
         	extraCombats--;
-        	AllZone.Combat.reset();
-        	AllZone.Combat.setAttackingPlayer(player);
-        	AllZone.Combat.setDefendingPlayer(opp);
+        	AllZone.getCombat().reset();
+        	AllZone.getCombat().setAttackingPlayer(player);
+        	AllZone.getCombat().setDefendingPlayer(opp);
         	phaseIndex = findIndex(Constant.Phase.Combat_Declare_Attackers);
         }  
         else {
@@ -373,9 +394,9 @@ public class Phase extends MyObservable
 
         // When consecutively skipping phases (like in combat) this section pushes through that block
         this.updateObservers();
-        if(AllZone.Phase != null && AllZone.Phase.isNeedToNextPhase()) {
-                AllZone.Phase.setNeedToNextPhase(false);
-                AllZone.Phase.nextPhase();
+        if(AllZone.getPhase() != null && AllZone.getPhase().isNeedToNextPhase()) {
+                AllZone.getPhase().setNeedToNextPhase(false);
+                AllZone.getPhase().nextPhase();
         }
     }
     
@@ -499,8 +520,8 @@ public class Phase extends MyObservable
             
             if(c.getCreatureGotBlockedThisCombat()) c.setCreatureGotBlockedThisCombat(false);
             
-            AllZone.GameInfo.setAssignedFirstStrikeDamageThisCombat(false);
-            AllZone.GameInfo.setResolvedFirstStrikeDamageThisCombat(false);
+            AllZone.getGameInfo().setAssignedFirstStrikeDamageThisCombat(false);
+            AllZone.getGameInfo().setResolvedFirstStrikeDamageThisCombat(false);
         }
     }
 
@@ -514,20 +535,20 @@ public class Phase extends MyObservable
     	if (lastToAct.equals(actingPlayer)){
     		// pass the priority to other player
     		setPriorityPlayer(actingPlayer.getOpponent());
-    		AllZone.InputControl.resetInput();
-            AllZone.Stack.chooseOrderOfSimultaneousStackEntryAll();
+    		AllZone.getInputControl().resetInput();
+            AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll();
     	}
     	else{
-    		if (AllZone.Stack.size() == 0){
+    		if (AllZone.getStack().size() == 0){
     			// end phase
     			needToNextPhase = true;
     			pPlayerPriority = getPlayerTurn();	// this needs to be set early as we exit the phase
     		}
     		else{
-                if(!AllZone.Stack.hasSimultaneousStackEntries())
-    			    AllZone.Stack.resolveStack();
+                if(!AllZone.getStack().hasSimultaneousStackEntries())
+    			    AllZone.getStack().resolveStack();
     		}
-            AllZone.Stack.chooseOrderOfSimultaneousStackEntryAll();
+            AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll();
     	}
     }
     
@@ -560,8 +581,8 @@ public class Phase extends MyObservable
 
 	public static boolean canCastSorcery(Player player)
 	{
-		return AllZone.Phase.isPlayerTurn(player) && (AllZone.Phase.getPhase().equals(Constant.Phase.Main2) || 
-			AllZone.Phase.getPhase().equals(Constant.Phase.Main1)) && AllZone.Stack.size() == 0;
+		return AllZone.getPhase().isPlayerTurn(player) && (AllZone.getPhase().getPhase().equals(Constant.Phase.Main2) || 
+			AllZone.getPhase().getPhase().equals(Constant.Phase.Main1)) && AllZone.getStack().size() == 0;
 	}
 	
 	public String buildActivateString(String startPhase, String endPhase){
@@ -594,43 +615,83 @@ public class Phase extends MyObservable
     }
 
 	public static void increaseSpellCount(SpellAbility sp){
-		StormCount++;
-
+		incrementStormCount();
+		
 		if (sp.getActivatingPlayer().isHuman()) {
-			PlayerSpellCount++;
+			incrementPlayerSpellCount();
 			if (sp instanceof Spell_Permanent && sp.getSourceCard().isCreature()) {
-				PlayerCreatureSpellCount++;
+				incrementPlayerCreatureSpellCount();
 			}
 			if (sp.getSourceCard().isInstant()) {
-				PlayerInstantSpellCount++;
+				incrementPlayerInstantSpellCount();
 			}
 		} 
 		
 		else {
-			ComputerSpellCount++;
+			incrementComputerSpellCount();
 			if (sp instanceof Spell_Permanent && sp.getSourceCard().isCreature()) {
-				Phase.ComputerCreatureSpellCount++;
+				incrementComputerCreatureSpellCount();
 			}
 			if (sp.getSourceCard().isInstant()) {
-				ComputerInstantSpellCount++;
+				incrementComputerInstantSpellCount();
 			}
 		}
 	}
 
+	protected static void incrementComputerInstantSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setComputerInstantSpellCount(1 + gs.getComputerInstantSpellCount());
+	}
+
+	protected static void incrementComputerCreatureSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setComputerCreatureSpellCount(1 + gs.getComputerCreatureSpellCount());
+	}
+
+	protected static void incrementComputerSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setComputerSpellCount(1 + gs.getComputerSpellCount());
+		
+	}
+
+	protected static void incrementPlayerInstantSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setPlayerInstantSpellCount(1 + gs.getPlayerInstantSpellCount());
+		
+	}
+
+	protected static void incrementPlayerCreatureSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setPlayerCreatureSpellCount(1 + gs.getPlayerCreatureSpellCount());
+		
+	}
+
+	protected static void incrementPlayerSpellCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setPlayerSpellCount(1 + gs.getPlayerSpellCount());
+		
+	}
+
+	protected static void incrementStormCount() {
+		FGameState gs = Unstatic.getGlobalGameState();
+		gs.setStormCount(1 + gs.getStormCount());
+		
+	}
+
 	public static void setStormCount(int stormCount) {
-		StormCount = stormCount;
+		Unstatic.getGlobalGameState().setStormCount(stormCount);
 	}
 
 	public static int getStormCount() {
-		return StormCount;
+		return Unstatic.getGlobalGameState().getStormCount();
 	}
 
 	public static void setGameBegins(int gameBegins) {
-		GameBegins = gameBegins;
+		Unstatic.getGlobalGameState().setGameBegins(gameBegins);
 	}
 
 	public static int getGameBegins() {
-		return GameBegins;
+		return Unstatic.getGlobalGameState().getGameBegins();
 	}
 	
 	// this is a hack for the setup game state mode, do not use outside of devSetupGameState code
@@ -639,4 +700,52 @@ public class Phase extends MyObservable
 	{
 		this.phaseIndex = findIndex(phaseID);
 	}
+
+    static int getPlayerSpellCount() {
+    	return Unstatic.getGlobalGameState().getPlayerSpellCount();
+    }
+
+    static void setPlayerSpellCount(int i) {
+    	Unstatic.getGlobalGameState().setPlayerSpellCount(i);
+    }
+    
+    static int getPlayerCreatureSpellCount() {
+    	return Unstatic.getGlobalGameState().getPlayerCreatureSpellCount();
+    }
+
+    static void setPlayerCreatureSpellCount(int i) { 
+    	Unstatic.getGlobalGameState().setPlayerCreatureSpellCount(i);
+    }
+
+    static int getPlayerInstantSpellCount() {
+    	return Unstatic.getGlobalGameState().getPlayerInstantSpellCount();
+    }
+    
+    static void setPlayerInstantSpellCount(int i) { 
+    	Unstatic.getGlobalGameState().setPlayerInstantSpellCount(i);
+    }
+    
+    static int getComputerSpellCount() {
+    	return Unstatic.getGlobalGameState().getComputerSpellCount();
+    }
+    
+    static void setComputerSpellCount(int i) { 
+    	Unstatic.getGlobalGameState().setComputerSpellCount(i);
+    }
+    
+    static int getComputerCreatureSpellCount() {
+    	return Unstatic.getGlobalGameState().getComputerCreatureSpellCount();
+    }
+    
+    static void setComputerCreatureSpellCount(int i) { 
+    	Unstatic.getGlobalGameState().setComputerCreatureSpellCount(i);
+    }
+    
+    static int getComputerInstantSpellCount() {
+    	return Unstatic.getGlobalGameState().getComputerInstantSpellCount();
+    }
+    
+    static void setComputerInstantSpellCount(int i) { 
+    	Unstatic.getGlobalGameState().setComputerInstantSpellCount(i);
+    }
 }

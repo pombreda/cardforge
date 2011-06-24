@@ -117,30 +117,30 @@ public class AbilityFactory_Combat {
 	
 	public static boolean fogCanPlayAI(final AbilityFactory af, SpellAbility sa){
 		// AI should only activate this during Human's Declare Blockers phase
-		if (AllZone.Phase.isPlayerTurn(sa.getActivatingPlayer())) return false;
-		if (!AllZone.Phase.is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)) return false;
+		if (AllZone.getPhase().isPlayerTurn(sa.getActivatingPlayer())) return false;
+		if (!AllZone.getPhase().is(Constant.Phase.Combat_Declare_Blockers_InstantAbility)) return false;
 		
 		// Only cast when Stack is empty, so Human uses spells/abilities first
-		if (AllZone.Stack.size() != 0) return false;
+		if (AllZone.getStack().size() != 0) return false;
 		
 		// Don't cast it, if the effect is already in place
-		if(AllZone.GameInfo.isPreventCombatDamageThisTurn()) return false;
+		if(AllZone.getGameInfo().isPreventCombatDamageThisTurn()) return false;
 		
 		Ability_Sub subAb = sa.getSubAbility();
 		if (subAb != null)
 			if(!subAb.chkAI_Drawback()) return false;
 		
 		// Cast it if life is in danger
-		return CombatUtil.lifeInDanger(AllZone.Combat);
+		return CombatUtil.lifeInDanger(AllZone.getCombat());
 	}
 	
 	public static boolean fogPlayDrawbackAI(final AbilityFactory af, SpellAbility sa){
 		// AI should only activate this during Human's turn
 		boolean chance;
-		if (AllZone.Phase.isPlayerTurn(sa.getActivatingPlayer().getOpponent()))
-			chance = AllZone.Phase.isBefore(Constant.Phase.Combat_FirstStrikeDamage);
+		if (AllZone.getPhase().isPlayerTurn(sa.getActivatingPlayer().getOpponent()))
+			chance = AllZone.getPhase().isBefore(Constant.Phase.Combat_FirstStrikeDamage);
 		else 
-			chance = AllZone.Phase.isAfter(Constant.Phase.Combat_Damage);
+			chance = AllZone.getPhase().isAfter(Constant.Phase.Combat_Damage);
 		
 		Ability_Sub subAb = sa.getSubAbility();
 		if (subAb != null)
@@ -154,10 +154,10 @@ public class AbilityFactory_Combat {
 			return false;
 
 		boolean chance;
-		if (AllZone.Phase.isPlayerTurn(sa.getActivatingPlayer().getOpponent()))
-			chance = AllZone.Phase.isBefore(Constant.Phase.Combat_FirstStrikeDamage);
+		if (AllZone.getPhase().isPlayerTurn(sa.getActivatingPlayer().getOpponent()))
+			chance = AllZone.getPhase().isBefore(Constant.Phase.Combat_FirstStrikeDamage);
 		else 
-			chance = AllZone.Phase.isAfter(Constant.Phase.Combat_Damage);
+			chance = AllZone.getPhase().isAfter(Constant.Phase.Combat_Damage);
 		 
 		// check SubAbilities DoTrigger?
 		Ability_Sub abSub = sa.getSubAbility();
@@ -171,6 +171,6 @@ public class AbilityFactory_Combat {
 	public static void fogResolve(final AbilityFactory af, final SpellAbility sa){
 		
 		// Expand Fog keyword here depending on what we need out of it.
-		AllZone.GameInfo.setPreventCombatDamageThisTurn(true);
+		AllZone.getGameInfo().setPreventCombatDamageThisTurn(true);
 	}
 }

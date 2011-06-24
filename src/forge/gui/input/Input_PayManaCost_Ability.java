@@ -1,6 +1,9 @@
 
 package forge.gui.input;
 
+import java.util.Collection;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 import forge.AllZone;
 import forge.ButtonUtil;
 import forge.Card;
@@ -66,20 +69,20 @@ public class Input_PayManaCost_Ability extends Input {
         
         if(manaCost.isPaid()) {
             resetManaCost();
-            AllZone.ManaPool.clearPay(fakeAbility, false);
+            AllZone.getManaPool().clearPay(fakeAbility, false);
             
             paidCommand.execute();
             
-            AllZone.InputControl.resetInput();
+            AllZone.getInputControl().resetInput();
         }
     }
     
     @Override
     public void selectButtonCancel() {
         resetManaCost();
-        AllZone.ManaPool.unpaid(fakeAbility, true);
+        AllZone.getManaPool().unpaid(fakeAbility, true);
         unpaidCommand.execute();
-        AllZone.InputControl.resetInput();
+        AllZone.getInputControl().resetInput();
     }
     
     @Override
@@ -87,7 +90,7 @@ public class Input_PayManaCost_Ability extends Input {
     	if (showOnlyOKButton)
     	{
     		unpaidCommand.execute();
-    		AllZone.InputControl.resetInput();
+    		AllZone.getInputControl().resetInput();
     	}
     }
     
@@ -96,8 +99,12 @@ public class Input_PayManaCost_Ability extends Input {
     	ButtonUtil.enableOnlyCancel();
         if (showOnlyOKButton)
         	ButtonUtil.enableOnlyOK();
-        AllZone.Display.showMessage(message + "Pay Mana Cost: \r\n" + manaCost.toString());
+        AllZone.getDisplay().showMessage(message + "Pay Mana Cost: \r\n" + manaCost.toString());
     }
     
 
+    @Override
+	public Collection<MinimaxMove> getMoves() {
+		throw new IllegalStateException("This method must never be called.");
+	}
 }

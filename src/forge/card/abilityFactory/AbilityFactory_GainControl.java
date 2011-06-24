@@ -210,7 +210,7 @@ public class AbilityFactory_GainControl {
 			return true;
 		}
 		
-		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 		list = list.getValidCards(tgt.getValidTgts(), hostCard.getController(), hostCard);
 		//AI won't try to grab cards that are filtered out of AI decks on purpose
 		list = list.filter(new CardListFilter() {
@@ -224,7 +224,7 @@ public class AbilityFactory_GainControl {
         	return false;
         
         // Don't steal something if I can't Attack without, or prevent it from blocking at least
-        if (lose != null && lose.contains("EOT") && AllZone.Phase.isAfter(Constant.Phase.Combat_Declare_Blockers))
+        if (lose != null && lose.contains("EOT") && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers))
         	return false;
         
 		while(tgt.getNumTargeted() < tgt.getMaxTargets(sa.getSourceCard(), sa)) { 
@@ -290,7 +290,7 @@ public class AbilityFactory_GainControl {
             
             if(AllZoneUtil.isCardInPlay(tgtC) && CardFactoryUtil.canTarget(hostCard, tgtC)) {
             	
-                AllZone.GameAction.changeController(new CardList(tgtC), tgtC.getController(), newController.get(0));
+                AllZone.getGameAction().changeController(new CardList(tgtC), tgtC.getController(), newController.get(0));
                 
                 if(bUntap) tgtC.untap();
                 
@@ -314,7 +314,7 @@ public class AbilityFactory_GainControl {
 	            	hostCard.addChangeControllerCommand(getLoseControlCommand(j, originalController));
 	            }
 	            if(lose.contains("EOT")) {
-	            	AllZone.EndOfTurn.addAt(getLoseControlCommand(j, originalController));
+	            	AllZone.getEndOfTurn().addAt(getLoseControlCommand(j, originalController));
 	            }
             }
             
@@ -372,10 +372,10 @@ public class AbilityFactory_GainControl {
 					public void resolve() {
 						
 		    			if(bNoRegen) {
-		    				AllZone.GameAction.destroyNoRegeneration(c);
+		    				AllZone.getGameAction().destroyNoRegeneration(c);
 		    			}
 		    			else {
-		    				AllZone.GameAction.destroy(c);
+		    				AllZone.getGameAction().destroy(c);
 		    			}
 					}
 				};
@@ -384,7 +384,7 @@ public class AbilityFactory_GainControl {
             	if(bNoRegen) sb.append("  It can't be regenerated.");
             	ability.setStackDescription(sb.toString());
                 
-                AllZone.Stack.addSimultaneousStackEntry(ability);
+                AllZone.getStack().addSimultaneousStackEntry(ability);
     		}
 			
     	};
@@ -401,7 +401,7 @@ public class AbilityFactory_GainControl {
     			if(null == c) return;
 
     			if(AllZoneUtil.isCardInPlay(c)) {
-    				AllZone.GameAction.changeController(new CardList(c), c.getController(), originalController);
+    				AllZone.getGameAction().changeController(new CardList(c), c.getController(), originalController);
 
     				if(bTapOnLose) c.tap();
     				

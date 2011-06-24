@@ -141,7 +141,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             Constant.Runtime.GameType[0] = Constant.GameType.Constructed;
             SwingUtilities.invokeLater(new Runnable() {   			
     			public void run() {
-    				AllZone.Computer = new ComputerAI_Input(new ComputerAI_General());
+    				AllZone.setComputer(new ComputerAI_Input(new ComputerAI_General()));
     				new Gui_NewGame();
     			}
     		});
@@ -152,7 +152,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     
     public Gui_NewGame() {
 
-        AllZone.QuestData = null;
+        AllZone.setQuestData(null);
         allDecks = getDecks();
         Constant.Runtime.matchState.reset();
         
@@ -687,13 +687,13 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         //DO NOT CHANGE THIS ORDER, GuiDisplay needs to be created before cards are added
         //Constant.Runtime.DevMode[0] = devModeCheckBox.isSelected();
         
-        if(newGuiCheckBox.isSelected()) AllZone.Display = new GuiDisplay4();
-        else AllZone.Display = new GuiDisplay3();
+        if(newGuiCheckBox.isSelected()) AllZone.setDisplay(new GuiDisplay4());
+        else AllZone.setDisplay(new GuiDisplay3());
         
         Constant.Runtime.Smooth[0] = smoothLandCheckBox.isSelected();
 
-        AllZone.GameAction.newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
-        AllZone.Display.setVisible(true);
+        AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
+        AllZone.getDisplay().setVisible(true);
         
         dispose();
     }//startButton_actionPerformed()

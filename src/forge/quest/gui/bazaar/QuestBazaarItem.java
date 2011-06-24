@@ -56,14 +56,14 @@ public class QuestBazaarItem {
         JButton purchaseButton = new JButton("Buy");
         purchaseButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AllZone.QuestData.subtractCredits(item.getPrice());
+                AllZone.getQuestData().subtractCredits(item.getPrice());
                 purchaseItem();
-                AllZone.QuestData.saveData();
+                AllZone.getQuestData().saveData();
                 QuestBazaarPanel.refreshLastInstance();
             }
         });
         
-        if(AllZone.QuestData.getCredits() < item.getPrice()) {
+        if(AllZone.getQuestData().getCredits() < item.getPrice()) {
             purchaseButton.setEnabled(false);
         }
         

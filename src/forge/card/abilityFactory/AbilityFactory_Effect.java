@@ -135,9 +135,9 @@ public class AbilityFactory_Effect {
 		if (tgt != null){
 			tgt.resetTargets();
 			if (tgt.canOnlyTgtOpponent())
-				tgt.addTarget(AllZone.HumanPlayer);
+				tgt.addTarget(AllZone.getHumanPlayer());
 			else
-				tgt.addTarget(AllZone.ComputerPlayer);		
+				tgt.addTarget(AllZone.getComputerPlayer());		
 		}
 
 		return ((r.nextFloat() < .6667));
@@ -225,14 +225,14 @@ public class AbilityFactory_Effect {
 					private static final long serialVersionUID = -9007707442828928732L;
 
 					public void execute() {
-						AllZone.TriggerHandler.removeAllFromCard(e);
+						AllZone.getTriggerHandler().removeAllFromCard(e);
 					}
 					
 				};
 				eff.addLeavesPlayCommand(LPCommand);
 				Trigger parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, eff);
 				eff.addTrigger(parsedTrigger);
-				AllZone.TriggerHandler.registerTrigger(parsedTrigger);
+				AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
 			}
 		}
 		
@@ -259,16 +259,16 @@ public class AbilityFactory_Effect {
 				private static final long serialVersionUID = -5861759814760561373L;
 	
 				public void execute() {
-					AllZone.GameAction.exile(e);
+					AllZone.getGameAction().exile(e);
 				}
 			};
 			
 			if (duration == null || duration.equals("EndOfTurn"))
-				AllZone.EndOfTurn.addUntil(endEffect);
+				AllZone.getEndOfTurn().addUntil(endEffect);
 		}
 		
 		// TODO: Add targeting to the effect so it knows who it's dealing with
 		
-		AllZone.GameAction.moveToPlay(eff);
+		AllZone.getGameAction().moveToPlay(eff);
 	}
 }

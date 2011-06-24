@@ -95,7 +95,7 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
     }
 
     public boolean isAvailableForPurchase() {
-        QuestPetAbstract pet = AllZone.QuestData.getPetManager().getPet(name);
+        QuestPetAbstract pet = AllZone.getQuestData().getPetManager().getPet(name);
         if (pet == null){
             return true;
         }
@@ -103,6 +103,6 @@ public abstract class QuestPetAbstract implements QuestStallPurchasable{
     }
 
     public void onPurchase() {
-        AllZone.QuestData.getPetManager().addPetLevel(name);
+        AllZone.getQuestData().getPetManager().addPetLevel(name);
     }
 }

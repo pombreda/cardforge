@@ -1,7 +1,11 @@
 package forge.gui.input;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Stack;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 
 import forge.AllZone;
 import forge.Constant;
@@ -19,7 +23,7 @@ public class InputControl extends MyObservable implements java.io.Serializable {
     private LinkedList<Input> resolvingQueue 	= new LinkedList<Input>();
 
     public void setInput(final Input in) {
-    	if(AllZone.Stack.getResolving() || !(input == null || input instanceof Input_PassPriority)) 
+    	if(AllZone.getStack().getResolving() || !(input == null || input instanceof Input_PassPriority)) 
         	inputStack.add(in);
         else 
         	input = in;
@@ -65,9 +69,9 @@ public class InputControl extends MyObservable implements java.io.Serializable {
     }
 
     public Input updateInput() {
-        final String phase = AllZone.Phase.getPhase();
-        final Player playerTurn = AllZone.Phase.getPlayerTurn();
-        final Player priority = AllZone.Phase.getPriorityPlayer();
+        final String phase = AllZone.getPhase().getPhase();
+        final Player playerTurn = AllZone.getPhase().getPlayerTurn();
+        final Player priority = AllZone.getPhase().getPriorityPlayer();
 
         // TODO: this resolving portion needs more work, but fixes Death Cloud issues 
 		if (resolvingStack.size() > 0) {
@@ -80,7 +84,7 @@ public class InputControl extends MyObservable implements java.io.Serializable {
 			return input;
 		}
 
-	    if (AllZone.Stack.getResolving())
+	    if (AllZone.getStack().getResolving())
         	return null;
 
         
@@ -92,34 +96,34 @@ public class InputControl extends MyObservable implements java.io.Serializable {
             return input;
         }
         
-        if (Phase.getGameBegins() != 0 && AllZone.Phase.doPhaseEffects()){
+        if (Phase.getGameBegins() != 0 && AllZone.getPhase().doPhaseEffects()){
         	// Handle begin phase stuff, then start back from the top
-        	AllZone.Phase.handleBeginPhase();
+        	AllZone.getPhase().handleBeginPhase();
         	return updateInput();
         }
         
     	// If the Phase we're in doesn't allow for Priority, return null to move to next phase
-        if (AllZone.Phase.isNeedToNextPhase())	
+        if (AllZone.getPhase().isNeedToNextPhase())	
         	return null;
         
         // Special Inputs needed for the following phases:        
         if(phase.equals(Constant.Phase.Combat_Declare_Attackers)) {
-        	AllZone.Stack.freezeStack();
+        	AllZone.getStack().freezeStack();
         	
         	if (playerTurn.isHuman())
         		return new Input_Attack();
         }
         
         else if(phase.equals(Constant.Phase.Combat_Declare_Blockers)) {
-        	AllZone.Stack.freezeStack();
+        	AllZone.getStack().freezeStack();
             if (playerTurn.isHuman()){
-            	AllZone.Computer.getComputer().declare_blockers();
+            	AllZone.getComputer().getComputer().declare_blockers();
             	return null;
         	}
         	else{
-                if(AllZone.Combat.getAttackers().length == 0){
+                if(AllZone.getCombat().getAttackers().length == 0){
                 	// no active attackers, skip the Blocking phase
-                	AllZone.Phase.setNeedToNextPhase(true);
+                	AllZone.getPhase().setNeedToNextPhase(true);
                 	return null;
                 }
                 else 
@@ -128,17 +132,17 @@ public class InputControl extends MyObservable implements java.io.Serializable {
         }
         
         else if(phase.equals(Constant.Phase.Cleanup))	// Player needs to discard
-        	if (AllZone.Stack.size() == 0)	// fall through to resolve things like Madness
+        	if (AllZone.getStack().size() == 0)	// fall through to resolve things like Madness
         		return new Input_Cleanup();
 
         // *********************
         // Special phases handled above, everything else is handled simply by priority
         
         if (priority.isHuman()){
-        	boolean skip = AllZone.Phase.doSkipPhase();
-        	AllZone.Phase.setSkipPhase(false);
-	    	if(AllZone.Stack.size() == 0 && !AllZone.Display.stopAtPhase(playerTurn, phase) && skip) {
-            	AllZone.Phase.passPriority();
+        	boolean skip = AllZone.getPhase().doSkipPhase();
+        	AllZone.getPhase().setSkipPhase(false);
+	    	if(AllZone.getStack().size() == 0 && !AllZone.getDisplay().stopAtPhase(playerTurn, phase) && skip) {
+            	AllZone.getPhase().passPriority();
             	return null;
             }
 	    	else
@@ -146,10 +150,20 @@ public class InputControl extends MyObservable implements java.io.Serializable {
     	}
         
         else if (playerTurn.isComputer())
-    		return AllZone.Computer;
+    		return AllZone.getComputer();
     	else{
-        	AllZone.Computer.getComputer().stack_not_empty();
+        	AllZone.getComputer().getComputer().stack_not_empty();
         	return null;
         }
     }//getInput()
+
+	public Collection<MinimaxMove> getMoves() {
+		Input theInput = getInput();
+		if (theInput != null) {
+			return theInput.getMoves();
+		}
+		else {
+			return new ArrayList<MinimaxMove>(0);
+		}
+	}
 }//InputControl

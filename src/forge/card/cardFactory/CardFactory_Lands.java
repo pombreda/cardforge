@@ -1,9 +1,13 @@
 
 package forge.card.cardFactory;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
+
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -54,9 +58,9 @@ class CardFactory_Lands {
                 public void computerExecute() {
                     boolean pay = false;
                     
-                    if(AllZone.ComputerPlayer.getLife() > 9) pay = MyRandom.random.nextBoolean();
+                    if(AllZone.getComputerPlayer().getLife() > 9) pay = MyRandom.random.nextBoolean();
                     
-                    if(pay) AllZone.ComputerPlayer.loseLife(2, card);
+                    if(pay) AllZone.getComputerPlayer().loseLife(2, card);
                     else card.tap();
                 }
                 
@@ -69,7 +73,7 @@ class CardFactory_Lands {
                         question.append(" enters the battlefield tapped.");
                         
                         if (GameActionUtil.showYesNoDialog(card, question.toString())) {
-                            AllZone.HumanPlayer.loseLife(2, card);
+                            AllZone.getHumanPlayer().loseLife(2, card);
                         } else tapCard();
                         
                     }//if
@@ -113,7 +117,7 @@ class CardFactory_Lands {
         				}
 
         			} else {
-        				CardList creature = AllZoneUtil.getCreaturesInPlay(AllZone.ComputerPlayer);
+        				CardList creature = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
         				creature = creature.filter(new CardListFilter()
         				{
         					public boolean addCard(Card c)
@@ -131,7 +135,7 @@ class CardFactory_Lands {
         					setTargetCard(biggest);
 
         				}
-        				CardList creature2 = AllZoneUtil.getCreaturesInPlay(AllZone.HumanPlayer);
+        				CardList creature2 = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
         				creature2 = creature2.filter(new CardListFilter()
         				{
         					public boolean addCard(Card c)
@@ -171,7 +175,7 @@ class CardFactory_Lands {
         				newString[size] = Color;
         				creatureMap.put(Target, newString);
         			} else creatureMap.put(Target, new String[] {Color});
-        			AllZone.EndOfTurn.addUntil(eot1);
+        			AllZone.getEndOfTurn().addUntil(eot1);
         		}
         	};
 
@@ -184,9 +188,9 @@ class CardFactory_Lands {
         			sb.append(card.getName()).append(" - target creature you control gains protection from the color of your choice until end of turn");
         			a[0].setStackDescription(sb.toString());
         			if(card.getController().isHuman()) {
-        				AllZone.InputControl.setInput(CardFactoryUtil.input_targetSpecific(a[0], creats, "Select target creature you control", false, false));
+        				AllZone.getInputControl().setInput(CardFactoryUtil.input_targetSpecific(a[0], creats, "Select target creature you control", false, false));
         			} else {
-        				AllZone.Stack.addSimultaneousStackEntry(a[0]);
+        				AllZone.getStack().addSimultaneousStackEntry(a[0]);
 
         			}
         		}
@@ -203,8 +207,8 @@ class CardFactory_Lands {
             final SpellAbility ability = new Ability(card, "3") {
                 @Override
                 public boolean canPlay() {
-                    for(int i = 0; i < AllZone.Stack.size(); i++) {
-                    	if(AllZone.Stack.peekInstance(i).getSourceCard().equals(card)) return false;
+                    for(int i = 0; i < AllZone.getStack().size(); i++) {
+                    	if(AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
                     }
                     
                     if(card.getCounters(Counters.ICE) > 0 && AllZoneUtil.isCardInPlay(card) && super.canPlay()) return true;
@@ -213,7 +217,7 @@ class CardFactory_Lands {
                 
                 @Override
                 public boolean canPlayAI() {
-                    String phase = AllZone.Phase.getPhase();
+                    String phase = AllZone.getPhase().getPhase();
                     return phase.equals(Constant.Phase.Main2) && super.canPlayAI();
                 }
                 
@@ -225,7 +229,7 @@ class CardFactory_Lands {
                     {CardFactoryUtil.makeToken("Marit Lage",
                             "B 20 20 Marit Lage", card.getController(), "B", new String[] {"Legendary", "Creature", "Avatar"}, 20,
                             20, new String[] {"Flying", "Indestructible"});
-                    	AllZone.GameAction.sacrifice(card);
+                    	AllZone.getGameAction().sacrifice(card);
                     }
                 }
             };
@@ -248,7 +252,7 @@ class CardFactory_Lands {
                             "B 20 20 Marit Lage", card.getController(), "B", new String[] {"Legendary", "Creature", "Avatar"}, 20,
                             20, new String[] {"Flying", "Indestructible"});
                     }
-                    AllZone.GameAction.sacrifice(card);  
+                    AllZone.getGameAction().sacrifice(card);  
                 }
             };
             //ability.setDescription("Dark Depths enters the battlefield with ten ice counters on it.\r\n\r\n3: Remove an ice counter from Dark Depths.\r\n\r\nWhen Dark Depths has no ice counters on it, sacrifice it. If you do, put an indestructible legendary 20/20 black Avatar creature token with flying named Marit Lage onto the battlefield.");
@@ -271,7 +275,7 @@ class CardFactory_Lands {
                 
                 public boolean addCard(Card c) {
                     return AllZoneUtil.isCardInPlay(c) && c.isCreature()
-                            && c.getTurnInZone() == AllZone.Phase.getTurn();
+                            && c.getTurnInZone() == AllZone.getPhase().getTurn();
                 }
             };
             
@@ -283,10 +287,10 @@ class CardFactory_Lands {
                 
                 @Override
                 public boolean canPlayAI() {
-                    if(!(AllZone.Phase.getPhase().equals(Constant.Phase.Main1) && AllZone.Phase.getPlayerTurn().isComputer()))
+                    if(!(AllZone.getPhase().getPhase().equals(Constant.Phase.Main1) && AllZone.getPhase().getPlayerTurn().isComputer()))
                     	return false;
                     inPlay.clear();
-                    inPlay.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer));
+                    inPlay.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
                     return (inPlay.filter(targets).size() > 1) && super.canPlayAI();
                 }
                 
@@ -323,29 +327,34 @@ class CardFactory_Lands {
         				Input target = new Input() {
 							private static final long serialVersionUID = -7835834281866473546L;
 							public void showMessage() {
-        						AllZone.Display.showMessage(cardName+" - Select an untapped land to sacrifice");
+        						AllZone.getDisplay().showMessage(cardName+" - Select an untapped land to sacrifice");
         						ButtonUtil.enableOnlyCancel();
         					}
         					public void selectButtonCancel() {
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					public void selectCard(Card c, PlayerZone zone) {
         						if(c.isLand() && zone.is(Constant.Zone.Battlefield) && c.isUntapped()) {
-        							AllZone.GameAction.sacrifice(c);
+        							AllZone.getGameAction().sacrifice(c);
         							if(paid[0] < 1) {
         								paid[0]++;
-        								AllZone.Display.showMessage(cardName+" - Select an untapped land to sacrifice");
+        								AllZone.getDisplay().showMessage(cardName+" - Select an untapped land to sacrifice");
         							}
         							else stop();
         						}
         					}//selectCard()
+							@Override
+							public Collection<MinimaxMove> getMoves() {
+								// TODO Auto-generated method stub
+								throw new NotImplementedError();
+							}
         				};//Input
-        				if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer).filter(AllZoneUtil.untapped).size() < 2)) {
-        					AllZone.GameAction.sacrifice(card);
+        				if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer()).filter(AllZoneUtil.untapped).size() < 2)) {
+        					AllZone.getGameAction().sacrifice(card);
         					return;
         				}
-        				else AllZone.InputControl.setInput(target);
+        				else AllZone.getInputControl().setInput(target);
         			}
         			else {
         				//compy can't play this card because it has no mana pool
@@ -381,35 +390,40 @@ class CardFactory_Lands {
         					//if any are tapped, sacrifice it
         					//else sacrifice random
         					if( tappedLand.size() > 0 ) {
-        						AllZone.GameAction.sacrifice(tappedLand.get(0));
+        						AllZone.getGameAction().sacrifice(tappedLand.get(0));
         					}
         					else {
-        						AllZone.GameAction.sacrifice(land.get(0));
+        						AllZone.getGameAction().sacrifice(land.get(0));
         					}
         				}
         				else {
-        					AllZone.GameAction.sacrifice(card);
+        					AllZone.getGameAction().sacrifice(card);
         				}
         			}
         			else { //this is the human resolution
         				Input target = new Input() {
         					private static final long serialVersionUID = 6653677835621129465L;
         					public void showMessage() {
-        						AllZone.Display.showMessage(cardName+" - Select one "+type[0]+" to sacrifice");
+        						AllZone.getDisplay().showMessage(cardName+" - Select one "+type[0]+" to sacrifice");
         						ButtonUtil.enableOnlyCancel();
         					}
         					public void selectButtonCancel() {
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					public void selectCard(Card c, PlayerZone zone) {
         						if(c.isLand() && zone.is(Constant.Zone.Battlefield) && land.contains(c)) {
-        							AllZone.GameAction.sacrifice(c);
+        							AllZone.getGameAction().sacrifice(c);
         							stop();
         						}
         					}//selectCard()
+							@Override
+							public Collection<MinimaxMove> getMoves() {
+								// TODO Auto-generated method stub
+								throw new NotImplementedError();
+							}
         				};//Input
-        				AllZone.InputControl.setInput(target);
+        				AllZone.getInputControl().setInput(target);
         			}
         		}
         	};
@@ -430,7 +444,7 @@ class CardFactory_Lands {
 					land.remove(card);
 
 					if( land.size() > 0 ) {
-						for(Card c:land) AllZone.GameAction.sacrifice(c);
+						for(Card c:land) AllZone.getGameAction().sacrifice(c);
 					}
 				}
         	};
@@ -453,46 +467,51 @@ class CardFactory_Lands {
         					CardList tappedPlains = new CardList(plains.toArray());
         					tappedPlains = tappedPlains.getType("Basic");
         					for(Card c : tappedPlains)
-        						AllZone.GameAction.sacrifice(c);
+        						AllZone.getGameAction().sacrifice(c);
         					for(int i = 0; i < tappedPlains.size(); i++){
-        						AllZone.GameAction.sacrifice(plains.get(i));
+        						AllZone.getGameAction().sacrifice(plains.get(i));
         					}
         					//if any are tapped, sacrifice it
         					//else sacrifice random
         				}
         				else {
-        					AllZone.GameAction.sacrifice(card);
+        					AllZone.getGameAction().sacrifice(card);
         				}
         			}
         			else { //this is the human resolution
         				final int[] paid = {0};
-        				if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.HumanPlayer).filter(AllZoneUtil.untapped).size() < 2))
+        				if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer()).filter(AllZoneUtil.untapped).size() < 2))
         				{
-        					AllZone.GameAction.sacrifice(card);
+        					AllZone.getGameAction().sacrifice(card);
         					return;
         				}
         				Input target = new Input() {
         					private static final long serialVersionUID = 6653677835621129465L;
         					public void showMessage() {
-        						AllZone.Display.showMessage("Scorched Ruins - Select an untapped land to sacrifice");
+        						AllZone.getDisplay().showMessage("Scorched Ruins - Select an untapped land to sacrifice");
         						ButtonUtil.enableOnlyCancel();
         					}
         					public void selectButtonCancel() {
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					public void selectCard(Card c, PlayerZone zone) {
         						if(c.isLand() && zone.is(Constant.Zone.Battlefield) && c.isUntapped()) {
-        							AllZone.GameAction.sacrifice(c);
+        							AllZone.getGameAction().sacrifice(c);
         							if(paid[0] < 1){
         								paid[0]++;
-        								AllZone.Display.showMessage("Scorched Ruins - Select an untapped land to sacrifice");
+        								AllZone.getDisplay().showMessage("Scorched Ruins - Select an untapped land to sacrifice");
         							}
         							else stop();
         						}
         					}//selectCard()
+							@Override
+							public Collection<MinimaxMove> getMoves() {
+								// TODO Auto-generated method stub
+								throw new NotImplementedError();
+							}
         				};//Input
-        				AllZone.InputControl.setInput(target);
+        				AllZone.getInputControl().setInput(target);
         			}
         		}
         	};
@@ -571,11 +590,17 @@ class CardFactory_Lands {
 	                    card.tap();
 	                    card.subtractCounter(Counters.STORAGE, num[0]);
 	                    stop();
-	                    AllZone.Stack.add(addMana);
+	                    AllZone.getStack().add(addMana);
 	                    return;
                     }
                     stop();
                 }
+
+				@Override
+				public Collection<MinimaxMove> getMoves() {
+					// TODO Auto-generated method stub
+					throw new NotImplementedError();
+				}
             };
             
             addMana.setDescription(desc.toString());
@@ -613,19 +638,19 @@ class CardFactory_Lands {
                 }
                 
                 public void computerExecute() {
-                    CardList hand = AllZoneUtil.getPlayerHand(AllZone.ComputerPlayer);
+                    CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
                     hand = hand.filter(AllZoneUtil.getTypeFilter(type));
                     if(hand.size() > 0) revealCard(hand.get(0));
                     else card.tap();
                 }
                 
                 public void humanExecute() {
-                	AllZone.InputControl.setInput(new Input() {
+                	AllZone.getInputControl().setInput(new Input() {
 						private static final long serialVersionUID = -2774066137824255680L;
 
 						@Override
         				public void showMessage() {
-        					AllZone.Display.showMessage(card.getName()+" - Reveal a card.");
+        					AllZone.getDisplay().showMessage(card.getName()+" - Reveal a card.");
         					ButtonUtil.enableOnlyCancel();
         				}
 
@@ -642,6 +667,12 @@ class CardFactory_Lands {
         					card.tap();
         					stop();
         				}
+
+						@Override
+						public Collection<MinimaxMove> getMoves() {
+							// TODO Auto-generated method stub
+							throw new NotImplementedError();
+						}
         			});
                 }//execute()
                 
@@ -747,11 +778,17 @@ class CardFactory_Lands {
                     if(num[0] > 0 || split[0] > 0) {
                     	card.subtractCounter(Counters.STORAGE, num[0]);
                     	stop();
-                    	AllZone.Stack.add(addMana);
+                    	AllZone.getStack().add(addMana);
                     	return;
                     }
                     stop();
                 }
+
+				@Override
+				public Collection<MinimaxMove> getMoves() {
+					// TODO Auto-generated method stub
+					throw new NotImplementedError();
+				}
             };
             addMana.setDescription(description.toString());
             addMana.setAfterPayMana(runtime);
@@ -777,37 +814,42 @@ class CardFactory_Lands {
         					CardList tappedLand = new CardList(land.toArray());
         					tappedLand = tappedLand.filter(AllZoneUtil.tapped);
         					if( tappedLand.size() > 0 ) {
-        						AllZone.GameAction.moveToHand(CardFactoryUtil.getWorstLand(tappedLand));
+        						AllZone.getGameAction().moveToHand(CardFactoryUtil.getWorstLand(tappedLand));
         					}
         					else {
-        						AllZone.GameAction.moveToHand(CardFactoryUtil.getWorstLand(land));
+        						AllZone.getGameAction().moveToHand(CardFactoryUtil.getWorstLand(land));
         					}
         				}
         				else {
-        					AllZone.GameAction.sacrifice(card);
+        					AllZone.getGameAction().sacrifice(card);
         				}
         			}
         			else { //this is the human resolution
         				Input target = new Input() {
 							private static final long serialVersionUID = 7944127258985401036L;
 							public void showMessage() {
-        						AllZone.Display.showMessage(cardName+" - Select one non-Lair land to return to your hand");
+        						AllZone.getDisplay().showMessage(cardName+" - Select one non-Lair land to return to your hand");
         						ButtonUtil.enableOnlyCancel();
         					}
         					public void selectButtonCancel() {
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					public void selectCard(Card c, PlayerZone zone) {
         						if (c.isLand() 
-        								&& zone.is(Constant.Zone.Battlefield, AllZone.HumanPlayer) 
+        								&& zone.is(Constant.Zone.Battlefield, AllZone.getHumanPlayer()) 
         								&& !c.isType("Lair")) {
-        							AllZone.GameAction.moveToHand(c);
+        							AllZone.getGameAction().moveToHand(c);
         							stop();
         						}
         					}//selectCard()
+							@Override
+							public Collection<MinimaxMove> getMoves() {
+								// TODO Auto-generated method stub
+								throw new NotImplementedError();
+							}
         				};//Input
-        				AllZone.InputControl.setInput(target);
+        				AllZone.getInputControl().setInput(target);
         			}
         		}
         	};
@@ -837,10 +879,10 @@ class CardFactory_Lands {
         			if( player.isComputer()) {
         				if( land.size() > 0 ) {
         					Card c = CardFactoryUtil.getWorstLand(land);
-        					AllZone.GameAction.moveToHand(c);
+        					AllZone.getGameAction().moveToHand(c);
         				}
         				else {
-        					AllZone.GameAction.sacrifice(card);
+        					AllZone.getGameAction().sacrifice(card);
         				}
         			}
         			else { //this is the human resolution
@@ -848,21 +890,26 @@ class CardFactory_Lands {
 							private static final long serialVersionUID = -7886610643693087790L;
 							
 							public void showMessage() {
-        						AllZone.Display.showMessage(card+" - Select one untapped "+type[0]+" to return");
+        						AllZone.getDisplay().showMessage(card+" - Select one untapped "+type[0]+" to return");
         						ButtonUtil.enableOnlyCancel();
         					}
         					public void selectButtonCancel() {
-        						AllZone.GameAction.sacrifice(card);
+        						AllZone.getGameAction().sacrifice(card);
         						stop();
         					}
         					public void selectCard(Card c, PlayerZone zone) {
         						if(zone.is(Constant.Zone.Battlefield) && land.contains(c)) {
-        							AllZone.GameAction.moveToHand(c);
+        							AllZone.getGameAction().moveToHand(c);
         							stop();
         						}
         					}//selectCard()
+							@Override
+							public Collection<MinimaxMove> getMoves() {
+								// TODO Auto-generated method stub
+								throw new NotImplementedError();
+							}
         				};//Input
-        				AllZone.InputControl.setInput(target);
+        				AllZone.getInputControl().setInput(target);
         			}
         		}
         	};
@@ -872,7 +919,7 @@ class CardFactory_Lands {
 				private static final long serialVersionUID = -5777499632266148456L;
 
 				public void execute() {
-        			AllZone.Stack.addSimultaneousStackEntry(sacOrNo);
+        			AllZone.getStack().addSimultaneousStackEntry(sacOrNo);
         		}
         	};
 

@@ -28,10 +28,10 @@ abstract public class Ability extends SpellAbility {
     
     @Override
     public boolean canPlay() {
-    	if(AllZone.Stack.isSplitSecondOnStack()) return false;
+    	if(AllZone.getStack().isSplitSecondOnStack()) return false;
     	
-    	CardList pithing = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		pithing.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer));
+    	CardList pithing = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+		pithing.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
 		pithing = pithing.getName("Pithing Needle");
 		pithing = pithing.filter(new CardListFilter() {
 			public boolean addCard(Card c){

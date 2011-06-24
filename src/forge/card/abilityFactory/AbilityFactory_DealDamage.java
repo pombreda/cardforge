@@ -210,28 +210,28 @@ public class AbilityFactory_DealDamage {
 		boolean rr = AF.isSpell();
 
 		// temporarily disabled until better AI
-		if (abCost.getSacCost() && !abCost.getSacThis() && AllZone.HumanPlayer.getLife() - dmg > 0){
+		if (abCost.getSacCost() && !abCost.getSacThis() && AllZone.getHumanPlayer().getLife() - dmg > 0){
 			//only sacrifice something that's supposed to be sacrificed 
 			String sacType = abCost.getSacType();
-		    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 		    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 		    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 		    	return false;
 		}
 		if (AF.getAbCost().getSubCounter())  {
 			// +1/+1 counters only if damage from this ability would kill the human, otherwise ok
-			if(AllZone.HumanPlayer.getLife() - dmg > 0 && AF.getAbCost().getCounterType().equals(Counters.P1P1))
+			if(AllZone.getHumanPlayer().getLife() - dmg > 0 && AF.getAbCost().getCounterType().equals(Counters.P1P1))
 				return false;
 		}
 		if (AF.getAbCost().getLifeCost())    {
-			if(AllZone.HumanPlayer.getLife() - dmg > 0) // only if damage from this ability would kill the human
+			if(AllZone.getHumanPlayer().getLife() - dmg > 0) // only if damage from this ability would kill the human
 				return false;
 		}
 
 		if(source.getName().equals("Stuffy Doll")){
 			// Now stuffy sits around for blocking
 			// TODO(sol): this should also happen if Stuffy is going to die
-			if (AllZone.Phase.is(Constant.Phase.End_Of_Turn, AllZone.HumanPlayer))
+			if (AllZone.getPhase().is(Constant.Phase.End_Of_Turn, AllZone.getHumanPlayer()))
 				return true;
 			else 
 				return false;
@@ -274,8 +274,8 @@ public class AbilityFactory_DealDamage {
 
 	private boolean shouldTgtP(SpellAbility sa, int d, final boolean noPrevention) {
 		int restDamage = d;
-		Player human = AllZone.HumanPlayer;
-		Player comp = AllZone.ComputerPlayer;
+		Player human = AllZone.getHumanPlayer();
+		Player comp = AllZone.getComputerPlayer();
 
 		if (!noPrevention)
 			restDamage = human.predictDamage(restDamage, AF.getHostCard(), false);
@@ -289,8 +289,8 @@ public class AbilityFactory_DealDamage {
 
 		if (AF.isSpell()){
 			// If this is a spell, cast it instead of discarding
-			if ((AllZone.Phase.is(Constant.Phase.End_Of_Turn) || AllZone.Phase.is(Constant.Phase.Main2)) && 
-					AllZone.Phase.isPlayerTurn(comp) && (hand.size() > comp.getMaxHandSize()))
+			if ((AllZone.getPhase().is(Constant.Phase.End_Of_Turn) || AllZone.getPhase().is(Constant.Phase.Main2)) && 
+					AllZone.getPhase().isPlayerTurn(comp) && (hand.size() > comp.getMaxHandSize()))
 				return true;
 		}
 
@@ -304,7 +304,7 @@ public class AbilityFactory_DealDamage {
 		Target tgt = AF.getAbTgt();
 		final Card source = AF.getHostCard();
 		CardList hPlay = AllZoneUtil.getPlayerCardsInPlay(pl);
-		hPlay = hPlay.getValidCards(tgt.getValidTgts(), AllZone.ComputerPlayer, source);
+		hPlay = hPlay.getValidCards(tgt.getValidTgts(), AllZone.getComputerPlayer(), source);
 
 		ArrayList<Object> objects = tgt.getTargets();
 		for(Object o : objects){
@@ -366,11 +366,11 @@ public class AbilityFactory_DealDamage {
 			if (tgt.canTgtCreatureAndPlayer()) {
 
 				if (shouldTgtP(saMe, dmg, noPrevention)) {
-					if (tgt.addTarget(AllZone.HumanPlayer))
+					if (tgt.addTarget(AllZone.getHumanPlayer()))
 						continue;
 				}
 
-				Card c = chooseTgtC(dmg,noPrevention, AllZone.HumanPlayer, mandatory);
+				Card c = chooseTgtC(dmg,noPrevention, AllZone.getHumanPlayer(), mandatory);
 				if (c != null) {
 					tgt.addTarget(c);
 					continue;
@@ -383,12 +383,12 @@ public class AbilityFactory_DealDamage {
 				// or from taking combat damage
 				boolean freePing = mandatory || AbilityFactory.playReusable(saMe);
 
-				if (freePing && tgt.addTarget(AllZone.HumanPlayer))
+				if (freePing && tgt.addTarget(AllZone.getHumanPlayer()))
 					continue;
 			}
 
 			else if (tgt.canTgtCreature()) {
-				Card c = chooseTgtC(dmg, noPrevention, AllZone.HumanPlayer, mandatory);
+				Card c = chooseTgtC(dmg, noPrevention, AllZone.getHumanPlayer(), mandatory);
 				if (c != null) {
 					tgt.addTarget(c);
 					continue;
@@ -397,7 +397,7 @@ public class AbilityFactory_DealDamage {
 
 			// TODO: Improve Damage, we shouldn't just target the player just because we can
 			else if (tgt.canTgtPlayer()) {
-				if (tgt.addTarget(AllZone.HumanPlayer))
+				if (tgt.addTarget(AllZone.getHumanPlayer()))
 					continue;
 			}
 			// fell through all the choices, no targets left?
@@ -446,7 +446,7 @@ public class AbilityFactory_DealDamage {
 		while (tgt.getNumTargeted() < tgt.getMinTargets(saMe.getSourceCard(), saMe)) {
 			// TODO: Consider targeting the planeswalker
 			if (tgt.canTgtCreature()) {
-				Card c = chooseTgtC(dmg, noPrevention, AllZone.ComputerPlayer, mandatory);
+				Card c = chooseTgtC(dmg, noPrevention, AllZone.getComputerPlayer(), mandatory);
 				if (c != null) {
 					tgt.addTarget(c);
 					continue;
@@ -454,7 +454,7 @@ public class AbilityFactory_DealDamage {
 			}
 
 			if (tgt.canTgtPlayer()) {
-				if (tgt.addTarget(AllZone.ComputerPlayer))
+				if (tgt.addTarget(AllZone.getComputerPlayer()))
 					continue;
 			}
 
@@ -685,13 +685,13 @@ public class AbilityFactory_DealDamage {
 		if(params.containsKey("ValidPlayers"))
 			validP = params.get("ValidPlayers");
 
-		CardList humanList = getKillableCreatures(af, sa, AllZone.HumanPlayer, dmg);
-		CardList computerList = getKillableCreatures(af, sa, AllZone.ComputerPlayer, dmg);
+		CardList humanList = getKillableCreatures(af, sa, AllZone.getHumanPlayer(), dmg);
+		CardList computerList = getKillableCreatures(af, sa, AllZone.getComputerPlayer(), dmg);
 		
 		Target tgt = af.getAbTgt();
 		if (tgt != null) {
 			tgt.resetTargets();
-		 	sa.getTarget().addTarget(AllZone.HumanPlayer);
+		 	sa.getTarget().addTarget(AllZone.getHumanPlayer());
 		 	computerList = new CardList();
 		}
 
@@ -702,7 +702,7 @@ public class AbilityFactory_DealDamage {
 				//OK
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) ; //OK
@@ -719,12 +719,12 @@ public class AbilityFactory_DealDamage {
 		// TODO: if damage is dependant on mana paid, maybe have X be human's max life
 		//Don't kill yourself
 		if (validP.contains("Each") 
-				&& AllZone.ComputerPlayer.getLife() <= AllZone.ComputerPlayer.predictDamage(dmg, source, false))
+				&& AllZone.getComputerPlayer().getLife() <= AllZone.getComputerPlayer().predictDamage(dmg, source, false))
 			return false;
 
 		//if we can kill human, do it
 		if((validP.contains("Each") || validP.contains("EachOpponent")) 
-				&& AllZone.HumanPlayer.getLife() <= AllZone.HumanPlayer.predictDamage(dmg, source, false))
+				&& AllZone.getHumanPlayer().getLife() <= AllZone.getHumanPlayer().predictDamage(dmg, source, false))
 			return true;
 
 		// prevent run-away activations - first time will always return true
@@ -798,17 +798,17 @@ public class AbilityFactory_DealDamage {
 				else{
 					// Don't get yourself killed
 					if (validP.contains("Each") 
-							&& AllZone.ComputerPlayer.getLife() <= AllZone.ComputerPlayer.predictDamage(dmg, source, false))
+							&& AllZone.getComputerPlayer().getLife() <= AllZone.getComputerPlayer().predictDamage(dmg, source, false))
 						return false;
 
 					//if we can kill human, do it
 					if((validP.contains("Each") || validP.contains("EachOpponent") ||  validP.contains("Targeted")) 
-							&& AllZone.HumanPlayer.getLife() <= AllZone.HumanPlayer.predictDamage(dmg, source, false))
+							&& AllZone.getHumanPlayer().getLife() <= AllZone.getHumanPlayer().predictDamage(dmg, source, false))
 						break;
 
 					// Evaluate creatures getting killed
-					CardList humanList = getKillableCreatures(af, sa, AllZone.HumanPlayer, dmg);
-					CardList computerList = getKillableCreatures(af, sa, AllZone.ComputerPlayer, dmg);
+					CardList humanList = getKillableCreatures(af, sa, AllZone.getHumanPlayer(), dmg);
+					CardList computerList = getKillableCreatures(af, sa, AllZone.getComputerPlayer(), dmg);
 					if(CardFactoryUtil.evaluateCreatureList(computerList) + 50 >= CardFactoryUtil.evaluateCreatureList(humanList))
 						return false;
 				}

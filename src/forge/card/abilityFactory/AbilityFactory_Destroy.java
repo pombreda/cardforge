@@ -119,7 +119,7 @@ public class AbilityFactory_Destroy {
 		final boolean noRegen = params.containsKey("NoRegen");
 
 		CardList list;
-		list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+		list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
 		list = list.getTargetableCards(source);
 
 		if (abTgt != null){
@@ -145,13 +145,13 @@ public class AbilityFactory_Destroy {
 			if (abCost.getSacCost() && !abCost.getSacThis()){
 				//only sacrifice something that's supposed to be sacrificed 
 				String sacType = abCost.getSacType();
-			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+			    CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 			    typeList = typeList.getValidCards(sacType.split(","), source.getController(), source);
 			    if(ComputerUtil.getCardPreference(source, "SacCost", typeList) == null)
 			    	return false;
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) return false;
@@ -237,7 +237,7 @@ public class AbilityFactory_Destroy {
 			tgt.resetTargets();
 
 			CardList preferred = list.getNotKeyword("Indestructible");
-			preferred = list.getController(AllZone.HumanPlayer);
+			preferred = list.getController(AllZone.getHumanPlayer());
 			
 			// If NoRegen is not set, filter out creatures that have a regeneration shield
 			if (!noRegen){
@@ -385,9 +385,9 @@ public class AbilityFactory_Destroy {
 		for(Card tgtC : tgtCards){
 			if(AllZoneUtil.isCardInPlay(tgtC) && (tgt == null || CardFactoryUtil.canTarget(card, tgtC))) {
 				if(noRegen) 
-					AllZone.GameAction.destroyNoRegeneration(tgtC);
+					AllZone.getGameAction().destroyNoRegeneration(tgtC);
 				else
-					AllZone.GameAction.destroy(tgtC);
+					AllZone.getGameAction().destroy(tgtC);
 			}
 		}
 	}
@@ -547,8 +547,8 @@ public class AbilityFactory_Destroy {
 			Valid = Valid.replace("X", Integer.toString(xPay));
 		}
 
-		CardList humanlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
-		CardList computerlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+		CardList humanlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+		CardList computerlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
 		humanlist = humanlist.getValidCards(Valid.split(","), source.getController(), source);
 		computerlist = computerlist.getValidCards(Valid.split(","), source.getController(), source);
@@ -562,7 +562,7 @@ public class AbilityFactory_Destroy {
 				//OK
 			}
 			if (abCost.getLifeCost()){
-				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+				if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
 					return false;
 			}
 			if (abCost.getDiscardCost()) ;//OK
@@ -622,12 +622,12 @@ public class AbilityFactory_Destroy {
 		
 	 	if(noRegen){
 	 		for(int i = 0; i < list.size(); i++) 
-	 			if (AllZone.GameAction.destroyNoRegeneration(list.get(i)) && remDestroyed)
+	 			if (AllZone.getGameAction().destroyNoRegeneration(list.get(i)) && remDestroyed)
 	 				card.addRemembered(list.get(i));
 	 	}
 	 	else{
 	 		for(int i = 0; i < list.size(); i++) 
-	 			if (AllZone.GameAction.destroy(list.get(i)) && remDestroyed)
+	 			if (AllZone.getGameAction().destroy(list.get(i)) && remDestroyed)
 	 				card.addRemembered(list.get(i));
 	 	}
      }

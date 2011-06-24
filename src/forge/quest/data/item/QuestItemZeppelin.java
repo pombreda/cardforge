@@ -35,7 +35,7 @@ public class QuestItemZeppelin extends QuestItemAbstract{
 
     @Override
     public boolean isAvailableForPurchase() {
-        return super.isAvailableForPurchase() && AllZone.QuestData.getInventory().hasItem("Map");
+        return super.isAvailableForPurchase() && AllZone.getQuestData().getInventory().hasItem("Map");
     }
 
     public boolean hasBeenUsed() {

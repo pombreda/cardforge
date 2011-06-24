@@ -4,7 +4,9 @@ package forge;
 
 import java.util.ArrayList;
 
-
+/**
+ * @deprecated
+ */
 class TestMove extends Move {
     private final int    myNumber;
     

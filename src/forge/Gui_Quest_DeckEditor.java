@@ -97,16 +97,16 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         topModel.clear();
         bottomModel.clear();
         
-        if(AllZone.NameChanger.shouldChangeCardName()) {
-            top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
-            bottom = new CardList(AllZone.NameChanger.changeCard(bottom.toArray()));
+        if(AllZone.getNameChanger().shouldChangeCardName()) {
+            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
+            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
         
         Card c;
         String cardName;
         //QuestBoosterPack pack = new QuestBoosterPack();
         
-        java.util.List<String> addedList = AllZone.QuestData.getAddedCards();
+        java.util.List<String> addedList = AllZone.getQuestData().getAddedCards();
         
 
         //update top
@@ -182,9 +182,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         
         topModel.clear();
         
-        if(AllZone.NameChanger.shouldChangeCardName()) {
-            top = new CardList(AllZone.NameChanger.changeCard(top.toArray()));
-            bottom = new CardList(AllZone.NameChanger.changeCard(bottom.toArray()));
+        if(AllZone.getNameChanger().shouldChangeCardName()) {
+            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
+            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
         
         Card c;
@@ -197,7 +197,7 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
             
             // add rarity to card if this is a sealed card pool
             
-            cardName = AllZone.NameChanger.getOriginalName(c.getName());
+            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
             if(!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
@@ -333,7 +333,7 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         this.setJMenuBar(customMenu);
         
 
-        forge.quest.data.QuestData questData = AllZone.QuestData;
+        forge.quest.data.QuestData questData = AllZone.getQuestData();
         Deck deck = null;
         
         //open deck that the player used if QuestData has it
@@ -353,11 +353,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         //convert Deck main into CardList to show on the screen
         CardList bottom = new CardList();
         for(int i = 0; i < deck.countMain(); i++) {
-            bottom.add(AllZone.CardFactory.getCard(deck.getMain(i), null));
+            bottom.add(AllZone.getCardFactory().getCard(deck.getMain(i), null));
         }
         
 
-        java.util.List<String> list = AllZone.QuestData.getCardpool();
+        java.util.List<String> list = AllZone.getQuestData().getCardpool();
         CardList cardpool = Gui_Quest_DeckEditor_Menu.covertToCardList(list);
         
         //remove bottom cards that are in the deck from the card pool
@@ -935,7 +935,7 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         Card c;
         ReadBoosterPack pack = new ReadBoosterPack();
         for(int i = 0; i < deck.countMain(); i++) {
-            c = AllZone.CardFactory.getCard(deck.getMain(i), AllZone.HumanPlayer);
+            c = AllZone.getCardFactory().getCard(deck.getMain(i), AllZone.getHumanPlayer());
             
             c.setRarity(pack.getRarity(c.getName()));
             
@@ -946,12 +946,12 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         if(deck.isSealed() || deck.isDraft()) {
             //add sideboard to GUI
             for(int i = 0; i < deck.countSideboard(); i++) {
-                c = AllZone.CardFactory.getCard(deck.getSideboard(i), AllZone.HumanPlayer);
+                c = AllZone.getCardFactory().getCard(deck.getSideboard(i), AllZone.getHumanPlayer());
                 c.setRarity(pack.getRarity(c.getName()));
                 topModel.addCard(c);
             }
         } else {
-            CardList all = AllZone.CardFactory.getAllCards();
+            CardList all = AllZone.getCardFactory().getAllCards();
             for(int i = 0; i < all.size(); i++)
                 topModel.addCard(all.get(i));
         }

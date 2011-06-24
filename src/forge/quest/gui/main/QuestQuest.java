@@ -46,7 +46,7 @@ public class QuestQuest extends QuestSelectablePanel {
     }
 
     private static List<Quest_Assignment> readQuests() {
-        forge.quest.data.QuestData questData = AllZone.QuestData;
+        forge.quest.data.QuestData questData = AllZone.getQuestData();
         ReadQuest_Assignment read = new ReadQuest_Assignment(ForgeProps.getFile(NewConstants.QUEST.QUESTS), questData);
         read.run();
 

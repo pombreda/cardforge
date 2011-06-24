@@ -1,8 +1,23 @@
 package forge.card.spellability;
 
+import java.util.Collection;
+
 import javax.swing.JOptionPane;
 
-import forge.*;
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
+import forge.AllZone;
+import forge.AllZoneUtil;
+import forge.ButtonUtil;
+import forge.Card;
+import forge.CardList;
+import forge.CardListFilter;
+import forge.ComputerUtil;
+import forge.Constant;
+import forge.Counters;
+import forge.Phase;
+import forge.Player;
+import forge.PlayerZone;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.ManaCost;
 import forge.gui.GuiUtils;
@@ -235,7 +250,7 @@ public class Cost_Payment {
     }
 	
 	public void setInput(Input in){
-		AllZone.InputControl.setInput(in, true);
+		AllZone.getInputControl().setInput(in, true);
 	}
 	
 	public boolean payCost(){
@@ -322,7 +337,7 @@ public class Cost_Payment {
         			JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE,
         			null, possibleValues, possibleValues[0]);
             if(choice.equals(0)) {
-            	  AllZone.HumanPlayer.payLife(cost.getLifeAmount(), null);
+            	  AllZone.getHumanPlayer().payLife(cost.getLifeAmount(), null);
             	  payLife = true;
             }
 			else{
@@ -434,7 +449,7 @@ public class Cost_Payment {
 	
 	public void resetUndoList(){
 		// TODO: clear other undoLists here?
-		payTapXTypeTappedList.clear();
+		getPayTapXTypeTappedList().clear();
 	}
 	
 	public void cancelPayment(){
@@ -448,14 +463,14 @@ public class Cost_Payment {
 			card.tap();
 		}
 		// refund mana
-        AllZone.ManaPool.unpaid(ability, false);
+        AllZone.getManaPool().unpaid(ability, false);
         
 		if (cost.getTapXTypeCost()){ // Can't depend on payTapXType if canceling before tapping enough
 
-			for (Card c:payTapXTypeTappedList)
+			for (Card c:getPayTapXTypeTappedList())
 				c.untap();	
 			//needed?
-			payTapXTypeTappedList.clear();
+			getPayTapXTypeTappedList().clear();
 		}
         
         // refund counters
@@ -494,7 +509,7 @@ public class Cost_Payment {
     	CardList exileFromTopCard = new CardList();
     	CardList tapXCard = new CardList();
     	CardList returnCard = new CardList();
-    	ability.setActivatingPlayer(AllZone.ComputerPlayer);
+    	ability.setActivatingPlayer(AllZone.getComputerPlayer());
     	
     	// double check if something can be sacrificed here. Real check is in ComputerUtil.canPayAdditionalCosts()
     	if (cost.getSacCost()){
@@ -502,7 +517,7 @@ public class Cost_Payment {
     		if (cost.getSacThis())
     			sacCard.add(card);
     		else if (cost.isSacAll()){
-    			CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+    			CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
     		    typeList = typeList.getValidCards(cost.getSacType().split(","), card.getController(), card);	
     			sacCard.addAll(typeList);
     			amount = sacCard.size();
@@ -560,7 +575,7 @@ public class Cost_Payment {
     		if (cost.getExileFromTopThis())
     			exileFromTopCard.add(card);
     		else
-    			exileFromTopCard = AllZoneUtil.getPlayerCardsInLibrary(AllZone.ComputerPlayer, cost.getExileFromTopAmount());
+    			exileFromTopCard = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getComputerPlayer(), cost.getExileFromTopAmount());
     		
 	    	if (exileFromTopCard.size() != cost.getExileFromTopAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
@@ -627,7 +642,7 @@ public class Cost_Payment {
     	}
     	
     	if (cost.getLifeCost())
-    		AllZone.ComputerPlayer.payLife(cost.getLifeAmount(), null);
+    		AllZone.getComputerPlayer().payLife(cost.getLifeAmount(), null);
     	
     	if (cost.getDiscardCost()){
     		String discType = cost.getDiscardType();
@@ -646,10 +661,10 @@ public class Cost_Payment {
     			else{
 	    			if (!discType.equals("Any")){
 	    				String validType[] = discType.split(";");
-	    				AllZone.GameAction.AI_discardNumType(discAmount, validType, ability);
+	    				AllZone.getGameAction().AI_discardNumType(discAmount, validType, ability);
 	    			}
 	    			else{
-	    				AllZone.ComputerPlayer.discard(discAmount, ability, false);
+	    				AllZone.getComputerPlayer().discard(discAmount, ability, false);
 	    			}
     			}
     		}
@@ -657,32 +672,32 @@ public class Cost_Payment {
     	
 		if (cost.getSacCost()){
 			for(Card c : sacCard)
-				AllZone.GameAction.sacrifice(c);
+				AllZone.getGameAction().sacrifice(c);
 		}
 		
 		if (cost.getExileCost()){
 			for(Card c : exileCard)
-				AllZone.GameAction.exile(c);
+				AllZone.getGameAction().exile(c);
 		}
 		
 		if (cost.getExileFromHandCost()){
 			for(Card c : exileFromHandCard)
-				AllZone.GameAction.exile(c);
+				AllZone.getGameAction().exile(c);
 		}
 		
 		if (cost.getExileFromGraveCost()){
 			for(Card c : exileFromGraveCard)
-				AllZone.GameAction.exile(c);
+				AllZone.getGameAction().exile(c);
 		}
 		
 		if(cost.getExileFromTopCost()) {
 			for(Card c : exileFromTopCard)
-				AllZone.GameAction.exile(c);
+				AllZone.getGameAction().exile(c);
 		}
 		
 		if (cost.getReturnCost()){
 			for(Card c : returnCard)
-				AllZone.GameAction.moveToHand(c);
+				AllZone.getGameAction().moveToHand(c);
 		}
 		return true;
     }
@@ -738,7 +753,7 @@ public class Cost_Payment {
 		        if(mana.isPaid()) 
 		        	done();
 		        else
-			        if (AllZone.InputControl.getInput() == this)
+			        if (AllZone.getInputControl().getInput() == this)
 			        	showMessage();
 		    }
 
@@ -760,7 +775,7 @@ public class Cost_Payment {
 		    
 		    private void done() {
                 if(phyLifeToLose > 0)
-                    AllZone.HumanPlayer.payLife(phyLifeToLose,sa.getSourceCard());
+                    AllZone.getHumanPlayer().payLife(phyLifeToLose,sa.getSourceCard());
                 sa.getSourceCard().setSunburstValue(mana.getSunburst());
 		    	resetManaCost();
 		    	payment.setPayMana(true);
@@ -773,7 +788,7 @@ public class Cost_Payment {
 		        resetManaCost();
 		        payment.setCancel(true);
 		        payment.payCost();
-		        AllZone.Human_Battlefield.updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
+		        AllZone.getHumanBattlefield().updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
 		        stop();
 		    }
 		    
@@ -781,7 +796,7 @@ public class Cost_Payment {
 		    public void showMessage() {
 		        ButtonUtil.enableOnlyCancel();
 		        String displayMana = mana.toString().replace("X", "").trim();
-		        AllZone.Display.showMessage("Pay Mana Cost: " + displayMana);
+		        AllZone.getDisplay().showMessage("Pay Mana Cost: " + displayMana);
 
                 StringBuilder msg = new StringBuilder("Pay Mana Cost: " +displayMana);
                 if(phyLifeToLose > 0)
@@ -796,10 +811,16 @@ public class Cost_Payment {
                     msg.append("\n(Click on your life total to pay life for phyrexian mana.)");
                 }
 
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
 		        if(mana.isPaid()) 
 		        	done(); 
 		    }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
 		};
 	    return payMana;
 	}
@@ -817,7 +838,7 @@ public class Cost_Payment {
 		    	else
 		    		ButtonUtil.enableOnlyCancel();
 		    	
-		        AllZone.Display.showMessage("Pay X Mana Cost for " + sa.getSourceCard().getName()+"\n"+xPaid+ " Paid so far.");
+		        AllZone.getDisplay().showMessage("Pay X Mana Cost for " + sa.getSourceCard().getName()+"\n"+xPaid+ " Paid so far.");
 		    }
 		    
 		    // selectCard 
@@ -834,7 +855,7 @@ public class Cost_Payment {
 		        	xPaid++;
 		        }
 		        
-		        if (AllZone.InputControl.getInput() == this)
+		        if (AllZone.getInputControl().getInput() == this)
 		        	showMessage();
 		    }
 		    
@@ -842,7 +863,7 @@ public class Cost_Payment {
 		    public void selectButtonCancel() {
 		        payment.setCancel(true);
 		        payment.payCost();
-		        AllZone.Human_Battlefield.updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
+		        AllZone.getHumanBattlefield().updateObservers();//DO NOT REMOVE THIS, otherwise the cards don't always tap
 		        stop();
 		    }
 		    
@@ -853,6 +874,12 @@ public class Cost_Payment {
 		    	stop();
 		    	payment.payCost();
 		    }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
 			
 		};
 
@@ -870,7 +897,7 @@ public class Cost_Payment {
             @Override
             public void showMessage() {
             	boolean any = discType.equals("Any") ? true : false;
-            	if (AllZone.Human_Hand.size() == 0) stop();
+            	if (AllZone.getHumanHand().size() == 0) stop();
             	StringBuilder type = new StringBuilder("");
             	if (any || !discType.equals("Card")){
             		type.append(" ").append(discType);
@@ -889,7 +916,7 @@ public class Cost_Payment {
             		sb.append(nCards - nDiscard);
             		sb.append(" remaining.");
             	}
-                AllZone.Display.showMessage(sb.toString());
+                AllZone.getDisplay().showMessage(sb.toString());
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -909,7 +936,7 @@ public class Cost_Payment {
                     //in case no more cards in hand
                     if(nDiscard == nCards) 
                     	done();
-                    else if (AllZone.Human_Hand.size() == 0)	// this really shouldn't happen
+                    else if (AllZone.getHumanHand().size() == 0)	// this really shouldn't happen
                     	cancel();
                     else
                     	showMessage();
@@ -927,6 +954,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -950,7 +983,7 @@ public class Cost_Payment {
                     if(choice.equals(0)) {
                     	payment.setPaySac(true);
                     	payment.getAbility().addCostToHashList(card, "Sacrificed");
-                    	AllZone.GameAction.sacrifice(card);
+                    	AllZone.getGameAction().sacrifice(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -961,6 +994,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         
         return target;
@@ -985,7 +1024,7 @@ public class Cost_Payment {
             	
                 typeList = AllZoneUtil.getPlayerCardsInPlay(sa.getSourceCard().getController());
                 typeList = typeList.getValidCards(type.split(";"), sa.getActivatingPlayer(), sa.getSourceCard());
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -999,7 +1038,7 @@ public class Cost_Payment {
                 if(typeList.contains(card)) {
                 	nSacrifices++;
                 	payment.getAbility().addCostToHashList(card, "Sacrificed");
-                	AllZone.GameAction.sacrifice(card);
+                	AllZone.getGameAction().sacrifice(card);
                 	typeList.remove(card);
                     //in case nothing else to sacrifice
                     if(nSacrifices == nNeeded) 
@@ -1022,6 +1061,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1036,7 +1081,7 @@ public class Cost_Payment {
     	
         for(Card card : typeList){
 	    	payment.getAbility().addCostToHashList(card, "Sacrificed");
-	    	AllZone.GameAction.sacrifice(card);
+	    	AllZone.getGameAction().sacrifice(card);
         }
     	
     	payment.setPaySac(true);
@@ -1057,7 +1102,7 @@ public class Cost_Payment {
             	
                 typeList = AllZoneUtil.getPlayerCardsInPlay(sa.getSourceCard().getController());
                 typeList = typeList.getValidCards(type.split(";"), sa.getActivatingPlayer(), sa.getSourceCard());
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
                 ButtonUtil.enableAll();
             }
             
@@ -1076,7 +1121,7 @@ public class Cost_Payment {
                 if(typeList.contains(card)) {
                 	nSacrifices++;
                 	payment.getAbility().addCostToHashList(card, "Sacrificed");
-                	AllZone.GameAction.sacrifice(card);
+                	AllZone.getGameAction().sacrifice(card);
                 	typeList.remove(card);
                     if (typeList.size() == 0)	// this really shouldn't happen
                     	done();
@@ -1096,6 +1141,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1119,7 +1170,7 @@ public class Cost_Payment {
                     if(choice.equals(0)) {
                     	payment.setPayExile(true);
                     	payment.getAbility().addCostToHashList(card, "Exiled");
-                    	AllZone.GameAction.exile(card);
+                    	AllZone.getGameAction().exile(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -1130,6 +1181,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1153,7 +1210,7 @@ public class Cost_Payment {
                     if(choice.equals(0)) {
                     	payment.setPayExileFromHand(true);
                     	payment.getAbility().addCostToHashList(card, "Exiled");
-                    	AllZone.GameAction.exile(card);
+                    	AllZone.getGameAction().exile(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -1164,6 +1221,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//input_exile()
@@ -1180,7 +1243,7 @@ public class Cost_Payment {
                     if(AllZoneUtil.getPlayerCardsInLibrary(card.getController()).size() > 0) {
                     	payment.setPayExileFromTop(true);
                     	payment.getAbility().addCostToHashList(card, "Exiled");
-                    	AllZone.GameAction.exile(card);
+                    	AllZone.getGameAction().exile(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -1191,6 +1254,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//input_exile()
@@ -1213,7 +1282,7 @@ public class Cost_Payment {
                     if(choice.equals(0)) {
                     	payment.setPayExileFromGrave(true);
                     	payment.getAbility().addCostToHashList(card, "Exiled");
-                    	AllZone.GameAction.exile(card);
+                    	AllZone.getGameAction().exile(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -1224,6 +1293,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//input_exile()
@@ -1248,7 +1323,7 @@ public class Cost_Payment {
             	
                 typeList = AllZoneUtil.getPlayerCardsInPlay(sa.getSourceCard().getController());
                 typeList = typeList.getValidCards(type.split(";"), sa.getActivatingPlayer(), sa.getSourceCard());
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -1262,7 +1337,7 @@ public class Cost_Payment {
                 if(typeList.contains(card)) {
                 	nExiles++;
                 	payment.getAbility().addCostToHashList(card, "Exiled");
-                	AllZone.GameAction.exile(card);
+                	AllZone.getGameAction().exile(card);
                 	typeList.remove(card);
                     //in case nothing else to exile
                     if(nExiles == nNeeded) 
@@ -1285,6 +1360,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1310,7 +1391,7 @@ public class Cost_Payment {
             	
                 typeList = AllZoneUtil.getPlayerHand(spell.getSourceCard().getController());
                 typeList = typeList.getValidCards(type.split(";"), spell.getActivatingPlayer(), spell.getSourceCard());
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -1324,7 +1405,7 @@ public class Cost_Payment {
                 if(typeList.contains(card)) {
                 	nExiles++;
                 	payment.getAbility().addCostToHashList(card, "Exiled");
-                	AllZone.GameAction.exile(card);
+                	AllZone.getGameAction().exile(card);
                 	typeList.remove(card);
                     //in case nothing else to exile
                     if(nExiles == nNeeded) 
@@ -1347,6 +1428,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//exileFromHandType()
@@ -1372,7 +1459,7 @@ public class Cost_Payment {
                         Card c = (Card) o;
                         typeList.remove(c);
                         payment.getAbility().addCostToHashList(c, "Exiled");
-                    	AllZone.GameAction.exile(c);
+                    	AllZone.getGameAction().exile(c);
                     	if (i == nNeeded-1) done();
                     }
                 }
@@ -1394,6 +1481,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//exileFromGraveType()
@@ -1418,7 +1511,7 @@ public class Cost_Payment {
                         Card c = typeList.get(0);
                         typeList.remove(c);
                         payment.getAbility().addCostToHashList(c, "Exiled");
-                    	AllZone.GameAction.exile(c);
+                    	AllZone.getGameAction().exile(c);
                     	if (i == nNeeded-1) done();
                     }
                 }
@@ -1440,6 +1533,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
         return target;
     }//exileFromTopType()
@@ -1456,7 +1555,7 @@ public class Cost_Payment {
             	if (cardList.size() == 0) stop();
             	
             	int left = nCards - nTapped;
-                AllZone.Display.showMessage("Select a "+ cardType + " to tap (" +left + " left)");
+                AllZone.getDisplay().showMessage("Select a "+ cardType + " to tap (" +left + " left)");
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -1495,6 +1594,12 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1517,7 +1622,7 @@ public class Cost_Payment {
                 			null, possibleValues, possibleValues[0]);
                     if(choice.equals(0)) {
                     	payment.setPayReturn(true);
-                    	AllZone.GameAction.moveToHand(card);
+                    	AllZone.getGameAction().moveToHand(card);
                     	stop();
                     	payment.payCost();
                     }
@@ -1528,6 +1633,12 @@ public class Cost_Payment {
                     }
                 }
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
@@ -1552,7 +1663,7 @@ public class Cost_Payment {
             	
                 typeList = AllZoneUtil.getPlayerCardsInPlay(sa.getSourceCard().getController());
                 typeList = typeList.getValidCards(type.split(";"), sa.getActivatingPlayer(), sa.getSourceCard());
-                AllZone.Display.showMessage(msg.toString());
+                AllZone.getDisplay().showMessage(msg.toString());
                 ButtonUtil.enableOnlyCancel();
             }
             
@@ -1565,7 +1676,7 @@ public class Cost_Payment {
             public void selectCard(Card card, PlayerZone zone) {
                 if(typeList.contains(card)) {
                 	nReturns++;
-                	AllZone.GameAction.moveToHand(card);
+                	AllZone.getGameAction().moveToHand(card);
                 	typeList.remove(card);
                     //in case nothing else to return
                     if(nReturns == nNeeded) 
@@ -1588,8 +1699,21 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
+
+			@Override
+			public Collection<MinimaxMove> getMoves() {
+				// TODO Auto-generated method stub
+				throw new NotImplementedError();
+			}
         };
 
         return target;
     }//returnType()  
+    
+	//public void setPayTapXTypeTappedList(CardList payTapXTypeTappedList) {
+	//	this.payTapXTypeTappedList = payTapXTypeTappedList;
+	//}
+	public CardList getPayTapXTypeTappedList() {
+		return payTapXTypeTappedList;
+	}
 }

@@ -44,13 +44,13 @@ public abstract class QuestItemAbstract implements QuestStallPurchasable{
      * This method will be invoked when an item is bought in a shop.
      */
     public void onPurchase() {
-        int currentLevel = AllZone.QuestData.getInventory().getItemLevel(name);
-        AllZone.QuestData.getInventory().setItemLevel(name, currentLevel +1);
+        int currentLevel = AllZone.getQuestData().getInventory().getItemLevel(name);
+        AllZone.getQuestData().getInventory().setItemLevel(name, currentLevel +1);
     }
 
 
     public boolean isAvailableForPurchase(){
-        return AllZone.QuestData.getInventory().getItemLevel(name) < maxLevel;
+        return AllZone.getQuestData().getInventory().getItemLevel(name) < maxLevel;
     }
 
     public int getLevel(){

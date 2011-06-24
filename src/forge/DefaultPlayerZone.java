@@ -83,7 +83,7 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
 
 		c.addObserver(this);
 
-		c.setTurnInZone(AllZone.Phase.getTurn());
+		c.setTurnInZone(AllZone.getPhase().getTurn());
 
 		cards.add((Card)c);
 		update();
@@ -126,7 +126,7 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
 		}
 
 		cards.add(index, c);
-		c.setTurnInZone(AllZone.Phase.getTurn());
+		c.setTurnInZone(AllZone.getPhase().getTurn());
 		update();
 	}
 	public void remove(Object c)

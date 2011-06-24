@@ -4,6 +4,8 @@ package forge.card.spellability;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+
 import forge.Card;
 import forge.CardList;
 import forge.Command;
@@ -16,7 +18,9 @@ import forge.gui.input.Input;
 
 //only SpellAbility can go on the stack
 //override any methods as needed
-public abstract class SpellAbility {
+public abstract class SpellAbility
+	implements MinimaxMove
+{
     public Object[]         choices_made;                       //open ended Casting choice storage
     //choices for constructor isPermanent argument
     public static final int Spell              = 0;
