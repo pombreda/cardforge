@@ -18,6 +18,7 @@ import forge.card.spellability.Ability_Sub;
 import forge.card.spellability.Cost;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.SpellAbility_Restriction;
+import forge.card.spellability.SpellAbility_Condition;
 import forge.card.spellability.Target;
 
 public class AbilityFactory {
@@ -107,7 +108,7 @@ public class AbilityFactory {
 		HashMap<String,String> mapParameters = new HashMap<String,String>();
 		
 		if (!(abString.length() > 0))
-			throw new RuntimeException("AbilityFactory : getAbility -- abString too short in " + hostCard.getName());
+			throw new RuntimeException("AbilityFactory : getAbility -- abString too short in " + hostCard.getName()+": ["+abString+"]");
 		
 		String a[] = abString.split("\\|");
 		
@@ -266,6 +267,15 @@ public class AbilityFactory {
 				SA = AbilityFactory_Counters.createDrawbackRemoveCounters(this);
 		}
 		
+		if (API.equals("RemoveCounterAll")){
+			if (isAb)
+				SA = AbilityFactory_Counters.createAbilityRemoveCounterAll(this);
+			else if (isSp)
+				SA = AbilityFactory_Counters.createSpellRemoveCounterAll(this);
+			else if (isDb)
+				SA = AbilityFactory_Counters.createDrawbackRemoveCounterAll(this);
+		}
+		
 		if (API.equals("Proliferate")){
 			if (isAb)
 				SA = AbilityFactory_Counters.createAbilityProliferate(this);
@@ -298,11 +308,11 @@ public class AbilityFactory {
 			AbilityFactory_Pump afPump = new AbilityFactory_Pump(this);
 			
 			if (isAb)
-				SA = afPump.getAbility();
+				SA = afPump.getAbilityPump();
 			else if (isSp)
-				SA = afPump.getSpell();
+				SA = afPump.getSpellPump();
 			else if (isDb)
-				SA = afPump.getDrawback();
+				SA = afPump.getDrawbackPump();
 			
 			if (isAb || isSp)
 				hostCard.setSVar("PlayMain1", "TRUE");
@@ -312,11 +322,11 @@ public class AbilityFactory {
 			AbilityFactory_Pump afPump = new AbilityFactory_Pump(this);
 			
 			if (isAb)
-				SA = afPump.getPumpAllAbility();
+				SA = afPump.getAbilityPumpAll();
 			else if (isSp)
-				SA = afPump.getPumpAllSpell();
+				SA = afPump.getSpellPumpAll();
 			else if (isDb)
-				SA = afPump.getPumpAllDrawback();
+				SA = afPump.getDrawbackPumpAll();
 			
 			if (isAb || isSp)
 				hostCard.setSVar("PlayMain1", "TRUE");
@@ -477,6 +487,15 @@ public class AbilityFactory {
 				SA = AbilityFactory_Sacrifice.createDrawbackSacrifice(this);
 		}
 		
+		if (API.equals("SacrificeAll")){
+			if (isAb)
+				SA = AbilityFactory_Sacrifice.createAbilitySacrificeAll(this);
+			else if (isSp)
+				SA = AbilityFactory_Sacrifice.createSpellSacrificeAll(this);
+			else if (isDb)
+				SA = AbilityFactory_Sacrifice.createDrawbackSacrificeAll(this);
+		}
+		
 		if (API.equals("Destroy")){
 			if (isAb)
 				SA = AbilityFactory_Destroy.createAbilityDestroy(this);
@@ -530,9 +549,12 @@ public class AbilityFactory {
 			AbilityFactory_GainControl afControl = new AbilityFactory_GainControl(this);
 			
 			if (isAb)
-				SA = afControl.getAbility();
+				SA = afControl.getAbilityGainControl();
 			else if (isSp)
-				SA = afControl.getSpell();
+				SA = afControl.getSpellGainControl();
+			else if (isDb) {
+				SA = afControl.getDrawbackGainControl();
+			}
 		}
 		
 		if (API.equals("Discard")){
@@ -648,6 +670,15 @@ public class AbilityFactory {
 				SA = AbilityFactory_Choose.createDrawbackChooseType(this);
 		}
 		
+		if (API.equals("ChooseColor")){
+			if (isAb)
+				SA = AbilityFactory_Choose.createAbilityChooseColor(this);
+			else if (isSp)
+				SA = AbilityFactory_Choose.createSpellChooseColor(this);
+			else if (isDb)
+				SA = AbilityFactory_Choose.createDrawbackChooseColor(this);
+		}
+		
 		if(API.equals("CopyPermanent")) {
 			if(isAb)
 				SA = AbilityFactory_Copy.createAbilityCopyPermanent(this);
@@ -708,6 +739,33 @@ public class AbilityFactory {
 			else if(isDb)
 				SA = AbilityFactory_Animate.createDrawbackAnimateAll(this);
 		}
+        
+        if(API.equals("Debuff")) {
+			if (isAb)
+				SA = AbilityFactory_Debuff.createAbilityDebuff(this);
+			else if (isSp)
+				SA = AbilityFactory_Debuff.createSpellDebuff(this);
+			else if (isDb)
+				SA = AbilityFactory_Debuff.createDrawbackDebuff(this);
+		}
+        
+        if(API.equals("DebuffAll")) {
+			if (isAb)
+				SA = AbilityFactory_Debuff.createAbilityDebuffAll(this);
+			else if (isSp)
+				SA = AbilityFactory_Debuff.createSpellDebuffAll(this);
+			else if (isDb)
+				SA = AbilityFactory_Debuff.createDrawbackDebuffAll(this);
+		}
+        
+        if(API.equals("DrainMana")) {
+			if (isAb)
+				SA = AbilityFactory_Mana.createAbilityDrainMana(this);
+			else if (isSp)
+				SA = AbilityFactory_Mana.createSpellDrainMana(this);
+			else if (isDb)
+				SA = AbilityFactory_Mana.createDrawbackDrainMana(this);
+		}
 
 		if (SA == null)
 			throw new RuntimeException("AbilityFactory : SpellAbility was not created for "+hostCard.getName()+". Looking for API: "+API);
@@ -745,9 +803,32 @@ public class AbilityFactory {
         //if (!isTargeted)
         //	SA.setStackDescription(hostCard.getName());
         
-        SA.setRestrictions(buildRestrictions(SA));
+        makeRestrictions(SA);
+        makeConditions(SA);
 
         return SA;
+	}
+	
+	private void makeRestrictions(SpellAbility sa) {
+        // SpellAbility_Restrictions should be added in here
+        SpellAbility_Restriction restrict = sa.getRestrictions(); 
+        if (mapParams.containsKey("Flashback")){
+        	sa.setFlashBackAbility(true);
+        }
+        restrict.setRestrictions(mapParams);
+	}
+	
+	private void makeConditions(SpellAbility sa) {
+        // SpellAbility_Restrictions should be added in here
+        SpellAbility_Condition condition = sa.getConditions(); 
+        if (mapParams.containsKey("Flashback")){
+        	sa.setFlashBackAbility(true);
+        }
+        condition.setConditions(mapParams);
+	}
+	
+	public static boolean checkConditional(SpellAbility sa){
+		return sa.getConditions().checkConditions(sa);
 	}
 	
 	// Easy creation of SubAbilities
@@ -772,73 +853,6 @@ public class AbilityFactory {
 		}
 
 		return abSub;
-	}
-	
-	public SpellAbility_Restriction buildRestrictions(SpellAbility SA){
-        // SpellAbility_Restrictions should be added in here
-        SpellAbility_Restriction restrict = SA.getRestrictions(); 
-        if (mapParams.containsKey("ActivatingZone"))
-        	restrict.setActivateZone(mapParams.get("ActivatingZone"));
-        
-        if (mapParams.containsKey("Flashback")){
-        	SA.setFlashBackAbility(true);
-        	restrict.setActivateZone("Graveyard");
-        }
-        
-        if (mapParams.containsKey("SorcerySpeed"))
-        	restrict.setSorcerySpeed(true);
-        
-        if (mapParams.containsKey("PlayerTurn"))
-        	restrict.setPlayerTurn(true);
-        
-        if (mapParams.containsKey("OpponentTurn"))
-        	restrict.setOpponentTurn(true);
-        
-        if (mapParams.containsKey("AnyPlayer"))
-        	restrict.setAnyPlayer(true);
-        
-        if (mapParams.containsKey("ActivationLimit"))
-        	restrict.setActivationLimit(Integer.parseInt(mapParams.get("ActivationLimit")));
-        
-        if (mapParams.containsKey("ActivationNumberSacrifice"))
-        	restrict.setActivationNumberSacrifice(Integer.parseInt(mapParams.get("ActivationNumberSacrifice")));
-
-        if (mapParams.containsKey("ActivatingPhases")) {
-        	String phases = mapParams.get("ActivatingPhases");
-        	
-        	if (phases.contains("->")){
-        		// If phases lists a Range, split and Build Activate String
-        		// Combat_Begin->Combat_End (During Combat)
-        		// Draw-> (After Upkeep)
-        		// Upkeep->Combat_Begin (Before Declare Attackers)
-        		
-        		String[] split = phases.split("->", 2);
-        		phases = AllZone.Phase.buildActivateString(split[0], split[1]);
-        	}
-        		
-        	restrict.setActivatePhases(phases);
-        }
-        
-        if (mapParams.containsKey("ActivatingCardsInHand"))
-        	restrict.setActivateCardsInHand(Integer.parseInt(mapParams.get("ActivatingCardsInHand")));
-        
-        if (mapParams.containsKey("Threshold"))
-        	restrict.setThreshold(true);
-        
-        if (mapParams.containsKey("Planeswalker"))
-        	restrict.setPlaneswalker(true);
-        
-        if (mapParams.containsKey("IsPresent")){
-        	restrict.setIsPresent(mapParams.get("IsPresent"));
-        	if (mapParams.containsKey("PresentCompare"))
-        		restrict.setPresentCompare(mapParams.get("PresentCompare"));
-        }
-        
-        if (mapParams.containsKey("IsNotPresent")){
-        	restrict.setIsPresent(mapParams.get("IsNotPresent"));
-        	restrict.setPresentCompare("EQ0");
-        }
-        return restrict;
 	}
 	
 	public static boolean playReusable(SpellAbility sa){
@@ -898,19 +912,35 @@ public class AbilityFactory {
 					}
 					return CardFactoryUtil.playerXCount(players, calcX[1], card) * multiplier;
 				}
+				if(calcX[0].startsWith("TargetedController")) {
+					ArrayList<Player> players = new ArrayList<Player>();
+					ArrayList<Card> list = getDefinedCards(card, "Targeted", ability);
+					ArrayList<SpellAbility> sas = getDefinedSpellAbilities(card, "Targeted", ability);
+
+					for(Card c : list){
+						Player p = c.getController();
+						if (!players.contains(p))
+							players.add(p);
+					}
+					for(SpellAbility s : sas) {
+						Player p = s.getSourceCard().getController();
+						if(!players.contains(p)) players.add(p);
+					}
+					return CardFactoryUtil.playerXCount(players, calcX[1], card) * multiplier;
+				}
 				
 				CardList list = new CardList();
 				if (calcX[0].startsWith("Sacrificed"))
-					list = findRootAbility(ability).getSacrificedCost();
+					list = findRootAbility(ability).getPaidList("Sacrificed");
 				
 				else if (calcX[0].startsWith("Discarded"))
-					list = findRootAbility(ability).getDiscardedCost();
+					list = findRootAbility(ability).getPaidList("Discarded");
 				
 				else if( calcX[0].startsWith("Exiled")) {
-					list = findRootAbility(ability).getExiledCost();
+					list = findRootAbility(ability).getPaidList("Exiled");
 				}
 				else if( calcX[0].startsWith("Tapped")) {
-					list = findRootAbility(ability).getTappedCost();
+					list = findRootAbility(ability).getPaidList("Tapped");
 				}
 				
 				else if (calcX[0].startsWith("Targeted")){
@@ -948,8 +978,9 @@ public class AbilityFactory {
 					}
 				}
 				else if (calcX[0].startsWith("Triggered")) {
+					SpellAbility root = ability.getRootSpellAbility();
 					list = new CardList();
-					list.add((Card)ability.getSourceCard().getTriggeringObject(calcX[0].substring(9)));
+					list.add((Card)root.getTriggeringObject(calcX[0].substring(9)));
 				}
 				else if (calcX[0].startsWith("Remembered")) {
 					// Add whole Remembered list to handlePaid
@@ -965,6 +996,16 @@ public class AbilityFactory {
 					for(Card c : card.getImprinted())
 						list.add(AllZoneUtil.getCardState(c));
 				}
+				
+				else if (calcX[0].startsWith("TriggerCount")) {
+					// TriggerCount is similar to a regular Count, but just pulls Integer Values from Trigger objects
+			    	String[] l = calcX[1].split("/");
+			        String[] m = CardFactoryUtil.parseMath(l);
+					int count = (Integer)ability.getTriggeringObject(l[0]); 
+					
+					return CardFactoryUtil.doXMath(count, m, card) * multiplier;
+				}
+				
 				else
 					return 0;
 				
@@ -1002,8 +1043,9 @@ public class AbilityFactory {
 			cards.addAll(parent.getTarget().getTargetCards());
 		}
 		
-		else if (defined.startsWith("Triggered")){
-            Object crd = hostCard.getTriggeringObject(defined.substring(9));
+		else if (defined.startsWith("Triggered") && sa != null){
+			SpellAbility root = sa.getRootSpellAbility();
+            Object crd = root.getTriggeringObject(defined.substring(9));
             if(crd instanceof Card)
             {
                 c = AllZoneUtil.getCardState((Card)crd);
@@ -1017,12 +1059,37 @@ public class AbilityFactory {
 			}
 		}
 		
+		else if (defined.equals("Clones")){
+			for(Card clone : hostCard.getClones()){
+				cards.add(AllZoneUtil.getCardState(clone));
+			}
+		}
+		
 		else if (defined.equals("Imprinted")){
 			for(Card imprint : hostCard.getImprinted()){
 				cards.add(AllZoneUtil.getCardState(imprint));
 			}
 		}
+		else{
+			CardList list = null;
+			if (defined.startsWith("Sacrificed"))
+				list = findRootAbility(sa).getPaidList("Sacrificed");
 			
+			else if (defined.startsWith("Discarded"))
+				list = findRootAbility(sa).getPaidList("Discarded");
+			
+			else if(defined.startsWith("Exiled")) 
+				list = findRootAbility(sa).getPaidList("Exiled");
+			
+			else if(defined.startsWith("Tapped")) 
+				list = findRootAbility(sa).getPaidList("Tapped");
+			
+			else
+				return cards;
+			
+			for(Card cl : list)
+				cards.add(cl);
+		}
 		
 		if (c != null)
 			cards.add(c);
@@ -1078,11 +1145,12 @@ public class AbilityFactory {
 			}
 		}
         else if (defined.startsWith("Triggered")){
+        	SpellAbility root = sa.getRootSpellAbility();
             Object o = null;
             if (defined.endsWith("Controller")){
                 String triggeringType = defined.substring(9);
                 triggeringType = triggeringType.substring(0,triggeringType.length()-10);
-                Object c = sa.getSourceCard().getTriggeringObject(triggeringType);
+                Object c = root.getTriggeringObject(triggeringType);
                 if(c instanceof Card)
                 {
                     o = ((Card)c).getController();
@@ -1091,7 +1159,7 @@ public class AbilityFactory {
             else if (defined.endsWith("Owner")){
                 String triggeringType = defined.substring(9);
                 triggeringType = triggeringType.substring(0,triggeringType.length()-5);
-                Object c = sa.getSourceCard().getTriggeringObject(triggeringType);
+                Object c = root.getTriggeringObject(triggeringType);
                 if(c instanceof Card)
                 {
                     o = ((Card)c).getOwner();
@@ -1099,7 +1167,7 @@ public class AbilityFactory {
 		    }
             else {
                 String triggeringType = defined.substring(9);
-                o = sa.getSourceCard().getTriggeringObject(triggeringType);
+                o = root.getTriggeringObject(triggeringType);
             }
             if(o != null)
             {
@@ -1158,8 +1226,12 @@ public class AbilityFactory {
         else if(defined.startsWith("Triggered"))
         {
             String triggeringType = defined.substring(9);
-            if(sa.getSourceCard().getTriggeringObject(triggeringType) instanceof SpellAbility)
-                s = (SpellAbility)sa.getSourceCard().getTriggeringObject(triggeringType);
+            if(sa.getTriggeringObject(triggeringType) instanceof SpellAbility)
+                s = (SpellAbility)sa.getTriggeringObject(triggeringType);
+        }
+        else if (defined.startsWith("Imprinted")){
+        	for(Card imp : card.getImprinted())
+        		sas.addAll(imp.getSpellAbilities());
         }
 		
 		if (s != null)
@@ -1223,52 +1295,80 @@ public class AbilityFactory {
 		return parent;
 	}
 	
-	public static boolean checkConditional(HashMap<String,String> params, SpellAbility sa){
-		// ConditionPresent is required. Other paramaters are optional.
-		// ConditionDefined$ What cardlist we will be comparing (Triggered, Valid, Targeted etc)
-		// ConditionPresent$ Similar to IsPresent, but the Condition is checked on Resolution, not Activation
-		// ConditionCompare$ Similar to PresentCompare, but the Condition is checked on Resolution, not Activation
-		// ConditionDescription$ Not used here, but can be used in StackDescription		
-
-		String present = params.get("ConditionPresent");
-		if (present == null)	// If CP doesn't exist, return true
-			return true;
+	public static ArrayList<Object> predictThreatenedObjects(){
+		ArrayList<Object> objects = new ArrayList<Object>();
+		if (AllZone.Stack.size() == 0)
+			return objects;
 		
-		String compare = params.get("ConditionCompare");
-		if (compare == null)	// Compare defaults to "Does this exist?"
-			compare = "GE1";
+		// check stack for something that will kill this
+		SpellAbility topStack = AllZone.Stack.peekAbility();
+		objects.addAll(predictThreatenedObjects(topStack));
 		
-		String defined = params.get("ConditionDefined");
-		CardList list;
-		if (defined == null)
-			list = AllZoneUtil.getCardsInPlay();
-		else{
-			list = new CardList(AbilityFactory.getDefinedCards(sa.getSourceCard(), defined, sa));
-		}
-		
-		list = list.getValidCards(present.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
-		
-		int right;
-		String rightString = compare.substring(2);
-		try{	// If this is an Integer, just parse it
-			right = Integer.parseInt(rightString);
-		}
-		catch(NumberFormatException e){	// Otherwise, grab it from the SVar
-			right = CardFactoryUtil.xCount(sa.getSourceCard(), sa.getSourceCard().getSVar(rightString));
-		}
-
-		int left = list.size();
-		
-		return Card.compare(left, compare, right);
+		return objects;
 	}
 	
-	/*
-	public static void resolveSubAbility(SpellAbility sa){
-		Ability_Sub abSub = sa.getSubAbility();
-		if (abSub != null){
-			abSub.resolve();
+	public static ArrayList<Object> predictThreatenedObjects(SpellAbility topStack){
+		ArrayList<Object> objects = new ArrayList<Object>();
+		ArrayList<Object> threatened = new ArrayList<Object>();
+		
+		if (topStack == null)
+			return objects;
+		
+		Card source = topStack.getSourceCard();
+		AbilityFactory topAf = topStack.getAbilityFactory();
+		
+		// Can only Predict things from AFs
+		if (topAf != null){
+			Target tgt = topStack.getTarget();
+			
+			if (tgt == null){
+				objects = getDefinedObjects(source, topAf.getMapParams().get("Defined"), topStack);
+			}
+			else{
+				objects = tgt.getTargets();
+			}
+			
+			// Determine if Defined Objects are "threatened" will be destroyed due to this SA
+
+			String api = topAf.getAPI(); 
+			if (api.equals("DealDamage")){
+				// If PredictDamage is >= Lethal Damage
+				int dmg = AbilityFactory.calculateAmount(topStack.getSourceCard(), topAf.getMapParams().get("NumDmg"), topStack);
+				for(Object o : objects){
+					if (o instanceof Card){
+						Card c = (Card)o;
+						if (c.predictDamage(dmg, source, false) >= c.getKillDamage())
+							threatened.add(c);
+					}
+					else if (o instanceof Player){
+						Player p = (Player)o;
+						
+						if (source.hasKeyword("Infect")){
+							if (p.predictDamage(dmg, source, false) >= p.getPoisonCounters())
+								threatened.add(p);
+						}
+						else if (p.predictDamage(dmg, source, false) >= p.getLife())
+							threatened.add(p);
+					}
+				}
+			}
+			
+			else if (api.equals("DamageAll")){
+				
+			}
+			
+			else if (api.equals("Destroy")){
+				
+			}
+			
+			else if (api.equals("DestroyAll")){
+				
+			}
 		}
-	}*/
+		
+		threatened.addAll(predictThreatenedObjects(topStack.getSubAbility()));
+		return threatened;
+	}
 	
 	public static void handleRemembering(AbilityFactory AF)
 	{
@@ -1286,7 +1386,7 @@ public class AbilityFactory {
 		{
 			host.clearRemembered();
 		}
-		else if(params.containsKey("Unimprint")) {
+		if(params.containsKey("Unimprint")) {
 			host.clearImprinted();
 		}
 		
@@ -1298,7 +1398,7 @@ public class AbilityFactory {
 				host.addRemembered(o);
 			}
 		}
-		else if(params.containsKey("Imprint")) {
+		if(params.containsKey("Imprint")) {
 			ArrayList<Card> tgts = (tgt == null) ? new ArrayList<Card>() : tgt.getTargetCards();
 			host.addImprinted(tgts);
 		}
@@ -1331,25 +1431,40 @@ public class AbilityFactory {
             }
         };
         
+        final Command paidCommand = new Command() {
+            private static final long serialVersionUID = 8094833091127334678L;
+            
+            public void execute() {
+            	resolveSubAbilities(sa);
+				AllZone.Stack.finishResolving(sa, false);
+            }
+        };
+        
         final Command unpaidCommand = new Command() {
             private static final long serialVersionUID = 8094833091127334678L;
             
             public void execute() {
             	sa.resolve();
             	if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.HumanPlayer);
+            	resolveSubAbilities(sa);
+				AllZone.Stack.finishResolving(sa, false);
             }
         };
         
         if(payer.isHuman()) {
         	GameActionUtil.payManaDuringAbilityResolve(source + "\r\n", ability.getManaCost(), 
-        			Command.Blank, unpaidCommand);
+        			paidCommand, unpaidCommand);
         } else {
             if(ComputerUtil.canPayCost(ability)) {
             	ComputerUtil.playNoStack(ability); //Unless cost was payed - no resolve
+            	resolveSubAbilities(sa);
+				AllZone.Stack.finishResolving(sa, false);
             }
             else {
-                if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.ComputerPlayer);
                 sa.resolve();
+                if(params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.ComputerPlayer);
+                resolveSubAbilities(sa);
+				AllZone.Stack.finishResolving(sa, false);
             }
         }
 	}
@@ -1359,16 +1474,29 @@ public class AbilityFactory {
 		AbilityFactory af = sa.getAbilityFactory();
 		HashMap<String,String> params = af.getMapParams();
 		
-		//check conditions
-		if (AbilityFactory.checkConditional(params, sa)) {
-			if (params.get("UnlessCost") == null)
-				sa.resolve();
-			else passUnlessCost(sa);
-		}
 		
-		//try to resolve subabilities (see null check above)
+		//check conditions
+		if (AbilityFactory.checkConditional(sa)) {
+			if (params.get("UnlessCost") == null) {
+				sa.resolve();
+				
+				//try to resolve subabilities (see null check above)
+				resolveSubAbilities(sa);
+				AllZone.Stack.finishResolving(sa, false);
+			}
+			else passUnlessCost(sa);
+		} else
+			resolveSubAbilities(sa);
+	}
+	
+	public static void resolveSubAbilities(SpellAbility sa) {
 		Ability_Sub abSub = sa.getSubAbility();
-		resolve(abSub);
+		if(abSub == null) return;
+		//check conditions
+		if (AbilityFactory.checkConditional(abSub)) {
+			abSub.resolve();
+		}
+		resolveSubAbilities(abSub);
 	}
 	
 }//end class AbilityFactory

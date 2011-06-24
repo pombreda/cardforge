@@ -2,6 +2,7 @@ package forge.card.abilityFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -9,10 +10,12 @@ import forge.Card;
 import forge.CardList;
 import forge.ComputerUtil;
 import forge.Constant;
+import forge.MyRandom;
 import forge.Player;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability_Activated;
 import forge.card.spellability.Ability_Sub;
+import forge.card.spellability.Cost;
 import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Target;
@@ -101,7 +104,8 @@ public class AbilityFactory_Sacrifice {
 		return dbSacrifice;
 	}
 	
-	public static String sacrificeDescription(final AbilityFactory af, SpellAbility sa){
+	public static String sacrificeDescription(final AbilityFactory af, SpellAbility sa) {
+		HashMap<String,String> params = af.getMapParams();
 		StringBuilder sb = new StringBuilder();
 		
 		if (sa instanceof Ability_Sub)
@@ -109,7 +113,7 @@ public class AbilityFactory_Sacrifice {
 		else
 			sb.append(sa.getSourceCard().getName()).append(" - ");
 		
-		String conditionDesc = af.getMapParams().get("ConditionDescription");
+		String conditionDesc = params.get("ConditionDescription");
 		if (conditionDesc != null)
 			sb.append(conditionDesc).append(" ");
 		
@@ -118,13 +122,13 @@ public class AbilityFactory_Sacrifice {
 		if (tgt != null)
 			tgts = tgt.getTargetPlayers();
 		else
-			tgts = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgts = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
 		
-		String valid = af.getMapParams().get("SacValid");
+		String valid = params.get("SacValid");
 		if (valid == null)
 			valid = "Self";
 		
-		String num = af.getMapParams().get("Amount");
+		String num = params.get("Amount");
 		num = (num == null) ? "1" : num;
 		int amount = AbilityFactory.calculateAmount(sa.getSourceCard(), num, sa);
 		
@@ -138,7 +142,7 @@ public class AbilityFactory_Sacrifice {
 			for(Player p : tgts)
 				sb.append(p.getName()).append(" ");
 			
-			String msg = af.getMapParams().get("SacMessage");
+			String msg = params.get("SacMessage");
 			if (msg == null)
 				msg = valid;
 			
@@ -308,7 +312,7 @@ public class AbilityFactory_Sacrifice {
 			}
 		}
 		else if( valid.equals("TriggeredCard")) {
-			Card equipee = (Card)(card.getTriggeringObject("Card"));
+			Card equipee = (Card)sa.getTriggeringObject("Card");
 			if(tgts.contains(card.getController()) && AllZoneUtil.isCardInPlay(equipee)) {
 				AllZone.GameAction.sacrifice(equipee);
 			}
@@ -339,5 +343,213 @@ public class AbilityFactory_Sacrifice {
 		// TODO: Wait for Input to finish before moving on with the rest of Resolution
 		AllZone.InputControl.setInput(CardFactoryUtil.input_sacrificePermanentsFromList(amount, list, message), true);
 	}
+	
+	
+	//**************************************************************
+	// *************************** SacrificeAll ***********************
+	//**************************************************************
+	
+	public static SpellAbility createAbilitySacrificeAll(final AbilityFactory AF){
+		final SpellAbility abSacrifice = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+			private static final long serialVersionUID = -1933592438783630254L;
+			
+			final AbilityFactory af = AF;
+			
+			public boolean canPlayAI()
+			{
+				return sacrificeAllCanPlayAI(af, this);
+			}
+			
+			@Override
+			public void resolve() {
+				sacrificeAllResolve(af, this);
+			}
+			
+			public String getStackDescription(){
+				return sacrificeAllStackDescription(af, this);
+			}
+
+			@Override
+			public boolean doTrigger(boolean mandatory) {
+				return sacrificeAllCanPlayAI(af, this);
+			}
+		};
+		return abSacrifice;
+	}
+	
+	public static SpellAbility createSpellSacrificeAll(final AbilityFactory AF){
+		final SpellAbility spSacrifice = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+			private static final long serialVersionUID = -5141246507533353605L;
+			
+			final AbilityFactory af = AF;
+			
+			public boolean canPlayAI()
+			{
+				return sacrificeAllCanPlayAI(af, this);
+			}
+			
+			@Override
+			public void resolve() {
+				sacrificeAllResolve(af, this);
+			}
+			
+			public String getStackDescription(){
+				return sacrificeAllStackDescription(af, this);
+			}
+		};
+		return spSacrifice;
+	}
+	
+	public static SpellAbility createDrawbackSacrificeAll(final AbilityFactory AF){
+		final SpellAbility dbSacrifice = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+			private static final long serialVersionUID = -5141246507533353605L;
+			
+			final AbilityFactory af = AF;
+			
+			@Override
+			public void resolve() {
+				sacrificeAllResolve(af, this);
+			}
+
+			@Override
+			public boolean chkAI_Drawback() {
+				return true;
+			}
+			
+			public String getStackDescription(){
+				return sacrificeAllStackDescription(af, this);
+			}
+
+			@Override
+			public boolean doTrigger(boolean mandatory) {
+				return sacrificeAllCanPlayAI(af, this);
+			}
+		};
+		return dbSacrifice;
+	}
+	
+	public static String sacrificeAllStackDescription(final AbilityFactory af, SpellAbility sa){
+		// when getStackDesc is called, just build exactly what is happening
+
+		StringBuilder sb = new StringBuilder();
+		String name = af.getHostCard().getName();
+		HashMap<String,String> params = af.getMapParams();
+
+		String conditionDesc = params.get("ConditionDescription");
+		if (conditionDesc != null)
+			sb.append(conditionDesc).append(" ");
+
+		ArrayList<Card> tgtCards;
+
+		Target tgt = af.getAbTgt();
+		if (tgt != null)
+			tgtCards = tgt.getTargetCards();
+		else{
+			tgtCards = new ArrayList<Card>(); 
+			tgtCards.add(sa.getSourceCard());
+		}
+
+		sb.append(name).append(" - Sacrifice permanents");
+
+		Ability_Sub abSub = sa.getSubAbility();
+		if (abSub != null) {
+			sb.append(abSub.getStackDescription());
+		}
+
+		return sb.toString();
+	}
+	
+	public static boolean sacrificeAllCanPlayAI(final AbilityFactory af, final SpellAbility sa){
+		// AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
+		Random r = MyRandom.random;
+		Cost abCost = sa.getPayCosts();
+		final Card source = sa.getSourceCard();
+		final HashMap<String,String> params = af.getMapParams();
+		String Valid = "";
+
+		if(params.containsKey("ValidCards")) 
+			Valid = params.get("ValidCards");
+
+		if (Valid.contains("X") && source.getSVar("X").equals("Count$xPaid")){
+			// Set PayX here to maximum value.
+			int xPay = ComputerUtil.determineLeftoverMana(sa);
+			source.setSVar("PayX", Integer.toString(xPay));
+			Valid = Valid.replace("X", Integer.toString(xPay));
+		}
+
+		CardList humanlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
+		CardList computerlist = AllZoneUtil.getPlayerCardsInPlay(AllZone.ComputerPlayer);
+
+		humanlist = humanlist.getValidCards(Valid.split(","), source.getController(), source);
+		computerlist = computerlist.getValidCards(Valid.split(","), source.getController(), source);
+
+		if (abCost != null){
+			// AI currently disabled for some costs
+			if (abCost.getSacCost()){ 
+				//OK
+			}
+			if (abCost.getLifeCost()){
+				if (AllZone.ComputerPlayer.getLife() - abCost.getLifeAmount() < 4)
+					return false;
+			}
+			if (abCost.getDiscardCost()) ;//OK
+
+			if (abCost.getSubCounter()){
+				// OK
+			}
+		}
+
+		if (!ComputerUtil.canPayCost(sa))
+			return false;
+
+		// prevent run-away activations - first time will always return true
+		boolean chance = r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed());
+
+		// if only creatures are affected evaluate both lists and pass only if human creatures are more valuable
+		if (humanlist.getNotType("Creature").size() == 0 && computerlist.getNotType("Creature").size() == 0) {
+			if(CardFactoryUtil.evaluateCreatureList(computerlist) + 200 >= CardFactoryUtil.evaluateCreatureList(humanlist))
+				return false;
+		}//only lands involved
+		else if (humanlist.getNotType("Land").size() == 0 && computerlist.getNotType("Land").size() == 0) {
+			if(CardFactoryUtil.evaluatePermanentList(computerlist) + 1 >= CardFactoryUtil.evaluatePermanentList(humanlist))
+				return false;
+		} // otherwise evaluate both lists by CMC and pass only if human permanents are more valuable
+		else if(CardFactoryUtil.evaluatePermanentList(computerlist) + 3 >= CardFactoryUtil.evaluatePermanentList(humanlist))
+			return false;
+
+		Ability_Sub subAb = sa.getSubAbility();
+		if (subAb != null)
+			chance &= subAb.chkAI_Drawback();
+
+		return ((r.nextFloat() < .9667) && chance);
+	}
+	
+	public static void sacrificeAllResolve(final AbilityFactory af, final SpellAbility sa){
+		HashMap<String,String> params = af.getMapParams();
+
+		Card card = sa.getSourceCard();
+		
+		String Valid = "";
+		
+		if(params.containsKey("ValidCards")) 
+			Valid = params.get("ValidCards");
+		
+		// Ugh. If calculateAmount needs to be called with DestroyAll it _needs_ to use the X variable
+		// We really need a better solution to this
+		if (Valid.contains("X"))	
+			Valid = Valid.replace("X", Integer.toString(AbilityFactory.calculateAmount(card, "X", sa)));
+		
+		CardList list = AllZoneUtil.getCardsInPlay();
+		
+		boolean remSacrificed = params.containsKey("RememberSacrificed");
+		if (remSacrificed)
+			card.clearRemembered();
+		
+		list = list.getValidCards(Valid.split(","), card.getController(), card);
+		
+ 		for(int i = 0; i < list.size(); i++) 
+ 			if(AllZone.GameAction.sacrifice(list.get(i)) && remSacrificed)
+				card.addRemembered(list.get(i));
+     }
 	
 }

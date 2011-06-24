@@ -24,6 +24,7 @@ import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Target;
 import forge.card.trigger.Trigger;
+import forge.gui.GuiUtils;
 
 public class AbilityFactory_Copy {
 
@@ -113,6 +114,7 @@ public class AbilityFactory_Copy {
 
 	private static String copyPermanentStackDescription(AbilityFactory af, SpellAbility sa) {
 		StringBuilder sb = new StringBuilder();
+		HashMap<String,String> params = af.getMapParams();
 
 		if (!(sa instanceof Ability_Sub))
 			sb.append(sa.getSourceCard()).append(" - ");
@@ -125,7 +127,7 @@ public class AbilityFactory_Copy {
 		if (tgt != null)
 			tgtCards = tgt.getTargetCards();
 		else
-			tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), params.get("Defined"), sa);
 
 		sb.append("Copy ");
 		Iterator<Card> it = tgtCards.iterator();
@@ -227,12 +229,12 @@ public class AbilityFactory_Copy {
 
 	private static void copyPermanentResolve(final AbilityFactory af, final SpellAbility sa) {
 		final HashMap<String,String> params = af.getMapParams();
-		Card card = af.getHostCard();
+		Card hostCard = af.getHostCard();
 		ArrayList<String> keywords = new ArrayList<String>();
 		if(params.containsKey("Keywords")) {
 			keywords.addAll(Arrays.asList(params.get("Keywords").split(" & ")));
 		}
-		int numCopies = params.containsKey("NumCopies") ? AbilityFactory.calculateAmount(card, params.get("NumCopies"), sa) : 1;
+		int numCopies = params.containsKey("NumCopies") ? AbilityFactory.calculateAmount(hostCard, params.get("NumCopies"), sa) : 1;
 
 		ArrayList<Card> tgtCards;
 
@@ -240,13 +242,15 @@ public class AbilityFactory_Copy {
 		if (tgt != null)
 			tgtCards = tgt.getTargetCards();
 		else
-			tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), params.get("Defined"), sa);
+		
+		hostCard.clearClones();
 
 		for(Card c : tgtCards) {
-			if (tgt == null || CardFactoryUtil.canTarget(card, c)) {
+			if (tgt == null || CardFactoryUtil.canTarget(hostCard, c)) {
 
 				//start copied Kiki code
-				int multiplier = AllZoneUtil.getDoublingSeasonMagnitude(card.getController());
+				int multiplier = AllZoneUtil.getDoublingSeasonMagnitude(hostCard.getController());
 				multiplier *= numCopies;
 				Card[] crds = new Card[multiplier];
 				
@@ -310,11 +314,12 @@ public class AbilityFactory_Copy {
 						copy.setCurSetCode("");
 						copy.setImageFilename("morph.jpg");
 					}
-
-					AllZone.GameAction.moveToPlay(copy);
+					copy = AllZone.GameAction.moveToPlay(copy);
+					
+					copy.setCloneOrigin(hostCard);
+					sa.getSourceCard().addClone(copy);
 					crds[i] = copy;
 				}
-
 
 				//have to do this since getTargetCard() might change
 				//if Kiki-Jiki somehow gets untapped again
@@ -446,6 +451,7 @@ public class AbilityFactory_Copy {
 
 	private static String copySpellStackDescription(AbilityFactory af, SpellAbility sa) {
 		StringBuilder sb = new StringBuilder();
+		HashMap<String,String> params = af.getMapParams();
 
 		if (!(sa instanceof Ability_Sub))
 			sb.append(sa.getSourceCard().getName()).append(" - ");
@@ -458,9 +464,10 @@ public class AbilityFactory_Copy {
 		if (tgt != null)
 			tgtSpells = tgt.getTargetSAs();
 		else
-			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), params.get("Defined"), sa);
 
 		sb.append("Copy ");
+		// TODO Someone fix this Description when Copying Charms
 		Iterator<SpellAbility> it = tgtSpells.iterator();
 		while(it.hasNext()) {
 			sb.append(it.next().getSourceCard());
@@ -494,7 +501,7 @@ public class AbilityFactory_Copy {
 	}
 
 	private static void copySpellResolve(final AbilityFactory af, final SpellAbility sa) {
-		//final HashMap<String,String> params = af.getMapParams();
+		final HashMap<String,String> params = af.getMapParams();
 		Card card = af.getHostCard();
 
 		ArrayList<SpellAbility> tgtSpells;
@@ -503,17 +510,21 @@ public class AbilityFactory_Copy {
 		if (tgt != null)
 			tgtSpells = tgt.getTargetSAs();
 		else
-			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), af.getMapParams().get("Defined"), sa);
+			tgtSpells = AbilityFactory.getDefinedSpellAbilities(sa.getSourceCard(), params.get("Defined"), sa);
 
-		for(SpellAbility tgtSA: tgtSpells) {
-			if (tgt == null || CardFactoryUtil.canTarget(card, tgtSA.getSourceCard())) {
-
-				//copied from Twincast
-				AllZone.CardFactory.copySpellontoStack(card, tgtSA.getSourceCard(), true);				
-				//end copied from Twincast
-
-			}//end canTarget
-		}//end foreach SpellAbility
+		if (tgtSpells.size() == 0)
+			return;
+		
+		SpellAbility chosenSA = null;
+		if (tgtSpells.size() == 1)
+			chosenSA = tgtSpells.get(0);
+		else if (sa.getActivatingPlayer().isHuman())
+			chosenSA = (SpellAbility)GuiUtils.getChoice("Select a spell to copy", tgtSpells.toArray());
+		else
+			chosenSA = tgtSpells.get(0);
+		
+		if (tgt == null || CardFactoryUtil.canTarget(card, chosenSA.getSourceCard())) 
+			AllZone.CardFactory.copySpellontoStack(card, chosenSA.getSourceCard(), chosenSA, true);	
 	}//end resolve
 
 }//end class AbilityFactory_Copy

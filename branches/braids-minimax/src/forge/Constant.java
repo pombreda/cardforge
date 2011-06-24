@@ -104,6 +104,8 @@ public interface Constant {
         
         public static final String Snow         = "snow";
         public static final String ManaColors[] = {White, Blue, Black, Red, Green, Colorless, Snow};
+        
+        public static final String BasicLands[] = {"Plains", "Island", "Swamp", "Mountain", "Forest"};
     }
     
     public interface Rarity{

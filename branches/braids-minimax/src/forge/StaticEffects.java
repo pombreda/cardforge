@@ -33,7 +33,6 @@ public class StaticEffects
 		cardToEffectsList.put("Homarid", new String[] {"Homarid"});
 		cardToEffectsList.put("Iona, Shield of Emeria", new String[] {"Iona_Shield_of_Emeria"});
 		//cardToEffectsList.put("Joiner Adept", new String[] {"Joiner_Adept"});
-		cardToEffectsList.put("Leyline of Singularity", new String[] {"Leyline_of_Singularity"});
 		cardToEffectsList.put("Liu Bei, Lord of Shu", new String[] {"Liu_Bei"});
 		
 		//cardToEffectsList.put("Magus of the Tabernacle", new String[] {"Magus_of_the_Tabernacle"});
@@ -43,7 +42,7 @@ public class StaticEffects
 		cardToEffectsList.put("Old Man of the Sea", new String[] {"Old_Man_of_the_Sea"});
 		
 		cardToEffectsList.put("Phylactery Lich", new String[]{"Phylactery_Lich"});
-		cardToEffectsList.put("Plague Rats", new String[] {"Plague_Rats"});
+		//cardToEffectsList.put("Plague Rats", new String[] {"Plague_Rats"});
 		cardToEffectsList.put("Tarmogoyf", new String[] {"Tarmogoyf"});
 		//cardToEffectsList.put("The Tabernacle at Pendrell Vale", new String[] {"The_Tabernacle_at_Pendrell_Vale"});
 		

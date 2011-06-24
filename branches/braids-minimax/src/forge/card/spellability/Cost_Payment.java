@@ -42,10 +42,9 @@ public class Cost_Payment {
 	
 	private boolean bCancel = false;
 	private boolean bXDefined = true;
-	
-	// why are these static? should they be attached to the CostPayment?
-	private static CardList payTapXTypeTappedList = new CardList();
-	static void addPayTapXTypeTappedList(Card c){
+
+	private CardList payTapXTypeTappedList = new CardList();
+	private void addPayTapXTypeTappedList(Card c){
 		payTapXTypeTappedList.add(c);
 	}
 
@@ -485,7 +484,7 @@ public class Cost_Payment {
         // can't really unreturn things
 	}
     
-    public void payComputerCosts(){
+    public boolean payComputerCosts(){
     	// ******** NOTE for Adding Costs ************
     	// make sure ComputerUtil.canPayAdditionalCosts() is updated so the AI knows if they can Pay the cost
     	CardList sacCard = new CardList();
@@ -513,7 +512,7 @@ public class Cost_Payment {
     		
 	    	if (sacCard.size() != amount){
 	    		System.out.println("Couldn't find a valid card to sacrifice for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -527,7 +526,7 @@ public class Cost_Payment {
     		
 	    	if (exileCard.size() != cost.getExileAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -540,7 +539,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromHandCard.size() != cost.getExileFromHandAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -553,7 +552,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromGraveCard.size() != cost.getExileFromGraveAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -565,7 +564,7 @@ public class Cost_Payment {
     		
 	    	if (exileFromTopCard.size() != cost.getExileFromTopAmount()){
 	    		System.out.println("Couldn't find a valid card to exile for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
@@ -577,16 +576,16 @@ public class Cost_Payment {
     		
 	    	if (returnCard.size() != cost.getReturnAmount()){
 	    		System.out.println("Couldn't find a valid card to return for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
     	if (cost.getDiscardThis()){
     		if(!AllZoneUtil.getPlayerHand(card.getController()).contains(card.getController().getLastDrawnCard())) {
-    			return;
+    			return false;
     		}
 			if (!AllZone.getZone(card).getZoneName().equals(Constant.Zone.Hand))
-				return;
+				return false;
     	}
     	
     	if (cost.getTapXTypeCost()) {
@@ -596,14 +595,14 @@ public class Cost_Payment {
     		
     		if (tapXCard == null || tapXCard.size() != cost.getTapXTypeAmount()){
 	    		System.out.println("Couldn't find a valid card to tap for: "+card.getName());
-	    		return;
+	    		return false;
 	    	}
     	}
     	
     	// double check if counters available? Real check is in ComputerUtil.canPayAdditionalCosts()
     	if (cost.getSubCounter() && cost.getCounterNum() > card.getCounters(cost.getCounterType())){
     		System.out.println("Not enough " + cost.getCounterType() + " on " + card.getName());
-    		return;
+    		return false;
     	}
     	
     	if (cost.getTap())
@@ -685,8 +684,7 @@ public class Cost_Payment {
 			for(Card c : returnCard)
 				AllZone.GameAction.moveToHand(c);
 		}
-
-		AllZone.Stack.addAndUnfreeze(ability);
+		return true;
     }
     
 	public void changeCost(){
@@ -951,7 +949,7 @@ public class Cost_Payment {
                 			null, possibleValues, possibleValues[0]);
                     if(choice.equals(0)) {
                     	payment.setPaySac(true);
-                    	payment.getAbility().addSacrificedCost(card);
+                    	payment.getAbility().addCostToHashList(card, "Sacrificed");
                     	AllZone.GameAction.sacrifice(card);
                     	stop();
                     	payment.payCost();
@@ -1000,7 +998,7 @@ public class Cost_Payment {
             public void selectCard(Card card, PlayerZone zone) {
                 if(typeList.contains(card)) {
                 	nSacrifices++;
-                	payment.getAbility().addSacrificedCost(card);
+                	payment.getAbility().addCostToHashList(card, "Sacrificed");
                 	AllZone.GameAction.sacrifice(card);
                 	typeList.remove(card);
                     //in case nothing else to sacrifice
@@ -1037,7 +1035,7 @@ public class Cost_Payment {
         typeList = typeList.getValidCards(type.split(";"), sa.getActivatingPlayer(), sa.getSourceCard());
     	
         for(Card card : typeList){
-	    	payment.getAbility().addSacrificedCost(card);
+	    	payment.getAbility().addCostToHashList(card, "Sacrificed");
 	    	AllZone.GameAction.sacrifice(card);
         }
     	
@@ -1077,7 +1075,7 @@ public class Cost_Payment {
             public void selectCard(Card card, PlayerZone zone) {
                 if(typeList.contains(card)) {
                 	nSacrifices++;
-                	payment.getAbility().addSacrificedCost(card);
+                	payment.getAbility().addCostToHashList(card, "Sacrificed");
                 	AllZone.GameAction.sacrifice(card);
                 	typeList.remove(card);
                     if (typeList.size() == 0)	// this really shouldn't happen
@@ -1120,7 +1118,7 @@ public class Cost_Payment {
                 			null, possibleValues, possibleValues[0]);
                     if(choice.equals(0)) {
                     	payment.setPayExile(true);
-                    	payment.getAbility().addExiledCost(card);
+                    	payment.getAbility().addCostToHashList(card, "Exiled");
                     	AllZone.GameAction.exile(card);
                     	stop();
                     	payment.payCost();
@@ -1154,7 +1152,7 @@ public class Cost_Payment {
                 			null, possibleValues, possibleValues[0]);
                     if(choice.equals(0)) {
                     	payment.setPayExileFromHand(true);
-                    	payment.getAbility().addExiledCost(card);
+                    	payment.getAbility().addCostToHashList(card, "Exiled");
                     	AllZone.GameAction.exile(card);
                     	stop();
                     	payment.payCost();
@@ -1181,7 +1179,7 @@ public class Cost_Payment {
         			//This can't really happen, but if for some reason it could....
                     if(AllZoneUtil.getPlayerCardsInLibrary(card.getController()).size() > 0) {
                     	payment.setPayExileFromTop(true);
-                    	payment.getAbility().addExiledCost(card);
+                    	payment.getAbility().addCostToHashList(card, "Exiled");
                     	AllZone.GameAction.exile(card);
                     	stop();
                     	payment.payCost();
@@ -1214,7 +1212,7 @@ public class Cost_Payment {
                 			null, possibleValues, possibleValues[0]);
                     if(choice.equals(0)) {
                     	payment.setPayExileFromGrave(true);
-                    	payment.getAbility().addExiledCost(card);
+                    	payment.getAbility().addCostToHashList(card, "Exiled");
                     	AllZone.GameAction.exile(card);
                     	stop();
                     	payment.payCost();
@@ -1263,7 +1261,7 @@ public class Cost_Payment {
             public void selectCard(Card card, PlayerZone zone) {
                 if(typeList.contains(card)) {
                 	nExiles++;
-                	payment.getAbility().addExiledCost(card);
+                	payment.getAbility().addCostToHashList(card, "Exiled");
                 	AllZone.GameAction.exile(card);
                 	typeList.remove(card);
                     //in case nothing else to exile
@@ -1325,7 +1323,7 @@ public class Cost_Payment {
             public void selectCard(Card card, PlayerZone zone) {
                 if(typeList.contains(card)) {
                 	nExiles++;
-                	payment.getAbility().addExiledCost(card);
+                	payment.getAbility().addCostToHashList(card, "Exiled");
                 	AllZone.GameAction.exile(card);
                 	typeList.remove(card);
                     //in case nothing else to exile
@@ -1373,7 +1371,7 @@ public class Cost_Payment {
                     if (o != null) {
                         Card c = (Card) o;
                         typeList.remove(c);
-                        payment.getAbility().addExiledCost(c);
+                        payment.getAbility().addCostToHashList(c, "Exiled");
                     	AllZone.GameAction.exile(c);
                     	if (i == nNeeded-1) done();
                     }
@@ -1419,7 +1417,7 @@ public class Cost_Payment {
                     if(lib.size() > 0) {
                         Card c = typeList.get(0);
                         typeList.remove(c);
-                        payment.getAbility().addExiledCost(c);
+                        payment.getAbility().addCostToHashList(c, "Exiled");
                     	AllZone.GameAction.exile(c);
                     	if (i == nNeeded-1) done();
                     }
@@ -1472,9 +1470,9 @@ public class Cost_Payment {
                 if(zone.is(Constant.Zone.Battlefield) && cardList.contains(card) && card.isUntapped() ) {
                 	// send in CardList for Typing
                     card.tap();
-                    payTapXTypeTappedList.add(card);
+                    payment.addPayTapXTypeTappedList(card);
                     cardList.remove(card);
-                    payment.getAbility().addTappedCost(card);
+                    payment.getAbility().addCostToHashList(card, "Tapped");
                     nTapped++;
                     
                     if(nTapped == nCards) 

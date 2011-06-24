@@ -15,6 +15,7 @@ import forge.card.spellability.Ability_Sub;
 import forge.card.spellability.Cost;
 import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
+import forge.card.spellability.SpellAbility_StackInstance;
 import forge.card.spellability.Target;
 import forge.card.spellability.Target_Selection;
 
@@ -25,7 +26,6 @@ import forge.card.spellability.Target_Selection;
 //		-Hand
 //		-BottomOfLibrary
 //		-ShuffleIntoLibrary
-//UnlessCost - counter target spell unless it's controller pays this cost
 //PowerSink - true if the drawback type part of Power Sink should be used
 //ExtraActions - this has been removed.  All SubAbilitys should now use the standard SubAbility system
 
@@ -161,16 +161,20 @@ public class AbilityFactory_CounterMagic {
 			}
 		}
 		
-		SpellAbility topSA = AllZone.Stack.peek();
-		if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
-			return false;
-		
 		Target tgt = sa.getTarget();
-		tgt.resetTargets();
-		if (Target_Selection.matchSpellAbility(sa, topSA, tgt))
-			tgt.addTarget(topSA);
-		else
-			return false;
+		if (tgt != null) {
+			
+			SpellAbility topSA = AllZone.Stack.peekAbility();
+			if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
+				return false;
+		
+			tgt.resetTargets();
+			if (Target_Selection.matchSpellAbility(sa, topSA, tgt))
+				tgt.addTarget(topSA);
+			else
+				return false;
+		}
+		
 		
 		if (unlessCost != null){
 			// Is this Usable Mana Sources? Or Total Available Mana?
@@ -215,43 +219,44 @@ public class AbilityFactory_CounterMagic {
 		if(AllZone.Stack.size() < 1) {
 			return false;
 		}
-		
-		SpellAbility topSA = AllZone.Stack.peek();
-		if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
-			return false;
-		
+
 		Target tgt = sa.getTarget();
-		tgt.resetTargets();
-		if (Target_Selection.matchSpellAbility(sa, topSA, tgt))
-			tgt.addTarget(topSA);
-		
-		else
-			return false;
-		
-		Card source = sa.getSourceCard();
-		if (unlessCost != null){
-			// Is this Usable Mana Sources? Or Total Available Mana?
-			int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.HumanPlayer);
-			int toPay = 0;
-			boolean setPayX = false;
-			if (unlessCost.equals("X") && source.getSVar(unlessCost).equals("Count$xPaid")){
-				setPayX = true;
-				toPay = ComputerUtil.determineLeftoverMana(sa);
-			}
-			else
-				toPay = AbilityFactory.calculateAmount(source, unlessCost, sa);
-			
-			if (toPay == 0)
+		if (tgt != null) {
+			SpellAbility topSA = AllZone.Stack.peekAbility();
+			if (!CardFactoryUtil.isCounterable(topSA.getSourceCard()) || topSA.getActivatingPlayer().isComputer())
 				return false;
-			
-			if (toPay <= usableManaSources){
-				// If this is a reusable Resource, feel free to play it most of the time
-				if (!sa.getPayCosts().isReusuableResource() || MyRandom.random.nextFloat() < .4)
+
+			tgt.resetTargets();
+			if (Target_Selection.matchSpellAbility(sa, topSA, tgt))
+				tgt.addTarget(topSA);
+			else
+				return false;
+		
+			Card source = sa.getSourceCard();
+			if (unlessCost != null){
+				// Is this Usable Mana Sources? Or Total Available Mana?
+				int usableManaSources = CardFactoryUtil.getUsableManaSources(AllZone.HumanPlayer);
+				int toPay = 0;
+				boolean setPayX = false;
+				if (unlessCost.equals("X") && source.getSVar(unlessCost).equals("Count$xPaid")){
+					setPayX = true;
+					toPay = ComputerUtil.determineLeftoverMana(sa);
+				}
+				else
+					toPay = AbilityFactory.calculateAmount(source, unlessCost, sa);
+				
+				if (toPay == 0)
 					return false;
+				
+				if (toPay <= usableManaSources){
+					// If this is a reusable Resource, feel free to play it most of the time
+					if (!sa.getPayCosts().isReusuableResource() || MyRandom.random.nextFloat() < .4)
+						return false;
+				}
+				
+				if (setPayX)
+					source.setSVar("PayX", Integer.toString(toPay));
 			}
-			
-			if (setPayX)
-				source.setSVar("PayX", Integer.toString(toPay));
 		}
 		
 		// TODO: Improve AI
@@ -288,23 +293,28 @@ public class AbilityFactory_CounterMagic {
 
 		for(final SpellAbility tgtSA : sas){
 			Card tgtSACard = tgtSA.getSourceCard();
-			if (AllZone.Stack.contains(tgtSA) && !tgtSACard.keywordsContain("CARDNAME can't be countered.")){
+			
+			if (tgtSA.isSpell() && tgtSACard.keywordsContain("CARDNAME can't be countered."))
+				continue;
+				
+			SpellAbility_StackInstance si = AllZone.Stack.getInstanceFromSpellAbility(tgtSA);
+			if (si == null)
+				continue;
 
-				removeFromStack(tgtSA,sa);
-					
-				// Destroy Permanent may be able to be turned into a SubAbility
-				if(tgtSA.isAbility() && params.containsKey("DestroyPermanent")) {
-					AllZone.GameAction.destroy(tgtSACard);
-				}
-
-                if(params.containsKey("RememberTargets"))
-                {
-                    if(params.get("RememberTargets").equals("True"))
-                    {
-                        af.getHostCard().addRemembered(tgtSACard);
-                    }
-                }
+			removeFromStack(tgtSA,sa, si);
+				
+			// Destroy Permanent may be able to be turned into a SubAbility
+			if(tgtSA.isAbility() && params.containsKey("DestroyPermanent")) {
+				AllZone.GameAction.destroy(tgtSACard);
 			}
+
+            if(params.containsKey("RememberTargets"))
+            {
+                if(params.get("RememberTargets").equals("True"))
+                {
+                    af.getHostCard().addRemembered(tgtSACard);
+                }
+            }
 		}
 	}//end counterResolve
 
@@ -349,8 +359,8 @@ public class AbilityFactory_CounterMagic {
 		return sb.toString();
 	}//end counterStackDescription
 	
-	private void removeFromStack(SpellAbility tgtSA, SpellAbility srcSA) {
-		AllZone.Stack.remove(tgtSA);
+	private void removeFromStack(SpellAbility tgtSA, SpellAbility srcSA, SpellAbility_StackInstance si) {
+		AllZone.Stack.remove(si);
 		
 		if(tgtSA.isAbility())  {
 			//For Ability-targeted counterspells - do not move it anywhere, even if Destination$ is specified.

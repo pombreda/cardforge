@@ -11,6 +11,7 @@ import forge.Card;
 import forge.CardList;
 import forge.CardListFilter;
 import forge.Command;
+import forge.ComputerUtil;
 import forge.Constant;
 import forge.Player;
 import forge.card.cardFactory.CardFactoryUtil;
@@ -39,7 +40,7 @@ public class AbilityFactory_GainControl {
 	
 	private final Card movedCards[] = new Card[1];
 
-	private AbilityFactory AF = null;
+	private AbilityFactory af = null;
 	private HashMap<String,String> params = null;
 	private Card hostCard = null;
 	private ArrayList<String> lose = null;
@@ -50,9 +51,9 @@ public class AbilityFactory_GainControl {
 	private ArrayList<String> kws = null;
 	
 	public AbilityFactory_GainControl(AbilityFactory newAF) {
-		AF = newAF;
-		params = AF.getMapParams();
-		hostCard = AF.getHostCard();
+		af = newAF;
+		params = af.getMapParams();
+		hostCard = af.getHostCard();
 		if (params.containsKey("LoseControl")) {
 			lose = new ArrayList<String>(Arrays.asList(params.get("LoseControl").split(",")));
 		}
@@ -73,18 +74,18 @@ public class AbilityFactory_GainControl {
 		}
 	}
 	
-	public SpellAbility getSpell() {
-        SpellAbility spControl = new Spell(hostCard, AF.getAbCost(), AF.getAbTgt()) {
+	public SpellAbility getSpellGainControl() {
+        SpellAbility spControl = new Spell(hostCard, af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = 3125489644424832311L;
 			
 			@Override
 			public boolean canPlayAI() {
-            	return doTgtAI(this);
+            	return gainControlTgtAI(this);
             }
             
 			@Override
             public void resolve() {
-            	doResolve(this);
+            	gainControlResolve(this);
             }//resolve
             
             @Override
@@ -96,19 +97,19 @@ public class AbilityFactory_GainControl {
         return spControl;
 	}
 
-	public SpellAbility getAbility() {
+	public SpellAbility getAbilityGainControl() {
 
-		final SpellAbility abControl = new Ability_Activated(hostCard, AF.getAbCost(), AF.getAbTgt()) {
+		final SpellAbility abControl = new Ability_Activated(hostCard, af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = -4384705198674678831L;
 
 			@Override
 			public boolean canPlayAI() {
-				return doTgtAI(this);
+				return gainControlTgtAI(this);
 			}
 
 			@Override
 			public void resolve() {
-				doResolve(this);
+				gainControlResolve(this);
 				hostCard.setAbilityUsed(hostCard.getAbilityUsed() + 1);
 			}
 
@@ -119,11 +120,44 @@ public class AbilityFactory_GainControl {
 
 			@Override
 			public boolean doTrigger(boolean mandatory) {
-				return doTgtAI(this);
+				return gainControlTgtAI(this);
 			}
 		};//Ability_Activated
 
 		return abControl;
+	}
+	
+	public SpellAbility getDrawbackGainControl() {
+        SpellAbility dbControl = new Ability_Sub(hostCard, af.getAbTgt()) {
+			private static final long serialVersionUID = -5577742598032345880L;
+
+			@Override
+            public boolean canPlayAI() {
+            	return gainControlTgtAI(this);
+            }
+            
+			@Override
+			public String getStackDescription() {
+				return gainControlStackDescription(this);
+			}
+            
+			@Override
+            public void resolve() {
+            	gainControlResolve(this);
+            }//resolve
+
+			@Override
+			public boolean chkAI_Drawback() {
+				return gainControlDrawbackAI(this);
+			}
+
+			@Override
+			public boolean doTrigger(boolean mandatory) {
+				return gainControlTriggerAI(this, mandatory);
+			}
+        };//SpellAbility
+        
+        return dbControl;
 	}
 
 	private String gainControlStackDescription(SpellAbility sa) {
@@ -136,7 +170,7 @@ public class AbilityFactory_GainControl {
 		
 		ArrayList<Card> tgtCards;
 
-		Target tgt = AF.getAbTgt();
+		Target tgt = af.getAbTgt();
 		if (tgt != null)
 			tgtCards = tgt.getTargetCards();
 		else{
@@ -163,13 +197,19 @@ public class AbilityFactory_GainControl {
 		return sb.toString();
 	}
 
-    private boolean doTgtAI(SpellAbility sa) {
+    private boolean gainControlTgtAI(SpellAbility sa) {
         boolean hasCreature = false;
         boolean hasArtifact = false;
         boolean hasEnchantment = false;
         boolean hasLand = false;
         
-		Target tgt = AF.getAbTgt();
+		Target tgt = af.getAbTgt();
+		
+		//if Defined, then don't worry about targeting
+		if(tgt == null) {
+			return true;
+		}
+		
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.HumanPlayer);
 		list = list.getValidCards(tgt.getValidTgts(), hostCard.getController(), hostCard);
 		//AI won't try to grab cards that are filtered out of AI decks on purpose
@@ -226,10 +266,10 @@ public class AbilityFactory_GainControl {
 
     }   
     
-    private void doResolve(SpellAbility sa) {
+    private void gainControlResolve(SpellAbility sa) {
     	ArrayList<Card> tgtCards;
 
-		Target tgt = AF.getAbTgt();
+		Target tgt = af.getAbTgt();
 		if (tgt != null)
 			tgtCards = tgt.getTargetCards();
 		else{
@@ -297,6 +337,31 @@ public class AbilityFactory_GainControl {
 		}//end foreach target
     }
     
+    private boolean gainControlTriggerAI(SpellAbility sa, boolean mandatory){
+    	if (!ComputerUtil.canPayCost(sa))
+    		return false;
+
+    	if (sa.getTarget() == null){
+    		if (mandatory)
+    			return true;
+    	}
+    	else{
+    		return gainControlTgtAI(sa);
+    	}
+
+    	return true;
+    }
+
+    private boolean gainControlDrawbackAI(SpellAbility sa) {
+    	if(af.getAbTgt() == null || !af.getAbTgt().doesTarget()) {
+    		//all is good
+    	}
+    	else
+    		return gainControlTgtAI(sa);
+
+    	return true; 
+    }//pumpDrawbackAI()
+    
     private Command getDestroyCommand(final int i) {
     	final Command destroy = new Command() {
 			private static final long serialVersionUID = 878543373519872418L;
@@ -354,4 +419,5 @@ public class AbilityFactory_GainControl {
     	
     	return loseControl;
     }
-}
+    
+}//end class AbilityFactory_GainControl
