@@ -28,23 +28,18 @@ public class StaticEffects
 		cardToEffectsList.put("Conspiracy", new String[] {"Conspiracy"});
         cardToEffectsList.put("Favor of the Mighty", new String[] {"Favor_of_the_Mighty"});
 		cardToEffectsList.put("Gaddock Teeg", new String[] {"Gaddock_Teeg"});
-		//cardToEffectsList.put("Gemhide Sliver", new String[] {"Gemhide_Sliver"});
 		
 		cardToEffectsList.put("Homarid", new String[] {"Homarid"});
 		cardToEffectsList.put("Iona, Shield of Emeria", new String[] {"Iona_Shield_of_Emeria"});
-		//cardToEffectsList.put("Joiner Adept", new String[] {"Joiner_Adept"});
 		cardToEffectsList.put("Liu Bei, Lord of Shu", new String[] {"Liu_Bei"});
 		
-		//cardToEffectsList.put("Magus of the Tabernacle", new String[] {"Magus_of_the_Tabernacle"});
 		cardToEffectsList.put("Meddling Mage", new String[] {"Meddling_Mage"});
 		cardToEffectsList.put("Mul Daya Channelers", new String[] {"Mul_Daya_Channelers"});
 		cardToEffectsList.put("Muraganda Petroglyphs", new String[] {"Muraganda_Petroglyphs"});
 		cardToEffectsList.put("Old Man of the Sea", new String[] {"Old_Man_of_the_Sea"});
 		
 		cardToEffectsList.put("Phylactery Lich", new String[]{"Phylactery_Lich"});
-		//cardToEffectsList.put("Plague Rats", new String[] {"Plague_Rats"});
 		cardToEffectsList.put("Tarmogoyf", new String[] {"Tarmogoyf"});
-		//cardToEffectsList.put("The Tabernacle at Pendrell Vale", new String[] {"The_Tabernacle_at_Pendrell_Vale"});
 		
 		cardToEffectsList.put("Umbra Stalker", new String[] {"Umbra_Stalker"});
 		cardToEffectsList.put("Wolf", new String[] {"Sound_the_Call_Wolf"});
