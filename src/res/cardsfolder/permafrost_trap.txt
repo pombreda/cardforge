@@ -8,4 +8,5 @@ SVar:DBPump:DB$Pump | Defined$ Targeted | KW$ HIDDEN This card doesn't untap dur
 SVar:GreenCreats:Count$ThisTurnEntered Battlefield Creature.Green+YouDontCtrl
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/permafrost_trap.jpg
+SetInfo:WWK|Uncommon|http://magiccards.info/scans/en/wwk/34.jpg
 End

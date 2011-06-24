@@ -8,4 +8,5 @@ SVar:DBDamageAll:DB$DamageAll | ValidCards$ Creature | NumDmg$ 4 | ValidDescript
 SVar:LandsEntered:Count$ThisTurnEntered Battlefield Land.YouDontCtrl
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/lavaball_trap.jpg
+SetInfo:ZEN|Rare|http://magiccards.info/scans/en/zen/135.jpg
 End

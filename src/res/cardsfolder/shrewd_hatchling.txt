@@ -11,5 +11,5 @@ SVar:RemAIDeck:True
 SVar:BuffedBy:Spell.Red,Spell.Blue
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/shrewd_hatchling.jpg
+SetInfo:EVE|Uncommon|http://magiccards.info/scans/en/eve/112.jpg
 End
-#Uses card-specific code

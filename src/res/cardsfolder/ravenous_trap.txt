@@ -7,4 +7,5 @@ A:SP$ ChangeZoneAll | Cost$ 0 | CheckSVar$ CardsToGraveyard | SVarCompare$ GE3 |
 SVar:CardsToGraveyard:Count$ThisTurnEntered Graveyard Card.YouDontCtrl
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/ravenous_trap.jpg
+SetInfo:ZEN|Uncommon|http://magiccards.info/scans/en/zen/109.jpg
 End
