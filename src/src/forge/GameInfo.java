@@ -1,104 +1,98 @@
 package forge;
 
-import java.util.ArrayList;
-
 import forge.card.mana.ManaCost;
 
+import java.util.ArrayList;
+
 public class GameInfo {
-	private boolean computerStartedThisGame = false;
-	
-	private int humanNumberOfTimesMulliganed;
-	private boolean humanMulliganedToZero;
-	
-	private boolean preventCombatDamageThisTurn;
-	private boolean assignedFirstStrikeDamageThisCombat;
-	private boolean resolvedFirstStrikeDamageThisCombat;
-	
-	private ArrayList<Card_Color> globalColorChanges = new ArrayList<Card_Color>();
+    private boolean computerStartedThisGame = false;
 
-	public int getHumanNumberOfTimesMulliganed()
-	{
-		return humanNumberOfTimesMulliganed;
-	}
-	
-	public void addHumanNumberOfTimesMulliganed(int n)
-	{
-		humanNumberOfTimesMulliganed+=n;
-	}
-	
-	public void setHumanNumberOfTimesMulliganed(int n)
-	{
-		humanNumberOfTimesMulliganed = n;
-	}
-	
-	public boolean getHumanMulliganedToZero()
-	{
-		return humanMulliganedToZero;
-	}
-	
-	public void setHumanMulliganedToZero(boolean b)
-	{
-		humanMulliganedToZero = b;
-	}
+    private int humanNumberOfTimesMulliganed;
+    private boolean humanMulliganedToZero;
 
-	public void setPreventCombatDamageThisTurn(boolean b) {
-		preventCombatDamageThisTurn = b;
-	}
+    private boolean preventCombatDamageThisTurn;
+    private boolean assignedFirstStrikeDamageThisCombat;
+    private boolean resolvedFirstStrikeDamageThisCombat;
 
-	public boolean isPreventCombatDamageThisTurn() {
-		return preventCombatDamageThisTurn;
-	}
-	
-	public void setAssignedFirstStrikeDamageThisCombat(boolean b) {
-		assignedFirstStrikeDamageThisCombat = b;
-	}
+    private ArrayList<Card_Color> globalColorChanges = new ArrayList<Card_Color>();
 
-	public boolean getAssignedFirstStrikeDamageThisCombat() {
-		return assignedFirstStrikeDamageThisCombat;
-	}
-	
-	public void setResolvedFirstStrikeDamageThisCombat(boolean b)
-	{
-		resolvedFirstStrikeDamageThisCombat = b;
-	}
-	
-	public boolean getResolvedFirstStrikeDamageThisCombat() {
-		return resolvedFirstStrikeDamageThisCombat;
-	}
+    public int getHumanNumberOfTimesMulliganed() {
+        return humanNumberOfTimesMulliganed;
+    }
 
-	public void setComputerStartedThisGame(boolean computerStartedThisGame) {
-		this.computerStartedThisGame = computerStartedThisGame;
-	}
+    public void addHumanNumberOfTimesMulliganed(int n) {
+        humanNumberOfTimesMulliganed += n;
+    }
 
-	public boolean isComputerStartedThisGame() {
-		return computerStartedThisGame;
-	}
+    public void setHumanNumberOfTimesMulliganed(int n) {
+        humanNumberOfTimesMulliganed = n;
+    }
 
-	public long addColorChanges(String s, Card c, boolean addToColors, boolean bIncrease) {
-    	if (bIncrease)
-    		Card_Color.increaseTimestamp();
-    	globalColorChanges.add(new Card_Color(new ManaCost(s), c, addToColors, false));
-    	return Card_Color.getTimestamp();
-	}
+    public boolean getHumanMulliganedToZero() {
+        return humanMulliganedToZero;
+    }
 
-	public void removeColorChanges(String s, Card c, boolean addTo, long timestamp) {
-		Card_Color removeCol = null;
-    	for(Card_Color cc : globalColorChanges)
-    		if (cc.equals(s, c, addTo, timestamp))
-    			removeCol = cc;
-    	
-    	if (removeCol != null)
-    		globalColorChanges.remove(removeCol);
-	}
-	
-	public void clearColorChanges() {	
-		// clear the global color changes at end of each game
-		globalColorChanges.clear();
-	}
-		
-	public ArrayList<Card_Color> getColorChanges() {
-		return globalColorChanges;
-	}
-	
-	
+    public void setHumanMulliganedToZero(boolean b) {
+        humanMulliganedToZero = b;
+    }
+
+    public void setPreventCombatDamageThisTurn(boolean b) {
+        preventCombatDamageThisTurn = b;
+    }
+
+    public boolean isPreventCombatDamageThisTurn() {
+        return preventCombatDamageThisTurn;
+    }
+
+    public void setAssignedFirstStrikeDamageThisCombat(boolean b) {
+        assignedFirstStrikeDamageThisCombat = b;
+    }
+
+    public boolean getAssignedFirstStrikeDamageThisCombat() {
+        return assignedFirstStrikeDamageThisCombat;
+    }
+
+    public void setResolvedFirstStrikeDamageThisCombat(boolean b) {
+        resolvedFirstStrikeDamageThisCombat = b;
+    }
+
+    public boolean getResolvedFirstStrikeDamageThisCombat() {
+        return resolvedFirstStrikeDamageThisCombat;
+    }
+
+    public void setComputerStartedThisGame(boolean computerStartedThisGame) {
+        this.computerStartedThisGame = computerStartedThisGame;
+    }
+
+    public boolean isComputerStartedThisGame() {
+        return computerStartedThisGame;
+    }
+
+    public long addColorChanges(String s, Card c, boolean addToColors, boolean bIncrease) {
+        if (bIncrease)
+            Card_Color.increaseTimestamp();
+        globalColorChanges.add(new Card_Color(new ManaCost(s), c, addToColors, false));
+        return Card_Color.getTimestamp();
+    }
+
+    public void removeColorChanges(String s, Card c, boolean addTo, long timestamp) {
+        Card_Color removeCol = null;
+        for (Card_Color cc : globalColorChanges)
+            if (cc.equals(s, c, addTo, timestamp))
+                removeCol = cc;
+
+        if (removeCol != null)
+            globalColorChanges.remove(removeCol);
+    }
+
+    public void clearColorChanges() {
+        // clear the global color changes at end of each game
+        globalColorChanges.clear();
+    }
+
+    public ArrayList<Card_Color> getColorChanges() {
+        return globalColorChanges;
+    }
+
+
 }

@@ -1,4 +1,3 @@
-
 package forge;
 
 
@@ -30,44 +29,44 @@ import java.util.Random;
 
 
 public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay, NewConstants {
-    private static final long serialVersionUID     = 130339644136746796L;
-    
-    Gui_DeckEditor_Menu       customMenu;
+    private static final long serialVersionUID = 130339644136746796L;
+
+    Gui_DeckEditor_Menu customMenu;
     public Gui_ProgressBarWindow gPBW = new Gui_ProgressBarWindow();
-    
+
     //private ImageIcon         upIcon               = Constant.IO.upIcon;
     //private ImageIcon         downIcon             = Constant.IO.downIcon;
-    
-    private TableModel        topModel;
-    private TableModel        bottomModel;
-    
-    private JScrollPane       jScrollPane1         = new JScrollPane();
-    private JScrollPane       jScrollPane2         = new JScrollPane();
-    private JButton           removeButton         = new JButton();
+
+    private TableModel topModel;
+    private TableModel bottomModel;
+
+    private JScrollPane jScrollPane1 = new JScrollPane();
+    private JScrollPane jScrollPane2 = new JScrollPane();
+    private JButton removeButton = new JButton();
     @SuppressWarnings("unused")
     // border1
-    private Border            border1;
-    private TitledBorder      titledBorder1;
-    private Border            border2;
-    private TitledBorder      titledBorder2;
-    private JButton           addButton            = new JButton();
-    private JButton           analysisButton       = new JButton();
-    private JButton           changePictureButton  = new JButton();
-    private JButton           removePictureButton  = new JButton();
-    private JLabel            statsLabel           = new JLabel();
-    private JTable            topTable             = new JTable();
-    private JTable            bottomTable          = new JTable();
-    private JScrollPane       jScrollPane3         = new JScrollPane();
-    private JPanel            jPanel3              = new JPanel();
-    private GridLayout        gridLayout1          = new GridLayout();
-    private JLabel            statsLabel2          = new JLabel();
-    private JLabel            jLabel1              = new JLabel();
-    
-    private JLabel            jLabel2              = new JLabel();
-    private JLabel            jLabel3              = new JLabel();
-    
-    private JLabel            jLabel4              = new JLabel();
-    
+    private Border border1;
+    private TitledBorder titledBorder1;
+    private Border border2;
+    private TitledBorder titledBorder2;
+    private JButton addButton = new JButton();
+    private JButton analysisButton = new JButton();
+    private JButton changePictureButton = new JButton();
+    private JButton removePictureButton = new JButton();
+    private JLabel statsLabel = new JLabel();
+    private JTable topTable = new JTable();
+    private JTable bottomTable = new JTable();
+    private JScrollPane jScrollPane3 = new JScrollPane();
+    private JPanel jPanel3 = new JPanel();
+    private GridLayout gridLayout1 = new GridLayout();
+    private JLabel statsLabel2 = new JLabel();
+    private JLabel jLabel1 = new JLabel();
+
+    private JLabel jLabel2 = new JLabel();
+    private JLabel jLabel3 = new JLabel();
+
+    private JLabel jLabel4 = new JLabel();
+
     /*
     public JCheckBox          whiteCheckBox        = new JCheckBox("W", true);
     public JCheckBox          blueCheckBox         = new JCheckBox("U", true);
@@ -85,382 +84,381 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     public JCheckBox          enchantmentCheckBox  = new JCheckBox("Enchantment", true);
     */
 
-    public JCheckBox          whiteCheckBox        = new FilterCheckBox("white", "White");
-    public JCheckBox          blueCheckBox         = new FilterCheckBox("blue", "Blue");
-    public JCheckBox          blackCheckBox        = new FilterCheckBox("black", "Black");
-    public JCheckBox          redCheckBox          = new FilterCheckBox("red", "Red");
-    public JCheckBox          greenCheckBox        = new FilterCheckBox("green", "Green");
-    public JCheckBox          colorlessCheckBox    = new FilterCheckBox("colorless", "Colorless");
+    public JCheckBox whiteCheckBox = new FilterCheckBox("white", "White");
+    public JCheckBox blueCheckBox = new FilterCheckBox("blue", "Blue");
+    public JCheckBox blackCheckBox = new FilterCheckBox("black", "Black");
+    public JCheckBox redCheckBox = new FilterCheckBox("red", "Red");
+    public JCheckBox greenCheckBox = new FilterCheckBox("green", "Green");
+    public JCheckBox colorlessCheckBox = new FilterCheckBox("colorless", "Colorless");
 
-    public JCheckBox          landCheckBox         = new FilterCheckBox("land", "Land");
-    public JCheckBox          creatureCheckBox     = new FilterCheckBox("creature", "Creature");
-    public JCheckBox          sorceryCheckBox      = new FilterCheckBox("sorcery", "Sorcery");
-    public JCheckBox          instantCheckBox      = new FilterCheckBox("instant", "Instant");
-    public JCheckBox          planeswalkerCheckBox = new FilterCheckBox("planeswalker", "Planeswalker");
-    public JCheckBox          artifactCheckBox     = new FilterCheckBox("artifact", "Artifact");
-    public JCheckBox          enchantmentCheckBox  = new FilterCheckBox("enchant", "Enchantment");
+    public JCheckBox landCheckBox = new FilterCheckBox("land", "Land");
+    public JCheckBox creatureCheckBox = new FilterCheckBox("creature", "Creature");
+    public JCheckBox sorceryCheckBox = new FilterCheckBox("sorcery", "Sorcery");
+    public JCheckBox instantCheckBox = new FilterCheckBox("instant", "Instant");
+    public JCheckBox planeswalkerCheckBox = new FilterCheckBox("planeswalker", "Planeswalker");
+    public JCheckBox artifactCheckBox = new FilterCheckBox("artifact", "Artifact");
+    public JCheckBox enchantmentCheckBox = new FilterCheckBox("enchant", "Enchantment");
 
-    
+
     /*CHOPPIC*/
-    private JButton           filterButton         = new JButton();
-    private JTextField	      searchTextField	   = new JTextField();
+    private JButton filterButton = new JButton();
+    private JTextField searchTextField = new JTextField();
     /*CHOPPIC*/
-    
-    private JTextField	      searchTextField2	   = new JTextField();
-    private JTextField	      searchTextField3	   = new JTextField();
-    private JComboBox		  searchSetCombo	   = new JComboBox();
-    private JButton           clearFilterButton    = new JButton();
-    
-    private CardList          top;
-    private CardList          bottom;
-    public Card               cCardHQ;
-    private static File       previousDirectory    = null;
-    
-    private CardDetailPanel   detail               = new CardDetailPanel(null);
-    private CardPanel         picture              = new CardPanel(null);
-    private ViewPanel         pictureViewPanel     = new ViewPanel();
-    private JPanel            glassPane;
-    
+
+    private JTextField searchTextField2 = new JTextField();
+    private JTextField searchTextField3 = new JTextField();
+    private JComboBox searchSetCombo = new JComboBox();
+    private JButton clearFilterButton = new JButton();
+
+    private CardList top;
+    private CardList bottom;
+    public Card cCardHQ;
+    private static File previousDirectory = null;
+
+    private CardDetailPanel detail = new CardDetailPanel(null);
+    private CardPanel picture = new CardPanel(null);
+    private ViewPanel pictureViewPanel = new ViewPanel();
+    private JPanel glassPane;
+
     @Override
     public void setTitle(String message) {
         super.setTitle(message);
     }
-    
+
     public void updateDisplay(CardList top, CardList bottom) {
         this.top = top;
         this.bottom = bottom;
-        
+
         topModel.clear();
         bottomModel.clear();
-        
-        if(AllZone.getNameChanger().shouldChangeCardName()) {
+
+        if (AllZone.getNameChanger().shouldChangeCardName()) {
             top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
             bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
-        
+
         Card c;
         String cardName;
         ReadBoosterPack pack = new ReadBoosterPack();
-        
+
         if (gPBW.isVisible())
-        	gPBW.setProgressRange(0, top.size() + bottom.size());
-        
+            gPBW.setProgressRange(0, top.size() + bottom.size());
+
         // update top
-        for(int i = 0; i < top.size(); i++) {
-        	if (gPBW.isVisible())
-        		gPBW.increment();
-        	
+        for (int i = 0; i < top.size(); i++) {
+            if (gPBW.isVisible())
+                gPBW.increment();
+
             c = top.get(i);
-            
+
             // add rarity to card if this is a sealed card pool
-            
+
             cardName = AllZone.getNameChanger().getOriginalName(c.getName());
-            if(!pack.getRarity(cardName).equals("error")) {
+            if (!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
-            
+
             boolean filteredOut = filterByColor(c);
-            
-            if(!filteredOut) {
+
+            if (!filteredOut) {
                 filteredOut = filterByType(c);
             }
-            
+
             //String PC = c.getSVar("PicCount");
             Random r = MyRandom.random;
             //int n = 0;
             //if (!PC.equals("")) {
-	        //    if (PC.matches("[0-9][0-9]?"))
-	        //    	n = Integer.parseInt(PC);
-	        //    if (n > 1)
-	        //        c.setRandomPicture(r.nextInt(n));
+            //    if (PC.matches("[0-9][0-9]?"))
+            //    	n = Integer.parseInt(PC);
+            //    if (n > 1)
+            //        c.setRandomPicture(r.nextInt(n));
             //}
-            
+
             if (c.getCurSetCode().equals(""))
-        		c.setCurSetCode(c.getMostRecentSet());
-        		
+                c.setCurSetCode(c.getMostRecentSet());
+
             if (!c.getCurSetCode().equals("")) {
-            	int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
-            	if (n > 1)
-                	c.setRandomPicture(r.nextInt(n-1) + 1);
-            
-            	c.setImageFilename(CardUtil.buildFilename(c));
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
+
+                c.setImageFilename(CardUtil.buildFilename(c));
             }
 
-            if(!filteredOut) {
+            if (!filteredOut) {
                 topModel.addCard(c);
             }
         }// for
-        
+
         // update bottom
-        for(int i = 0; i < bottom.size(); i++) {
-        	if (gPBW.isVisible())
-        		gPBW.increment();
-        	
-        	c = bottom.get(i);
-            
+        for (int i = 0; i < bottom.size(); i++) {
+            if (gPBW.isVisible())
+                gPBW.increment();
+
+            c = bottom.get(i);
+
             // add rarity to card if this is a sealed card pool
-            if(!customMenu.getGameType().equals(Constant.GameType.Constructed)) c.setRarity(pack.getRarity(c.getName()));
-            
+            if (!customMenu.getGameType().equals(Constant.GameType.Constructed))
+                c.setRarity(pack.getRarity(c.getName()));
+
             //String PC = c.getSVar("PicCount");
             Random r = MyRandom.random;
             //int n = 0;
             //if (!PC.equals("")) {
-	        //    if (PC.matches("[0-9][0-9]?"))
-	        //    	n = Integer.parseInt(PC);
-	        //    if (n > 1)
-	        //        c.setRandomPicture(r.nextInt(n));
+            //    if (PC.matches("[0-9][0-9]?"))
+            //    	n = Integer.parseInt(PC);
+            //    if (n > 1)
+            //        c.setRandomPicture(r.nextInt(n));
             //}
-            
+
             if (c.getCurSetCode().equals(""))
-        		c.setCurSetCode(c.getMostRecentSet());
-            
-            if (!c.getCurSetCode().equals("")) { 
-            	int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
-            	if (n > 1)
-            		c.setRandomPicture(r.nextInt(n-1) + 1);
-            
-            	c.setImageFilename(CardUtil.buildFilename(c));
+                c.setCurSetCode(c.getMostRecentSet());
+
+            if (!c.getCurSetCode().equals("")) {
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
+
+                c.setImageFilename(CardUtil.buildFilename(c));
             }
 
             bottomModel.addCard(c);
         }// for
-        
+
         if (gPBW.isVisible())
-        	gPBW.setTitle("Sorting Deck Editor");
+            gPBW.setTitle("Sorting Deck Editor");
         topModel.resort();
         topTable.repaint();
         bottomModel.resort();
         bottomTable.repaint();
     }// updateDisplay
-    
+
     public void updateDisplay() {
         //updateDisplay(this.top, this.bottom);
-        
+
         topModel.clear();
-        
-        if(AllZone.getNameChanger().shouldChangeCardName()) {
+
+        if (AllZone.getNameChanger().shouldChangeCardName()) {
             top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
             bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
         }
-        
+
         Card c;
         String cardName;
         ReadBoosterPack pack = new ReadBoosterPack();
-        
+
         // update top
-        for(int i = 0; i < top.size(); i++) {
+        for (int i = 0; i < top.size(); i++) {
             c = top.get(i);
-            
+
             // add rarity to card if this is a sealed card pool
-            
+
             cardName = AllZone.getNameChanger().getOriginalName(c.getName());
-            if(!pack.getRarity(cardName).equals("error")) {
+            if (!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
-            
+
             boolean filteredOut = filterByColor(c);
-            
-            if(!filteredOut) {
+
+            if (!filteredOut) {
                 filteredOut = filterByType(c);
             }
-            
-            if(!filteredOut) {
-            	filteredOut = filterByName(c);
+
+            if (!filteredOut) {
+                filteredOut = filterByName(c);
             }
-            
-            if(!filteredOut) {
-            	filteredOut = filterByCardType(c);
+
+            if (!filteredOut) {
+                filteredOut = filterByCardType(c);
             }
-            
-            if(!filteredOut) {
-            	filteredOut = filterByCardDescription(c);
+
+            if (!filteredOut) {
+                filteredOut = filterByCardDescription(c);
             }
-            
-            if(!filteredOut) {
-            	filteredOut = filterByCardSetCode(c);
+
+            if (!filteredOut) {
+                filteredOut = filterByCardSetCode(c);
             }
-            
-            
-            
-            if(!filteredOut) {
+
+
+            if (!filteredOut) {
                 topModel.addCard(c);
             }
         }// for
-        
+
         topModel.resort();
     }
-    
+
     /*CHOPPIC*/
     private boolean filterByName(Card c) {
-    	boolean filterOut = false;
-    	if(!(searchTextField.getText() == "")){
-    		filterOut = !(c.getName().toLowerCase().contains(searchTextField.getText().toLowerCase()));
-    	}
-    	return filterOut;
+        boolean filterOut = false;
+        if (!(searchTextField.getText() == "")) {
+            filterOut = !(c.getName().toLowerCase().contains(searchTextField.getText().toLowerCase()));
+        }
+        return filterOut;
     }
     /*CHOPPIC*/
-    
+
     private boolean filterByCardType(Card c) {
-    	boolean filterOut = false;
-    	if(!(searchTextField2.getText() == "")){
-    		filterOut = !(c.getType().toString().toLowerCase().contains(searchTextField2.getText().toLowerCase()));
-    	}
-    	return filterOut;
+        boolean filterOut = false;
+        if (!(searchTextField2.getText() == "")) {
+            filterOut = !(c.getType().toString().toLowerCase().contains(searchTextField2.getText().toLowerCase()));
+        }
+        return filterOut;
     }
-    
+
     private boolean filterByCardDescription(Card c) {
-    	boolean filterOut = false;
-    	if(!(searchTextField3.getText() == "")){
-    		filterOut = !(c.getText().toString().toLowerCase().contains(searchTextField3.getText().toLowerCase()));
-    	}
-    	return filterOut;
+        boolean filterOut = false;
+        if (!(searchTextField3.getText() == "")) {
+            filterOut = !(c.getText().toString().toLowerCase().contains(searchTextField3.getText().toLowerCase()));
+        }
+        return filterOut;
     }
-    
+
     private boolean filterByCardSetCode(Card c) {
-    	boolean filterOut = false;
-    	String SC = "";
-    	
-    	if (!(searchSetCombo.getSelectedItem().toString().equals(""))) {
-    		SC = SetInfoUtil.getSetCode3_SetName(searchSetCombo.getSelectedItem().toString());
-    		
-    		boolean result = false;
-    		
-    		if (SetInfoUtil.getSetInfo_Code(c.getSets(), SC) != null) {
-				c.setCurSetCode(SC);
-				
-		    	Random r = MyRandom.random;
-		    	int n = SetInfoUtil.getSetInfo_Code(c.getSets(), SC).PicCount;
-		    	if (n > 1)
-		    		c.setRandomPicture(r.nextInt(n-1) + 1);
-				
-				result = true;
-			}
-    		filterOut = !(result);
-    	}
-    	else {
-    		SC = c.getMostRecentSet();
-    		if (!SC.equals(""))
-    			c.setCurSetCode(c.getMostRecentSet());
-    	}
-    		    	
-    	c.setImageFilename(CardUtil.buildFilename(c));
-    	
-    	return filterOut;
+        boolean filterOut = false;
+        String SC = "";
+
+        if (!(searchSetCombo.getSelectedItem().toString().equals(""))) {
+            SC = SetInfoUtil.getSetCode3_SetName(searchSetCombo.getSelectedItem().toString());
+
+            boolean result = false;
+
+            if (SetInfoUtil.getSetInfo_Code(c.getSets(), SC) != null) {
+                c.setCurSetCode(SC);
+
+                Random r = MyRandom.random;
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), SC).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
+
+                result = true;
+            }
+            filterOut = !(result);
+        } else {
+            SC = c.getMostRecentSet();
+            if (!SC.equals(""))
+                c.setCurSetCode(c.getMostRecentSet());
+        }
+
+        c.setImageFilename(CardUtil.buildFilename(c));
+
+        return filterOut;
     }
-    
-    
+
+
     private boolean filterByColor(Card c) {
         boolean filterOut = false;
-        
-        if(!whiteCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.White)) {
+
+        if (!whiteCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.White)) {
                 filterOut = true;
             }
         }
-        
-         if(!blueCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.Blue)) {
+
+        if (!blueCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.Blue)) {
                 filterOut = true;
             }
         }
-        
-         if(!blackCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.Black)) {
+
+        if (!blackCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.Black)) {
                 filterOut = true;
             }
         }
-        
-        if(!redCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.Red)) {
+
+        if (!redCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.Red)) {
                 filterOut = true;
             }
         }
-        
-        if(!greenCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.Green)) {
+
+        if (!greenCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.Green)) {
                 filterOut = true;
             }
         }
-        
-        if(!colorlessCheckBox.isSelected()) {
-            if(CardUtil.getColors(c).contains(Constant.Color.Colorless)) {
+
+        if (!colorlessCheckBox.isSelected()) {
+            if (CardUtil.getColors(c).contains(Constant.Color.Colorless)) {
                 filterOut = true;
             }
         }
-        
+
         return filterOut;
     }
-    
+
     private boolean filterByType(Card c) {
         boolean filterOut = false;
-        
-        if(!landCheckBox.isSelected() && c.isLand()) {
+
+        if (!landCheckBox.isSelected() && c.isLand()) {
             filterOut = true;
         }
-        
-        if(!creatureCheckBox.isSelected() && c.isCreature()) {
+
+        if (!creatureCheckBox.isSelected() && c.isCreature()) {
             filterOut = true;
         }
-        
-        if(!sorceryCheckBox.isSelected() && c.isSorcery()) {
+
+        if (!sorceryCheckBox.isSelected() && c.isSorcery()) {
             filterOut = true;
         }
-        
-        if(!instantCheckBox.isSelected() && c.isInstant()) {
+
+        if (!instantCheckBox.isSelected() && c.isInstant()) {
             filterOut = true;
         }
-        
-        if(!planeswalkerCheckBox.isSelected() && c.isPlaneswalker()) {
+
+        if (!planeswalkerCheckBox.isSelected() && c.isPlaneswalker()) {
             filterOut = true;
         }
-        
-        if(!artifactCheckBox.isSelected() && c.isArtifact()) {
+
+        if (!artifactCheckBox.isSelected() && c.isArtifact()) {
             filterOut = true;
         }
-        
-        if(!enchantmentCheckBox.isSelected() && c.isEnchantment()) {
+
+        if (!enchantmentCheckBox.isSelected() && c.isEnchantment()) {
             filterOut = true;
         }
-        
+
         return filterOut;
     }
-    
+
     //top shows available card pool
     //if constructed, top shows all cards
     //if sealed, top shows 5 booster packs
     //if draft, top shows cards that were chosen
-    
+
     public TableModel getTopTableModel() {
         return topModel;
     }
-    
+
     public CardList getTop() {
         return topModel.getCards();
     }
-    
+
     //bottom shows cards that the user has chosen for his library
     public CardList getBottom() {
         return bottomModel.getCards();
     }
-    
+
     public void show(final Command exitCommand) {
         final Command exit = new Command() {
             private static final long serialVersionUID = 5210924838133689758L;
-            
+
             public void execute() {
                 Gui_DeckEditor.this.dispose();
                 exitCommand.execute();
             }
         };
-        
-    	//pm = new ProgressMonitor(this, "Loading Deck Editor", "", 0, 20000);
-    	gPBW.setTitle("Loading Deck Editor");
-    	gPBW.setVisible(true);
-    	
-        
+
+        //pm = new ProgressMonitor(this, "Loading Deck Editor", "", 0, 20000);
+        gPBW.setTitle("Loading Deck Editor");
+        gPBW.setVisible(true);
+
+
         customMenu = new Gui_DeckEditor_Menu(this, exit);
         this.setJMenuBar(customMenu);
-        
+
 
         //do not change this!!!!
         this.addWindowListener(new WindowAdapter() {
@@ -469,95 +467,95 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
                 customMenu.close();
             }
         });
-        
+
 
         setup();
-        
+
         //show cards, makes this user friendly
         if (Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed))
-        	customMenu.newConstructed();
-        
+            customMenu.newConstructed();
+
         topModel.sort(1, true);
         bottomModel.sort(1, true);
-        
+
         gPBW.dispose();
     }//show(Command)
-    
+
     private void addListeners() {
         MouseInputListener l = new MouseInputListener() {
             public void mouseReleased(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mousePressed(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mouseExited(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mouseEntered(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mouseClicked(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mouseMoved(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             public void mouseDragged(MouseEvent e) {
                 redispatchMouseEvent(e);
             }
-            
+
             private void redispatchMouseEvent(MouseEvent e) {
                 Container content = getContentPane();
                 Point glassPoint = e.getPoint();
                 Point contentPoint = SwingUtilities.convertPoint(glassPane, glassPoint, content);
-                
+
                 Component component = SwingUtilities.getDeepestComponentAt(content, contentPoint.x, contentPoint.y);
-                if(component == null || !SwingUtilities.isDescendingFrom(component, picture)) {
+                if (component == null || !SwingUtilities.isDescendingFrom(component, picture)) {
                     glassPane.setVisible(false);
                 }
             }
         };
-        
+
         glassPane.addMouseMotionListener(l);
         glassPane.addMouseListener(l);
-        
+
         picture.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 Card c = picture.getCard();
-                if(c == null) return;
+                if (c == null) return;
                 Image i = ImageCache.getOriginalImage(c);
-                if(i == null) return;
-                if(i.getWidth(null) < 300) return;
+                if (i == null) return;
+                if (i.getWidth(null) < 300) return;
                 glassPane.setVisible(true);
             }
         });
     }//addListeners()
-    
+
     private void setup() {
         addListeners();
-        
+
         //construct topTable, get all cards
         topModel = new TableModel(new CardList(), this);
         topModel.addListeners(topTable);
-        
+
         topTable.setModel(topModel);
         topModel.resizeCols(topTable);
-        
+
         //construct bottomModel
         bottomModel = new TableModel(this);
         bottomModel.addListeners(bottomTable);
-        
+
         bottomTable.setModel(bottomModel);
         topModel.resizeCols(bottomTable);
-        
+
         //get stats from deck
         bottomModel.addTableModelListener(new TableModelListener() {
             public void tableChanged(TableModelEvent ev) {
@@ -565,7 +563,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
                 statsLabel.setText(getStats(deck));
             }
         });
-        
+
 
         //get stats from all cards
         topModel.addTableModelListener(new TableModelListener() {
@@ -574,12 +572,12 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
                 statsLabel2.setText(getStats(deck));
             }
         });
-        
+
         //TODO use this as soon the deck editor has resizable GUI
         //Use both so that when "un"maximizing, the frame isn't tiny
         setSize(1024, 740);
         setExtendedState(Frame.MAXIMIZED_BOTH);
-        
+
         // This was an attempt to limit the width of the deck editor to 1400 pixels. 
         /*
         setSize(1024, 740);
@@ -598,38 +596,38 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         setMaximizedBounds(bounds);
         */
     }//setupAndDisplay()
-    
+
     private String getStats(CardList deck) {
         int total = deck.size();
         int creature = deck.getType("Creature").size();
         int land = deck.getType("Land").size();
-        
+
         StringBuffer show = new StringBuffer();
         show.append("Total: ").append(total).append(",  Creatures: ").append(creature).append(",  Land: ").append(land);
         String[] color = Constant.Color.Colors;
-        for(int i = 0; i < 5; i++)
-        	show.append(",  ").append(color[i]).append(": ").append(CardListUtil.getColor(deck, color[i]).size());
-        
+        for (int i = 0; i < 5; i++)
+            show.append(",  ").append(color[i]).append(": ").append(CardListUtil.getColor(deck, color[i]).size());
+
         return show.toString();
     }//getStats()
-    
+
     public Gui_DeckEditor() {
         try {
             jbInit();
-        } catch(Exception ex) {
+        } catch (Exception ex) {
             ErrorViewer.showError(ex);
         }
     }
-    
+
     public Card getCard() {
         return detail.getCard();
     }
-    
+
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
-    
+
     private void jbInit() throws Exception {
         border1 = new EtchedBorder(EtchedBorder.RAISED, Color.white, new Color(148, 145, 140));
         titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white, new Color(148, 145, 140)),
@@ -643,7 +641,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         jScrollPane2.setBorder(titledBorder2);
         jScrollPane2.setToolTipText(tableToolTip);
         //removeButton.setIcon(upIcon);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) removeButton.setFont(new java.awt.Font("Dialog", 0, 13));
+        if (!Gui_NewGame.useLAFFonts.isSelected()) removeButton.setFont(new java.awt.Font("Dialog", 0, 13));
         removeButton.setText("Remove from Deck");
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -657,68 +655,68 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             }
         });
         //addButton.setIcon(downIcon);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) addButton.setFont(new java.awt.Font("Dialog", 0, 13));
-        
+        if (!Gui_NewGame.useLAFFonts.isSelected()) addButton.setFont(new java.awt.Font("Dialog", 0, 13));
+
         /*CHOPPIC*/
         filterButton.setText("Apply Filter");
         filterButton.setToolTipText("Pressing the \"return\" key will activate this button");
         filterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	filterButton_actionPerformed(e);
+                filterButton_actionPerformed(e);
             }
         });
         if (!Gui_NewGame.useLAFFonts.isSelected()) filterButton.setFont(new java.awt.Font("Dialog", 0, 13));
         /*CHOPPIC*/
-        
+
         clearFilterButton.setText("Clear Filter");
         clearFilterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	clearFilterButton_actionPerformed(e);
+                clearFilterButton_actionPerformed(e);
             }
         });
-        if(!Gui_NewGame.useLAFFonts.isSelected()) clearFilterButton.setFont(new java.awt.Font("Dialog", 0, 13));
-        
+        if (!Gui_NewGame.useLAFFonts.isSelected()) clearFilterButton.setFont(new java.awt.Font("Dialog", 0, 13));
+
         analysisButton.setText("Deck Analysis");
         analysisButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 analysisButton_actionPerformed(e);
             }
         });
-        if(!Gui_NewGame.useLAFFonts.isSelected()) analysisButton.setFont(new java.awt.Font("Dialog", 0, 13));
-        
+        if (!Gui_NewGame.useLAFFonts.isSelected()) analysisButton.setFont(new java.awt.Font("Dialog", 0, 13));
+
         changePictureButton.setText("Change picture...");
         changePictureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 changePictureButton_actionPerformed(e);
             }
         });
-        if(!Gui_NewGame.useLAFFonts.isSelected()) changePictureButton.setFont(new java.awt.Font("Dialog", 0, 10));
-        
+        if (!Gui_NewGame.useLAFFonts.isSelected()) changePictureButton.setFont(new java.awt.Font("Dialog", 0, 10));
+
         removePictureButton.setText("Remove picture...");
         removePictureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 removePictureButton_actionPerformed(e);
             }
         });
-        if(!Gui_NewGame.useLAFFonts.isSelected()) removePictureButton.setFont(new java.awt.Font("Dialog", 0, 10));
-        
+        if (!Gui_NewGame.useLAFFonts.isSelected()) removePictureButton.setFont(new java.awt.Font("Dialog", 0, 10));
+
         /**
          * Type filtering
          */
         Font f = new Font("Tahoma", Font.PLAIN, 10);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) landCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) landCheckBox.setFont(f);
         landCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) creatureCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) creatureCheckBox.setFont(f);
         creatureCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) sorceryCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) sorceryCheckBox.setFont(f);
         sorceryCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) instantCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) instantCheckBox.setFont(f);
         instantCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) planeswalkerCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) planeswalkerCheckBox.setFont(f);
         planeswalkerCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) artifactCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) artifactCheckBox.setFont(f);
         artifactCheckBox.setOpaque(false);
-        if(!Gui_NewGame.useLAFFonts.isSelected()) enchantmentCheckBox.setFont(f);
+        if (!Gui_NewGame.useLAFFonts.isSelected()) enchantmentCheckBox.setFont(f);
         enchantmentCheckBox.setOpaque(false);
 
         /**
@@ -730,7 +728,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         redCheckBox.setOpaque(false);
         greenCheckBox.setOpaque(false);
         colorlessCheckBox.setOpaque(false);
-        
+
         picture.addMouseListener(new CustomListener());
         if (!Gui_NewGame.useLAFFonts.isSelected()) statsLabel.setFont(new java.awt.Font("Dialog", 0, 13));
         statsLabel.setText("Total: 0, Creatures: 0, Land: 0");
@@ -743,11 +741,11 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         statsLabel2.setText("Total: 0, Creatures: 0, Land: 0");
         if (!Gui_NewGame.useLAFFonts.isSelected()) statsLabel2.setFont(new java.awt.Font("Dialog", 0, 13));
         /* jLabel1.setText("Click on the column name (like name or color) to sort the cards"); */
-        
+
         pictureViewPanel.setCardPanel(picture);
-     
+
         this.getContentPane().setLayout(new MigLayout("fill"));
-                
+
         // this.getContentPane().add(landCheckBox, "cell 0 0, egx checkbox, split 16");
         this.getContentPane().add(landCheckBox, "cell 0 0, egx checkbox, grow, split 15");
         this.getContentPane().add(creatureCheckBox, "grow");
@@ -756,7 +754,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         this.getContentPane().add(planeswalkerCheckBox, "grow");
         this.getContentPane().add(artifactCheckBox, "grow");
         this.getContentPane().add(enchantmentCheckBox, "grow");
-        
+
         this.getContentPane().add(whiteCheckBox, "grow");
         this.getContentPane().add(blueCheckBox, "grow");
         this.getContentPane().add(blackCheckBox, "grow");
@@ -766,19 +764,19 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 
         this.getContentPane().add(filterButton, "wmin 100, hmin 25, wmax 140, hmax 25, grow");
         this.getContentPane().add(clearFilterButton, "wmin 100, hmin 25, wmax 140, hmax 25, grow");
-        
+
         this.getContentPane().add(jScrollPane1, "cell 0 2 1 2, pushy, grow");
         // this.getContentPane().add(detail, "w 239, h 323, grow, flowy, wrap");
         this.getContentPane().add(detail, "w 239, h 323, cell 1 0 1 3, grow, flowy, wrap");
         // this.getContentPane().add(detail, "align 50% 50%, wmin 239, hmin 323, cell 1 0 1 2, flowy");
         this.getContentPane().add(changePictureButton, "align 50% 0%, cell 1 3, split 2, flowx");
         this.getContentPane().add(removePictureButton, "align 50% 0%, wrap");
-        
+
         jLabel1.setText("Name:");
         jLabel1.setToolTipText("Card names must include the text in this field");
         this.getContentPane().add(jLabel1, "cell 0 1, split 7");
         this.getContentPane().add(searchTextField, "wmin 100, grow");
-        
+
         jLabel2.setText("Type:");
         jLabel2.setToolTipText("Card types must include the text in this field");
         this.getContentPane().add(jLabel2, "");
@@ -787,35 +785,35 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         jLabel3.setToolTipText("Card descriptions must include the text in this field");
         this.getContentPane().add(jLabel3, "");
         this.getContentPane().add(searchTextField3, "wmin 200, grow");
-        
+
         searchSetCombo.removeAllItems();
         searchSetCombo.addItem("");
-        for (int i=0; i<SetInfoUtil.getSetNameList().size(); i++)
-        	searchSetCombo.addItem(SetInfoUtil.getSetNameList().get(i));
+        for (int i = 0; i < SetInfoUtil.getSetNameList().size(); i++)
+            searchSetCombo.addItem(SetInfoUtil.getSetNameList().get(i));
         this.getContentPane().add(searchSetCombo, "wmin 150, grow");
-        
+
         this.getContentPane().add(statsLabel2, "cell 0 4");
         this.getContentPane().add(pictureViewPanel, "wmin 239, hmin 323, grow, cell 1 4 1 4");
-        
+
         this.getContentPane().add(addButton, "w 100, h 49, sg button, cell 0 5, split 4");
         this.getContentPane().add(removeButton, "w 100, h 49, sg button");
-        
+
         // jLabel4 is used to push the analysis button to the right
         // This will separate this button from the add and remove card buttons
         jLabel4.setText("");
         this.getContentPane().add(jLabel4, "wmin 100, grow");
-        
-        this.getContentPane().add(analysisButton, "w 100, h 49, wrap");   
-        
+
+        this.getContentPane().add(analysisButton, "w 100, h 49, wrap");
+
         this.getContentPane().add(jScrollPane2, "cell 0 6, grow");
         this.getContentPane().add(statsLabel, "cell 0 7");
 
         jScrollPane2.getViewport().add(bottomTable, null);
         jScrollPane1.getViewport().add(topTable, null);
-        
+
         glassPane = new JPanel() {
             private static final long serialVersionUID = 7394924497724994317L;
-            
+
             @Override
             protected void paintComponent(java.awt.Graphics g) {
                 Image image = ImageCache.getOriginalImage(picture.getCard());
@@ -824,88 +822,87 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             }
         };
         setGlassPane(glassPane);
-        
+
         javax.swing.JRootPane rootPane = this.getRootPane();
         rootPane.setDefaultButton(filterButton);
     }
-    
+
     void addButton_actionPerformed(ActionEvent e) {
         setTitle("Deck Editor : " + customMenu.getDeckName() + " : unsaved");
-        
+
         int n = topTable.getSelectedRow();
-        if(n != -1) {
+        if (n != -1) {
             Card c = topModel.rowToCard(n);
-            
+
             if (customMenu.getGameType().equals(Constant.GameType.Constructed)) {
-	            Card newC = new Card();
-	            newC.setName(c.getName());
-	            newC.setColor(c.getColor());
-	            newC.setType(c.getType());
-	            newC.setManaCost(c.getManaCost());
-	            newC.setBaseAttack(c.getBaseAttack());
-	            newC.setBaseDefense(c.getBaseDefense());
-	            newC.setBaseLoyalty(c.getBaseLoyalty());
-	            newC.setRarity(c.getRarity());
-	            newC.setCurSetCode(c.getCurSetCode());
-	            newC.setImageFilename(c.getImageFilename());
-	            newC.setSets(c.getSets());
-	            newC.setText(c.getText());
-	            
-	            bottomModel.addCard(newC);
-	            bottomModel.resort();
-            }
-            else {
-            //if(!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
+                Card newC = new Card();
+                newC.setName(c.getName());
+                newC.setColor(c.getColor());
+                newC.setType(c.getType());
+                newC.setManaCost(c.getManaCost());
+                newC.setBaseAttack(c.getBaseAttack());
+                newC.setBaseDefense(c.getBaseDefense());
+                newC.setBaseLoyalty(c.getBaseLoyalty());
+                newC.setRarity(c.getRarity());
+                newC.setCurSetCode(c.getCurSetCode());
+                newC.setImageFilename(c.getImageFilename());
+                newC.setSets(c.getSets());
+                newC.setText(c.getText());
+
+                bottomModel.addCard(newC);
+                bottomModel.resort();
+            } else {
+                //if(!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
                 bottomModel.addCard(c);
                 bottomModel.resort();
-                
+
                 top.remove(c);
-            	topModel.removeCard(c);
+                topModel.removeCard(c);
             }
-            
+
             //3 conditions" 0 cards left, select the same row, select next row
             int size = topModel.getRowCount();
-            if(size != 0) {
-                if(size == n) n--;
+            if (size != 0) {
+                if (size == n) n--;
                 topTable.addRowSelectionInterval(n, n);
             }
         }//if(valid row)
     }//addButton_actionPerformed
-    
+
     /*CHOPPIC*/
     void filterButton_actionPerformed(ActionEvent e) {
-    	updateDisplay();
+        updateDisplay();
     }
-	/*CHOPPIC*/
-    
+    /*CHOPPIC*/
+
     void clearFilterButton_actionPerformed(ActionEvent e) {
-        
-        if (! landCheckBox.isSelected())         landCheckBox.doClick();
-        if (! creatureCheckBox.isSelected())     creatureCheckBox.doClick();
-        if (! sorceryCheckBox.isSelected())      sorceryCheckBox.doClick();
-        if (! instantCheckBox.isSelected())      instantCheckBox.doClick();
-        if (! planeswalkerCheckBox.isSelected()) planeswalkerCheckBox.doClick();
-        if (! artifactCheckBox.isSelected())     artifactCheckBox.doClick();
-        if (! enchantmentCheckBox.isSelected())  enchantmentCheckBox.doClick();
-        
-        if (! whiteCheckBox.isSelected())     whiteCheckBox.doClick();
-        if (! blueCheckBox.isSelected())      blueCheckBox.doClick();
-        if (! blackCheckBox.isSelected())     blackCheckBox.doClick();
-        if (! redCheckBox.isSelected())       redCheckBox.doClick();
-        if (! greenCheckBox.isSelected())     greenCheckBox.doClick();
-        if (! colorlessCheckBox.isSelected()) colorlessCheckBox.doClick();
-        
+
+        if (!landCheckBox.isSelected()) landCheckBox.doClick();
+        if (!creatureCheckBox.isSelected()) creatureCheckBox.doClick();
+        if (!sorceryCheckBox.isSelected()) sorceryCheckBox.doClick();
+        if (!instantCheckBox.isSelected()) instantCheckBox.doClick();
+        if (!planeswalkerCheckBox.isSelected()) planeswalkerCheckBox.doClick();
+        if (!artifactCheckBox.isSelected()) artifactCheckBox.doClick();
+        if (!enchantmentCheckBox.isSelected()) enchantmentCheckBox.doClick();
+
+        if (!whiteCheckBox.isSelected()) whiteCheckBox.doClick();
+        if (!blueCheckBox.isSelected()) blueCheckBox.doClick();
+        if (!blackCheckBox.isSelected()) blackCheckBox.doClick();
+        if (!redCheckBox.isSelected()) redCheckBox.doClick();
+        if (!greenCheckBox.isSelected()) greenCheckBox.doClick();
+        if (!colorlessCheckBox.isSelected()) colorlessCheckBox.doClick();
+
         searchTextField.setText("");
         searchTextField2.setText("");
         searchTextField3.setText("");
         searchSetCombo.setSelectedIndex(0);
-        
+
         updateDisplay();
     }// clearFilterButton_actionPerformed
-    
+
     void analysisButton_actionPerformed(ActionEvent e) {
-        
-        if(bottomModel.getRowCount() == 0) {
+
+        if (bottomModel.getRowCount() == 0) {
             JOptionPane.showMessageDialog(null, "Cards in deck not found.", "Analysis Deck",
                     JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -915,40 +912,40 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
             g.setEnabled(false);
         }
     }
-    
+
     void changePictureButton_actionPerformed(ActionEvent e) {
-        if(cCardHQ != null) {
+        if (cCardHQ != null) {
             File file = getImportFilename();
-            if(file != null) {
+            if (file != null) {
                 String fileName = GuiDisplayUtil.cleanString(cCardHQ.getName()) + ".jpg";
                 File base = ForgeProps.getFile(IMAGE_BASE);
                 File f = new File(base, fileName);
                 f.delete();
-                
+
                 try {
-                    
+
                     f.createNewFile();
                     FileOutputStream fos = new FileOutputStream(f);
                     FileInputStream fis = new FileInputStream(file);
                     byte[] buff = new byte[32 * 1024];
                     int length;
-                    while(fis.available() > 0) {
+                    while (fis.available() > 0) {
                         length = fis.read(buff);
-                        if(length > 0) fos.write(buff, 0, length);
+                        if (length > 0) fos.write(buff, 0, length);
                     }
                     fos.flush();
                     fis.close();
                     fos.close();
                     setCard(cCardHQ);
-                    
-                } catch(IOException e1) {
+
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                
+
             }
         }
     }
-    
+
     private File getImportFilename() {
         JFileChooser chooser = new JFileChooser(previousDirectory);
         ImagePreviewPanel preview = new ImagePreviewPanel();
@@ -956,40 +953,40 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         chooser.addPropertyChangeListener(preview);
         chooser.addChoosableFileFilter(dckFilter);
         int returnVal = chooser.showOpenDialog(null);
-        
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = chooser.getSelectedFile();
             previousDirectory = file.getParentFile();
             return file;
         }
-        
+
 
         return null;
-        
+
     }
-    
+
     private FileFilter dckFilter = new FileFilter() {
-                                     
-    	@Override
-    	public boolean accept(File f) {
-    		return f.getName().endsWith(".jpg") || f.isDirectory();
-    	}
-                                     
-    	@Override
-    	public String getDescription() {
-    		return "*.jpg";
-    	}
-                                     
-	};
-    
-    
+
+        @Override
+        public boolean accept(File f) {
+            return f.getName().endsWith(".jpg") || f.isDirectory();
+        }
+
+        @Override
+        public String getDescription() {
+            return "*.jpg";
+        }
+
+    };
+
+
     void removePictureButton_actionPerformed(ActionEvent e) {
-        if(cCardHQ != null) {
+        if (cCardHQ != null) {
             String options[] = {"Yes", "No"};
             int value = JOptionPane.showOptionDialog(null,
                     "Do you want delete " + cCardHQ.getName() + " picture?", "Delete picture",
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-            if(value == 0) {
+            if (value == 0) {
                 String fileName = GuiDisplayUtil.cleanString(cCardHQ.getName()) + ".jpg";
                 File base = ForgeProps.getFile(IMAGE_BASE);
                 File f = new File(base, fileName);
@@ -999,113 +996,111 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
                 setCard(cCardHQ);
             }
         }
-        
+
     }
-    
+
     void removeButton_actionPerformed(ActionEvent e) {
         setTitle("Deck Editor : " + customMenu.getDeckName() + " : unsaved");
-        
+
         int n = bottomTable.getSelectedRow();
-        if(n != -1) {
+        if (n != -1) {
             Card c = bottomModel.rowToCard(n);
             bottomModel.removeCard(c);
-            
-            if(!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
+
+            if (!Constant.GameType.Constructed.equals(customMenu.getGameType())) {
                 topModel.addCard(c);
                 topModel.resort();
             }
-            
+
             //3 conditions" 0 cards left, select the same row, select next row
             int size = bottomModel.getRowCount();
-            if(size != 0) {
-                if(size == n) n--;
+            if (size != 0) {
+                if (size == n) n--;
                 bottomTable.addRowSelectionInterval(n, n);
             }
         }//if(valid row)
     }//
-    
+
 
     @SuppressWarnings("unused")
     // stats_actionPerformed
     private void stats_actionPerformed(CardList list) {
 
     }
-    
+
     //refresh Gui from deck, Gui shows the cards in the deck
     @SuppressWarnings("unused")
     // refreshGui
     private void refreshGui() {
         Deck deck = Constant.Runtime.HumanDeck[0];
-        if(deck == null) //this is just a patch, i know
-        	deck = new Deck(Constant.Runtime.GameType[0]);
-        
+        if (deck == null) //this is just a patch, i know
+            deck = new Deck(Constant.Runtime.GameType[0]);
+
         topModel.clear();
         bottomModel.clear();
-        
+
         Card c;
         //ReadBoosterPack pack = new ReadBoosterPack();
-        for(int i = 0; i < deck.countMain(); i++) {
+        for (int i = 0; i < deck.countMain(); i++) {
             c = AllZone.getCardFactory().getCard(deck.getMain(i), AllZone.getHumanPlayer());
-            
+
             //add rarity to card if this is a sealed card pool
             //if(Constant.Runtime.GameType[0].equals(Constant.GameType.Sealed))
             //	c.setRarity(pack.getRarity(c.getName()));
-            
+
             bottomModel.addCard(c);
         }//for
-        
-        if(deck.isSealed() || deck.isDraft()) {
+
+        if (deck.isSealed() || deck.isDraft()) {
             //add sideboard to GUI
-            for(int i = 0; i < deck.countSideboard(); i++) {
+            for (int i = 0; i < deck.countSideboard(); i++) {
                 c = AllZone.getCardFactory().getCard(deck.getSideboard(i), AllZone.getHumanPlayer());
                 //c.setRarity(pack.getRarity(c.getName()));
                 topModel.addCard(c);
             }
         } else {
             CardList all = AllZone.getCardFactory().getAllCards();
-            for(int i = 0; i < all.size(); i++)
-            {
+            for (int i = 0; i < all.size(); i++) {
                 c = all.get(i);
                 topModel.addCard(c);
             }
         }
-        
+
         topModel.resort();
         bottomModel.resort();
     }////refreshGui()
-    
+
     /*CHOPPIC*/
     /* Custom check box class for filter icons */
     private class FilterCheckBox extends JCheckBox {
-		private static final long serialVersionUID = -8099263807219520120L;
-		
-		private String imagePath = "res/images/deckeditor/";
-    	private String iconYes;
-    	private String iconNo;
-    	private FilterCheckBox cb;
+        private static final long serialVersionUID = -8099263807219520120L;
 
-    	FilterCheckBox(String filterName, String toolTip){
-    		super("",true);
-    		cb = this;
-    		iconYes = imagePath + "filter_" + filterName + "_y.png";
-    		iconNo = imagePath + "filter_" + filterName + "_n.png";
-    		this.setIcon(new ImageIcon(iconYes));
-    		this.setToolTipText(toolTip);
-    		this.addActionListener(new ActionListener() {
+        private String imagePath = "res/images/deckeditor/";
+        private String iconYes;
+        private String iconNo;
+        private FilterCheckBox cb;
+
+        FilterCheckBox(String filterName, String toolTip) {
+            super("", true);
+            cb = this;
+            iconYes = imagePath + "filter_" + filterName + "_y.png";
+            iconNo = imagePath + "filter_" + filterName + "_n.png";
+            this.setIcon(new ImageIcon(iconYes));
+            this.setToolTipText(toolTip);
+            this.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
-                    if(cb.isSelected()){
-                    	cb.setIcon(new ImageIcon(iconYes));
+                    if (cb.isSelected()) {
+                        cb.setIcon(new ImageIcon(iconYes));
+                    } else {
+                        cb.setIcon(new ImageIcon(iconNo));
                     }
-                    else {
-                    	cb.setIcon(new ImageIcon(iconNo));
-                    }
-                  }
+                }
             });
-    	}
+        }
     }
-    
+
     /*CHOPPIC*/
-    
+
     public class CustomListener extends MouseAdapter {
 //        TODO reenable
 //        public void mouseEntered(MouseEvent e) {
@@ -1144,5 +1139,5 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 //            
 //        }
     }
-    
+
 }

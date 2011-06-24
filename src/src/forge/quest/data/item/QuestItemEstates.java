@@ -22,14 +22,12 @@ public class QuestItemEstates extends QuestItemAbstract {
     public int getPrice() {
         if (getLevel() == 0) {
             return 500;
-        }
-        else if (getLevel() == 1) {
+        } else if (getLevel() == 1) {
             return 750;
-        }
-        else {
+        } else {
             return 1000;
         }
     }
 
-    
+
 }

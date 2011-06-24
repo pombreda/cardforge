@@ -1,43 +1,47 @@
 package forge;
-public class ButtonUtil
-{
-    public static void reset()
-    {
-	getOK().setText("OK");
-	getCancel().setText("Cancel");
-	
-	getOK().setSelectable(false);
-	getCancel().setSelectable(false);
+
+public class ButtonUtil {
+    public static void reset() {
+        getOK().setText("OK");
+        getCancel().setText("Cancel");
+
+        getOK().setSelectable(false);
+        getCancel().setSelectable(false);
     }
-    public static void enableOnlyOK()
-    {
-	getOK().setSelectable(true);
-	getCancel().setSelectable(false);	
+
+    public static void enableOnlyOK() {
+        getOK().setSelectable(true);
+        getCancel().setSelectable(false);
     }
-    public static void enableOnlyCancel()
-    {
-	getOK().setSelectable(false);
-	getCancel().setSelectable(true);
+
+    public static void enableOnlyCancel() {
+        getOK().setSelectable(false);
+        getCancel().setSelectable(true);
     }
-    public static void disableAll()
-    {
-	getOK().setSelectable(false);
-	getCancel().setSelectable(false);	
+
+    public static void disableAll() {
+        getOK().setSelectable(false);
+        getCancel().setSelectable(false);
     }
-    public static void enableAll()
-    {
-	getOK().setSelectable(true);
-	getCancel().setSelectable(true);	
-    }    
-    public static void disableOK()
-    {
-    getOK().setSelectable(false);
-    }    
-    public static void disableCancel()
-    {
-    	getCancel().setSelectable(false);
+
+    public static void enableAll() {
+        getOK().setSelectable(true);
+        getCancel().setSelectable(true);
     }
-    
-    private static MyButton getOK()  {return AllZone.getDisplay().getButtonOK();}
-    private static MyButton getCancel()  {return AllZone.getDisplay().getButtonCancel();}
+
+    public static void disableOK() {
+        getOK().setSelectable(false);
+    }
+
+    public static void disableCancel() {
+        getCancel().setSelectable(false);
+    }
+
+    private static MyButton getOK() {
+        return AllZone.getDisplay().getButtonOK();
+    }
+
+    private static MyButton getCancel() {
+        return AllZone.getDisplay().getButtonCancel();
+    }
 }

@@ -46,7 +46,7 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
 
     private void initUI() {
         this.removeAll();
-        
+
         JLabel stallNameLabel;
 
         GridBagLayout layout = new GridBagLayout();
@@ -66,7 +66,7 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         fluffArea.setOpaque(false);
         fluffArea.setEditable(false);
         fluffArea.setFocusable(false);
-        fluffArea.setPreferredSize(new Dimension(fluffArea.getPreferredSize().width,40));
+        fluffArea.setPreferredSize(new Dimension(fluffArea.getPreferredSize().width, 40));
         GridBagConstraints constraints = new GridBagConstraints(0,
                 0,
                 1,
@@ -94,7 +94,7 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         constraints.gridy = 3;
         constraints.anchor = GridBagConstraints.NORTHWEST;
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.insets = new Insets(10,5,10,5);
+        constraints.insets = new Insets(10, 5, 10, 5);
         constraints.weighty = 1;
         constraints.weightx = GridBagConstraints.REMAINDER;
 
@@ -102,11 +102,11 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
 
         JScrollPane scrollPane = new JScrollPane(inventoryPanel);
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.setBorder(new EmptyBorder(0,0,0,0));
+        scrollPane.setBorder(new EmptyBorder(0, 0, 0, 0));
         layout.setConstraints(scrollPane, constraints);
         this.add(scrollPane);
 
-        this.setBorder(new EmptyBorder(0,5,0,0));
+        this.setBorder(new EmptyBorder(0, 5, 0, 0));
     }
 
     private void populateInventory(java.util.List<QuestBazaarItem> stallItems) {
@@ -129,16 +129,14 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
 
         JLabel purchaseLabel = new JLabel();
 
-        if (stallItems.size() == 0){
+        if (stallItems.size() == 0) {
 
             purchaseLabel.setText("The merchant does not have anything useful for sale");
             inventoryPanel.add(purchaseLabel);
             innerConstraints.gridy++;
-        }
+        } else {
 
-        else{
-
-            innerConstraints.insets = new Insets(5,20,5,5);
+            innerConstraints.insets = new Insets(5, 20, 5, 5);
             for (QuestBazaarItem item : stallItems) {
                 JPanel itemPanel = item.getItemPanel();
 
@@ -154,14 +152,14 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         inventoryPanel.add(fillLabel);
     }
 
-    protected java.util.List<QuestBazaarItem> populateItems(){
+    protected java.util.List<QuestBazaarItem> populateItems() {
         java.util.List<QuestBazaarItem> ret = new ArrayList<QuestBazaarItem>();
         java.util.List<QuestStallPurchasable> purchasables = QuestStallManager.getItems(name);
 
         for (QuestStallPurchasable purchasable : purchasables) {
             ret.add(new QuestBazaarItem(purchasable));
         }
-        
+
         return ret;
     }
 
@@ -174,7 +172,7 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         return stallName;
     }
 
-    public void updateItems(){
+    public void updateItems() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 populateInventory(populateItems());

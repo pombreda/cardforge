@@ -6,14 +6,12 @@ import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 
 public class QuestSelectablePanel extends JPanel {
-	private static final long serialVersionUID = -1502285997894190742L;
-	
-	protected Color backgroundColor;
+    private static final long serialVersionUID = -1502285997894190742L;
+
+    protected Color backgroundColor;
     private boolean selected;
 
     ImageIcon icon;
@@ -30,16 +28,15 @@ public class QuestSelectablePanel extends JPanel {
         this.description = description;
         this.icon = icon;
 
-        this.setLayout(new BorderLayout(5,5));
+        this.setLayout(new BorderLayout(5, 5));
 
 
         JLabel iconLabel;
 
-        if(icon == null){
-            iconLabel = new JLabel(GuiUtils.getEmptyIcon(40,40));
-        }
-        else{
-            iconLabel = new JLabel(GuiUtils.getResizedIcon(icon,40,40));
+        if (icon == null) {
+            iconLabel = new JLabel(GuiUtils.getEmptyIcon(40, 40));
+        } else {
+            iconLabel = new JLabel(GuiUtils.getResizedIcon(icon, 40, 40));
         }
 
         iconLabel.setBorder(new LineBorder(Color.BLACK));
@@ -52,7 +49,7 @@ public class QuestSelectablePanel extends JPanel {
 
         centerPanel.setOpaque(false);
         centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-        this.add(centerPanel,BorderLayout.CENTER);
+        this.add(centerPanel, BorderLayout.CENTER);
 
         JPanel centerTopPanel = new JPanel();
         centerTopPanel.setOpaque(false);
@@ -78,18 +75,17 @@ public class QuestSelectablePanel extends JPanel {
         centerPanel.add(descriptionLabel);
 
         this.setMaximumSize(new Dimension(Integer.MAX_VALUE, 80));
-        this.setBorder(new CompoundBorder(new LineBorder(Color.BLACK),new EmptyBorder(5,5,5,5)));
+        this.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(5, 5, 5, 5)));
     }
 
     public boolean isSelected() {
         return selected;
     }
 
-    public void setSelected(boolean selected){
-        if(selected){
+    public void setSelected(boolean selected) {
+        if (selected) {
             this.setBackground(backgroundColor.darker());
-        }
-        else{
+        } else {
             this.setBackground(backgroundColor);
         }
 

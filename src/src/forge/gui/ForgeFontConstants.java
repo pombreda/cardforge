@@ -17,29 +17,29 @@ public class ForgeFontConstants {
 
         Exception exception = null;
         try {
-        	// Fetch Java 6 values (if present) without making the Java 5
-        	// compiler unhappy:
-        	@SuppressWarnings("rawtypes")
-			Class fontClass = Class.forName("java.awt.Font");
-        	
-			dialog = (String) fontClass.getField("DIALOG").get(null);
+            // Fetch Java 6 values (if present) without making the Java 5
+            // compiler unhappy:
+            @SuppressWarnings("rawtypes")
+            Class fontClass = Class.forName("java.awt.Font");
+
+            dialog = (String) fontClass.getField("DIALOG").get(null);
             dialogInput = (String) fontClass.getField("DIALOG_INPUT").get(null);
             monospaced = (String) fontClass.getField("MONOSPACED").get(null);
             sansSerif = (String) fontClass.getField("SANS_SERIF").get(null);
             serif = (String) fontClass.getField("SERIF").get(null);
-            
+
         } catch (ClassNotFoundException err) {
-        	exception = err;
+            exception = err;
         } catch (IllegalAccessException err) {
-        	exception = err;
+            exception = err;
         } catch (NoSuchFieldException err) {
-        	exception = err;
-		} finally {
-        	if (exception != null) {
-        		System.err.print("Exception thrown: " + exception);
-        		exception.printStackTrace();
-        	}
-		}
+            exception = err;
+        } finally {
+            if (exception != null) {
+                System.err.print("Exception thrown: " + exception);
+                exception.printStackTrace();
+            }
+        }
 
         DIALOG = dialog;
         DIALOG_INPUT = dialogInput;

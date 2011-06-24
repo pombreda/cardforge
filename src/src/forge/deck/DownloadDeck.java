@@ -21,8 +21,7 @@ public class DownloadDeck {
         }
         if (rStr.codePointAt(i + 1) >= 48 && rStr.codePointAt(i + 1) <= 57) {
             return rStr.substring(i, i + 2);
-        }
-        else {
+        } else {
             return rStr.substring(i, i + 1);
         }
     }
@@ -80,8 +79,7 @@ public class DownloadDeck {
         temp = rStr.codePointAt(a + 1);
         if (temp >= 48 && temp <= 57) {
             return rStr.substring(a + 2);
-        }
-        else {
+        } else {
             return rStr.substring(a + 1);
         }
 

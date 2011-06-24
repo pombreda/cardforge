@@ -37,9 +37,7 @@ public class QuestDataIO {
             if (!xmlSaveFile.exists()) {
                 data = convertDeprecatedSaveFormat();
                 data.saveData();
-            }
-
-            else {
+            } else {
                 GZIPInputStream zin = new GZIPInputStream(new FileInputStream(xmlSaveFile));
 
                 StringBuilder xml = new StringBuilder();
@@ -53,16 +51,14 @@ public class QuestDataIO {
                 IgnoringXStream xStream = new IgnoringXStream();
                 data = (QuestData) xStream.fromXML(xml.toString());
 
-                if (data.versionNumber != QuestData.CURRENT_VERSION_NUMBER){
-                    updateSaveFile(data,xml.toString());
+                if (data.versionNumber != QuestData.CURRENT_VERSION_NUMBER) {
+                    updateSaveFile(data, xml.toString());
                 }
 
                 zin.close();
             }
             return data;
-        }
-
-        catch (Exception ex) {
+        } catch (Exception ex) {
             ErrorViewer.showError(ex, "Error loading Quest Data");
             throw new RuntimeException(ex);
         }
@@ -80,11 +76,11 @@ public class QuestDataIO {
                 case 0: // First beta release with new file format, inventory needs to be migrated
                     newData.inventory = new QuestInventory();
                     NodeList elements = document.getElementsByTagName("estatesLevel");
-                    newData.getInventory().setItemLevel("Estates",Integer.parseInt(elements.item(0).getTextContent()));
+                    newData.getInventory().setItemLevel("Estates", Integer.parseInt(elements.item(0).getTextContent()));
                     elements = document.getElementsByTagName("luckyCoinLevel");
-                    newData.getInventory().setItemLevel("Lucky Coin",Integer.parseInt(elements.item(0).getTextContent()));
+                    newData.getInventory().setItemLevel("Lucky Coin", Integer.parseInt(elements.item(0).getTextContent()));
                     elements = document.getElementsByTagName("sleightOfHandLevel");
-                    newData.getInventory().setItemLevel("Sleight",Integer.parseInt(elements.item(0).getTextContent()));
+                    newData.getInventory().setItemLevel("Sleight", Integer.parseInt(elements.item(0).getTextContent()));
                     elements = document.getElementsByTagName("gearLevel");
 
                     int gearLevel = Integer.parseInt(elements.item(0).getTextContent());
@@ -206,9 +202,8 @@ public class QuestDataIO {
             return new MapperWrapper(next) {
                 @Override
                 public boolean shouldSerializeMember(
-                		@SuppressWarnings("rawtypes") Class definedIn,
-                        String fieldName) 
-                {
+                        @SuppressWarnings("rawtypes") Class definedIn,
+                        String fieldName) {
                     if (definedIn == Object.class) {
                         ignoredFields.add(fieldName);
                         return false;

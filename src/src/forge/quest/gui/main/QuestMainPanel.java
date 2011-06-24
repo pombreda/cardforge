@@ -25,9 +25,9 @@ import java.util.List;
 
 
 public class QuestMainPanel extends QuestAbstractPanel {
-	private static final long serialVersionUID = 6142934729724012402L;
+    private static final long serialVersionUID = 6142934729724012402L;
 
-	private forge.quest.data.QuestData questData;
+    private forge.quest.data.QuestData questData;
 
     JLabel creditsLabel = new JLabel();
     JLabel lifeLabel = new JLabel();
@@ -87,7 +87,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
         centerPanel.add(nextMatchPanel, BorderLayout.CENTER);
         this.setBorder(new EmptyBorder(5, 5, 5, 5));
-        
+
     }
 
     private JPanel createStatusPanel() {
@@ -281,8 +281,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     if (petCheckBox.isSelected()) {
                         questData.getPetManager().setSelectedPet((String) petComboBox.getSelectedItem());
-                    }
-                    else {
+                    } else {
                         questData.getPetManager().setSelectedPet(null);
                     }
 
@@ -296,15 +295,14 @@ public class QuestMainPanel extends QuestAbstractPanel {
                 public void actionPerformed(ActionEvent actionEvent) {
                     if (petCheckBox.isSelected()) {
                         questData.getPetManager().setSelectedPet((String) petComboBox.getSelectedItem());
-                    }
-                    else {
+                    } else {
                         questData.getPetManager().setSelectedPet(null);
                     }
                 }
             });
             this.petComboBox.setMaximumSize(
-                    new Dimension(Integer.MAX_VALUE, 
-                    (int) this.petCheckBox.getPreferredSize().getHeight()));
+                    new Dimension(Integer.MAX_VALUE,
+                            (int) this.petCheckBox.getPreferredSize().getHeight()));
             petPanel.add(this.petComboBox);
 
             this.plantBox.addActionListener(new ActionListener() {
@@ -412,9 +410,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
             for (String deckName : deckNames) {
                 deckComboBox.addItem(deckName);
             }
-        }
-
-        else {
+        } else {
             deckComboBox.addItem(NO_DECKS_AVAILABLE);
             deckComboBox.setEnabled(false);
         }
@@ -437,9 +433,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
                 for (String aPetList : petList) {
                     petComboBox.addItem(aPetList);
                 }
-            }
-
-            else {
+            } else {
                 petComboBox.addItem("No pets available");
                 petComboBox.setEnabled(false);
                 petCheckBox.setEnabled(false);
@@ -448,8 +442,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
             if (!questData.getPetManager().shouldPetBeUsed()) {
                 petCheckBox.setSelected(false);
                 petComboBox.setEnabled(false);
-            }
-            else {
+            } else {
                 petCheckBox.setSelected(true);
                 petComboBox.setSelectedItem(questData.getPetManager().getSelectedPet().getName());
             }
@@ -460,25 +453,23 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
             QuestItemZeppelin zeppelin = (QuestItemZeppelin) questData.getInventory().getItem("Zeppelin");
 
-            if (zeppelin.getLevel() > 0){
+            if (zeppelin.getLevel() > 0) {
                 zeppelinPanel.removeAll();
-                zeppelinPanel.add(zeppelinButton,BorderLayout.CENTER);
+                zeppelinPanel.add(zeppelinButton, BorderLayout.CENTER);
             }
 
-            if (!zeppelin.hasBeenUsed()){
+            if (!zeppelin.hasBeenUsed()) {
                 zeppelinButton.setEnabled(true);
-            }
-            else{
+            } else {
                 zeppelinButton.setEnabled(false);
             }
-            
+
 
         }
 
         if (nextQuestInWins() > 0) {
             nextQuestLabel.setText("Next Quest in " + nextQuestInWins() + " Wins.");
-        }
-        else {
+        } else {
             nextQuestLabel.setText("Next Quest available now.");
         }
 
@@ -493,10 +484,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
         nextMatchPanel.setLayout(nextMatchLayout);
         nextMatchPanel.add(createBattlePanel(), BATTLES);
         nextMatchPanel.add(createQuestPanel(), QUESTS);
-        if (isShowingQuests){
+        if (isShowingQuests) {
             this.nextMatchLayout.show(nextMatchPanel, QUESTS);
-        }
-        else{
+        } else {
             this.nextMatchLayout.show(nextMatchPanel, BATTLES);
         }
     }
@@ -512,8 +502,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
         if (questData.getInventory().hasItem("Zeppelin")) {
             mul = 4;
-        }
-        else if (questData.getInventory().hasItem("Map")) {
+        } else if (questData.getInventory().hasItem("Map")) {
             mul = 5;
         }
 
@@ -589,8 +578,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         //DO NOT CHANGE THIS ORDER, GuiDisplay needs to be created before cards are added
         if (newGUICheckbox.isSelected()) {
             AllZone.setDisplay(new GuiDisplay4());
-        }
-        else {
+        } else {
             AllZone.setDisplay(new GuiDisplay3());
         }
 
@@ -601,14 +589,12 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
         if (isShowingQuests) {
             setupQuest(humanDeck);
-        }
-
-        else {
+        } else {
             setupBattle(humanDeck);
         }
 
         AllZone.getQuestData().saveData();
-        
+
         AllZone.getDisplay().setVisible(true);
         mainFrame.dispose();
     }
@@ -649,9 +635,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         if (isShowingQuests) {
             Quest_Assignment selectedQuest = ((QuestQuest) selectedOpponent).getQuestAssignment();
             oppIconName = selectedQuest.getIconName();
-        }
-
-        else {
+        } else {
             oppIconName = selectedOpponent.getName();
             oppIconName = oppIconName.substring(0, oppIconName.length() - 1).trim() + ".jpg";
         }
@@ -662,8 +646,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         if (isShowingQuests) {
             isShowingQuests = false;
             questButton.setText("Quests");
-        }
-        else {
+        } else {
             isShowingQuests = true;
             questButton.setText("Battles");
         }

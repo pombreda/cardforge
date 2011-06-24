@@ -1,19 +1,19 @@
 package forge.properties;
 /**
  * ForgeProps.java
- * 
+ *
  * Created on 30.08.2009
  */
 
 
-import static java.lang.String.*;
+import forge.error.ErrorViewer;
+import treeProperties.TreeProperties;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 
-import treeProperties.TreeProperties;
-import forge.error.ErrorViewer;
+import static java.lang.String.format;
 
 
 /**
@@ -21,33 +21,33 @@ import forge.error.ErrorViewer;
  */
 public class ForgeProps {
     private static final TreeProperties properties;
-    
+
     static {
         TreeProperties p;
         try {
             p = new TreeProperties("forge.properties");
             p.rethrow();
-        } catch(IOException ex) {
+        } catch (IOException ex) {
             ErrorViewer.showError(ex);
             p = null;
         }
         properties = p;
     }
-    
+
     /**
      * Returns the tree properties of forge
      */
     public static TreeProperties getProperties() {
         return properties;
     }
-    
+
     /**
      * Returns the string property value, or null if there's no such property
      */
     public static String getProperty(String key) {
         return getProperty(key, null);
     }
-    
+
     /**
      * Returns the string property value, or def if there's no such property
      */
@@ -55,20 +55,20 @@ public class ForgeProps {
         String result;
         try {
             result = getProperties().getProperty(key);
-            if(result == null) result = def;
-        } catch(Exception ex) {
+            if (result == null) result = def;
+        } catch (Exception ex) {
             result = def;
         }
         return result;
     }
-    
+
     /**
      * Returns the File property value, or null if there's no such property
      */
     public static File getFile(String key) {
         return getFile(key, null);
     }
-    
+
     /**
      * Returns the File property value, or def if there's no such property
      */
@@ -76,13 +76,13 @@ public class ForgeProps {
         File result;
         try {
             result = getProperties().getFile(key);
-            if(result == null) result = def;
-        } catch(Exception ex) {
+            if (result == null) result = def;
+        } catch (Exception ex) {
             result = def;
         }
         return result;
     }
-    
+
     /**
      * Returns the localized version of the specified property. The key is a format string containing "%s", which
      * is replaced with a language code (ISO 639-1, see {@link Locale#getLanguage()}). First, the configured
@@ -92,7 +92,7 @@ public class ForgeProps {
     public static String getLocalized(String key) {
         return getLocalized(key, null);
     }
-    
+
     /**
      * Returns the localized version of the specified property. The key is a format string containing "%s", which
      * is replaced with a language code (ISO 639-1, see {@link Locale#getLanguage()}). First, the configured
@@ -105,16 +105,17 @@ public class ForgeProps {
         //the second is the default locale's language code
         String[] languages = {getProperty(NewConstants.LANG.LANGUAGE), Locale.getDefault().getLanguage(), "en"};
         try {
-            for(String lang:languages) {
+            for (String lang : languages) {
                 //could be if a property does not exist
                 //just skip it, and try the next
-                if(lang == null) continue;
+                if (lang == null) continue;
                 String result = getProperty(format(key, lang));
-                if(result != null) return result;
+                if (result != null) return result;
             }
             //exceptions are skipped here; also the error viewer uses this, and reporting exceptions may result
             //in a more fatal error (stack overflow)
-        } catch(Exception ex) {}
+        } catch (Exception ex) {
+        }
         //if no property was found, or an error occurred, return the default value
         return def;
     }

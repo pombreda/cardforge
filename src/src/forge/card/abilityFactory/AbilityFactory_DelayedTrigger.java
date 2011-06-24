@@ -18,76 +18,65 @@ import java.util.HashMap;
 public class AbilityFactory_DelayedTrigger {
     private static AbilityFactory tempCreator = new AbilityFactory();
 
-    public static Ability_Sub getDrawback(final AbilityFactory AF)
-    {
-        final Ability_Sub drawback = new Ability_Sub(AF.getHostCard(),AF.getAbTgt()) {
-			private static final long serialVersionUID = 6192972525033429820L;
+    public static Ability_Sub getDrawback(final AbilityFactory AF) {
+        final Ability_Sub drawback = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
+            private static final long serialVersionUID = 6192972525033429820L;
 
-			@Override
+            @Override
             public boolean chkAI_Drawback() {
-                return doChkAI_Drawback(AF,this);  //To change body of implemented methods use File | Settings | File Templates.
+                return doChkAI_Drawback(AF, this);  //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
             public boolean doTrigger(boolean mandatory) {
-                return doTriggerAI(AF,this);  //To change body of implemented methods use File | Settings | File Templates.
+                return doTriggerAI(AF, this);  //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
             public void resolve() {
-                doResolve(AF,this);
+                doResolve(AF, this);
             }
         };
 
         return drawback;
     }
 
-    private static boolean doChkAI_Drawback(final AbilityFactory AF, final SpellAbility SA)
-    {
-    	HashMap<String,String> params = AF.getMapParams();
+    private static boolean doChkAI_Drawback(final AbilityFactory AF, final SpellAbility SA) {
+        HashMap<String, String> params = AF.getMapParams();
         String svarName = params.get("Execute");
         SpellAbility trigsa = tempCreator.getAbility(AF.getHostCard().getSVar(svarName), AF.getHostCard());
 
-        if(trigsa instanceof Ability_Sub)
-        {
-            return ((Ability_Sub)trigsa).chkAI_Drawback();
-        }
-        else
-        {
+        if (trigsa instanceof Ability_Sub) {
+            return ((Ability_Sub) trigsa).chkAI_Drawback();
+        } else {
             return trigsa.canPlayAI();
         }
     }
 
-    private static boolean doTriggerAI(final AbilityFactory AF,final SpellAbility SA)
-    {
-    	HashMap<String,String> params = AF.getMapParams();
+    private static boolean doTriggerAI(final AbilityFactory AF, final SpellAbility SA) {
+        HashMap<String, String> params = AF.getMapParams();
         String svarName = params.get("Execute");
-        SpellAbility trigsa = tempCreator.getAbility(AF.getHostCard().getSVar(svarName),AF.getHostCard());
+        SpellAbility trigsa = tempCreator.getAbility(AF.getHostCard().getSVar(svarName), AF.getHostCard());
 
-        if(!params.containsKey("OptionalDecider"))
-        {
-                return trigsa.doTrigger(true);
-        }
-        else
-        {
+        if (!params.containsKey("OptionalDecider")) {
+            return trigsa.doTrigger(true);
+        } else {
             return trigsa.doTrigger(!params.get("OptionalDecider").equals("You"));
         }
     }
 
-    private static void doResolve(AbilityFactory AF,SpellAbility SA)
-    {
-        HashMap<String,String> mapParams = AF.getMapParams();
+    private static void doResolve(AbilityFactory AF, SpellAbility SA) {
+        HashMap<String, String> mapParams = AF.getMapParams();
 
-        if(mapParams.containsKey("Cost"))
+        if (mapParams.containsKey("Cost"))
             mapParams.remove("Cost");
 
-        if(mapParams.containsKey("SpellDescription"))
-        {
-            mapParams.put("TriggerDescription",mapParams.get("SpellDescription"));
+        if (mapParams.containsKey("SpellDescription")) {
+            mapParams.put("TriggerDescription", mapParams.get("SpellDescription"));
             mapParams.remove("SpellDescription");
         }
 
-        Trigger delTrig = TriggerHandler.parseTrigger(mapParams,AF.getHostCard());
+        Trigger delTrig = TriggerHandler.parseTrigger(mapParams, AF.getHostCard());
 
         AllZone.getTriggerHandler().registerDelayedTrigger(delTrig);
     }

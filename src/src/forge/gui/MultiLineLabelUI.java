@@ -46,28 +46,30 @@ import java.util.List;
  * text alignment (horizontal and vertical) is supported. The UI delegate can be
  * used on a regular <code>JLabel</code> if text alignment isn't required. The
  * default alignment, left and vertically centered, will then be used.
- * <p>
+ * <p/>
  * Example of usage:
- * 
+ * <p/>
  * <pre>
  * JLabel myLabel = new JLabel();
  * myLabel.setUI(MultiLineLabelUI.labelUI);
  * myLabel.setText(&quot;A long label that will wrap automatically.&quot;);
  * </pre>
- * 
- * <p>
+ * <p/>
+ * <p/>
  * The line and wrapping support is implemented without using a
  * <code>View</code> to make it easy for subclasses to add custom text effects
  * by overriding {@link #paintEnabledText(JLabel, Graphics, String, int, int)}
  * and {@link #paintDisabledText(JLabel, Graphics, String, int, int)}. This
  * class is designed to be easily extended by subclasses.
- * 
+ *
  * @author Samuel Sjoberg, http://samuelsjoberg.com
  * @version 1.3.0
  */
 public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener {
 
-    /** Shared instance of the UI delegate. */
+    /**
+     * Shared instance of the UI delegate.
+     */
     public static LabelUI labelUI = new MultiLineLabelUI();
 
     /**
@@ -82,36 +84,45 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     protected static Rectangle paintViewR = new Rectangle();
     protected static Insets paintViewInsets = new Insets(0, 0, 0, 0);
 
-    /** Font metrics of the JLabel being rendered. */
+    /**
+     * Font metrics of the JLabel being rendered.
+     */
     protected FontMetrics metrics;
 
-    /** Default size of the lines list. */
+    /**
+     * Default size of the lines list.
+     */
     protected static int defaultSize = 4;
 
     /**
      * Get the shared UI instance.
-     * 
-     * @param c
-     *            the component about to be installed
+     *
+     * @param c the component about to be installed
      * @return the shared UI delegate instance
      */
     public static ComponentUI createUI(JComponent c) {
         return labelUI;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected void uninstallDefaults(JLabel c) {
         super.uninstallDefaults(c);
         clearCache(c);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected void installListeners(JLabel c) {
         super.installListeners(c);
         c.addComponentListener(this);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     protected void uninstallListeners(JLabel c) {
         super.uninstallListeners(c);
         c.removeComponentListener(this);
@@ -119,15 +130,16 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
 
     /**
      * Clear the wrapped line cache.
-     * 
-     * @param l
-     *            the label containing a cached value
+     *
+     * @param l the label containing a cached value
      */
     protected void clearCache(JLabel l) {
         l.putClientProperty(PROPERTY_KEY, null);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         final String name = e.getPropertyName();
@@ -139,16 +151,12 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Calculate the paint rectangles for the icon and text for the passed
      * label.
-     * 
-     * @param l
-     *            a label
-     * @param fm
-     *            the font metrics to use, or <code>null</code> to get the font
-     *            metrics from the label
-     * @param width
-     *            label width
-     * @param height
-     *            label height
+     *
+     * @param l      a label
+     * @param fm     the font metrics to use, or <code>null</code> to get the font
+     *               metrics from the label
+     * @param width  label width
+     * @param height label height
      */
     protected void updateLayout(JLabel l, FontMetrics fm, int width, int height) {
         if (fm == null) {
@@ -174,7 +182,9 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     protected void prepareGraphics(Graphics g) {
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void paint(Graphics g, JComponent c) {
 
         // parent's update method fills the background
@@ -211,13 +221,10 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
 
     /**
      * Paint the wrapped text lines.
-     * 
-     * @param g
-     *            graphics component to paint on
-     * @param label
-     *            the label being painted
-     * @param fm
-     *            font metrics for current font
+     *
+     * @param g     graphics component to paint on
+     * @param label the label being painted
+     * @param fm    font metrics for current font
      */
     protected void paintTextLines(Graphics g, JLabel label, FontMetrics fm) {
         List<String> lines = getTextLines(label);
@@ -244,7 +251,7 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
 
             if (it.hasNext()
                     && !paintTextR.contains(textX, textY + fm.getHeight()
-                            + getAscent(fm))) {
+                    + getAscent(fm))) {
                 // The last visible row, add a clip indication.
                 text = clip(text, fm, paintTextR);
             }
@@ -262,9 +269,8 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Returns the available height to paint text on. This is the height of the
      * passed component with insets subtracted.
-     * 
-     * @param l
-     *            a component
+     *
+     * @param l a component
      * @return the available height
      */
     protected int getAvailableHeight(JLabel l) {
@@ -275,13 +281,10 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Add a clip indication to the string. It is important that the string
      * length does not exceed the length or the original string.
-     * 
-     * @param text
-     *            the to be painted
-     * @param fm
-     *            font metrics
-     * @param bounds
-     *            the text bounds
+     *
+     * @param text   the to be painted
+     * @param fm     font metrics
+     * @param bounds the text bounds
      * @return the clipped string
      */
     protected String clip(String text, FontMetrics fm, Rectangle bounds) {
@@ -298,13 +301,10 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Establish the vertical text alignment. The default alignment is to center
      * the text in the label.
-     * 
-     * @param label
-     *            the label to paint
-     * @param fm
-     *            font metrics
-     * @param bounds
-     *            the text bounds rectangle
+     *
+     * @param label  the label to paint
+     * @param fm     font metrics
+     * @param bounds the text bounds rectangle
      * @return the vertical text alignment, defaults to CENTER.
      */
     protected int alignmentY(JLabel label, FontMetrics fm, Rectangle bounds) {
@@ -314,12 +314,12 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         if (label instanceof MultiLineLabel) {
             int align = ((MultiLineLabel) label).getVerticalTextAlignment();
             switch (align) {
-            case JLabel.TOP:
-                return getAscent(fm) + paintViewInsets.top;
-            case JLabel.BOTTOM:
-                return getAscent(fm) + height - paintViewInsets.top
-                        + paintViewInsets.bottom - textHeight;
-            default:
+                case JLabel.TOP:
+                    return getAscent(fm) + paintViewInsets.top;
+                case JLabel.BOTTOM:
+                    return getAscent(fm) + height - paintViewInsets.top
+                            + paintViewInsets.bottom - textHeight;
+                default:
             }
         }
 
@@ -336,28 +336,24 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Establish the horizontal text alignment. The default alignment is left
      * aligned text.
-     * 
-     * @param label
-     *            the label to paint
-     * @param fm
-     *            font metrics
-     * @param s
-     *            the string to paint
-     * @param bounds
-     *            the text bounds rectangle
+     *
+     * @param label  the label to paint
+     * @param fm     font metrics
+     * @param s      the string to paint
+     * @param bounds the text bounds rectangle
      * @return the x-coordinate to use when painting for proper alignment
      */
     protected int alignmentX(JLabel label, FontMetrics fm, String s,
-            Rectangle bounds) {
+                             Rectangle bounds) {
         if (label instanceof MultiLineLabel) {
             int align = ((MultiLineLabel) label).getHorizontalTextAlignment();
             switch (align) {
-            case JLabel.RIGHT:
-                return bounds.x + paintViewR.width - fm.stringWidth(s);
-            case JLabel.CENTER:
-                return bounds.x + paintViewR.width / 2 - fm.stringWidth(s) / 2;
-            default:
-                return bounds.x;
+                case JLabel.RIGHT:
+                    return bounds.x + paintViewR.width - fm.stringWidth(s);
+                case JLabel.CENTER:
+                    return bounds.x + paintViewR.width / 2 - fm.stringWidth(s) / 2;
+                default:
+                    return bounds.x;
             }
         }
         return bounds.x;
@@ -367,9 +363,8 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
      * Check the given string to see if it should be rendered as HTML. Code
      * based on implementation found in
      * <code>BasicHTML.isHTMLString(String)</code> in future JDKs.
-     * 
-     * @param s
-     *            the string
+     *
+     * @param s the string
      * @return <code>true</code> if string is HTML, otherwise <code>false</code>
      */
     private static boolean isHTMLString(String s) {
@@ -383,7 +378,9 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Dimension getPreferredSize(JComponent c) {
         Dimension d = super.getPreferredSize(c);
         JLabel label = (JLabel) c;
@@ -419,9 +416,8 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * The preferred height of the label is the height of the lines with added
      * top and bottom insets.
-     * 
-     * @param label
-     *            the label
+     *
+     * @param label the label
      * @return the preferred height of the wrapped lines.
      */
     protected int getPreferredHeight(JLabel label) {
@@ -433,9 +429,8 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Get the lines of text contained in the text label. The prepared lines is
      * cached as a client property, accessible via {@link #PROPERTY_KEY}.
-     * 
-     * @param l
-     *            the label
+     *
+     * @param l the label
      * @return the text lines of the label.
      */
     @SuppressWarnings("unchecked")
@@ -448,22 +443,30 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         return lines;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void componentHidden(ComponentEvent e) {
         // Don't care
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void componentMoved(ComponentEvent e) {
         // Don't care
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void componentResized(ComponentEvent e) {
         clearCache((JLabel) e.getSource());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void componentShown(ComponentEvent e) {
         // Don't care
     }
@@ -471,9 +474,8 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     /**
      * Prepare the text lines for rendering. The lines are wrapped to fit in the
      * current available space for text. Explicit line breaks are preserved.
-     * 
-     * @param l
-     *            the label to render
+     *
+     * @param l the label to render
      * @return a list of text lines to render
      */
     protected List<String> prepareLines(JLabel l) {
@@ -497,16 +499,14 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
 
     /**
      * If necessary, wrap the text into multiple lines.
-     * 
-     * @param lines
-     *            line array in which to store the wrapped lines
-     * @param elem
-     *            the document element containing the text content
+     *
+     * @param lines line array in which to store the wrapped lines
+     * @param elem  the document element containing the text content
      */
     protected void wrap(List<String> lines, Element elem) {
         int p1 = elem.getEndOffset();
         Document doc = elem.getDocument();
-        for (int p0 = elem.getStartOffset(); p0 < p1;) {
+        for (int p0 = elem.getStartOffset(); p0 < p1; ) {
             int p = calculateBreakPosition(doc, p0, p1);
             try {
                 lines.add(doc.getText(p0, p - p0));
@@ -519,13 +519,10 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
 
     /**
      * Calculate the position on which to break (wrap) the line.
-     * 
-     * @param doc
-     *            the document
-     * @param p0
-     *            start position
-     * @param p1
-     *            end position
+     *
+     * @param doc the document
+     * @param p0  start position
+     * @param p1  end position
      * @return the actual end position, will be <code>p1</code> if content does
      *         not need to wrap, otherwise it will be less than <code>p1</code>.
      */
@@ -540,34 +537,39 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         int width = paintTextR.width;
         int p = p0
                 + Utilities.getBreakLocation(segment, metrics, 0, width, null,
-                        p0);
+                p0);
         SegmentCache.releaseSegment(segment);
         return p;
     }
 
     /**
      * Static singleton {@link Segment} cache.
-     * 
-     * @see javax.swing.text.SegmentCache
-     * 
+     *
      * @author Samuel Sjoberg
+     * @see javax.swing.text.SegmentCache
      */
     protected static final class SegmentCache {
 
-        /** Reused segments. */
+        /**
+         * Reused segments.
+         */
         private ArrayList<Segment> segments = new ArrayList<Segment>(2);
 
-        /** Singleton instance. */
+        /**
+         * Singleton instance.
+         */
         private static SegmentCache cache = new SegmentCache();
 
-        /** Private constructor. */
+        /**
+         * Private constructor.
+         */
         private SegmentCache() {
         }
 
         /**
          * Returns a <code>Segment</code>. When done, the <code>Segment</code>
          * should be recycled by invoking {@link #releaseSegment(Segment)}.
-         * 
+         *
          * @return a <code>Segment</code>.
          */
         public static Segment getSegment() {

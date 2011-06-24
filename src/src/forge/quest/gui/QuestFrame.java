@@ -8,17 +8,14 @@ import forge.quest.gui.main.QuestMainPanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-import java.awt.Dimension;
-import java.awt.HeadlessException;
+import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class QuestFrame extends JFrame {
-	private static final long serialVersionUID = -2832625381531838412L;
-	
-	JPanel visiblePanel;
+    private static final long serialVersionUID = -2832625381531838412L;
+
+    JPanel visiblePanel;
     CardLayout questLayout;
 
     public static final String MAIN_PANEL = "Main";
@@ -30,7 +27,7 @@ public class QuestFrame extends JFrame {
         this.setTitle("Quest Mode");
 
         visiblePanel = new JPanel(new BorderLayout());
-        visiblePanel.setBorder(new EmptyBorder(2,2,2,2));
+        visiblePanel.setBorder(new EmptyBorder(2, 2, 2, 2));
         questLayout = new CardLayout();
         visiblePanel.setLayout(questLayout);
 
@@ -41,7 +38,6 @@ public class QuestFrame extends JFrame {
         newPanel = new QuestBazaarPanel(this);
         visiblePanel.add(newPanel, BAZAAR_PANEL);
         subPanelMap.put(BAZAAR_PANEL, newPanel);
-
 
 
         this.getContentPane().setLayout(new BorderLayout());
@@ -60,25 +56,23 @@ public class QuestFrame extends JFrame {
     }
 
 
-
-    private void showPane(String paneName){
+    private void showPane(String paneName) {
         subPanelMap.get(paneName).refreshState();
         questLayout.show(visiblePanel, paneName);
     }
 
-    public void showMainPane(){
+    public void showMainPane() {
         showPane(MAIN_PANEL);
     }
 
-    public void showBazaarPane(){
+    public void showBazaarPane() {
         showPane(BAZAAR_PANEL);
     }
 
 
-
     public void returnToMainMenu() {
         AllZone.getQuestData().saveData();
-        (new Gui_NewGame()).setVisible(true) ;
+        (new Gui_NewGame()).setVisible(true);
         this.dispose();
     }
 }
