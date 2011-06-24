@@ -1,0 +1,10 @@
+Name:Duct Crawler
+ManaCost:R
+Types:Creature Insect
+Text:no text
+PT:1/1
+SVar:Rarity:Common
+SVar:RemAIDeck:True
+SVar:Picture:http://www.wizards.com/global/images/magic/general/duct_crawler.jpg
+End
+#Uses card-specific code
