@@ -558,11 +558,11 @@ public class AbilityFactory {
 
         if (API.equals("Clash")) {
             if (isAb)
-                SA = AbilityFactory_Clash.getAbility(this);
+                SA = AbilityFactory_Clash.getAbilityClash(this);
             else if (isSp)
-                SA = AbilityFactory_Clash.getSpell(this);
+                SA = AbilityFactory_Clash.getSpellClash(this);
             else if (isDb)
-                SA = AbilityFactory_Clash.getDrawback(this);
+                SA = AbilityFactory_Clash.getDrawbackClash(this);
         }
 
         if (API.equals("Animate")) {
@@ -671,11 +671,11 @@ public class AbilityFactory {
 
         if (API.equals("FlipACoin")) {
             if (isAb)
-                SA = AbilityFactory_Clash.getAbilityFlip(this);
+                SA = AbilityFactory_Clash.createAbilityFlip(this);
             else if (isSp)
-                SA = AbilityFactory_Clash.getSpellFlip(this);
+                SA = AbilityFactory_Clash.createSpellFlip(this);
             else if (isDb)
-                SA = AbilityFactory_Clash.getDrawbackFlip(this);
+                SA = AbilityFactory_Clash.createDrawbackFlip(this);
         }
 
         if (API.equals("DelayedTrigger")) {
