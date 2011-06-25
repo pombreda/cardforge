@@ -1,4 +1,4 @@
-Name:Frozen AEther
+Name:Frozen Æther
 ManaCost:3 U
 Types:Enchantment
 Text:Artifacts, creatures, and lands your opponents control enter the battlefield tapped.

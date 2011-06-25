@@ -1,4 +1,4 @@
-Name:Scornful AEther-Lich
+Name:Scornful Æther-Lich
 ManaCost:3 U
 Types:Artifact Creature Zombie Wizard
 Text:no text

@@ -1,4 +1,4 @@
-Name:AEther Mutation
+Name:Æther Mutation
 ManaCost:3 G U
 Types:Sorcery
 Text:no text

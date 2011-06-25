@@ -1,4 +1,4 @@
-Name:AEther Spellbomb
+Name:Æther Spellbomb
 ManaCost:1
 Types:Artifact
 Text:no text
