@@ -1,5 +1,5 @@
 Name:Skyshooter
-ManaCost:3 W
+ManaCost:1 G
 Types:Creature Centaur Archer
 Text:no text
 PT:1/2
