@@ -408,7 +408,7 @@ public class AllZoneUtil {
     /**
      * gets a list of all cards with a certain type (Mountain, Elf, etc...) in play
      *
-     * @param the type to find in play
+     * @param cardType the type to find in play
      * @return a CardList with all cards of the given type in play
      */
     public static CardList getTypeInPlay(final String cardType) {

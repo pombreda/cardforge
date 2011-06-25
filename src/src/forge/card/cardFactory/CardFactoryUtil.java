@@ -1801,7 +1801,8 @@ public class CardFactoryUtil {
      *
      * @param numCards
      * @param recall
-     * @return
+     * @param sa
+     * @return input
      */
     public static Input input_discardRecall(final int numCards, final Card recall, final SpellAbility sa) {
         Input target = new Input() {

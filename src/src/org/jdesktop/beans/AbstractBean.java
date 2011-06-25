@@ -120,7 +120,7 @@ import java.beans.*;
  * {@code AbstractBean} is not {@link java.io.Serializable}. Special care must
  * be taken when creating {@code Serializable} subclasses, as the
  * {@code Serializable} listeners will not be saved.  Subclasses will need to
- * manually save the serializable listeners.  The {@link AbstractSerializableBean}
+ * manually save the serializable listeners.  The AbstractSerializableBean
  * is {@code Serializable} and already handles the listeners correctly.  If
  * possible, it is recommended that {@code Serializable} beans should extend
  * {@code AbstractSerializableBean}.  If it is not possible, the
@@ -129,8 +129,6 @@ import java.beans.*;
  * </p>
  *
  * @author rbair
- * @status REVIEWED
- * @see AbstractSerializableBean
  */
 public abstract class AbstractBean {
     /**
