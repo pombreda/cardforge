@@ -556,7 +556,7 @@ public class TriggerHandler {
 
                 @Override
                 public Ability_Sub getSubAbility() {
-                    return sa[0].getSubAbility();
+                    return null;//sa[0].getSubAbility(); //the wrapper ability should not return a subability
                 }
 
                 @Override

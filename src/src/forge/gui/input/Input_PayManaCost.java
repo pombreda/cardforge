@@ -159,7 +159,7 @@ public class Input_PayManaCost extends Input {
                 stopSetNext(spell.getAfterPayMana());
             else {
                 if (skipStack) {
-                	AbilityFactory.resolve(spell);
+                	spell.resolve();
                 } else {
                     AllZone.getStack().add(spell);
                 }
