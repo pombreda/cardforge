@@ -14,15 +14,12 @@ import java.util.Locale;
 public class GlowText extends JLabel {
     private static final long serialVersionUID = -2868833097364223352L;
     private int glowSize;
-    @SuppressWarnings("unused")
-    private float glowIntensity;
     private Color glowColor;
     private boolean wrap;
 
     public void setGlow(Color glowColor, int size, float intensity) {
         this.glowColor = glowColor;
         this.glowSize = size;
-        this.glowIntensity = intensity;
     }
 
     public void setWrap(boolean wrap) {

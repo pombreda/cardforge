@@ -159,6 +159,10 @@ abstract public class CardPanelContainer extends JPanel {
         return placeholder;
     }
 
+    /**
+     * @param gameCardID
+     * @return
+     */
     public CardPanel getCardPanel(int gameCardID) {
         for (CardPanel panel : cardPanels)
             if (panel.gameCard.getUniqueNumber() == gameCardID) return panel;

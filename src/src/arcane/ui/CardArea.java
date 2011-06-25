@@ -65,7 +65,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         return null;
     }
 
-    public void layout() {
+    public void doLayout() {
         if (cardPanels.isEmpty()) return;
 
         Rectangle rect = scrollPane.getVisibleRect();
@@ -222,7 +222,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
 
     public void mouseDragEnd(CardPanel dragPanel, MouseEvent evt) {
         super.mouseDragEnd(dragPanel, evt);
-        layout();
+        doLayout();
         JLayeredPane layeredPane = SwingUtilities.getRootPane(CardPanel.dragAnimationPanel).getLayeredPane();
         int startX = CardPanel.dragAnimationPanel.getCardX();
         int startY = CardPanel.dragAnimationPanel.getCardY();
