@@ -53,11 +53,6 @@ import java.awt.*;
  * <p>This class is <strong>not</strong> threadsafe.</p>
  *
  * @author rbair
- * @see AbstractPainter
- * @see CompoundPainter
- * @see org.jdesktop.swingx.JXPanel
- * @see org.jdesktop.swingx.JXLabel
- * @see org.jdesktop.swingx.JXButton
  */
 public interface Painter<T> {
     /**

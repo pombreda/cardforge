@@ -53,7 +53,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * running task run in a background thread and provide updates to the UI
  * either when done, or while processing.
  * Subclasses of {@code SwingWorker} must implement
- * the {@see #doInBackground} method to perform the background computation.
+ * the doInBackground method to perform the background computation.
  * <p/>
  * <p/>
  * <p/>
@@ -377,7 +377,6 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      * </pre>
      *
      * @param chunks intermediate results to process
-     * @see #process
      */
     protected final void publish(V... chunks) {
         synchronized (this) {
