@@ -5,12 +5,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_Shuffled class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_Shuffled extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Shuffled.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Shuffled(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("ValidPlayer")) {
@@ -22,6 +35,7 @@ public class Trigger_Shuffled extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Shuffled(mapParams, hostCard);
@@ -34,6 +48,7 @@ public class Trigger_Shuffled extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Player", runParams.get("Player"));

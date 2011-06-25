@@ -23,9 +23,13 @@ import java.util.Arrays;
  * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
  * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
  * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class GUI_DeckAnalysis extends javax.swing.JDialog {
 
+    /** Constant <code>serialVersionUID=-8475271235196182185L</code> */
     private static final long serialVersionUID = -8475271235196182185L;
     private JPanel jPanel1;
     private JLabel jLabelColorless;
@@ -76,6 +80,12 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
     public TableModel tModel;
 
 
+    /**
+     * <p>Constructor for GUI_DeckAnalysis.</p>
+     *
+     * @param g a {@link javax.swing.JFrame} object.
+     * @param tb a {@link forge.TableModel} object.
+     */
     public GUI_DeckAnalysis(JFrame g, TableModel tb) {
         super(g);
         tModel = tb;
@@ -84,6 +94,9 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         initGUI();
     }
 
+    /**
+     * <p>initGUI.</p>
+     */
     private void initGUI() {
         try {
 
@@ -118,6 +131,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
     }
 
 
+    /**
+     * <p>Getter for the field <code>jPanel1</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel1() {
         if (jPanel1 == null) {
             jPanel1 = new JPanel();
@@ -140,6 +158,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jPanel1;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel2</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel2() {
         if (jLabel2 == null) {
             jLabel2 = new JLabel();
@@ -153,6 +176,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabel2;
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator1</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator1() {
         if (jSeparator1 == null) {
             jSeparator1 = new JSeparator();
@@ -163,6 +191,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jSeparator1;
     }
 
+    /**
+     * <p>Getter for the field <code>jButtonOk</code>.</p>
+     *
+     * @return a {@link javax.swing.JButton} object.
+     */
     private JButton getJButtonOk() {
         if (jButtonOk == null) {
             jButtonOk = new JButton();
@@ -174,6 +207,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jButtonOk;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel1</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1() {
         if (jLabelBlack == null) {
             jLabelBlack = new JLabel();
@@ -185,6 +223,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelBlack;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel3</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel3() {
         if (jLabelBlue == null) {
             jLabelBlue = new JLabel();
@@ -195,6 +238,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelBlue;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel4</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel4() {
         if (jLabelGreen == null) {
             jLabelGreen = new JLabel();
@@ -205,6 +253,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelGreen;
     }
 
+    /**
+     * <p>getJLabel5.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel5() {
         if (jLabelRed == null) {
             jLabelRed = new JLabel();
@@ -215,6 +268,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelRed;
     }
 
+    /**
+     * <p>getJLabel6.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel6() {
         if (jLabelWhite == null) {
             jLabelWhite = new JLabel();
@@ -225,6 +283,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelWhite;
     }
 
+    /**
+     * <p>getJLabel7.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel7() {
         if (jLabelMultiColor == null) {
             jLabelMultiColor = new JLabel();
@@ -235,6 +298,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelMultiColor;
     }
 
+    /**
+     * <p>getJLabel8.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel8() {
         if (jLabelColorless == null) {
             jLabelColorless = new JLabel();
@@ -245,6 +313,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelColorless;
     }
 
+    /**
+     * <p>getJLabel1x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1x() {
         if (jLabelLand == null) {
             jLabelLand = new JLabel();
@@ -255,6 +328,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelLand;
     }
 
+    /**
+     * <p>getJLabel1xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1xx() {
         if (jLabelTotal == null) {
             jLabelTotal = new JLabel();
@@ -265,6 +343,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelTotal;
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel2</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel2() {
         if (jPanel2 == null) {
             jPanel2 = new JPanel();
@@ -286,6 +369,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jPanel2;
     }
 
+    /**
+     * <p>getJLabel1xxx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1xxx() {
         if (jLabelArtifact == null) {
             jLabelArtifact = new JLabel();
@@ -297,6 +385,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelArtifact;
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator2</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator2() {
         if (jSeparator2 == null) {
             jSeparator2 = new JSeparator();
@@ -307,6 +400,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jSeparator2;
     }
 
+    /**
+     * <p>getJLabel3x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel3x() {
         if (jLabel3 == null) {
             jLabel3 = new JLabel();
@@ -320,6 +418,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabel3;
     }
 
+    /**
+     * <p>getJLabel4x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel4x() {
         if (jLabelCreature == null) {
             jLabelCreature = new JLabel();
@@ -330,6 +433,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelCreature;
     }
 
+    /**
+     * <p>getJLabel5x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel5x() {
         if (jLabelEnchant == null) {
             jLabelEnchant = new JLabel();
@@ -340,6 +448,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelEnchant;
     }
 
+    /**
+     * <p>getJLabel6x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel6x() {
         if (jLabelInstant == null) {
             jLabelInstant = new JLabel();
@@ -350,6 +463,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelInstant;
     }
 
+    /**
+     * <p>getJLabel7x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel7x() {
         if (jLabelLandType == null) {
             jLabelLandType = new JLabel();
@@ -360,6 +478,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelLandType;
     }
 
+    /**
+     * <p>getJLabel8x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel8x() {
         if (jLabelPlaneswalker == null) {
             jLabelPlaneswalker = new JLabel();
@@ -370,6 +493,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelPlaneswalker;
     }
 
+    /**
+     * <p>getJLabel10.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel10() {
         if (jLabelSorcery == null) {
             jLabelSorcery = new JLabel();
@@ -380,6 +508,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelSorcery;
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel3</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel3() {
         if (jPanel3 == null) {
             jPanel3 = new JPanel();
@@ -400,6 +533,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jPanel3;
     }
 
+    /**
+     * <p>getJLabel1xxxx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1xxxx() {
         if (jLabelZeroMana == null) {
             jLabelZeroMana = new JLabel();
@@ -411,6 +549,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelZeroMana;
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator3</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator3() {
         if (jSeparator3 == null) {
             jSeparator3 = new JSeparator();
@@ -421,6 +564,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jSeparator3;
     }
 
+    /**
+     * <p>getJLabel4xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel4xx() {
         if (jLabelManaCost == null) {
             jLabelManaCost = new JLabel();
@@ -434,6 +582,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelManaCost;
     }
 
+    /**
+     * <p>getJLabel5xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel5xx() {
         if (jLabelOneMana == null) {
             jLabelOneMana = new JLabel();
@@ -444,6 +597,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelOneMana;
     }
 
+    /**
+     * <p>getJLabel6xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel6xx() {
         if (jLabelTwoMana == null) {
             jLabelTwoMana = new JLabel();
@@ -454,6 +612,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelTwoMana;
     }
 
+    /**
+     * <p>getJLabel7xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel7xx() {
         if (jLabelThreeMana == null) {
             jLabelThreeMana = new JLabel();
@@ -464,6 +627,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelThreeMana;
     }
 
+    /**
+     * <p>getJLabel8xx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel8xx() {
         if (jLabelFourMana == null) {
             jLabelFourMana = new JLabel();
@@ -474,6 +642,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelFourMana;
     }
 
+    /**
+     * <p>getJLabel9.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel9() {
         if (jLabelFiveMana == null) {
             jLabelFiveMana = new JLabel();
@@ -484,6 +657,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelFiveMana;
     }
 
+    /**
+     * <p>getJLabel10x.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel10x() {
         if (jLabelSixMana == null) {
             jLabelSixMana = new JLabel();
@@ -494,6 +672,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabelSixMana;
     }
 
+    /**
+     * <p>getJList1.</p>
+     *
+     * @return a {@link javax.swing.JList} object.
+     */
     private JList getJList1() {
         CardList rList;
         rList = tModel.getCards();
@@ -550,6 +733,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jListFirstHand;
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel4</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel4() {
         if (jPanel4 == null) {
             jPanel4 = new JPanel();
@@ -577,6 +765,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
 
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator4</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator4() {
         if (jSeparator4 == null) {
             jSeparator4 = new JSeparator();
@@ -587,6 +780,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jSeparator4;
     }
 
+    /**
+     * <p>getJLabel4xxx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel4xxx() {
         if (jLabel4 == null) {
             jLabel4 = new JLabel();
@@ -600,6 +798,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jLabel4;
     }
 
+    /**
+     * <p>getJButton1.</p>
+     *
+     * @return a {@link javax.swing.JButton} object.
+     */
     private JButton getJButton1() {
         CardList rList;
         rList = tModel.getCards();
@@ -892,6 +1095,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
 
     }
 
+    /**
+     * <p>jButtonRegenerate_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void jButtonRegenerate_actionPerformed(ActionEvent e) {
         getContentPane().removeAll();
         getContentPane().add(getJPanel5());
@@ -907,6 +1115,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
 
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel5</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel5() {
         if (jPanel5 == null) {
             jPanel5 = new JPanel();
@@ -918,6 +1131,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jPanel5;
     }
 
+    /**
+     * <p>Getter for the field <code>jTable1</code>.</p>
+     *
+     * @return a {@link javax.swing.JTable} object.
+     */
     private JTable getJTable1() {
         if (jTable1 == null) {
             DefaultTableModel dm = new DefaultTableModel();
@@ -1045,6 +1263,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jTable1;
     }
 
+    /**
+     * <p>Getter for the field <code>jScrollPane1</code>.</p>
+     *
+     * @return a {@link javax.swing.JScrollPane} object.
+     */
     private JScrollPane getJScrollPane1() {
         if (jScrollPane1 == null) {
             jScrollPane1 = new JScrollPane();
@@ -1055,6 +1278,11 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
         return jScrollPane1;
     }
 
+    /**
+     * <p>getJLabel1xxxxx.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel1xxxxx() {
         if (jLabel1 == null) {
             jLabel1 = new JLabel();

@@ -25,13 +25,18 @@ package forge;
  * Project home page: <a href="http://www.source-code.biz/base64coder/java/">www.source-code.biz/base64coder/java</a><br>
  * Author: Christian d'Heureuse, Inventec Informatik AG, Zurich, Switzerland<br>
  * Multi-licensed: EPL / LGPL / GPL / AL / BSD.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class Base64Coder {
 
     // The line separator string of the operating system.
+    /** Constant <code>systemLineSeparator="System.getProperty(line.separator)"</code> */
     private static final String systemLineSeparator = System.getProperty("line.separator");
 
     // Mapping table from 6-bit nibbles to Base64 characters.
+    /** Constant <code>map1=new char[64]</code> */
     private static char[] map1 = new char[64];
 
     static {
@@ -44,6 +49,7 @@ public class Base64Coder {
     }
 
     // Mapping table from Base64 characters to 6-bit nibbles.
+    /** Constant <code>map2=new byte[128]</code> */
     private static byte[] map2 = new byte[128];
 
     static {
@@ -62,6 +68,13 @@ public class Base64Coder {
         return new String(encode(s.getBytes()));
     }
 
+    /**
+     * <p>encodeString.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param noPad a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public static String encodeString(String s, boolean noPad) {
         String t = new String(encode(s.getBytes()));
 
@@ -171,7 +184,7 @@ public class Base64Coder {
      *
      * @param s A Base64 String to be decoded.
      * @return A String containing the decoded data.
-     * @throws IllegalArgumentException If the input is not valid Base64 encoded data.
+     * @throws java.lang.IllegalArgumentException If the input is not valid Base64 encoded data.
      */
     public static String decodeString(String s) {
         return new String(decode(s));
@@ -184,7 +197,7 @@ public class Base64Coder {
      *
      * @param s A Base64 String to be decoded.
      * @return An array containing the decoded data bytes.
-     * @throws IllegalArgumentException If the input is not valid Base64 encoded data.
+     * @throws java.lang.IllegalArgumentException If the input is not valid Base64 encoded data.
      */
     public static byte[] decodeLines(String s) {
         char[] buf = new char[s.length()];
@@ -203,7 +216,7 @@ public class Base64Coder {
      *
      * @param s A Base64 String to be decoded.
      * @return An array containing the decoded data bytes.
-     * @throws IllegalArgumentException If the input is not valid Base64 encoded data.
+     * @throws java.lang.IllegalArgumentException If the input is not valid Base64 encoded data.
      */
     public static byte[] decode(String s) {
         return decode(s.toCharArray());
@@ -215,7 +228,7 @@ public class Base64Coder {
      *
      * @param in A character array containing the Base64 encoded data.
      * @return An array containing the decoded data bytes.
-     * @throws IllegalArgumentException If the input is not valid Base64 encoded data.
+     * @throws java.lang.IllegalArgumentException If the input is not valid Base64 encoded data.
      */
     public static byte[] decode(char[] in) {
         return decode(in, 0, in.length);
@@ -229,7 +242,7 @@ public class Base64Coder {
      * @param iOff Offset of the first character in <code>in</code> to be processed.
      * @param iLen Number of characters to process in <code>in</code>, starting at <code>iOff</code>.
      * @return An array containing the decoded data bytes.
-     * @throws IllegalArgumentException If the input is not valid Base64 encoded data.
+     * @throws java.lang.IllegalArgumentException If the input is not valid Base64 encoded data.
      */
     public static byte[] decode(char[] in, int iOff, int iLen) {
         if (iLen % 4 != 0)
@@ -264,6 +277,9 @@ public class Base64Coder {
     }
 
     // Dummy constructor.
+    /**
+     * <p>Constructor for Base64Coder.</p>
+     */
     private Base64Coder() {
     }
 

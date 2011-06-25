@@ -21,6 +21,12 @@ import java.util.HashMap;
 //A:SP$Counter | Cost$ 1 G | TargetType$ Activated | SpellDescription$ Counter target activated ability.
 //A:AB$Counter | Cost$ G G | TargetType$ Spell | Destination$ Exile | ValidTgts$ Color.Black | SpellDescription$ xxxxx
 
+/**
+ * <p>AbilityFactory_CounterMagic class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_CounterMagic {
 
     private AbilityFactory af = null;
@@ -28,6 +34,11 @@ public class AbilityFactory_CounterMagic {
     private String destination = null;
     private String unlessCost = null;
 
+    /**
+     * <p>Constructor for AbilityFactory_CounterMagic.</p>
+     *
+     * @param newAF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public AbilityFactory_CounterMagic(AbilityFactory newAF) {
         af = newAF;
         params = af.getMapParams();
@@ -39,6 +50,12 @@ public class AbilityFactory_CounterMagic {
 
     }
 
+    /**
+     * <p>getAbilityCounter.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbilityCounter(final AbilityFactory AF) {
         final SpellAbility abCounter = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -3895990436431818899L;
@@ -68,6 +85,12 @@ public class AbilityFactory_CounterMagic {
         return abCounter;
     }
 
+    /**
+     * <p>getSpellCounter.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpellCounter(final AbilityFactory AF) {
         final SpellAbility spCounter = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -4272851734871573693L;
@@ -92,6 +115,12 @@ public class AbilityFactory_CounterMagic {
     }
 
     // Add Counter Drawback
+    /**
+     * <p>getDrawbackCounter.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawbackCounter(final AbilityFactory AF) {
         final SpellAbility dbCounter = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -4272851734871573693L;
@@ -125,6 +154,13 @@ public class AbilityFactory_CounterMagic {
         return dbCounter;
     }
 
+    /**
+     * <p>counterCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean counterCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         boolean toReturn = true;
         Cost abCost = af.getAbCost();
@@ -201,6 +237,14 @@ public class AbilityFactory_CounterMagic {
         return toReturn;
     }
 
+    /**
+     * <p>counterDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     public boolean counterDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         boolean toReturn = true;
         if (AllZone.getStack().size() < 1) {
@@ -258,6 +302,12 @@ public class AbilityFactory_CounterMagic {
         return toReturn;
     }
 
+    /**
+     * <p>counterResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void counterResolve(final AbilityFactory af, final SpellAbility sa) {
 
         // TODO: Before this resolves we should see if any of our targets are still on the stack
@@ -300,6 +350,13 @@ public class AbilityFactory_CounterMagic {
         }
     }//end counterResolve
 
+    /**
+     * <p>counterStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String counterStackDescription(AbilityFactory af, SpellAbility sa) {
 
         StringBuilder sb = new StringBuilder();
@@ -341,6 +398,13 @@ public class AbilityFactory_CounterMagic {
         return sb.toString();
     }//end counterStackDescription
 
+    /**
+     * <p>removeFromStack.</p>
+     *
+     * @param tgtSA a {@link forge.card.spellability.SpellAbility} object.
+     * @param srcSA a {@link forge.card.spellability.SpellAbility} object.
+     * @param si a {@link forge.card.spellability.SpellAbility_StackInstance} object.
+     */
     private void removeFromStack(SpellAbility tgtSA, SpellAbility srcSA, SpellAbility_StackInstance si) {
         AllZone.getStack().remove(si);
 

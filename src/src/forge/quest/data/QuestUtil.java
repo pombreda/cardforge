@@ -4,12 +4,31 @@ import forge.*;
 
 import java.util.ArrayList;
 
+/**
+ * <p>QuestUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestUtil {
 
+    /**
+     * <p>getComputerCreatures.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getComputerCreatures(QuestData qd) {
         return new CardList();
     }
 
+    /**
+     * <p>getComputerCreatures.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     * @param qa a {@link forge.Quest_Assignment} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getComputerCreatures(QuestData qd, Quest_Assignment qa) {
         CardList list = new CardList();
         if (qa != null) {
@@ -27,6 +46,12 @@ public class QuestUtil {
         return list;
     }
 
+    /**
+     * <p>getHumanPlantAndPet.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getHumanPlantAndPet(QuestData qd) {
         CardList list = new CardList();
 
@@ -41,6 +66,13 @@ public class QuestUtil {
         return list;
     }
 
+    /**
+     * <p>getHumanPlantAndPet.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     * @param qa a {@link forge.Quest_Assignment} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getHumanPlantAndPet(QuestData qd, Quest_Assignment qa) {
         CardList list = getHumanPlantAndPet(qd);
 
@@ -51,6 +83,11 @@ public class QuestUtil {
     }
 
 
+    /**
+     * <p>setupQuest.</p>
+     *
+     * @param qa a {@link forge.Quest_Assignment} object.
+     */
     public static void setupQuest(Quest_Assignment qa) {
         QuestBoosterPack pack = new QuestBoosterPack();
         qa.clearCompy();

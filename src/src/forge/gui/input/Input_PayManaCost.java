@@ -7,8 +7,15 @@ import forge.card.spellability.SpellAbility;
 //pays the cost of a card played from the player's hand
 //the card is removed from the players hand if the cost is paid
 //CANNOT be used for ABILITIES
+/**
+ * <p>Input_PayManaCost class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_PayManaCost extends Input {
     // anything that uses this should be converted to Ability_Cost
+    /** Constant <code>serialVersionUID=3467312982164195091L</code> */
     private static final long serialVersionUID = 3467312982164195091L;
 
     private final String originalManaCost;
@@ -22,6 +29,12 @@ public class Input_PayManaCost extends Input {
 
     private int phyLifeToLose = 0;
 
+    /**
+     * <p>Constructor for Input_PayManaCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param noStack a boolean.
+     */
     public Input_PayManaCost(SpellAbility sa, boolean noStack) {
         skipStack = noStack;
         originalManaCost = sa.getManaCost(); // Change
@@ -44,6 +57,11 @@ public class Input_PayManaCost extends Input {
         }
     }
 
+    /**
+     * <p>Constructor for Input_PayManaCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public Input_PayManaCost(SpellAbility sa) {
         originalManaCost = sa.getManaCost(); // Change
         originalCard = sa.getSourceCard();
@@ -65,11 +83,15 @@ public class Input_PayManaCost extends Input {
         }
     }
 
+    /**
+     * <p>resetManaCost.</p>
+     */
     private void resetManaCost() {
         manaCost = new ManaCost(originalManaCost);
         phyLifeToLose = 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         //this is a hack, to prevent lands being able to use mana to pay their own abilities from cards like
@@ -92,6 +114,7 @@ public class Input_PayManaCost extends Input {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectPlayer(Player player) {
 
@@ -105,6 +128,9 @@ public class Input_PayManaCost extends Input {
 
     }
 
+    /**
+     * <p>done.</p>
+     */
     private void done() {
         if (phyLifeToLose > 0)
             AllZone.getHumanPlayer().payLife(phyLifeToLose, originalCard);
@@ -141,6 +167,7 @@ public class Input_PayManaCost extends Input {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonCancel() {
         resetManaCost();
@@ -150,6 +177,7 @@ public class Input_PayManaCost extends Input {
         stop();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         ButtonUtil.enableOnlyCancel();

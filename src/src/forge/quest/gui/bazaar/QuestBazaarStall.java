@@ -13,7 +13,14 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * <p>QuestBazaarStall class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestBazaarStall extends JPanel implements NewConstants {
+    /** Constant <code>serialVersionUID=-4147745071116906043L</code> */
     private static final long serialVersionUID = -4147745071116906043L;
     String name;
     String stallName;
@@ -26,6 +33,14 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
 
     protected QuestData questData = AllZone.getQuestData();
 
+    /**
+     * <p>Constructor for QuestBazaarStall.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param stallName a {@link java.lang.String} object.
+     * @param iconName a {@link java.lang.String} object.
+     * @param fluff a {@link java.lang.String} object.
+     */
     protected QuestBazaarStall(String name, String stallName, String iconName, String fluff) {
         this.name = name;
         this.fluff = fluff;
@@ -36,6 +51,11 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
 
     }
 
+    /**
+     * <p>Constructor for QuestBazaarStall.</p>
+     *
+     * @param definition a {@link forge.quest.data.bazaar.QuestStallDefinition} object.
+     */
     protected QuestBazaarStall(QuestStallDefinition definition) {
         this.fluff = definition.fluff;
         this.icon = GuiUtils.getIconFromFile(definition.iconName);
@@ -44,6 +64,9 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         initUI();
     }
 
+    /**
+     * <p>initUI.</p>
+     */
     private void initUI() {
         this.removeAll();
 
@@ -109,6 +132,11 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         this.setBorder(new EmptyBorder(0, 5, 0, 0));
     }
 
+    /**
+     * <p>populateInventory.</p>
+     *
+     * @param stallItems a {@link java.util.List} object.
+     */
     private void populateInventory(java.util.List<QuestBazaarItem> stallItems) {
         inventoryPanel.removeAll();
 
@@ -152,6 +180,11 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
         inventoryPanel.add(fillLabel);
     }
 
+    /**
+     * <p>populateItems.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     protected java.util.List<QuestBazaarItem> populateItems() {
         java.util.List<QuestBazaarItem> ret = new ArrayList<QuestBazaarItem>();
         java.util.List<QuestStallPurchasable> purchasables = QuestStallManager.getItems(name);
@@ -164,14 +197,27 @@ public class QuestBazaarStall extends JPanel implements NewConstants {
     }
 
 
+    /**
+     * <p>getStallIcon.</p>
+     *
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     public ImageIcon getStallIcon() {
         return icon;
     }
 
+    /**
+     * <p>Getter for the field <code>stallName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getStallName() {
         return stallName;
     }
 
+    /**
+     * <p>updateItems.</p>
+     */
     public void updateItems() {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

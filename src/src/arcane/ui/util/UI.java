@@ -27,22 +27,42 @@ import java.util.concurrent.ConcurrentMap;
 
 /**
  * UI utility functions.
+ *
+ * @author Forge
+ * @version $Id$
  */
 public class UI {
+    /** Constant <code>imageCache</code> */
     static private ConcurrentMap<URI, Image> imageCache = new MapMaker().softValues().makeMap();
 
+    /**
+     * <p>getToggleButton.</p>
+     *
+     * @return a {@link javax.swing.JToggleButton} object.
+     */
     static public JToggleButton getToggleButton() {
         JToggleButton button = new JToggleButton();
         button.setMargin(new Insets(2, 4, 2, 4));
         return button;
     }
 
+    /**
+     * <p>getButton.</p>
+     *
+     * @return a {@link javax.swing.JButton} object.
+     */
     static public JButton getButton() {
         JButton button = new JButton();
         button.setMargin(new Insets(2, 4, 2, 4));
         return button;
     }
 
+    /**
+     * <p>setTitle.</p>
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
+     * @param title a {@link java.lang.String} object.
+     */
     static public void setTitle(JPanel panel, String title) {
         Border border = panel.getBorder();
         if (border instanceof TitledBorder) {
@@ -52,6 +72,12 @@ public class UI {
             panel.setBorder(BorderFactory.createTitledBorder(title));
     }
 
+    /**
+     * <p>getFileURL.</p>
+     *
+     * @param path a {@link java.lang.String} object.
+     * @return a {@link java.net.URL} object.
+     */
     static public URL getFileURL(String path) {
         File file = new File(path);
         if (file.exists()) {
@@ -63,6 +89,12 @@ public class UI {
         return UI.class.getResource(path);
     }
 
+    /**
+     * <p>getImageIcon.</p>
+     *
+     * @param path a {@link java.lang.String} object.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     static public ImageIcon getImageIcon(String path) {
         InputStream stream = null;
         try {
@@ -82,6 +114,11 @@ public class UI {
         }
     }
 
+    /**
+     * <p>setHTMLEditorKit.</p>
+     *
+     * @param editorPane a {@link javax.swing.JEditorPane} object.
+     */
     static public void setHTMLEditorKit(JEditorPane editorPane) {
         editorPane.getDocument().putProperty("imageCache", imageCache); // Read internally by ImageView, but never written.
         // Extend all this shit to cache images.
@@ -114,6 +151,12 @@ public class UI {
         });
     }
 
+    /**
+     * <p>setVerticalScrollingView.</p>
+     *
+     * @param scrollPane a {@link javax.swing.JScrollPane} object.
+     * @param view a {@link java.awt.Component} object.
+     */
     static public void setVerticalScrollingView(JScrollPane scrollPane, final Component view) {
         final JViewport viewport = new JViewport();
         viewport.setLayout(new ViewportLayout() {
@@ -132,6 +175,12 @@ public class UI {
         scrollPane.setViewport(viewport);
     }
 
+    /**
+     * <p>getDisplayManaCost.</p>
+     *
+     * @param manaCost a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     static public String getDisplayManaCost(String manaCost) {
         manaCost = manaCost.replace("/", "");
         manaCost = manaCost.replace("X 0", "X");
@@ -141,10 +190,20 @@ public class UI {
         return manaCost;
     }
 
+    /**
+     * <p>invokeLater.</p>
+     *
+     * @param runnable a {@link java.lang.Runnable} object.
+     */
     static public void invokeLater(Runnable runnable) {
         EventQueue.invokeLater(runnable);
     }
 
+    /**
+     * <p>invokeAndWait.</p>
+     *
+     * @param runnable a {@link java.lang.Runnable} object.
+     */
     static public void invokeAndWait(Runnable runnable) {
         if (EventQueue.isDispatchThread()) {
             runnable.run();
@@ -158,6 +217,9 @@ public class UI {
         }
     }
 
+    /**
+     * <p>setSystemLookAndFeel.</p>
+     */
     static public void setSystemLookAndFeel() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -167,6 +229,11 @@ public class UI {
         }
     }
 
+    /**
+     * <p>setDefaultFont.</p>
+     *
+     * @param font a {@link java.awt.Font} object.
+     */
     static public void setDefaultFont(Font font) {
         for (Object key : Collections.list(UIManager.getDefaults().keys())) {
             Object value = UIManager.get(key);

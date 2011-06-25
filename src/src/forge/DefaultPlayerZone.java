@@ -4,7 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
+/**
+ * <p>DefaultPlayerZone class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class DefaultPlayerZone extends PlayerZone implements java.io.Serializable {
+    /** Constant <code>serialVersionUID=-5687652485777639176L</code> */
     private static final long serialVersionUID = -5687652485777639176L;
 
     private ArrayList<Card> cards = new ArrayList<Card>();
@@ -15,12 +22,19 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     private CardList cardsAddedThisTurn = new CardList();
     private ArrayList<String> cardsAddedThisTurnSource = new ArrayList<String>();
 
+    /**
+     * <p>Constructor for DefaultPlayerZone.</p>
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @param inPlayer a {@link forge.Player} object.
+     */
     public DefaultPlayerZone(String zone, Player inPlayer) {
         zoneName = zone;
         player = inPlayer;
     }
 
     //************ BEGIN - these methods fire updateObservers() *************
+    /** {@inheritDoc} */
     public void add(Object o) {
         Card c = (Card) o;
 
@@ -85,6 +99,7 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     }
 
     //hack... use for adding Dread / Serra Avenger to grave
+    /** {@inheritDoc} */
     public void addOnce(Object o) {
         Card c = (Card) o;
 
@@ -104,10 +119,12 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         update();
     }
 
+    /** {@inheritDoc} */
     public void update(Observable ob, Object object) {
         this.update();
     }
 
+    /** {@inheritDoc} */
     public void add(Card c, int index) {
         if (!c.isImmutable()) //Immutable cards are usually emblems,effects and the mana pool and we don't want to log those.
         {
@@ -124,17 +141,26 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         update();
     }
 
+    /** {@inheritDoc} */
     public void remove(Object c) {
         cards.remove((Card) c);
         update();
     }
 
+    /**
+     * <p>Setter for the field <code>cards</code>.</p>
+     *
+     * @param c an array of {@link forge.Card} objects.
+     */
     public void setCards(Card c[]) {
         cards = new ArrayList<Card>(Arrays.asList(c));
         update();
     }
 
     //removes all cards
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         cardsAddedThisTurn.clear();
         cardsAddedThisTurnSource.clear();
@@ -143,49 +169,86 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     }
     //************ END - these methods fire updateObservers() *************
 
+    /** {@inheritDoc} */
     public boolean is(String zone) {
         return zone.equals(zoneName);
     }
 
+    /** {@inheritDoc} */
     public boolean is(String zone, Player player) {
         return (zone.equals(zoneName) && player.isPlayer(player));
     }
 
+    /**
+     * <p>Getter for the field <code>player</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getPlayer() {
         return player;
     }
 
+    /**
+     * <p>Getter for the field <code>zoneName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getZoneName() {
         return zoneName;
     }
 
+    /**
+     * <p>size.</p>
+     *
+     * @return a int.
+     */
     public int size() {
         return cards.size();
     }
 
+    /** {@inheritDoc} */
     public Card get(int index) {
         return (Card) cards.get(index);
     }
 
+    /**
+     * <p>Getter for the field <code>cards</code>.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getCards() {
         Card c[] = new Card[cards.size()];
         cards.toArray(c);
         return c;
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
         if (update)
             updateObservers();
     }
 
+    /** {@inheritDoc} */
     public void setUpdate(boolean b) {
         update = b;
     }
 
+    /**
+     * <p>Getter for the field <code>update</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getUpdate() {
         return update;
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (player != null)
@@ -194,6 +257,12 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         return sb.toString();
     }
 
+    /**
+     * <p>Getter for the field <code>cardsAddedThisTurn</code>.</p>
+     *
+     * @param origin a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCardsAddedThisTurn(String origin) {
         System.out.print("Request cards put into " + getZoneName() + " from " + origin + ".Amount: ");
         CardList ret = new CardList();
@@ -206,6 +275,9 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         return ret;
     }
 
+    /**
+     * <p>resetCardsAddedThisTurn.</p>
+     */
     public void resetCardsAddedThisTurn() {
         cardsAddedThisTurn.clear();
         cardsAddedThisTurnSource.clear();

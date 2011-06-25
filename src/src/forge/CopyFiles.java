@@ -13,6 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 
+/**
+ * <p>CopyFiles class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CopyFiles extends SwingWorker<Void, Integer> implements NewConstants {
 
     private List<File> FileList;
@@ -22,6 +28,15 @@ public class CopyFiles extends SwingWorker<Void, Integer> implements NewConstant
     JButton jSource;
     int count;
 
+    /**
+     * <p>Constructor for CopyFiles.</p>
+     *
+     * @param FileList a {@link java.util.List} object.
+     * @param jLabelTotalFiles a {@link javax.swing.JLabel} object.
+     * @param Jbar a {@link javax.swing.JProgressBar} object.
+     * @param jCheckBox a {@link javax.swing.JCheckBox} object.
+     * @param jButtonSource a {@link javax.swing.JButton} object.
+     */
     public CopyFiles(List<File> FileList, JLabel jLabelTotalFiles, JProgressBar Jbar, JCheckBox jCheckBox, JButton jButtonSource) {
         this.FileList = FileList;
         jLb = jLabelTotalFiles;
@@ -30,6 +45,7 @@ public class CopyFiles extends SwingWorker<Void, Integer> implements NewConstant
         jSource = jButtonSource;
     }
 
+    /** {@inheritDoc} */
     @Override
     protected Void doInBackground() {
         for (int i = 0; i < this.FileList.size(); i++) {
@@ -69,6 +85,7 @@ public class CopyFiles extends SwingWorker<Void, Integer> implements NewConstant
 
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void done() {
         jLb.setText("All files were copied successfully.");

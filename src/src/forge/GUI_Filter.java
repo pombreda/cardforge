@@ -21,9 +21,13 @@ import java.lang.reflect.Method;
  * www.cloudgarden.com for details. Use of Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE
  * HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR
  * COMMERCIAL PURPOSE.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class GUI_Filter extends javax.swing.JDialog {
 
+    /** Constant <code>serialVersionUID=-8475271235196182185L</code> */
     private static final long serialVersionUID = -8475271235196182185L;
     private JLabel jLabel1;
     private JTextField NameText;
@@ -58,12 +62,21 @@ public class GUI_Filter extends javax.swing.JDialog {
     int kCode;
 
 
+    /**
+     * <p>Constructor for GUI_Filter.</p>
+     *
+     * @param g a {@link javax.swing.JFrame} object.
+     * @param display a {@link forge.DeckDisplay} object.
+     */
     public GUI_Filter(JFrame g, DeckDisplay display) {
         super(g);
         deckDisplay = display;
         initGUI();
     }
 
+    /**
+     * <p>initGUI.</p>
+     */
     private void initGUI() {
         try {
 
@@ -156,6 +169,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel1</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel1() {
         if (jPanel1 == null) {
             jPanel1 = new JPanel();
@@ -185,6 +203,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jPanel1;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel2</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel2() {
         if (jLabel2 == null) {
             jLabel2 = new JLabel();
@@ -197,6 +220,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jLabel2;
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator1</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator1() {
         if (jSeparator1 == null) {
             jSeparator1 = new JSeparator();
@@ -206,6 +234,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jSeparator1;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxBlue</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxBlue() {
         if (jCheckBoxBlue == null) {
             jCheckBoxBlue = new JCheckBox();
@@ -227,6 +260,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxBlue;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxGreen</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxGreen() {
         if (jCheckBoxGreen == null) {
             jCheckBoxGreen = new JCheckBox();
@@ -248,6 +286,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxGreen;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxRed</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxRed() {
         if (jCheckBoxRed == null) {
             jCheckBoxRed = new JCheckBox();
@@ -269,6 +312,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxRed;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxWhite</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxWhite() {
         if (jCheckBoxWhite == null) {
             jCheckBoxWhite = new JCheckBox();
@@ -290,6 +338,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxWhite;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxColorless</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxColorless() {
         if (jCheckBoxColorless == null) {
             jCheckBoxColorless = new JCheckBox();
@@ -311,6 +364,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxColorless;
     }
 
+    /**
+     * <p>Getter for the field <code>jButtonOk</code>.</p>
+     *
+     * @return a {@link javax.swing.JButton} object.
+     */
     private JButton getJButtonOk() {
         if (jButtonOk == null) {
             jButtonOk = new JButton();
@@ -322,6 +380,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jButtonOk;
     }
 
+    /**
+     * <p>Getter for the field <code>jCheckBoxBlack</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBoxBlack() {
         if (jCheckBoxBlack == null) {
             jCheckBoxBlack = new JCheckBox();
@@ -343,6 +406,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxBlack;
     }
 
+    /**
+     * <p>Getter for the field <code>jPanel2</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel getJPanel2() {
         if (jPanel2 == null) {
             jPanel2 = new JPanel();
@@ -375,6 +443,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jPanel2;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel3</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel3() {
         if (jLabel3 == null) {
             jLabel3 = new JLabel();
@@ -387,6 +460,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jLabel3;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel4</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel4() {
         if (jLabel4 == null) {
             jLabel4 = new JLabel();
@@ -399,6 +477,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jLabel4;
     }
 
+    /**
+     * <p>Getter for the field <code>jSeparator2</code>.</p>
+     *
+     * @return a {@link javax.swing.JSeparator} object.
+     */
     private JSeparator getJSeparator2() {
         if (jSeparator2 == null) {
             jSeparator2 = new JSeparator();
@@ -408,6 +491,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jSeparator2;
     }
 
+    /**
+     * <p>getJCheckBox1.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox1() {
         if (jCheckBoxSorcery == null) {
             jCheckBoxSorcery = new JCheckBox();
@@ -429,6 +517,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxSorcery;
     }
 
+    /**
+     * <p>getJCheckBox2.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox2() {
         if (jCheckBoxPlaneswalker == null) {
             jCheckBoxPlaneswalker = new JCheckBox();
@@ -450,6 +543,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxPlaneswalker;
     }
 
+    /**
+     * <p>getJCheckBox3.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox3() {
         if (jCheckBoxLand == null) {
             jCheckBoxLand = new JCheckBox();
@@ -471,6 +569,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxLand;
     }
 
+    /**
+     * <p>getJCheckBox4.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox4() {
         if (jCheckBoxInstant == null) {
             jCheckBoxInstant = new JCheckBox();
@@ -492,6 +595,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxInstant;
     }
 
+    /**
+     * <p>getJCheckBox5.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox5() {
         if (jCheckBoxEnchant == null) {
             jCheckBoxEnchant = new JCheckBox();
@@ -513,6 +621,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxEnchant;
     }
 
+    /**
+     * <p>getJCheckBox6.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox6() {
         if (jCheckBoxCreature == null) {
             jCheckBoxCreature = new JCheckBox();
@@ -534,6 +647,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxCreature;
     }
 
+    /**
+     * <p>getJCheckBox7.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
     private JCheckBox getJCheckBox7() {
         if (jCheckBoxArtifact == null) {
             jCheckBoxArtifact = new JCheckBox();
@@ -555,6 +673,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return jCheckBoxArtifact;
     }
 
+    /**
+     * <p>getJTextField1.</p>
+     *
+     * @return a {@link javax.swing.JTextField} object.
+     */
     private JTextField getJTextField1() {
         if (cardText == null) {
             cardText = new JTextField();
@@ -572,6 +695,11 @@ public class GUI_Filter extends javax.swing.JDialog {
         return cardText;
     }
 
+    /**
+     * <p>Getter for the field <code>jLabel5</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
     private JLabel getJLabel5() {
         if (jLabel5 == null) {
             jLabel5 = new JLabel();
@@ -640,6 +768,9 @@ public class GUI_Filter extends javax.swing.JDialog {
         }
     }
 
+    /**
+     * <p>FilterCardTable.</p>
+     */
     private void FilterCardTable() {
 
         String name = NameText.getText();

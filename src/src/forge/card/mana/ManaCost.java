@@ -8,6 +8,12 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+/**
+ * <p>ManaCost class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ManaCost {
     //holds Mana_Part objects
     //ManaPartColor is stored before ManaPartColorless
@@ -19,6 +25,11 @@ public class ManaCost {
     //or "split hybrid mana" like "2/G 2/G", "2/B 2/B 2/B"
     //"GW" can be paid with either G or W
 
+    /**
+     * <p>Constructor for ManaCost.</p>
+     *
+     * @param manaCost a {@link java.lang.String} object.
+     */
     public ManaCost(String manaCost) {
         if (manaCost.equals(""))
             manaCost = "0";
@@ -33,12 +44,22 @@ public class ManaCost {
         manaPart = split(manaCost);
     }
 
+    /**
+     * <p>getSunburst.</p>
+     *
+     * @return a int.
+     */
     public int getSunburst() {
         int ret = sunburstMap.size();
         sunburstMap.clear();
         return ret;
     }
 
+    /**
+     * <p>getUnpaidPhyrexianMana.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<Mana_PartPhyrexian> getUnpaidPhyrexianMana() {
         ArrayList<Mana_PartPhyrexian> res = new ArrayList<Mana_PartPhyrexian>();
         for (Object o : manaPart) {
@@ -53,6 +74,11 @@ public class ManaCost {
         return res;
     }
 
+    /**
+     * <p>containsPhyrexianMana.</p>
+     *
+     * @return a boolean.
+     */
     public boolean containsPhyrexianMana() {
         for (Object o : manaPart) {
             if (o instanceof Mana_PartPhyrexian) {
@@ -63,6 +89,11 @@ public class ManaCost {
         return false;
     }
 
+    /**
+     * <p>payPhyrexian.</p>
+     *
+     * @return a boolean.
+     */
     public boolean payPhyrexian() {
         ArrayList<Mana_PartPhyrexian> Phy = getUnpaidPhyrexianMana();
 
@@ -76,6 +107,12 @@ public class ManaCost {
     }
 
     // takes a Short Color and returns true if it exists in the mana cost. Easier for split costs
+    /**
+     * <p>isColor.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isColor(String color) {
         for (Object s : manaPart) {
             if (s.toString().contains(color))
@@ -85,6 +122,12 @@ public class ManaCost {
     }
 
     // isNeeded(String) still used by the Computer, might have problems activating Snow abilities
+    /**
+     * <p>isNeeded.</p>
+     *
+     * @param mana a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isNeeded(String mana) {
         if (mana.length() > 1)
             mana = Input_PayManaCostUtil.getShortColorString(mana);
@@ -96,6 +139,12 @@ public class ManaCost {
         return false;
     }
 
+    /**
+     * <p>isNeeded.</p>
+     *
+     * @param mana a {@link forge.card.mana.Mana} object.
+     * @return a boolean.
+     */
     public boolean isNeeded(Mana mana) {
         Mana_Part m;
         for (int i = 0; i < manaPart.size(); i++) {
@@ -106,6 +155,11 @@ public class ManaCost {
         return false;
     }
 
+    /**
+     * <p>isPaid.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isPaid() {
         Mana_Part m;
         for (int i = 0; i < manaPart.size(); i++) {
@@ -115,15 +169,32 @@ public class ManaCost {
         return true;
     }//isPaid()
 
+    /**
+     * <p>payMana.</p>
+     *
+     * @param mana a {@link forge.card.mana.Mana} object.
+     * @return a boolean.
+     */
     public boolean payMana(Mana mana) {
         return addMana(mana);
     }
 
+    /**
+     * <p>payMana.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean payMana(String color) {
         color = Input_PayManaCostUtil.getShortColorString(color);
         return addMana(color);
     }
 
+    /**
+     * <p>increaseColorlessMana.</p>
+     *
+     * @param manaToAdd a int.
+     */
     public void increaseColorlessMana(int manaToAdd) {
         if (manaToAdd <= 0)
             return;
@@ -139,6 +210,12 @@ public class ManaCost {
         manaPart.add(new Mana_PartColorless(manaToAdd));
     }
 
+    /**
+     * <p>addMana.</p>
+     *
+     * @param mana a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean addMana(String mana) {
         if (!isNeeded(mana)) throw new RuntimeException("ManaCost : addMana() error, mana not needed - " + mana);
 
@@ -170,6 +247,12 @@ public class ManaCost {
         return true;
     }
 
+    /**
+     * <p>addMana.</p>
+     *
+     * @param mana a {@link forge.card.mana.Mana} object.
+     * @return a boolean.
+     */
     public boolean addMana(Mana mana) {
         if (!isNeeded(mana)) throw new RuntimeException("ManaCost : addMana() error, mana not needed - " + mana);
 
@@ -201,6 +284,11 @@ public class ManaCost {
         return true;
     }
 
+    /**
+     * <p>combineManaCost.</p>
+     *
+     * @param extra a {@link java.lang.String} object.
+     */
     public void combineManaCost(String extra) {
         ArrayList<Object> extraParts = split(extra);
 
@@ -231,6 +319,7 @@ public class ManaCost {
             manaPart.add(part);
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -249,6 +338,11 @@ public class ManaCost {
         return sb.toString().trim();
     }
 
+    /**
+     * <p>getConvertedManaCost.</p>
+     *
+     * @return a int.
+     */
     public int getConvertedManaCost() {
         int cmc = 0;
         for (Object s : manaPart) {
@@ -278,6 +372,12 @@ public class ManaCost {
         return cmc;
     }
 
+    /**
+     * <p>split.</p>
+     *
+     * @param cost a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<Object> split(String cost) {
         ArrayList<Object> list = new ArrayList<Object>();
 
@@ -315,6 +415,12 @@ public class ManaCost {
         return list;
     }//split()
 
+    /**
+     * <p>Getter for the field <code>manaPart</code>.</p>
+     *
+     * @param partCost a {@link java.lang.String} object.
+     * @return a {@link forge.card.mana.Mana_Part} object.
+     */
     private Mana_Part getManaPart(String partCost) {
         if (partCost.length() == 3) {
             return new Mana_PartSplit(partCost);
@@ -329,14 +435,29 @@ public class ManaCost {
         }
     }
 
+    /**
+     * <p>Setter for the field <code>xcounter</code>.</p>
+     *
+     * @param xcounter a int.
+     */
     public void setXcounter(int xcounter) {
         this.xcounter = xcounter;
     }
 
+    /**
+     * <p>Getter for the field <code>xcounter</code>.</p>
+     *
+     * @return a int.
+     */
     public int getXcounter() {
         return xcounter;
     }
 
+    /**
+     * <p>removeColorlessMana.</p>
+     *
+     * @since 1.0.15
+     */
     public void removeColorlessMana() {
 
         for (int i = 0; i < manaPart.size(); i++) {

@@ -79,9 +79,13 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     public static final String PROPERTY_KEY = "WrappedText";
 
     // Static references to avoid heap allocations.
+    /** Constant <code>paintIconR</code> */
     protected static Rectangle paintIconR = new Rectangle();
+    /** Constant <code>paintTextR</code> */
     protected static Rectangle paintTextR = new Rectangle();
+    /** Constant <code>paintViewR</code> */
     protected static Rectangle paintViewR = new Rectangle();
+    /** Constant <code>paintViewInsets</code> */
     protected static Insets paintViewInsets = new Insets(0, 0, 0, 0);
 
     /**
@@ -95,34 +99,27 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     protected static int defaultSize = 4;
 
     /**
-     * Get the shared UI instance.
+     * {@inheritDoc}
      *
-     * @param c the component about to be installed
-     * @return the shared UI delegate instance
+     * Get the shared UI instance.
      */
     public static ComponentUI createUI(JComponent c) {
         return labelUI;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected void uninstallDefaults(JLabel c) {
         super.uninstallDefaults(c);
         clearCache(c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected void installListeners(JLabel c) {
         super.installListeners(c);
         c.addComponentListener(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     protected void uninstallListeners(JLabel c) {
         super.uninstallListeners(c);
         c.removeComponentListener(this);
@@ -137,9 +134,7 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         l.putClientProperty(PROPERTY_KEY, null);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void propertyChange(PropertyChangeEvent e) {
         super.propertyChange(e);
         final String name = e.getPropertyName();
@@ -179,12 +174,15 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         layoutCL(l, fm, text, icon, paintViewR, paintIconR, paintTextR);
     }
 
+    /**
+     * <p>prepareGraphics.</p>
+     *
+     * @param g a {@link java.awt.Graphics} object.
+     */
     protected void prepareGraphics(Graphics g) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void paint(Graphics g, JComponent c) {
 
         // parent's update method fills the background
@@ -329,6 +327,12 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         return Math.max(textY, getAscent(fm) + paintViewInsets.top);
     }
 
+    /**
+     * <p>getAscent.</p>
+     *
+     * @param fm a {@link java.awt.FontMetrics} object.
+     * @return a int.
+     */
     private static int getAscent(FontMetrics fm) {
         return fm.getAscent() + fm.getLeading();
     }
@@ -378,9 +382,7 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         return false;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public Dimension getPreferredSize(JComponent c) {
         Dimension d = super.getPreferredSize(c);
         JLabel label = (JLabel) c;
@@ -443,30 +445,22 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
         return lines;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void componentHidden(ComponentEvent e) {
         // Don't care
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void componentMoved(ComponentEvent e) {
         // Don't care
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void componentResized(ComponentEvent e) {
         clearCache((JLabel) e.getSource());
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void componentShown(ComponentEvent e) {
         // Don't care
     }

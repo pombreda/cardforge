@@ -25,16 +25,24 @@ import static javax.swing.JOptionPane.ERROR_MESSAGE;
  * @version V1.0 02.08.2009
  */
 public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer {
+    /** Constant <code>nameOS="os.name"</code> */
     private static final String nameOS = "os.name";
+    /** Constant <code>versionOS="os.version"</code> */
     private static final String versionOS = "os.version";
+    /** Constant <code>architectureOS="os.arch"</code> */
     private static final String architectureOS = "os.arch";
+    /** Constant <code>versionJava="java.version"</code> */
     private static final String versionJava = "java.version";
+    /** Constant <code>vendorJava="java.vendor"</code> */
     private static final String vendorJava = "java.vendor";
 
+    /** Constant <code>ALL_THREADS_ACTION</code> */
     public static final Action ALL_THREADS_ACTION = new ShowAllThreadsAction();
 
     /**
      * Shows an error dialog taking the exception's message as the error message.
+     *
+     * @param ex a {@link java.lang.Throwable} object.
      */
     public static void showError(Throwable ex) {
         showError(ex, null);
@@ -42,6 +50,10 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error dialog creating the error message by a formatting operation.
+     *
+     * @param ex a {@link java.lang.Throwable} object.
+     * @param format a {@link java.lang.String} object.
+     * @param args a {@link java.lang.Object} object.
      */
     public static void showError(Throwable ex, String format, Object... args) {
         if (ex == null) return;
@@ -50,6 +62,9 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error dialog with the specified error message.
+     *
+     * @param ex a {@link java.lang.Throwable} object.
+     * @param message a {@link java.lang.String} object.
      */
     public static void showError(final Throwable ex, String message) {
         if (ex == null) return;
@@ -63,6 +78,9 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error without an exception that caused it.
+     *
+     * @param format a {@link java.lang.String} object.
+     * @param args a {@link java.lang.Object} object.
      */
     public static void showError(String format, Object... args) {
         showError(String.format(format, args));
@@ -70,6 +88,8 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error without an exception that caused it.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public static void showError(String message) {
         showError(new Exception(), message);
@@ -77,6 +97,9 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error message for all running threads.
+     *
+     * @param format a {@link java.lang.String} object.
+     * @param args a {@link java.lang.Object} object.
      */
     public static void showErrorAllThreads(String format, Object... args) {
         showErrorAllThreads(String.format(format, args));
@@ -84,6 +107,8 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Shows an error message for all running threads.
+     *
+     * @param message a {@link java.lang.String} object.
      */
     public static void showErrorAllThreads(String message) {
         final StringWriter sw = new StringWriter();
@@ -93,6 +118,11 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
         showDialog(sw.toString());
     }
 
+    /**
+     * <p>showDialog.</p>
+     *
+     * @param fullMessage a {@link java.lang.String} object.
+     */
     private static void showDialog(String fullMessage) {
         JTextArea area = new JTextArea(fullMessage, 40, 90);
         area.setFont(new Font("Monospaced", Font.PLAIN, 10));
@@ -113,6 +143,10 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Prints the error message for the specified exception to the print writer
+     *
+     * @param pw a {@link java.io.PrintWriter} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     * @param message a {@link java.lang.String} object.
      */
     private static void printError(PrintWriter pw, Throwable ex, String message) {
         if (message != null) System.err.println(message);
@@ -127,6 +161,9 @@ public class ErrorViewer implements NewConstants, NewConstants.LANG.ErrorViewer 
 
     /**
      * Prints the error message to the print writer, showing all running threads' stack traces.
+     *
+     * @param pw a {@link java.io.PrintWriter} object.
+     * @param message a {@link java.lang.String} object.
      */
     private static void printError(PrintWriter pw, String message) {
         System.err.println(message);

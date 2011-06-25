@@ -14,20 +14,39 @@ import java.util.Map;
 import java.util.Random;
 
 
+/**
+ * <p>ReadPriceList class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ReadPriceList implements NewConstants {
 
+    /** Constant <code>comment="//"</code> */
     final private static String comment = "//";
 
     private HashMap<String, Long> priceMap;
 
+    /**
+     * <p>Constructor for ReadPriceList.</p>
+     */
     public ReadPriceList() {
         setup();
     }
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         priceMap = readFile(ForgeProps.getFile(QUEST.PRICE));
     }//setup()
 
+    /**
+     * <p>readFile.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link java.util.HashMap} object.
+     */
     private HashMap<String, Long> readFile(File file) {
         BufferedReader in;
         HashMap<String, Long> map = new HashMap<String, Long>();
@@ -79,6 +98,11 @@ public class ReadPriceList implements NewConstants {
         return map;
     }//readFile()
 
+    /**
+     * <p>getPriceList.</p>
+     *
+     * @return a {@link java.util.Map} object.
+     */
     public Map<String, Long> getPriceList() {
         return priceMap;
     }

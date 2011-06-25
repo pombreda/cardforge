@@ -10,8 +10,21 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Mana class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Mana {
     // ****************************** MANA ************************
+    /**
+     * <p>createAbilityMana.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param produced a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityMana(final AbilityFactory AF, final String produced) {
         final Ability_Mana abMana = new Ability_Mana(AF.getHostCard(), AF.getAbCost(), produced) {
             private static final long serialVersionUID = -1933592438783630254L;
@@ -37,6 +50,13 @@ public class AbilityFactory_Mana {
         return abMana;
     }
 
+    /**
+     * <p>createSpellMana.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param produced a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellMana(final AbilityFactory AF, final String produced) {
         final SpellAbility spMana = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
@@ -75,6 +95,13 @@ public class AbilityFactory_Mana {
     }
 
     // Mana never really appears as a Drawback
+    /**
+     * <p>createDrawbackMana.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param produced a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.Ability_Sub} object.
+     */
     public static Ability_Sub createDrawbackMana(final AbilityFactory AF, final String produced) {
         final Ability_Sub dbMana = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
@@ -119,11 +146,25 @@ public class AbilityFactory_Mana {
         return dbMana;
     }
 
+    /**
+     * <p>manaCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a boolean.
+     */
     public static boolean manaCanPlayAI(final AbilityFactory af) {
         // AI cannot use this properly until he has a ManaPool
         return false;
     }
 
+    /**
+     * <p>manaStackDescription.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String manaStackDescription(Ability_Mana abMana, AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -140,6 +181,13 @@ public class AbilityFactory_Mana {
         return sb.toString();
     }
 
+    /**
+     * <p>manaResolve.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void manaResolve(Ability_Mana abMana, AbilityFactory af, SpellAbility sa) {
         // Spells are not undoable
         abMana.setUndoable(af.isAbility() && abMana.isUndoable());
@@ -176,6 +224,14 @@ public class AbilityFactory_Mana {
         doDrawback(af, abMana, card);
     }
 
+    /**
+     * <p>generatedMana.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String generatedMana(Ability_Mana abMana, AbilityFactory af, SpellAbility sa) {
         // Calculate generated mana here for stack description and resolving
         HashMap<String, String> params = af.getMapParams();
@@ -222,6 +278,13 @@ public class AbilityFactory_Mana {
     }
 
     // ****************************** MANAREFLECTED ************************
+    /**
+     * <p>createAbilityManaReflected.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param produced a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityManaReflected(final AbilityFactory AF, final String produced) {
         final Ability_Mana abMana = new Ability_Mana(AF.getHostCard(), AF.getAbCost(), produced) {
             private static final long serialVersionUID = -1933592438783630254L;
@@ -248,6 +311,13 @@ public class AbilityFactory_Mana {
         return abMana;
     }
 
+    /**
+     * <p>createSpellManaReflected.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param produced a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellManaReflected(final AbilityFactory AF, final String produced) {
         // No Spell has Reflected Mana, but might as well put it in for the future
         final SpellAbility spMana = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
@@ -282,11 +352,23 @@ public class AbilityFactory_Mana {
         return spMana;
     }
 
+    /**
+     * <p>manaReflectedCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a boolean.
+     */
     public static boolean manaReflectedCanPlayAI(final AbilityFactory af) {
         // AI cannot use this properly until he has a ManaPool
         return false;
     }
 
+    /**
+     * <p>manaReflectedResolve.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public static void manaReflectedResolve(Ability_Mana abMana, AbilityFactory af) {
         // Spells are not undoable
         HashMap<String, String> params = af.getMapParams();
@@ -319,6 +401,15 @@ public class AbilityFactory_Mana {
     }
 
     // add Colors and
+    /**
+     * <p>reflectableMana.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param colors a {@link java.util.ArrayList} object.
+     * @param parents a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private static ArrayList<String> reflectableMana(Ability_Mana abMana, AbilityFactory af, ArrayList<String> colors, ArrayList<Card> parents) {
         // Here's the problem with reflectable Mana. If more than one is out, they need to Reflect each other,
         // so we basically need to have a recursive list that send the parents so we don't infinite recurse.
@@ -403,6 +494,14 @@ public class AbilityFactory_Mana {
         return colors;
     }
 
+    /**
+     * <p>hasProperty.</p>
+     *
+     * @param maxChoices a int.
+     * @param cards a {@link forge.CardList} object.
+     * @param colors a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private static ArrayList<String> hasProperty(int maxChoices, CardList cards, ArrayList<String> colors) {
         for (Card c : cards) {
             // For each card, go through all the colors and if the card is that color, add
@@ -417,6 +516,14 @@ public class AbilityFactory_Mana {
         return colors;
     }
 
+    /**
+     * <p>canProduce.</p>
+     *
+     * @param maxChoices a int.
+     * @param ab a {@link forge.card.spellability.Ability_Mana} object.
+     * @param colors a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private static ArrayList<String> canProduce(int maxChoices, Ability_Mana ab, ArrayList<String> colors) {
         for (String col : Constant.Color.onlyColors) {
             String s = Input_PayManaCostUtil.getShortColorString(col);
@@ -430,6 +537,15 @@ public class AbilityFactory_Mana {
         return colors;
     }
 
+    /**
+     * <p>generatedReflectedMana.</p>
+     *
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param colors a {@link java.util.ArrayList} object.
+     * @param player a {@link forge.Player} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String generatedReflectedMana(Ability_Mana abMana, AbilityFactory af, ArrayList<String> colors, Player player) {
         // Calculate generated mana here for stack description and resolving
         HashMap<String, String> params = af.getMapParams();
@@ -478,6 +594,13 @@ public class AbilityFactory_Mana {
 
     // *************** Utility Functions **********************
 
+    /**
+     * <p>doDrawback.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param abMana a {@link forge.card.spellability.Ability_Mana} object.
+     * @param card a {@link forge.Card} object.
+     */
     public static void doDrawback(AbilityFactory af, Ability_Mana abMana, Card card) {
 
         // if mana production has any type of SubAbility, undoable=false
@@ -488,6 +611,12 @@ public class AbilityFactory_Mana {
         }
     }
 
+    /**
+     * <p>hasUrzaLands.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     * @return a boolean.
+     */
     private static boolean hasUrzaLands(Player p) {
         CardList landsControlled = AllZoneUtil.getPlayerCardsInPlay(p);
 
@@ -499,6 +628,13 @@ public class AbilityFactory_Mana {
     // ************** DrainMana ***************
     // ****************************************
 
+    /**
+     * <p>createAbilityDrainMana.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createAbilityDrainMana(final AbilityFactory af) {
         final SpellAbility abDrainMana = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5669367387381350104L;
@@ -527,6 +663,13 @@ public class AbilityFactory_Mana {
         return abDrainMana;
     }
 
+    /**
+     * <p>createSpellDrainMana.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createSpellDrainMana(final AbilityFactory af) {
         final SpellAbility spDrainMana = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4294474468024747680L;
@@ -550,6 +693,13 @@ public class AbilityFactory_Mana {
         return spDrainMana;
     }
 
+    /**
+     * <p>createDrawbackDrainMana.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createDrawbackDrainMana(final AbilityFactory af) {
         final SpellAbility dbDrainMana = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 1458568386420831420L;
@@ -578,6 +728,13 @@ public class AbilityFactory_Mana {
         return dbDrainMana;
     }
 
+    /**
+     * <p>drainManaStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String drainManaStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -611,6 +768,13 @@ public class AbilityFactory_Mana {
         return sb.toString();
     }
 
+    /**
+     * <p>drainManaCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean drainManaCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         if (!ComputerUtil.canPayCost(sa))
@@ -644,6 +808,14 @@ public class AbilityFactory_Mana {
         return randomReturn;
     }
 
+    /**
+     * <p>drainManaTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean drainManaTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -672,6 +844,13 @@ public class AbilityFactory_Mana {
         return true;
     }
 
+    /**
+     * <p>drainManaPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean drainManaPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         HashMap<String, String> params = af.getMapParams();
@@ -698,6 +877,12 @@ public class AbilityFactory_Mana {
         return randomReturn;
     }
 
+    /**
+     * <p>drainManaResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void drainManaResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();

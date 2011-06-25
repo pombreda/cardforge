@@ -6,16 +6,39 @@ import forge.card.spellability.SpellAbility;
 import java.util.Random;
 
 
+/**
+ * <p>AIPlayer class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AIPlayer extends Player {
 
+    /**
+     * <p>Constructor for AIPlayer.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     */
     public AIPlayer(String myName) {
         this(myName, 20, 0);
     }
 
+    /**
+     * <p>Constructor for AIPlayer.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     * @param myLife a int.
+     * @param myPoisonCounters a int.
+     */
     public AIPlayer(String myName, int myLife, int myPoisonCounters) {
         super(myName, myLife, myPoisonCounters);
     }
 
+    /**
+     * <p>getOpponent.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getOpponent() {
         return AllZone.getHumanPlayer();
     }
@@ -26,14 +49,25 @@ public class AIPlayer extends Player {
     ///
     ///////////////
 
+    /**
+     * <p>isHuman.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isHuman() {
         return false;
     }
 
+    /**
+     * <p>isComputer.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isComputer() {
         return true;
     }
 
+    /** {@inheritDoc} */
     public boolean isPlayer(Player p1) {
         return p1.getName().equals(this.name);
     }
@@ -50,16 +84,25 @@ public class AIPlayer extends Player {
     ///
     ////////////////////////////////
 
+    /**
+     * <p>mayDrawCard.</p>
+     */
     public void mayDrawCard() {
         mayDrawCards(1);
     }
 
+    /** {@inheritDoc} */
     public void mayDrawCards(int n) {
         if (AllZone.getComputerLibrary().size() > n) {
             drawCards(n);
         }
     }
 
+    /**
+     * <p>dredge.</p>
+     *
+     * @return a boolean.
+     */
     public boolean dredge() {
         CardList dredgers = getDredge();
         Random random = MyRandom.random;
@@ -89,6 +132,7 @@ public class AIPlayer extends Player {
     ///
     ////////////////////////////////
 
+    /** {@inheritDoc} */
     public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
         int max = AllZoneUtil.getPlayerHand(this).size();
         max = Math.min(max, num);
@@ -119,6 +163,7 @@ public class AIPlayer extends Player {
         return discarded;
     }//end discard
 
+    /** {@inheritDoc} */
     public void discardUnless(int num, String uType, SpellAbility sa) {
         CardList hand = AllZoneUtil.getPlayerHand(this);
         CardList tHand = hand.getType(uType);
@@ -132,6 +177,7 @@ public class AIPlayer extends Player {
         AllZone.getComputerPlayer().discard(num, sa, false);
     }
 
+    /** {@inheritDoc} */
     public void handToLibrary(final int numToLibrary, final String libPosIn) {
         String libPos = libPosIn;
 
@@ -176,6 +222,7 @@ public class AIPlayer extends Player {
 
     ///////////////////////////
 
+    /** {@inheritDoc} */
     protected void doScry(final CardList topN, final int N) {
         int num = N;
         for (int i = 0; i < num; i++) {
@@ -220,6 +267,7 @@ public class AIPlayer extends Player {
         }
     }
 
+    /** {@inheritDoc} */
     public void sacrificePermanent(String prompt, CardList choices) {
         if (choices.size() > 0) {
             //TODO - this could probably use better AI
@@ -228,6 +276,7 @@ public class AIPlayer extends Player {
         }
     }
 
+    /** {@inheritDoc} */
     protected void clashMoveToTopOrBottom(Card c) {
         //computer just puts the card back until such time it can make a smarter decision
         AllZone.getGameAction().moveToLibrary(c);

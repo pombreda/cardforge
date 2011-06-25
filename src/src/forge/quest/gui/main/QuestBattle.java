@@ -9,9 +9,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
+/**
+ * <p>QuestBattle class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestBattle extends QuestSelectablePanel {
+    /** Constant <code>serialVersionUID=3112668476017792084L</code> */
     private static final long serialVersionUID = 3112668476017792084L;
 
+    /** Constant <code>nameDeckMap</code> */
     static TreeMap<String, DeckInfo> nameDeckMap = new TreeMap<String, DeckInfo>();
 
     String deckName;
@@ -20,6 +28,9 @@ public class QuestBattle extends QuestSelectablePanel {
         buildDeckList();
     }
 
+    /**
+     * <p>buildDeckList.</p>
+     */
     private static void buildDeckList() {
         //TODO: Build this list dynamically from the deck files.
 
@@ -384,10 +395,23 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Xavier 2", "medium", "UR Twitch");
     }
 
+    /**
+     * <p>addToDeckList.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param difficulty a {@link java.lang.String} object.
+     * @param description a {@link java.lang.String} object.
+     */
     private static void addToDeckList(String name, String difficulty, String description) {
         nameDeckMap.put(name, new DeckInfo(name, description, difficulty));
     }
 
+    /**
+     * <p>getDescription.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getDescription(String deckName) {
         if (nameDeckMap.containsKey(deckName)) {
             return nameDeckMap.get(deckName).description;
@@ -409,6 +433,11 @@ public class QuestBattle extends QuestSelectablePanel {
         }
     }
 
+    /**
+     * <p>getBattles.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public static List<QuestSelectablePanel> getBattles() {
         List<QuestSelectablePanel> opponentList = new ArrayList<QuestSelectablePanel>();
 
@@ -436,12 +465,21 @@ public class QuestBattle extends QuestSelectablePanel {
         return opponentList;
     }
 
+    /**
+     * <p>Constructor for QuestBattle.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param difficulty a {@link java.lang.String} object.
+     * @param description a {@link java.lang.String} object.
+     * @param icon a {@link javax.swing.ImageIcon} object.
+     */
     private QuestBattle(String name, String difficulty, String description, ImageIcon icon) {
         super(name.substring(0, name.length() - 2), difficulty, description, icon);
 
         this.deckName = name;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return deckName;

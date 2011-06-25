@@ -24,7 +24,14 @@ import java.util.*;
 import java.util.List;
 
 
+/**
+ * <p>QuestMainPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestMainPanel extends QuestAbstractPanel {
+    /** Constant <code>serialVersionUID=6142934729724012402L</code> */
     private static final long serialVersionUID = 6142934729724012402L;
 
     private forge.quest.data.QuestData questData;
@@ -53,16 +60,25 @@ public class QuestMainPanel extends QuestAbstractPanel {
     private JCheckBox petCheckBox = new JCheckBox("Summon Pet");
 
     private JCheckBox plantBox = new JCheckBox("Summon Plant");
+    /** Constant <code>NO_DECKS_AVAILABLE="No decks available"</code> */
     private static final String NO_DECKS_AVAILABLE = "No decks available";
+    /** Constant <code>BATTLES="Battles"</code> */
     private static final String BATTLES = "Battles";
+    /** Constant <code>QUESTS="Quests"</code> */
     private static final String QUESTS = "Quests";
 
     //TODO: Make this ordering permanent
+    /** Constant <code>lastUsedDeck="//TODO: Make this ordering permanent"</code> */
     private static String lastUsedDeck;
     private JButton zeppelinButton = new JButton("<html>Launch<br>Zeppelin</html>",
             GuiUtils.getResizedIcon(GuiUtils.getIconFromFile("ZeppelinIcon.png"), 40, 40));
     private JPanel zeppelinPanel = new JPanel();
 
+    /**
+     * <p>Constructor for QuestMainPanel.</p>
+     *
+     * @param mainFrame a {@link forge.quest.gui.QuestFrame} object.
+     */
     public QuestMainPanel(QuestFrame mainFrame) {
         super(mainFrame);
         questData = AllZone.getQuestData();
@@ -70,6 +86,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
         initUI();
     }
 
+    /**
+     * <p>initUI.</p>
+     */
     private void initUI() {
         refresh();
         this.setLayout(new BorderLayout(5, 5));
@@ -90,6 +109,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     }
 
+    /**
+     * <p>createStatusPanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createStatusPanel() {
         JPanel northPanel = new JPanel();
         JLabel modeLabel;
@@ -119,6 +143,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return northPanel;
     }
 
+    /**
+     * <p>createSidePanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createSidePanel() {
         JPanel panel = new JPanel();
         JPanel optionsPanel;//Create options checkbox list
@@ -220,6 +249,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return panel;
     }
 
+    /**
+     * <p>createOptionsPanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createOptionsPanel() {
         JPanel optionsPanel;
         optionsPanel = new JPanel();
@@ -234,6 +268,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return optionsPanel;
     }
 
+    /**
+     * <p>createMatchSettingsPanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createMatchSettingsPanel() {
 
         JPanel matchPanel = new JPanel();
@@ -338,6 +377,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return matchPanel;
     }
 
+    /**
+     * <p>createBattlePanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createBattlePanel() {
         JPanel BattlePanel = new JPanel();
         BattlePanel.setLayout(new BoxLayout(BattlePanel, BoxLayout.Y_AXIS));
@@ -357,6 +401,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return BattlePanel;
     }
 
+    /**
+     * <p>createQuestPanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     private JPanel createQuestPanel() {
         JPanel questPanel = new JPanel();
         questPanel.setLayout(new BoxLayout(questPanel, BoxLayout.Y_AXIS));
@@ -376,6 +425,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return questPanel;
     }
 
+    /**
+     * <p>refresh.</p>
+     */
     void refresh() {
         AllZone.getQuestData().saveData();
 
@@ -478,6 +530,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
         refreshNextMatchPanel();
     }
 
+    /**
+     * <p>refreshNextMatchPanel.</p>
+     */
     private void refreshNextMatchPanel() {
         nextMatchPanel.removeAll();
         nextMatchLayout = new CardLayout();
@@ -491,6 +546,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
         }
     }
 
+    /**
+     * <p>nextQuestInWins.</p>
+     *
+     * @return a int.
+     */
     private int nextQuestInWins() {
 
         if (questData.getWin() < 25) {
@@ -512,6 +572,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
     }
 
 
+    /**
+     * <p>showDeckEditor.</p>
+     */
     void showDeckEditor() {
         Command exit = new Command() {
             private static final long serialVersionUID = -5110231879431074581L;
@@ -531,10 +594,16 @@ public class QuestMainPanel extends QuestAbstractPanel {
         mainFrame.dispose();
     }//deck editor button
 
+    /**
+     * <p>showBazaar.</p>
+     */
     void showBazaar() {
         mainFrame.showBazaarPane();
     }
 
+    /**
+     * <p>showCardShop.</p>
+     */
     void showCardShop() {
         Command exit = new Command() {
             private static final long serialVersionUID = 8567193482568076362L;
@@ -556,6 +625,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     }//card shop button
 
+    /**
+     * <p>launchGame.</p>
+     */
     private void launchGame() {
 
         //TODO: This is a temporary hack to see if the image cache affects the heap usage significantly.
@@ -600,6 +672,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
     }
 
 
+    /**
+     * <p>setupBattle.</p>
+     *
+     * @param humanDeck a {@link forge.deck.Deck} object.
+     */
     void setupBattle(Deck humanDeck) {
 
         Deck computer = QuestBattleManager.getAIDeckNewFormat((selectedOpponent).getName());
@@ -609,6 +686,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
                 new CardList(), questData.getLife(), 20, null);
     }
 
+    /**
+     * <p>setupQuest.</p>
+     *
+     * @param humanDeck a {@link forge.deck.Deck} object.
+     */
     private void setupQuest(Deck humanDeck) {
         Quest_Assignment selectedQuest = ((QuestQuest) selectedOpponent).getQuestAssignment();
 
@@ -629,6 +711,11 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     }
 
+    /**
+     * <p>getMatchIcon.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     String getMatchIcon() {
         String oppIconName;
 
@@ -642,6 +729,9 @@ public class QuestMainPanel extends QuestAbstractPanel {
         return oppIconName;
     }
 
+    /**
+     * <p>showQuests.</p>
+     */
     void showQuests() {
         if (isShowingQuests) {
             isShowingQuests = false;
@@ -683,15 +773,26 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     }
 
+    /**
+     * <p>moveDeckToTop.</p>
+     *
+     * @param humanDeckName a {@link java.lang.String} object.
+     */
     private void moveDeckToTop(String humanDeckName) {
         QuestMainPanel.lastUsedDeck = humanDeckName;
     }
 
 
+    /**
+     * <p>canGameBeLaunched.</p>
+     *
+     * @return a boolean.
+     */
     boolean canGameBeLaunched() {
         return !(NO_DECKS_AVAILABLE.equals(deckComboBox.getSelectedItem()) || selectedOpponent == null);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void refreshState() {
         this.refresh();

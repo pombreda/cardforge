@@ -6,6 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>GenerateConstructedMultiColorDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GenerateConstructedMultiColorDeck {
     private String color1;
     private String color2;
@@ -16,11 +22,17 @@ public class GenerateConstructedMultiColorDeck {
     private Map<String, String> map = new HashMap<String, String>();
     private Map<String, String[]> multiMap = new HashMap<String, String[]>();
 
+    /**
+     * <p>Constructor for GenerateConstructedMultiColorDeck.</p>
+     */
     public GenerateConstructedMultiColorDeck() {
         setupBasicLandMap();
         setupMultiMap();
     }
 
+    /**
+     * <p>setupBasicLandMap.</p>
+     */
     private void setupBasicLandMap() {
         map.put(Constant.Color.Black, "Swamp");
         map.put(Constant.Color.Blue, "Island");
@@ -29,6 +41,9 @@ public class GenerateConstructedMultiColorDeck {
         map.put(Constant.Color.White, "Plains");
     }
 
+    /**
+     * <p>setupMultiMap.</p>
+     */
     private void setupMultiMap() {
         multiMap.put(Constant.Color.Black + Constant.Color.Blue, new String[]{"Underground Sea", "Watery Grave"});
         multiMap.put(Constant.Color.Black + Constant.Color.Green, new String[]{"Bayou", "Overgrown Tomb"});
@@ -53,6 +68,11 @@ public class GenerateConstructedMultiColorDeck {
     }
 
 
+    /**
+     * <p>generate3ColorDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList generate3ColorDeck() {
         CardList deck;
 
@@ -72,6 +92,11 @@ public class GenerateConstructedMultiColorDeck {
         return deck;
     }
 
+    /**
+     * <p>generate5ColorDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList generate5ColorDeck() {
         CardList deck;
 
@@ -95,6 +120,12 @@ public class GenerateConstructedMultiColorDeck {
         return deck;
     }
 
+    /**
+     * <p>addLand.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param colors a int.
+     */
     private void addLand(CardList list, int colors) {
         if (colors == 3) {
             int numberBasic = 2;
@@ -190,10 +221,21 @@ public class GenerateConstructedMultiColorDeck {
         }
     }//addLand()
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @param colors a int.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getCards(int colors) {
         return filterBadCards(AllZone.getCardFactory().getAllCards(), colors);
     }//getCards()
 
+    /**
+     * <p>get3ColorDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get3ColorDeck() {
         CardList deck = get3Colors(getCards(3));
 
@@ -207,6 +249,11 @@ public class GenerateConstructedMultiColorDeck {
         return out;
     }
 
+    /**
+     * <p>get5ColorDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get5ColorDeck() {
         CardList deck = get5Colors(getCards(5));
 
@@ -220,6 +267,12 @@ public class GenerateConstructedMultiColorDeck {
         return out;
     }
 
+    /**
+     * <p>get3Colors.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get3Colors(CardList in) {
         int a;
         int b;
@@ -268,6 +321,12 @@ public class GenerateConstructedMultiColorDeck {
         return out;
     }
 
+    /**
+     * <p>get5Colors.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get5Colors(CardList in) {
 
         color1 = Constant.Color.Black;
@@ -315,6 +374,13 @@ public class GenerateConstructedMultiColorDeck {
     }
 
 
+    /**
+     * <p>filterBadCards.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param colors a int.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList filterBadCards(CardList list, int colors) {
         final ArrayList<Card> goodLand = new ArrayList<Card>();
         //goodLand.add("Faerie Conclave");
@@ -361,6 +427,11 @@ public class GenerateConstructedMultiColorDeck {
         return out;
     }//filterBadCards()
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         GenerateConstructedMultiColorDeck g = new GenerateConstructedMultiColorDeck();
 

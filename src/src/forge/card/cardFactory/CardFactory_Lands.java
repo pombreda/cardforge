@@ -8,8 +8,28 @@ import forge.gui.input.Input;
 import javax.swing.*;
 import java.util.HashMap;
 
+/**
+ * <p>CardFactory_Lands class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 class CardFactory_Lands {
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @param cf a {@link forge.card.cardFactory.CardFactory} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, final String cardName, Player owner, CardFactory cf) {
 
 

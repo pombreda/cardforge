@@ -8,6 +8,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_AlterLife class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_AlterLife {
     // An AbilityFactory subclass for Gaining, Losing, or Setting Life totals.
 
@@ -15,6 +21,12 @@ public class AbilityFactory_AlterLife {
     // ************************* GAIN LIFE *************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityGainLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityGainLife(final AbilityFactory AF) {
 
         final SpellAbility abGainLife = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
@@ -47,6 +59,12 @@ public class AbilityFactory_AlterLife {
         return abGainLife;
     }
 
+    /**
+     * <p>createSpellGainLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellGainLife(final AbilityFactory AF) {
         final SpellAbility spGainLife = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6631124959690157874L;
@@ -76,6 +94,12 @@ public class AbilityFactory_AlterLife {
         return spGainLife;
     }
 
+    /**
+     * <p>createDrawbackGainLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackGainLife(final AbilityFactory AF) {
         final SpellAbility dbGainLife = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6631124959690157874L;
@@ -115,6 +139,13 @@ public class AbilityFactory_AlterLife {
         return dbGainLife;
     }
 
+    /**
+     * <p>gainLifeStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String gainLifeStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -150,6 +181,13 @@ public class AbilityFactory_AlterLife {
         return sb.toString();
     }
 
+    /**
+     * <p>gainLifeCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean gainLifeCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         Random r = MyRandom.random;
         HashMap<String, String> params = af.getMapParams();
@@ -233,6 +271,14 @@ public class AbilityFactory_AlterLife {
         return (randomReturn && chance);
     }
 
+    /**
+     * <p>gainLifeDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     public static boolean gainLifeDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)    // If there is a cost payment it's usually not mandatory
             return false;
@@ -267,6 +313,12 @@ public class AbilityFactory_AlterLife {
         return true;
     }
 
+    /**
+     * <p>gainLifeResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void gainLifeResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -288,6 +340,12 @@ public class AbilityFactory_AlterLife {
     // ************************* LOSE LIFE *************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityLoseLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityLoseLife(final AbilityFactory AF) {
         final SpellAbility abLoseLife = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 1129762905315395160L;
@@ -321,6 +379,12 @@ public class AbilityFactory_AlterLife {
         return abLoseLife;
     }
 
+    /**
+     * <p>createSpellLoseLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellLoseLife(final AbilityFactory AF) {
         final SpellAbility spLoseLife = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -2966932725306192437L;
@@ -349,6 +413,12 @@ public class AbilityFactory_AlterLife {
         return spLoseLife;
     }
 
+    /**
+     * <p>createDrawbackLoseLife.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackLoseLife(final AbilityFactory AF) {
         final SpellAbility dbLoseLife = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -2966932725306192437L;
@@ -387,6 +457,13 @@ public class AbilityFactory_AlterLife {
         return dbLoseLife;
     }
 
+    /**
+     * <p>loseLifeStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     static String loseLifeStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -421,6 +498,13 @@ public class AbilityFactory_AlterLife {
         return sb.toString();
     }
 
+    /**
+     * <p>loseLifeCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean loseLifeCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         Random r = MyRandom.random;
         Cost abCost = sa.getPayCosts();
@@ -498,6 +582,14 @@ public class AbilityFactory_AlterLife {
         return (randomReturn && chance);
     }
 
+    /**
+     * <p>loseLifeDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     public static boolean loseLifeDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)    // If there is a cost payment it's usually not mandatory
             return false;
@@ -542,6 +634,12 @@ public class AbilityFactory_AlterLife {
         return true;
     }
 
+    /**
+     * <p>loseLifeResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void loseLifeResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -567,6 +665,12 @@ public class AbilityFactory_AlterLife {
     //
     // Made more sense here than in AF_Counters since it affects players and their health
 
+    /**
+     * <p>createAbilityPoison.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityPoison(final AbilityFactory af) {
 
         final SpellAbility abPoison = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -597,6 +701,12 @@ public class AbilityFactory_AlterLife {
         return abPoison;
     }
 
+    /**
+     * <p>createSpellPoison.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellPoison(final AbilityFactory af) {
         final SpellAbility spPoison = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -1495708415138457833L;
@@ -623,6 +733,12 @@ public class AbilityFactory_AlterLife {
         return spPoison;
     }
 
+    /**
+     * <p>createDrawbackPoison.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackPoison(final AbilityFactory af) {
         final SpellAbility dbPoison = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -1173479041548558016L;
@@ -659,6 +775,14 @@ public class AbilityFactory_AlterLife {
         return dbPoison;
     }
 
+    /**
+     * <p>poisonDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean poisonDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)    // If there is a cost payment it's usually not mandatory
             return false;
@@ -684,6 +808,12 @@ public class AbilityFactory_AlterLife {
         return true;
     }
 
+    /**
+     * <p>poisonResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void poisonResolve(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         int amount = AbilityFactory.calculateAmount(af.getHostCard(), params.get("Num"), sa);
@@ -701,6 +831,13 @@ public class AbilityFactory_AlterLife {
                 p.addPoisonCounters(amount);
     }
 
+    /**
+     * <p>poisonStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String poisonStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -747,6 +884,13 @@ public class AbilityFactory_AlterLife {
         return sb.toString();
     }
 
+    /**
+     * <p>poisonCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean poisonCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         Cost abCost = sa.getPayCosts();
         final Card source = af.getHostCard();
@@ -802,6 +946,12 @@ public class AbilityFactory_AlterLife {
     // ************************** SET LIFE *************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilitySetLife.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilitySetLife(final AbilityFactory af) {
         final SpellAbility abSetLife = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -7375434097541097668L;
@@ -830,6 +980,12 @@ public class AbilityFactory_AlterLife {
         return abSetLife;
     }
 
+    /**
+     * <p>createSpellSetLife.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellSetLife(final AbilityFactory af) {
         final SpellAbility spSetLife = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -94657822256270222L;
@@ -855,6 +1011,12 @@ public class AbilityFactory_AlterLife {
         return spSetLife;
     }
 
+    /**
+     * <p>createDrawbackSetLife.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackSetLife(final AbilityFactory af) {
         final SpellAbility dbSetLife = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -7634729949893534023L;
@@ -891,6 +1053,13 @@ public class AbilityFactory_AlterLife {
         return dbSetLife;
     }
 
+    /**
+     * <p>setLifeStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String setLifeStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -926,6 +1095,13 @@ public class AbilityFactory_AlterLife {
         return sb.toString();
     }
 
+    /**
+     * <p>setLifeCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean setLifeCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         Random r = MyRandom.random;
         //Ability_Cost abCost = sa.getPayCosts();
@@ -989,6 +1165,14 @@ public class AbilityFactory_AlterLife {
         return ((r.nextFloat() < .6667) && chance);
     }
 
+    /**
+     * <p>setLifeDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean setLifeDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         int life = AllZone.getComputerPlayer().getLife();
         int hlife = AllZone.getHumanPlayer().getLife();
@@ -1035,6 +1219,12 @@ public class AbilityFactory_AlterLife {
         return true;
     }
 
+    /**
+     * <p>setLifeResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void setLifeResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 

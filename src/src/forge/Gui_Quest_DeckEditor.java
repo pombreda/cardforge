@@ -28,7 +28,14 @@ import java.util.Random;
 //import forge.quest.data.QuestBoosterPack;
 
 
+/**
+ * <p>Gui_Quest_DeckEditor class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckDisplay, NewConstants {
+    /** Constant <code>serialVersionUID=152061168634545L</code> */
     private static final long serialVersionUID = 152061168634545L;
 
     Gui_Quest_DeckEditor_Menu customMenu;
@@ -78,17 +85,20 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
     private CardList top;
     private CardList bottom;
     public Card cCardHQ;
+    /** Constant <code>previousDirectory</code> */
     private static File previousDirectory = null;
 
     private CardDetailPanel detail = new CardDetailPanel(null);
     private CardPicturePanel picture = new CardPicturePanel(null);
     private JPanel glassPane;
 
+    /** {@inheritDoc} */
     @Override
     public void setTitle(String message) {
         super.setTitle(message);
     }
 
+    /** {@inheritDoc} */
     public void updateDisplay(CardList top, CardList bottom) {
 
         this.top = top;
@@ -177,6 +187,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         bottomModel.resort();
     }//updateDisplay
 
+    /**
+     * <p>updateDisplay.</p>
+     */
     public void updateDisplay() {
         //updateDisplay(this.top, this.bottom);
 
@@ -216,6 +229,12 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         topModel.resort();
     }
 
+    /**
+     * <p>filterByColor.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private boolean filterByColor(Card c) {
         boolean filterOut = false;
 
@@ -258,6 +277,12 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         return filterOut;
     }
 
+    /**
+     * <p>filterByType.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private boolean filterByType(Card c) {
         boolean filterOut = false;
 
@@ -292,22 +317,42 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         return filterOut;
     }
 
+    /**
+     * <p>getTopTableModel.</p>
+     *
+     * @return a {@link forge.TableModel} object.
+     */
     public TableModel getTopTableModel() {
         return topModel;
     }
 
 
     //top shows available card pool
+    /**
+     * <p>Getter for the field <code>top</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getTop() {
         return topModel.getCards();
     }
 
     //bottom shows cards that the user has chosen for his library
+    /**
+     * <p>Getter for the field <code>bottom</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBottom() {
         return bottomModel.getCards();
     }
 
 
+    /**
+     * <p>show.</p>
+     *
+     * @param exitCommand a {@link forge.Command} object.
+     */
     public void show(final Command exitCommand) {
         final Command exit = new Command() {
             private static final long serialVersionUID = -7428793574300520612L;
@@ -376,6 +421,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         bottomModel.sort(1, true);
     }//show(Command)
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         MouseInputListener l = new MouseInputListener() {
             public void mouseReleased(MouseEvent e) {
@@ -434,6 +482,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         });
     }//addListeners()
 
+    /**
+     * <p>setup.</p>
+     */
     public void setup() {
         addListeners();
 
@@ -483,6 +534,12 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
 //        setExtendedState(Frame.MAXIMIZED_BOTH);
     }//setupAndDisplay()
 
+    /**
+     * <p>getStats.</p>
+     *
+     * @param deck a {@link forge.CardList} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getStats(CardList deck) {
         int total = deck.size();
         int creature = deck.getType("Creature").size();
@@ -497,6 +554,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         return show.toString();
     }//getStats()
 
+    /**
+     * <p>Constructor for Gui_Quest_DeckEditor.</p>
+     */
     public Gui_Quest_DeckEditor() {
         try {
             filterUsed = false;
@@ -506,15 +566,26 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         }
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return detail.getCard();
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
 
         border1 = new EtchedBorder(EtchedBorder.RAISED, Color.white, new Color(148, 145, 140));
@@ -752,6 +823,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         setGlassPane(glassPane);
     }
 
+    /**
+     * <p>addButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void addButton_actionPerformed(ActionEvent e) {
         setTitle("Deck Editor : " + customMenu.getDeckName() + " : unsaved");
 
@@ -785,6 +861,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
 
     }//addButton_actionPerformed
 
+    /**
+     * <p>analysisButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void analysisButton_actionPerformed(ActionEvent e) {
 
         if (bottomModel.getRowCount() == 0) {
@@ -798,6 +879,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         }
     }
 
+    /**
+     * <p>changePictureButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void changePictureButton_actionPerformed(ActionEvent e) {
         if (cCardHQ != null) {
             File file = getImportFilename();
@@ -831,6 +917,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         }
     }
 
+    /**
+     * <p>getImportFilename.</p>
+     *
+     * @return a {@link java.io.File} object.
+     */
     private File getImportFilename() {
         JFileChooser chooser = new JFileChooser(previousDirectory);
         ImagePreviewPanel preview = new ImagePreviewPanel();
@@ -865,6 +956,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
     };
 
 
+    /**
+     * <p>removePictureButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void removePictureButton_actionPerformed(ActionEvent e) {
         if (cCardHQ != null) {
             String options[] = {"Yes", "No"};
@@ -885,6 +981,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
     }
 
 
+    /**
+     * <p>removeButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void removeButton_actionPerformed(ActionEvent e) {
         setTitle("Deck Editor : " + customMenu.getDeckName() + " : unsaved");
 
@@ -915,6 +1016,11 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
 
     }//removeButton_actionPerformed
 
+    /**
+     * <p>stats_actionPerformed.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     @SuppressWarnings("unused")
     // stats_actionPerformed
     private void stats_actionPerformed(CardList list) {
@@ -922,6 +1028,9 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
     }
 
     //refresh Gui from deck, Gui shows the cards in the deck
+    /**
+     * <p>refreshGui.</p>
+     */
     @SuppressWarnings("unused")
     // refreshGui
     private void refreshGui() {

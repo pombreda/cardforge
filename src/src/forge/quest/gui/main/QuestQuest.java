@@ -12,11 +12,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * <p>QuestQuest class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestQuest extends QuestSelectablePanel {
+    /** Constant <code>serialVersionUID=-162817410327650160L</code> */
     private static final long serialVersionUID = -162817410327650160L;
 
     Quest_Assignment assignment;
 
+    /**
+     * <p>Constructor for QuestQuest.</p>
+     *
+     * @param assignment a {@link forge.Quest_Assignment} object.
+     */
     public QuestQuest(Quest_Assignment assignment) {
         super(assignment.getName(), assignment.getDifficulty(), assignment.getDesc(), GuiUtils.getIconFromFile(assignment.getIconName()));
         this.assignment = assignment;
@@ -32,6 +44,11 @@ public class QuestQuest extends QuestSelectablePanel {
         this.centerPanel.add(repeatabilityLabel);
     }
 
+    /**
+     * <p>getQuests.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public static List<QuestQuest> getQuests() {
         List<QuestQuest> quests = new ArrayList<QuestQuest>();
 
@@ -43,6 +60,11 @@ public class QuestQuest extends QuestSelectablePanel {
         return quests;
     }
 
+    /**
+     * <p>readQuests.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     private static List<Quest_Assignment> readQuests() {
         forge.quest.data.QuestData questData = AllZone.getQuestData();
         ReadQuest_Assignment read = new ReadQuest_Assignment(ForgeProps.getFile(NewConstants.QUEST.QUESTS), questData);
@@ -82,6 +104,11 @@ public class QuestQuest extends QuestSelectablePanel {
         return questsToDisplay;
     }
 
+    /**
+     * <p>getQuestAssignment.</p>
+     *
+     * @return a {@link forge.Quest_Assignment} object.
+     */
     public Quest_Assignment getQuestAssignment() {
         return assignment;
     }

@@ -2,9 +2,17 @@ package forge.gui.input;
 
 import forge.*;
 
+/**
+ * <p>Input_Cleanup class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_Cleanup extends Input {
+    /** Constant <code>serialVersionUID=-4164275418971547948L</code> */
     private static final long serialVersionUID = -4164275418971547948L;
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         if (AllZone.getPhase().getPlayerTurn().isComputer()) {
@@ -30,6 +38,7 @@ public class Input_Cleanup extends Input {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         if (zone.is(Constant.Zone.Hand, AllZone.getHumanPlayer())) {
@@ -40,6 +49,9 @@ public class Input_Cleanup extends Input {
     }//selectCard()
 
 
+    /**
+     * <p>AI_CleanupDiscard.</p>
+     */
     public void AI_CleanupDiscard() {
         int size = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()).size();
 

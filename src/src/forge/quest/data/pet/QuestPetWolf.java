@@ -3,7 +3,14 @@ package forge.quest.data.pet;
 import forge.AllZone;
 import forge.Card;
 
+/**
+ * <p>QuestPetWolf class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestPetWolf extends QuestPetAbstract {
+    /** {@inheritDoc} */
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
@@ -41,17 +48,22 @@ public class QuestPetWolf extends QuestPetAbstract {
         return petCard;
     }
 
+    /**
+     * <p>Constructor for QuestPetWolf.</p>
+     */
     public QuestPetWolf() {
         super("Wolf",
                 "This ferocious animal may have been raised in captivity, but it has been trained to kill.",
                 4);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getAllUpgradePrices() {
         return new int[]{250, 250, 500, 550};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllUpgradeDescriptions() {
         return new String[]{
@@ -62,6 +74,7 @@ public class QuestPetWolf extends QuestPetAbstract {
                 "You cannot train your wolf any further"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a wolf",
@@ -71,6 +84,7 @@ public class QuestPetWolf extends QuestPetAbstract {
                 "2/2, G, Flanking"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllImageNames() {
         return new String[]{

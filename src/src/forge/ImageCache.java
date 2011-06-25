@@ -35,12 +35,23 @@ import static java.lang.Math.min;
  * <li>If the key belongs to the large preview image, "#<i>scale</i>" is appended, where scale is a double
  * precision floating point number</li>
  * </ul>
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class ImageCache implements NewConstants {
+    /** Constant <code>imageCache</code> */
     private static final Map<String, BufferedImage> imageCache;
+    /** Constant <code>FULL_SIZE</code> */
     private static final Pattern FULL_SIZE = Pattern.compile("(.*)#(\\d+.\\d+)");
+    /** Constant <code>TOKEN="#Token"</code> */
+    /** Constant <code>NORMAL="#Normal"</code> */
+    /** Constant <code>TAPPED="#Tapped"</code> */
+    /** Constant <code>NORMAL="#Normal"</code> */
+    /** Constant <code>TAPPED="#Tapped"</code> */
     private static final String TOKEN = "#Token", NORMAL = "#Normal", TAPPED = "#Tapped";
 
+    /** Constant <code>scaleLargerThanOriginal=true</code> */
     public static boolean scaleLargerThanOriginal = true;
 
     static {
@@ -97,6 +108,9 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns the image appropriate to display the card in a zone
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     public static BufferedImage getImage(Card card) {
         String key = card.isFaceDown() ? "Morph" : getKey(card);
@@ -107,6 +121,11 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns the image appropriate to display the card in the picture panel
+     *
+     * @param card a {@link forge.Card} object.
+     * @param width a int.
+     * @param height a int.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     public static BufferedImage getImage(Card card, int width, int height) {
         String key = (card.isFaceDown() && card.getController().isComputer()) ? "Morph" : getKey(card);
@@ -120,6 +139,12 @@ public class ImageCache implements NewConstants {
         return getImage(key + "#" + scale);
     }
 
+    /**
+     * <p>getOriginalImage.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
+     */
     public static BufferedImage getOriginalImage(Card card) {
         String key = (card.isFaceDown() && card.getController().isComputer()) ? "Morph" : getKey(card);
         return getImage(key);
@@ -127,6 +152,9 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns the Image corresponding to the key
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     private static BufferedImage getImage(String key) {
         try {
@@ -151,6 +179,10 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns if the image for the key is the proper size.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param image a {@link java.awt.image.BufferedImage} object.
+     * @return a boolean.
      */
     private static boolean isExpectedSize(String key, BufferedImage image) {
         if (key.endsWith(NORMAL)) {
@@ -169,6 +201,9 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns the map key for a card, without any suffixes for the image size.
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
      */
     private static String getKey(Card card) {
 /*        String key = GuiDisplayUtil.cleanString(card.getImageName());
@@ -243,6 +278,9 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns an image scaled to the size given in {@link Constant.Runtime}
+     *
+     * @param original a {@link java.awt.image.BufferedImage} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     private static BufferedImage getNormalSizeImage(BufferedImage original) {
         int srcWidth = original.getWidth();
@@ -271,6 +309,9 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns an image scaled to the size given in {@link Constant.Runtime}, but rotated
+     *
+     * @param original a {@link java.awt.image.BufferedImage} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     private static BufferedImage getTappedSizeImage(BufferedImage original) {
         /*int srcWidth = original.getWidth();
@@ -301,6 +342,10 @@ public class ImageCache implements NewConstants {
 
     /**
      * Returns an image scaled to the size appropriate for the card picture panel
+     *
+     * @param original a {@link java.awt.image.BufferedImage} object.
+     * @param scale a double.
+     * @return a {@link java.awt.image.BufferedImage} object.
      */
     private static BufferedImage getFullSizeImage(BufferedImage original, double scale) {
         if (scale == 1) return original;
@@ -321,6 +366,9 @@ public class ImageCache implements NewConstants {
     }
 
 
+    /**
+     * <p>clear.</p>
+     */
     public static void clear() {
         imageCache.clear();
     }

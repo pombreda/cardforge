@@ -23,6 +23,7 @@ import java.util.Iterator;
  * @version V0.0 17.02.2010
  */
 public class CardDetailPanel extends JPanel implements CardContainer {
+    /** Constant <code>serialVersionUID=-8461473263764812323L</code> */
     private static final long serialVersionUID = -8461473263764812323L;
 
     private Card card;
@@ -36,6 +37,11 @@ public class CardDetailPanel extends JPanel implements CardContainer {
     private JLabel cdLabel7;
     private JTextArea cdArea;
 
+    /**
+     * <p>Constructor for CardDetailPanel.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     */
     public CardDetailPanel(Card card) {
         setLayout(new GridLayout(2, 0, 0, 5));
         setBorder(new EtchedBorder());
@@ -92,6 +98,7 @@ public class CardDetailPanel extends JPanel implements CardContainer {
         setCard(card);
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         cdLabel1.setText("");
         cdLabel2.setText("");
@@ -329,6 +336,11 @@ public class CardDetailPanel extends JPanel implements CardContainer {
         cdArea.setText(area.toString());
     }
 
+    /**
+     * <p>Getter for the field <code>card</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return card;
     }

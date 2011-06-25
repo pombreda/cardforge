@@ -9,6 +9,12 @@ import java.awt.event.*;
 import java.util.Arrays;
 
 
+/**
+ * <p>TableModel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 class TableModel extends AbstractTableModel {
     /**
      *
@@ -33,10 +39,21 @@ class TableModel extends AbstractTableModel {
     private int recentSortedColumn;
     private boolean recentAscending;
 
+    /**
+     * <p>Constructor for TableModel.</p>
+     *
+     * @param cd a {@link forge.CardContainer} object.
+     */
     public TableModel(CardContainer cd) {
         this(new CardList(), cd);
     }
 
+    /**
+     * <p>Constructor for TableModel.</p>
+     *
+     * @param inData a {@link forge.CardList} object.
+     * @param in_cardDetail a {@link forge.CardContainer} object.
+     */
     public TableModel(CardList inData, CardContainer in_cardDetail) {
         cardDetail = in_cardDetail;
         //intialize dataNoCopies and dataCopies
@@ -44,6 +61,11 @@ class TableModel extends AbstractTableModel {
     }
 
 
+    /**
+     * <p>resizeCols.</p>
+     *
+     * @param table a {@link javax.swing.JTable} object.
+     */
     public void resizeCols(final JTable table) {
         TableColumn column = null;
         for (int i = 0; i < table.getColumnCount(); i++) {
@@ -92,12 +114,20 @@ class TableModel extends AbstractTableModel {
         }*/
     }
 
+    /**
+     * <p>clear.</p>
+     */
     public void clear() {
         dataNoCopies.clear();
         dataCopies.clear();
         //fireTableDataChanged();
     }
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCards() {
         CardList all = new CardList();
         all.addAll(dataCopies);
@@ -106,6 +136,11 @@ class TableModel extends AbstractTableModel {
         return all;
     }
 
+    /**
+     * <p>removeCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeCard(Card c) {
         //remove card from "dataCopies",
         //if not found there, remove card from "dataNoCopies"
@@ -121,6 +156,13 @@ class TableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * <p>findCardName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param list a {@link forge.CardList} object.
+     * @return a int.
+     */
     private int findCardName(String name, CardList list) {
         for (int i = 0; i < list.size(); i++)
             if (list.get(i).getName().equals(name)) return i;
@@ -128,11 +170,21 @@ class TableModel extends AbstractTableModel {
         return -1;
     }
 
+    /**
+     * <p>addCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addCard(Card c) {
         if (0 == countQuantity(c, dataNoCopies)) dataNoCopies.add(c);
         else dataCopies.add(c);
     }
 
+    /**
+     * <p>addCard.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     */
     public void addCard(CardList c) {
         for (int i = 0; i < c.size(); i++)
             addCard(c.get(i));
@@ -140,15 +192,34 @@ class TableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
 
+    /**
+     * <p>rowToCard.</p>
+     *
+     * @param row a int.
+     * @return a {@link forge.Card} object.
+     */
     public Card rowToCard(int row) {
         return dataNoCopies.get(row);
     }
 
+    /**
+     * <p>countQuantity.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     private int countQuantity(Card c) {
         return countQuantity(c, dataNoCopies) + countQuantity(c, dataCopies);
     }
 
     //CardList data is either class members "dataNoCopies" or "dataCopies"
+    /**
+     * <p>countQuantity.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param data a {@link forge.CardList} object.
+     * @return a int.
+     */
     private int countQuantity(Card c, CardList data) {
         int count = 0;
         for (int i = 0; i < data.size(); i++) {
@@ -161,23 +232,43 @@ class TableModel extends AbstractTableModel {
         return count;
     }
 
+    /**
+     * <p>getRowCount.</p>
+     *
+     * @return a int.
+     */
     public int getRowCount() {
         return dataNoCopies.size();
     }
 
+    /**
+     * <p>getColumnCount.</p>
+     *
+     * @return a int.
+     */
     public int getColumnCount() {
         return column.length;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getColumnName(int n) {
         return column[n];
     }
 
+    /** {@inheritDoc} */
     public Object getValueAt(int row, int column) {
         return getColumn(dataNoCopies.get(row), column);
     }
 
+    /**
+     * <p>Getter for the field <code>column</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param column a int.
+     * @param column a int.
+     * @return a {@link java.lang.Object} object.
+     */
     private Object getColumn(Card c, int column) {
         switch (column) {
             case 0:
@@ -234,6 +325,11 @@ class TableModel extends AbstractTableModel {
         }
     }
 
+    /**
+     * <p>addListeners.</p>
+     *
+     * @param table a {@link javax.swing.JTable} object.
+     */
     public void addListeners(final JTable table) {
         //updates card detail, listens to any key strokes
         table.addKeyListener(new KeyListener() {
@@ -286,6 +382,9 @@ class TableModel extends AbstractTableModel {
     }//addCardListener()
 
     //called by the GUI when a card is added to re-sort
+    /**
+     * <p>resort.</p>
+     */
     public void resort() {
         sort(recentSortedColumn, recentAscending);
         //this.fireTableDataChanged();
@@ -294,6 +393,13 @@ class TableModel extends AbstractTableModel {
     //returns true if any data changed positions
     // @SuppressWarnings("unchecked")
     // Arrays.sort
+    /**
+     * <p>sort.</p>
+     *
+     * @param column a int.
+     * @param ascending a boolean.
+     * @return a boolean.
+     */
     public boolean sort(int column, boolean ascending) {
         //used by addCard() to resort the cards
         recentSortedColumn = column;

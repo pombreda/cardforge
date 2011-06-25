@@ -9,6 +9,12 @@ import forge.card.trigger.TriggerHandler;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Token class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Token extends AbilityFactory {
     private AbilityFactory AF = null;
 
@@ -27,6 +33,11 @@ public class AbilityFactory_Token extends AbilityFactory {
     private boolean tokenTapped;
     private boolean tokenAttacking;
 
+    /**
+     * <p>Constructor for AbilityFactory_Token.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public AbilityFactory_Token(final AbilityFactory af) {
         AF = af;
 
@@ -86,6 +97,11 @@ public class AbilityFactory_Token extends AbilityFactory {
         else tokenOwner = "You";
     }
 
+    /**
+     * <p>getAbility.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbility() {
 
 
@@ -117,6 +133,11 @@ public class AbilityFactory_Token extends AbilityFactory {
         return abToken;
     }
 
+    /**
+     * <p>getSpell.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpell() {
         final SpellAbility spToken = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -8041427947613029670L;
@@ -140,6 +161,11 @@ public class AbilityFactory_Token extends AbilityFactory {
         return spToken;
     }
 
+    /**
+     * <p>getDrawback.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawback() {
         final SpellAbility dbDealDamage = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 7239608350643325111L;
@@ -169,6 +195,12 @@ public class AbilityFactory_Token extends AbilityFactory {
         return dbDealDamage;
     }
 
+    /**
+     * <p>tokenCanPlayAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean tokenCanPlayAI(SpellAbility sa) {
         Cost cost = sa.getPayCosts();
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment it's usually not mandatory
@@ -259,6 +291,13 @@ public class AbilityFactory_Token extends AbilityFactory {
         return (r.nextFloat() < .6667 && chance);
     }
 
+    /**
+     * <p>tokenDoTriggerAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean tokenDoTriggerAI(SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -266,6 +305,12 @@ public class AbilityFactory_Token extends AbilityFactory {
         return true;
     }
 
+    /**
+     * <p>doStackDescription.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String doStackDescription(SpellAbility sa) {
 
         int finalPower = AbilityFactory.calculateAmount(AF.getHostCard(), tokenPower, sa);
@@ -299,6 +344,11 @@ public class AbilityFactory_Token extends AbilityFactory {
         return sb.toString();
     }
 
+    /**
+     * <p>doResolve.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void doResolve(SpellAbility sa) {
         String imageName = "";
         Player controller;

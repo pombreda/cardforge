@@ -11,6 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * <p>ReadQuest_Assignment class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ReadQuest_Assignment implements Runnable, NewConstants {
     private BufferedReader in;
     private ArrayList<Quest_Assignment> allQuests = new ArrayList<Quest_Assignment>();
@@ -18,6 +24,12 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
     private int totalWins;
     private List<Integer> completedQuests = new ArrayList<Integer>();
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String args[]) throws Exception {
         try {
             ReadQuest_Assignment read = new ReadQuest_Assignment(ForgeProps.getFile(QUEST.QUESTS), null);
@@ -41,10 +53,21 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
         }
     }
 
+    /**
+     * <p>getQuests.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<Quest_Assignment> getQuests() {
         return new ArrayList<Quest_Assignment>(allQuests);
     }
 
+    /**
+     * <p>getQuestsByIds.</p>
+     *
+     * @param availableQuestIds a {@link java.util.List} object.
+     * @return a {@link java.util.List} object.
+     */
     public List<Quest_Assignment> getQuestsByIds(List<Integer> availableQuestIds) {
         List<Quest_Assignment> quests = new ArrayList<Quest_Assignment>();
 
@@ -56,6 +79,12 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
         return quests;
     }
 
+    /**
+     * <p>getQuestById.</p>
+     *
+     * @param i a int.
+     * @return a {@link forge.Quest_Assignment} object.
+     */
     public Quest_Assignment getQuestById(int i) {
         for (Quest_Assignment qa : allQuests) {
             if (qa.getId() == i)
@@ -70,10 +99,22 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
     }
     */
 
+    /**
+     * <p>Constructor for ReadQuest_Assignment.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     * @param questData a {@link forge.quest.data.QuestData} object.
+     */
     public ReadQuest_Assignment(String filename, forge.quest.data.QuestData questData) {
         this(new File(filename), questData);
     }
 
+    /**
+     * <p>Constructor for ReadQuest_Assignment.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @param questData a {@link forge.quest.data.QuestData} object.
+     */
     public ReadQuest_Assignment(File file, forge.quest.data.QuestData questData) {
 
         if (questData != null) {
@@ -108,6 +149,9 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
     * creditsReward
     */
 
+    /**
+     * <p>run.</p>
+     */
     public void run() {
         Quest_Assignment qa;
         String s = readLine();
@@ -178,6 +222,11 @@ public class ReadQuest_Assignment implements Runnable, NewConstants {
         }
     }//run()
 
+    /**
+     * <p>readLine.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     private String readLine() {
         //makes the checked exception, into an unchecked runtime exception
         try {

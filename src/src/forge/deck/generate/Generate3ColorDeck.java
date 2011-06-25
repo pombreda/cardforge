@@ -9,6 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * <p>Generate3ColorDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Generate3ColorDeck {
     private String color1 = "";
     private String color2 = "";
@@ -20,6 +26,13 @@ public class Generate3ColorDeck {
     private ArrayList<String> DL = null;
     private Map<String, Integer> CardCounts = null;
 
+    /**
+     * <p>Constructor for Generate3ColorDeck.</p>
+     *
+     * @param Clr1 a {@link java.lang.String} object.
+     * @param Clr2 a {@link java.lang.String} object.
+     * @param Clr3 a {@link java.lang.String} object.
+     */
     public Generate3ColorDeck(String Clr1, String Clr2, String Clr3) {
         r = MyRandom.random;
 
@@ -98,6 +111,12 @@ public class Generate3ColorDeck {
 
     }
 
+    /**
+     * <p>get3ColorDeck.</p>
+     *
+     * @param Size a int.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList get3ColorDeck(int Size) {
         int lc = 0; // loop counter to prevent infinite card selection loops
         String tmpDeck = "";

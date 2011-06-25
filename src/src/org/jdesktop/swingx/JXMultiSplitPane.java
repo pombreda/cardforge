@@ -42,8 +42,10 @@ import java.awt.event.MouseEvent;
  *
  * @author Hans Muller
  * @author Luan O'Carroll
+ * @version $Id: $
  */
 public class JXMultiSplitPane extends JPanel {
+    /** Constant <code>serialVersionUID=255040079203554096L</code> */
     private static final long serialVersionUID = 255040079203554096L;
     private AccessibleContext accessibleContext = null;
     private boolean continuousLayout = true;
@@ -77,8 +79,6 @@ public class JXMultiSplitPane extends JPanel {
      * to MutliSplitLayout.
      *
      * @return this MultiSplitPane's layout manager
-     * @see java.awt.Container#getLayout
-     * @see #setModel
      */
     public final MultiSplitLayout getMultiSplitLayout() {
         return (MultiSplitLayout) getLayout();
@@ -89,8 +89,6 @@ public class JXMultiSplitPane extends JPanel {
      * Equivalent to <code>getMultiSplitLayout.setModel(model)</code>
      *
      * @param model the root of the MultiSplitLayout model
-     * @see #getMultiSplitLayout
-     * @see MultiSplitLayout#setModel
      */
     public final void setModel(Node model) {
         getMultiSplitLayout().setModel(model);
@@ -102,8 +100,6 @@ public class JXMultiSplitPane extends JPanel {
      * <code>getMultiSplitLayout().setDividerSize(newDividerSize)</code>.
      *
      * @param dividerSize the value of the dividerSize property
-     * @see #getMultiSplitLayout
-     * @see MultiSplitLayout#setDividerSize
      */
     public final void setDividerSize(int dividerSize) {
         getMultiSplitLayout().setDividerSize(dividerSize);
@@ -114,8 +110,7 @@ public class JXMultiSplitPane extends JPanel {
      * property. Equivalent to
      * <code>getMultiSplitLayout().getDividerSize()</code>.
      *
-     * @see #getMultiSplitLayout
-     * @see MultiSplitLayout#getDividerSize
+     * @return a int.
      */
     public final int getDividerSize() {
         return getMultiSplitLayout().getDividerSize();
@@ -128,7 +123,6 @@ public class JXMultiSplitPane extends JPanel {
      * is true.
      *
      * @param continuousLayout value of the continuousLayout property
-     * @see #isContinuousLayout
      */
     public void setContinuousLayout(boolean continuousLayout) {
         boolean oldContinuousLayout = isContinuousLayout();
@@ -142,7 +136,6 @@ public class JXMultiSplitPane extends JPanel {
      * mouse button is released).
      *
      * @return the value of the <code>continuousLayout</code> property
-     * @see #setContinuousLayout
      */
     public boolean isContinuousLayout() {
         return continuousLayout;
@@ -162,8 +155,6 @@ public class JXMultiSplitPane extends JPanel {
      * Draws a single Divider.  Typically used to specialize the
      * way the active Divider is painted.
      *
-     * @see #getDividerPainter
-     * @see #setDividerPainter
      */
     public static abstract class DividerPainter extends AbstractPainter<Divider> {
     }
@@ -183,7 +174,6 @@ public class JXMultiSplitPane extends JPanel {
      * This property may be null.
      *
      * @return the value of the dividerPainter Property
-     * @see #setDividerPainter
      */
     public DividerPainter getDividerPainter() {
         return dividerPainter;
@@ -199,8 +189,6 @@ public class JXMultiSplitPane extends JPanel {
      * the activeDivider can appear "on top of" the children.
      *
      * @param dividerPainter the value of the dividerPainter property, can be null
-     * @see #paintChildren
-     * @see #activeDivider
      */
     public void setDividerPainter(DividerPainter dividerPainter) {
         DividerPainter old = getDividerPainter();
@@ -209,6 +197,8 @@ public class JXMultiSplitPane extends JPanel {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Calls the UI delegate's paint method, if the UI delegate
      * is non-<code>null</code>.  We pass the delegate a copy of the
      * <code>Graphics</code> object to protect the rest of the
@@ -232,10 +222,6 @@ public class JXMultiSplitPane extends JPanel {
      * installed on it.  In this case, you might get
      * unexpected results if you cumulatively apply
      * another transform.
-     *
-     * @param g the <code>Graphics</code> object to protect
-     * @see #paint(Graphics)
-     * @see javax.swing.plaf.ComponentUI
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -261,6 +247,8 @@ public class JXMultiSplitPane extends JPanel {
      * as a side effect. A component should not be opaque if painters are
      * being used, because Painters may paint transparent pixels or not
      * paint certain pixels, such as around the border insets.
+     *
+     * @param p a {@link org.jdesktop.swingx.painter.Painter} object.
      */
     public void setBackgroundPainter(Painter<JXMultiSplitPane> p) {
         Painter<JXMultiSplitPane> old = getBackgroundPainter();
@@ -274,6 +262,11 @@ public class JXMultiSplitPane extends JPanel {
         repaint();
     }
 
+    /**
+     * <p>Getter for the field <code>backgroundPainter</code>.</p>
+     *
+     * @return a {@link org.jdesktop.swingx.painter.Painter} object.
+     */
     public Painter<JXMultiSplitPane> getBackgroundPainter() {
         return backgroundPainter;
     }
@@ -316,6 +309,12 @@ public class JXMultiSplitPane extends JPanel {
     private int dragMin = -1;
     private int dragMax = -1;
 
+    /**
+     * <p>startDrag.</p>
+     *
+     * @param mx a int.
+     * @param my a int.
+     */
     private void startDrag(int mx, int my) {
         requestFocusInWindow();
         MultiSplitLayout msl = getMultiSplitLayout();
@@ -413,6 +412,9 @@ public class JXMultiSplitPane extends JPanel {
         return msl.minimumNodeSize(n);
     }
 
+    /**
+     * <p>repaintDragLimits.</p>
+     */
     private void repaintDragLimits() {
         Rectangle damageR = dragDivider.getBounds();
         if (dragDivider.isVertical()) {
@@ -425,6 +427,12 @@ public class JXMultiSplitPane extends JPanel {
         repaint(damageR);
     }
 
+    /**
+     * <p>updateDrag.</p>
+     *
+     * @param mx a int.
+     * @param my a int.
+     */
     private void updateDrag(int mx, int my) {
         if (!dragUnderway) {
             return;
@@ -449,6 +457,9 @@ public class JXMultiSplitPane extends JPanel {
         }
     }
 
+    /**
+     * <p>clearDragState.</p>
+     */
     private void clearDragState() {
         dragDivider = null;
         initialDividerBounds = null;
@@ -458,6 +469,12 @@ public class JXMultiSplitPane extends JPanel {
         dragUnderway = false;
     }
 
+    /**
+     * <p>finishDrag.</p>
+     *
+     * @param x a int.
+     * @param y a int.
+     */
     private void finishDrag(int x, int y) {
         if (dragUnderway) {
             clearDragState();
@@ -469,6 +486,9 @@ public class JXMultiSplitPane extends JPanel {
         setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
+    /**
+     * <p>cancelDrag.</p>
+     */
     private void cancelDrag() {
         if (dragUnderway) {
             dragDivider.setBounds(initialDividerBounds);
@@ -480,6 +500,13 @@ public class JXMultiSplitPane extends JPanel {
         }
     }
 
+    /**
+     * <p>updateCursor.</p>
+     *
+     * @param x a int.
+     * @param y a int.
+     * @param show a boolean.
+     */
     private void updateCursor(int x, int y, boolean show) {
         if (dragUnderway) {
             return;
@@ -542,6 +569,7 @@ public class JXMultiSplitPane extends JPanel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public AccessibleContext getAccessibleContext() {
         if (accessibleContext == null) {

@@ -27,14 +27,27 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 //import java.util.StringTokenizer;
 
 
+/**
+ * <p>Gui_MigrateLocalMWSSetPictures_HQ class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel implements Runnable, NewConstants, NewConstants.LANG.Gui_DownloadPictures {
 
+    /** Constant <code>serialVersionUID=-7890794857949935256L</code> */
     private static final long serialVersionUID = -7890794857949935256L;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         startDownload(null);
     }
 
+    /** Constant <code>types</code> */
     public static final Proxy.Type[] types = Proxy.Type.values();
 
     //proxy
@@ -54,6 +67,11 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
     private int tptr = 0;
     private long lTime = System.currentTimeMillis();
 
+    /**
+     * <p>getAverageTimePerCard.</p>
+     *
+     * @return a int.
+     */
     private int getAverageTimePerCard() {
         int aTime = 0;
         int nz = 10;
@@ -78,6 +96,11 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
     }
 
 
+    /**
+     * <p>Constructor for Gui_MigrateLocalMWSSetPictures_HQ.</p>
+     *
+     * @param c an array of {@link forge.Gui_MigrateLocalMWSSetPictures_HQ.mCard} objects.
+     */
     private Gui_MigrateLocalMWSSetPictures_HQ(mCard[] c) {
         this.cards = c;
         addr = new JTextField(ForgeProps.getLocalized(PROXY_ADDRESS));
@@ -140,26 +163,35 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         dlg = new JOptionPane(p0, DEFAULT_OPTION, PLAIN_MESSAGE, null, options, options[1]);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMinimum() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getValue() {
         return card;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getExtent() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMaximum() {
         return cards == null ? 0 : cards.length;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param card a int.
+     */
     private void update(int card) {
         this.card = card;
 
@@ -210,6 +242,12 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         EventQueue.invokeLater(new Worker(card));
     }
 
+    /**
+     * <p>Getter for the field <code>dlg</code>.</p>
+     *
+     * @param frame a {@link javax.swing.JFrame} object.
+     * @return a {@link javax.swing.JDialog} object.
+     */
     public JDialog getDlg(JFrame frame) {
         final JDialog dlg = this.dlg.createDialog(frame, ForgeProps.getLocalized(TITLE));
         close.addActionListener(new ActionListener() {
@@ -220,11 +258,19 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         return dlg;
     }
 
+    /**
+     * <p>Setter for the field <code>cancel</code>.</p>
+     *
+     * @param cancel a boolean.
+     */
     public void setCancel(boolean cancel) {
         this.cancel = cancel;
     }
 
 
+    /**
+     * <p>run.</p>
+     */
     public void run() {
         BufferedInputStream in;
         BufferedOutputStream out;
@@ -320,6 +366,11 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         close.setText(ForgeProps.getLocalized(BUTTONS.CLOSE));
     }//run
 
+    /**
+     * <p>startDownload.</p>
+     *
+     * @param frame a {@link javax.swing.JFrame} object.
+     */
     public static void startDownload(JFrame frame) {
         final mCard[] card = getNeededCards();
 
@@ -335,6 +386,11 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         download.setCancel(true);
     }//startDownload()
 
+    /**
+     * <p>getNeededCards.</p>
+     *
+     * @return an array of {@link forge.Gui_MigrateLocalMWSSetPictures_HQ.mCard} objects.
+     */
     private static mCard[] getNeededCards() {
         //read all card names and urls
         //mCard[] cardPlay = readFile(CARD_PICTURES);

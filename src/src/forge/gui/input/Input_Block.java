@@ -6,16 +6,29 @@ import forge.*;
 import java.util.ArrayList;
 
 
+/**
+ * <p>Input_Block class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_Block extends Input {
+    /** Constant <code>serialVersionUID=6120743598368928128L</code> */
     private static final long serialVersionUID = 6120743598368928128L;
 
     private Card currentAttacker = null;
     private ArrayList<Card> allBlocking = new ArrayList<Card>();
 
+    /**
+     * <p>removeFromAllBlocking.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeFromAllBlocking(Card c) {
         allBlocking.remove(c);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         //for Castle Raptors, since it gets a bonus if untapped
@@ -55,6 +68,7 @@ public class Input_Block extends Input {
         CombatUtil.showCombat();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonOK() {
         if (CombatUtil.finishedMandatotyBlocks(AllZone.getCombat())) {
@@ -65,6 +79,7 @@ public class Input_Block extends Input {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         //is attacking?

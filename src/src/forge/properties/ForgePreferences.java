@@ -4,6 +4,12 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>ForgePreferences class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class ForgePreferences extends Preferences {
     public boolean newGui;
     public boolean stackAiLand;
@@ -33,6 +39,12 @@ public class ForgePreferences extends Preferences {
     private List<SavePreferencesListener> saveListeners = new ArrayList<SavePreferencesListener>();
     private final String fileName;
 
+    /**
+     * <p>Constructor for ForgePreferences.</p>
+     *
+     * @param fileName a {@link java.lang.String} object.
+     * @throws java.lang.Exception if any.
+     */
     public ForgePreferences(String fileName) throws Exception {
         this.fileName = fileName;
         File f = new File(fileName);
@@ -76,6 +88,11 @@ public class ForgePreferences extends Preferences {
         bHumanEndCombat = getBoolean("phase.human.endCombat", true);
     }
 
+    /**
+     * <p>save.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     public void save() throws Exception {
 
         set("gui.new", newGui);
@@ -115,6 +132,11 @@ public class ForgePreferences extends Preferences {
         }
     }
 
+    /**
+     * <p>addSaveListener.</p>
+     *
+     * @param listener a {@link forge.properties.SavePreferencesListener} object.
+     */
     public void addSaveListener(SavePreferencesListener listener) {
         saveListeners.add(listener);
     }

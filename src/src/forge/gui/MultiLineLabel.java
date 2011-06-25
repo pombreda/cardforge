@@ -79,6 +79,8 @@ public class MultiLineLabel extends JLabel {
 
     /**
      * {@inheritDoc}
+     *
+     * @return a {@link java.awt.Rectangle} object.
      */
     public Rectangle getBounds() {
         if (bounds == null) {

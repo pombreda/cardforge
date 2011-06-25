@@ -10,8 +10,22 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 
+/**
+ * <p>CardFactory_Instants class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFactory_Instants {
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, final String cardName, Player owner) {
 
 

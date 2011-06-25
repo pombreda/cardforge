@@ -6,8 +6,13 @@ import forge.properties.NewConstants;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * <p>TableSorter class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 @SuppressWarnings("unchecked") // Comparable needs <type>
-
 public class TableSorter implements Comparator<Card>, NewConstants {
     private final int column;
     private boolean ascending;
@@ -29,12 +34,27 @@ public class TableSorter implements Comparator<Card>, NewConstants {
     //                             0       1       2       3        4     5          6          7
     //private String column[] = {"Qty", "Name", "Cost", "Color", "Type", "Stats", "Rarity"}; New cards first - the order is based on cards.txt
 
+    /**
+     * <p>Constructor for TableSorter.</p>
+     *
+     * @param in_all a {@link forge.CardList} object.
+     * @param in_column a int.
+     * @param in_ascending a boolean.
+     */
     public TableSorter(CardList in_all, int in_column, boolean in_ascending) {
         all = new CardList(in_all.toArray());
         column = in_column;
         ascending = in_ascending;
     }
 
+    /**
+     * <p>Constructor for TableSorter.</p>
+     *
+     * @param in_all a {@link forge.CardList} object.
+     * @param in_column a int.
+     * @param in_ascending a boolean.
+     * @param in_col7mod a boolean.
+     */
     public TableSorter(CardList in_all, int in_column, boolean in_ascending, boolean in_col7mod) {
         all = new CardList(in_all.toArray());
         column = in_column;
@@ -42,6 +62,13 @@ public class TableSorter implements Comparator<Card>, NewConstants {
         col7mod = in_col7mod;
     }
 
+    /**
+     * <p>compare.</p>
+     *
+     * @param a a {@link forge.Card} object.
+     * @param b a {@link forge.Card} object.
+     * @return a int.
+     */
     final public int compare(Card a, Card b) {
 
         if (column == 0)//Qty
@@ -111,6 +138,13 @@ public class TableSorter implements Comparator<Card>, NewConstants {
             return bCom.compareTo(aCom);
     }//compare()
 
+    /**
+     * <p>countCardName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     final private int countCardName(String name, CardList c) {
         int count = 0;
         for (int i = 0; i < c.size(); i++)
@@ -120,6 +154,12 @@ public class TableSorter implements Comparator<Card>, NewConstants {
         return count;
     }
 
+    /**
+     * <p>getRarity.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.Integer} object.
+     */
     final private Integer getRarity(Card c) {
         String rarity = c.getRarity();
 
@@ -162,10 +202,22 @@ public class TableSorter implements Comparator<Card>, NewConstants {
         */
     }
 
+    /**
+     * <p>getValue.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.Long} object.
+     */
     final private Long getValue(Card c) {
         return c.getValue();
     }
 
+    /**
+     * <p>getColor.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     final public static String getColor(Card c) {
         ArrayList<String> list = CardUtil.getColors(c);
 
@@ -175,6 +227,12 @@ public class TableSorter implements Comparator<Card>, NewConstants {
         return "multi";
     }
 
+    /**
+     * <p>getAI.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.Integer} object.
+     */
     final private Integer getAI(Card c) {
         if (c.getSVar("RemAIDeck").equals("True")
                 && c.getSVar("RemRandomDeck").equals("True"))
@@ -187,6 +245,12 @@ public class TableSorter implements Comparator<Card>, NewConstants {
             return Integer.valueOf(1);
     }
 
+    /**
+     * <p>getType.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.Comparable} object.
+     */
     final private Comparable<String> getType(Card c) {
         return c.getType().toString();
     }

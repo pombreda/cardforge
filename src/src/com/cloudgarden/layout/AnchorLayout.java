@@ -17,6 +17,9 @@ import java.util.HashMap;
  * at all in which case they will occur at places determined by their
  * component's "bounds" property and the anchoring of the component's
  * other sides.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class AnchorLayout implements LayoutManager2 {
 
@@ -26,10 +29,18 @@ public class AnchorLayout implements LayoutManager2 {
     private boolean sizesCalculated = false;
     //private Container container;
 
+    /**
+     * <p>Constructor for AnchorLayout.</p>
+     */
     public AnchorLayout() {
         super();
     }
 
+    /**
+     * <p>initialize.</p>
+     *
+     * @param parent a {@link java.awt.Container} object.
+     */
     void initialize(Container parent) {
         if (sizesCalculated)
             return;
@@ -109,6 +120,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see org.eclipse.swt.widgets.Layout#layout(org.eclipse.swt.widgets.Composite, boolean)
       */
+    /** {@inheritDoc} */
     public void layoutContainer(Container container) {
         //this.container = container;
         Component children[] = container.getComponents();
@@ -189,12 +201,14 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager#addLayoutComponent(java.lang.String, java.awt.Component)
       */
+    /** {@inheritDoc} */
     public void addLayoutComponent(String name, Component comp) {
     }
 
     /* (non-Javadoc)
       * @see java.awt.LayoutManager#removeLayoutComponent(java.awt.Component)
       */
+    /** {@inheritDoc} */
     public void removeLayoutComponent(Component comp) {
         constraintMap.remove(comp);
     }
@@ -202,6 +216,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager#preferredLayoutSize(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public Dimension preferredLayoutSize(Container parent) {
         initialize(parent);
         return new Dimension(preferredWidth, preferredHeight);
@@ -210,6 +225,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager#minimumLayoutSize(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public Dimension minimumLayoutSize(Container parent) {
         initialize(parent);
         return new Dimension(minWidth, minHeight);
@@ -218,6 +234,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager2#addLayoutComponent(java.awt.Component, java.lang.Object)
       */
+    /** {@inheritDoc} */
     public void addLayoutComponent(Component comp, Object constraints) {
         constraintMap.put(comp, constraints);
     }
@@ -225,6 +242,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager2#maximumLayoutSize(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public Dimension maximumLayoutSize(Container target) {
         return preferredLayoutSize(target);
     }
@@ -232,6 +250,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager2#getLayoutAlignmentX(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public float getLayoutAlignmentX(Container target) {
         return 0;
     }
@@ -239,6 +258,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager2#getLayoutAlignmentY(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public float getLayoutAlignmentY(Container target) {
         return 0;
     }
@@ -246,6 +266,7 @@ public class AnchorLayout implements LayoutManager2 {
     /* (non-Javadoc)
       * @see java.awt.LayoutManager2#invalidateLayout(java.awt.Container)
       */
+    /** {@inheritDoc} */
     public void invalidateLayout(Container target) {
         sizesCalculated = false;
     }

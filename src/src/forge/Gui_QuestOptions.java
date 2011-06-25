@@ -14,7 +14,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+/**
+ * <p>Gui_QuestOptions class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_QuestOptions extends JFrame {
+    /** Constant <code>serialVersionUID=2018518804206822235L</code> */
     private static final long serialVersionUID = 2018518804206822235L;
 
     private forge.quest.data.QuestData questData = new forge.quest.data.QuestData();
@@ -41,10 +48,18 @@ public class Gui_QuestOptions extends JFrame {
     private ButtonGroup buttonGroup2 = new ButtonGroup();
     private JPanel jPanel3 = new JPanel();
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         new Gui_QuestOptions();
     }
 
+    /**
+     * <p>Constructor for Gui_QuestOptions.</p>
+     */
     public Gui_QuestOptions() {
         try {
             jbInit();
@@ -60,6 +75,9 @@ public class Gui_QuestOptions extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         //make the text look correct on the screen
         jTextArea1.setBackground(getBackground());
@@ -79,6 +97,9 @@ public class Gui_QuestOptions extends JFrame {
     }//setup()
 
     //show total number of games for each difficulty
+    /**
+     * <p>setupRadioButtonText.</p>
+     */
     private void setupRadioButtonText() {
         String[] diff = questData.getDifficultyChoices();
         JRadioButton[] b = {easyRadio, mediumRadio, hardRadio, veryHardRadio};
@@ -89,6 +110,11 @@ public class Gui_QuestOptions extends JFrame {
 
     }//setupRadioButtonText()
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
         TitledBorder titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white,
                 new Color(148, 145, 140)),
@@ -188,6 +214,11 @@ public class Gui_QuestOptions extends JFrame {
 
     }
 
+    /**
+     * <p>continueQuestButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void continueQuestButton_actionPerformed(ActionEvent e) {
         //set global variable
         AllZone.setQuestData(QuestDataIO.loadData());
@@ -198,6 +229,11 @@ public class Gui_QuestOptions extends JFrame {
 
     }
 
+    /**
+     * <p>newQuestButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void newQuestButton_actionPerformed(ActionEvent e) {
         int difficulty = 0;
 

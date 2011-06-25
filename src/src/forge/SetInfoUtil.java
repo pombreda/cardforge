@@ -3,9 +3,19 @@ package forge;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>SetInfoUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class SetInfoUtil {
+    /** Constant <code>setData</code> */
     private static ArrayList<HashMap<String, String>> setData = new ArrayList<HashMap<String, String>>();
 
+    /**
+     * <p>loadSetData.</p>
+     */
     private static void loadSetData() {
         ArrayList<String> fData = FileUtil.readFile("res/blockdata/setdata.txt");
 
@@ -28,6 +38,11 @@ public class SetInfoUtil {
         }
     }
 
+    /**
+     * <p>getSetCode2List.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getSetCode2List() {
         ArrayList<String> scl = new ArrayList<String>();
 
@@ -40,6 +55,11 @@ public class SetInfoUtil {
         return scl;
     }
 
+    /**
+     * <p>getSetCode3List.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getSetCode3List() {
         ArrayList<String> scl = new ArrayList<String>();
 
@@ -52,6 +72,11 @@ public class SetInfoUtil {
         return scl;
     }
 
+    /**
+     * <p>getSetNameList.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getSetNameList() {
         ArrayList<String> snl = new ArrayList<String>();
 
@@ -64,6 +89,12 @@ public class SetInfoUtil {
         return snl;
     }
 
+    /**
+     * <p>getSetCode2_SetName.</p>
+     *
+     * @param SetName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetCode2_SetName(String SetName) {
         if (setData.size() == 0)
             loadSetData();
@@ -75,6 +106,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetCode3_SetName.</p>
+     *
+     * @param SetName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetCode3_SetName(String SetName) {
         if (setData.size() == 0)
             loadSetData();
@@ -86,6 +123,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetCode2_SetCode3.</p>
+     *
+     * @param SetCode3 a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetCode2_SetCode3(String SetCode3) {
         if (setData.size() == 0)
             loadSetData();
@@ -97,6 +140,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetCode3_SetCode2.</p>
+     *
+     * @param SetCode2 a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetCode3_SetCode2(String SetCode2) {
         if (setData.size() == 0)
             loadSetData();
@@ -108,6 +157,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetName_SetCode2.</p>
+     *
+     * @param SetCode2 a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetName_SetCode2(String SetCode2) {
         if (setData.size() == 0)
             loadSetData();
@@ -119,6 +174,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetName_SetCode3.</p>
+     *
+     * @param SetCode3 a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getSetName_SetCode3(String SetCode3) {
         if (setData.size() == 0)
             loadSetData();
@@ -130,6 +191,12 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getMostRecentSet.</p>
+     *
+     * @param alSI a {@link java.util.ArrayList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getMostRecentSet(ArrayList<SetInfo> alSI) {
         if (setData.size() == 0)
             loadSetData();
@@ -156,6 +223,13 @@ public class SetInfoUtil {
         return "";
     }
 
+    /**
+     * <p>getSetInfo_Code.</p>
+     *
+     * @param SetList a {@link java.util.ArrayList} object.
+     * @param SetCode a {@link java.lang.String} object.
+     * @return a {@link forge.SetInfo} object.
+     */
     public static SetInfo getSetInfo_Code(ArrayList<SetInfo> SetList, String SetCode) {
         SetInfo si;
 
@@ -168,6 +242,12 @@ public class SetInfoUtil {
         return null;
     }
 
+    /**
+     * <p>getSetIndex.</p>
+     *
+     * @param SetCode a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int getSetIndex(String SetCode) {
         if (setData.size() == 0)
             loadSetData();
@@ -180,8 +260,12 @@ public class SetInfoUtil {
         return 0;
     }
 
+    /** Constant <code>blockData</code> */
     private static ArrayList<HashMap<String, String>> blockData = new ArrayList<HashMap<String, String>>();
 
+    /**
+     * <p>loadBlockData.</p>
+     */
     private static void loadBlockData() {
         ArrayList<String> fData = FileUtil.readFile("res/blockdata/blocks.txt");
 
@@ -204,6 +288,11 @@ public class SetInfoUtil {
         }
     }
 
+    /**
+     * <p>getBlockNameList.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getBlockNameList() {
         ArrayList<String> bnl = new ArrayList<String>();
 
@@ -216,6 +305,12 @@ public class SetInfoUtil {
         return bnl;
     }
 
+    /**
+     * <p>getSets_BlockName.</p>
+     *
+     * @param blockName a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getSets_BlockName(String blockName) {
         ArrayList<String> sets = new ArrayList<String>();
 
@@ -238,6 +333,12 @@ public class SetInfoUtil {
         return sets;
     }
 
+    /**
+     * <p>getDraftPackCount.</p>
+     *
+     * @param blockName a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int getDraftPackCount(String blockName) {
         if (blockData.size() == 0)
             loadBlockData();
@@ -250,6 +351,12 @@ public class SetInfoUtil {
         return 0;
     }
 
+    /**
+     * <p>getSealedPackCount.</p>
+     *
+     * @param blockName a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int getSealedPackCount(String blockName) {
         if (blockData.size() == 0)
             loadBlockData();
@@ -262,6 +369,12 @@ public class SetInfoUtil {
         return 0;
     }
 
+    /**
+     * <p>getLandCode.</p>
+     *
+     * @param blockName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getLandCode(String blockName) {
         if (blockData.size() == 0)
             loadBlockData();

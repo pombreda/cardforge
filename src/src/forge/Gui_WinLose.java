@@ -21,7 +21,14 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 
 
+/**
+ * <p>Gui_WinLose class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_WinLose extends JFrame implements NewConstants {
+    /** Constant <code>serialVersionUID=-5800412940994975483L</code> */
     private static final long serialVersionUID = -5800412940994975483L;
 
     //private CardList          humanList;
@@ -45,6 +52,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
     // border1
     private Border border1;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         Constant.Runtime.GameType[0] = Constant.GameType.Sealed;
 
@@ -65,6 +77,14 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         new Gui_WinLose();
     }
 
+    /**
+     * <p>Constructor for Gui_WinLose.</p>
+     *
+     * @param human a {@link forge.CardList} object.
+     * @param computer a {@link forge.CardList} object.
+     * @param hLife a int.
+     * @param cLife a int.
+     */
     public Gui_WinLose(CardList human, CardList computer, int hLife, int cLife) {
         /*
           fantasyQuest = true;
@@ -89,6 +109,9 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         setVisible(true);
     }
 
+    /**
+     * <p>Constructor for Gui_WinLose.</p>
+     */
     public Gui_WinLose() {
         /*
     	fantasyQuest = false;
@@ -114,6 +137,9 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         setVisible(true);
     }
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         AllZone.getGameInfo().clearColorChanges();
         QuestMatchState winLose = Constant.Runtime.matchState;
@@ -159,6 +185,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         }
     }//setup();
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
         titledBorder1 = new TitledBorder("");
         border1 = BorderFactory.createEtchedBorder(Color.white, new Color(148, 145, 140));
@@ -203,6 +234,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
 
     }
 
+    /**
+     * <p>editDeckButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void editDeckButton_actionPerformed(ActionEvent e) {
         Command exit = new Command() {
             private static final long serialVersionUID = 4735992294414389187L;
@@ -218,6 +254,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         dispose();
     }//editDeckButton_actionPerformed()
 
+    /**
+     * <p>continueButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void continueButton_actionPerformed(ActionEvent e) {
         //open up "Game" screen
         //AllZone.getComputerPlay().reset();//sometimes computer has creature in play in the 2nd game of the match
@@ -248,6 +289,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         dispose();
     }
 
+    /**
+     * <p>restartButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void restartButton_actionPerformed(ActionEvent e) {
         Constant.Runtime.matchState.reset();
 
@@ -279,6 +325,14 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         dispose();
     }
 
+    /**
+     * <p>getWinText.</p>
+     *
+     * @param creds a long.
+     * @param winLose a {@link forge.quest.data.QuestMatchState} object.
+     * @param q a {@link forge.quest.data.QuestData} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getWinText(long creds, QuestMatchState winLose, forge.quest.data.QuestData q) {
         // TODO use q.qdPrefs to write bonus credits in prefs file
         StringBuilder sb = new StringBuilder();
@@ -363,6 +417,12 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         return sb.toString();
     }
 
+    /**
+     * <p>getCardIcon.</p>
+     *
+     * @param fileName a {@link java.lang.String} object.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     private ImageIcon getCardIcon(String fileName) {
         File base = ForgeProps.getFile(IMAGE_BASE);
         File file = new File(base, fileName);
@@ -370,6 +430,12 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         return icon;
     }
 
+    /**
+     * <p>getIcon.</p>
+     *
+     * @param fileName a {@link java.lang.String} object.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     private ImageIcon getIcon(String fileName) {
         File base = ForgeProps.getFile(IMAGE_ICON);
         File file = new File(base, fileName);
@@ -377,6 +443,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         return icon;
     }
 
+    /**
+     * <p>quitButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void quitButton_actionPerformed(ActionEvent e) {
         //are we on a quest?
         if (AllZone.getQuestData() == null) {
@@ -498,6 +569,11 @@ public class Gui_WinLose extends JFrame implements NewConstants {
 //        ImageCache.cache.clear();
     }
 
+    /**
+     * <p>this_windowClosing.</p>
+     *
+     * @param e a {@link java.awt.event.WindowEvent} object.
+     */
     void this_windowClosing(WindowEvent e) {
         quitButton_actionPerformed(null);
     }

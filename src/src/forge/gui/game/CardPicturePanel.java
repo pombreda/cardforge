@@ -28,6 +28,7 @@ import java.awt.event.ComponentEvent;
  * @version V0.0 17.02.2010
  */
 public class CardPicturePanel extends JPanel implements CardContainer {
+    /** Constant <code>serialVersionUID=-3160874016387273383L</code> */
     private static final long serialVersionUID = -3160874016387273383L;
 
     private Card card;
@@ -37,6 +38,11 @@ public class CardPicturePanel extends JPanel implements CardContainer {
     private ScaledImagePanel panel;
     private Image currentImange;
 
+    /**
+     * <p>Constructor for CardPicturePanel.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     */
     public CardPicturePanel(Card card) {
         super(new BorderLayout());
 //        add(label = new JLabel(icon = new ImageIcon()));
@@ -60,10 +66,14 @@ public class CardPicturePanel extends JPanel implements CardContainer {
         setCard(card);
     }
 
+    /**
+     * <p>update.</p>
+     */
     public void update() {
         setCard(getCard());
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         this.card = card;
         if (!isShowing()) return;
@@ -87,6 +97,11 @@ public class CardPicturePanel extends JPanel implements CardContainer {
 //        }
     }
 
+    /**
+     * <p>Getter for the field <code>card</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return card;
     }

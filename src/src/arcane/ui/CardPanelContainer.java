@@ -14,10 +14,15 @@ import java.util.List;
 
 /**
  * Manages mouse events and common funcitonality for CardPanel containing components.
+ *
+ * @author Forge
+ * @version $Id$
  */
 abstract public class CardPanelContainer extends JPanel {
+    /** Constant <code>serialVersionUID=-6400018234895548306L</code> */
     private static final long serialVersionUID = -6400018234895548306L;
 
+    /** Constant <code>DRAG_SMUDGE=10</code> */
     private final static int DRAG_SMUDGE = 10;
 
     public List<CardPanel> cardPanels = new ArrayList<CardPanel>();
@@ -31,6 +36,11 @@ abstract public class CardPanelContainer extends JPanel {
     private boolean dragEnabled;
     private int zoneID;
 
+    /**
+     * <p>Constructor for CardPanelContainer.</p>
+     *
+     * @param scrollPane a {@link javax.swing.JScrollPane} object.
+     */
     public CardPanelContainer(JScrollPane scrollPane) {
         this.scrollPane = scrollPane;
 
@@ -131,6 +141,11 @@ abstract public class CardPanelContainer extends JPanel {
         });
     }
 
+    /**
+     * <p>mouseOutPanel.</p>
+     *
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     private void mouseOutPanel(MouseEvent evt) {
         if (mouseOverPanel == null) return;
         mouseOverPanel.setSelected(false);
@@ -142,10 +157,20 @@ abstract public class CardPanelContainer extends JPanel {
          mouseDragPanel = null;
          invalidate();
      };*/
+    /**
+     * <p>getCardPanel.</p>
+     *
+     * @param x a int.
+     * @param y a int.
+     * @return a {@link arcane.ui.CardPanel} object.
+     */
     abstract protected CardPanel getCardPanel(int x, int y);
 
     /**
      * Must call from the Swing event thread.
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link arcane.ui.CardPanel} object.
      */
     public CardPanel addCard(Card card) {
         final CardPanel placeholder = new CardPanel(card);
@@ -160,8 +185,10 @@ abstract public class CardPanelContainer extends JPanel {
     }
 
     /**
-     * @param gameCardID
-     * @return
+     * <p>getCardPanel.</p>
+     *
+     * @param gameCardID a int.
+     * @return a {@link arcane.ui.CardPanel} object.
      */
     public CardPanel getCardPanel(int gameCardID) {
         for (CardPanel panel : cardPanels)
@@ -169,6 +196,11 @@ abstract public class CardPanelContainer extends JPanel {
         return null;
     }
 
+    /**
+     * <p>removeCardPanel.</p>
+     *
+     * @param fromPanel a {@link arcane.ui.CardPanel} object.
+     */
     public void removeCardPanel(final CardPanel fromPanel) {
         UI.invokeAndWait(new Runnable() {
             public void run() {
@@ -188,6 +220,9 @@ abstract public class CardPanelContainer extends JPanel {
         });
     }
 
+    /**
+     * <p>clear.</p>
+     */
     public void clear() {
         UI.invokeAndWait(new Runnable() {
             public void run() {
@@ -201,78 +236,173 @@ abstract public class CardPanelContainer extends JPanel {
         });
     }
 
+    /**
+     * <p>Getter for the field <code>scrollPane</code>.</p>
+     *
+     * @return a {@link javax.swing.JScrollPane} object.
+     */
     public JScrollPane getScrollPane() {
         return scrollPane;
     }
 
+    /**
+     * <p>Getter for the field <code>cardWidthMin</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCardWidthMin() {
         return cardWidthMin;
     }
 
+    /**
+     * <p>Setter for the field <code>cardWidthMin</code>.</p>
+     *
+     * @param cardWidthMin a int.
+     */
     public void setCardWidthMin(int cardWidthMin) {
         this.cardWidthMin = cardWidthMin;
     }
 
+    /**
+     * <p>Getter for the field <code>cardWidthMax</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCardWidthMax() {
         return cardWidthMax;
     }
 
+    /**
+     * <p>Setter for the field <code>cardWidthMax</code>.</p>
+     *
+     * @param cardWidthMax a int.
+     */
     public void setCardWidthMax(int cardWidthMax) {
         this.cardWidthMax = cardWidthMax;
     }
 
+    /**
+     * <p>isDragEnabled.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isDragEnabled() {
         return dragEnabled;
     }
 
+    /**
+     * <p>Setter for the field <code>dragEnabled</code>.</p>
+     *
+     * @param dragEnabled a boolean.
+     */
     public void setDragEnabled(boolean dragEnabled) {
         this.dragEnabled = dragEnabled;
     }
 
+    /**
+     * <p>addCardPanelMouseListener.</p>
+     *
+     * @param listener a {@link arcane.ui.util.CardPanelMouseListener} object.
+     */
     public void addCardPanelMouseListener(CardPanelMouseListener listener) {
         listeners.add(listener);
     }
 
+    /**
+     * <p>mouseLeftClicked.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseLeftClicked(CardPanel panel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseLeftClicked(panel, evt);
     }
 
+    /**
+     * <p>mouseRightClicked.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseRightClicked(CardPanel panel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseRightClicked(panel, evt);
     }
 
+    /**
+     * <p>mouseMiddleClicked.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseMiddleClicked(CardPanel panel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseMiddleClicked(panel, evt);
     }
 
+    /**
+     * <p>mouseDragEnd.</p>
+     *
+     * @param dragPanel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseDragEnd(CardPanel dragPanel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseDragEnd(dragPanel, evt);
     }
 
+    /**
+     * <p>mouseDragged.</p>
+     *
+     * @param dragPanel a {@link arcane.ui.CardPanel} object.
+     * @param dragOffsetX a int.
+     * @param dragOffsetY a int.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseDragged(CardPanel dragPanel, int dragOffsetX, int dragOffsetY, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseDragged(mouseDragPanel, mouseDragOffsetX, mouseDragOffsetY, evt);
     }
 
+    /**
+     * <p>mouseDragStart.</p>
+     *
+     * @param dragPanel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseDragStart(CardPanel dragPanel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseDragStart(mouseDragPanel, evt);
     }
 
+    /**
+     * <p>mouseOut.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseOut(CardPanel panel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseOut(mouseOverPanel, evt);
     }
 
+    /**
+     * <p>mouseOver.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     * @param evt a {@link java.awt.event.MouseEvent} object.
+     */
     public void mouseOver(CardPanel panel, MouseEvent evt) {
         for (CardPanelMouseListener listener : listeners)
             listener.mouseOver(panel, evt);
     }
 
+    /**
+     * <p>getCardFromMouseOverPanel.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCardFromMouseOverPanel() {
         if (mouseOverPanel != null)
             return mouseOverPanel.gameCard;
@@ -280,10 +410,20 @@ abstract public class CardPanelContainer extends JPanel {
             return null;
     }
 
+    /**
+     * <p>Getter for the field <code>zoneID</code>.</p>
+     *
+     * @return a int.
+     */
     public int getZoneID() {
         return zoneID;
     }
 
+    /**
+     * <p>Setter for the field <code>zoneID</code>.</p>
+     *
+     * @param zoneID a int.
+     */
     public void setZoneID(int zoneID) {
         this.zoneID = zoneID;
     }

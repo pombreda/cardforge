@@ -3,7 +3,14 @@ package forge.quest.data.pet;
 import forge.AllZone;
 import forge.Card;
 
+/**
+ * <p>QuestPetBird class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestPetBird extends QuestPetAbstract {
+    /** {@inheritDoc} */
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
@@ -44,17 +51,22 @@ public class QuestPetBird extends QuestPetAbstract {
         return petCard;
     }
 
+    /**
+     * <p>Constructor for QuestPetBird.</p>
+     */
     public QuestPetBird() {
         super("Bird",
                 "Unmatched in speed, agility and awareness, this trained hawk makes a fantastic hunter.",
                 4);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getAllUpgradePrices() {
         return new int[]{200, 300, 450, 400};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllUpgradeDescriptions() {
         return new String[]{
@@ -65,6 +77,7 @@ public class QuestPetBird extends QuestPetAbstract {
                 "You cannot train your bird any further"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a bird",
@@ -74,6 +87,7 @@ public class QuestPetBird extends QuestPetAbstract {
                 "2/1, W, Flying, First Strike"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllImageNames() {
         return new String[]{

@@ -10,12 +10,24 @@ import java.util.ArrayList;
 import static forge.error.ErrorViewer.showError;
 
 
+/**
+ * <p>ComputerAI_General class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ComputerAI_General implements Computer {
 
+    /**
+     * <p>Constructor for ComputerAI_General.</p>
+     */
     public ComputerAI_General() {
 
     }
 
+    /**
+     * <p>main1.</p>
+     */
     public void main1() {
         if (!ComputerUtil.chooseLandsToPlay()) {
             if (AllZone.getPhase().getPriorityPlayer().isComputer())
@@ -25,6 +37,9 @@ public class ComputerAI_General implements Computer {
         playCards(Constant.Phase.Main1);
     }//main1()
 
+    /**
+     * <p>main2.</p>
+     */
     public void main2() {
         if (!ComputerUtil.chooseLandsToPlay()) {    // in case we can play more lands now, or drew cards since first main phase
             if (AllZone.getPhase().getPriorityPlayer().isComputer())
@@ -34,6 +49,11 @@ public class ComputerAI_General implements Computer {
         playCards(Constant.Phase.Main2);
     }
 
+    /**
+     * <p>playCards.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     */
     private void playCards(final String phase) {
         SpellAbility[] sp = phase.equals(Constant.Phase.Main1) ? getMain1() : getMain2();
 
@@ -44,6 +64,11 @@ public class ComputerAI_General implements Computer {
         }
     }//playCards()
 
+    /**
+     * <p>getMain1.</p>
+     *
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     private SpellAbility[] getMain1() {
         //Card list of all cards to consider
         CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
@@ -117,6 +142,11 @@ public class ComputerAI_General implements Computer {
     }//getMain1()
 
 
+    /**
+     * <p>getMain2.</p>
+     *
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     private SpellAbility[] getMain2() {
         //Card list of all cards to consider
         CardList all = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
@@ -155,6 +185,11 @@ public class ComputerAI_General implements Computer {
         return getPlayable(all);
     }//getMain2()
 
+    /**
+     * <p>getAvailableSpellAbilities.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getAvailableSpellAbilities() {
         CardList all = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
         //Don't play permanents with Flash before humans declare attackers step
@@ -182,20 +217,38 @@ public class ComputerAI_General implements Computer {
         return all;
     }
 
+    /**
+     * <p>getOtherPhases.</p>
+     *
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     private SpellAbility[] getOtherPhases() {
         return getPlayable(getAvailableSpellAbilities());
     }
 
+    /**
+     * <p>getPossibleCounters.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<SpellAbility> getPossibleCounters() {
         return getPlayableCounters(getAvailableSpellAbilities());
     }
 
+    /**
+     * <p>getPossibleETBCounters.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<SpellAbility> getPossibleETBCounters() {
         return getETBCounters(getAvailableSpellAbilities());
     }
 
     /**
      * Returns the spellAbilities from the card list that the computer is able to play
+     *
+     * @param l a {@link forge.CardList} object.
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
      */
     private SpellAbility[] getPlayable(CardList l) {
         ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
@@ -214,6 +267,12 @@ public class ComputerAI_General implements Computer {
         return spellAbility.toArray(new SpellAbility[spellAbility.size()]);
     }
 
+    /**
+     * <p>getPlayableCounters.</p>
+     *
+     * @param l a {@link forge.CardList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<SpellAbility> getPlayableCounters(CardList l) {
         ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
         for (Card c : l) {
@@ -227,6 +286,12 @@ public class ComputerAI_General implements Computer {
         return spellAbility;
     }
 
+    /**
+     * <p>getETBCounters.</p>
+     *
+     * @param l a {@link forge.CardList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<SpellAbility> getETBCounters(CardList l) {
         ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
         for (Card c : l) {
@@ -242,10 +307,16 @@ public class ComputerAI_General implements Computer {
         return spellAbility;
     }
 
+    /**
+     * <p>begin_combat.</p>
+     */
     public void begin_combat() {
         stackResponse();
     }
 
+    /**
+     * <p>declare_attackers.</p>
+     */
     public void declare_attackers() {
         // 12/2/10(sol) the decision making here has moved to getAttackers()
 
@@ -267,10 +338,16 @@ public class ComputerAI_General implements Computer {
         AllZone.getPhase().setNeedToNextPhase(true);
     }
 
+    /**
+     * <p>declare_attackers_after.</p>
+     */
     public void declare_attackers_after() {
         stackResponse();
     }
 
+    /**
+     * <p>declare_blockers.</p>
+     */
     public void declare_blockers() {
         CardList blockers = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
 
@@ -281,23 +358,38 @@ public class ComputerAI_General implements Computer {
         AllZone.getPhase().setNeedToNextPhase(true);
     }
 
+    /**
+     * <p>declare_blockers_after.</p>
+     */
     public void declare_blockers_after() {
         stackResponse();
     }
 
+    /**
+     * <p>end_of_combat.</p>
+     */
     public void end_of_combat() {
         stackResponse();
     }
 
     //end of Human's turn
+    /**
+     * <p>end_of_turn.</p>
+     */
     public void end_of_turn() {
         stackResponse();
     }
 
+    /**
+     * <p>stack_not_empty.</p>
+     */
     public void stack_not_empty() {
         stackResponse();
     }
 
+    /**
+     * <p>stackResponse.</p>
+     */
     public void stackResponse() {
         // if top of stack is empty
         SpellAbility[] sas = null;

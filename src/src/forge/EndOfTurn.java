@@ -4,25 +4,50 @@ import forge.card.spellability.Ability;
 import forge.card.spellability.SpellAbility;
 
 //handles "until end of turn" and "at end of turn" commands from cards
+/**
+ * <p>EndOfTurn class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class EndOfTurn implements java.io.Serializable {
+    /** Constant <code>serialVersionUID=-3656715295379727275L</code> */
     private static final long serialVersionUID = -3656715295379727275L;
 
     private CommandList at = new CommandList();
     private CommandList until = new CommandList();
     private CommandList last = new CommandList();
 
+    /**
+     * <p>addAt.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addAt(Command c) {
         at.add(c);
     }
 
+    /**
+     * <p>addUntil.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addUntil(Command c) {
         until.add(c);
     }
 
+    /**
+     * <p>addLast.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addLast(Command c) {
         last.add(c);
     }
 
+    /**
+     * <p>executeAt.</p>
+     */
     public void executeAt() {
 
         //Pyrohemia and Pestilence
@@ -197,23 +222,46 @@ public class EndOfTurn implements java.io.Serializable {
     }//executeAt()
 
 
+    /**
+     * <p>executeUntil.</p>
+     */
     public void executeUntil() {
         execute(until);
         execute(last);
     }
 
+    /**
+     * <p>sizeAt.</p>
+     *
+     * @return a int.
+     */
     public int sizeAt() {
         return at.size();
     }
 
+    /**
+     * <p>sizeUntil.</p>
+     *
+     * @return a int.
+     */
     public int sizeUntil() {
         return until.size();
     }
 
+    /**
+     * <p>sizeLast.</p>
+     *
+     * @return a int.
+     */
     public int sizeLast() {
         return last.size();
     }
 
+    /**
+     * <p>execute.</p>
+     *
+     * @param c a {@link forge.CommandList} object.
+     */
     private void execute(CommandList c) {
         int length = c.size();
 

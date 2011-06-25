@@ -100,18 +100,37 @@ public enum Counters {
 
     private String name;
 
+    /**
+     * <p>Constructor for Counters.</p>
+     */
     private Counters() {
         this.name = name().substring(0, 1).toUpperCase() + name().substring(1).toLowerCase();
     }
 
+    /**
+     * <p>Constructor for Counters.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     */
     private Counters(String name) {
         this.name = name;
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <p>getType.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.Counters} object.
+     */
     public static Counters getType(String name) {
         return Enum.valueOf(Counters.class, name.replace("/", "").replaceAll("\\+", "p").replaceAll("\\-", "m").toUpperCase());
     }

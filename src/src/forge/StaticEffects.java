@@ -6,17 +6,30 @@ import forge.card.cardFactory.CardFactoryUtil;
 import java.util.HashMap;
 
 
+/**
+ * <p>StaticEffects class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class StaticEffects {
     //this is used to keep track of all state-based effects in play:
     private HashMap<String, Integer> stateBasedMap = new HashMap<String, Integer>();
 
     //this is used to define all cards that are state-based effects, and map the corresponding commands to their cardnames
+    /** Constant <code>cardToEffectsList</code> */
     private static HashMap<String, String[]> cardToEffectsList = new HashMap<String, String[]>();
 
+    /**
+     * <p>Constructor for StaticEffects.</p>
+     */
     public StaticEffects() {
         initStateBasedEffectsList();
     }
 
+    /**
+     * <p>initStateBasedEffectsList.</p>
+     */
     public void initStateBasedEffectsList() {
         //value has to be an array, since certain cards have multiple commands associated with them
 
@@ -43,10 +56,20 @@ public class StaticEffects {
 
     }
 
+    /**
+     * <p>Getter for the field <code>cardToEffectsList</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<String, String[]> getCardToEffectsList() {
         return cardToEffectsList;
     }
 
+    /**
+     * <p>addStateBasedEffect.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addStateBasedEffect(String s) {
         if (stateBasedMap.containsKey(s))
             stateBasedMap.put(s, stateBasedMap.get(s) + 1);
@@ -54,6 +77,11 @@ public class StaticEffects {
             stateBasedMap.put(s, 1);
     }
 
+    /**
+     * <p>removeStateBasedEffect.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removeStateBasedEffect(String s) {
         if (stateBasedMap.containsKey(s)) {
             stateBasedMap.put(s, stateBasedMap.get(s) - 1);
@@ -62,14 +90,25 @@ public class StaticEffects {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>stateBasedMap</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<String, Integer> getStateBasedMap() {
         return stateBasedMap;
     }
 
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         stateBasedMap.clear();
     }
 
+    /**
+     * <p>rePopulateStateBasedList.</p>
+     */
     public void rePopulateStateBasedList() {
         reset();
 

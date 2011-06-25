@@ -9,11 +9,23 @@ import forge.card.spellability.Ability_Sub;
 import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 
+/**
+ * <p>AbilityFactory_Combat class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Combat {
     //**************************************************************
     // ****************************** FOG **************************
     //**************************************************************
 
+    /**
+     * <p>createAbilityFog.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityFog(final AbilityFactory AF) {
         final SpellAbility abFog = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -1933592438783630254L;
@@ -44,6 +56,12 @@ public class AbilityFactory_Combat {
         return abFog;
     }
 
+    /**
+     * <p>createSpellFog.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellFog(final AbilityFactory AF) {
         final SpellAbility spFog = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
@@ -69,6 +87,12 @@ public class AbilityFactory_Combat {
         return spFog;
     }
 
+    /**
+     * <p>createDrawbackFog.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackFog(final AbilityFactory AF) {
         final SpellAbility dbFog = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
@@ -94,6 +118,13 @@ public class AbilityFactory_Combat {
         return dbFog;
     }
 
+    /**
+     * <p>fogStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String fogStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -113,6 +144,13 @@ public class AbilityFactory_Combat {
         return sb.toString();
     }
 
+    /**
+     * <p>fogCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean fogCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI should only activate this during Human's Declare Blockers phase
         if (AllZone.getPhase().isPlayerTurn(sa.getActivatingPlayer())) return false;
@@ -132,6 +170,13 @@ public class AbilityFactory_Combat {
         return CombatUtil.lifeInDanger(AllZone.getCombat());
     }
 
+    /**
+     * <p>fogPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean fogPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI should only activate this during Human's turn
         boolean chance;
@@ -147,6 +192,14 @@ public class AbilityFactory_Combat {
         return chance;
     }
 
+    /**
+     * <p>fogDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     public static boolean fogDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)    // If there is a cost payment it's usually not mandatory
             return false;
@@ -166,6 +219,12 @@ public class AbilityFactory_Combat {
         return chance;
     }
 
+    /**
+     * <p>fogResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void fogResolve(final AbilityFactory af, final SpellAbility sa) {
 
         // Expand Fog keyword here depending on what we need out of it.

@@ -3,9 +3,17 @@ package forge.gui.input;
 import forge.*;
 
 
+/**
+ * <p>Input_Attack class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_Attack extends Input {
+    /** Constant <code>serialVersionUID=7849903731842214245L</code> */
     private static final long serialVersionUID = 7849903731842214245L;
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         // TODO: still seems to have some issues with multiple planeswalkers
@@ -40,6 +48,7 @@ public class Input_Attack extends Input {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonOK() {
         if (AllZone.getCombat().getAttackers().length > 0)
@@ -52,6 +61,7 @@ public class Input_Attack extends Input {
         AllZone.getInputControl().resetInput();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         if (card.isAttacking() || card.getController().isComputer())
@@ -77,6 +87,12 @@ public class Input_Attack extends Input {
         }
     }//selectCard()
 
+    /**
+     * <p>unselectCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param zone a {@link forge.PlayerZone} object.
+     */
     public void unselectCard(Card card, PlayerZone zone) {
 
     }

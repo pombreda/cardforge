@@ -35,12 +35,20 @@ import java.util.List;
 
 /*CHOPPIC*/
 
+/**
+ * <p>Gui_NewGame class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LANG.Gui_NewGame {
+    /** Constant <code>serialVersionUID=-2437047615019135648L</code> */
     private static final long serialVersionUID = -2437047615019135648L;
 
     private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
     //with the new IO, there's no reason to use different instances
     private List<Deck> allDecks;
+    /** Constant <code>editor</code> */
     private static Gui_DeckEditor editor;
 
     private JLabel titleLabel = new JLabel();
@@ -64,20 +72,28 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
     // @SuppressWarnings("unused")
     // titledBorder2
+    /** Constant <code>newGuiCheckBox</code> */
     private static JCheckBox newGuiCheckBox = new JCheckBox("", true);
+    /** Constant <code>smoothLandCheckBox</code> */
     private static JCheckBox smoothLandCheckBox = new JCheckBox("", false);
+    /** Constant <code>devModeCheckBox</code> */
     private static JCheckBox devModeCheckBox = new JCheckBox("", true);
 
     // GenerateConstructedDeck.get2Colors() and GenerateSealedDeck.get2Colors()
     // use these two variables
+    /** Constant <code>removeSmallCreatures</code> */
     public static JCheckBoxMenuItem removeSmallCreatures = new JCheckBoxMenuItem(
             ForgeProps.getLocalized(MENU_BAR.OPTIONS.GENERATE.REMOVE_SMALL));
+    /** Constant <code>removeArtifacts</code> */
     public static JCheckBoxMenuItem removeArtifacts = new JCheckBoxMenuItem(
             ForgeProps.getLocalized(MENU_BAR.OPTIONS.GENERATE.REMOVE_ARTIFACTS));
+    /** Constant <code>useLAFFonts</code> */
     public static JCheckBoxMenuItem useLAFFonts = new JCheckBoxMenuItem(
             ForgeProps.getLocalized(MENU_BAR.OPTIONS.FONT));
+    /** Constant <code>cardOverlay</code> */
     public static JCheckBoxMenuItem cardOverlay = new JCheckBoxMenuItem(
             ForgeProps.getLocalized(MENU_BAR.OPTIONS.CARD_OVERLAY));
+    /** Constant <code>cardScale</code> */
     public static JCheckBoxMenuItem cardScale = new JCheckBoxMenuItem(
             ForgeProps.getLocalized(MENU_BAR.OPTIONS.CARD_SCALE));
     private JButton questButton = new JButton();
@@ -94,8 +110,14 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     private Action HOW_TO_PLAY_ACTION = new HowToPlayAction();
     private Action DNLD_PRICES_ACTION = new DownloadPriceAction();
 
+    /** Constant <code>preferences</code> */
     static public ForgePreferences preferences;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         ExceptionHandler.registerErrorHandling();
         File logFile = new File("forge.log");
@@ -151,6 +173,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         }
     }
 
+    /**
+     * <p>Constructor for Gui_NewGame.</p>
+     */
     public Gui_NewGame() {
 
         AllZone.setQuestData(null);
@@ -198,6 +223,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         SwingUtilities.updateComponentTreeUI(this);
     }// init()
 
+    /**
+     * <p>setupMenu.</p>
+     */
     private void setupMenu() {
         Action[] actions = {
                 // Remove the option to download HQ pics since the HQ pics server appears to be offline.
@@ -253,6 +281,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
 
     // returns, ArrayList of Deck objects
+    /**
+     * <p>getDecks.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     private List<Deck> getDecks() {
         List<Deck> list = new ArrayList<Deck>(deckManager.getDecks());
 
@@ -260,6 +293,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return list;
     }
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -280,6 +316,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         });
     }// addListeners()
 
+    /**
+     * <p>setupSealed.</p>
+     */
     private void setupSealed() {
         Deck deck = new Deck(Constant.GameType.Sealed);
 
@@ -341,6 +380,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             new Gui_NewGame();
     }
 
+    /**
+     * <p>setupDraft.</p>
+     */
     private void setupDraft() {
         Gui_BoosterDraft draft = new Gui_BoosterDraft();
 
@@ -365,6 +407,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     }
 
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
 
         /*
@@ -532,6 +579,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
     /*CHOPPIC*/
     /*Update Panel Display*/
+    /**
+     * <p>updatePanelDisplay.</p>
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
+     */
     void updatePanelDisplay(JPanel panel) {
         for (Component c : panel.getComponents()) {
             if (c instanceof JRadioButton) {
@@ -545,6 +597,12 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         panel.setOpaque(false);
     }
 
+    /**
+     * <p>setCustomBorder.</p>
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
+     * @param title a {@link java.lang.String} object.
+     */
     void setCustomBorder(JPanel panel, String title) {
         TitledBorder tb = BorderFactory.createTitledBorder(BorderFactory.createEmptyBorder(), title);
         tb.setTitlePosition(TitledBorder.ABOVE_TOP);
@@ -554,6 +612,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     }
     /*CHOPPIC*/
 
+    /**
+     * <p>deckEditorButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void deckEditorButton_actionPerformed(ActionEvent e) {
         if (editor == null) {
 
@@ -581,6 +644,12 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         dispose();
     }
 
+    /**
+     * <p>getRandomDeck.</p>
+     *
+     * @param d an array of {@link forge.deck.Deck} objects.
+     * @return a {@link forge.deck.Deck} object.
+     */
     Deck getRandomDeck(Deck[] d) {
         //get a random number between 0 and d.length
         //int i = (int) (Math.random() * d.length);
@@ -589,6 +658,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return d[r.nextInt(d.length)];
     }
 
+    /**
+     * <p>startButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void startButton_actionPerformed(ActionEvent e) {
         if (humanComboBox.getSelectedItem() == null || computerComboBox.getSelectedItem() == null) return;
 
@@ -700,6 +774,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             return deck;
         }
     */
+    /**
+     * <p>genDecks.</p>
+     *
+     * @param p a {@link java.lang.String} object.
+     */
     private void genDecks(String p) {
         Deck d = null;
 
@@ -739,6 +818,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             Constant.Runtime.ComputerDeck[0] = d;
     }
 
+    /**
+     * <p>generateConstructedDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generateConstructedDeck() {
         GenerateConstructedDeck gen = new GenerateConstructedDeck();
         CardList name = gen.generateDeck();
@@ -749,6 +833,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return deck;
     }
 
+    /**
+     * <p>generateConstructed3ColorDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generateConstructed3ColorDeck() {
         GenerateConstructedMultiColorDeck gen = new GenerateConstructedMultiColorDeck();
         CardList name = gen.generate3ColorDeck();
@@ -759,6 +848,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return deck;
     }
 
+    /**
+     * <p>generateConstructed5ColorDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generateConstructed5ColorDeck() {
         GenerateConstructedMultiColorDeck gen = new GenerateConstructedMultiColorDeck();
         CardList name = gen.generate5ColorDeck();
@@ -769,6 +863,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return deck;
     }
 
+    /**
+     * <p>generateConstructedThemeDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generateConstructedThemeDeck() {
         GenerateThemeDeck gen = new GenerateThemeDeck();
         ArrayList<String> tNames = gen.getThemeNames();
@@ -791,6 +890,12 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return deck;
     }
 
+    /**
+     * <p>generate2ColorDeck.</p>
+     *
+     * @param p a {@link java.lang.String} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generate2ColorDeck(String p) {
         Random r = MyRandom.random;
 
@@ -834,6 +939,12 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
     }
 
+    /**
+     * <p>generate3ColorDeck.</p>
+     *
+     * @param p a {@link java.lang.String} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck generate3ColorDeck(String p) {
         Random r = MyRandom.random;
 
@@ -887,16 +998,29 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
     }
 
+    /**
+     * <p>singleRadioButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void singleRadioButton_actionPerformed(ActionEvent e) {
         Constant.Runtime.GameType[0] = Constant.GameType.Constructed;
         updateDeckComboBoxes();
     }
 
+    /**
+     * <p>sealedRadioButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void sealedRadioButton_actionPerformed(ActionEvent e) {
         Constant.Runtime.GameType[0] = Constant.GameType.Sealed;
         updateDeckComboBoxes();
     }
 
+    /**
+     * <p>updateDeckComboBoxes.</p>
+     */
     private void updateDeckComboBoxes() {
         humanComboBox.removeAllItems();
         computerComboBox.removeAllItems();
@@ -935,6 +1059,12 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
     }/*updateComboBoxes()*/
 
+    /**
+     * <p>getDecks.</p>
+     *
+     * @param gameType a {@link java.lang.String} object.
+     * @return an array of {@link forge.deck.Deck} objects.
+     */
     Deck[] getDecks(String gameType) {
         ArrayList<Deck> list = new ArrayList<Deck>();
 
@@ -954,6 +1084,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return out;
     }//getDecks()
 
+    /**
+     * <p>draftRadioButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void draftRadioButton_actionPerformed(ActionEvent e) {
         Constant.Runtime.GameType[0] = Constant.GameType.Draft;
         humanComboBox.removeAllItems();
@@ -971,6 +1106,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             computerComboBox.addItem("" + (i + 1));
     }
 
+    /**
+     * <p>humanComboBox_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void humanComboBox_actionPerformed(ActionEvent e) {
 
     }/* draftRadioButton_actionPerformed() */
@@ -1277,6 +1417,11 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         }
     }
 
+    /**
+     * <p>exit.</p>
+     *
+     * @return a boolean.
+     */
     public boolean exit() {
         try {
             preferences.laf = UIManager.getLookAndFeel().getClass().getName();
@@ -1300,6 +1445,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         return true;
     }
 
+    /** {@inheritDoc} */
     protected void processWindowEvent(WindowEvent event) {
         if (event.getID() == WindowEvent.WINDOW_CLOSING) {
             if (!exit()) return;

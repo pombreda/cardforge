@@ -20,7 +20,6 @@ import java.beans.PropertyChangeSupport;
  * @author Igor Kushnirskiy
  * @version $Revision: 1.1 $ $Date: 2005/06/18 21:27:14 $
  */
-
 public final class SwingPropertyChangeSupport extends PropertyChangeSupport {
 
     /**
@@ -28,7 +27,7 @@ public final class SwingPropertyChangeSupport extends PropertyChangeSupport {
      *
      * @param sourceBean The bean to be given as the source for any
      *                   events.
-     * @throws NullPointerException if {@code sourceBean} is
+     * @throws java.lang.NullPointerException if {@code sourceBean} is
      *                              {@code null}
      */
     public SwingPropertyChangeSupport(Object sourceBean) {
@@ -41,7 +40,7 @@ public final class SwingPropertyChangeSupport extends PropertyChangeSupport {
      * @param sourceBean  the bean to be given as the source for any events
      * @param notifyOnEDT whether to notify listeners on the <i>Event
      *                    Dispatch Thread</i> only
-     * @throws NullPointerException if {@code sourceBean} is
+     * @throws java.lang.NullPointerException if {@code sourceBean} is
      *                              {@code null}
      * @since 1.6
      */
@@ -59,9 +58,6 @@ public final class SwingPropertyChangeSupport extends PropertyChangeSupport {
      * {@code SwingUtilities.invokeLater} to send out the notification
      * on the <i>Event Dispatch Thread</i>. This ensures  listeners
      * are only ever notified on the <i>Event Dispatch Thread</i>.
-     *
-     * @throws NullPointerException if {@code evt} is
-     *                              {@code null}
      * @since 1.6
      */
     public void firePropertyChange(final PropertyChangeEvent evt) {
@@ -92,6 +88,7 @@ public final class SwingPropertyChangeSupport extends PropertyChangeSupport {
     }
 
     // Serialization version ID
+    /** Constant <code>serialVersionUID=7162625831330845068L</code> */
     static final long serialVersionUID = 7162625831330845068L;
 
     /**

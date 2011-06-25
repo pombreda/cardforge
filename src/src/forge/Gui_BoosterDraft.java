@@ -20,11 +20,19 @@ import java.awt.event.*;
 import java.util.Random;
 
 
+/**
+ * <p>Gui_BoosterDraft class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConstants, NewConstants.LANG.Gui_BoosterDraft {
+    /** Constant <code>serialVersionUID=-6055633915602448260L</code> */
     private static final long serialVersionUID = -6055633915602448260L;
 
     private BoosterDraft boosterDraft;
 
+    /** Constant <code>limitedDeckEditor=true</code> */
     private static final boolean limitedDeckEditor = true;
 
     private TableModel allCardModel;
@@ -47,6 +55,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     private CardDetailPanel detail = new CardDetailPanel(null);
     private CardPicturePanel picture = new CardPicturePanel(null);
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         Constant.Runtime.GameType[0] = Constant.GameType.Draft;
         Constant.Runtime.HumanDeck[0] = new Deck(Constant.GameType.Sealed);
@@ -56,6 +69,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }
 
 
+    /**
+     * <p>showGui.</p>
+     *
+     * @param in_boosterDraft a {@link forge.BoosterDraft} object.
+     */
     public void showGui(BoosterDraft in_boosterDraft) {
         boosterDraft = in_boosterDraft;
 
@@ -68,6 +86,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         setVisible(true);
     }
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -82,6 +103,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         });
     }//addListeners()
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         addListeners();
 //    setupMenu();
@@ -133,6 +157,12 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         setExtendedState(Frame.MAXIMIZED_BOTH);
     }//setupAndDisplay()
 
+    /**
+     * <p>getStats.</p>
+     *
+     * @param deck a {@link forge.CardList} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getStats(CardList deck) {
         int total = deck.size();
         int creature = deck.getType("Creature").size();
@@ -147,6 +177,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         return show.toString();
     }//getStats()
 
+    /**
+     * <p>Constructor for Gui_BoosterDraft.</p>
+     */
     public Gui_BoosterDraft() {
         try {
             jbInit();
@@ -155,15 +188,26 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         }
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return detail.getCard();
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
         titledBorder1 = new TitledBorder(BorderFactory.createEtchedBorder(Color.white, new Color(148, 145, 140)),
                 "Previously Picked Cards");
@@ -212,6 +256,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         jScrollPane1.getViewport().add(allCardTable, null);
     }
 
+    /**
+     * <p>addButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void addButton_actionPerformed(ActionEvent e) {
         int n = allCardTable.getSelectedRow();
         if (n != -1) {
@@ -234,6 +283,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         }//if(valid row)
     }//addButton_actionPerformed
 
+    /**
+     * <p>removeButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void removeButton_actionPerformed(ActionEvent e) {
         int n = deckTable.getSelectedRow();
         if (n != -1) {
@@ -257,6 +311,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }//removeButton_actionPerformed
 
     //if true, don't do anything else
+    /**
+     * <p>checkSaveDeck.</p>
+     *
+     * @return a boolean.
+     */
     private boolean checkSaveDeck() {
         //a crappy way of checking if the deck has been saved
         if (getTitle().endsWith("changed")) {
@@ -269,6 +328,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         return false;
     }//checkSaveDeck()
 
+    /**
+     * <p>newItem_actionPerformed.</p>
+     */
     private void newItem_actionPerformed() {
         if (checkSaveDeck()) return;
 
@@ -281,28 +343,51 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         refreshGui();
     }//newItem_actionPerformed
 
+    /**
+     * <p>closeItem_actionPerformed.</p>
+     */
     private void closeItem_actionPerformed() {
         //check if saved, show dialog "yes, "no"
         checkSaveDeck();
         dispose();
     }
 
+    /**
+     * <p>stats_actionPerformed.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     private void stats_actionPerformed(CardList list) {
 
     }
 
+    /**
+     * <p>saveAsItem_actionPerformed.</p>
+     */
     private void saveAsItem_actionPerformed() {
     }//saveItem_actionPerformed()
 
+    /**
+     * <p>saveItem_actionPerformed.</p>
+     */
     private void saveItem_actionPerformed() {
     }
 
+    /**
+     * <p>openItem_actionPerformed.</p>
+     */
     private void openItem_actionPerformed() {
     }//openItem_actionPerformed()
 
+    /**
+     * <p>deleteItem_actionPerformed.</p>
+     */
     public void deleteItem_actionPerformed() {
     }
 
+    /**
+     * <p>renameItem_actionPerformed.</p>
+     */
     public void renameItem_actionPerformed() {
         String newName = "";
         while (newName.equals("")) {
@@ -320,6 +405,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         }
     }
 
+    /**
+     * <p>setupMenu.</p>
+     */
     @SuppressWarnings("unused")
     // setupMenu
     private void setupMenu() {
@@ -402,6 +490,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }/*setupMenu();  */
 
     //refresh Gui from deck, Gui shows the cards in the deck
+    /**
+     * <p>refreshGui.</p>
+     */
     private void refreshGui() {
         Deck deck = Constant.Runtime.HumanDeck[0];
         if (deck == null) //this is just a patch, i know
@@ -442,6 +533,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }//refreshGui()
 
     //updates Constant.Runtime.HumanDeck[0] from the cards shown in the GUI
+    /**
+     * <p>refreshDeck.</p>
+     */
     @SuppressWarnings("unused")
     // refreshDeck
     private void refreshDeck() {
@@ -463,6 +557,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         }
     }/* refreshDeck() */
 
+    /**
+     * <p>jButton1_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void jButton1_actionPerformed(ActionEvent e) {
         //pick card
         int n = allCardTable.getSelectedRow();
@@ -485,6 +584,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         }
     }/*OK Button*/
 
+    /**
+     * <p>showChoices.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     private void showChoices(CardList list) {
         allCardModel.clear();
 
@@ -522,6 +626,11 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
 
     }//showChoices()
 
+    /**
+     * <p>getPlayersDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck getPlayersDeck() {
         Deck deck = new Deck(Constant.GameType.Draft);
         Constant.Runtime.HumanDeck[0] = deck;
@@ -543,6 +652,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         return deck;
     }//getPlayersDeck()
 
+    /**
+     * <p>saveDraft.</p>
+     */
     private void saveDraft() {
         String s = "";
         while (s == null || s.length() == 0) {

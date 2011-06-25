@@ -4,6 +4,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * <p>Gui_ProgressBarWindow class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
+ */
 public class Gui_ProgressBarWindow extends JDialog {
 
     /**
@@ -14,6 +21,8 @@ public class Gui_ProgressBarWindow extends JDialog {
 
     /**
      * Launch the application.
+     *
+     * @param args an array of {@link java.lang.String} objects.
      */
     public static void main(String[] args) {
         try {
@@ -50,11 +59,20 @@ public class Gui_ProgressBarWindow extends JDialog {
         }
     }
 
+    /**
+     * <p>setProgressRange.</p>
+     *
+     * @param min a int.
+     * @param max a int.
+     */
     public void setProgressRange(int min, int max) {
         progressBar.setMinimum(min);
         progressBar.setMaximum(max);
     }
 
+    /**
+     * <p>increment.</p>
+     */
     public void increment() {
         progressBar.setValue(progressBar.getValue() + 1);
 

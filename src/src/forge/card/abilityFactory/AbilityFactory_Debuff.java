@@ -6,11 +6,23 @@ import forge.card.spellability.*;
 
 import java.util.*;
 
+/**
+ * <p>AbilityFactory_Debuff class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Debuff {
     // *************************************************************************
     // ***************************** Debuff ************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityDebuff.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDebuff(final AbilityFactory af) {
         final SpellAbility abDebuff = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 3536198601841771383L;
@@ -39,6 +51,12 @@ public class AbilityFactory_Debuff {
         return abDebuff;
     }
 
+    /**
+     * <p>createSpellDebuff.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDebuff(final AbilityFactory af) {
         final SpellAbility spDebuff = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -54573740774322697L;
@@ -62,6 +80,12 @@ public class AbilityFactory_Debuff {
         return spDebuff;
     }
 
+    /**
+     * <p>createDrawbackDebuff.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackDebuff(final AbilityFactory af) {
         final SpellAbility dbDebuff = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4728590185604233229L;
@@ -90,6 +114,12 @@ public class AbilityFactory_Debuff {
         return dbDebuff;
     }
 
+    /**
+     * <p>getKeywords.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private static ArrayList<String> getKeywords(HashMap<String, String> params) {
         ArrayList<String> kws = new ArrayList<String>();
         if (params.containsKey("Keywords")) {
@@ -98,6 +128,13 @@ public class AbilityFactory_Debuff {
         return kws;
     }
 
+    /**
+     * <p>debuffStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String debuffStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -148,6 +185,13 @@ public class AbilityFactory_Debuff {
         return sb.toString();
     }
 
+    /**
+     * <p>debuffCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean debuffCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // if there is no target and host card isn't in play, don't activate
         if (af.getAbTgt() == null && !AllZoneUtil.isCardInPlay(af.getHostCard()))
@@ -203,6 +247,13 @@ public class AbilityFactory_Debuff {
         return false;
     }
 
+    /**
+     * <p>debuffDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean debuffDrawbackAI(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         if (af.getAbTgt() == null || !af.getAbTgt().doesTarget()) {
@@ -213,6 +264,15 @@ public class AbilityFactory_Debuff {
         return true;
     }//debuffDrawbackAI()
 
+    /**
+     * <p>debuffTgtAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param kws a {@link java.util.ArrayList} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean debuffTgtAI(AbilityFactory af, SpellAbility sa, ArrayList<String> kws, boolean mandatory) {
         //this would be for evasive things like Flying, Unblockable, etc
         if (!mandatory && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility))
@@ -257,6 +317,14 @@ public class AbilityFactory_Debuff {
         return true;
     }//pumpTgtAI()
 
+    /**
+     * <p>getCurseCreatures.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param kws a {@link java.util.ArrayList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getCurseCreatures(AbilityFactory af, SpellAbility sa, final ArrayList<String> kws) {
         Card hostCard = af.getHostCard();
         CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
@@ -273,6 +341,14 @@ public class AbilityFactory_Debuff {
         return list;
     }//getCurseCreatures()
 
+    /**
+     * <p>debuffMandatoryTarget.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean debuffMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         CardList list = AllZoneUtil.getCardsInPlay();
         Target tgt = sa.getTarget();
@@ -330,6 +406,14 @@ public class AbilityFactory_Debuff {
         return true;
     }//pumpMandatoryTarget()
 
+    /**
+     * <p>debuffTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean debuffTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -348,6 +432,12 @@ public class AbilityFactory_Debuff {
         return true;
     }
 
+    /**
+     * <p>debuffResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void debuffResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -392,6 +482,13 @@ public class AbilityFactory_Debuff {
     // ***************************** DebuffAll *********************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityDebuffAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createAbilityDebuffAll(final AbilityFactory af) {
         final SpellAbility abDebuffAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -1977027530713097149L;
@@ -421,6 +518,13 @@ public class AbilityFactory_Debuff {
         return abDebuffAll;
     }
 
+    /**
+     * <p>createSpellDebuffAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createSpellDebuffAll(final AbilityFactory af) {
         SpellAbility spDebuffAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 399707924254248213L;
@@ -444,6 +548,13 @@ public class AbilityFactory_Debuff {
         return spDebuffAll;
     }
 
+    /**
+     * <p>createDrawbackDebuffAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createDrawbackDebuffAll(final AbilityFactory af) {
         SpellAbility dbDebuffAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 3262199296469706708L;
@@ -472,6 +583,13 @@ public class AbilityFactory_Debuff {
         return dbDebuffAll;
     }
 
+    /**
+     * <p>debuffAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean debuffAllCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         String valid = "";
         Random r = MyRandom.random;
@@ -509,6 +627,12 @@ public class AbilityFactory_Debuff {
         return (r.nextFloat() < .6667) && chance;
     }//debuffAllCanPlayAI()
 
+    /**
+     * <p>debuffAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void debuffAllResolve(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card hostCard = af.getHostCard();
@@ -546,6 +670,14 @@ public class AbilityFactory_Debuff {
         }
     }//debuffAllResolve()
 
+    /**
+     * <p>debuffAllTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean debuffAllTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -553,10 +685,24 @@ public class AbilityFactory_Debuff {
         return true;
     }
 
+    /**
+     * <p>debuffAllChkDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean debuffAllChkDrawbackAI(AbilityFactory af, SpellAbility sa) {
         return true;
     }
 
+    /**
+     * <p>debuffAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String debuffAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();

@@ -14,7 +14,17 @@ package forge;
  * @version V0.0 17.02.2010
  */
 public interface CardContainer {
+    /**
+     * <p>setCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     */
     public void setCard(Card card);
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard();
 }

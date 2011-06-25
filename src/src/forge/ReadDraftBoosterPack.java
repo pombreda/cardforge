@@ -11,8 +11,15 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 
+/**
+ * <p>ReadDraftBoosterPack class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ReadDraftBoosterPack implements NewConstants {
 
+    /** Constant <code>comment="//"</code> */
     final private static String comment = "//";
 
     private CardList commonCreatureList = new CardList();
@@ -22,11 +29,20 @@ public class ReadDraftBoosterPack implements NewConstants {
     private CardList uncommonList = new CardList();
     private CardList rareList = new CardList();
 
+    /**
+     * <p>Constructor for ReadDraftBoosterPack.</p>
+     */
     public ReadDraftBoosterPack() {
         setup();
     }
 
     //returns "common", "uncommon", or "rare"
+    /**
+     * <p>getRarity.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getRarity(String cardName) {
         if (commonList.containsName(cardName)) return "Common";
         if (uncommonList.containsName(cardName)) return "Uncommon";
@@ -49,6 +65,11 @@ public class ReadDraftBoosterPack implements NewConstants {
         return "error";
     }
 
+    /**
+     * <p>getBoosterPack5.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBoosterPack5() {
         CardList list = new CardList();
         for (int i = 0; i < 5; i++)
@@ -73,6 +94,11 @@ public class ReadDraftBoosterPack implements NewConstants {
         return list;
     }//getBoosterPack5()
 
+    /**
+     * <p>getBoosterPack.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBoosterPack() {
         CardList pack = new CardList();
 
@@ -100,6 +126,12 @@ public class ReadDraftBoosterPack implements NewConstants {
         return pack;
     }
 
+    /**
+     * <p>getShopCards.</p>
+     *
+     * @param numberWins a int.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getShopCards(int numberWins) {
         CardList list = new CardList();
 
@@ -128,6 +160,12 @@ public class ReadDraftBoosterPack implements NewConstants {
     }
 
     //return CardList of 5 or 6 cards, one for each color and maybe an artifact
+    /**
+     * <p>getVariety.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getVariety(CardList in) {
         CardList out = new CardList();
 
@@ -143,6 +181,13 @@ public class ReadDraftBoosterPack implements NewConstants {
         return out;
     }//getVariety()
 
+    /**
+     * <p>findColor.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link forge.Card} object.
+     */
     private Card findColor(CardList in, String color) {
         for (int i = 0; i < in.size(); i++)
             if (CardUtil.getColors(in.get(i)).contains(color)) return in.get(i);
@@ -151,6 +196,12 @@ public class ReadDraftBoosterPack implements NewConstants {
     }
 
 
+    /**
+     * <p>getRandomCard.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     private Card getRandomCard(CardList list) {
         for (int i = 0; i < 10; i++)
             list.shuffle();
@@ -162,6 +213,9 @@ public class ReadDraftBoosterPack implements NewConstants {
         return c;
     }//getRandomCard()
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         commonList = readFile(ForgeProps.getFile(DRAFT.COMMON));
         uncommonList = readFile(ForgeProps.getFile(DRAFT.UNCOMMON));
@@ -210,6 +264,12 @@ for (int i=0; i<AllCards.size(); i++)
     }//setup()
 
 
+    /**
+     * <p>readFile.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList readFile(File file) {
         CardList cardList = new CardList();
 

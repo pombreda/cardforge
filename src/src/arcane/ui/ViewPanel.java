@@ -3,9 +3,21 @@ package arcane.ui;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * <p>ViewPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class ViewPanel extends JPanel {
+    /** Constant <code>serialVersionUID=7016597023142963068L</code> */
     private static final long serialVersionUID = 7016597023142963068L;
 
+    /**
+     * <p>doLayout.</p>
+     *
+     * @since 1.0.15
+     */
     public void doLayout() {
         if (getComponentCount() == 0) return;
         CardPanel panel = (CardPanel) getComponent(0);
@@ -25,6 +37,11 @@ public class ViewPanel extends JPanel {
         panel.setCardBounds(x, y, targetWidth, targetHeight);
     }
 
+    /**
+     * <p>setCardPanel.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     */
     public void setCardPanel(CardPanel panel) {
         //CardPanel newPanel = new CardPanel(panel.gameCard);
         //newPanel.setImage(panel);

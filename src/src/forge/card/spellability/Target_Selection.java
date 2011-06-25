@@ -8,62 +8,122 @@ import forge.gui.input.Input;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>Target_Selection class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Target_Selection {
     private Target target = null;
     private SpellAbility ability = null;
     private Card card = null;
 
+    /**
+     * <p>getTgt.</p>
+     *
+     * @return a {@link forge.card.spellability.Target} object.
+     */
     public Target getTgt() {
         return target;
     }
 
+    /**
+     * <p>Getter for the field <code>ability</code>.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbility() {
         return ability;
     }
 
+    /**
+     * <p>Getter for the field <code>card</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return card;
     }
 
     private SpellAbility_Requirements req = null;
 
+    /**
+     * <p>setRequirements.</p>
+     *
+     * @param reqs a {@link forge.card.spellability.SpellAbility_Requirements} object.
+     */
     public void setRequirements(SpellAbility_Requirements reqs) {
         req = reqs;
     }
 
     private boolean bCancel = false;
 
+    /**
+     * <p>setCancel.</p>
+     *
+     * @param done a boolean.
+     */
     public void setCancel(boolean done) {
         bCancel = done;
     }
 
+    /**
+     * <p>isCanceled.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCanceled() {
         return bCancel;
     }
 
     private boolean bDoneTarget = false;
 
+    /**
+     * <p>setDoneTarget.</p>
+     *
+     * @param done a boolean.
+     */
     public void setDoneTarget(boolean done) {
         bDoneTarget = done;
     }
 
+    /**
+     * <p>Constructor for Target_Selection.</p>
+     *
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public Target_Selection(Target tgt, SpellAbility sa) {
         target = tgt;
         ability = sa;
         card = sa.getSourceCard();
     }
 
+    /**
+     * <p>doesTarget.</p>
+     *
+     * @return a boolean.
+     */
     public boolean doesTarget() {
         if (target == null)
             return false;
         return target.doesTarget();
     }
 
+    /**
+     * <p>resetTargets.</p>
+     */
     public void resetTargets() {
         if (target != null)
             target.resetTargets();
     }
 
+    /**
+     * <p>chooseTargets.</p>
+     *
+     * @return a boolean.
+     */
     public boolean chooseTargets() {
         // if not enough targets chosen, reset and cancel Ability
         if (bCancel || (bDoneTarget && !target.isMinTargetsChosen(card, ability))) {
@@ -94,6 +154,9 @@ public class Target_Selection {
     // these have been copied over from CardFactoryUtil as they need two extra parameters for target selection.
     // however, due to the changes necessary for SA_Requirements this is much different than the original
 
+    /**
+     * <p>chooseValidInput.</p>
+     */
     public void chooseValidInput() {
         Target tgt = this.getTgt();
         String zone = tgt.getZone();
@@ -121,6 +184,14 @@ public class Target_Selection {
     }//input_targetValid
 
     //CardList choices are the only cards the user can successful select
+    /**
+     * <p>input_targetSpecific.</p>
+     *
+     * @param choices a {@link forge.CardList} object.
+     * @param targeted a boolean.
+     * @param mandatory a boolean.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public Input input_targetSpecific(final CardList choices, final boolean targeted, final boolean mandatory) {
         final SpellAbility sa = this.ability;
         final Target_Selection select = this;
@@ -194,6 +265,13 @@ public class Target_Selection {
     }//input_targetSpecific()
 
 
+    /**
+     * <p>chooseCardFromList.</p>
+     *
+     * @param choices a {@link forge.CardList} object.
+     * @param targeted a boolean.
+     * @param mandatory a boolean.
+     */
     public void chooseCardFromList(final CardList choices, boolean targeted, final boolean mandatory) {
         // Send in a list of valid cards, and popup a choice box to target
         final Card dummy = new Card();
@@ -221,6 +299,11 @@ public class Target_Selection {
         this.chooseTargets();
     }
 
+    /**
+     * <p>chooseCardFromStack.</p>
+     *
+     * @param mandatory a boolean.
+     */
     public void chooseCardFromStack(final boolean mandatory) {
         Target tgt = this.target;
         String message = tgt.getVTSelection();
@@ -254,6 +337,13 @@ public class Target_Selection {
 
     // TODO: The following three functions are Utility functions for TargetOnStack, probably should be moved
     // The following should be select.getTargetableOnStack()
+    /**
+     * <p>getTargetableOnStack.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<SpellAbility> getTargetableOnStack(SpellAbility sa, Target tgt) {
         ArrayList<SpellAbility> choosables = new ArrayList<SpellAbility>();
 
@@ -269,6 +359,14 @@ public class Target_Selection {
         return choosables;
     }
 
+    /**
+     * <p>matchSpellAbility.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param topSA a {@link forge.card.spellability.SpellAbility} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @return a boolean.
+     */
     public static boolean matchSpellAbility(SpellAbility sa, SpellAbility topSA, Target tgt) {
         String saType = tgt.getTargetSpellAbilityType();
 
@@ -314,6 +412,14 @@ public class Target_Selection {
         return true;
     }
 
+    /**
+     * <p>matchesValid.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     * @param valids an array of {@link java.lang.String} objects.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean matchesValid(Object o, String[] valids, SpellAbility sa) {
         Card srcCard = sa.getSourceCard();
         Player activatingPlayer = sa.getActivatingPlayer();

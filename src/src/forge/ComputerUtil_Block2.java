@@ -5,57 +5,126 @@ import forge.card.cardFactory.CardFactoryUtil;
 import java.util.ArrayList;
 
 
+/**
+ * <p>ComputerUtil_Block2 class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ComputerUtil_Block2 {
+    /** Constant <code>attackers</code> */
     private static CardList attackers = new CardList(); //all attackers
+    /** Constant <code>attackersLeft</code> */
     private static CardList attackersLeft = new CardList(); //keeps track of all currently unblocked attackers
+    /** Constant <code>blockedButUnkilled</code> */
     private static CardList blockedButUnkilled = new CardList(); //blocked attackers that currently wouldn't be destroyed
+    /** Constant <code>blockersLeft</code> */
     private static CardList blockersLeft = new CardList(); //keeps track of all unassigned blockers
+    /** Constant <code>diff=0</code> */
     private static int diff = 0;
 
 
+    /**
+     * <p>Getter for the field <code>attackers</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getAttackers() {
         return attackers;
     }
 
+    /**
+     * <p>Setter for the field <code>attackers</code>.</p>
+     *
+     * @param cardList a {@link forge.CardList} object.
+     */
     private static void setAttackers(CardList cardList) {
         attackers = (cardList);
     }
 
+    /**
+     * <p>Getter for the field <code>attackersLeft</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getAttackersLeft() {
         return attackersLeft;
     }
 
+    /**
+     * <p>Setter for the field <code>attackersLeft</code>.</p>
+     *
+     * @param cardList a {@link forge.CardList} object.
+     */
     private static void setAttackersLeft(CardList cardList) {
         attackersLeft = (cardList);
     }
 
+    /**
+     * <p>Getter for the field <code>blockedButUnkilled</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getBlockedButUnkilled() {
         return blockedButUnkilled;
 
     }
 
+    /**
+     * <p>Setter for the field <code>blockedButUnkilled</code>.</p>
+     *
+     * @param cardList a {@link forge.CardList} object.
+     */
     private static void setBlockedButUnkilled(CardList cardList) {
         blockedButUnkilled = (cardList);
     }
 
+    /**
+     * <p>Getter for the field <code>blockersLeft</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getBlockersLeft() {
         return blockersLeft;
     }
 
+    /**
+     * <p>Setter for the field <code>blockersLeft</code>.</p>
+     *
+     * @param cardList a {@link forge.CardList} object.
+     */
     private static void setBlockersLeft(CardList cardList) {
         blockersLeft = (cardList);
     }
 
+    /**
+     * <p>Getter for the field <code>diff</code>.</p>
+     *
+     * @return a int.
+     */
     private static int getDiff() {
         return diff;
     }
 
+    /**
+     * <p>Setter for the field <code>diff</code>.</p>
+     *
+     * @param diff a int.
+     */
     private static void setDiff(int diff) {
         ComputerUtil_Block2.diff = (diff);
     }
 
 
     //finds the creatures able to block the attacker
+    /**
+     * <p>getPossibleBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blockersLeft a {@link forge.CardList} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getPossibleBlockers(Card attacker, CardList blockersLeft, Combat combat) {
         CardList blockers = new CardList();
 
@@ -68,6 +137,14 @@ public class ComputerUtil_Block2 {
     }
 
     //finds blockers that won't be destroyed
+    /**
+     * <p>getSafeBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blockersLeft a {@link forge.CardList} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getSafeBlockers(Card attacker, CardList blockersLeft, Combat combat) {
         CardList blockers = new CardList();
 
@@ -79,6 +156,14 @@ public class ComputerUtil_Block2 {
     }
 
     //finds blockers that destroy the attacker
+    /**
+     * <p>getKillingBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blockersLeft a {@link forge.CardList} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getKillingBlockers(Card attacker, CardList blockersLeft, Combat combat) {
         CardList blockers = new CardList();
 
@@ -89,6 +174,12 @@ public class ComputerUtil_Block2 {
         return blockers;
     }
 
+    /**
+     * <p>sortPotentialAttackers.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList sortPotentialAttackers(Combat combat) {
         CardList[] attackerLists = combat.sortAttackerByDefender();
         CardList sortedAttackers = new CardList();
@@ -132,6 +223,12 @@ public class ComputerUtil_Block2 {
     // ======================= block assignment functions ================================
 
     // Good Blocks means a good trade or no trade
+    /**
+     * <p>makeGoodBlocks.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat makeGoodBlocks(Combat combat) {
 
         CardList currentAttackers = new CardList(getAttackersLeft().toArray());
@@ -178,6 +275,12 @@ public class ComputerUtil_Block2 {
     }
 
     // Good Gang Blocks means a good trade or no trade
+    /**
+     * <p>makeGangBlocks.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat makeGangBlocks(Combat combat) {
 
         CardList currentAttackers = new CardList(getAttackersLeft().toArray());
@@ -271,6 +374,12 @@ public class ComputerUtil_Block2 {
     }
 
     // Bad Trade Blocks (should only be made if life is in danger)
+    /**
+     * <p>makeTradeBlocks.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat makeTradeBlocks(Combat combat) {
 
         CardList currentAttackers = new CardList(getAttackersLeft().toArray());
@@ -291,6 +400,12 @@ public class ComputerUtil_Block2 {
     }
 
     // Chump Blocks (should only be made if life is in danger)
+    /**
+     * <p>makeChumpBlocks.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat makeChumpBlocks(Combat combat) {
 
         CardList currentAttackers = new CardList(getAttackersLeft().toArray());
@@ -311,6 +426,12 @@ public class ComputerUtil_Block2 {
     }
 
     //Reinforce blockers blocking attackers with trample (should only be made if life is in danger)
+    /**
+     * <p>reinforceBlockersAgainstTrample.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat reinforceBlockersAgainstTrample(Combat combat) {
 
         CardList chumpBlockers;
@@ -338,6 +459,12 @@ public class ComputerUtil_Block2 {
     }
 
     //Support blockers not destroying the attacker with more blockers to try to kill the attacker
+    /**
+     * <p>reinforceBlockersToKill.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat reinforceBlockersToKill(Combat combat) {
 
         CardList safeBlockers;
@@ -386,6 +513,13 @@ public class ComputerUtil_Block2 {
         return combat;
     }
 
+    /**
+     * <p>resetBlockers.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @param possibleBlockers a {@link forge.CardList} object.
+     * @return a {@link forge.Combat} object.
+     */
     private static Combat resetBlockers(Combat combat, CardList possibleBlockers) {
 
         CardList oldBlockers = combat.getAllBlockers();
@@ -401,6 +535,13 @@ public class ComputerUtil_Block2 {
     }
 
     //Main function
+    /**
+     * <p>getBlockers.</p>
+     *
+     * @param originalCombat a {@link forge.Combat} object.
+     * @param possibleBlockers a {@link forge.CardList} object.
+     * @return a {@link forge.Combat} object.
+     */
     static public Combat getBlockers(Combat originalCombat, CardList possibleBlockers) {
 
         Combat combat = originalCombat;

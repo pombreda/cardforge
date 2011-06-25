@@ -15,9 +15,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+/**
+ * <p>CombatUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CombatUtil {
 
     //can the creature block given the combat state?
+    /**
+     * <p>canBlock.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean canBlock(Card blocker, Combat combat) {
 
         if (blocker == null) return false;
@@ -37,6 +50,12 @@ public class CombatUtil {
 
 
     //can the creature block at all?
+    /**
+     * <p>canBlock.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canBlock(Card blocker) {
 
         if (blocker == null) return false;
@@ -62,6 +81,13 @@ public class CombatUtil {
     }
 
     //can the attacker be blocked at all?
+    /**
+     * <p>canBeBlocked.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean canBeBlocked(Card attacker, Combat combat) {
 
         if (attacker == null) return true;
@@ -73,6 +99,12 @@ public class CombatUtil {
     }
 
     //can the attacker be blocked at all?
+    /**
+     * <p>canBeBlocked.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canBeBlocked(Card attacker) {
 
         if (attacker == null) return true;
@@ -205,6 +237,12 @@ public class CombatUtil {
     }
 
     // Has the player chosen all mandatory blocks?
+    /**
+     * <p>finishedMandatotyBlocks.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean finishedMandatotyBlocks(Combat combat) {
 
         CardList blockers = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
@@ -228,6 +266,13 @@ public class CombatUtil {
     }
 
     // can the blocker block an attacker with a lure effect?
+    /**
+     * <p>canBlockAnAttackerWithLure.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean canBlockAnAttackerWithLure(Card blocker, Combat combat) {
 
         if (blocker == null) return false;
@@ -245,6 +290,14 @@ public class CombatUtil {
     }
 
     // can the blocker block the attacker given the combat state?
+    /**
+     * <p>canBlock.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blocker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean canBlock(Card attacker, Card blocker, Combat combat) {
 
         if (attacker == null || blocker == null) return false;
@@ -273,6 +326,13 @@ public class CombatUtil {
 
 
     // can the blocker block the attacker?
+    /**
+     * <p>canBlock.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blocker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canBlock(Card attacker, Card blocker) {
 
         if (attacker == null || blocker == null) return false;
@@ -436,6 +496,13 @@ public class CombatUtil {
     }//canBlock()
 
     //can a creature attack given the combat state
+    /**
+     * <p>canAttack.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean canAttack(Card c, Combat combat) {
 
         if (combat.getAttackers().length > 1 && AllZoneUtil.isCardInPlay("Crawlspace", c.getController().getOpponent()))
@@ -454,6 +521,12 @@ public class CombatUtil {
     }
 
     //can a creature attack at the moment?
+    /**
+     * <p>canAttack.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canAttack(Card c) {
         if (c.isTapped() || (c.isSick() && !c.isEnchantedBy("Instill Energy"))) return false;
 
@@ -461,6 +534,12 @@ public class CombatUtil {
     }
 
     //can a creature attack if untapped and without summoning sickness?
+    /**
+     * <p>canAttackNextTurn.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canAttackNextTurn(Card c) {
         if (!c.isCreature()) return false;
 
@@ -586,6 +665,13 @@ public class CombatUtil {
     }//canAttack()
 
 
+    /**
+     * <p>getTotalFirstStrikeBlockPower.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public static int getTotalFirstStrikeBlockPower(Card attacker, Player player) {
         final Card att = attacker;
 
@@ -601,6 +687,12 @@ public class CombatUtil {
     }
 
     //This function takes Doran and Double Strike into account
+    /**
+     * <p>getAttack.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int getAttack(Card c) {
         int n = c.getNetCombatDamage();
 
@@ -611,6 +703,14 @@ public class CombatUtil {
     }
 
     //Returns the damage an unblocked attacker would deal
+    /**
+     * <p>damageIfUnblocked.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param attacked a {@link forge.Player} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int damageIfUnblocked(Card attacker, Player attacked, Combat combat) {
         int damage = attacker.getNetCombatDamage();
         int sum = 0;
@@ -623,6 +723,14 @@ public class CombatUtil {
     }
 
     //Returns the poison an unblocked attacker would deal
+    /**
+     * <p>poisonIfUnblocked.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param attacked a {@link forge.Player} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int poisonIfUnblocked(Card attacker, Player attacked, Combat combat) {
         int damage = attacker.getNetCombatDamage();
         int poison = 0;
@@ -636,6 +744,13 @@ public class CombatUtil {
     }
 
     //Returns the damage unblocked attackers would deal
+    /**
+     * <p>sumDamageIfUnblocked.</p>
+     *
+     * @param attackers a {@link forge.CardList} object.
+     * @param attacked a {@link forge.Player} object.
+     * @return a int.
+     */
     private static int sumDamageIfUnblocked(CardList attackers, Player attacked) {
         int sum = 0;
         for (Card attacker : attackers) {
@@ -645,6 +760,13 @@ public class CombatUtil {
     }
 
     //Returns the number of poison counters unblocked attackers would deal
+    /**
+     * <p>sumPoisonIfUnblocked.</p>
+     *
+     * @param attackers a {@link forge.CardList} object.
+     * @param attacked a {@link forge.Player} object.
+     * @return a int.
+     */
     private static int sumPoisonIfUnblocked(CardList attackers, Player attacked) {
         int sum = 0;
         for (Card attacker : attackers) {
@@ -654,6 +776,12 @@ public class CombatUtil {
     }
 
     //calculates the amount of life that will remain after the attack 
+    /**
+     * <p>lifeThatWouldRemain.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int lifeThatWouldRemain(Combat combat) {
 
         int damage = 0;
@@ -680,6 +808,12 @@ public class CombatUtil {
     }
 
     //calculates the amount of poison counters after the attack  
+    /**
+     * <p>resultingPoison.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int resultingPoison(Combat combat) {
 
         int poison = 0;
@@ -706,6 +840,12 @@ public class CombatUtil {
     }
 
     //Checks if the life of the attacked Player/Planeswalker is in danger 
+    /**
+     * <p>lifeInDanger.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean lifeInDanger(Combat combat) {
         // life in danger only cares about the player's life. Not about a Planeswalkers life
         if (AllZone.getComputerPlayer().cantLose())
@@ -719,12 +859,24 @@ public class CombatUtil {
     }
 
     //Checks if the life of the attacked Player would be reduced
+    /**
+     * <p>wouldLoseLife.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean wouldLoseLife(Combat combat) {
 
         return (lifeThatWouldRemain(combat) < AllZone.getComputerPlayer().getLife());
     }
 
     //Checks if the life of the attacked Player/Planeswalker is in danger 
+    /**
+     * <p>lifeInSeriousDanger.</p>
+     *
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean lifeInSeriousDanger(Combat combat) {
         // life in danger only cares about the player's life. Not about a Planeswalkers life
         if (AllZone.getComputerPlayer().cantLose())
@@ -737,6 +889,13 @@ public class CombatUtil {
     }
 
     // This calculates the amount of damage a blockgang can deal to the attacker (first strike not supported)
+    /**
+     * <p>totalDamageOfBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defenders a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int totalDamageOfBlockers(Card attacker, CardList defenders) {
         int damage = 0;
 
@@ -747,6 +906,13 @@ public class CombatUtil {
 
 
     // This calculates the amount of damage a blocker in a blockgang can deal to the attacker
+    /**
+     * <p>dealsDamageAsBlocker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int dealsDamageAsBlocker(Card attacker, Card defender) {
 
         if (attacker.getName().equals("Sylvan Basilisk")
@@ -782,6 +948,13 @@ public class CombatUtil {
     }
 
     // This calculates the amount of damage a blocker in a blockgang can take from the attacker (for trampling attackers)
+    /**
+     * <p>totalShieldDamage.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defenders a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int totalShieldDamage(Card attacker, CardList defenders) {
 
         int defenderDefense = 0;
@@ -792,6 +965,13 @@ public class CombatUtil {
     }
 
     // This calculates the amount of damage a blocker in a blockgang can take from the attacker (for trampling attackers)
+    /**
+     * <p>shieldDamage.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shieldDamage(Card attacker, Card defender) {
 
         if (!canDestroyBlocker(defender, attacker, null, false)) return 100;
@@ -818,6 +998,12 @@ public class CombatUtil {
     }//shieldDamage
 
     //For AI safety measures like Regeneration
+    /**
+     * <p>combatantWouldBeDestroyed.</p>
+     *
+     * @param combatant a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean combatantWouldBeDestroyed(Card combatant) {
 
         if (combatant.isAttacking())
@@ -828,6 +1014,12 @@ public class CombatUtil {
     }
 
     //For AI safety measures like Regeneration
+    /**
+     * <p>attackerWouldBeDestroyed.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean attackerWouldBeDestroyed(Card attacker) {
         CardList blockers = AllZone.getCombat().getBlockers(attacker);
 
@@ -841,6 +1033,15 @@ public class CombatUtil {
     }
 
     //Will this trigger trigger?
+    /**
+     * <p>combatTriggerWillTrigger.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @param trigger a {@link forge.card.trigger.Trigger} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public static boolean combatTriggerWillTrigger(Card attacker, Card defender, Trigger trigger, Combat combat) {
         HashMap<String, String> trigParams = trigger.getMapParams();
         boolean willTrigger = false;
@@ -893,6 +1094,13 @@ public class CombatUtil {
     }
 
     //Predict the Power bonus of the blocker if blocking the attacker (Flanking, Bushido and other triggered abilities)
+    /**
+     * <p>predictPowerBonusOfBlocker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int predictPowerBonusOfBlocker(Card attacker, Card defender) {
         int power = 0;
 
@@ -946,6 +1154,13 @@ public class CombatUtil {
     }
 
     //Predict the Toughness bonus of the blocker if blocking the attacker (Flanking, Bushido and other triggered abilities)
+    /**
+     * <p>predictToughnessBonusOfBlocker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int predictToughnessBonusOfBlocker(Card attacker, Card defender) {
         int toughness = 0;
 
@@ -992,6 +1207,14 @@ public class CombatUtil {
     }
 
     //Predict the Power bonus of the blocker if blocking the attacker (Flanking, Bushido and other triggered abilities)
+    /**
+     * <p>predictPowerBonusOfAttacker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int predictPowerBonusOfAttacker(Card attacker, Card defender, Combat combat) {
         int power = 0;
 
@@ -1050,6 +1273,14 @@ public class CombatUtil {
     }
 
     //Predict the Toughness bonus of the blocker if blocking the attacker (Flanking, Bushido and other triggered abilities)
+    /**
+     * <p>predictToughnessBonusOfAttacker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a int.
+     */
     public static int predictToughnessBonusOfAttacker(Card attacker, Card defender, Combat combat) {
         int toughness = 0;
 
@@ -1099,6 +1330,15 @@ public class CombatUtil {
     }
 
     //can the blocker destroy the attacker?
+    /**
+     * <p>canDestroyAttacker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defender a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @param withoutAbilities a boolean.
+     * @return a boolean.
+     */
     public static boolean canDestroyAttacker(Card attacker, Card defender, Combat combat, boolean withoutAbilities) {
 
         if (attacker.getName().equals("Sylvan Basilisk") && !defender.hasKeyword("Indestructible")) return false;
@@ -1170,6 +1410,12 @@ public class CombatUtil {
 
 
     //For AI safety measures like Regeneration
+    /**
+     * <p>blockerWouldBeDestroyed.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean blockerWouldBeDestroyed(Card blocker) {
         Card attacker = AllZone.getCombat().getAttackerBlockedBy(blocker);
 
@@ -1180,6 +1426,15 @@ public class CombatUtil {
     }
 
     //can the attacker destroy this blocker?
+    /**
+     * <p>canDestroyBlocker.</p>
+     *
+     * @param defender a {@link forge.Card} object.
+     * @param attacker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @param withoutAbilities a boolean.
+     * @return a boolean.
+     */
     public static boolean canDestroyBlocker(Card defender, Card attacker, Combat combat, boolean withoutAbilities) {
 
         int flankingMagnitude = 0;
@@ -1248,6 +1503,9 @@ public class CombatUtil {
         return false; //should never arrive here
     }//canDestroyBlocker
 
+    /**
+     * <p>removeAllDamage.</p>
+     */
     public static void removeAllDamage() {
         CardList cl = AllZoneUtil.getCardsInPlay();
         for (Card c : cl) {
@@ -1255,6 +1513,9 @@ public class CombatUtil {
         }
     }
 
+    /**
+     * <p>showCombat.</p>
+     */
     public static void showCombat() {
         AllZone.getDisplay().showCombat("");
 
@@ -1298,6 +1559,12 @@ public class CombatUtil {
 
     }//showBlockers()
 
+    /**
+     * <p>combatantToString.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String combatantToString(Card c) {
         StringBuilder sb = new StringBuilder();
 
@@ -1310,10 +1577,21 @@ public class CombatUtil {
         return sb.toString();
     }
 
+    /**
+     * <p>isDoranInPlay.</p>
+     *
+     * @return a boolean.
+     */
     public static boolean isDoranInPlay() {
         return AllZoneUtil.isCardInPlay("Doran, the Siege Tower");
     }
 
+    /**
+     * <p>checkPropagandaEffects.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param bLast a boolean.
+     */
     public static void checkPropagandaEffects(Card c, final boolean bLast) {
         String cost = CardFactoryUtil.getPropagandaCost(c);
         if (cost.equals("0")) {
@@ -1380,6 +1658,11 @@ public class CombatUtil {
         }
     }
 
+    /**
+     * <p>checkDeclareAttackers.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void checkDeclareAttackers(Card c) //this method checks triggered effects of attacking creatures, right before defending player declares blockers
     {
         //Run triggers
@@ -1605,6 +1888,11 @@ public class CombatUtil {
         c.setCreatureAttackedThisCombat(true);
     }//checkDeclareAttackers
 
+    /**
+     * <p>checkUnblockedAttackers.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void checkUnblockedAttackers(Card c) {
 
         //Run triggers
@@ -1613,6 +1901,11 @@ public class CombatUtil {
         AllZone.getTriggerHandler().runTrigger("AttackerUnblocked", runParams);
     }
 
+    /**
+     * <p>checkDeclareBlockers.</p>
+     *
+     * @param cl a {@link forge.CardList} object.
+     */
     public static void checkDeclareBlockers(CardList cl) {
         for (Card c : cl) {
             if (!c.getCreatureBlockedThisCombat()) {
@@ -1626,6 +1919,12 @@ public class CombatUtil {
 
     }//checkDeclareBlockers
 
+    /**
+     * <p>checkBlockedAttackers.</p>
+     *
+     * @param a a {@link forge.Card} object.
+     * @param b a {@link forge.Card} object.
+     */
     public static void checkBlockedAttackers(final Card a, Card b) {
         //System.out.println(a.getName() + " got blocked by " + b.getName());
 
@@ -1724,6 +2023,12 @@ public class CombatUtil {
 
     }
 
+    /**
+     * <p>executeExaltedAbility.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param magnitude a int.
+     */
     public static void executeExaltedAbility(Card c, int magnitude) {
         final Card crd = c;
         Ability ability;

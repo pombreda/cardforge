@@ -21,10 +21,24 @@ import java.util.List;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * <p>QuestDataIO class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestDataIO {
+    /**
+     * <p>Constructor for QuestDataIO.</p>
+     */
     public QuestDataIO() {
     }
 
+    /**
+     * <p>loadData.</p>
+     *
+     * @return a {@link forge.quest.data.QuestData} object.
+     */
     static public QuestData loadData() {
         try {
             //read file "questData"
@@ -64,6 +78,12 @@ public class QuestDataIO {
         }
     }
 
+    /**
+     * <p>updateSaveFile.</p>
+     *
+     * @param newData a {@link forge.quest.data.QuestData} object.
+     * @param input a {@link java.lang.String} object.
+     */
     private static void updateSaveFile(QuestData newData, String input) {
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -101,6 +121,11 @@ public class QuestDataIO {
         }
     }
 
+    /**
+     * <p>saveData.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     */
     public static void saveData(QuestData qd) {
         try {
             File f = ForgeProps.getFile(NewConstants.QUEST.XMLDATA);
@@ -118,6 +143,11 @@ public class QuestDataIO {
         }
     }
 
+    /**
+     * <p>convertDeprecatedSaveFormat.</p>
+     *
+     * @return a {@link forge.quest.data.QuestData} object.
+     */
     @SuppressWarnings({"deprecation"})
     public static QuestData convertDeprecatedSaveFormat() {
         forge.QuestData oldData = forge.QuestData.loadData();

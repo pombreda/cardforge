@@ -5,12 +5,26 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_Championed class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
+ */
 public class Trigger_Championed extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Championed.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Championed(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         Card championed = (Card) runParams.get("Championed");
@@ -24,6 +38,7 @@ public class Trigger_Championed extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Championed(mapParams, hostCard);
@@ -36,6 +51,7 @@ public class Trigger_Championed extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Championed", runParams.get("Championed"));

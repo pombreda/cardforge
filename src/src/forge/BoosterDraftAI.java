@@ -5,25 +5,41 @@ import forge.deck.Deck;
 
 import java.util.*;
 
+/**
+ * <p>BoosterDraftAI class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class BoosterDraftAI {
     public BoosterDraft bd = null;
     //once a deck has this number of creatures the computer randomly
     //picks a card, so the final computer deck has 12-20 creatures
     //minimum of creatures per deck
     //private static final int nCreatures = 16;
+    /** Constant <code>nDecks=7</code> */
     private static final int nDecks = 7;
 
     //holds all the cards for each of the computer's decks
     private CardList[] deck = new CardList[nDecks];
     private String[][] deckColor = new String[nDecks][];
 
+    /** Constant <code>colorToLand</code> */
     private static Map<String, String> colorToLand = new HashMap<String, String>();
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         BoosterDraftAI ai = new BoosterDraftAI();
         ai.runTestPrint();
     }
 
+    /**
+     * <p>runTestPrint.</p>
+     */
     public void runTestPrint() {
         BoosterDraftAI ai = new BoosterDraftAI();
         ai.runTest(ai);
@@ -46,6 +62,11 @@ public class BoosterDraftAI {
     }//runTestPrint()
 
     //throws Exception if error
+    /**
+     * <p>runTest.</p>
+     *
+     * @param ai a {@link forge.BoosterDraftAI} object.
+     */
     public void runTest(BoosterDraftAI ai) {
         ReadDraftBoosterPack booster = new ReadDraftBoosterPack();
         for (int outer = 0; outer < 1; outer++) {
@@ -63,6 +84,13 @@ public class BoosterDraftAI {
 
     //picks one Card from in_choose, removes that card, and returns the list
     //returns the cards not picked
+    /**
+     * <p>choose.</p>
+     *
+     * @param in_choose a {@link forge.CardList} object.
+     * @param player a int.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList choose(final CardList in_choose, int player) {
         //in_choose should ONLY be on the RIGHT side of any equal sign
         //only 1 card should be removed from in_choose
@@ -249,6 +277,11 @@ public class BoosterDraftAI {
 
     //private int countCreatures(CardList list) {return list.getType("Creature").size();}
 
+    /**
+     * <p>testColors.</p>
+     *
+     * @param n an array of int.
+     */
     private void testColors(int[] n) {
         if (n.length != nDecks)
             throw new RuntimeException("BoosterDraftAI : testColors error, numbers array length does not equal 7");
@@ -265,6 +298,11 @@ public class BoosterDraftAI {
                 throw new RuntimeException("BoosterDraftAI : testColors error, index out of range - " + n[i]);
     }//testColors()
 
+    /**
+     * <p>getDecks.</p>
+     *
+     * @return an array of {@link forge.deck.Deck} objects.
+     */
     public Deck[] getDecks() {
         //check CardList[] deck for errors
         //checkDeckList(deck);
@@ -282,7 +320,14 @@ public class BoosterDraftAI {
         return out;
     }//getDecks()
 
-    private Deck buildDeck(CardList dList, deckColors pClrs) {
+    /**
+     * <p>buildDeck.</p>
+     *
+     * @param dList a {@link forge.CardList} object.
+     * @param pClrs a {@link forge.DeckColors} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
+    private Deck buildDeck(CardList dList, DeckColors pClrs) {
         Deck out = new Deck(Constant.GameType.Draft);
         CardList outList = new CardList();
         int cardsNeeded = 22;
@@ -521,6 +566,11 @@ public class BoosterDraftAI {
 */
 
     //returns 7 different ints, within the range of 0-9
+    /**
+     * <p>getDeckColors.</p>
+     *
+     * @return an array of int.
+     */
     private int[] getDeckColors() {
         int[] out = new int[nDecks];
         int start = MyRandom.random.nextInt(10);
@@ -535,6 +585,9 @@ public class BoosterDraftAI {
         return out;
     }//getDeckColors()
 
+    /**
+     * <p>Constructor for BoosterDraftAI.</p>
+     */
     public BoosterDraftAI() {
         //choose colors for decks
         int[] n = getDeckColors();
@@ -551,13 +604,13 @@ public class BoosterDraftAI {
         //initilize deck array and playerColors list
         for (int i = 0; i < deck.length; i++) {
             deck[i] = new CardList();
-            playerColors.add(new deckColors());
+            playerColors.add(new DeckColors());
         }
 
     }//BoosterDraftAI()
 
 
-    private ArrayList<deckColors> playerColors = new ArrayList<deckColors>();
+    private ArrayList<DeckColors> playerColors = new ArrayList<DeckColors>();
 
     //all 10 two color combinations
     private String[][] deckColorChoices =
@@ -603,60 +656,38 @@ public class BoosterDraftAI {
 
             int trgA = a.getTriggers().size() * 10;
             int trgB = b.getTriggers().size() * 10;
+/**
+ * <p>Constructor for deckColors.</p>
+ *
+ * @param c1 a {@link java.lang.String} object.
+ * @param c2 a {@link java.lang.String} object.
+ * @param sp a {@link java.lang.String} object.
+ */
 
             int scoreA = ((attA + defA) / cmcA) + keyA + abA + trgA;
             int scoreB = ((attB + defB) / cmcB) + keyB + abB + trgB;
 
             if (scoreA == scoreB)
                 return 0;
+            /**
+             * <p>Constructor for deckColors.</p>
+             */
             else if (scoreA > scoreB)
                 return 1;
             else if (scoreB > scoreA)
                 return -1;
+/**
+ * <p>ColorToMana.</p>
+ *
+ * @param color a {@link java.lang.String} object.
+ * @return a {@link java.lang.String} object.
+ */
 
             return 0;
         }
     };
 }//BoosterDraftAI()
 
-class CCnt {
-    public String Color;
-    public int Count;
-
-    public CCnt(String clr, int cnt) {
-        Color = clr;
-        Count = cnt;
-    }
-}
-
-class deckColors {
-    public String Color1 = "none";
-    public String Color2 = "none";
-    //public String Splash = "none";
-    public String Mana1 = "";
-    public String Mana2 = "";
-    //public String ManaS = "";
-
-    public deckColors(String c1, String c2, String sp) {
-        Color1 = c1;
-        Color2 = c2;
-        //Splash = sp;
-    }
-
-    public deckColors() {
-
-    }
-
-    public String ColorToMana(String color) {
-        String Mana[] = {"W", "U", "B", "R", "G"};
-
-        for (int i = 0; i < Constant.Color.onlyColors.length; i++) {
-            if (Constant.Color.onlyColors[i].equals(color))
-                return Mana[i];
-        }
-
-        return "";
-    }
 
 
-}
+

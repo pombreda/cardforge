@@ -8,8 +8,15 @@ import java.util.HashMap;
 import java.util.Observer;
 import java.util.Stack;
 
+/**
+ * <p>Phase class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Phase extends MyObservable implements java.io.Serializable {
 
+    /** Constant <code>serialVersionUID=5207222278370963197L</code> */
     private static final long serialVersionUID = 5207222278370963197L;
 
     private int phaseIndex;
@@ -17,13 +24,21 @@ public class Phase extends MyObservable implements java.io.Serializable {
 
     // Please use getX, setX, and incrementX methods instead of directly
     // accessing the following:
+    /** Constant <code>GameBegins=0</code> */
     private static int GameBegins = 0;
+    /** Constant <code>StormCount=</code> */
     private static int StormCount;
+    /** Constant <code>PlayerSpellCount=</code> */
     private static int PlayerSpellCount;
+    /** Constant <code>PlayerCreatureSpellCount=</code> */
     private static int PlayerCreatureSpellCount;
+    /** Constant <code>PlayerInstantSpellCount=</code> */
     private static int PlayerInstantSpellCount;
+    /** Constant <code>ComputerSpellCount=</code> */
     private static int ComputerSpellCount;
+    /** Constant <code>ComputerCreatureSpellCount=</code> */
     private static int ComputerCreatureSpellCount;
+    /** Constant <code>ComputerInstantSpellCount=</code> */
     private static int ComputerInstantSpellCount;
 
     private Stack<Player> extraTurns = new Stack<Player>();
@@ -34,14 +49,30 @@ public class Phase extends MyObservable implements java.io.Serializable {
 
     private Player playerTurn = AllZone.getHumanPlayer();
 
+    /**
+     * <p>isPlayerTurn.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public boolean isPlayerTurn(Player player) {
         return playerTurn.isPlayer(player);
     }
 
+    /**
+     * <p>Setter for the field <code>playerTurn</code>.</p>
+     *
+     * @param s a {@link forge.Player} object.
+     */
     public void setPlayerTurn(Player s) {
         playerTurn = s;
     }
 
+    /**
+     * <p>Getter for the field <code>playerTurn</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getPlayerTurn() {
         return playerTurn;
     }
@@ -50,24 +81,49 @@ public class Phase extends MyObservable implements java.io.Serializable {
 
     private Player pPlayerPriority = AllZone.getHumanPlayer();
 
+    /**
+     * <p>getPriorityPlayer.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getPriorityPlayer() {
         return pPlayerPriority;
     }
 
+    /**
+     * <p>setPriorityPlayer.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     */
     public void setPriorityPlayer(Player p) {
         pPlayerPriority = p;
     }
 
     private Player pFirstPriority = AllZone.getHumanPlayer();
 
+    /**
+     * <p>getFirstPriority.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getFirstPriority() {
         return pFirstPriority;
     }
 
+    /**
+     * <p>setFirstPriority.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     */
     public void setFirstPriority(Player p) {
         pFirstPriority = p;
     }
 
+    /**
+     * <p>setPriority.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     */
     public void setPriority(Player p) {
         if (AllZone.getStack() != null)
             AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll();
@@ -76,42 +132,78 @@ public class Phase extends MyObservable implements java.io.Serializable {
         pPlayerPriority = p;
     }
 
+    /**
+     * <p>resetPriority.</p>
+     */
     public void resetPriority() {
         setPriority(playerTurn);
     }
 
     private boolean bPhaseEffects = true;
 
+    /**
+     * <p>doPhaseEffects.</p>
+     *
+     * @return a boolean.
+     */
     public boolean doPhaseEffects() {
         return bPhaseEffects;
     }
 
+    /**
+     * <p>setPhaseEffects.</p>
+     *
+     * @param b a boolean.
+     */
     public void setPhaseEffects(boolean b) {
         bPhaseEffects = b;
     }
 
     private boolean bSkipPhase = true;
 
+    /**
+     * <p>doSkipPhase.</p>
+     *
+     * @return a boolean.
+     */
     public boolean doSkipPhase() {
         return bSkipPhase;
     }
 
+    /**
+     * <p>setSkipPhase.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSkipPhase(boolean b) {
         bSkipPhase = b;
     }
 
     private boolean bCombat = false;
 
+    /**
+     * <p>inCombat.</p>
+     *
+     * @return a boolean.
+     */
     public boolean inCombat() {
         return bCombat;
     }
 
+    /**
+     * <p>setCombat.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCombat(boolean b) {
         bCombat = b;
     }
 
     private boolean bRepeat = false;
 
+    /**
+     * <p>repeatPhase.</p>
+     */
     public void repeatPhase() {
         bRepeat = true;
     }
@@ -134,10 +226,16 @@ public class Phase extends MyObservable implements java.io.Serializable {
             Constant.Phase.Cleanup
     };
 
+    /**
+     * <p>Constructor for Phase.</p>
+     */
     public Phase() {
         reset();
     }
 
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         turn = 1;
         playerTurn = AllZone.getHumanPlayer();
@@ -154,6 +252,9 @@ public class Phase extends MyObservable implements java.io.Serializable {
         this.updateObservers();
     }
 
+    /**
+     * <p>turnReset.</p>
+     */
     public void turnReset() {
         setStormCount(0);
         setPlayerSpellCount(0);
@@ -165,6 +266,9 @@ public class Phase extends MyObservable implements java.io.Serializable {
         playerTurn.setNumLandsPlayed(0);
     }
 
+    /**
+     * <p>handleBeginPhase.</p>
+     */
     public void handleBeginPhase() {
         AllZone.getPhase().setPhaseEffects(false);
         // Handle effects that happen at the beginning of phases
@@ -286,6 +390,9 @@ public class Phase extends MyObservable implements java.io.Serializable {
             resetPriority();
     }
 
+    /**
+     * <p>nextPhase.</p>
+     */
     public void nextPhase() {
         //experimental, add executeCardStateEffects() here:
         for (String effect : AllZone.getStaticEffects().getStateBasedMap().keySet()) {
@@ -364,6 +471,11 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /**
+     * <p>handleNextTurn.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     private Player handleNextTurn() {
         Player nextTurn = extraTurns.isEmpty() ? getPlayerTurn().getOpponent() : extraTurns.pop();
 
@@ -372,6 +484,12 @@ public class Phase extends MyObservable implements java.io.Serializable {
         return skipTurnTimeVault(nextTurn);
     }
 
+    /**
+     * <p>skipTurnTimeVault.</p>
+     *
+     * @param turn a {@link forge.Player} object.
+     * @return a {@link forge.Player} object.
+     */
     private Player skipTurnTimeVault(Player turn) {
         //time vault:
         CardList vaults = AllZoneUtil.getPlayerCardsInPlay(turn, "Time Vault");
@@ -396,22 +514,53 @@ public class Phase extends MyObservable implements java.io.Serializable {
         return turn;
     }
 
+    /**
+     * <p>is.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public synchronized boolean is(String phase, Player player) {
         return getPhase().equals(phase) && getPlayerTurn().isPlayer(player);
     }
 
+    /**
+     * <p>is.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public synchronized boolean is(String phase) {
         return (getPhase().equals(phase));
     }
 
+    /**
+     * <p>isAfter.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isAfter(String phase) {
         return phaseIndex > findIndex(phase);
     }
 
+    /**
+     * <p>isBefore.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isBefore(String phase) {
         return phaseIndex < findIndex(phase);
     }
 
+    /**
+     * <p>findIndex.</p>
+     *
+     * @param phase a {@link java.lang.String} object.
+     * @return a int.
+     */
     private int findIndex(String phase) {
         for (int i = 0; i < phaseOrder.length; i++) {
             if (phase.equals(phaseOrder[i]))
@@ -420,14 +569,29 @@ public class Phase extends MyObservable implements java.io.Serializable {
         throw new RuntimeException("Phase : findIndex() invalid argument, phase = " + phase);
     }
 
+    /**
+     * <p>getPhase.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getPhase() {
         return phaseOrder[phaseIndex];
     }
 
+    /**
+     * <p>Getter for the field <code>turn</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTurn() {
         return turn;
     }
 
+    /**
+     * <p>getNextTurn.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getNextTurn() {
         if (extraTurns.isEmpty())
             return getPlayerTurn().getOpponent();
@@ -435,11 +599,22 @@ public class Phase extends MyObservable implements java.io.Serializable {
         return extraTurns.peek();
     }
 
+    /**
+     * <p>isNextTurn.</p>
+     *
+     * @param pl a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public boolean isNextTurn(Player pl) {
         Player next = getNextTurn();
         return (pl.equals(next));
     }
 
+    /**
+     * <p>addExtraTurn.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void addExtraTurn(Player player) {
         // use a stack to handle extra turns, make sure the bottom of the stack restores original turn order
         if (extraTurns.isEmpty())
@@ -448,6 +623,11 @@ public class Phase extends MyObservable implements java.io.Serializable {
         extraTurns.push(player);
     }
 
+    /**
+     * <p>skipTurn.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void skipTurn(Player player) {
         // skipping turn without having extras is equivalent to giving your opponent an extra turn
         if (extraTurns.isEmpty())
@@ -461,15 +641,28 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /**
+     * <p>addExtraCombat.</p>
+     */
     public void addExtraCombat() {
         // Extra combats can only happen
         extraCombats++;
     }
 
+    /**
+     * <p>isFirstCombat.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isFirstCombat() {
         return (nCombatsThisTurn == 1);
     }
 
+    /**
+     * <p>resetAttackedThisCombat.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void resetAttackedThisCombat(Player player) {
         // resets the status of attacked/blocked this phase
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -488,6 +681,9 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /**
+     * <p>passPriority.</p>
+     */
     public void passPriority() {
         Player actingPlayer = getPriorityPlayer();
         Player lastToAct = getFirstPriority();
@@ -513,6 +709,7 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void addObserver(Observer o) {
         super.deleteObservers();
@@ -521,10 +718,20 @@ public class Phase extends MyObservable implements java.io.Serializable {
 
     boolean needToNextPhase = false;
 
+    /**
+     * <p>Setter for the field <code>needToNextPhase</code>.</p>
+     *
+     * @param needToNextPhase a boolean.
+     */
     public void setNeedToNextPhase(boolean needToNextPhase) {
         this.needToNextPhase = needToNextPhase;
     }
 
+    /**
+     * <p>isNeedToNextPhase.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isNeedToNextPhase() {
         return this.needToNextPhase;
     }
@@ -532,6 +739,11 @@ public class Phase extends MyObservable implements java.io.Serializable {
     //This should only be true four times! that is for the initial nextPhases in MyObservable
     int needToNextPhaseInit = 0;
 
+    /**
+     * <p>isNeedToNextPhaseInit.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isNeedToNextPhaseInit() {
         needToNextPhaseInit++;
         if (needToNextPhaseInit <= 4) {
@@ -540,11 +752,24 @@ public class Phase extends MyObservable implements java.io.Serializable {
         return false;
     }
 
+    /**
+     * <p>canCastSorcery.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public static boolean canCastSorcery(Player player) {
         return AllZone.getPhase().isPlayerTurn(player) && (AllZone.getPhase().getPhase().equals(Constant.Phase.Main2) ||
                 AllZone.getPhase().getPhase().equals(Constant.Phase.Main1)) && AllZone.getStack().size() == 0;
     }
 
+    /**
+     * <p>buildActivateString.</p>
+     *
+     * @param startPhase a {@link java.lang.String} object.
+     * @param endPhase a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String buildActivateString(String startPhase, String endPhase) {
         StringBuilder sb = new StringBuilder();
 
@@ -566,6 +791,11 @@ public class Phase extends MyObservable implements java.io.Serializable {
         return sb.toString();
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String args[]) {
         Phase phase = new Phase();
         for (int i = 0; i < phase.phaseOrder.length; i++) {
@@ -574,6 +804,11 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /**
+     * <p>increaseSpellCount.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void increaseSpellCount(SpellAbility sp) {
         incrementStormCount();
 
@@ -596,100 +831,220 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
     }
 
+    /**
+     * <p>incrementComputerInstantSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementComputerInstantSpellCount() {
         ComputerInstantSpellCount++;
     }
 
+    /**
+     * <p>incrementComputerCreatureSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementComputerCreatureSpellCount() {
         ComputerCreatureSpellCount++;
     }
 
+    /**
+     * <p>incrementComputerSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementComputerSpellCount() {
         ComputerSpellCount++;
     }
 
+    /**
+     * <p>incrementPlayerInstantSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementPlayerInstantSpellCount() {
         PlayerInstantSpellCount++;
     }
 
+    /**
+     * <p>incrementPlayerCreatureSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementPlayerCreatureSpellCount() {
         PlayerCreatureSpellCount++;
     }
 
+    /**
+     * <p>incrementPlayerSpellCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementPlayerSpellCount() {
         PlayerSpellCount++;
     }
 
+    /**
+     * <p>incrementStormCount.</p>
+     *
+     * @since 1.0.15
+     */
     protected static void incrementStormCount() {
         StormCount++;
     }
 
+    /**
+     * <p>setStormCount.</p>
+     *
+     * @param stormCount a int.
+     */
     public static void setStormCount(int stormCount) {
         StormCount = stormCount;
     }
 
+    /**
+     * <p>getStormCount.</p>
+     *
+     * @return a int.
+     */
     public static int getStormCount() {
         return StormCount;
     }
 
+    /**
+     * <p>setGameBegins.</p>
+     *
+     * @param gameBegins a int.
+     */
     public static void setGameBegins(int gameBegins) {
         GameBegins = gameBegins;
     }
 
+    /**
+     * <p>getGameBegins.</p>
+     *
+     * @return a int.
+     */
     public static int getGameBegins() {
         return GameBegins;
     }
 
     // this is a hack for the setup game state mode, do not use outside of devSetupGameState code
     // as it avoids calling any of the phase effects that may be necessary in a less enforced context
+    /**
+     * <p>setDevPhaseState.</p>
+     *
+     * @param phaseID a {@link java.lang.String} object.
+     */
     public void setDevPhaseState(String phaseID) {
         this.phaseIndex = findIndex(phaseID);
     }
 
+    /**
+     * <p>getPlayerSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getPlayerSpellCount() {
         return PlayerSpellCount;
     }
 
+    /**
+     * <p>setPlayerSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setPlayerSpellCount(int i) {
         PlayerSpellCount = (i);
     }
 
+    /**
+     * <p>getPlayerCreatureSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getPlayerCreatureSpellCount() {
         return PlayerCreatureSpellCount;
     }
 
+    /**
+     * <p>setPlayerCreatureSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setPlayerCreatureSpellCount(int i) {
         PlayerCreatureSpellCount = (i);
     }
 
+    /**
+     * <p>getPlayerInstantSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getPlayerInstantSpellCount() {
         return PlayerInstantSpellCount;
     }
 
+    /**
+     * <p>setPlayerInstantSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setPlayerInstantSpellCount(int i) {
         PlayerInstantSpellCount = (i);
     }
 
+    /**
+     * <p>getComputerSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getComputerSpellCount() {
         return ComputerSpellCount;
     }
 
+    /**
+     * <p>setComputerSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setComputerSpellCount(int i) {
         ComputerSpellCount = (i);
     }
 
+    /**
+     * <p>getComputerCreatureSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getComputerCreatureSpellCount() {
         return ComputerCreatureSpellCount;
     }
 
+    /**
+     * <p>setComputerCreatureSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setComputerCreatureSpellCount(int i) {
         ComputerCreatureSpellCount = (i);
     }
 
+    /**
+     * <p>getComputerInstantSpellCount.</p>
+     *
+     * @return a int.
+     */
     static int getComputerInstantSpellCount() {
         return ComputerInstantSpellCount;
     }
 
+    /**
+     * <p>setComputerInstantSpellCount.</p>
+     *
+     * @param i a int.
+     */
     static void setComputerInstantSpellCount(int i) {
         ComputerInstantSpellCount = (i);
     }

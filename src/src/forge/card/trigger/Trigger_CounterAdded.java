@@ -6,12 +6,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_CounterAdded class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_CounterAdded extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_CounterAdded.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_CounterAdded(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         Card addedTo = (Card) runParams.get("Card");
@@ -33,6 +46,7 @@ public class Trigger_CounterAdded extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_CounterAdded(mapParams, hostCard);
@@ -45,6 +59,7 @@ public class Trigger_CounterAdded extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Card", runParams.get("Card"));

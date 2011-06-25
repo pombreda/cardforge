@@ -8,7 +8,19 @@ import forge.card.trigger.TriggerHandler;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Effect class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Effect {
+    /**
+     * <p>createAbilityEffect.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityEffect(final AbilityFactory AF) {
 
         final SpellAbility abEffect = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
@@ -40,6 +52,12 @@ public class AbilityFactory_Effect {
         return abEffect;
     }
 
+    /**
+     * <p>createSpellEffect.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellEffect(final AbilityFactory AF) {
         final SpellAbility spEffect = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6631124959690157874L;
@@ -65,6 +83,12 @@ public class AbilityFactory_Effect {
         return spEffect;
     }
 
+    /**
+     * <p>createDrawbackEffect.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackEffect(final AbilityFactory AF) {
         final SpellAbility dbEffect = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6631124959690157874L;
@@ -100,6 +124,13 @@ public class AbilityFactory_Effect {
         return dbEffect;
     }
 
+    /**
+     * <p>effectStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String effectStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -118,6 +149,13 @@ public class AbilityFactory_Effect {
         return sb.toString();
     }
 
+    /**
+     * <p>effectCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean effectCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         Random r = MyRandom.random;
 
@@ -133,6 +171,14 @@ public class AbilityFactory_Effect {
         return ((r.nextFloat() < .6667));
     }
 
+    /**
+     * <p>effectDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     public static boolean effectDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)    // If there is a cost payment it's usually not mandatory
             return false;
@@ -148,6 +194,12 @@ public class AbilityFactory_Effect {
         return true;
     }
 
+    /**
+     * <p>effectResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void effectResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = af.getHostCard();

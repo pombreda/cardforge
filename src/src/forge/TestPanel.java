@@ -7,6 +7,12 @@ import java.awt.Color;
 import java.awt.*;
 
 
+/**
+ * <p>TestPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class TestPanel extends JFrame {
     /**
      *
@@ -15,12 +21,20 @@ public class TestPanel extends JFrame {
     private JPanel jPanel1 = new JPanel();
     private JLabel jLabel1 = new JLabel();
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         TestPanel p = new TestPanel();
         p.setSize(300, 300);
         p.setVisible(true);
     }
 
+    /**
+     * <p>Constructor for TestPanel.</p>
+     */
     public TestPanel() {
         try {
             jbInit();
@@ -30,6 +44,11 @@ public class TestPanel extends JFrame {
         }
     }
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
         this.getContentPane().setLayout(null);
         jPanel1.setForeground(Color.orange);

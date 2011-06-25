@@ -10,8 +10,20 @@ import forge.gui.input.Input;
 import java.util.ArrayList;
 
 
+/**
+ * <p>CardFactory_Equipment class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 class CardFactory_Equipment {
 
+    /**
+     * <p>shouldEquip.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldEquip(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -23,6 +35,55 @@ class CardFactory_Equipment {
     }
 
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, String cardName, Player owner) {
 
         //*************** START *********** START **************************

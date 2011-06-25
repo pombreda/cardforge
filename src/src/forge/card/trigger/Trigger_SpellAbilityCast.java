@@ -9,12 +9,25 @@ import forge.card.spellability.SpellAbility_StackInstance;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_SpellAbilityCast class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_SpellAbilityCast extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_SpellAbilityCast.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_SpellAbilityCast(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         SpellAbility SA = (SpellAbility) runParams.get("CastSA");
@@ -114,6 +127,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_SpellAbilityCast(mapParams, hostCard);
@@ -126,6 +140,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Card", ((SpellAbility) runParams.get("CastSA")).getSourceCard());

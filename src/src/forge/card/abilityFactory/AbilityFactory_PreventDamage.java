@@ -7,11 +7,23 @@ import forge.card.spellability.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>AbilityFactory_PreventDamage class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_PreventDamage {
 
     // Ex: A:SP$ PreventDamage | Cost$ W | Tgt$ TgtC | Amount$ 3 | SpellDescription$ Prevent the next 3 damage that would be dealt to target creature this turn.
     // http://www.slightlymagic.net/wiki/Forge_AbilityFactory#PreventDamage
 
+    /**
+     * <p>getAbilityPreventDamage.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getAbilityPreventDamage(final AbilityFactory af) {
 
         final SpellAbility abRegenerate = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -43,6 +55,12 @@ public class AbilityFactory_PreventDamage {
         return abRegenerate;
     }
 
+    /**
+     * <p>getSpellPreventDamage.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getSpellPreventDamage(final AbilityFactory af) {
 
         final SpellAbility spRegenerate = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -68,6 +86,12 @@ public class AbilityFactory_PreventDamage {
         return spRegenerate;
     }
 
+    /**
+     * <p>createDrawbackPreventDamage.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackPreventDamage(final AbilityFactory af) {
         final SpellAbility dbRegen = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -2295483806708528744L;
@@ -96,6 +120,13 @@ public class AbilityFactory_PreventDamage {
         return dbRegen;
     }
 
+    /**
+     * <p>preventDamageStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String preventDamageStackDescription(AbilityFactory af, SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -136,6 +167,13 @@ public class AbilityFactory_PreventDamage {
         return sb.toString();
     }
 
+    /**
+     * <p>preventDamageCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean preventDamageCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         final Card hostCard = af.getHostCard();
@@ -210,6 +248,14 @@ public class AbilityFactory_PreventDamage {
         return chance;
     }
 
+    /**
+     * <p>doPreventDamageTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean doPreventDamageTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         boolean chance = false;
 
@@ -231,6 +277,14 @@ public class AbilityFactory_PreventDamage {
         return chance;
     }
 
+    /**
+     * <p>preventDamageMandatoryTarget.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean preventDamageMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         final Card hostCard = af.getHostCard();
         Target tgt = sa.getTarget();
@@ -268,6 +322,12 @@ public class AbilityFactory_PreventDamage {
         return true;
     }
 
+    /**
+     * <p>preventDamageResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void preventDamageResolve(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         int numDam = AbilityFactory.calculateAmount(af.getHostCard(), params.get("Amount"), sa);

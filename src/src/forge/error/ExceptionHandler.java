@@ -14,6 +14,9 @@ import java.lang.Thread.UncaughtExceptionHandler;
 
 /**
  * This class handles all exceptions that weren't caught by showing the error to the user.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class ExceptionHandler implements UncaughtExceptionHandler {
     static {
@@ -31,12 +34,15 @@ public class ExceptionHandler implements UncaughtExceptionHandler {
     }
 
 
+    /** {@inheritDoc} */
     public void uncaughtException(Thread t, Throwable ex) {
         ErrorViewer.showError(ex);
     }
 
     /**
      * This Method is called by AWT when an error is thrown in the event dispatching thread and not caught.
+     *
+     * @param ex a {@link java.lang.Throwable} object.
      */
     public void handle(Throwable ex) {
         ErrorViewer.showError(ex);

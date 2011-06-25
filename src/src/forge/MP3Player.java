@@ -11,7 +11,10 @@ import java.io.InputStream;
 
 
 /**
+ * <p>MP3Player class.</p>
+ *
  * @author shaines
+ * @version $Id: $
  */
 public class MP3Player implements NewConstants {
 
@@ -21,6 +24,8 @@ public class MP3Player implements NewConstants {
 
     /**
      * Creates a new instance of MP3Player
+     *
+     * @param filename a {@link java.lang.String} object.
      */
     public MP3Player(String filename) {
         File base = ForgeProps.getFile(SOUND_BASE);
@@ -35,6 +40,9 @@ public class MP3Player implements NewConstants {
         }
     }
 
+    /**
+     * <p>play.</p>
+     */
     public void play() {
         if (GuiDisplay3.playsoundCheckboxForMenu.isSelected() && file.exists()) {
             try {

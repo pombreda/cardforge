@@ -26,29 +26,23 @@ import java.util.Collections;
 //import java.util.HashMap;
 //import java.util.Map;
 
-
-interface DeckDisplay {
-    public void updateDisplay(CardList top, CardList bottom);
-
-    //top shows available card pool
-    //if constructed, top shows all cards
-    //if sealed, top shows 5 booster packs
-    //if draft, top shows cards that were chosen
-    public CardList getTop();
-
-    //bottom shows cards that the user has chosen for his library
-    public CardList getBottom();
-
-    public void setTitle(String message);
-}
-
+/**
+ * <p>Gui_DeckEditor_Menu class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
+
+    /** Constant <code>serialVersionUID=-4037993759604768755L</code> */
     private static final long serialVersionUID = -4037993759604768755L;
 
     //used by importConstructed() and exportConstructected()
+    /** Constant <code>previousDirectory</code> */
     private static File previousDirectory = null;
 
 
+    /** Constant <code>debugPrint=false</code> */
     private static final boolean debugPrint = false;
 
     private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
@@ -60,6 +54,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     private String currentGameType;
     private String currentDeckPlayerType;
 
+    /**
+     * <p>Setter for the field <code>currentGameType</code>.</p>
+     *
+     * @param gameType a {@link java.lang.String} object.
+     * @since 1.0.15
+     */
     public void setCurrentGameType(String gameType) {
         currentGameType = gameType;
     }
@@ -70,6 +70,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     private Command exitCommand;
 
 
+    /**
+     * <p>Constructor for Gui_DeckEditor_Menu.</p>
+     *
+     * @param in_display a {@link forge.DeckDisplay} object.
+     * @param exit a {@link forge.Command} object.
+     */
     public Gui_DeckEditor_Menu(DeckDisplay in_display, Command exit) {
         deckDisplay = in_display;
         exitCommand = exit;
@@ -84,6 +90,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         setupSortMenu();
     }
 
+    /**
+     * <p>setupFilterMenu.</p>
+     */
     private void setupFilterMenu() {
         JMenuItem filter = new JMenuItem("New filter");
         JMenuItem clearfilter = new JMenuItem("Clear filter");
@@ -140,6 +149,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }
 
 
+    /**
+     * <p>setupSortMenu.</p>
+     */
     private void setupSortMenu() {
         JMenuItem name = new JMenuItem("Card Name");
         JMenuItem cost = new JMenuItem("Cost");
@@ -258,11 +270,20 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
     }//setupSortMenu()
 
+    /**
+     * <p>populateShop.</p>
+     *
+     * @param shop a {@link forge.CardList} object.
+     * @param owned a {@link forge.CardList} object.
+     */
     public void populateShop(CardList shop, CardList owned) {
 
         deckDisplay.updateDisplay(shop, owned);
     }
 
+    /**
+     * <p>newConstructed.</p>
+     */
     public void newConstructed() {
         if (debugPrint) {
             System.out.println("New Constructed");
@@ -277,6 +298,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), new CardList());
     }//new constructed
 
+    /**
+     * <p>newRandomConstructed.</p>
+     */
     private void newRandomConstructed() {
         if (debugPrint) {
             System.out.println("Random Constructed");
@@ -309,6 +333,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }//new sealed
 
 
+    /**
+     * <p>newGenerateConstructed.</p>
+     */
     private void newGenerateConstructed() {
         if (debugPrint) {
             System.out.println("Generate Constructed");
@@ -396,6 +423,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     };
 
 
+    /**
+     * <p>getImportFilename.</p>
+     *
+     * @return a {@link java.io.File} object.
+     */
     private File getImportFilename() {
         JFileChooser chooser = new JFileChooser(previousDirectory);
 
@@ -413,6 +445,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
     }//openFileDialog()
 
+    /**
+     * <p>showDeck.</p>
+     *
+     * @param deck a {@link forge.deck.Deck} object.
+     */
     private void showDeck(Deck deck) {
         String gameType = deck.getDeckType();
 
@@ -429,6 +466,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         }
     }//showDeck()
 
+    /**
+     * <p>importDeck.</p>
+     */
     private void importDeck() {
         File file = getImportFilename();
 
@@ -460,6 +500,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
     }//importDeck()
 
+    /**
+     * <p>downloadDeck.</p>
+     */
     private void downloadDeck() {
 
         Object o = JOptionPane.showInputDialog(null, "URL(only from http://magic.tcgplayer.com):",
@@ -606,6 +649,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }
 
 
+    /**
+     * <p>exportDeck.</p>
+     */
     private void exportDeck() {
         File filename = getExportFilename();
 
@@ -644,6 +690,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
     // @SuppressWarnings("unchecked")
     // TableSorter type saftey
+    /**
+     * <p>exportDeckText.</p>
+     *
+     * @param aDeck a {@link forge.deck.Deck} object.
+     * @param filename a {@link java.lang.String} object.
+     */
     private void exportDeckText(Deck aDeck, String filename) {
         //convert Deck into CardList
         CardList all = new CardList();
@@ -743,6 +795,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }//exportDeckText()
 
 
+    /**
+     * <p>getExportFilename.</p>
+     *
+     * @return a {@link java.io.File} object.
+     */
     private File getExportFilename() {
         //Object o = null; // unused
 
@@ -770,6 +827,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         return null;
     }
 
+    /**
+     * <p>openConstructed.</p>
+     */
     private void openConstructed() {
         if (debugPrint) {
             System.out.println("Open Constructed");
@@ -792,6 +852,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         showConstructedDeck(deck);
     }//open constructed
 
+    /**
+     * <p>showConstructedDeck.</p>
+     *
+     * @param deck a {@link forge.deck.Deck} object.
+     */
     private void showConstructedDeck(Deck deck) {
         setDeckData(deck.getName(), true);
 
@@ -819,6 +884,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), main);
     }//showConstructedDeck()
 
+    /**
+     * <p>openSealed.</p>
+     */
     private void openSealed() {
         if (debugPrint) {
             System.out.println("Open Sealed");
@@ -842,6 +910,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         showSealedDeck(deck);
     }//open sealed
 
+    /**
+     * <p>showSealedDeck.</p>
+     *
+     * @param deck a {@link forge.deck.Deck} object.
+     */
     public void showSealedDeck(Deck deck) {
         setDeckData(deck.getName(), true);
         currentDeckPlayerType = deck.getMetadata("PlayerType");
@@ -879,6 +952,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.updateDisplay(top, bottom);
     }//showSealedDeck()
 
+    /**
+     * <p>openDraft.</p>
+     */
     private void openDraft() {
         if (debugPrint) {
             System.out.println("Open Draft");
@@ -898,6 +974,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         showDraftDeck(deck);
     }//open draft
 
+    /**
+     * <p>showDraftDeck.</p>
+     *
+     * @param deck a {@link forge.deck.Deck} object.
+     */
     private void showDraftDeck(Deck deck) {
         setDeckData(deck.getName(), true);
 
@@ -926,6 +1007,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.updateDisplay(top, bottom);
     }//showDraftDeck()
 
+    /**
+     * <p>save.</p>
+     */
     private void save() {
         if (debugPrint) {
             System.out.println("Save");
@@ -947,6 +1031,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         }
     }//save
 
+    /**
+     * <p>saveAs.</p>
+     */
     private void saveAs() {
         if (debugPrint) {
             System.out.println("Save As");
@@ -974,6 +1061,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         }
     }//save as
 
+    /**
+     * <p>delete.</p>
+     */
     private void delete() {
         if (debugPrint) {
             System.out.println("Delete");
@@ -999,6 +1089,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.updateDisplay(new CardList(), new CardList());
     }//delete
 
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         if (debugPrint) {
             System.out.println("Close");
@@ -1011,6 +1104,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         exitCommand.execute();
     }//close
 
+    /**
+     * <p>setDeckData.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     * @param in_isDeckSaved a boolean.
+     */
     private void setDeckData(String deckName, boolean in_isDeckSaved) {
         currentDeckName = deckName;
         isDeckSaved = in_isDeckSaved;
@@ -1018,22 +1117,47 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         deckDisplay.setTitle("Deck Editor : " + currentDeckName);
     }
 
+    /**
+     * <p>setTitle.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setTitle(String s) {
         deckDisplay.setTitle(s);
     }
 
+    /**
+     * <p>getDeckName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDeckName() {
         return currentDeckName;
     }
 
+    /**
+     * <p>getGameType.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getGameType() {
         return currentGameType;
     }
 
+    /**
+     * <p>isDeckSaved.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isDeckSaved() {
         return isDeckSaved;
     }
 
+    /**
+     * <p>getUserInput_GetDeckName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     private String getUserInput_GetDeckName() {
         Object o = JOptionPane.showInputDialog(null, "Save As", "Deck Name", JOptionPane.OK_CANCEL_OPTION);
 
@@ -1059,6 +1183,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }//getUserInput_GetDeckName()
 
     //only accepts numbers, letters or dashes up to 10 characters in length
+    /**
+     * <p>cleanString.</p>
+     *
+     * @param in a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String cleanString(String in) {
         char[] c = in.toCharArray();
 
@@ -1072,6 +1202,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }
 
 
+    /**
+     * <p>getUserInput_OpenDeck.</p>
+     *
+     * @param deckType a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getUserInput_OpenDeck(String deckType) {
         ArrayList<String> choices = getDeckNames(deckType);
         if (choices.size() == 0) {
@@ -1090,6 +1226,12 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     }//getUserInput_OpenDeck()
 
 
+    /**
+     * <p>getDeckNames.</p>
+     *
+     * @param deckType a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<String> getDeckNames(String deckType) {
         ArrayList<String> list = new ArrayList<String>();
 
@@ -1112,6 +1254,11 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         return list;
     }//getDecks()
 
+    /**
+     * <p>getDeck.</p>
+     *
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck getDeck() {
         Deck deck = new Deck(currentGameType);
         deck.setName(currentDeckName);
@@ -1142,6 +1289,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         return deck;
     }//getDeck()
 
+    /**
+     * <p>setupMenu.</p>
+     */
     private void setupMenu() {
         JMenuItem newConstructed = new JMenuItem("New Deck - Constructed");
 

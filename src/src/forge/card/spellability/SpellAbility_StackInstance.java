@@ -6,6 +6,12 @@ import forge.Player;
 
 import java.util.HashMap;
 
+/**
+ * <p>SpellAbility_StackInstance class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class SpellAbility_StackInstance {
     // At some point I want this functioning more like Target/Target Choices where the SA has an "active"
     // Stack Instance, and instead of having duplicate parameters, it adds changes directly to the "active" one
@@ -39,6 +45,11 @@ public class SpellAbility_StackInstance {
     // Triggers
     private HashMap<String, Object> triggeringObjects = new HashMap<String, Object>();
 
+    /**
+     * <p>Constructor for SpellAbility_StackInstance.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility_StackInstance(SpellAbility sa) {
         // Base SA info
         ability = sa;
@@ -67,6 +78,11 @@ public class SpellAbility_StackInstance {
             subInstace = new SpellAbility_StackInstance(subAb);
     }
 
+    /**
+     * <p>getSpellAbility.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpellAbility() {
         if (ability.getTarget() != null) {
             ability.getTarget().resetTargets();
@@ -89,26 +105,56 @@ public class SpellAbility_StackInstance {
     }
 
     // A bit of SA shared abilities to restrict conflicts
+    /**
+     * <p>Getter for the field <code>stackDescription</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getStackDescription() {
         return stackDescription;
     }
 
+    /**
+     * <p>getSourceCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getSourceCard() {
         return ability.getSourceCard();
     }
 
+    /**
+     * <p>Getter for the field <code>activatingPlayer</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getActivatingPlayer() {
         return activatingPlayer;
     }
 
+    /**
+     * <p>isSpell.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSpell() {
         return ability.isSpell();
     }
 
+    /**
+     * <p>isAbility.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAbility() {
         return ability.isAbility();
     }
 
+    /**
+     * <p>isTrigger.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isTrigger() {
         return ability.isTrigger();
     }

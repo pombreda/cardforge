@@ -13,12 +13,25 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 
+/**
+ * <p>ReadCard class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ReadCard implements Runnable, NewConstants {
     private BufferedReader in;
     private String fileList[];
     private ArrayList<Card> allCards = new ArrayList<Card>();
+    /** Constant <code>zipFile</code> */
     private static File zipFile;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @throws java.lang.Exception if any.
+     */
     public static void main(String args[]) throws Exception {
         try {
             ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER));
@@ -42,14 +55,29 @@ public class ReadCard implements Runnable, NewConstants {
         }
     }
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getCards() {
         return new ArrayList<Card>(allCards);
     }
 
+    /**
+     * <p>Constructor for ReadCard.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public ReadCard(String filename) {
         this(new File(filename));
     }
 
+    /**
+     * <p>Constructor for ReadCard.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     */
     public ReadCard(File file) {
         if (!file.exists())
             throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
@@ -72,6 +100,9 @@ public class ReadCard implements Runnable, NewConstants {
         //}
     }//ReadCard()
 
+    /**
+     * <p>run.</p>
+     */
     public void run() {
         Card c = null;
         ArrayList<String> cardNames = new ArrayList<String>();
@@ -128,12 +159,23 @@ public class ReadCard implements Runnable, NewConstants {
 
     }//run()
 
+    /**
+     * <p>addTypes.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param types a {@link java.lang.String} object.
+     */
     private void addTypes(Card c, String types) {
         StringTokenizer tok = new StringTokenizer(types);
         while (tok.hasMoreTokens())
             c.addType(tok.nextToken());
     }
 
+    /**
+     * <p>readLine.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     private String readLine() {
         //makes the checked exception, into an unchecked runtime exception
         try {
@@ -146,6 +188,12 @@ public class ReadCard implements Runnable, NewConstants {
         }
     }//readLine(Card)
 
+    /**
+     * <p>loadCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param cardNames a {@link java.util.ArrayList} object.
+     */
     private void loadCard(Card c, ArrayList<String> cardNames) {
         String s = readLine();
         while (!s.equals("End")) {

@@ -13,6 +13,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+/**
+ * <p>MagicStack class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class MagicStack extends MyObservable {
     private ArrayList<SpellAbility> simultaneousStackEntryList = new ArrayList<SpellAbility>();
 
@@ -23,14 +29,27 @@ public class MagicStack extends MyObservable {
     private boolean bResolving = false;
     private int splitSecondOnStack = 0;
 
+    /**
+     * <p>isFrozen.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isFrozen() {
         return frozen;
     }
 
+    /**
+     * <p>Setter for the field <code>frozen</code>.</p>
+     *
+     * @param frozen a boolean.
+     */
     public void setFrozen(boolean frozen) {
         this.frozen = frozen;
     }
 
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         stack.clear();
         frozen = false;
@@ -39,15 +58,30 @@ public class MagicStack extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>isSplitSecondOnStack.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSplitSecondOnStack() {
         return splitSecondOnStack > 0;
     }
 
+    /**
+     * <p>incrementSplitSecond.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void incrementSplitSecond(SpellAbility sp) {
         if (sp.getSourceCard().hasKeyword("Split Second"))
             splitSecondOnStack++;
     }
 
+    /**
+     * <p>decrementSplitSecond.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void decrementSplitSecond(SpellAbility sp) {
         if (sp.getSourceCard().hasKeyword("Split Second"))
             splitSecondOnStack--;
@@ -56,10 +90,18 @@ public class MagicStack extends MyObservable {
             splitSecondOnStack = 0;
     }
 
+    /**
+     * <p>freezeStack.</p>
+     */
     public void freezeStack() {
         frozen = true;
     }
 
+    /**
+     * <p>addAndUnfreeze.</p>
+     *
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void addAndUnfreeze(SpellAbility ability) {
         ability.getRestrictions().abilityActivated();
         if (ability.getRestrictions().getActivationNumberSacrifice() != -1 &&
@@ -83,6 +125,9 @@ public class MagicStack extends MyObservable {
             unfreezeStack();
     }
 
+    /**
+     * <p>unfreezeStack.</p>
+     */
     public void unfreezeStack() {
         frozen = false;
         boolean checkState = !frozenStack.isEmpty();
@@ -94,21 +139,40 @@ public class MagicStack extends MyObservable {
             AllZone.getGameAction().checkStateEffects();
     }
 
+    /**
+     * <p>clearFrozen.</p>
+     */
     public void clearFrozen() {
         // TODO: frozen triggered abilities and undoable costs have nasty consequences
         frozen = false;
         frozenStack.clear();
     }
 
+    /**
+     * <p>setResolving.</p>
+     *
+     * @param b a boolean.
+     */
     public void setResolving(boolean b) {
         bResolving = b;
         if (!bResolving) chooseOrderOfSimultaneousStackEntryAll();
     }
 
+    /**
+     * <p>getResolving.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getResolving() {
         return bResolving;
     }
 
+    /**
+     * <p>add.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     * @param useX a boolean.
+     */
     public void add(SpellAbility sp, boolean useX) {
         if (!useX)
             this.add(sp);
@@ -125,6 +189,12 @@ public class MagicStack extends MyObservable {
         }
     }
 
+    /**
+     * <p>getMultiKickerSpellCostChange.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.card.mana.ManaCost} object.
+     */
     public ManaCost getMultiKickerSpellCostChange(SpellAbility sa) {
         int Max = 25;
         String[] Numbers = new String[Max];
@@ -187,12 +257,23 @@ public class MagicStack extends MyObservable {
     }
 
     //TODO - this may be able to use a straight copy of MultiKicker cost change
+    /**
+     * <p>getReplicateSpellCostChange.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.card.mana.ManaCost} object.
+     */
     public ManaCost getReplicateSpellCostChange(SpellAbility sa) {
         ManaCost manaCost = new ManaCost(sa.getManaCost());
         //String Mana = manaCost.toString();
         return manaCost;
     }
 
+    /**
+     * <p>add.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void add(final SpellAbility sp) {
         ArrayList<Target_Choices> chosenTargets = sp.getAllTargetChoices();
 
@@ -644,11 +725,21 @@ public class MagicStack extends MyObservable {
             AllZone.getPhase().passPriority();
     }
 
+    /**
+     * <p>size.</p>
+     *
+     * @return a int.
+     */
     public int size() {
         return stack.size();
     }
 
     // Push should only be used by add.
+    /**
+     * <p>push.</p>
+     *
+     * @param sp a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void push(SpellAbility sp) {
         if (null == sp.getActivatingPlayer()) {
             sp.setActivatingPlayer(sp.getSourceCard().getController());
@@ -669,6 +760,9 @@ public class MagicStack extends MyObservable {
         }
     }
 
+    /**
+     * <p>resolveStack.</p>
+     */
     public void resolveStack() {
         // Resolving the Stack
         GuiDisplayUtil.updateGUI();
@@ -694,6 +788,13 @@ public class MagicStack extends MyObservable {
 
     }
 
+    /**
+     * <p>removeCardFromStack.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param fizzle a boolean.
+     * @since 1.0.15
+     */
     public void removeCardFromStack(SpellAbility sa, boolean fizzle) {
         Card source = sa.getSourceCard();
 
@@ -719,6 +820,13 @@ public class MagicStack extends MyObservable {
         }
     }
 
+    /**
+     * <p>finishResolving.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param fizzle a boolean.
+     * @since 1.0.15
+     */
     public void finishResolving(SpellAbility sa, boolean fizzle) {
 
         //remove card from the stack
@@ -752,6 +860,13 @@ public class MagicStack extends MyObservable {
         }
     }
 
+    /**
+     * <p>hasFizzled.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean hasFizzled(SpellAbility sa, Card source) {
         // By default this has not fizzled
         boolean fizzle = false;
@@ -804,6 +919,11 @@ public class MagicStack extends MyObservable {
         return fizzle;
     }
 
+    /**
+     * <p>pop.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility pop() {
         SpellAbility sp = stack.pop().getSpellAbility();
         decrementSplitSecond(sp);
@@ -813,22 +933,49 @@ public class MagicStack extends MyObservable {
 
     // CAREFUL! Peeking while an SAs Targets are being choosen may cause issues
     // index = 0 is the top, index = 1 is the next to top, etc...
+    /**
+     * <p>peekInstance.</p>
+     *
+     * @param index a int.
+     * @return a {@link forge.card.spellability.SpellAbility_StackInstance} object.
+     */
     public SpellAbility_StackInstance peekInstance(int index) {
         return stack.get(index);
     }
 
+    /**
+     * <p>peekAbility.</p>
+     *
+     * @param index a int.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility peekAbility(int index) {
         return stack.get(index).getSpellAbility();
     }
 
+    /**
+     * <p>peekInstance.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility_StackInstance} object.
+     */
     public SpellAbility_StackInstance peekInstance() {
         return stack.peek();
     }
 
+    /**
+     * <p>peekAbility.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility peekAbility() {
         return stack.peek().getSpellAbility();
     }
 
+    /**
+     * <p>remove.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void remove(SpellAbility sa) {
         SpellAbility_StackInstance si = getInstanceFromSpellAbility(sa);
         if (si == null)
@@ -837,6 +984,11 @@ public class MagicStack extends MyObservable {
         remove(si);
     }
 
+    /**
+     * <p>remove.</p>
+     *
+     * @param si a {@link forge.card.spellability.SpellAbility_StackInstance} object.
+     */
     public void remove(SpellAbility_StackInstance si) {
         if (stack.remove(si)) {
             decrementSplitSecond(si.getSpellAbility());
@@ -845,6 +997,12 @@ public class MagicStack extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>getInstanceFromSpellAbility.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.card.spellability.SpellAbility_StackInstance} object.
+     */
     public SpellAbility_StackInstance getInstanceFromSpellAbility(SpellAbility sa) {
         // TODO: Confirm this works!
         for (SpellAbility_StackInstance si : stack) {
@@ -854,19 +1012,37 @@ public class MagicStack extends MyObservable {
         return null;
     }
 
+    /**
+     * <p>hasSimultaneousStackEntries.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasSimultaneousStackEntries() {
         return simultaneousStackEntryList.size() > 0;
     }
 
+    /**
+     * <p>addSimultaneousStackEntry.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void addSimultaneousStackEntry(SpellAbility sa) {
         simultaneousStackEntryList.add(sa);
     }
 
+    /**
+     * <p>chooseOrderOfSimultaneousStackEntryAll.</p>
+     */
     public void chooseOrderOfSimultaneousStackEntryAll() {
         chooseOrderOfSimultaneousStackEntry(AllZone.getPhase().getPlayerTurn());
         chooseOrderOfSimultaneousStackEntry(AllZone.getPhase().getPlayerTurn().getOpponent());
     }
 
+    /**
+     * <p>chooseOrderOfSimultaneousStackEntry.</p>
+     *
+     * @param activePlayer a {@link forge.Player} object.
+     */
     public void chooseOrderOfSimultaneousStackEntry(Player activePlayer) {
         if (simultaneousStackEntryList.size() == 0)
             return;

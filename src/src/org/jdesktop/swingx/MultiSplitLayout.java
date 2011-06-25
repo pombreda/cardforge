@@ -58,16 +58,19 @@ import java.util.List;
  *
  * @author Hans Muller
  * @author Luan O'Carroll
- * @see JXMultiSplitPane
+ * @version $Id: $
  */
 
-/* 
- * Changes by Luan O'Carroll 
+/*
+ * Changes by Luan O'Carroll
  * 1 Support for visibility added.
  */
 public class MultiSplitLayout implements LayoutManager {
+    /** Constant <code>DEFAULT_LAYOUT=0</code> */
     public static final int DEFAULT_LAYOUT = 0;
+    /** Constant <code>NO_MIN_SIZE_LAYOUT=1</code> */
     public static final int NO_MIN_SIZE_LAYOUT = 1;
+    /** Constant <code>USER_MIN_SIZE_LAYOUT=2</code> */
     public static final int USER_MIN_SIZE_LAYOUT = 2;
 
     private final Map<String, Component> childMap = new HashMap<String, Component>();
@@ -109,6 +112,8 @@ public class MultiSplitLayout implements LayoutManager {
      * Set the size of the child components to match the weights of the children.
      * If the components to not all specify a weight then the available layout
      * space is divided equally between the components.
+     *
+     * @param parent a {@link java.awt.Container} object.
      */
     public void layoutByWeight(Container parent) {
         doLayoutByWeight(parent);
@@ -120,6 +125,8 @@ public class MultiSplitLayout implements LayoutManager {
      * Set the size of the child components to match the weights of the children.
      * If the components to not all specify a weight then the available layout
      * space is divided equally between the components.
+     *
+     * @param parent a {@link java.awt.Container} object.
      */
     private void doLayoutByWeight(Container parent) {
         Dimension size = parent.getSize();
@@ -134,6 +141,12 @@ public class MultiSplitLayout implements LayoutManager {
             doLayoutByWeight(model, bounds);
     }
 
+    /**
+     * <p>doLayoutByWeight.</p>
+     *
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void doLayoutByWeight(Node node, Rectangle bounds) {
         int width = bounds.width;
         int height = bounds.height;
@@ -314,6 +327,8 @@ public class MultiSplitLayout implements LayoutManager {
      * Create a MultiSplitLayout with the specified model.
      * <p/>
      * #see setModel
+     *
+     * @param model a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
      */
     public MultiSplitLayout(Node model) {
         this.model = model;
@@ -323,22 +338,44 @@ public class MultiSplitLayout implements LayoutManager {
         }
     }
 
+    /**
+     * <p>addPropertyChangeListener.</p>
+     *
+     * @param listener a {@link java.beans.PropertyChangeListener} object.
+     */
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         if (listener != null) {
             pcs.addPropertyChangeListener(listener);
         }
     }
 
+    /**
+     * <p>removePropertyChangeListener.</p>
+     *
+     * @param listener a {@link java.beans.PropertyChangeListener} object.
+     */
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         if (listener != null) {
             pcs.removePropertyChangeListener(listener);
         }
     }
 
+    /**
+     * <p>getPropertyChangeListeners.</p>
+     *
+     * @return an array of {@link java.beans.PropertyChangeListener} objects.
+     */
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners();
     }
 
+    /**
+     * <p>firePCS.</p>
+     *
+     * @param propertyName a {@link java.lang.String} object.
+     * @param oldValue a {@link java.lang.Object} object.
+     * @param newValue a {@link java.lang.Object} object.
+     */
     private void firePCS(String propertyName, Object oldValue, Object newValue) {
         if (!(oldValue != null && newValue != null && oldValue.equals(newValue))) {
             pcs.firePropertyChange(propertyName, oldValue, newValue);
@@ -350,7 +387,6 @@ public class MultiSplitLayout implements LayoutManager {
      * that define this layout.
      *
      * @return the value of the model property
-     * @see #setModel
      */
     public Node getModel() {
         return model;
@@ -363,8 +399,7 @@ public class MultiSplitLayout implements LayoutManager {
      * property is a Leaf named "default".
      *
      * @param model the root of the tree of Split, Leaf, and Divider node
-     * @throws IllegalArgumentException if model is a Divider or null
-     * @see #getModel
+     * @throws java.lang.IllegalArgumentException if model is a Divider or null
      */
     public void setModel(Node model) {
         if ((model == null) || (model instanceof Divider)) {
@@ -380,7 +415,6 @@ public class MultiSplitLayout implements LayoutManager {
      * Dividers in Split columns.
      *
      * @return the value of the dividerSize property
-     * @see #setDividerSize
      */
     public int getDividerSize() {
         return dividerSize;
@@ -392,8 +426,7 @@ public class MultiSplitLayout implements LayoutManager {
      * is the same as for JSplitPane Dividers.
      *
      * @param dividerSize the size of dividers (pixels)
-     * @throws IllegalArgumentException if dividerSize < 0
-     * @see #getDividerSize
+     * @throws java.lang.IllegalArgumentException if dividerSize < 0
      */
     public void setDividerSize(int dividerSize) {
         if (dividerSize < 0) {
@@ -405,8 +438,9 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
     /**
+     * <p>Getter for the field <code>floatingDividers</code>.</p>
+     *
      * @return the value of the floatingDividers property
-     * @see #setFloatingDividers
      */
     public boolean getFloatingDividers() {
         return floatingDividers;
@@ -420,7 +454,7 @@ public class MultiSplitLayout implements LayoutManager {
      * Split and Leaf nodes.  Typically this property is set to false
      * after the (MultiSplitPane) user has dragged a Divider.
      *
-     * @see #getFloatingDividers
+     * @param floatingDividers a boolean.
      */
     public void setFloatingDividers(boolean floatingDividers) {
         boolean oldFloatingDividers = this.floatingDividers;
@@ -429,8 +463,9 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
     /**
+     * <p>Getter for the field <code>removeDividers</code>.</p>
+     *
      * @return the value of the removeDividers property
-     * @see #setRemoveDividers
      */
     public boolean getRemoveDividers() {
         return removeDividers;
@@ -451,6 +486,8 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Add a component to this MultiSplitLayout.  The
      * <code>name</code> should match the name property of the Leaf
      * node that represents the bounds of <code>child</code>.  After
@@ -459,10 +496,6 @@ public class MultiSplitLayout implements LayoutManager {
      * Leaf node with <code>name</code>.  Note: if a component was already
      * added with the same name, this method does not remove it from
      * its parent.
-     *
-     * @param name  identifies the Leaf node that defines the child's bounds
-     * @param child the component to be added
-     * @see #removeLayoutComponent
      */
     public void addLayoutComponent(String name, Component child) {
         if (name == null) {
@@ -472,10 +505,9 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
     /**
-     * Removes the specified component from the layout.
+     * {@inheritDoc}
      *
-     * @param child the component to be removed
-     * @see #addLayoutComponent
+     * Removes the specified component from the layout.
      */
     public void removeLayoutComponent(Component child) {
         String name = getNameForComponent(child);
@@ -489,7 +521,6 @@ public class MultiSplitLayout implements LayoutManager {
      * Removes the specified node from the layout.
      *
      * @param name the name of the component to be removed
-     * @see #addLayoutComponent
      */
     public void removeLayoutNode(String name) {
 
@@ -567,6 +598,12 @@ public class MultiSplitLayout implements LayoutManager {
         setFloatingDividers(false);
     }
 
+    /**
+     * <p>childForNode.</p>
+     *
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @return a {@link java.awt.Component} object.
+     */
     private Component childForNode(Node node) {
         if (node instanceof Leaf) {
             Leaf leaf = (Leaf) node;
@@ -577,6 +614,12 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
 
+    /**
+     * <p>preferredComponentSize.</p>
+     *
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @return a {@link java.awt.Dimension} object.
+     */
     private Dimension preferredComponentSize(Node node) {
         if (layoutMode == NO_MIN_SIZE_LAYOUT)
             return new Dimension(0, 0);
@@ -585,6 +628,12 @@ public class MultiSplitLayout implements LayoutManager {
         return ((child != null) && child.isVisible()) ? child.getPreferredSize() : new Dimension(0, 0);
     }
 
+    /**
+     * <p>minimumComponentSize.</p>
+     *
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @return a {@link java.awt.Dimension} object.
+     */
     @SuppressWarnings("unused")
     private Dimension minimumComponentSize(Node node) {
         if (layoutMode == NO_MIN_SIZE_LAYOUT)
@@ -594,6 +643,12 @@ public class MultiSplitLayout implements LayoutManager {
         return ((child != null) && child.isVisible()) ? child.getMinimumSize() : new Dimension(0, 0);
     }
 
+    /**
+     * <p>preferredNodeSize.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @return a {@link java.awt.Dimension} object.
+     */
     private Dimension preferredNodeSize(Node root) {
         if (root instanceof Leaf) {
             return preferredComponentSize(root);
@@ -719,6 +774,13 @@ public class MultiSplitLayout implements LayoutManager {
         }
     }
 
+    /**
+     * <p>sizeWithInsets.</p>
+     *
+     * @param parent a {@link java.awt.Container} object.
+     * @param size a {@link java.awt.Dimension} object.
+     * @return a {@link java.awt.Dimension} object.
+     */
     private Dimension sizeWithInsets(Container parent, Dimension size) {
         Insets insets = parent.getInsets();
         int width = size.width + insets.left + insets.right;
@@ -726,23 +788,41 @@ public class MultiSplitLayout implements LayoutManager {
         return new Dimension(width, height);
     }
 
+    /** {@inheritDoc} */
     public Dimension preferredLayoutSize(Container parent) {
         Dimension size = preferredNodeSize(getModel());
         return sizeWithInsets(parent, size);
     }
 
+    /** {@inheritDoc} */
     public Dimension minimumLayoutSize(Container parent) {
         Dimension size = minimumNodeSize(getModel());
         return sizeWithInsets(parent, size);
     }
 
 
+    /**
+     * <p>boundsWithYandHeight.</p>
+     *
+     * @param bounds a {@link java.awt.Rectangle} object.
+     * @param y a double.
+     * @param height a double.
+     * @return a {@link java.awt.Rectangle} object.
+     */
     private Rectangle boundsWithYandHeight(Rectangle bounds, double y, double height) {
         Rectangle r = new Rectangle();
         r.setBounds((int) (bounds.getX()), (int) y, (int) (bounds.getWidth()), (int) height);
         return r;
     }
 
+    /**
+     * <p>boundsWithXandWidth.</p>
+     *
+     * @param bounds a {@link java.awt.Rectangle} object.
+     * @param x a double.
+     * @param width a double.
+     * @return a {@link java.awt.Rectangle} object.
+     */
     private Rectangle boundsWithXandWidth(Rectangle bounds, double x, double width) {
         Rectangle r = new Rectangle();
         r.setBounds((int) x, (int) (bounds.getY()), (int) width, (int) (bounds.getHeight()));
@@ -750,6 +830,12 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
 
+    /**
+     * <p>minimizeSplitBounds.</p>
+     *
+     * @param split a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void minimizeSplitBounds(Split split, Rectangle bounds) {
         assert (split.isVisible());
         Rectangle splitBounds = new Rectangle(bounds.x, bounds.y, 0, 0);
@@ -777,6 +863,12 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
 
+    /**
+     * <p>layoutShrink.</p>
+     *
+     * @param split a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void layoutShrink(Split split, Rectangle bounds) {
         Rectangle splitBounds = split.getBounds();
         ListIterator<Node> splitChildren = split.getChildren().listIterator();
@@ -943,7 +1035,7 @@ public class MultiSplitLayout implements LayoutManager {
      * Check if the specified node has any following visible siblings
      *
      * @param splitChild the node to check
-     * @param true       if there are visible children following
+     * @return a boolean.
      */
     private boolean hasMoreVisibleSiblings(Node splitChild) {
         Node next = splitChild.nextSibling();
@@ -959,6 +1051,12 @@ public class MultiSplitLayout implements LayoutManager {
         return false;
     }
 
+    /**
+     * <p>layoutGrow.</p>
+     *
+     * @param split a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void layoutGrow(Split split, Rectangle bounds) {
         Rectangle splitBounds = split.getBounds();
         ListIterator<Node> splitChildren = split.getChildren().listIterator();
@@ -1055,6 +1153,12 @@ public class MultiSplitLayout implements LayoutManager {
     /* Second pass of the layout algorithm: branch to layoutGrow/Shrink
     * as needed.
     */
+    /**
+     * <p>layout2.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void layout2(Node root, Rectangle bounds) {
         if (root instanceof Leaf) {
             Component child = childForNode(root);
@@ -1094,6 +1198,12 @@ public class MultiSplitLayout implements LayoutManager {
     * (java.awt.Component) children.  That's done in the second pass,
     * see layoutGrow() and layoutShrink().
     */
+    /**
+     * <p>layout1.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param bounds a {@link java.awt.Rectangle} object.
+     */
     private void layout1(Node root, Rectangle bounds) {
         if (root instanceof Leaf) {
             root.setBounds(bounds);
@@ -1296,10 +1406,21 @@ public class MultiSplitLayout implements LayoutManager {
         }
     }
 
+    /**
+     * <p>throwInvalidLayout.</p>
+     *
+     * @param msg a {@link java.lang.String} object.
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     */
     private void throwInvalidLayout(String msg, Node node) {
         throw new InvalidLayoutException(msg, node);
     }
 
+    /**
+     * <p>checkLayout.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     */
     private void checkLayout(Node root) {
         if (root instanceof Split) {
             Split split = (Split) root;
@@ -1335,6 +1456,8 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
     /**
+     * {@inheritDoc}
+     *
      * Compute the bounds of all of the Split/Divider/Leaf Nodes in
      * the layout model, and then set the bounds of each child component
      * with a matching Leaf Node.
@@ -1354,6 +1477,14 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
 
+    /**
+     * <p>dividerAt.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param x a int.
+     * @param y a int.
+     * @return a {@link org.jdesktop.swingx.MultiSplitLayout.Divider} object.
+     */
     private Divider dividerAt(Node root, int x, int y) {
         if (root instanceof Divider) {
             Divider divider = (Divider) root;
@@ -1383,6 +1514,13 @@ public class MultiSplitLayout implements LayoutManager {
         return dividerAt(getModel(), x, y);
     }
 
+    /**
+     * <p>nodeOverlapsRectangle.</p>
+     *
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param r2 a {@link java.awt.Rectangle} object.
+     * @return a boolean.
+     */
     private boolean nodeOverlapsRectangle(Node node, Rectangle r2) {
         Rectangle r1 = node.getBounds();
         return
@@ -1390,6 +1528,14 @@ public class MultiSplitLayout implements LayoutManager {
                         (r1.y <= (r2.y + r2.height)) && ((r1.y + r1.height) >= r2.y);
     }
 
+    /**
+     * <p>dividersThatOverlap.</p>
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @param r a {@link java.awt.Rectangle} object.
+     * @return a {@link java.util.List} object.
+     */
     private List<Divider> dividersThatOverlap(Node root, Rectangle r) {
         if (nodeOverlapsRectangle(root, r) && (root instanceof Split)) {
             List<Divider> dividers = new ArrayList<Divider>();
@@ -1414,7 +1560,7 @@ public class MultiSplitLayout implements LayoutManager {
      *
      * @param r target Rectangle
      * @return the Dividers that overlap r
-     * @throws IllegalArgumentException if the Rectangle is null
+     * @throws java.lang.IllegalArgumentException if the Rectangle is null
      */
     public List<Divider> dividersThatOverlap(Rectangle r) {
         if (r == null) {
@@ -1453,7 +1599,6 @@ public class MultiSplitLayout implements LayoutManager {
          * Returns the Split parent of this Node, or null.
          *
          * @return the value of the parent property.
-         * @see #setParent
          */
         public Split getParent() {
             return parent;
@@ -1464,7 +1609,6 @@ public class MultiSplitLayout implements LayoutManager {
          * value of this property is null.
          *
          * @param parent a Split or null
-         * @see #getParent
          */
         public void setParent(Split parent) {
             this.parent = parent;
@@ -1474,7 +1618,6 @@ public class MultiSplitLayout implements LayoutManager {
          * Returns the bounding Rectangle for this Node.
          *
          * @return the value of the bounds property.
-         * @see #setBounds
          */
         public Rectangle getBounds() {
             return new Rectangle(this.bounds);
@@ -1487,7 +1630,6 @@ public class MultiSplitLayout implements LayoutManager {
          *
          * @param bounds the new value of the bounds property
          * @throws IllegalArgumentException if bounds is null
-         * @see #getBounds
          */
         public void setBounds(Rectangle bounds) {
             if (bounds == null) {
@@ -1502,7 +1644,6 @@ public class MultiSplitLayout implements LayoutManager {
          * much to reduce when the layout shrinks.
          *
          * @return the value of the weight property
-         * @see #setWeight
          */
         public double getWeight() {
             return weight;
@@ -1519,8 +1660,6 @@ public class MultiSplitLayout implements LayoutManager {
          *
          * @param weight a double between 0.0 and 1.0
          * @throws IllegalArgumentException if weight is not between 0.0 and 1.0
-         * @see #getWeight
-         * @see MultiSplitLayout#layoutContainer
          */
         public void setWeight(double weight) {
             if ((weight < 0.0) || (weight > 1.0)) {
@@ -1549,8 +1688,6 @@ public class MultiSplitLayout implements LayoutManager {
          * or if it's the last child, then return null.
          *
          * @return the Node that comes after this one in the parent's list of children.
-         * @see #previousSibling
-         * @see #getParent
          */
         public Node nextSibling() {
             return siblingAtOffset(+1);
@@ -1562,8 +1699,6 @@ public class MultiSplitLayout implements LayoutManager {
          * or if it's the last child, then return null.
          *
          * @return the Node that comes before this one in the parent's list of children.
-         * @see #nextSibling
-         * @see #getParent
          */
         public Node previousSibling() {
             return siblingAtOffset(-1);
@@ -1585,7 +1720,6 @@ public class MultiSplitLayout implements LayoutManager {
          * children are laid on in a column.
          *
          * @return the value of the rowLayout property.
-         * @see #setRowLayout
          */
         @Override
         public final boolean isRowLayout() {
@@ -1608,7 +1742,6 @@ public class MultiSplitLayout implements LayoutManager {
          * children are laid on in a column.
          *
          * @return the value of the rowLayout property.
-         * @see #setRowLayout
          */
         @Override
         public final boolean isRowLayout() {
@@ -1660,7 +1793,6 @@ public class MultiSplitLayout implements LayoutManager {
          * children are laid on in a column.
          *
          * @return the value of the rowLayout property.
-         * @see #setRowLayout
          */
         public boolean isRowLayout() {
             return rowLayout;
@@ -1674,7 +1806,6 @@ public class MultiSplitLayout implements LayoutManager {
          * value is true.
          *
          * @param rowLayout true for horizontal row layout, false for column
-         * @see #isRowLayout
          */
         public void setRowLayout(boolean rowLayout) {
             this.rowLayout = rowLayout;
@@ -1685,7 +1816,6 @@ public class MultiSplitLayout implements LayoutManager {
          * is not a reference to the Split's internal list of children
          *
          * @return the value of the children property.
-         * @see #setChildren
          */
         public List<Node> getChildren() {
             return new ArrayList<Node>(children);
@@ -1816,7 +1946,6 @@ public class MultiSplitLayout implements LayoutManager {
          *
          * @param children List of children
          * @throws IllegalArgumentException if children is null
-         * @see #getChildren
          */
         public void setChildren(List<Node> children) {
             if (children == null) {
@@ -1840,7 +1969,6 @@ public class MultiSplitLayout implements LayoutManager {
          *
          * @param children array of children
          * @throws IllegalArgumentException if children is null
-         * @see #getChildren
          */
         public void setChildren(Node... children) {
             setChildren(children == null ? null : Arrays.asList(children));
@@ -1851,8 +1979,6 @@ public class MultiSplitLayout implements LayoutManager {
          * is > 0.0.
          *
          * @return the last child whose weight is > 0.0.
-         * @see #getChildren
-         * @see Node#getWeight
          */
         public final Node lastWeightedChild() {
             List<Node> kids = getChildren();
@@ -1871,7 +1997,6 @@ public class MultiSplitLayout implements LayoutManager {
          * Return the Leaf's name.
          *
          * @return the value of the name property.
-         * @see #setName
          */
         public String getName() {
             return name;
@@ -1937,7 +2062,6 @@ public class MultiSplitLayout implements LayoutManager {
          * Return the Leaf's name.
          *
          * @return the value of the name property.
-         * @see #setName
          */
         public String getName() {
             return name;
@@ -2005,10 +2129,25 @@ public class MultiSplitLayout implements LayoutManager {
     }
 
 
+    /**
+     * <p>throwParseException.</p>
+     *
+     * @param st a {@link java.io.StreamTokenizer} object.
+     * @param msg a {@link java.lang.String} object.
+     * @throws java.lang.Exception if any.
+     */
     private static void throwParseException(StreamTokenizer st, String msg) throws Exception {
         throw new Exception("MultiSplitLayout.parseModel Error: " + msg);
     }
 
+    /**
+     * <p>parseAttribute.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param st a {@link java.io.StreamTokenizer} object.
+     * @param node a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     * @throws java.lang.Exception if any.
+     */
     private static void parseAttribute(String name, StreamTokenizer st, Node node) throws Exception {
         if ((st.nextToken() != '=')) {
             throwParseException(st, "expected '=' after " + name);
@@ -2036,6 +2175,12 @@ public class MultiSplitLayout implements LayoutManager {
         }
     }
 
+    /**
+     * <p>addSplitChild.</p>
+     *
+     * @param parent a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @param child a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     */
     private static void addSplitChild(Split parent, Node child) {
         List<Node> children = new ArrayList<Node>(parent.getChildren());
         if (children.size() == 0) {
@@ -2047,6 +2192,13 @@ public class MultiSplitLayout implements LayoutManager {
         parent.setChildren(children);
     }
 
+    /**
+     * <p>parseLeaf.</p>
+     *
+     * @param st a {@link java.io.StreamTokenizer} object.
+     * @param parent a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @throws java.lang.Exception if any.
+     */
     private static void parseLeaf(StreamTokenizer st, Split parent) throws Exception {
         Leaf leaf = new Leaf();
         int token;
@@ -2063,6 +2215,13 @@ public class MultiSplitLayout implements LayoutManager {
         addSplitChild(parent, leaf);
     }
 
+    /**
+     * <p>parseSplit.</p>
+     *
+     * @param st a {@link java.io.StreamTokenizer} object.
+     * @param parent a {@link org.jdesktop.swingx.MultiSplitLayout.Split} object.
+     * @throws java.lang.Exception if any.
+     */
     private static void parseSplit(StreamTokenizer st, Split parent) throws Exception {
         int token;
         while ((token = st.nextToken()) != StreamTokenizer.TT_EOF) {
@@ -2095,6 +2254,12 @@ public class MultiSplitLayout implements LayoutManager {
         }
     }
 
+    /**
+     * <p>parseModel.</p>
+     *
+     * @param r a {@link java.io.Reader} object.
+     * @return a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     */
     private static Node parseModel(Reader r) {
         StreamTokenizer st = new StreamTokenizer(r);
         try {
@@ -2157,12 +2322,19 @@ public class MultiSplitLayout implements LayoutManager {
      * examples and tests.
      *
      * @return the Node root of a tree based on s.
+     * @param s a {@link java.lang.String} object.
      */
     public static Node parseModel(String s) {
         return parseModel(new StringReader(s));
     }
 
 
+    /**
+     * <p>printModel.</p>
+     *
+     * @param indent a {@link java.lang.String} object.
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
+     */
     private static void printModel(String indent, Node root) {
         if (root instanceof Split) {
             Split split = (Split) root;
@@ -2177,6 +2349,8 @@ public class MultiSplitLayout implements LayoutManager {
 
     /**
      * Print the tree with enough detail for simple debugging.
+     *
+     * @param root a {@link org.jdesktop.swingx.MultiSplitLayout.Node} object.
      */
     public static void printModel(Node root) {
         printModel("", root);

@@ -5,9 +5,20 @@ import forge.Player;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Target_Choices class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Target_Choices {
     private int numTargeted = 0;
 
+    /**
+     * <p>Getter for the field <code>numTargeted</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNumTargeted() {
         return numTargeted;
     }
@@ -17,6 +28,12 @@ public class Target_Choices {
     private ArrayList<Player> targetPlayers = new ArrayList<Player>();
     private ArrayList<SpellAbility> targetSAs = new ArrayList<SpellAbility>();
 
+    /**
+     * <p>addTarget.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     * @return a boolean.
+     */
     public boolean addTarget(Object o) {
         if (o instanceof Player)
             return addTarget((Player) o);
@@ -30,6 +47,12 @@ public class Target_Choices {
         return false;
     }
 
+    /**
+     * <p>addTarget.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean addTarget(Card c) {
         if (!targetCards.contains(c)) {
             targetCards.add(c);
@@ -39,6 +62,12 @@ public class Target_Choices {
         return false;
     }
 
+    /**
+     * <p>addTarget.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public boolean addTarget(Player p) {
         if (!targetPlayers.contains(p)) {
             targetPlayers.add(p);
@@ -48,6 +77,12 @@ public class Target_Choices {
         return false;
     }
 
+    /**
+     * <p>addTarget.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public boolean addTarget(SpellAbility sa) {
         if (!targetSAs.contains(sa)) {
             targetSAs.add(sa);
@@ -57,18 +92,38 @@ public class Target_Choices {
         return false;
     }
 
+    /**
+     * <p>Getter for the field <code>targetCards</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getTargetCards() {
         return targetCards;
     }
 
+    /**
+     * <p>Getter for the field <code>targetPlayers</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Player> getTargetPlayers() {
         return targetPlayers;
     }
 
+    /**
+     * <p>Getter for the field <code>targetSAs</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getTargetSAs() {
         return targetSAs;
     }
 
+    /**
+     * <p>getTargets.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Object> getTargets() {
         ArrayList<Object> tgts = new ArrayList<Object>();
         tgts.addAll(targetPlayers);
@@ -78,6 +133,11 @@ public class Target_Choices {
         return tgts;
     }
 
+    /**
+     * <p>getTargetedString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTargetedString() {
         ArrayList<Object> tgts = getTargets();
         StringBuilder sb = new StringBuilder("");

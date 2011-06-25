@@ -8,11 +8,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_DealDamage class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_DealDamage {
     private AbilityFactory AF = null;
 
     private String damage;
 
+    /**
+     * <p>Constructor for AbilityFactory_DealDamage.</p>
+     *
+     * @param newAF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public AbilityFactory_DealDamage(AbilityFactory newAF) {
         AF = newAF;
 
@@ -25,6 +36,11 @@ public class AbilityFactory_DealDamage {
     // ***************************** DAMAGE *****************************************************************
     // ******************************************************************************************************
 
+    /**
+     * <p>getAbility.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbility() {
         final SpellAbility abDamage = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -7560349014757367722L;
@@ -55,6 +71,11 @@ public class AbilityFactory_DealDamage {
         return abDamage;
     }
 
+    /**
+     * <p>getSpell.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpell() {
         final SpellAbility spDealDamage = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 7239608350643325111L;
@@ -80,6 +101,11 @@ public class AbilityFactory_DealDamage {
         return spDealDamage;
     }
 
+    /**
+     * <p>getDrawback.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawback() {
         final SpellAbility dbDealDamage = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 7239608350643325111L;
@@ -110,6 +136,13 @@ public class AbilityFactory_DealDamage {
         return dbDealDamage;
     }
 
+    /**
+     * <p>damageStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String damageStackDescription(AbilityFactory af, SpellAbility sa) {
         // when damageStackDescription is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
@@ -158,10 +191,22 @@ public class AbilityFactory_DealDamage {
         return sb.toString();
     }
 
+    /**
+     * <p>getNumDamage.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     private int getNumDamage(SpellAbility saMe) {
         return AbilityFactory.calculateAmount(saMe.getSourceCard(), damage, saMe);
     }
 
+    /**
+     * <p>damageDrawback.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean damageDrawback(SpellAbility sa) {
         Card source = sa.getSourceCard();
         int dmg;
@@ -174,6 +219,12 @@ public class AbilityFactory_DealDamage {
         return damageTargetAI(sa, dmg);
     }
 
+    /**
+     * <p>doCanPlayAI.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean doCanPlayAI(SpellAbility saMe) {
         if (!ComputerUtil.canPayCost(saMe))
             return false;
@@ -252,6 +303,14 @@ public class AbilityFactory_DealDamage {
         return rr;
     }
 
+    /**
+     * <p>shouldTgtP.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param d a int.
+     * @param noPrevention a boolean.
+     * @return a boolean.
+     */
     private boolean shouldTgtP(SpellAbility sa, int d, final boolean noPrevention) {
         int restDamage = d;
         Player human = AllZone.getHumanPlayer();
@@ -280,6 +339,15 @@ public class AbilityFactory_DealDamage {
         return false;
     }
 
+    /**
+     * <p>chooseTgtC.</p>
+     *
+     * @param d a int.
+     * @param noPrevention a boolean.
+     * @param pl a {@link forge.Player} object.
+     * @param mandatory a boolean.
+     * @return a {@link forge.Card} object.
+     */
     private Card chooseTgtC(final int d, final boolean noPrevention, final Player pl, final boolean mandatory) {
         Target tgt = AF.getAbTgt();
         final Card source = AF.getHostCard();
@@ -326,6 +394,13 @@ public class AbilityFactory_DealDamage {
         return null;
     }
 
+    /**
+     * <p>damageTargetAI.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @param dmg a int.
+     * @return a boolean.
+     */
     private boolean damageTargetAI(SpellAbility saMe, int dmg) {
         Target tgt = AF.getAbTgt();
 
@@ -335,6 +410,15 @@ public class AbilityFactory_DealDamage {
         return damageChoosingTargets(saMe, tgt, dmg, false);
     }
 
+    /**
+     * <p>damageChoosingTargets.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param dmg a int.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean damageChoosingTargets(SpellAbility saMe, Target tgt, int dmg, boolean mandatory) {
         boolean noPrevention = AF.getMapParams().containsKey("NoPrevention");
 
@@ -396,6 +480,13 @@ public class AbilityFactory_DealDamage {
         return true;
     }
 
+    /**
+     * <p>damageChooseNontargeted.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @param dmg a int.
+     * @return a boolean.
+     */
     private boolean damageChooseNontargeted(SpellAbility saMe, int dmg) {
         // TODO: Improve circumstances where the Defined Damage is unwanted
         ArrayList<Object> objects = AbilityFactory.getDefinedObjects(saMe.getSourceCard(), AF.getMapParams().get("Defined"), saMe);
@@ -415,6 +506,15 @@ public class AbilityFactory_DealDamage {
         return true;
     }
 
+    /**
+     * <p>damageChooseRequiredTargets.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param dmg a int.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean damageChooseRequiredTargets(SpellAbility saMe, Target tgt, int dmg, boolean mandatory) {
         // this is for Triggered targets that are mandatory
         boolean noPrevention = AF.getMapParams().containsKey("NoPrevention");
@@ -440,6 +540,14 @@ public class AbilityFactory_DealDamage {
         return true;
     }
 
+    /**
+     * <p>damageDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean damageDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)
             return false;
@@ -486,6 +594,11 @@ public class AbilityFactory_DealDamage {
     }
 
 
+    /**
+     * <p>doResolve.</p>
+     *
+     * @param saMe a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void doResolve(SpellAbility saMe) {
         HashMap<String, String> params = AF.getMapParams();
 
@@ -529,6 +642,11 @@ public class AbilityFactory_DealDamage {
     // ******************************************************************************************************
     // ***************************** DAMAGEALL **************************************************************
     // ******************************************************************************************************
+    /**
+     * <p>getAbilityDamageAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbilityDamageAll() {
 
         final SpellAbility abDamageAll = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
@@ -559,6 +677,11 @@ public class AbilityFactory_DealDamage {
         return abDamageAll;
     }
 
+    /**
+     * <p>getSpellDamageAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpellDamageAll() {
         final SpellAbility spDamageAll = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 8004957182752984818L;
@@ -586,6 +709,11 @@ public class AbilityFactory_DealDamage {
         return spDamageAll;
     }
 
+    /**
+     * <p>getDrawbackDamageAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawbackDamageAll() {
         final SpellAbility dbDamageAll = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -6169562107675964474L;
@@ -616,6 +744,13 @@ public class AbilityFactory_DealDamage {
         return dbDamageAll;
     }
 
+    /**
+     * <p>damageAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String damageAllStackDescription(final AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
         String name = af.getHostCard().getName();
@@ -635,6 +770,13 @@ public class AbilityFactory_DealDamage {
         return sb.toString();
     }
 
+    /**
+     * <p>damageAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean damageAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         Random r = MyRandom.random;
@@ -713,6 +855,15 @@ public class AbilityFactory_DealDamage {
         return ((r.nextFloat() < .6667) && chance);
     }
 
+    /**
+     * <p>getKillableCreatures.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param player a {@link forge.Player} object.
+     * @param dmg a int.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getKillableCreatures(final AbilityFactory af, final SpellAbility sa, Player player, final int dmg) {
         final HashMap<String, String> params = af.getMapParams();
         final Card source = af.getHostCard();
@@ -737,6 +888,14 @@ public class AbilityFactory_DealDamage {
         return list;
     }
 
+    /**
+     * <p>damageAllDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean damageAllDoTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa) && !mandatory)
             return false;
@@ -792,6 +951,12 @@ public class AbilityFactory_DealDamage {
         return true;
     }
 
+    /**
+     * <p>damageAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void damageAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();

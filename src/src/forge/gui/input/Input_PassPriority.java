@@ -2,9 +2,17 @@ package forge.gui.input;
 
 import forge.*;
 
+/**
+ * <p>Input_PassPriority class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_PassPriority extends Input implements java.io.Serializable {
+    /** Constant <code>serialVersionUID=-581477682214137181L</code> */
     private static final long serialVersionUID = -581477682214137181L;
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         GuiDisplayUtil.updateGUI();
@@ -32,6 +40,7 @@ public class Input_PassPriority extends Input implements java.io.Serializable {
         AllZone.getDisplay().showMessage(sb.toString());
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonOK() {
         AllZone.getPhase().passPriority();
@@ -42,6 +51,7 @@ public class Input_PassPriority extends Input implements java.io.Serializable {
         // Clear out PassPriority after clicking button
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectCard(Card card, PlayerZone zone) {
         if (AllZone.getGameAction().playCard(card))

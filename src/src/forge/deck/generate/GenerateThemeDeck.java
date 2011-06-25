@@ -15,13 +15,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * <p>GenerateThemeDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GenerateThemeDeck {
     private BufferedReader in = null;
 
+    /**
+     * <p>Constructor for GenerateThemeDeck.</p>
+     */
     public GenerateThemeDeck() {
 
     }
 
+    /**
+     * <p>getThemeNames.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getThemeNames() {
         ArrayList<String> ltNames = new ArrayList<String>();
 
@@ -44,6 +58,13 @@ public class GenerateThemeDeck {
         return ltNames;
     }
 
+    /**
+     * <p>getThemeDeck.</p>
+     *
+     * @param ThemeName a {@link java.lang.String} object.
+     * @param Size a int.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getThemeDeck(String ThemeName, int Size) {
         CardList tDeck = new CardList();
 
@@ -240,6 +261,11 @@ public class GenerateThemeDeck {
         return tDeck;
     }
 
+    /**
+     * <p>readLine.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     private String readLine() {
         //makes the checked exception, into an unchecked runtime exception
         try {

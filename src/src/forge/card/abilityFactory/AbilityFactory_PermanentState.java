@@ -10,12 +10,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_PermanentState class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_PermanentState {
 
     // ****************************************
     // ************** Untap *******************
     // ****************************************
 
+    /**
+     * <p>createAbilityUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityUntap(final AbilityFactory af) {
         final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5445572699000471299L;
@@ -44,6 +56,12 @@ public class AbilityFactory_PermanentState {
         return abUntap;
     }
 
+    /**
+     * <p>createSpellUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellUntap(final AbilityFactory af) {
         final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -67,6 +85,12 @@ public class AbilityFactory_PermanentState {
         return spUntap;
     }
 
+    /**
+     * <p>createDrawbackUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackUntap(final AbilityFactory af) {
         final SpellAbility dbUntap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -95,6 +119,13 @@ public class AbilityFactory_PermanentState {
         return dbUntap;
     }
 
+    /**
+     * <p>untapStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String untapStackDescription(AbilityFactory af, SpellAbility sa) {
         // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
@@ -136,6 +167,13 @@ public class AbilityFactory_PermanentState {
         return sb.toString();
     }
 
+    /**
+     * <p>untapCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean untapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         if (!ComputerUtil.canPayCost(sa))
@@ -166,6 +204,14 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>untapTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean untapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         HashMap<String, String> params = af.getMapParams();
         if (!ComputerUtil.canPayCost(sa))
@@ -195,6 +241,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>untapPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean untapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         Target tgt = af.getAbTgt();
@@ -215,6 +268,15 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>untapPrefTargeting.</p>
+     *
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean untapPrefTargeting(Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory) {
         Card source = sa.getSourceCard();
 
@@ -264,6 +326,14 @@ public class AbilityFactory_PermanentState {
         return true;
     }
 
+    /**
+     * <p>untapUnpreferredTargeting.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean untapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         Card source = sa.getSourceCard();
         Target tgt = sa.getTarget();
@@ -295,6 +365,17 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>untapTargetList.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @param tapList a {@link forge.CardList} object.
+     * @return a boolean.
+     */
     private static boolean untapTargetList(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory, CardList tapList) {
         for (Card c : tgt.getTargetCards())
             tapList.remove(c);
@@ -339,6 +420,12 @@ public class AbilityFactory_PermanentState {
         return true;
     }
 
+    /**
+     * <p>untapResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void untapResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();
@@ -361,6 +448,13 @@ public class AbilityFactory_PermanentState {
         }
     }
 
+    /**
+     * <p>untapChooseUpTo.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param params a {@link java.util.HashMap} object.
+     */
     private static void untapChooseUpTo(AbilityFactory af, SpellAbility sa, HashMap<String, String> params) {
         int num = Integer.parseInt(params.get("Amount"));
         String valid = params.get("UntapType");
@@ -391,6 +485,12 @@ public class AbilityFactory_PermanentState {
     // ************** Tap *********************
     // ****************************************
 
+    /**
+     * <p>createAbilityTap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityTap(final AbilityFactory af) {
         final SpellAbility abTap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5445572699000471299L;
@@ -419,6 +519,12 @@ public class AbilityFactory_PermanentState {
         return abTap;
     }
 
+    /**
+     * <p>createSpellTap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellTap(final AbilityFactory af) {
         final SpellAbility spTap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -442,6 +548,12 @@ public class AbilityFactory_PermanentState {
         return spTap;
     }
 
+    /**
+     * <p>createDrawbackTap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackTap(final AbilityFactory af) {
         final SpellAbility dbTap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -470,6 +582,13 @@ public class AbilityFactory_PermanentState {
         return dbTap;
     }
 
+    /**
+     * <p>tapStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String tapStackDescription(AbilityFactory af, SpellAbility sa) {
         // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
@@ -506,6 +625,13 @@ public class AbilityFactory_PermanentState {
         return sb.toString();
     }
 
+    /**
+     * <p>tapCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         if (!ComputerUtil.canPayCost(sa))
@@ -540,6 +666,14 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>tapTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -566,6 +700,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>tapPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         Target tgt = af.getAbTgt();
@@ -589,6 +730,16 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>tapPrefTargeting.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapPrefTargeting(Card source, Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory) {
         CardList tapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         tapList = tapList.filter(AllZoneUtil.untapped);
@@ -638,6 +789,14 @@ public class AbilityFactory_PermanentState {
         return true;
     }
 
+    /**
+     * <p>tapUnpreferredTargeting.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         Card source = sa.getSourceCard();
         Target tgt = sa.getTarget();
@@ -668,6 +827,15 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>tapTargetList.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param tapList a {@link forge.CardList} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapTargetList(AbilityFactory af, SpellAbility sa, CardList tapList, boolean mandatory) {
         Card source = sa.getSourceCard();
         Target tgt = sa.getTarget();
@@ -715,6 +883,12 @@ public class AbilityFactory_PermanentState {
         return true;
     }
 
+    /**
+     * <p>tapResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void tapResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();
@@ -736,6 +910,12 @@ public class AbilityFactory_PermanentState {
     // ****************************************
     // ************** UntapAll *****************
     // ****************************************
+    /**
+     * <p>createAbilityUntapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityUntapAll(final AbilityFactory af) {
         final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 8914852730903389831L;
@@ -764,6 +944,12 @@ public class AbilityFactory_PermanentState {
         return abUntap;
     }
 
+    /**
+     * <p>createSpellUntapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellUntapAll(final AbilityFactory af) {
         final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5713174052551899363L;
@@ -787,6 +973,12 @@ public class AbilityFactory_PermanentState {
         return spUntap;
     }
 
+    /**
+     * <p>createDrawbackUntapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackUntapAll(final AbilityFactory af) {
         final SpellAbility dbUntapAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -5187900994680626766L;
@@ -815,10 +1007,23 @@ public class AbilityFactory_PermanentState {
         return dbUntapAll;
     }
 
+    /**
+     * <p>untapAllPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean untapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         return true;
     }
 
+    /**
+     * <p>untapAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void untapAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();
@@ -834,6 +1039,13 @@ public class AbilityFactory_PermanentState {
         for (int i = 0; i < list.size(); i++) list.get(i).untap();
     }
 
+    /**
+     * <p>untapAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean untapAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         /*
            * All cards using this currently have SVar:RemAIDeck:True
@@ -841,6 +1053,14 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>untapAllTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean untapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -852,6 +1072,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>untapAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String untapAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         // when getStackDesc is called, just build exactly what is happening
@@ -875,6 +1102,12 @@ public class AbilityFactory_PermanentState {
     // ****************************************
     // ************** TapAll *****************
     // ****************************************
+    /**
+     * <p>createAbilityTapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityTapAll(final AbilityFactory af) {
         final SpellAbility abUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -2095140656782946737L;
@@ -903,6 +1136,12 @@ public class AbilityFactory_PermanentState {
         return abUntap;
     }
 
+    /**
+     * <p>createSpellTapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellTapAll(final AbilityFactory af) {
         final SpellAbility spUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -62401571838950166L;
@@ -926,6 +1165,12 @@ public class AbilityFactory_PermanentState {
         return spUntap;
     }
 
+    /**
+     * <p>createDrawbackTapAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackTapAll(final AbilityFactory af) {
         final SpellAbility dbTap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -954,6 +1199,12 @@ public class AbilityFactory_PermanentState {
         return dbTap;
     }
 
+    /**
+     * <p>tapAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void tapAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -977,6 +1228,14 @@ public class AbilityFactory_PermanentState {
         for (Card c : cards) c.tap();
     }
 
+    /**
+     * <p>filterListByType.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param params a {@link java.util.HashMap} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList filterListByType(CardList list, HashMap<String, String> params, SpellAbility sa) {
         String type = params.containsKey("ValidCards") ? params.get("ValidCards") : "";
         if (type == "")
@@ -985,6 +1244,13 @@ public class AbilityFactory_PermanentState {
         return list.getValidCards(type.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
     }
 
+    /**
+     * <p>tapAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // If tapping all creatures do it either during declare attackers of AIs turn
         // or during upkeep/begin combat?
@@ -1031,6 +1297,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>getTapAllTargets.</p>
+     *
+     * @param valid a {@link java.lang.String} object.
+     * @param source a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList getTapAllTargets(String valid, Card source) {
         CardList tmpList = AllZoneUtil.getCardsInPlay();
         tmpList = tmpList.getValidCards(valid, source.getController(), source);
@@ -1040,6 +1313,13 @@ public class AbilityFactory_PermanentState {
     }
 
 
+    /**
+     * <p>tapAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String tapAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         // when getStackDesc is called, just build exactly what is happening
@@ -1060,6 +1340,14 @@ public class AbilityFactory_PermanentState {
         return sb.toString();
     }
 
+    /**
+     * <p>tapAllTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapAllTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -1100,6 +1388,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>tapAllPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         return true;
     }
@@ -1109,6 +1404,12 @@ public class AbilityFactory_PermanentState {
     // ************** Tap or Untap ************
     // ****************************************
 
+    /**
+     * <p>createAbilityTapOrUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityTapOrUntap(final AbilityFactory af) {
         final SpellAbility abTapOrUntap = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4713183763302932079L;
@@ -1137,6 +1438,12 @@ public class AbilityFactory_PermanentState {
         return abTapOrUntap;
     }
 
+    /**
+     * <p>createSpellTapOrUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellTapOrUntap(final AbilityFactory af) {
         final SpellAbility spTapOrUntap = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -8870476840484788521L;
@@ -1160,6 +1467,12 @@ public class AbilityFactory_PermanentState {
         return spTapOrUntap;
     }
 
+    /**
+     * <p>createDrawbackTapOrUntap.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackTapOrUntap(final AbilityFactory af) {
         final SpellAbility dbTapOrUntap = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -8282868583712773337L;
@@ -1188,6 +1501,13 @@ public class AbilityFactory_PermanentState {
         return dbTapOrUntap;
     }
 
+    /**
+     * <p>tapOrUntapStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String tapOrUntapStackDescription(AbilityFactory af, SpellAbility sa) {
         // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
@@ -1224,6 +1544,13 @@ public class AbilityFactory_PermanentState {
         return sb.toString();
     }
 
+    /**
+     * <p>tapOrUntapCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapOrUntapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         if (!ComputerUtil.canPayCost(sa))
@@ -1260,6 +1587,14 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>tapOrUntapTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean tapOrUntapTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -1286,6 +1621,13 @@ public class AbilityFactory_PermanentState {
         return false;
     }
 
+    /**
+     * <p>tapOrUntapPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean tapOrUntapPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         Target tgt = af.getAbTgt();
@@ -1309,6 +1651,12 @@ public class AbilityFactory_PermanentState {
         return randomReturn;
     }
 
+    /**
+     * <p>tapOrUntapResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void tapOrUntapResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = sa.getSourceCard();

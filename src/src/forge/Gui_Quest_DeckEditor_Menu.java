@@ -23,16 +23,25 @@ import java.util.List;
 
 
 //presumes AllZone.getQuestData() is not null
+/**
+ * <p>Gui_Quest_DeckEditor_Menu class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
+    /** Constant <code>serialVersionUID=-4052319220021158574L</code> */
     private static final long serialVersionUID = -4052319220021158574L;
 
     //this should be false in the public version
     //if true, the Quest Deck editor will let you edit the computer's decks
     private final boolean canEditComputerDecks;
 
+    /** Constant <code>deckEditorName="Deck Editor"</code> */
     private static final String deckEditorName = "Deck Editor";
 
     //used for import and export, try to made the gui user friendly
+    /** Constant <code>previousDirectory</code> */
     private static File previousDirectory = null;
 
     private Command exitCommand;
@@ -43,6 +52,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     private DeckDisplay deckDisplay;
 
 
+    /**
+     * <p>Constructor for Gui_Quest_DeckEditor_Menu.</p>
+     *
+     * @param d a {@link forge.DeckDisplay} object.
+     * @param exit a {@link forge.Command} object.
+     */
     public Gui_Quest_DeckEditor_Menu(DeckDisplay d, Command exit) {
         //is a file named "edit" in this directory
         //lame but it works, I don't like 2 versions of MTG Forge floating around
@@ -65,6 +80,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         if (canEditComputerDecks) setupComputerMenu();
     }
 
+    /**
+     * <p>setupFilterMenu.</p>
+     */
     private void setupFilterMenu() {
         JMenuItem filter = new JMenuItem("New filter");
         JMenuItem clearfilter = new JMenuItem("Clear filter");
@@ -212,6 +230,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }
 
 
+    /**
+     * <p>addImportExport.</p>
+     *
+     * @param menu a {@link javax.swing.JMenu} object.
+     * @param isHumanMenu a boolean.
+     */
     private void addImportExport(JMenu menu, final boolean isHumanMenu) {
         JMenuItem import2 = new JMenuItem("Import");
         JMenuItem export = new JMenuItem("Export");
@@ -233,6 +257,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
     }//addImportExport()
 
+    /**
+     * <p>exportDeck.</p>
+     */
     private void exportDeck() {
         File filename = getExportFilename();
 
@@ -262,6 +289,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }//exportDeck()
 
     // TableSorter type safety
+    /**
+     * <p>getExportDeckText.</p>
+     *
+     * @param aDeck a {@link forge.deck.Deck} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getExportDeckText(Deck aDeck) {
         //convert Deck into CardList
         CardList all = new CardList();
@@ -339,6 +372,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         return sb.toString();
     }//getExportDeckText
 
+    /**
+     * <p>exportDeckText.</p>
+     *
+     * @param deckText a {@link java.lang.String} object.
+     * @param filename a {@link java.lang.String} object.
+     */
     private void exportDeckText(String deckText, String filename) {
 
         //remove ".deck" extension
@@ -359,6 +398,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }//exportDeckText()
 
 
+    /**
+     * <p>getFileFilter.</p>
+     *
+     * @return a {@link javax.swing.filechooser.FileFilter} object.
+     */
     private FileFilter getFileFilter() {
         FileFilter filter = new FileFilter() {
             @Override
@@ -375,6 +419,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         return filter;
     }//getFileFilter()
 
+    /**
+     * <p>getExportFilename.</p>
+     *
+     * @return a {@link java.io.File} object.
+     */
     private File getExportFilename() {
         //Object o = null; // unused
 
@@ -400,6 +449,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         return null;
     }//getExportFilename()
 
+    /**
+     * <p>importDeck.</p>
+     */
     private void importDeck() {
         File file = getImportFilename();
 
@@ -512,6 +564,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }//importDeck()
     */
 
+    /**
+     * <p>getImportFilename.</p>
+     *
+     * @return a {@link java.io.File} object.
+     */
     private File getImportFilename() {
         JFileChooser chooser = new JFileChooser(previousDirectory);
 
@@ -528,6 +585,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }//openFileDialog()
 
     //edit the AI decks
+    /**
+     * <p>setupComputerMenu.</p>
+     */
     private void setupComputerMenu() {
         JMenuItem open = new JMenuItem("Open");
         JMenuItem new2 = new JMenuItem("New");
@@ -717,6 +777,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
     }//setupComputerMenu()
 
+    /**
+     * <p>openHumanDeck.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     */
     private void openHumanDeck(String deckName) {
         setHumanPlayer(deckName);
 
@@ -750,6 +815,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
 
     //the usual menu options that will be used
+    /**
+     * <p>setupMenu.</p>
+     */
     private void setupMenu() {
         JMenuItem open = new JMenuItem("Open");
         JMenuItem new2 = new JMenuItem("New");
@@ -999,6 +1067,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
     }//setupMenu()
 
+    /**
+     * <p>convertCardListToDeck.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
     private Deck convertCardListToDeck(CardList list) {
         //put CardList into Deck main
         Deck deck = new Deck(Constant.GameType.Sealed);
@@ -1010,6 +1084,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }
 
     //needs to be public because Gui_Quest_DeckEditor.show(Command) uses it
+    /**
+     * <p>setHumanPlayer.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     */
     public void setHumanPlayer(String deckName) {
         //the gui uses this, Gui_Quest_DeckEditor
         currentDeck = new Deck(Constant.GameType.Sealed);
@@ -1018,6 +1097,11 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         deckDisplay.setTitle(deckEditorName + " - " + deckName);
     }
 
+    /**
+     * <p>setComputerPlayer.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     */
     private void setComputerPlayer(String deckName) {
         //the gui uses this, Gui_Quest_DeckEditor
         currentDeck = new Deck(Constant.GameType.Constructed);
@@ -1027,6 +1111,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }
 
     //only accepts numbers, letters or dashes up to 20 characters in length
+    /**
+     * <p>cleanString.</p>
+     *
+     * @param in a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String cleanString(String in) {
         StringBuffer out = new StringBuffer();
         char[] c = in.toCharArray();
@@ -1038,6 +1128,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }
 
     //if user cancels, returns ""
+    /**
+     * <p>getUserInput_GetDeckName.</p>
+     *
+     * @param nameList a {@link java.util.List} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getUserInput_GetDeckName(List<String> nameList) {
         Object o = JOptionPane.showInputDialog(null, "", "Deck Name", JOptionPane.OK_CANCEL_OPTION);
 
@@ -1055,6 +1151,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
 
     //if user cancels, it will return ""
+    /**
+     * <p>getUserInput_OpenDeck.</p>
+     *
+     * @param deckNameList a {@link java.util.List} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getUserInput_OpenDeck(List<String> deckNameList) {
         List<String> choices = deckNameList;
         if (choices.size() == 0) {
@@ -1072,16 +1174,29 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }//getUserInput_OpenDeck()
 
     //used by Gui_Quest_DeckEditor
+    /**
+     * <p>close.</p>
+     */
     public void close() {
         exitCommand.execute();
     }
 
     //used by Gui_Quest_DeckEditor
+    /**
+     * <p>getDeckName.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDeckName() {
         return currentDeck.getName();
     }
 
     //used by Gui_Quest_DeckEditor
+    /**
+     * <p>getGameType.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getGameType() {
         return currentDeck.getDeckType();
     }
@@ -1089,6 +1204,12 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
     //returns CardList of Card objects,
     //argument ArrayList holds String card names
+    /**
+     * <p>covertToCardList.</p>
+     *
+     * @param list a {@link java.util.List} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList covertToCardList(List<String> list) {
         CardList c = new CardList();
         Card card;

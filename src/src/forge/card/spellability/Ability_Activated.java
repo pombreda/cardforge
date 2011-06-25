@@ -3,13 +3,33 @@ package forge.card.spellability;
 import forge.*;
 
 
+/**
+ * <p>Abstract Ability_Activated class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 abstract public class Ability_Activated extends SpellAbility implements java.io.Serializable {
+    /** Constant <code>serialVersionUID=1L</code> */
     private static final long serialVersionUID = 1L;
 
+    /**
+     * <p>Constructor for Ability_Activated.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param manacost a {@link java.lang.String} object.
+     */
     public Ability_Activated(Card card, String manacost) {
         this(card, new Cost(manacost, card.getName(), true), null);
     }
 
+    /**
+     * <p>Constructor for Ability_Activated.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param abCost a {@link forge.card.spellability.Cost} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     */
     public Ability_Activated(Card sourceCard, Cost abCost, Target tgt) {
         super(SpellAbility.Ability, sourceCard);
         setManaCost(abCost.getTotalMana());
@@ -18,6 +38,7 @@ abstract public class Ability_Activated extends SpellAbility implements java.io.
             setTarget(tgt);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean canPlay() {
         if (AllZone.getStack().isSplitSecondOnStack()) return false;

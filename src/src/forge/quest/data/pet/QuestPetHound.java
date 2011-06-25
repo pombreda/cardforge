@@ -6,11 +6,21 @@ import forge.card.abilityFactory.AbilityFactory;
 import forge.card.trigger.Trigger;
 import forge.card.trigger.TriggerHandler;
 
+/**
+ * <p>QuestPetHound class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestPetHound extends QuestPetAbstract {
+    /**
+     * <p>Constructor for QuestPetHound.</p>
+     */
     public QuestPetHound() {
         super("Hound", "Dogs are said to be man's best friend. Definitely not this one.", 4);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
@@ -58,11 +68,13 @@ public class QuestPetHound extends QuestPetAbstract {
         return petCard;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getAllUpgradePrices() {
         return new int[]{200, 350, 450, 750};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllUpgradeDescriptions() {
         return new String[]{
@@ -73,6 +85,7 @@ public class QuestPetHound extends QuestPetAbstract {
                 "You cannot train your hound any further"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a hound",
@@ -82,6 +95,7 @@ public class QuestPetHound extends QuestPetAbstract {
                 "2/1, R, Haste, Whenever this creature attacks alone, it gets +2/+0 until end of turn."};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllImageNames() {
         return new String[]{

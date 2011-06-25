@@ -129,6 +129,7 @@ import java.beans.*;
  * </p>
  *
  * @author rbair
+ * @version $Id$
  */
 public abstract class AbstractBean {
     /**
@@ -155,6 +156,9 @@ public abstract class AbstractBean {
     /**
      * Creates a new instance of AbstractBean, using the supplied PropertyChangeSupport and
      * VetoableChangeSupport delegates. Neither of these may be null.
+     *
+     * @param pcs a {@link java.beans.PropertyChangeSupport} object.
+     * @param vcs a {@link java.beans.VetoableChangeSupport} object.
      */
     protected AbstractBean(PropertyChangeSupport pcs, VetoableChangeSupport vcs) {
         if (pcs == null) {
@@ -365,7 +369,6 @@ public abstract class AbstractBean {
      *
      * @param listener The VetoableChangeListener to be added
      */
-
     public final void addVetoableChangeListener(VetoableChangeListener listener) {
         vcs.addVetoableChangeListener(listener);
     }
@@ -410,7 +413,6 @@ public abstract class AbstractBean {
      * @param propertyName The name of the property to listen on.
      * @param listener     The VetoableChangeListener to be added
      */
-
     public final void addVetoableChangeListener(String propertyName,
                                                 VetoableChangeListener listener) {
         vcs.addVetoableChangeListener(propertyName, listener);
@@ -429,7 +431,6 @@ public abstract class AbstractBean {
      * @param propertyName The name of the property that was listened on.
      * @param listener     The VetoableChangeListener to be removed
      */
-
     public final void removeVetoableChangeListener(String propertyName,
                                                    VetoableChangeListener listener) {
         vcs.removeVetoableChangeListener(propertyName, listener);
@@ -460,7 +461,7 @@ public abstract class AbstractBean {
      *                     that is about to change..
      * @param oldValue     The old value of the property.
      * @param newValue     The new value of the property.
-     * @throws PropertyVetoException if the recipient wishes the property
+     * @throws java.beans.PropertyVetoException if the recipient wishes the property
      *                               change to be rolled back.
      */
     protected final void fireVetoableChange(String propertyName,
@@ -477,7 +478,7 @@ public abstract class AbstractBean {
      * No event is fired if old and new are equal and non-null.
      *
      * @param evt The PropertyChangeEvent to be fired.
-     * @throws PropertyVetoException if the recipient wishes the property
+     * @throws java.beans.PropertyVetoException if the recipient wishes the property
      *                               change to be rolled back.
      */
     protected final void fireVetoableChange(PropertyChangeEvent evt)
@@ -485,9 +486,7 @@ public abstract class AbstractBean {
         vcs.fireVetoableChange(evt);
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     public Object clone() throws CloneNotSupportedException {
         AbstractBean result = (AbstractBean) super.clone();

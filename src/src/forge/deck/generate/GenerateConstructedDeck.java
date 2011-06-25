@@ -6,16 +6,28 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>GenerateConstructedDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GenerateConstructedDeck {
     private String color1;
     private String color2;
 
     private Map<String, String> map = new HashMap<String, String>();
 
+    /**
+     * <p>Constructor for GenerateConstructedDeck.</p>
+     */
     public GenerateConstructedDeck() {
         setupMap();
     }
 
+    /**
+     * <p>setupMap.</p>
+     */
     private void setupMap() {
         map.put(Constant.Color.Black, "Swamp");
         map.put(Constant.Color.Blue, "Island");
@@ -24,6 +36,11 @@ public class GenerateConstructedDeck {
         map.put(Constant.Color.White, "Plains");
     }
 
+    /**
+     * <p>generateDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList generateDeck() {
         CardList deck;
 
@@ -44,6 +61,11 @@ public class GenerateConstructedDeck {
     }
 
     //25 lands
+    /**
+     * <p>addLand.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     private void addLand(CardList list) {
         Card land;
         for (int i = 0; i < 13; i++) {
@@ -55,10 +77,20 @@ public class GenerateConstructedDeck {
         }
     }//addLand()
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getCards() {
         return filterBadCards(AllZone.getCardFactory().getAllCards());
     }//getCards()
 
+    /**
+     * <p>get2ColorDeck.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get2ColorDeck() {
         CardList deck = get2Colors(getCards());
 
@@ -72,6 +104,12 @@ public class GenerateConstructedDeck {
         return out;
     }
 
+    /**
+     * <p>get2Colors.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList get2Colors(CardList in) {
         int a;
         int b;
@@ -116,6 +154,12 @@ public class GenerateConstructedDeck {
         return out;
     }
 
+    /**
+     * <p>filterBadCards.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList filterBadCards(CardList list) {
 
         final ArrayList<Card> goodLand = new ArrayList<Card>();
@@ -138,6 +182,11 @@ public class GenerateConstructedDeck {
         return out;
     }//filterBadCards()
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         GenerateConstructedDeck g = new GenerateConstructedDeck();
 

@@ -4,11 +4,22 @@ import forge.AllZone;
 
 import java.util.*;
 
+/**
+ * <p>QuestStallManager class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestStallManager {
 
+    /** Constant <code>stalls</code> */
     static Map<String, QuestStallDefinition> stalls;
+    /** Constant <code>items</code> */
     static Map<String, SortedSet<QuestStallPurchasable>> items;
 
+    /**
+     * <p>buildStalls.</p>
+     */
     public static void buildStalls() {
         stalls = new HashMap<String, QuestStallDefinition>();
         stalls.put(ALCHEMIST,
@@ -44,6 +55,11 @@ public class QuestStallManager {
                         "FoxIconSmall.png"));
     }
 
+    /**
+     * <p>getStallNames.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public static List<String> getStallNames() {
         List<String> ret = new ArrayList<String>();
         ret.add(ALCHEMIST);
@@ -55,6 +71,12 @@ public class QuestStallManager {
         return ret;
     }
 
+    /**
+     * <p>getStall.</p>
+     *
+     * @param stallName a {@link java.lang.String} object.
+     * @return a {@link forge.quest.data.bazaar.QuestStallDefinition} object.
+     */
     public static QuestStallDefinition getStall(String stallName) {
         if (stalls == null) {
             buildStalls();
@@ -63,6 +85,9 @@ public class QuestStallManager {
         return stalls.get(stallName);
     }
 
+    /**
+     * <p>buildItems.</p>
+     */
     public static void buildItems() {
         SortedSet<QuestStallPurchasable> itemSet = new TreeSet<QuestStallPurchasable>();
 
@@ -81,6 +106,12 @@ public class QuestStallManager {
 
     }
 
+    /**
+     * <p>Getter for the field <code>items</code>.</p>
+     *
+     * @param stallName a {@link java.lang.String} object.
+     * @return a {@link java.util.List} object.
+     */
     public static List<QuestStallPurchasable> getItems(String stallName) {
         if (items == null) {
             buildItems();
@@ -96,11 +127,17 @@ public class QuestStallManager {
         return ret;
     }
 
+    /** Constant <code>ALCHEMIST="Alchemist"</code> */
     public static final String ALCHEMIST = "Alchemist";
+    /** Constant <code>BANKER="Banker"</code> */
     public static final String BANKER = "Banker";
+    /** Constant <code>BOOKSTORE="Bookstore"</code> */
     public static final String BOOKSTORE = "Bookstore";
+    /** Constant <code>GEAR="Gear"</code> */
     public static final String GEAR = "Gear";
+    /** Constant <code>NURSERY="Nursery"</code> */
     public static final String NURSERY = "Nursery";
+    /** Constant <code>PET_SHOP="Pet Shop"</code> */
     public static final String PET_SHOP = "Pet Shop";
 
 }
