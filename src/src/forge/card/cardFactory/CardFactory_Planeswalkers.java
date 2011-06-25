@@ -1907,7 +1907,7 @@ class CardFactory_Planeswalkers {
                     emblem.setImmutable(true);
                     emblem.addType("Emblem");
                     emblem.setController(card.getController());
-                    emblem.setOwner(card.getOwner());
+                    emblem.setOwner(card.getController());
 
                     AllZone.getGameAction().moveToPlay(emblem);
 
