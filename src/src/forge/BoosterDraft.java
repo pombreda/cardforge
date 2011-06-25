@@ -1,11 +1,6 @@
 package forge;
 
 import forge.deck.Deck;
-import forge.gui.GuiUtils;
-
-import javax.swing.*;
-import java.io.File;
-import java.util.ArrayList;
 
 /**
  * <p>BoosterDraft interface.</p>
