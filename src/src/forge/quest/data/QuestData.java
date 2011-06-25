@@ -188,6 +188,10 @@ public class QuestData {
         return new ArrayList<String>(cardPool);
     }
 
+    public void setCardpool(ArrayList<String> pool) {
+        cardPool = pool;
+    }
+
     /**
      * <p>Getter for the field <code>shopList</code>.</p>
      *

@@ -23,6 +23,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 //import forge.quest.data.QuestBoosterPack;
@@ -402,7 +403,16 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         }
 
 
-        java.util.List<String> list = AllZone.getQuestData().getCardpool();
+        java.util.ArrayList<String> list = (ArrayList<String>)AllZone.getQuestData().getCardpool();
+
+        //BEGIN Backwards compatibility block. We should be able to remove this after a few betas, when most users questData has been converted.
+        for(int i = 0;i< list.size();i++)
+        {
+            list.set(i,Gui_Quest_DeckEditor_Menu.cardNameBackwardsCompatibility(list.get(i)));
+        }
+        AllZone.getQuestData().setCardpool(list);
+        //END Backwards compatibility block.
+
         CardList cardpool = Gui_Quest_DeckEditor_Menu.covertToCardList(list);
 
         //remove bottom cards that are in the deck from the card pool
