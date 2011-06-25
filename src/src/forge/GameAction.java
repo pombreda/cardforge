@@ -1,6 +1,7 @@
 package forge;
 
 
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaCost;
@@ -2058,7 +2059,7 @@ public class GameAction {
             }
             if (manaCost.isPaid() && sa.getBeforePayMana() == null) {
                 if (sa.getAfterPayMana() == null) {
-                    sa.resolve();
+                	AbilityFactory.resolve(sa);
                     if (sa.isTapAbility() && !sa.wasCancelled()) sa.getSourceCard().tap();
                     if (sa.isUntapAbility()) sa.getSourceCard().untap();
                     return;
