@@ -402,6 +402,17 @@ public class AllZoneUtil {
     public static boolean isCardInPlay(final String cardName, final Player player) {
         return getPlayerCardsInPlay(player, cardName).size() > 0;
     }
+    
+    /**
+	 * Answers the question: "Does <player> have <given card> in play?"
+	 * 
+	 * @param card the card to look for
+	 * @param player the player whose battlefield we want to check
+	 * @return true if that player has that card in play, false otherwise
+	 */
+	public static boolean isCardInPlay(final Card card, final Player player) {
+		return getPlayerCardsInPlay(player).contains(card);
+	}
 
     ///get a list of certain types are in play (like Mountain, Elf, etc...)
 
