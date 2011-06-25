@@ -242,6 +242,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Kojak 3", "hard", "Mono U deck with Sunken City, Inundate, counterspells and bounce");
 //        addToDeckList("Krypto 3", "hard", "UBG Standard Constructed deck");
 
+        addToDeckList("Leprechaun 1", "easy", "WBG anti green deck with Aisling Leprechaun, Beast Within and Waiting in the Weeds");
 //        addToDeckList("Lex 3", "hard", "Ninjas deck");
 //        addToDeckList("Link 3", "hard", "GUR Standard Constructed deck");
         addToDeckList("Lisa Simpson 2", "medium", "WG Devour deck with tokens, Skullmulcher and Mycoloth");
