@@ -570,4 +570,20 @@ public class CardUtil {
         }
         return colorDesc;
     }
+
+    //This is so as not to make Lim-Dûl cards or Khabál Ghoul/Dandân/El-Hajjâj too obnoxious to search for.
+    public static String simplifyNameString(String in)
+    {
+        String out = in;
+
+        out = out.replace("û","u");
+        out = out.replace("â","a");
+        out = out.replace("á","a");
+        out = out.replace("å","a");
+        out = out.replace("ä","a");
+        out = out.replace("ö","o");
+        out = out.replace("Æ","AE");
+
+        return out;
+    }
 }
