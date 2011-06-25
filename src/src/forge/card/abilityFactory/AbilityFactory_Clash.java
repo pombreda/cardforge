@@ -9,11 +9,12 @@ import forge.card.spellability.Ability_Sub;
 import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AbilityFactory_Clash {
 
-    public static SpellAbility getAbility(final AbilityFactory AF) {
+    public static SpellAbility getAbilityClash(final AbilityFactory AF) {
         final SpellAbility abClash = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -8019637116128196248L;
 
@@ -46,7 +47,7 @@ public class AbilityFactory_Clash {
         return abClash;
     }
 
-    public static SpellAbility getSpell(final AbilityFactory AF) {
+    public static SpellAbility getSpellClash(final AbilityFactory AF) {
         final SpellAbility spClash = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -4991665176268317172L;
 
@@ -79,7 +80,7 @@ public class AbilityFactory_Clash {
         return spClash;
     }
 
-    public static SpellAbility getDrawback(final AbilityFactory AF) {
+    public static SpellAbility getDrawbackClash(final AbilityFactory AF) {
         final SpellAbility dbClash = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -3850086157052881360L;
 
@@ -152,7 +153,7 @@ public class AbilityFactory_Clash {
     // ************************* FlipACoin *************************************
     // *************************************************************************
 
-    public static SpellAbility getAbilityFlip(final AbilityFactory af) {
+    public static SpellAbility createAbilityFlip(final AbilityFactory af) {
         final SpellAbility abFlip = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -8293336773930687488L;
 
@@ -180,7 +181,7 @@ public class AbilityFactory_Clash {
         return abFlip;
     }
 
-    public static SpellAbility getSpellFlip(final AbilityFactory af) {
+    public static SpellAbility createSpellFlip(final AbilityFactory af) {
         final SpellAbility spFlip = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4402144245527547151L;
 
@@ -213,7 +214,7 @@ public class AbilityFactory_Clash {
         return spFlip;
     }
 
-    public static SpellAbility getDrawbackFlip(final AbilityFactory af) {
+    public static SpellAbility createDrawbackFlip(final AbilityFactory af) {
         final SpellAbility dbFlip = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 8581978154811461324L;
 
@@ -277,9 +278,12 @@ public class AbilityFactory_Clash {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
         Player player = host.getController();
+    	
+    	ArrayList<Player> caller = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Caller"), sa);
+		if(caller.size() == 0) caller.add(player);
 
-        AbilityFactory AF_Outcomes = new AbilityFactory();
-        boolean victory = GameActionUtil.flipACoin(player, sa.getSourceCard());
+    	AbilityFactory AF_Outcomes = new AbilityFactory();
+    	boolean victory = GameActionUtil.flipACoin(caller.get(0), sa.getSourceCard());
 
         //Run triggers
         //HashMap<String,Object> runParams = new HashMap<String,Object>();
@@ -291,19 +295,20 @@ public class AbilityFactory_Clash {
                 win.setActivatingPlayer(player);
                 ((Ability_Sub) win).setParent(sa);
 
-                win.resolve();
-            }
-            //runParams.put("Won","True");
-        } else {
-            if (params.containsKey("LoseSubAbility")) {
-                SpellAbility lose = AF_Outcomes.getAbility(host.getSVar(params.get("LoseSubAbility")), host);
-                lose.setActivatingPlayer(player);
-                ((Ability_Sub) lose).setParent(sa);
+    			AbilityFactory.resolve(win);
+    		}
+    		//runParams.put("Won","True");
+    	}
+    	else {
+    		if(params.containsKey("LoseSubAbility")) {
+    			SpellAbility lose = AF_Outcomes.getAbility(host.getSVar(params.get("LoseSubAbility")), host);
+    			lose.setActivatingPlayer(player);
+    			((Ability_Sub)lose).setParent(sa);
 
-                lose.resolve();
-            }
-            //runParams.put("Won","False");
-        }
+    			AbilityFactory.resolve(lose);
+    		}
+    		//runParams.put("Won","False");
+    	}
 
         //AllZone.getTriggerHandler().runTrigger("FlipsACoin",runParams);
     }
