@@ -13,4 +13,5 @@ SVar:TrigRemoveCounter:AB$RemoveCounter | Cost$ 0 | CounterType$ TIME | CounterN
 SVar:TrigSacrifice:AB$Sacrifice | Cost$ 0 | SpellDescription$ Sacrifice CARDNAME.
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/maelstrom_djinn.jpg
+SetInfo:FUT|Rare|http://magiccards.info/scans/en/fut/39.jpg
 End
