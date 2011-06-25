@@ -1,4 +1,4 @@
-Name:AEther Flash
+Name:Æther Flash
 ManaCost:2 R R
 Types:Enchantment
 Text:no text

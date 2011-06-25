@@ -1,4 +1,4 @@
-Name:AEther Adept
+Name:Æther Adept
 ManaCost:1 U U
 Types:Creature Human Wizard
 Text:no text

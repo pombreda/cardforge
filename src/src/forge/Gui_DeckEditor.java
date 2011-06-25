@@ -331,6 +331,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         out = out.replace("å","a");
         out = out.replace("ä","a");
         out = out.replace("ö","o");
+        out = out.replace("Æ","AE");
 
         return out;
     }

@@ -1,4 +1,4 @@
-Name:AEther Sting
+Name:Æther Sting
 ManaCost:3 R
 Types:Enchantment
 Text:no text

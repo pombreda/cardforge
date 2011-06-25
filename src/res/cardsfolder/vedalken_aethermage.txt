@@ -1,4 +1,4 @@
-Name:Vedalken AEthermage
+Name:Vedalken Æthermage
 ManaCost:1 U
 Types:Creature Vedalken Wizard
 Text:no text

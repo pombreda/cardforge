@@ -1,4 +1,4 @@
-Name:AEthermage's Touch
+Name:Æthermage's Touch
 ManaCost:2 W U
 Types:Instant
 Text:no text
