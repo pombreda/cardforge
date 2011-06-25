@@ -6,7 +6,7 @@ import java.awt.*;
 public class ViewPanel extends JPanel {
     private static final long serialVersionUID = 7016597023142963068L;
 
-    public void layout() {
+    public void doLayout() {
         if (getComponentCount() == 0) return;
         CardPanel panel = (CardPanel) getComponent(0);
         int viewWidth = getWidth();

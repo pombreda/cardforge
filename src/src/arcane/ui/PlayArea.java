@@ -20,7 +20,7 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
     static private final float STACK_SPACING_Y = 0.07f;
 
     private int landStackMax = 5;
-    private int tokenStackMax = 5;
+
     private boolean stackVertical;
     private boolean mirror;
 
@@ -37,7 +37,8 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         this.mirror = mirror;
     }
 
-    public void layout() {
+    public void doLayout() {
+        int tokenStackMax = 5;
         // Collect lands.
         Row allLands = new Row();
         outerLoop:

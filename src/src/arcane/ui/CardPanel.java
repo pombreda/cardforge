@@ -98,7 +98,7 @@ public class CardPanel extends JPanel implements CardContainer {
             }
             imageLoadListeners.clear();
         }
-        layout();
+        doLayout();
     }
 
     public void setImage(final CardPanel panel) {
@@ -217,7 +217,6 @@ public class CardPanel extends JPanel implements CardContainer {
                 if (AllZone.getManaPool() != null) {
                     String s = AllZone.getManaPool().getManaList();
                     if (!s.equals("|||||||||||")) {
-                        //System.out.println("ManaList: " + s);
 
                         String mList[] = s.split("\\|", 12);
 
@@ -238,7 +237,7 @@ public class CardPanel extends JPanel implements CardContainer {
         }
     }
 
-    public void layout() {
+    public void doLayout() {
         int borderSize = Math.round(cardWidth * BLACK_BORDER_SIZE);
         imagePanel.setLocation(cardXOffset + borderSize, cardYOffset + borderSize);
         imagePanel.setSize(cardWidth - borderSize * 2, cardHeight - borderSize * 2);
