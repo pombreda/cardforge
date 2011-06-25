@@ -1338,5 +1338,60 @@ public class GuiDisplayUtil implements NewConstants {
             AllZone.getGameAction().moveToHand(c);
         }
     }
+    
+    /**
+     * <p>devModeAddCounter.</p>
+     *
+     * @since 1.0.15
+     */
+    public static void devModeAddCounter() {
+        CardList play = AllZoneUtil.getCardsInPlay();
+        Object o = GuiUtils.getChoiceOptional("Add counters to which card?", play.toArray());
+        if (null == o) return;
+        else {
+            Card c = (Card) o;
+            Counters counter = GuiUtils.getChoiceOptional("Which type of counter?", Counters.values());
+            if (null == counter) return;
+            else {
+            	Integer integers[] = new Integer[99];
+            	for(int j = 0; j < 99; j++) integers[j] = new Integer(j);
+            	Integer i = GuiUtils.getChoiceOptional("How many counters?", integers);
+                if (null == i) return;
+                else {
+                	c.addCounterFromNonEffect(counter, i);
+                }
+            }
+        }
+    }
+    
+    /**
+     * <p>devModeTapPerm.</p>
+     *
+     * @since 1.0.15
+     */
+    public static void devModeTapPerm() {
+        CardList play = AllZoneUtil.getCardsInPlay();
+        Object o = GuiUtils.getChoiceOptional("Choose a permanent", play.toArray());
+        if (null == o) return;
+        else {
+            Card c = (Card) o;
+            c.tap();
+        }
+    }
+    
+    /**
+     * <p>devModeUntapPerm.</p>
+     *
+     * @since 1.0.15
+     */
+    public static void devModeUntapPerm() {
+    	CardList play = AllZoneUtil.getCardsInPlay();
+        Object o = GuiUtils.getChoiceOptional("Choose a permanent", play.toArray());
+        if (null == o) return;
+        else {
+            Card c = (Card) o;
+            c.untap();
+        }
+    }
 
 }//end class GuiDisplayUtil

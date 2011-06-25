@@ -206,8 +206,49 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
                 }
             };
             //end DevMode Tutor
+            
+            //DevMode AddCounter
+            ForgeAction addCounter = new ForgeAction(ADDCOUNTER) {
+				private static final long serialVersionUID = 3136264111882855268L;
 
-            Object[] objDev = {GuiDisplay4.canLoseByDecking, viewAIHand, viewAILibrary, viewHumanLibrary, generateMana, setupBattleField, tutor};
+				public void actionPerformed(ActionEvent arg0) {
+            		GuiDisplayUtil.devModeAddCounter();
+            	}
+            };
+            //end DevMode AddCounter
+
+            //DevMode Tap
+            ForgeAction tapPerm = new ForgeAction(TAPPERM) {
+				private static final long serialVersionUID = -6092045653540313527L;
+
+				public void actionPerformed(ActionEvent arg0) {
+            		GuiDisplayUtil.devModeTapPerm();
+            	}
+            };
+            //end DevMode Tap
+
+            //DevMode Untap
+            ForgeAction untapPerm = new ForgeAction(UNTAPPERM) {
+				private static final long serialVersionUID = 5425291996157256656L;
+
+				public void actionPerformed(ActionEvent arg0) {
+            		GuiDisplayUtil.devModeUntapPerm();
+            	}
+            };
+            //end DevMode Untap
+
+            Object[] objDev = {
+            		GuiDisplay4.canLoseByDecking,
+            		viewAIHand,
+            		viewAILibrary,
+            		viewHumanLibrary,
+            		generateMana,
+            		setupBattleField,
+            		tutor,
+            		addCounter,
+            		tapPerm,
+            		untapPerm
+            };
             for (Object o : objDev) {
                 if (o instanceof ForgeAction)
                     devMenu.add(((ForgeAction) o).setupButton(new JMenuItem()));
