@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Counters class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Counters {
     // An AbilityFactory subclass for Putting or Removing Counters on Cards.
 
@@ -17,6 +23,12 @@ public class AbilityFactory_Counters {
     // ********** PutCounters *****************
     // *******************************************
 
+    /**
+     * <p>createAbilityPutCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityPutCounters(final AbilityFactory af) {
 
         final SpellAbility abPutCounter = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -46,6 +58,12 @@ public class AbilityFactory_Counters {
         return abPutCounter;
     }
 
+    /**
+     * <p>createSpellPutCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellPutCounters(final AbilityFactory af) {
         final SpellAbility spPutCounter = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -323471693082498224L;
@@ -72,6 +90,12 @@ public class AbilityFactory_Counters {
         return spPutCounter;
     }
 
+    /**
+     * <p>createDrawbackPutCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackPutCounters(final AbilityFactory af) {
         final SpellAbility dbPutCounter = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -323471693082498224L;
@@ -100,6 +124,13 @@ public class AbilityFactory_Counters {
         return dbPutCounter;
     }
 
+    /**
+     * <p>putStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String putStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -141,6 +172,13 @@ public class AbilityFactory_Counters {
         return sb.toString();
     }
 
+    /**
+     * <p>putCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean putCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         HashMap<String, String> params = af.getMapParams();
@@ -274,6 +312,13 @@ public class AbilityFactory_Counters {
         return ((r.nextFloat() < .6667) && chance);
     }//putCanPlayAI
 
+    /**
+     * <p>putPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean putPlayDrawbackAI(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         boolean chance = true;
@@ -339,6 +384,14 @@ public class AbilityFactory_Counters {
         return chance;
     }//putPlayDrawbackAI
 
+    /**
+     * <p>putDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean putDoTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         // if there is a cost, it's gotta be optional
         if (!ComputerUtil.canPayCost(sa) && !mandatory)
@@ -419,6 +472,14 @@ public class AbilityFactory_Counters {
         return true;
     }
 
+    /**
+     * <p>chooseCursedTarget.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param type a {@link java.lang.String} object.
+     * @param amount a int.
+     * @return a {@link forge.Card} object.
+     */
     private static Card chooseCursedTarget(CardList list, String type, final int amount) {
         Card choice;
         if (type.equals("M1M1")) {
@@ -439,6 +500,14 @@ public class AbilityFactory_Counters {
         return choice;
     }
 
+    /**
+     * <p>chooseBoonTarget.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param type a {@link java.lang.String} object.
+     * @param amount a int.
+     * @return a {@link forge.Card} object.
+     */
     private static Card chooseBoonTarget(CardList list, String type, final int amount) {
         Card choice;
         if (type.equals("P1P1")) {
@@ -451,6 +520,12 @@ public class AbilityFactory_Counters {
         return choice;
     }
 
+    /**
+     * <p>putResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void putResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -481,6 +556,12 @@ public class AbilityFactory_Counters {
     // ********** RemoveCounters *****************
     // *******************************************
 
+    /**
+     * <p>createAbilityRemoveCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityRemoveCounters(final AbilityFactory af) {
         final SpellAbility abRemCounter = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 8581011868395954121L;
@@ -509,6 +590,12 @@ public class AbilityFactory_Counters {
         return abRemCounter;
     }
 
+    /**
+     * <p>createSpellRemoveCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellRemoveCounters(final AbilityFactory af) {
         final SpellAbility spRemoveCounter = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -5065591869141835456L;
@@ -535,6 +622,12 @@ public class AbilityFactory_Counters {
         return spRemoveCounter;
     }
 
+    /**
+     * <p>createDrawbackRemoveCounters.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackRemoveCounters(final AbilityFactory af) {
         final SpellAbility spRemoveCounter = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -5065591869141835456L;
@@ -563,6 +656,13 @@ public class AbilityFactory_Counters {
         return spRemoveCounter;
     }
 
+    /**
+     * <p>removeStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String removeStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = af.getHostCard();
@@ -603,6 +703,13 @@ public class AbilityFactory_Counters {
         return sb.toString();
     }
 
+    /**
+     * <p>removeCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean removeCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         Random r = MyRandom.random;
@@ -668,6 +775,13 @@ public class AbilityFactory_Counters {
         return ((r.nextFloat() < .6667) && chance);
     }
 
+    /**
+     * <p>removePlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean removePlayDrawbackAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         //Target abTgt = sa.getTarget();
@@ -698,6 +812,14 @@ public class AbilityFactory_Counters {
         return chance;
     }
 
+    /**
+     * <p>removeDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean removeDoTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         boolean chance = true;
@@ -717,6 +839,12 @@ public class AbilityFactory_Counters {
         return chance;
     }
 
+    /**
+     * <p>removeResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void removeResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -752,6 +880,12 @@ public class AbilityFactory_Counters {
     // ********** Proliferate ********************
     // *******************************************
 
+    /**
+     * <p>createAbilityProliferate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityProliferate(final AbilityFactory af) {
         final SpellAbility abProliferate = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -6617234927365102930L;
@@ -780,6 +914,12 @@ public class AbilityFactory_Counters {
         return abProliferate;
     }
 
+    /**
+     * <p>createSpellProliferate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellProliferate(final AbilityFactory af) {
         final SpellAbility spProliferate = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 1265466498444897146L;
@@ -809,6 +949,12 @@ public class AbilityFactory_Counters {
         return spProliferate;
     }
 
+    /**
+     * <p>createDrawbackProliferate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackProliferate(final AbilityFactory af) {
         final SpellAbility dbProliferate = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 1265466498444897146L;
@@ -842,6 +988,12 @@ public class AbilityFactory_Counters {
         return dbProliferate;
     }
 
+    /**
+     * <p>proliferateStackDescription.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String proliferateStackDescription(SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
         if (!(sa instanceof Ability_Sub))
@@ -860,6 +1012,12 @@ public class AbilityFactory_Counters {
         return sb.toString();
     }
 
+    /**
+     * <p>shouldProliferateAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean shouldProliferateAI(SpellAbility sa) {
         boolean chance = true;
         Ability_Sub subAb = sa.getSubAbility();
@@ -870,6 +1028,13 @@ public class AbilityFactory_Counters {
         return chance;
     }
 
+    /**
+     * <p>doTriggerProliferateAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean doTriggerProliferateAI(SpellAbility sa, boolean mandatory) {
         boolean chance = true;
         Ability_Sub subAb = sa.getSubAbility();
@@ -880,6 +1045,12 @@ public class AbilityFactory_Counters {
         return chance;
     }
 
+    /**
+     * <p>proliferateResolve.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void proliferateResolve(final AbilityFactory AF, SpellAbility sa) {
         CardList hperms = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         hperms = hperms.filter(new CardListFilter() {
@@ -1024,6 +1195,12 @@ public class AbilityFactory_Counters {
     // ********** PutCounterAll ******************
     // *******************************************
 
+    /**
+     * <p>createAbilityPutCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityPutCounterAll(final AbilityFactory af) {
 
         final SpellAbility abPutCounterAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -1053,6 +1230,12 @@ public class AbilityFactory_Counters {
         return abPutCounterAll;
     }
 
+    /**
+     * <p>createSpellPutCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellPutCounterAll(final AbilityFactory af) {
         final SpellAbility spPutCounterAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4400684695467183219L;
@@ -1076,6 +1259,12 @@ public class AbilityFactory_Counters {
         return spPutCounterAll;
     }
 
+    /**
+     * <p>createDrawbackPutCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackPutCounterAll(final AbilityFactory af) {
         final SpellAbility dbPutCounterAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -3101160929130043022L;
@@ -1104,6 +1293,13 @@ public class AbilityFactory_Counters {
         return dbPutCounterAll;
     }
 
+    /**
+     * <p>putAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String putAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -1128,6 +1324,13 @@ public class AbilityFactory_Counters {
         return sb.toString();
     }
 
+    /**
+     * <p>putAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean putAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         Random r = MyRandom.random;
@@ -1211,10 +1414,23 @@ public class AbilityFactory_Counters {
         return ((r.nextFloat() < .6667) && chance);
     }
 
+    /**
+     * <p>putAllPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean putAllPlayDrawbackAI(final AbilityFactory af, final SpellAbility sa) {
         return putAllCanPlayAI(af, sa);
     }
 
+    /**
+     * <p>putAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void putAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -1243,6 +1459,12 @@ public class AbilityFactory_Counters {
     // ********** RemoveCounterAll ***************
     // *******************************************
 
+    /**
+     * <p>createAbilityRemoveCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityRemoveCounterAll(final AbilityFactory af) {
 
         final SpellAbility abRemoveCounterAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -1272,6 +1494,12 @@ public class AbilityFactory_Counters {
         return abRemoveCounterAll;
     }
 
+    /**
+     * <p>createSpellRemoveCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellRemoveCounterAll(final AbilityFactory af) {
         final SpellAbility spRemoveCounterAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 4173468877313664704L;
@@ -1295,6 +1523,12 @@ public class AbilityFactory_Counters {
         return spRemoveCounterAll;
     }
 
+    /**
+     * <p>createDrawbackRemoveCounterAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackRemoveCounterAll(final AbilityFactory af) {
         final SpellAbility dbRemoveCounterAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 9210702927696563686L;
@@ -1323,6 +1557,13 @@ public class AbilityFactory_Counters {
         return dbRemoveCounterAll;
     }
 
+    /**
+     * <p>removeCounterAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String removeCounterAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -1347,16 +1588,36 @@ public class AbilityFactory_Counters {
         return sb.toString();
     }
 
+    /**
+     * <p>removeCounterAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean removeCounterAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         //Heartmender is the only card using this, and it's from a trigger.
         //If at some point, other cards use this as a spell or ability, this will need to be implemented.
         return false;
     }
 
+    /**
+     * <p>removeCounterAllPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean removeCounterAllPlayDrawbackAI(final AbilityFactory af, final SpellAbility sa) {
         return removeCounterAllCanPlayAI(af, sa);
     }
 
+    /**
+     * <p>removeCounterAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void removeCounterAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 

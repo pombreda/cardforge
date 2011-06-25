@@ -8,6 +8,12 @@ import java.util.HashMap;
 import java.util.Random;
 
 //doesHumanAttackAndWin() uses the global variable AllZone.getComputerPlayer()
+/**
+ * <p>ComputerUtil_Attack2 class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ComputerUtil_Attack2 {
 
     //possible attackers and blockers
@@ -24,10 +30,24 @@ public class ComputerUtil_Attack2 {
 
     private int aiAggression = 0; // added by Masher, how aggressive the ai attack will be depending on circumstances
 
+    /**
+     * <p>Constructor for ComputerUtil_Attack2.</p>
+     *
+     * @param possibleAttackers an array of {@link forge.Card} objects.
+     * @param possibleBlockers an array of {@link forge.Card} objects.
+     * @param blockerLife a int.
+     */
     public ComputerUtil_Attack2(Card[] possibleAttackers, Card[] possibleBlockers, int blockerLife) {
         this(new CardList(possibleAttackers), new CardList(possibleBlockers), blockerLife);
     }
 
+    /**
+     * <p>Constructor for ComputerUtil_Attack2.</p>
+     *
+     * @param possibleAttackers a {@link forge.CardList} object.
+     * @param possibleBlockers a {@link forge.CardList} object.
+     * @param blockerLife a int.
+     */
     public ComputerUtil_Attack2(CardList possibleAttackers, CardList possibleBlockers, int blockerLife) {
         humanList = new CardList(possibleBlockers.toArray());
         humanList = humanList.getType("Creature");
@@ -42,6 +62,12 @@ public class ComputerUtil_Attack2 {
         this.blockerLife = blockerLife;
     }//constructor
 
+    /**
+     * <p>sortAttackers.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList sortAttackers(CardList in) {
         CardList list = new CardList();
 
@@ -63,6 +89,13 @@ public class ComputerUtil_Attack2 {
     }//sortAttackers()
 
     //Is there any reward for attacking? (for 0/1 creatures there is not)
+    /**
+     * <p>isEffectiveAttacker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public boolean isEffectiveAttacker(Card attacker, Combat combat) {
         if (CombatUtil.damageIfUnblocked(attacker, AllZone.getHumanPlayer(), combat) > 0) return true;
         if (CombatUtil.poisonIfUnblocked(attacker, AllZone.getHumanPlayer(), combat) > 0) return true;
@@ -75,6 +108,12 @@ public class ComputerUtil_Attack2 {
         return false;
     }
 
+    /**
+     * <p>getPossibleAttackers.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getPossibleAttackers(CardList in) {
         CardList list = new CardList(in.toArray());
         list = list.filter(new CardListFilter() {
@@ -85,6 +124,13 @@ public class ComputerUtil_Attack2 {
         return list;
     }//getPossibleAttackers()
 
+    /**
+     * <p>getPossibleBlockers.</p>
+     *
+     * @param blockers a {@link forge.CardList} object.
+     * @param attackers a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getPossibleBlockers(CardList blockers, CardList attackers) {
         CardList possibleBlockers = new CardList(blockers.toArray());
         final CardList attackerList = new CardList(attackers.toArray());
@@ -103,6 +149,13 @@ public class ComputerUtil_Attack2 {
     //this checks to make sure that the computer player
     //doesn't lose when the human player attacks
     //this method is used by getAttackers()
+    /**
+     * <p>notNeededAsBlockers.</p>
+     *
+     * @param attackers a {@link forge.CardList} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList notNeededAsBlockers(CardList attackers, Combat combat) {
         CardList notNeededAsBlockers = new CardList(attackers.toArray());
         CardListUtil.sortAttackLowFirst(attackers);
@@ -164,6 +217,12 @@ public class ComputerUtil_Attack2 {
     }
 
     //this uses a global variable, which isn't perfect
+    /**
+     * <p>doesHumanAttackAndWin.</p>
+     *
+     * @param nBlockingCreatures a int.
+     * @return a boolean.
+     */
     public boolean doesHumanAttackAndWin(int nBlockingCreatures) {
         int totalAttack = 0;
         int stop = humanList.size() - nBlockingCreatures;
@@ -177,6 +236,11 @@ public class ComputerUtil_Attack2 {
         return AllZone.getComputerPlayer().getLife() <= totalAttack;
     }
 
+    /**
+     * <p>doAssault.</p>
+     *
+     * @return a boolean.
+     */
     private boolean doAssault() {
         //Beastmaster Ascension
         if (AllZoneUtil.isCardInPlay("Beastmaster Ascension", AllZone.getComputerPlayer()) && attackers.size() > 1) {
@@ -202,6 +266,12 @@ public class ComputerUtil_Attack2 {
         return blockerLife <= totalAttack;
     }//doAssault()
 
+    /**
+     * <p>chooseDefender.</p>
+     *
+     * @param c a {@link forge.Combat} object.
+     * @param bAssault a boolean.
+     */
     public void chooseDefender(Combat c, boolean bAssault) {
         // TODO: split attackers to different planeswalker/human
         // AI will only attack one Defender per combat for now
@@ -220,6 +290,11 @@ public class ComputerUtil_Attack2 {
     }
 
 
+    /**
+     * <p>Getter for the field <code>attackers</code>.</p>
+     *
+     * @return a {@link forge.Combat} object.
+     */
     public Combat getAttackers() {
         //if this method is called multiple times during a turn,
         //it will always return the same value
@@ -467,6 +542,12 @@ System.out.println(String.valueOf(outNumber) + " = outNumber, higher = better fo
         return combat;
     }//getAttackers()
 
+    /**
+     * <p>countExaltedBonus.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public int countExaltedBonus(Player player) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
         list = list.filter(new CardListFilter() {
@@ -478,6 +559,12 @@ System.out.println(String.valueOf(outNumber) + " = outNumber, higher = better fo
         return list.size();
     }
 
+    /**
+     * <p>getAttack.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public int getAttack(Card c) {
         int n = c.getNetCombatDamage();
 
@@ -487,6 +574,14 @@ System.out.println(String.valueOf(outNumber) + " = outNumber, higher = better fo
         return n;
     }
 
+    /**
+     * <p>shouldAttack.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param defenders a {@link forge.CardList} object.
+     * @param combat a {@link forge.Combat} object.
+     * @return a boolean.
+     */
     public boolean shouldAttack(Card attacker, CardList defenders, Combat combat) {
         boolean canBeKilledByOne = false; // indicates if the attacker can be killed by a single blockers
         boolean canKillAll = true; // indicates if the attacker can kill all single blockers

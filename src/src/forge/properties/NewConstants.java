@@ -16,56 +16,103 @@ package forge.properties;
  */
 public interface NewConstants {
     //General properties
+    /** Constant <code>MAIL="program/mail"</code> */
     public static final String MAIL = "program/mail";
+    /** Constant <code>FORUM="program/forum"</code> */
     public static final String FORUM = "program/forum";
+    /** Constant <code>VERSION="program/version"</code> */
     public static final String VERSION = "program/version";
 
+    /** Constant <code>SHOW2CDECK="showdeck/2color"</code> */
     public static final String SHOW2CDECK = "showdeck/2color";
 
+    /** Constant <code>DECKS="decks"</code> */
     public static final String DECKS = "decks";
+    /** Constant <code>BOOSTER_DECKS="booster-decks"</code> */
     public static final String BOOSTER_DECKS = "booster-decks";
+    /** Constant <code>NEW_DECKS="decks-dir"</code> */
     public static final String NEW_DECKS = "decks-dir";
 
+    /** Constant <code>TOKENS="tokens"</code> */
     public static final String TOKENS = "tokens";
+    /** Constant <code>CARD_PICTURES="card-pictures"</code> */
     public static final String CARD_PICTURES = "card-pictures";
+    /** Constant <code>CARD_PICTURES_TOKEN_LQ="card-pictures_token_lq"</code> */
     public static final String CARD_PICTURES_TOKEN_LQ = "card-pictures_token_lq";
+    /** Constant <code>CARD_PICTURES_A="card-pictures_a"</code> */
     public static final String CARD_PICTURES_A = "card-pictures_a";
+    /** Constant <code>CARD_PICTURES_B="card-pictures_b"</code> */
     public static final String CARD_PICTURES_B = "card-pictures_b";
+    /** Constant <code>CARD_PICTURES_C="card-pictures_c"</code> */
     public static final String CARD_PICTURES_C = "card-pictures_c";
+    /** Constant <code>CARD_PICTURES_D="card-pictures_d"</code> */
     public static final String CARD_PICTURES_D = "card-pictures_d";
+    /** Constant <code>CARD_PICTURES_E="card-pictures_e"</code> */
     public static final String CARD_PICTURES_E = "card-pictures_e";
+    /** Constant <code>CARD_PICTURES_F="card-pictures_f"</code> */
     public static final String CARD_PICTURES_F = "card-pictures_f";
+    /** Constant <code>CARD_PICTURES_G="card-pictures_g"</code> */
     public static final String CARD_PICTURES_G = "card-pictures_g";
+    /** Constant <code>CARD_PICTURES_H="card-pictures_h"</code> */
     public static final String CARD_PICTURES_H = "card-pictures_h";
+    /** Constant <code>CARD_PICTURES_I="card-pictures_i"</code> */
     public static final String CARD_PICTURES_I = "card-pictures_i";
+    /** Constant <code>CARD_PICTURES_J="card-pictures_j"</code> */
     public static final String CARD_PICTURES_J = "card-pictures_j";
+    /** Constant <code>CARD_PICTURES_K="card-pictures_k"</code> */
     public static final String CARD_PICTURES_K = "card-pictures_k";
+    /** Constant <code>CARD_PICTURES_L="card-pictures_l"</code> */
     public static final String CARD_PICTURES_L = "card-pictures_l";
+    /** Constant <code>CARD_PICTURES_M="card-pictures_m"</code> */
     public static final String CARD_PICTURES_M = "card-pictures_m";
+    /** Constant <code>CARD_PICTURES_N="card-pictures_n"</code> */
     public static final String CARD_PICTURES_N = "card-pictures_n";
+    /** Constant <code>CARD_PICTURES_O="card-pictures_o"</code> */
     public static final String CARD_PICTURES_O = "card-pictures_o";
+    /** Constant <code>CARD_PICTURES_P="card-pictures_p"</code> */
     public static final String CARD_PICTURES_P = "card-pictures_p";
+    /** Constant <code>CARD_PICTURES_Q="card-pictures_q"</code> */
     public static final String CARD_PICTURES_Q = "card-pictures_q";
+    /** Constant <code>CARD_PICTURES_R="card-pictures_r"</code> */
     public static final String CARD_PICTURES_R = "card-pictures_r";
+    /** Constant <code>CARD_PICTURES_S="card-pictures_s"</code> */
     public static final String CARD_PICTURES_S = "card-pictures_s";
+    /** Constant <code>CARD_PICTURES_T="card-pictures_t"</code> */
     public static final String CARD_PICTURES_T = "card-pictures_t";
+    /** Constant <code>CARD_PICTURES_U="card-pictures_u"</code> */
     public static final String CARD_PICTURES_U = "card-pictures_u";
+    /** Constant <code>CARD_PICTURES_V="card-pictures_v"</code> */
     public static final String CARD_PICTURES_V = "card-pictures_v";
+    /** Constant <code>CARD_PICTURES_W="card-pictures_w"</code> */
     public static final String CARD_PICTURES_W = "card-pictures_w";
+    /** Constant <code>CARD_PICTURES_X="card-pictures_x"</code> */
     public static final String CARD_PICTURES_X = "card-pictures_x";
+    /** Constant <code>CARD_PICTURES_Y="card-pictures_y"</code> */
     public static final String CARD_PICTURES_Y = "card-pictures_y";
+    /** Constant <code>CARD_PICTURES_Z="card-pictures_z"</code> */
     public static final String CARD_PICTURES_Z = "card-pictures_z";
+    /** Constant <code>CARD_PICTURES_OTHER="card-pictures_other"</code> */
     public static final String CARD_PICTURES_OTHER = "card-pictures_other";
+    /** Constant <code>CARD_PICTURES_TOKEN_HQ="card-pictures_token_hq"</code> */
     public static final String CARD_PICTURES_TOKEN_HQ = "card-pictures_token_hq";
+    /** Constant <code>CARDS="cards"</code> */
     public static final String CARDS = "cards";
+    /** Constant <code>CARDSFOLDER="cardsfolder"</code> */
     public static final String CARDSFOLDER = "cardsfolder";
+    /** Constant <code>REMOVED="removed-cards"</code> */
     public static final String REMOVED = "removed-cards";
+    /** Constant <code>NAME_MUTATOR="name-mutator"</code> */
     public static final String NAME_MUTATOR = "name-mutator";
+    /** Constant <code>BOOSTERDATA="boosterdata"</code> */
     public static final String BOOSTERDATA = "boosterdata";
 
+    /** Constant <code>IMAGE_BASE="image/base"</code> */
     public static final String IMAGE_BASE = "image/base";
+    /** Constant <code>IMAGE_TOKEN="image/token"</code> */
     public static final String IMAGE_TOKEN = "image/token";
+    /** Constant <code>IMAGE_ICON="image/icon"</code> */
     public static final String IMAGE_ICON = "image/icon";
+    /** Constant <code>SOUND_BASE="sound/base"</code> */
     public static final String SOUND_BASE = "sound/base";
 
     /**

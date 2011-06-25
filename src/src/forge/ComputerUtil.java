@@ -14,14 +14,31 @@ import java.util.HashMap;
 import static forge.error.ErrorViewer.showError;
 
 
+/**
+ * <p>ComputerUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ComputerUtil {
 
     //if return true, go to next phase
+    /**
+     * <p>playCards.</p>
+     *
+     * @return a boolean.
+     */
     static public boolean playCards() {
         return playCards(getSpellAbility());
     }
 
     //if return true, go to next phase
+    /**
+     * <p>playCards.</p>
+     *
+     * @param all an array of {@link forge.card.spellability.SpellAbility} objects.
+     * @return a boolean.
+     */
     static public boolean playCards(SpellAbility[] all) {
         //not sure "playing biggest spell" matters?
         sortSpellAbilityByCost(all);
@@ -44,6 +61,12 @@ public class ComputerUtil {
         return true;
     }//playCards()
 
+    /**
+     * <p>playCards.</p>
+     *
+     * @param all a {@link java.util.ArrayList} object.
+     * @return a boolean.
+     */
     static public boolean playCards(ArrayList<SpellAbility> all) {
         SpellAbility[] sas = new SpellAbility[all.size()];
         for (int i = 0; i < sas.length; i++) {
@@ -52,6 +75,11 @@ public class ComputerUtil {
         return playCards(sas);
     }//playCards()
 
+    /**
+     * <p>handlePlayingSpellAbility.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     static public void handlePlayingSpellAbility(SpellAbility sa) {
         AllZone.getStack().freezeStack();
         Card source = sa.getSourceCard();
@@ -77,6 +105,12 @@ public class ComputerUtil {
         }
     }
 
+    /**
+     * <p>counterSpellRestriction.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     static public int counterSpellRestriction(SpellAbility sa) {
         // Move this to AF?
         // Restriction Level is Based off a handful of factors
@@ -135,6 +169,12 @@ public class ComputerUtil {
     }
 
     //if return true, go to next phase
+    /**
+     * <p>playCounterSpell.</p>
+     *
+     * @param possibleCounters a {@link java.util.ArrayList} object.
+     * @return a boolean.
+     */
     static public boolean playCounterSpell(ArrayList<SpellAbility> possibleCounters) {
         SpellAbility bestSA = null;
         int bestRestriction = Integer.MIN_VALUE;
@@ -189,6 +229,11 @@ public class ComputerUtil {
 
 
     //this is used for AI's counterspells
+    /**
+     * <p>playStack.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     final static public void playStack(SpellAbility sa) {
         if (canPayCost(sa)) {
             Card source = sa.getSourceCard();
@@ -203,6 +248,11 @@ public class ComputerUtil {
         }
     }
 
+    /**
+     * <p>playStackFree.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     final static public void playStackFree(SpellAbility sa) {
         sa.setActivatingPlayer(AllZone.getComputerPlayer());
 
@@ -213,6 +263,11 @@ public class ComputerUtil {
         AllZone.getStack().add(sa);
     }
 
+    /**
+     * <p>playNoStack.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     final static public void playNoStack(SpellAbility sa) {
         // TODO: We should really restrict what doesn't use the Stack
 
@@ -236,6 +291,11 @@ public class ComputerUtil {
     //gets Spells of cards in hand and Abilities of cards in play
     //checks to see
     //1. if canPlay() returns true, 2. can pay for mana
+    /**
+     * <p>getSpellAbility.</p>
+     *
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     static public SpellAbility[] getSpellAbility() {
         CardList all = new CardList();
         all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
@@ -265,15 +325,35 @@ public class ComputerUtil {
     }
 
     //This is for playing spells regularly (no Cascade/Ripple etc.)
+    /**
+     * <p>canBePlayedAndPayedByAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     * @since 1.0.15
+     */
     static public boolean canBePlayedAndPayedByAI(SpellAbility sa) {
         return sa.canPlayAI() && sa.canPlay() && canPayCost(sa);
     }
 
+    /**
+     * <p>canPayCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     static public boolean canPayCost(SpellAbility sa) {
         return canPayCost(sa, AllZone.getComputerPlayer());
     }//canPayCost()
 
 
+    /**
+     * <p>canPayCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     static public boolean canPayCost(SpellAbility sa, Player player) {
         if (!payManaCost(sa, player, true, 0))
             return false;
@@ -282,10 +362,24 @@ public class ComputerUtil {
     }//canPayCost()
 
 
+    /**
+     * <p>determineLeftoverMana.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     static public int determineLeftoverMana(SpellAbility sa) {
         return determineLeftoverMana(sa, AllZone.getComputerPlayer());
     }
 
+    /**
+     * <p>determineLeftoverMana.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     * @since 1.0.15
+     */
     static public int determineLeftoverMana(SpellAbility sa, Player player) {
 
         int xMana = 0;
@@ -300,10 +394,23 @@ public class ComputerUtil {
     }
 
 
+    /**
+     * <p>canPayAdditionalCosts.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     static public boolean canPayAdditionalCosts(SpellAbility sa) {
         return canPayAdditionalCosts(sa, AllZone.getComputerPlayer());
     }
 
+    /**
+     * <p>canPayAdditionalCosts.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     static public boolean canPayAdditionalCosts(SpellAbility sa, Player player) {
         // Add additional cost checks here before attempting to activate abilities
         Cost cost = sa.getPayCosts();
@@ -461,11 +568,26 @@ public class ComputerUtil {
         return true;
     }
 
+    /**
+     * <p>payManaCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     static public void payManaCost(SpellAbility sa) {
         payManaCost(sa, AllZone.getComputerPlayer(), false, 0);
     }
 
     //the test flag is for canPayCost and should not change the game state
+    /**
+     * <p>payManaCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param player a {@link forge.Player} object.
+     * @param test a boolean.
+     * @param extraMana a int.
+     * @return a boolean.
+     * @since 1.0.15
+     */
     static public boolean payManaCost(SpellAbility sa, Player player, boolean test, int extraMana) {
         String mana = sa.getPayCosts() != null ? sa.getPayCosts().getTotalMana() : sa.getManaCost();
 
@@ -596,6 +718,14 @@ public class ComputerUtil {
     }//payManaCost()
 
 
+    /**
+     * <p>getProduceableColors.</p>
+     *
+     * @param m a {@link forge.card.spellability.Ability_Mana} object.
+     * @param player a {@link forge.Player} object.
+     * @return a {@link java.util.ArrayList} object.
+     * @since 1.0.15
+     */
     public static ArrayList<String> getProduceableColors(Ability_Mana m, Player player) {
         ArrayList<String> colors = new ArrayList<String>();
 
@@ -619,11 +749,22 @@ public class ComputerUtil {
         return colors;
     }
 
+    /**
+     * <p>getAvailableMana.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList getAvailableMana() {
         return getAvailableMana(AllZone.getComputerPlayer());
     }//getAvailableMana()
 
     //gets available mana sources and sorts them
+    /**
+     * <p>getAvailableMana.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList getAvailableMana(final Player player) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
         CardList manaSources = list.filter(new CardListFilter() {
@@ -686,6 +827,15 @@ public class ComputerUtil {
     }//getAvailableMana()
 
     // sorts the most needed mana abilities to come first
+    /**
+     * <p>sortForNeeded.</p>
+     *
+     * @param cost a {@link forge.card.mana.ManaCost} object.
+     * @param manaAbilities a {@link java.util.ArrayList} object.
+     * @param player a {@link forge.Player} object.
+     * @return a {@link java.util.ArrayList} object.
+     * @since 1.0.15
+     */
     static public ArrayList<Ability_Mana> sortForNeeded(ManaCost cost, ArrayList<Ability_Mana> manaAbilities, Player player) {
 
         ArrayList<String> colors;
@@ -724,6 +874,11 @@ public class ComputerUtil {
 
 
     //plays a land if one is available
+    /**
+     * <p>chooseLandsToPlay.</p>
+     *
+     * @return a boolean.
+     */
     static public boolean chooseLandsToPlay() {
         Player computer = AllZone.getComputerPlayer();
         CardList landList = AllZoneUtil.getPlayerHand(computer);
@@ -772,6 +927,14 @@ public class ComputerUtil {
         return true;
     }
 
+    /**
+     * <p>getCardPreference.</p>
+     *
+     * @param activate a {@link forge.Card} object.
+     * @param pref a {@link java.lang.String} object.
+     * @param typeList a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     static public Card getCardPreference(Card activate, String pref, CardList typeList) {
         String[] prefValid = activate.getSVar("AIPreference").split("\\$");
         if (prefValid[0].equals(pref)) {
@@ -798,6 +961,15 @@ public class ComputerUtil {
         return null;
     }
 
+    /**
+     * <p>chooseSacrificeType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseSacrificeType(String type, Card activate, Card target, int amount) {
         CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
@@ -826,18 +998,55 @@ public class ComputerUtil {
         return sacList;
     }
 
+    /**
+     * <p>chooseExileType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseExileType(String type, Card activate, Card target, int amount) {
         return chooseExileFrom(Constant.Zone.Battlefield, type, activate, target, amount);
     }
 
+    /**
+     * <p>chooseExileFromHandType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseExileFromHandType(String type, Card activate, Card target, int amount) {
         return chooseExileFrom(Constant.Zone.Hand, type, activate, target, amount);
     }
 
+    /**
+     * <p>chooseExileFromGraveType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseExileFromGraveType(String type, Card activate, Card target, int amount) {
         return chooseExileFrom(Constant.Zone.Graveyard, type, activate, target, amount);
     }
 
+    /**
+     * <p>chooseExileFrom.</p>
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseExileFrom(String zone, String type, Card activate, Card target, int amount) {
         CardList typeList = AllZoneUtil.getCardsInZone(zone, AllZone.getComputerPlayer());
         typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
@@ -854,6 +1063,15 @@ public class ComputerUtil {
         return exileList;
     }
 
+    /**
+     * <p>chooseTapType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param tap a boolean.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseTapType(String type, Card activate, boolean tap, int amount) {
         CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
@@ -875,6 +1093,15 @@ public class ComputerUtil {
         return tapList;
     }
 
+    /**
+     * <p>chooseReturnType.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @param activate a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @param amount a int.
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList chooseReturnType(String type, Card activate, Card target, int amount) {
         CardList typeList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         typeList = typeList.getValidCards(type.split(","), activate.getController(), activate);
@@ -891,6 +1118,11 @@ public class ComputerUtil {
         return returnList;
     }
 
+    /**
+     * <p>getPossibleAttackers.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     static public CardList getPossibleAttackers() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
         list = list.filter(new CardListFilter() {
@@ -901,6 +1133,11 @@ public class ComputerUtil {
         return list;
     }
 
+    /**
+     * <p>getAttackers.</p>
+     *
+     * @return a {@link forge.Combat} object.
+     */
     static public Combat getAttackers() {
         ComputerUtil_Attack2 att = new ComputerUtil_Attack2(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()),
                 AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer()), AllZone.getHumanPlayer().getLife());
@@ -908,12 +1145,22 @@ public class ComputerUtil {
         return att.getAttackers();
     }
 
+    /**
+     * <p>getBlockers.</p>
+     *
+     * @return a {@link forge.Combat} object.
+     */
     static public Combat getBlockers() {
         CardList blockers = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
 
         return ComputerUtil_Block2.getBlockers(AllZone.getCombat(), blockers);
     }
 
+    /**
+     * <p>sortSpellAbilityByCost.</p>
+     *
+     * @param sa an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     static void sortSpellAbilityByCost(SpellAbility sa[]) {
         //sort from highest cost to lowest
         //we want the highest costs first
@@ -936,6 +1183,12 @@ public class ComputerUtil {
         Arrays.sort(sa, c);
     }//sortSpellAbilityByCost()
 
+    /**
+     * <p>sacrificePermanents.</p>
+     *
+     * @param amount a int.
+     * @param list a {@link forge.CardList} object.
+     */
     static public void sacrificePermanents(int amount, CardList list) {
         // used in Annihilator and AF_Sacrifice
         int max = list.size();
@@ -975,6 +1228,12 @@ public class ComputerUtil {
         }
     }
 
+    /**
+     * <p>canRegenerate.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canRegenerate(Card card) {
 
         if (card.hasKeyword("CARDNAME can't be regenerated.")) return false;
@@ -1008,6 +1267,12 @@ public class ComputerUtil {
         return false;
     }
 
+    /**
+     * <p>possibleDamagePrevention.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int possibleDamagePrevention(Card card) {
 
         int prevented = 0;

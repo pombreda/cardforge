@@ -18,8 +18,12 @@ import static java.lang.String.format;
 
 /**
  * The class ForgeProps. Wrapper around TreeProperties to support the uses in forge.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class ForgeProps {
+    /** Constant <code>properties</code> */
     private static final TreeProperties properties;
 
     static {
@@ -36,6 +40,8 @@ public class ForgeProps {
 
     /**
      * Returns the tree properties of forge
+     *
+     * @return a {@link treeProperties.TreeProperties} object.
      */
     public static TreeProperties getProperties() {
         return properties;
@@ -43,6 +49,9 @@ public class ForgeProps {
 
     /**
      * Returns the string property value, or null if there's no such property
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getProperty(String key) {
         return getProperty(key, null);
@@ -50,6 +59,10 @@ public class ForgeProps {
 
     /**
      * Returns the string property value, or def if there's no such property
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param def a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getProperty(String key, String def) {
         String result;
@@ -64,6 +77,9 @@ public class ForgeProps {
 
     /**
      * Returns the File property value, or null if there's no such property
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.io.File} object.
      */
     public static File getFile(String key) {
         return getFile(key, null);
@@ -71,6 +87,10 @@ public class ForgeProps {
 
     /**
      * Returns the File property value, or def if there's no such property
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param def a {@link java.io.File} object.
+     * @return a {@link java.io.File} object.
      */
     public static File getFile(String key, File def) {
         File result;
@@ -88,6 +108,9 @@ public class ForgeProps {
      * is replaced with a language code (ISO 639-1, see {@link Locale#getLanguage()}). First, the configured
      * language is used. Second, the locale's code is used. If none of them contains the requested key, "en" is
      * used as the language code.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getLocalized(String key) {
         return getLocalized(key, null);
@@ -98,6 +121,10 @@ public class ForgeProps {
      * is replaced with a language code (ISO 639-1, see {@link Locale#getLanguage()}). First, the configured
      * language is used. Second, the locale's code is used. If none of them contains the requested key, "en" is
      * used as the language code. If even that has no value, the def parameter is returned.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param def a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public static String getLocalized(String key, String def) {
         //the list of languages to look for, in the order to be used

@@ -5,12 +5,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_Untaps class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_Untaps extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Untaps.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Untaps(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         Card untapper = (Card) runParams.get("Card");
@@ -24,6 +37,7 @@ public class Trigger_Untaps extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Untaps(mapParams, hostCard);
@@ -36,6 +50,7 @@ public class Trigger_Untaps extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Card", runParams.get("Card"));

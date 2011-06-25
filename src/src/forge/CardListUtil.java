@@ -6,7 +6,20 @@ import forge.card.cardFactory.CardFactoryUtil;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * <p>CardListUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardListUtil {
+    /**
+     * <p>filterToughness.</p>
+     *
+     * @param in a {@link forge.CardList} object.
+     * @param atLeastToughness a int.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList filterToughness(CardList in, int atLeastToughness) {
         CardList out = new CardList();
         for (int i = 0; i < in.size(); i++)
@@ -18,6 +31,11 @@ public class CardListUtil {
 
     //the higher the defense the better
 
+    /**
+     * <p>sortDefense.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortDefense(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -28,6 +46,11 @@ public class CardListUtil {
     }//sortDefense()
 
     //the higher the attack the better
+    /**
+     * <p>sortAttack.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortAttack(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -43,6 +66,11 @@ public class CardListUtil {
 
     // sort by "best" using the EvaluateCreature function
     // the best creatures will be first in the list
+    /**
+     * <p>sortByEvaluateCreature.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByEvaluateCreature(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -54,6 +82,11 @@ public class CardListUtil {
 
     // sort by "best" using the EvaluateCreature function
     // the best creatures will be first in the list
+    /**
+     * <p>sortByMostExpensive.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByMostExpensive(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -64,6 +97,11 @@ public class CardListUtil {
     }//sortByEvaluateCreature()
 
     //the lower the attack the better
+    /**
+     * <p>sortAttackLowFirst.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortAttackLowFirst(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -76,12 +114,22 @@ public class CardListUtil {
         list.sort(com);
     }//sortAttackLowFirst()
 
+    /**
+     * <p>sortNonFlyingFirst.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortNonFlyingFirst(CardList list) {
         sortFlying(list);
         list.reverse();
     }//sortNonFlyingFirst
 
     //the creature with flying are better
+    /**
+     * <p>sortFlying.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortFlying(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -99,6 +147,12 @@ public class CardListUtil {
     }//sortFlying()
 
     //sort by keyword
+    /**
+     * <p>sortByKeyword.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param kw a {@link java.lang.String} object.
+     */
     public static void sortByKeyword(CardList list, String kw) {
         final String keyword = kw;
         Comparator<Card> com = new Comparator<Card>() {
@@ -116,6 +170,11 @@ public class CardListUtil {
         list.sort(com);
     }//sortByKeyword()
 
+    /**
+     * <p>sortByDestroyEffect.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByDestroyEffect(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -151,6 +210,11 @@ public class CardListUtil {
         list.sort(com);
     }
 
+    /**
+     * <p>sortByIndestructible.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByIndestructible(CardList list) {
         final ArrayList<String> arrList = new ArrayList<String>();
         arrList.add("Timber Protector");
@@ -171,6 +235,11 @@ public class CardListUtil {
         list.sort(com);
     }
 
+    /**
+     * <p>sortByTapped.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByTapped(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -188,6 +257,11 @@ public class CardListUtil {
         list.sort(com);
     }
 
+    /**
+     * <p>sortByName.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByName(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -201,6 +275,12 @@ public class CardListUtil {
         list.sort(com);
     }
 
+    /**
+     * <p>sortBySelectable.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param type a {@link java.lang.String} object.
+     */
     public static void sortBySelectable(CardList list, String type) {
         final String t = type;
         Comparator<Card> com = new Comparator<Card>() {
@@ -219,6 +299,11 @@ public class CardListUtil {
         list.sort(com);
     }
 
+    /**
+     * <p>sortByTextLen.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortByTextLen(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -239,6 +324,11 @@ public class CardListUtil {
     }
 
     //Sorts from high to low
+    /**
+     * <p>sortCMC.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     public static void sortCMC(CardList list) {
         Comparator<Card> com = new Comparator<Card>() {
             public int compare(Card a, Card b) {
@@ -259,6 +349,13 @@ public class CardListUtil {
     }//sortCMC
 
 
+    /**
+     * <p>getColor.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getColor(CardList list, final String color) {
         return list.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -267,6 +364,12 @@ public class CardListUtil {
         });
     }//getColor()
 
+    /**
+     * <p>getGoldCards.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getGoldCards(CardList list) {
         return list.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -275,6 +378,12 @@ public class CardListUtil {
         });
     }
 
+    /**
+     * <p>sumAttack.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int sumAttack(CardList c) {
         int attack = 0;
 
@@ -288,6 +397,12 @@ public class CardListUtil {
         return attack;
     }//sumAttack()
 
+    /**
+     * <p>sumDefense.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int sumDefense(CardList c) {
         int defense = 0;
 
@@ -300,6 +415,12 @@ public class CardListUtil {
         return defense;
     }//sumAttack()
 
+    /**
+     * <p>sumFirstStrikeAttack.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int sumFirstStrikeAttack(CardList c) {
         int attack = 0;
 
@@ -313,6 +434,12 @@ public class CardListUtil {
     }//sumFirstStrikeAttack()
 
     //Get the total converted mana cost of a card list
+    /**
+     * <p>sumCMC.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int sumCMC(CardList c) {
         int cmc = 0;
 

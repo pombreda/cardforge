@@ -11,7 +11,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
+/**
+ * <p>Spell_Permanent class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Spell_Permanent extends Spell {
+    /** Constant <code>serialVersionUID=2413495058630644447L</code> */
     private static final long serialVersionUID = 2413495058630644447L;
 
     private boolean willChampion = false;
@@ -115,11 +122,23 @@ public class Spell_Permanent extends Spell {
     ///////
     ////////////////////
 
+    /**
+     * <p>Constructor for Spell_Permanent.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     */
     public Spell_Permanent(Card sourceCard) {
         // Add Costs for all SpellPermanents
         this(sourceCard, new Cost(sourceCard.getManaCost(), sourceCard.getName(), false), null);
     }//Spell_Permanent()
 
+    /**
+     * <p>Constructor for Spell_Permanent.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cost a {@link forge.card.spellability.Cost} object.
+     * @param tgt a {@link forge.card.spellability.Target} object.
+     */
     public Spell_Permanent(Card sourceCard, Cost cost, Target tgt) {
         super(sourceCard, cost, tgt);
 
@@ -151,6 +170,7 @@ public class Spell_Permanent extends Spell {
 
     }//Spell_Permanent()
 
+    /** {@inheritDoc} */
     @Override
     public boolean canPlay() {
         Card source = getSourceCard();
@@ -171,6 +191,7 @@ public class Spell_Permanent extends Spell {
         return super.canPlay();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean canPlayAI() {
 
@@ -222,6 +243,14 @@ public class Spell_Permanent extends Spell {
         return super.canPlayAI();
     }//canPlayAI()
 
+    /**
+     * <p>checkETBEffects.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param api a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean checkETBEffects(Card card, SpellAbility sa, String api) {
         // Trigger play improvements
         ArrayList<Trigger> triggers = card.getTriggers();
@@ -271,6 +300,7 @@ public class Spell_Permanent extends Spell {
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public void resolve() {
         Card c = getSourceCard();

@@ -10,10 +10,23 @@ import java.io.File;
 import java.util.*;
 
 
+/**
+ * <p>CardUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardUtil {
+    /** Constant <code>r</code> */
     public final static Random r = MyRandom.random;
 
 
+    /**
+     * <p>getRandomIndex.</p>
+     *
+     * @param o an array of {@link java.lang.Object} objects.
+     * @return a int.
+     */
     public static int getRandomIndex(Object[] o) {
         if (o == null || o.length == 0) throw new RuntimeException(
                 "CardUtil : getRandomIndex() argument is null or length is 0");
@@ -21,10 +34,22 @@ public class CardUtil {
         return r.nextInt(o.length);
     }
 
+    /**
+     * <p>getRandom.</p>
+     *
+     * @param o an array of {@link forge.Card} objects.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getRandom(Card[] o) {
         return o[getRandomIndex(o)];
     }
 
+    /**
+     * <p>getRandomIndex.</p>
+     *
+     * @param list a {@link forge.card.spellability.SpellAbilityList} object.
+     * @return a int.
+     */
     public static int getRandomIndex(SpellAbilityList list) {
         if (list == null || list.size() == 0) throw new RuntimeException(
                 "CardUtil : getRandomIndex(SpellAbilityList) argument is null or length is 0");
@@ -32,16 +57,34 @@ public class CardUtil {
         return r.nextInt(list.size());
     }
 
+    /**
+     * <p>getRandomIndex.</p>
+     *
+     * @param c a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int getRandomIndex(CardList c) {
         return r.nextInt(c.size());
     }
 
     //returns Card Name (unique number) attack/defense
     //example: Big Elf (12) 2/3
+    /**
+     * <p>toText.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String toText(Card c) {
         return c.getName() + " (" + c.getUniqueNumber() + ") " + c.getNetAttack() + "/" + c.getNetDefense();
     }
 
+    /**
+     * <p>toCard.</p>
+     *
+     * @param col a {@link java.util.Collection} object.
+     * @return an array of {@link forge.Card} objects.
+     */
     public static Card[] toCard(Collection<Card> col) {
         Object o[] = col.toArray();
         Card c[] = new Card[o.length];
@@ -56,12 +99,24 @@ public class CardUtil {
         return c;
     }
 
+    /**
+     * <p>toCard.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     * @return an array of {@link forge.Card} objects.
+     */
     public static Card[] toCard(ArrayList<Card> list) {
         Card[] c = new Card[list.size()];
         list.toArray(c);
         return c;
     }
 
+    /**
+     * <p>toList.</p>
+     *
+     * @param c an array of {@link forge.Card} objects.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> toList(Card c[]) {
         ArrayList<Card> a = new ArrayList<Card>();
         for (int i = 0; i < c.length; i++)
@@ -70,6 +125,12 @@ public class CardUtil {
     }
 
     //returns "G", longColor is Constant.Color.Green and the like
+    /**
+     * <p>getShortColor.</p>
+     *
+     * @param longColor a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getShortColor(String longColor) {
         Map<String, String> map = new HashMap<String, String>();
         map.put(Constant.Color.Black, "B");
@@ -84,15 +145,34 @@ public class CardUtil {
         return (String) o;
     }
 
-    public static boolean isColor(Card c, String col) {
-        ArrayList<String> list = getColors(c);
-        return list.contains(col);
-    }
+     /**
+      * <p>isColor.</p>
+      *
+      * @param c a {@link forge.Card} object.
+      * @param col a {@link java.lang.String} object.
+      * @return a boolean.
+      */
+     public static boolean isColor(Card c, String col) {
+         ArrayList<String> list = getColors(c);
+         return list.contains(col);
+     }
 
+    /**
+     * <p>getColors.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getColors(Card c) {
         return c.determineColor().toStringArray();
     }
 
+    /**
+     * <p>getOnlyColors.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getOnlyColors(Card c) {
         String m = c.getManaCost();
         Set<String> colors = new HashSet<String>();
@@ -127,6 +207,13 @@ public class CardUtil {
     }
 
 
+    /**
+     * <p>hasCardName.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @param list a {@link java.util.ArrayList} object.
+     * @return a boolean.
+     */
     public static boolean hasCardName(String cardName, ArrayList<Card> list) {
         Card c;
         boolean b = false;
@@ -142,16 +229,34 @@ public class CardUtil {
     }//hasCardName()
 
     //probably should put this somewhere else, but not sure where
+    /**
+     * <p>getConvertedManaCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     static public int getConvertedManaCost(SpellAbility sa) {
         return getConvertedManaCost(sa.getManaCost());
     }
 
+    /**
+     * <p>getConvertedManaCost.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     static public int getConvertedManaCost(Card c) {
         if (c.isToken() && !c.isCopiedToken())
             return 0;
         return getConvertedManaCost(c.getManaCost());
     }
 
+    /**
+     * <p>getConvertedManaCost.</p>
+     *
+     * @param manaCost a {@link java.lang.String} object.
+     * @return a int.
+     */
     static public int getConvertedManaCost(String manaCost) {
         if (manaCost.equals("")) return 0;
 
@@ -159,6 +264,13 @@ public class CardUtil {
         return cost.getConvertedManaCost();
     }
 
+    /**
+     * <p>addManaCosts.</p>
+     *
+     * @param mc1 a {@link java.lang.String} object.
+     * @param mc2 a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     static public String addManaCosts(String mc1, String mc2) {
         String tMC = "";
 
@@ -189,6 +301,13 @@ public class CardUtil {
         return tMC.trim();
     }
 
+    /**
+     * <p>getRelative.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param relation a {@link java.lang.String} object.
+     * @return a {@link forge.Card} object.
+     */
     static public Card getRelative(Card c, String relation) {
         if (relation.equals("CARDNAME")) return c;
         else if (relation.startsWith("enchanted ")) return c.getEnchanting().get(0);
@@ -198,10 +317,21 @@ public class CardUtil {
             throw new IllegalArgumentException("Error at CardUtil.getRelative: " + relation + "is not a valid relation");
     }
 
+    /**
+     * <p>isACardType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isACardType(String cardType) {
         return getAllCardTypes().contains(cardType);
     }
 
+    /**
+     * <p>getAllCardTypes.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getAllCardTypes() {
         ArrayList<String> types = new ArrayList<String>();
 
@@ -215,6 +345,11 @@ public class CardUtil {
         return types;
     }
 
+    /**
+     * <p>getCardTypes.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<String> getCardTypes() {
         ArrayList<String> types = new ArrayList<String>();
 
@@ -230,16 +365,34 @@ public class CardUtil {
         return types;
     }
 
+    /**
+     * <p>isASuperType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isASuperType(String cardType) {
         return (cardType.equals("Basic") || cardType.equals("Legendary")
                 || cardType.equals("Snow") || cardType.equals("World"));
     }
 
+    /**
+     * <p>isASubType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isASubType(String cardType) {
         return (!isASuperType(cardType) && !isACardType(cardType));
     }
 
     // Check if a Type is a Creature Type (by excluding all other types)
+    /**
+     * <p>isACreatureType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isACreatureType(String cardType) {
         return (!isACardType(cardType) && !isASuperType(cardType) && !isALandType(cardType)
                 && !cardType.equals("Arcane") && !cardType.equals("Trap")
@@ -247,6 +400,12 @@ public class CardUtil {
                 && !cardType.equals("Equipment") && !cardType.equals("Fortification"));
     }
 
+    /**
+     * <p>isALandType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isALandType(String cardType) {
         return (isABasicLandType(cardType)
                 || cardType.equals("Locus") || cardType.equals("Lair")
@@ -255,6 +414,12 @@ public class CardUtil {
                 || cardType.equals("Desert"));
     }
 
+    /**
+     * <p>isABasicLandType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isABasicLandType(String cardType) {
         return (cardType.equals("Plains")
                 || cardType.equals("Island") || cardType.equals("Swamp")
@@ -262,6 +427,12 @@ public class CardUtil {
     }
 
     //this function checks, if duplicates of a keyword are not necessary (like flying, trample, etc.)
+    /**
+     * <p>isNonStackingKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isNonStackingKeyword(String keyword) {
         return (
                 keyword.equals("Deathtouch") || keyword.equals("Defender")
@@ -275,10 +446,22 @@ public class CardUtil {
                         || keyword.equals("Wither") || keyword.equals("Infect"));
     }
 
+    /**
+     * <p>isStackingKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean isStackingKeyword(String keyword) {
         return !isNonStackingKeyword(keyword);
     }
 
+    /**
+     * <p>buildFilename.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String buildFilename(Card card) {
         File path = null;
         if (card.isToken() && !card.isCopiedToken())
@@ -349,6 +532,12 @@ public class CardUtil {
         return "none";
     }
 
+    /**
+     * <p>getWeightedManaCost.</p>
+     *
+     * @param manaCost a {@link java.lang.String} object.
+     * @return a double.
+     */
     public static double getWeightedManaCost(String manaCost) {
         if (manaCost.equals("")) return 0;
 
@@ -356,6 +545,12 @@ public class CardUtil {
         return cost.getWeightedManaCost();
     }
 
+    /**
+     * <p>getShortColorsString.</p>
+     *
+     * @param colors a {@link java.util.ArrayList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getShortColorsString(ArrayList<String> colors) {
         String colorDesc = "";
         for (String col : colors) {

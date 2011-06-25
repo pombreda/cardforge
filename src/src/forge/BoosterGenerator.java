@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * <p>BoosterGenerator class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class BoosterGenerator {
     private CardList commons = new CardList();
     private CardList uncommons = new CardList();
@@ -30,6 +36,9 @@ public class BoosterGenerator {
 
     //private Random r  = new Random();
 
+    /**
+     * <p>Constructor for BoosterGenerator.</p>
+     */
     public BoosterGenerator() {
         numCommons = 11;
         numUncommons = 3;
@@ -49,6 +58,17 @@ public class BoosterGenerator {
 
     }
 
+    /**
+     * <p>Constructor for BoosterGenerator.</p>
+     *
+     * @param DeckFile a {@link java.lang.String} object.
+     * @param nCommons a int.
+     * @param nUncommons a int.
+     * @param nRares a int.
+     * @param nMythics a int.
+     * @param nSpecials a int.
+     * @param ignoreRarity a boolean.
+     */
     public BoosterGenerator(String DeckFile, int nCommons, int nUncommons, int nRares, int nMythics, int nSpecials, boolean ignoreRarity) {
         numCommons = nCommons;
         numUncommons = nUncommons;
@@ -101,6 +121,11 @@ public class BoosterGenerator {
         shuffleAll();
     }
 
+    /**
+     * <p>Constructor for BoosterGenerator.</p>
+     *
+     * @param SetCode a {@link java.lang.String} object.
+     */
     public BoosterGenerator(final String SetCode) {
         numCommons = 0;
         numUncommons = 0;
@@ -154,6 +179,12 @@ public class BoosterGenerator {
 
     }
 
+    /**
+     * <p>addToRarity.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param si a {@link forge.SetInfo} object.
+     */
     private void addToRarity(Card c, SetInfo si) {
         if (si != null) {
             if (si.Rarity.equals("Common"))
@@ -169,6 +200,9 @@ public class BoosterGenerator {
         }
     }
 
+    /**
+     * <p>shuffleAll.</p>
+     */
     private void shuffleAll() {
 
         if (commons.size() > 0)
@@ -195,6 +229,11 @@ public class BoosterGenerator {
         }
     }
 
+    /**
+     * <p>getBoosterPack.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBoosterPack() {
         CardList temp = new CardList();
 
@@ -255,6 +294,11 @@ public class BoosterGenerator {
         return temp;
     }
 
+    /**
+     * <p>getBoosterPackSize.</p>
+     *
+     * @return a int.
+     */
     public int getBoosterPackSize() {
         return numCommons + numUncommons + numRares + numSpecials;
     }

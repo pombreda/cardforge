@@ -35,38 +35,6 @@ import java.util.List;
  * <pre>
  * AccumulativeRunnable<String> doSetTextImpl =
  * new  AccumulativeRunnable<String>() {
- *     @Override
- *     protected void run(List&lt;String&gt; args) {
- *         //set to the last string being passed
- *         setTextImpl(args.get(args.size() - 1);
- *     }
- * }
- * void setText(String text) {
- *     //add text and send for the execution if needed.
- *     doSetTextImpl.add(text);
- * }
- * </pre>
- * <p/>
- * <p/>
- * Say we want want to implement addDirtyRegion(Rectangle rect)
- * which sends this region to the
- * handleDirtyRegions(List<Rect> regions) on the EDT.
- * addDirtyRegions better be accumulated before handling on the EDT.
- * <p/>
- * <p/>
- * Here is how it can be implemented using AccumulativeRunnable:
- * <pre>
- * AccumulativeRunnable<Rectangle> doHandleDirtyRegions =
- *     new AccumulativeRunnable<Rectangle>() {
- *         @Override
- *         protected void run(List&lt;Rectangle&gt; args) {
- *             handleDirtyRegions(args);
- *         }
- *     };
- *  void addDirtyRegion(Rectangle rect) {
- *      doHandleDirtyRegions.add(rect);
- *  }
- * </pre>
  *
  * @param <T> the type this {@code Runnable} accumulates
  * @author Igor Kushnirskiy
@@ -80,6 +48,7 @@ abstract class AccumulativeRunnable<T> implements Runnable {
      * accumulated arguments to process.
      *
      * @param args accumulated arguments to process.
+     * @param <T> a T object.
      */
     protected abstract void run(List<T> args);
 

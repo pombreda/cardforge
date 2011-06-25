@@ -3,6 +3,12 @@ package forge;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * <p>Combat class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Combat {
     // key is attacker Card
     // value is CardList of blockers
@@ -28,10 +34,16 @@ public class Combat {
     private CardList attackersWithLure = new CardList();
     private CardList canBlockAttackerWithLure = new CardList();
 
+    /**
+     * <p>Constructor for Combat.</p>
+     */
     public Combat() {
         // Let the Begin Turn/Untap Phase Reset Combat properly
     }
 
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         resetAttackers();
         blocked.clear();
@@ -54,6 +66,11 @@ public class Combat {
         initiatePossibleDefenders(AllZone.getPhase().getPlayerTurn().getOpponent());
     }
 
+    /**
+     * <p>initiatePossibleDefenders.</p>
+     *
+     * @param defender a {@link forge.Player} object.
+     */
     public void initiatePossibleDefenders(Player defender) {
         defenders.add(defender);
         CardList planeswalkers = AllZoneUtil.getPlayerCardsInPlay(defender);
@@ -62,6 +79,11 @@ public class Combat {
             defenders.add(pw);
     }
 
+    /**
+     * <p>nextDefender.</p>
+     *
+     * @return a {@link java.lang.Object} object.
+     */
     public Object nextDefender() {
         if (nextDefender >= defenders.size())
             return null;
@@ -72,22 +94,47 @@ public class Combat {
         return defenders.get(currentDefender);
     }
 
+    /**
+     * <p>Setter for the field <code>currentDefender</code>.</p>
+     *
+     * @param def a int.
+     */
     public void setCurrentDefender(int def) {
         currentDefender = def;
     }
 
+    /**
+     * <p>getRemainingDefenders.</p>
+     *
+     * @return a int.
+     */
     public int getRemainingDefenders() {
         return defenders.size() - nextDefender;
     }
 
+    /**
+     * <p>Getter for the field <code>defenders</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Object> getDefenders() {
         return defenders;
     }
 
+    /**
+     * <p>Setter for the field <code>defenders</code>.</p>
+     *
+     * @param newDef a {@link java.util.ArrayList} object.
+     */
     public void setDefenders(ArrayList<Object> newDef) {
         defenders = newDef;
     }
 
+    /**
+     * <p>getDefendingPlaneswalkers.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getDefendingPlaneswalkers() {
         Card[] pwDefending = new Card[defenders.size() - 1];
 
@@ -103,30 +150,65 @@ public class Combat {
         return pwDefending;
     }
 
+    /**
+     * <p>getDeclaredAttackers.</p>
+     *
+     * @return a int.
+     */
     public int getDeclaredAttackers() {
         return attackerToDefender.size();
     }
 
+    /**
+     * <p>Setter for the field <code>attackingPlayer</code>.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void setAttackingPlayer(Player player) {
         attackingPlayer = player;
     }
 
+    /**
+     * <p>Setter for the field <code>defendingPlayer</code>.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void setDefendingPlayer(Player player) {
         defendingPlayer = player;
     }
 
+    /**
+     * <p>Getter for the field <code>attackingPlayer</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getAttackingPlayer() {
         return attackingPlayer;
     }
 
+    /**
+     * <p>Getter for the field <code>defendingPlayer</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getDefendingPlayer() {
         return defendingPlayer;
     }
 
+    /**
+     * <p>Getter for the field <code>defendingDamageMap</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<Card, Integer> getDefendingDamageMap() {
         return defendingDamageMap;
     }
 
+    /**
+     * <p>getTotalDefendingDamage.</p>
+     *
+     * @return a int.
+     */
     public int getTotalDefendingDamage() {
         int total = 0;
 
@@ -139,6 +221,9 @@ public class Combat {
         return total;
     }
 
+    /**
+     * <p>setDefendingDamage.</p>
+     */
     public void setDefendingDamage() {
         defendingDamageMap.clear();
         CardList att = new CardList(getAttackers());
@@ -159,6 +244,11 @@ public class Combat {
     }
 
 
+    /**
+     * <p>setDefendingFirstStrikeDamage.</p>
+     *
+     * @return a boolean.
+     */
     public boolean setDefendingFirstStrikeDamage() {
         boolean needsFirstStrike = false;
         defendingDamageMap.clear();
@@ -183,6 +273,12 @@ public class Combat {
     }
 
 
+    /**
+     * <p>addDefendingDamage.</p>
+     *
+     * @param n a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addDefendingDamage(int n, Card source) {
         String slot = getDefenderByAttacker(source).toString();
         Object o = defenders.get(Integer.parseInt(slot));
@@ -201,14 +297,29 @@ public class Combat {
         }
     }
 
+    /**
+     * <p>addAttackingDamage.</p>
+     *
+     * @param n a int.
+     */
     public void addAttackingDamage(int n) {
         attackingDamage += n;
     }
 
+    /**
+     * <p>Getter for the field <code>attackingDamage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getAttackingDamage() {
         return attackingDamage;
     }
 
+    /**
+     * <p>sortAttackerByDefender.</p>
+     *
+     * @return an array of {@link forge.CardList} objects.
+     */
     public CardList[] sortAttackerByDefender() {
         CardList attackers[] = new CardList[defenders.size()];
         for (int i = 0; i < attackers.length; i++)
@@ -223,24 +334,49 @@ public class Combat {
         return attackers;
     }
 
+    /**
+     * <p>isAttacking.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isAttacking(Card c) {
         return map.get(c) != null;
     }
 
+    /**
+     * <p>addAttacker.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addAttacker(Card c) {
         map.put(c, new CardList());
         attackerToDefender.put(c, currentDefender);
     }
 
+    /**
+     * <p>getDefenderByAttacker.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.Object} object.
+     */
     public Object getDefenderByAttacker(Card c) {
         return attackerToDefender.get(c);
     }
 
+    /**
+     * <p>resetAttackers.</p>
+     */
     public void resetAttackers() {
         map.clear();
         attackerToDefender.clear();
     }
 
+    /**
+     * <p>getAttackers.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getAttackers() {
         CardList out = new CardList();
         Iterator<Card> it = map.keySet().iterator();
@@ -252,15 +388,30 @@ public class Combat {
         return out.toArray();
     }// getAttackers()
 
+    /**
+     * <p>isBlocked.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isBlocked(Card attacker) {
         return blocked.contains(attacker);
     }
 
+    /**
+     * <p>addBlocker.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param blocker a {@link forge.Card} object.
+     */
     public void addBlocker(Card attacker, Card blocker) {
         blocked.add(attacker);
         getList(attacker).add(blocker);
     }
 
+    /**
+     * <p>resetBlockers.</p>
+     */
     public void resetBlockers() {
         reset();
 
@@ -269,6 +420,11 @@ public class Combat {
             addAttacker(att.get(i));
     }
 
+    /**
+     * <p>getAllBlockers.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getAllBlockers() {
         CardList att = new CardList(getAttackers());
         CardList block = new CardList();
@@ -279,6 +435,12 @@ public class Combat {
         return block;
     }// getAllBlockers()
 
+    /**
+     * <p>getBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBlockers(Card attacker) {
         if (getList(attacker) == null)
             return new CardList();
@@ -286,6 +448,12 @@ public class Combat {
             return new CardList(getList(attacker));
     }
 
+    /**
+     * <p>getAttackerBlockedBy.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public Card getAttackerBlockedBy(Card blocker) {
         CardList att = new CardList(getAttackers());
 
@@ -296,10 +464,21 @@ public class Combat {
         return null;
     }
 
+    /**
+     * <p>getList.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getList(Card attacker) {
         return (CardList) map.get(attacker);
     }
 
+    /**
+     * <p>removeFromCombat.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeFromCombat(Card c) {
         // is card an attacker?
         CardList att = new CardList(getAttackers());
@@ -320,6 +499,9 @@ public class Combat {
         CombatUtil.showCombat();
     }// removeFromCombat()
 
+    /**
+     * <p>verifyCreaturesInPlay.</p>
+     */
     public void verifyCreaturesInPlay() {
         CardList all = new CardList();
         all.addAll(getAttackers());
@@ -330,6 +512,9 @@ public class Combat {
                 removeFromCombat(all.get(i));
     }// verifyCreaturesInPlay()
 
+    /**
+     * <p>setUnblocked.</p>
+     */
     public void setUnblocked() {
         CardList attacking = new CardList(getAttackers());
 
@@ -351,6 +536,11 @@ public class Combat {
 
     // set Card.setAssignedDamage() for all creatures in combat
     // also assigns player damage by setPlayerDamage()
+    /**
+     * <p>setAssignedFirstStrikeDamage.</p>
+     *
+     * @return a boolean.
+     */
     public boolean setAssignedFirstStrikeDamage() {
 
         boolean needFirstStrike = setDefendingFirstStrikeDamage();
@@ -393,6 +583,9 @@ public class Combat {
 
     // set Card.setAssignedDamage() for all creatures in combat
     // also assigns player damage by setPlayerDamage()
+    /**
+     * <p>setAssignedDamage.</p>
+     */
     public void setAssignedDamage() {
         setDefendingDamage();
 
@@ -432,6 +625,13 @@ public class Combat {
 
     }// assignDamage()
 
+    /**
+     * <p>distributeAIDamage.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param block a {@link forge.CardList} object.
+     * @param damage a int.
+     */
     private void distributeAIDamage(Card attacker, CardList block, int damage) {
         Card c = attacker;
 
@@ -489,6 +689,9 @@ public class Combat {
         }
     }// setAssignedDamage()
 
+    /**
+     * <p>dealAssignedDamage.</p>
+     */
     public static void dealAssignedDamage() {
         // This function handles both Regular and First Strike combat assignment
         Player player = AllZone.getCombat().getDefendingPlayer();
@@ -545,10 +748,21 @@ public class Combat {
 
     }
 
+    /**
+     * <p>isUnblocked.</p>
+     *
+     * @param att a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isUnblocked(Card att) {
         return unblockedMap.containsKey(att);
     }
 
+    /**
+     * <p>getUnblockedAttackers.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getUnblockedAttackers() {
         CardList out = new CardList();
         Iterator<Card> it = unblockedMap.keySet().iterator();
@@ -563,6 +777,11 @@ public class Combat {
         return out.toArray();
     }// getUnblockedAttackers()
 
+    /**
+     * <p>getUnblockedFirstStrikeAttackers.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getUnblockedFirstStrikeAttackers() {
         CardList out = new CardList();
         Iterator<Card> it = unblockedMap.keySet().iterator();
@@ -577,6 +796,11 @@ public class Combat {
         return out.toArray();
     }// getUnblockedAttackers()
 
+    /**
+     * <p>addUnblockedAttacker.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addUnblockedAttacker(Card c) {
         unblockedMap.put(c, new CardList());
     }

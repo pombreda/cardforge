@@ -6,6 +6,12 @@ import forge.card.cardFactory.CardFactoryUtil;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Target class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Target {
     // Target has two things happening:
     // Targeting restrictions (Creature, Min/Maxm etc) which are true for this whole Target
@@ -14,20 +20,40 @@ public class Target {
 
     private Target_Choices choice = null;
 
+    /**
+     * <p>getTargetChoices.</p>
+     *
+     * @return a {@link forge.card.spellability.Target_Choices} object.
+     */
     public Target_Choices getTargetChoices() {
         return choice;
     }
 
+    /**
+     * <p>setTargetChoices.</p>
+     *
+     * @param tc a {@link forge.card.spellability.Target_Choices} object.
+     */
     public void setTargetChoices(Target_Choices tc) {
         choice = tc;
     }
 
     private boolean bMandatory = false;
 
+    /**
+     * <p>getMandatory.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getMandatory() {
         return bMandatory;
     }
 
+    /**
+     * <p>setMandatory.</p>
+     *
+     * @param m a boolean.
+     */
     public void setMandatory(boolean m) {
         bMandatory = m;
     }
@@ -36,14 +62,29 @@ public class Target {
     private String ValidTgts[];
     private String vtSelection = "";
 
+    /**
+     * <p>doesTarget.</p>
+     *
+     * @return a boolean.
+     */
     public boolean doesTarget() {
         return tgtValid;
     }
 
+    /**
+     * <p>getValidTgts.</p>
+     *
+     * @return an array of {@link java.lang.String} objects.
+     */
     public String[] getValidTgts() {
         return ValidTgts;
     }
 
+    /**
+     * <p>getVTSelection.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getVTSelection() {
         return vtSelection;
     }
@@ -51,28 +92,66 @@ public class Target {
     private String minTargets;
     private String maxTargets;
 
+    /**
+     * <p>Getter for the field <code>minTargets</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     public int getMinTargets(Card c, SpellAbility sa) {
         return AbilityFactory.calculateAmount(c, minTargets, sa);
     }
 
+    /**
+     * <p>Getter for the field <code>maxTargets</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     public int getMaxTargets(Card c, SpellAbility sa) {
         return AbilityFactory.calculateAmount(c, maxTargets, sa);
     }
 
+    /**
+     * <p>isMaxTargetsChosen.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public boolean isMaxTargetsChosen(Card c, SpellAbility sa) {
         return choice != null && getMaxTargets(c, sa) == choice.getNumTargeted();
     }
 
+    /**
+     * <p>isMinTargetsChosen.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public boolean isMinTargetsChosen(Card c, SpellAbility sa) {
         return choice != null && getMinTargets(c, sa) <= choice.getNumTargeted();
     }
 
     private String tgtZone = Constant.Zone.Battlefield;
 
+    /**
+     * <p>setZone.</p>
+     *
+     * @param tZone a {@link java.lang.String} object.
+     */
     public void setZone(String tZone) {
         tgtZone = tZone;
     }
 
+    /**
+     * <p>getZone.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getZone() {
         return tgtZone;
     }
@@ -80,10 +159,20 @@ public class Target {
     // Used for Counters. Currently, Spell,Activated,Triggered can be Comma-separated
     private String targetSpellAbilityType = null;
 
+    /**
+     * <p>Setter for the field <code>targetSpellAbilityType</code>.</p>
+     *
+     * @param tgtSAType a {@link java.lang.String} object.
+     */
     public void setTargetSpellAbilityType(String tgtSAType) {
         targetSpellAbilityType = tgtSAType;
     }
 
+    /**
+     * <p>Getter for the field <code>targetSpellAbilityType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTargetSpellAbilityType() {
         return targetSpellAbilityType;
     }
@@ -91,15 +180,31 @@ public class Target {
     // Used for Counters. The target SA of this SA must be targeting a Valid X
     private String saValidTargeting = null;
 
+    /**
+     * <p>setSAValidTargeting.</p>
+     *
+     * @param saValidTgting a {@link java.lang.String} object.
+     */
     public void setSAValidTargeting(String saValidTgting) {
         saValidTargeting = saValidTgting;
     }
 
+    /**
+     * <p>getSAValidTargeting.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSAValidTargeting() {
         return saValidTargeting;
     }
 
     // Leaving old structure behind for compatibility.
+    /**
+     * <p>addTarget.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     * @return a boolean.
+     */
     public boolean addTarget(Object o) {
         if (choice == null)
             choice = new Target_Choices();
@@ -116,6 +221,11 @@ public class Target {
         return false;
     }
 
+    /**
+     * <p>getTargetCards.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getTargetCards() {
         if (choice == null)
             return new ArrayList<Card>();
@@ -123,6 +233,11 @@ public class Target {
         return choice.getTargetCards();
     }
 
+    /**
+     * <p>getTargetPlayers.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Player> getTargetPlayers() {
         if (choice == null)
             return new ArrayList<Player>();
@@ -130,6 +245,11 @@ public class Target {
         return choice.getTargetPlayers();
     }
 
+    /**
+     * <p>getTargetSAs.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getTargetSAs() {
         if (choice == null)
             return new ArrayList<SpellAbility>();
@@ -137,6 +257,11 @@ public class Target {
         return choice.getTargetSAs();
     }
 
+    /**
+     * <p>getTargets.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Object> getTargets() {
         if (choice == null)
             return new ArrayList<Object>();
@@ -144,20 +269,42 @@ public class Target {
         return choice.getTargets();
     }
 
+    /**
+     * <p>getNumTargeted.</p>
+     *
+     * @return a int.
+     */
     public int getNumTargeted() {
         if (choice == null)
             return 0;
         return choice.getNumTargeted();
     }
 
+    /**
+     * <p>resetTargets.</p>
+     */
     public void resetTargets() {
         choice = null;
     }
 
+    /**
+     * <p>Constructor for Target.</p>
+     *
+     * @param src a {@link forge.Card} object.
+     * @param parse a {@link java.lang.String} object.
+     */
     public Target(Card src, String parse) {
         this(src, parse, "1", "1");
     }
 
+    /**
+     * <p>Constructor for Target.</p>
+     *
+     * @param src a {@link forge.Card} object.
+     * @param parse a {@link java.lang.String} object.
+     * @param min a {@link java.lang.String} object.
+     * @param max a {@link java.lang.String} object.
+     */
     public Target(Card src, String parse, String min, String max) {
         // parse=Tgt{C}{P} - Primarily used for Pump or Damage
         // C = Creature   P=Player/Planeswalker
@@ -197,14 +344,37 @@ public class Target {
         maxTargets = max;
     }
 
+    /**
+     * <p>Constructor for Target.</p>
+     *
+     * @param src a {@link forge.Card} object.
+     * @param select a {@link java.lang.String} object.
+     * @param valid an array of {@link java.lang.String} objects.
+     */
     public Target(Card src, String select, String[] valid) {
         this(src, select, valid, "1", "1");
     }
 
+    /**
+     * <p>Constructor for Target.</p>
+     *
+     * @param src a {@link forge.Card} object.
+     * @param select a {@link java.lang.String} object.
+     * @param valid a {@link java.lang.String} object.
+     */
     public Target(Card src, String select, String valid) {
         this(src, select, valid.split(","), "1", "1");
     }
 
+    /**
+     * <p>Constructor for Target.</p>
+     *
+     * @param src a {@link forge.Card} object.
+     * @param select a {@link java.lang.String} object.
+     * @param valid an array of {@link java.lang.String} objects.
+     * @param min a {@link java.lang.String} object.
+     * @param max a {@link java.lang.String} object.
+     */
     public Target(Card src, String select, String[] valid, String min, String max) {
         srcCard = src;
         tgtValid = true;
@@ -215,6 +385,11 @@ public class Target {
         maxTargets = max;
     }
 
+    /**
+     * <p>getTargetedString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTargetedString() {
         ArrayList<Object> tgts = getTargets();
         StringBuilder sb = new StringBuilder("");
@@ -234,6 +409,11 @@ public class Target {
     }
 
 
+    /**
+     * <p>canOnlyTgtOpponent.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canOnlyTgtOpponent() {
         boolean player = false;
         boolean opponent = false;
@@ -246,6 +426,11 @@ public class Target {
         return opponent && !player;
     }
 
+    /**
+     * <p>canTgtPlayer.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canTgtPlayer() {
         for (String s : ValidTgts) {
             if (s.equals("Player") || s.equals("Opponent"))
@@ -254,6 +439,11 @@ public class Target {
         return false;
     }
 
+    /**
+     * <p>canTgtCreature.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canTgtCreature() {
         for (String s : ValidTgts) {
             if (s.contains("Creature") && !s.contains("nonCreature"))
@@ -262,10 +452,20 @@ public class Target {
         return false;
     }
 
+    /**
+     * <p>canTgtCreatureAndPlayer.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canTgtCreatureAndPlayer() {
         return canTgtPlayer() && canTgtCreature();
     }
 
+    /**
+     * <p>hasCandidates.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasCandidates() {
         if (canTgtPlayer()) {
             return true;

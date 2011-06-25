@@ -4,16 +4,30 @@ import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability;
 import forge.card.spellability.SpellAbility;
 
+/**
+ * <p>PlayerZone_ComesIntoPlay class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
+    /** Constant <code>serialVersionUID=5750837078903423978L</code> */
     private static final long serialVersionUID = 5750837078903423978L;
 
     private boolean trigger = true;
     private boolean leavesTrigger = true;
 
+    /**
+     * <p>Constructor for PlayerZone_ComesIntoPlay.</p>
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @param player a {@link forge.Player} object.
+     */
     public PlayerZone_ComesIntoPlay(String zone, Player player) {
         super(zone, player);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void add(Object o) {
         if (o == null) throw new RuntimeException("PlayerZone_ComesInto Play : add() object is null");
@@ -193,6 +207,7 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
 
     }// end add()
 
+    /** {@inheritDoc} */
     @Override
     public void remove(Object o) {
 
@@ -253,14 +268,29 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
 
     }
 
+    /**
+     * <p>Setter for the field <code>trigger</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setTrigger(boolean b) {
         trigger = b;
     }
 
+    /**
+     * <p>Setter for the field <code>leavesTrigger</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setLeavesTrigger(boolean b) {
         leavesTrigger = b;
     }
 
+    /**
+     * <p>setTriggers.</p>
+     *
+     * @param b a boolean.
+     */
     public void setTriggers(boolean b) {
         trigger = b;
         leavesTrigger = b;

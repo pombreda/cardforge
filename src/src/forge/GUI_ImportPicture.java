@@ -18,7 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * <p>GUI_ImportPicture class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GUI_ImportPicture extends JDialog implements NewConstants {
+    /** Constant <code>serialVersionUID=-4191539152208389089L</code> */
     private static final long serialVersionUID = -4191539152208389089L;
     private JPanel jContentPane = null;
     private JLabel jLabel = null;
@@ -41,7 +48,9 @@ public class GUI_ImportPicture extends JDialog implements NewConstants {
 
 
     /**
-     * @param owner
+     * <p>Constructor for GUI_ImportPicture.</p>
+     *
+     * @param owner a {@link javax.swing.JFrame} object.
      */
     public GUI_ImportPicture(JFrame owner) {
         super(owner);
@@ -51,8 +60,6 @@ public class GUI_ImportPicture extends JDialog implements NewConstants {
 
     /**
      * This method initializes this
-     *
-     * @return void
      */
     private void initialize() {
         Dimension screen = getToolkit().getScreenSize();

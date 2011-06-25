@@ -9,34 +9,74 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 
+/**
+ * <p>CardList class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardList implements Iterable<Card> {
 
+    /**
+     * <p>iterator.</p>
+     *
+     * @return a {@link java.util.Iterator} object.
+     */
     public Iterator<Card> iterator() {
         return list.iterator();
     }
 
     private ArrayList<Card> list = new ArrayList<Card>();
 
+    /**
+     * <p>Constructor for CardList.</p>
+     */
     public CardList() {
     }
 
+    /**
+     * <p>Constructor for CardList.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public CardList(Card... c) {
         addAll(c);
     }
 
+    /**
+     * <p>Constructor for CardList.</p>
+     *
+     * @param al a {@link java.util.ArrayList} object.
+     */
     public CardList(ArrayList<Card> al) {
         addAll(al.toArray());
     }
 
+    /**
+     * <p>Constructor for CardList.</p>
+     *
+     * @param al a {@link forge.CardList} object.
+     */
     public CardList(CardList al) {
         addAll(al.toArray());
     }
 
+    /**
+     * <p>Constructor for CardList.</p>
+     *
+     * @param c an array of {@link java.lang.Object} objects.
+     */
     public CardList(Object[] c) {
         addAll(c);
     }
 
     // get any cards that exist in the passed in sets list
+    /**
+     * <p>getSets.</p>
+     *
+     * @param sets a {@link java.util.ArrayList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getSets(ArrayList<String> sets) {
         CardList list = new CardList();
         for (Card c : this) {
@@ -51,6 +91,12 @@ public class CardList implements Iterable<Card> {
     }//getSets()
 
 
+    /**
+     * <p>getColor.</p>
+     *
+     * @param cardColor a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getColor(String cardColor) {
         CardList list = new CardList();
         for (Card c : this) {
@@ -63,6 +109,13 @@ public class CardList implements Iterable<Card> {
         return list;
     }//getColor()
 
+    /**
+     * <p>getOnly2Colors.</p>
+     *
+     * @param clr1 a {@link java.lang.String} object.
+     * @param clr2 a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getOnly2Colors(final String clr1, final String clr2) {
         CardList list = new CardList();
         list.addAll(this);
@@ -81,10 +134,14 @@ public class CardList implements Iterable<Card> {
         return list.filter(clrF);
     }
 
+    /**
+     * <p>reverse.</p>
+     */
     public void reverse() {
         Collections.reverse(list);
     }
 
+    /** {@inheritDoc} */
     public boolean equals(Object a) {
         if (a instanceof CardList) {
             CardList b = (CardList) a;
@@ -98,6 +155,11 @@ public class CardList implements Iterable<Card> {
     }
 
     //removes one copy of that card
+    /**
+     * <p>remove.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     */
     public void remove(final String cardName) {
         CardList find = this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -111,14 +173,30 @@ public class CardList implements Iterable<Card> {
 
     }//remove(String cardName)
 
+    /**
+     * <p>size.</p>
+     *
+     * @return a int.
+     */
     public int size() {
         return list.size();
     }
 
+    /**
+     * <p>add.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void add(Card c) {
         list.add(c);
     }
 
+    /**
+     * <p>add.</p>
+     *
+     * @param n a int.
+     * @param c a {@link forge.Card} object.
+     */
     public void add(int n, Card c) {
         list.add(n, c);
     }
@@ -132,28 +210,63 @@ public class CardList implements Iterable<Card> {
         addAll(in.toArray());
     }
 
+    /**
+     * <p>contains.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean contains(Card c) {
         return list.contains(c);
     }
 
     //probably remove getCard() in the future
+    /**
+     * <p>getCard.</p>
+     *
+     * @param index a int.
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard(int index) {
         return list.get(index);
     }
 
+    /**
+     * <p>get.</p>
+     *
+     * @param i a int.
+     * @return a {@link forge.Card} object.
+     */
     public Card get(int i) {
         return getCard(i);
     }
 
+    /**
+     * <p>addAll.</p>
+     *
+     * @param c an array of {@link java.lang.Object} objects.
+     */
     public void addAll(Object c[]) {
         for (int i = 0; i < c.length; i++)
             list.add((Card) c[i]);
     }
 
+    /**
+     * <p>containsName.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean containsName(Card c) {
         return containsName(c.getName());
     }
 
+    /**
+     * <p>containsName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean containsName(String name) {
         for (int i = 0; i < size(); i++)
             if (getCard(i).getName().equals(name)) return true;
@@ -162,6 +275,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //returns new subset of all the cards with the same name
+    /**
+     * <p>getName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getName(String name) {
         CardList c = new CardList();
 
@@ -172,6 +291,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //returns new subset of all the cards that have a different name
+    /**
+     * <p>getNotName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getNotName(String name) {
         CardList c = new CardList();
 
@@ -181,6 +306,12 @@ public class CardList implements Iterable<Card> {
         return c;
     }
 
+    /**
+     * <p>getImageName.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getImageName(String name) {
         CardList c = new CardList();
 
@@ -190,6 +321,12 @@ public class CardList implements Iterable<Card> {
         return c;
     }
 
+    /**
+     * <p>getController.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getController(final Player player) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -198,6 +335,12 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getOwner.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getOwner(final Player player) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -206,6 +349,12 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getRarity.</p>
+     *
+     * @param rarity a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getRarity(final String rarity) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -218,6 +367,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //cardType is like "Land" or "Goblin", returns a new CardList that is a subset of current CardList
+    /**
+     * <p>getType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getType(final String cardType) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -227,6 +382,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //cardType is like "Land" or "Goblin", returns a new CardList with cards that do not have this type
+    /**
+     * <p>getNotType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getNotType(final String cardType) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -235,6 +396,11 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getPermanents.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getPermanents() {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -243,6 +409,12 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getKeyword(final String keyword) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -251,6 +423,12 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getNotKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getNotKeyword(final String keyword) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -260,6 +438,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //get all cards that have this string in their keywords
+    /**
+     * <p>getKeywordsContain.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getKeywordsContain(final String keyword) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -269,6 +453,12 @@ public class CardList implements Iterable<Card> {
     }
 
     //get all cards that don't have this string in their keywords
+    /**
+     * <p>getKeywordsDontContain.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getKeywordsDontContain(final String keyword) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -277,6 +467,11 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getTokens.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getTokens() {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -285,6 +480,12 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>filter.</p>
+     *
+     * @param f a {@link forge.CardListFilter} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList filter(CardListFilter f) {
         CardList c = new CardList();
         for (int i = 0; i < size(); i++)
@@ -293,33 +494,61 @@ public class CardList implements Iterable<Card> {
         return c;
     }
 
+    /**
+     * <p>toArray.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public final Card[] toArray() {
         Card[] c = new Card[list.size()];
         list.toArray(c);
         return c;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return list.toString();
     }
 
+    /**
+     * <p>isEmpty.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEmpty() {
         return list.isEmpty();
     }
 
+    /**
+     * <p>remove.</p>
+     *
+     * @param i a int.
+     * @return a {@link forge.Card} object.
+     */
     public Card remove(int i) {
         return list.remove(i);
     }
 
+    /**
+     * <p>remove.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void remove(Card c) {
         list.remove(c);
     }
 
+    /**
+     * <p>clear.</p>
+     */
     public void clear() {
         list.clear();
     }
 
+    /**
+     * <p>shuffle.</p>
+     */
     public void shuffle() {
         // reseed Random each time we want to Shuffle
         //MyRandom.random = MyRandom.random;
@@ -328,10 +557,21 @@ public class CardList implements Iterable<Card> {
         Collections.shuffle(list, MyRandom.random);
     }
 
+    /**
+     * <p>sort.</p>
+     *
+     * @param c a {@link java.util.Comparator} object.
+     */
     public void sort(Comparator<Card> c) {
         Collections.sort(list, c);
     }
 
+    /**
+     * <p>getTargetableCards.</p>
+     *
+     * @param Source a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getTargetableCards(final Card Source) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -340,10 +580,28 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getValidCards.</p>
+     *
+     * @param Restrictions a {@link java.lang.String} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getValidCards(String Restrictions, final Player sourceController, final Card source) {
         return getValidCards(Restrictions.split(","), sourceController, source);
     }
 
+    /**
+     * <p>getValidCards.</p>
+     *
+     * @param Restrictions a {@link java.lang.String} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getValidCards(final String Restrictions[], final Player sourceController, final Card source) {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -352,6 +610,11 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getEquipMagnets.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getEquipMagnets() {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -361,6 +624,11 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getEnchantMagnets.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getEnchantMagnets() {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -370,6 +638,11 @@ public class CardList implements Iterable<Card> {
         });
     }
 
+    /**
+     * <p>getTotalConvertedManaCost.</p>
+     *
+     * @return a int.
+     */
     public int getTotalConvertedManaCost() {
         int total = 0;
         for (int i = 0; i < size(); i++) {
@@ -378,6 +651,12 @@ public class CardList implements Iterable<Card> {
         return total;
     }
 
+    /**
+     * <p>getHighestConvertedManaCost.</p>
+     *
+     * @return a int.
+     * @since 1.0.15
+     */
     public int getHighestConvertedManaCost() {
         int total = 0;
         for (int i = 0; i < size(); i++) {
@@ -386,6 +665,11 @@ public class CardList implements Iterable<Card> {
         return total;
     }
 
+    /**
+     * <p>getColored.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getColored() {
         return this.filter(new CardListFilter() {
             public boolean addCard(Card c) {

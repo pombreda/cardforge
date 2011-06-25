@@ -10,11 +10,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_ZoneAffecting class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_ZoneAffecting {
 
     //**********************************************************************
     //******************************* DRAW *********************************
     //**********************************************************************
+    /**
+     * <p>createAbilityDraw.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDraw(final AbilityFactory af) {
         final SpellAbility abDraw = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5445572699000471299L;
@@ -43,6 +55,12 @@ public class AbilityFactory_ZoneAffecting {
         return abDraw;
     }
 
+    /**
+     * <p>createSpellDraw.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDraw(final AbilityFactory af) {
         final SpellAbility spDraw = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -66,6 +84,12 @@ public class AbilityFactory_ZoneAffecting {
         return spDraw;
     }
 
+    /**
+     * <p>createDrawbackDraw.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackDraw(final AbilityFactory af) {
         final SpellAbility dbDraw = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -94,6 +118,13 @@ public class AbilityFactory_ZoneAffecting {
         return dbDraw;
     }
 
+    /**
+     * <p>drawStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String drawStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -139,6 +170,13 @@ public class AbilityFactory_ZoneAffecting {
         return sb.toString();
     }
 
+    /**
+     * <p>drawCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean drawCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         // AI cannot use this properly until he can use SAs during Humans turn
@@ -202,6 +240,15 @@ public class AbilityFactory_ZoneAffecting {
         return randomReturn;
     }
 
+    /**
+     * <p>drawTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param primarySA a boolean.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean drawTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
         Target tgt = af.getAbTgt();
         HashMap<String, String> params = af.getMapParams();
@@ -298,6 +345,14 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }// drawTargetAI()
 
+    /**
+     * <p>drawTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean drawTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment
             return false;
@@ -314,6 +369,12 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }
 
+    /**
+     * <p>drawResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void drawResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -369,6 +430,12 @@ public class AbilityFactory_ZoneAffecting {
     //******************************* MILL *********************************
     //**********************************************************************
 
+    /**
+     * <p>createAbilityMill.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityMill(final AbilityFactory af) {
         final SpellAbility abMill = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 5445572699000471299L;
@@ -397,6 +464,12 @@ public class AbilityFactory_ZoneAffecting {
         return abMill;
     }
 
+    /**
+     * <p>createSpellMill.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellMill(final AbilityFactory af) {
         final SpellAbility spMill = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -420,6 +493,12 @@ public class AbilityFactory_ZoneAffecting {
         return spMill;
     }
 
+    /**
+     * <p>createDrawbackMill.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackMill(final AbilityFactory af) {
         final SpellAbility dbMill = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4990932993654533449L;
@@ -448,6 +527,13 @@ public class AbilityFactory_ZoneAffecting {
         return dbMill;
     }
 
+    /**
+     * <p>millStackDescription.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String millStackDescription(SpellAbility sa, AbilityFactory af) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -491,6 +577,13 @@ public class AbilityFactory_ZoneAffecting {
         return sb.toString();
     }
 
+    /**
+     * <p>millCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean millCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         if (!ComputerUtil.canPayCost(sa))
@@ -552,6 +645,14 @@ public class AbilityFactory_ZoneAffecting {
         return randomReturn;
     }
 
+    /**
+     * <p>millTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean millTargetAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         Target tgt = af.getAbTgt();
         HashMap<String, String> params = af.getMapParams();
@@ -594,6 +695,13 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }
 
+    /**
+     * <p>millDrawback.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean millDrawback(AbilityFactory af, SpellAbility sa) {
         if (!millTargetAI(af, sa, true))
             return false;
@@ -635,6 +743,12 @@ public class AbilityFactory_ZoneAffecting {
     }
     */
 
+    /**
+     * <p>millResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void millResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -678,6 +792,12 @@ public class AbilityFactory_ZoneAffecting {
     //A:SP$Discard | Cost$B | Tgt$TgtP | NumCards$2 | Mode$Random | SpellDescription$<...>
     //A:AB$Discard | Cost$U | ValidTgts$ Opponent | Mode$RevealYouChoose | NumCards$X | SpellDescription$<...>
 
+    /**
+     * <p>createAbilityDiscard.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDiscard(final AbilityFactory af) {
         final SpellAbility abDiscard = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 4348585353456736817L;
@@ -706,6 +826,12 @@ public class AbilityFactory_ZoneAffecting {
         return abDiscard;
     }
 
+    /**
+     * <p>createSpellDiscard.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDiscard(final AbilityFactory af) {
         final SpellAbility spDiscard = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 4348585353456736817L;
@@ -729,6 +855,12 @@ public class AbilityFactory_ZoneAffecting {
         return spDiscard;
     }
 
+    /**
+     * <p>createDrawbackDiscard.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackDiscard(final AbilityFactory af) {
         final SpellAbility dbDiscard = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 4348585353456736817L;
@@ -757,6 +889,12 @@ public class AbilityFactory_ZoneAffecting {
         return dbDiscard;
     }
 
+    /**
+     * <p>discardResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void discardResolve(final AbilityFactory af, final SpellAbility sa) {
         Card source = sa.getSourceCard();
         HashMap<String, String> params = af.getMapParams();
@@ -877,6 +1015,13 @@ public class AbilityFactory_ZoneAffecting {
         }
     }//discardResolve()
 
+    /**
+     * <p>discardStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String discardStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         String mode = params.get("Mode");
@@ -946,6 +1091,13 @@ public class AbilityFactory_ZoneAffecting {
         return sb.toString();
     }//discardStackDescription()
 
+    /**
+     * <p>discardCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean discardCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         // AI cannot use this properly until he can use SAs during Humans turn
@@ -1035,6 +1187,12 @@ public class AbilityFactory_ZoneAffecting {
         return randomReturn;
     }//discardCanPlayAI()
 
+    /**
+     * <p>discardTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a boolean.
+     */
     private static boolean discardTargetAI(AbilityFactory af) {
         Target tgt = af.getAbTgt();
         if (tgt != null) {
@@ -1047,6 +1205,14 @@ public class AbilityFactory_ZoneAffecting {
     }// discardTargetAI()
 
 
+    /**
+     * <p>discardTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean discardTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -1064,6 +1230,13 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }// discardTrigger()
 
+    /**
+     * <p>discardCheckDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param subAb a {@link forge.card.spellability.Ability_Sub} object.
+     * @return a boolean.
+     */
     private static boolean discardCheckDrawbackAI(AbilityFactory af, Ability_Sub subAb) {
         // Drawback AI improvements
         // if parent draws cards, make sure cards in hand + cards drawn > 0
@@ -1079,6 +1252,12 @@ public class AbilityFactory_ZoneAffecting {
     //******************************* Shuffle ******************************
     //**********************************************************************
 
+    /**
+     * <p>createAbilityShuffle.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityShuffle(final AbilityFactory af) {
         final SpellAbility abShuffle = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -1245185178904838198L;
@@ -1107,6 +1286,12 @@ public class AbilityFactory_ZoneAffecting {
         return abShuffle;
     }
 
+    /**
+     * <p>createSpellShuffle.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellShuffle(final AbilityFactory af) {
         final SpellAbility spShuffle = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 589035800601547559L;
@@ -1130,6 +1315,12 @@ public class AbilityFactory_ZoneAffecting {
         return spShuffle;
     }
 
+    /**
+     * <p>createDrawbackShuffle.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackShuffle(final AbilityFactory af) {
         final SpellAbility dbShuffle = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 5974307947494280639L;
@@ -1158,6 +1349,13 @@ public class AbilityFactory_ZoneAffecting {
         return dbShuffle;
     }
 
+    /**
+     * <p>shuffleStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String shuffleStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -1201,6 +1399,13 @@ public class AbilityFactory_ZoneAffecting {
         return sb.toString();
     }
 
+    /**
+     * <p>shuffleCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean shuffleCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         //not really sure when the compy would use this; maybe only after a human
         // deliberately put a card on top of their library
@@ -1224,10 +1429,27 @@ public class AbilityFactory_ZoneAffecting {
           */
     }
 
+    /**
+     * <p>shuffleTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param primarySA a boolean.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean shuffleTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
         return false;
     }// shuffleTargetAI()
 
+    /**
+     * <p>shuffleTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean shuffleTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment
             return false;
@@ -1244,6 +1466,12 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }
 
+    /**
+     * <p>shuffleResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void shuffleResolve(final AbilityFactory af, final SpellAbility sa) {
         Card host = af.getHostCard();
         HashMap<String, String> params = af.getMapParams();

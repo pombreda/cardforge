@@ -23,6 +23,12 @@ import java.util.Hashtable;
 //	DestroyTgt - actions upon which the tgt should be destroyed.  same list as LoseControl
 //	NoRegen - set if destroyed creature can't be regenerated.  used only with DestroyTgt
 
+/**
+ * <p>AbilityFactory_GainControl class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_GainControl {
 
     private final Card movedCards[] = new Card[1];
@@ -37,6 +43,11 @@ public class AbilityFactory_GainControl {
     private boolean bTapOnLose = false;
     private ArrayList<String> kws = null;
 
+    /**
+     * <p>Constructor for AbilityFactory_GainControl.</p>
+     *
+     * @param newAF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public AbilityFactory_GainControl(AbilityFactory newAF) {
         af = newAF;
         params = af.getMapParams();
@@ -61,6 +72,12 @@ public class AbilityFactory_GainControl {
         }
     }
 
+    /**
+     * <p>getSpellGainControl.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public SpellAbility getSpellGainControl() {
         SpellAbility spControl = new Spell(hostCard, af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 3125489644424832311L;
@@ -84,6 +101,12 @@ public class AbilityFactory_GainControl {
         return spControl;
     }
 
+    /**
+     * <p>getAbilityGainControl.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public SpellAbility getAbilityGainControl() {
 
         final SpellAbility abControl = new Ability_Activated(hostCard, af.getAbCost(), af.getAbTgt()) {
@@ -114,6 +137,12 @@ public class AbilityFactory_GainControl {
         return abControl;
     }
 
+    /**
+     * <p>getDrawbackGainControl.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public SpellAbility getDrawbackGainControl() {
         SpellAbility dbControl = new Ability_Sub(hostCard, af.getAbTgt()) {
             private static final long serialVersionUID = -5577742598032345880L;
@@ -147,6 +176,12 @@ public class AbilityFactory_GainControl {
         return dbControl;
     }
 
+    /**
+     * <p>gainControlStackDescription.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String gainControlStackDescription(SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -184,6 +219,12 @@ public class AbilityFactory_GainControl {
         return sb.toString();
     }
 
+    /**
+     * <p>gainControlTgtAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean gainControlTgtAI(SpellAbility sa) {
         boolean hasCreature = false;
         boolean hasArtifact = false;
@@ -252,6 +293,11 @@ public class AbilityFactory_GainControl {
 
     }
 
+    /**
+     * <p>gainControlResolve.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void gainControlResolve(SpellAbility sa) {
         ArrayList<Card> tgtCards;
 
@@ -323,6 +369,13 @@ public class AbilityFactory_GainControl {
         }//end foreach target
     }
 
+    /**
+     * <p>gainControlTriggerAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean gainControlTriggerAI(SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -337,6 +390,12 @@ public class AbilityFactory_GainControl {
         return true;
     }
 
+    /**
+     * <p>gainControlDrawbackAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean gainControlDrawbackAI(SpellAbility sa) {
         if (af.getAbTgt() == null || !af.getAbTgt().doesTarget()) {
             //all is good
@@ -346,6 +405,12 @@ public class AbilityFactory_GainControl {
         return true;
     }//pumpDrawbackAI()
 
+    /**
+     * <p>getDestroyCommand.</p>
+     *
+     * @param i a int.
+     * @return a {@link forge.Command} object.
+     */
     private Command getDestroyCommand(final int i) {
         final Command destroy = new Command() {
             private static final long serialVersionUID = 878543373519872418L;
@@ -374,6 +439,13 @@ public class AbilityFactory_GainControl {
         return destroy;
     }
 
+    /**
+     * <p>getLoseControlCommand.</p>
+     *
+     * @param i a int.
+     * @param originalController a {@link forge.Player} object.
+     * @return a {@link forge.Command} object.
+     */
     private Command getLoseControlCommand(final int i, final Player originalController) {
         final Command loseControl = new Command() {
             private static final long serialVersionUID = 878543373519872418L;

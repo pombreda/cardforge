@@ -10,6 +10,12 @@ import java.util.*;
 //balance the number of colors and creature/spells for
 //new cards that are won in quest mode
 @Deprecated
+/**
+ * <p>QuestData_BoosterPack class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestData_BoosterPack implements NewConstants {
 //    final private static String      comment          = "//";
 
@@ -37,6 +43,11 @@ public class QuestData_BoosterPack implements NewConstants {
     private ArrayList<String> colorTest = new ArrayList<String>();
 
     //prints statistics to make sure everything is working
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         QuestData_BoosterPack q = new QuestData_BoosterPack();
 
@@ -48,6 +59,14 @@ public class QuestData_BoosterPack implements NewConstants {
 
     //testing
     //nCommon is the number of common cards
+    /**
+     * <p>getNewCards.</p>
+     *
+     * @param nCommon a int.
+     * @param nUncommon a int.
+     * @param nRare a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<String> getNewCards(int nCommon, int nUncommon, int nRare) {
         ArrayList<String> out = new ArrayList<String>();
 
@@ -59,6 +78,11 @@ public class QuestData_BoosterPack implements NewConstants {
     }//getNewCards()
 
     //testing
+    /**
+     * <p>print.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     private void print(ArrayList<String> list) {
         int nCreature = 0;
         int nSpell = 0;
@@ -76,6 +100,9 @@ public class QuestData_BoosterPack implements NewConstants {
     }//print()
 
     //testing
+    /**
+     * <p>colorStats.</p>
+     */
     private void colorStats() {
         String[] colors = {
                 "gold", Constant.Color.Colorless, Constant.Color.Black, Constant.Color.Blue, Constant.Color.Green,
@@ -91,6 +118,9 @@ public class QuestData_BoosterPack implements NewConstants {
         }
     }//colorStats()
 
+    /**
+     * <p>Constructor for QuestData_BoosterPack.</p>
+     */
     public QuestData_BoosterPack() {
         //setup(ForgeProps.getFile(QUEST.COMMON), commonCreature, commonSpell);
         //setup(ForgeProps.getFile(QUEST.UNCOMMON), uncommonCreature, uncommonSpell);
@@ -127,12 +157,24 @@ public class QuestData_BoosterPack implements NewConstants {
         }
     }
 
+    /**
+     * <p>getColorIndex.</p>
+     *
+     * @param n a int.
+     * @return a int.
+     */
     private int getColorIndex(int n) {
         return n % colors.length;
     }
 
     //return a number that is a multiple of colors.length
     //we want to loop all the way through the colors array  
+    /**
+     * <p>getLoopStop.</p>
+     *
+     * @param n a int.
+     * @return a int.
+     */
     private int getLoopStop(int n) {
         int stop = colors.length;
         while (stop < n)
@@ -141,6 +183,12 @@ public class QuestData_BoosterPack implements NewConstants {
         return stop;
     }
 
+    /**
+     * <p>getCommon.</p>
+     *
+     * @param n a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getCommon(int n) {
         ArrayList<String> bag = new ArrayList<String>();
         String c;
@@ -158,6 +206,12 @@ public class QuestData_BoosterPack implements NewConstants {
     }//getCommon()
 
 
+    /**
+     * <p>getUncommon.</p>
+     *
+     * @param n a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getUncommon(int n) {
         ArrayList<String> bag = new ArrayList<String>();
         String c;
@@ -174,6 +228,12 @@ public class QuestData_BoosterPack implements NewConstants {
         return getRandom(n, bag);
     }//getUncommon()
 
+    /**
+     * <p>getRare.</p>
+     *
+     * @param n a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getRare(int n) {
         ArrayList<String> bag = new ArrayList<String>();
         String c;
@@ -188,6 +248,13 @@ public class QuestData_BoosterPack implements NewConstants {
         return getRandom(n, bag);
     }//getRare()
 
+    /**
+     * <p>getRare.</p>
+     *
+     * @param n a int.
+     * @param colorIndex a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getRare(int n, int colorIndex) {
         ArrayList<String> bag = new ArrayList<String>();
         String c;
@@ -203,6 +270,13 @@ public class QuestData_BoosterPack implements NewConstants {
     }//getRare()
 
     //returns String of the card name that matches the parameter "color"
+    /**
+     * <p>getColor.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @param list a {@link java.util.ArrayList} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getColor(String color, ArrayList<String> list) {
         Collections.shuffle(list, random);
 
@@ -219,6 +293,12 @@ public class QuestData_BoosterPack implements NewConstants {
     }//getColor()
 
 
+    /**
+     * <p>getColor.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String getColor(Card c) {
         String m = c.getManaCost();
         Set<String> colors = new HashSet<String>();
@@ -252,6 +332,13 @@ public class QuestData_BoosterPack implements NewConstants {
         return list.get(0).toString();
     }
 
+    /**
+     * <p>Getter for the field <code>random</code>.</p>
+     *
+     * @param n a int.
+     * @param list a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     private ArrayList<String> getRandom(int n, ArrayList<String> list) {
         //must always shuffle since we are starting at 0
         Collections.shuffle(list, random);
@@ -304,6 +391,12 @@ public class QuestData_BoosterPack implements NewConstants {
             return cardList;
         }//readFile()
     */
+    /**
+     * <p>getRarity.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getRarity(String cardName) {
         if (commonCreature.contains(cardName) || commonSpell.contains(cardName)) return "Common";
         else if (uncommonCreature.contains(cardName) || uncommonSpell.contains(cardName)) return "Uncommon";

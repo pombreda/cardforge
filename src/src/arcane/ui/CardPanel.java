@@ -14,22 +14,46 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>CardPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class CardPanel extends JPanel implements CardContainer {
+    /** Constant <code>serialVersionUID=2361907095724263295L</code> */
     private static final long serialVersionUID = 2361907095724263295L;
-    static public final double TAPPED_ANGLE = Math.PI / 2;
-    static public final float ASPECT_RATIO = 3.5f / 2.5f;
+    /**
+     * Constant <code>TAPPED_ANGLE=Math.PI / 2</code>
+     */
+    public static final double TAPPED_ANGLE = Math.PI / 2;
+    /**
+     * Constant <code>ASPECT_RATIO=3.5f / 2.5f</code>
+     */
+    public static final float ASPECT_RATIO = 3.5f / 2.5f;
 
-    static public CardPanel dragAnimationPanel;
+    /**
+     * Constant <code>dragAnimationPanel</code>
+     */
+    public static CardPanel dragAnimationPanel;
 
-    static private final float ROUNDED_CORNER_SIZE = 0.1f;
-    static private final float SELECTED_BORDER_SIZE = 0.01f;
-    static private final float BLACK_BORDER_SIZE = 0.03f;
-    static private final int TEXT_GLOW_SIZE = 6;
-    static private final float TEXT_GLOW_INTENSITY = 3f;
-    static private final float rotCenterToTopCorner = 1.0295630140987000315797369464196f;
-    static private final float rotCenterToBottomCorner = 0.7071067811865475244008443621048f;
+    /** Constant <code>ROUNDED_CORNER_SIZE=0.1f</code> */
+    private static final float ROUNDED_CORNER_SIZE = 0.1f;
+    /** Constant <code>SELECTED_BORDER_SIZE=0.01f</code> */
+    private static final float SELECTED_BORDER_SIZE = 0.01f;
+    /** Constant <code>BLACK_BORDER_SIZE=0.03f</code> */
+    private static final float BLACK_BORDER_SIZE = 0.03f;
+    /** Constant <code>TEXT_GLOW_SIZE=6</code> */
+    private static final int TEXT_GLOW_SIZE = 6;
+    /** Constant <code>TEXT_GLOW_INTENSITY=3f</code> */
+    private static final float TEXT_GLOW_INTENSITY = 3f;
+    /** Constant <code>rotCenterToTopCorner=1.0295630140987000315797369464196f</code> */
+    private static final float rotCenterToTopCorner = 1.0295630140987000315797369464196f;
+    /** Constant <code>rotCenterToBottomCorner=0.7071067811865475244008443621048f</code> */
+    private static final float rotCenterToBottomCorner = 0.7071067811865475244008443621048f;
 
-    static private boolean beenHere = false;
+    /** Constant <code>beenHere=false</code> */
+    private static boolean beenHere = false;
 
     public Card gameCard;
     public CardPanel attachedToPanel;
@@ -47,6 +71,11 @@ public class CardPanel extends JPanel implements CardContainer {
     private boolean isSelected;
     private boolean showCastingCost;
 
+    /**
+     * <p>Constructor for CardPanel.</p>
+     *
+     * @param newGameCard a {@link forge.Card} object.
+     */
     public CardPanel(Card newGameCard) {
         this.gameCard = newGameCard;
 
@@ -88,6 +117,13 @@ public class CardPanel extends JPanel implements CardContainer {
         setCard(newGameCard);
     }
 
+    /**
+     * <p>setImage.</p>
+     *
+     * @param srcImage a {@link java.awt.Image} object.
+     * @param srcImageBlurred a {@link java.awt.Image} object.
+     * @param srcImageBlurred a {@link java.awt.Image} object.
+     */
     private void setImage(Image srcImage, Image srcImageBlurred) {
         synchronized (imagePanel) {
             imagePanel.setImage(srcImage, srcImageBlurred);
@@ -101,6 +137,11 @@ public class CardPanel extends JPanel implements CardContainer {
         doLayout();
     }
 
+    /**
+     * <p>setImage.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     */
     public void setImage(final CardPanel panel) {
         synchronized (panel.imagePanel) {
             if (panel.imagePanel.hasImage())
@@ -110,31 +151,62 @@ public class CardPanel extends JPanel implements CardContainer {
         }
     }
 
+    /**
+     * <p>setScalingType.</p>
+     *
+     * @param scalingType a {@link arcane.ui.ScaledImagePanel.ScalingType} object.
+     */
     public void setScalingType(ScalingType scalingType) {
         imagePanel.setScalingType(scalingType);
     }
 
+    /**
+     * <p>Setter for the field <code>displayEnabled</code>.</p>
+     *
+     * @param displayEnabled a boolean.
+     */
     public void setDisplayEnabled(boolean displayEnabled) {
         this.displayEnabled = displayEnabled;
     }
 
+    /**
+     * <p>isDisplayEnabled.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isDisplayEnabled() {
         return displayEnabled;
     }
 
+    /**
+     * <p>setAnimationPanel.</p>
+     *
+     * @param isAnimationPanel a boolean.
+     */
     public void setAnimationPanel(boolean isAnimationPanel) {
         this.isAnimationPanel = isAnimationPanel;
     }
 
+    /**
+     * <p>setSelected.</p>
+     *
+     * @param isSelected a boolean.
+     */
     public void setSelected(boolean isSelected) {
         this.isSelected = isSelected;
         repaint();
     }
 
+    /**
+     * <p>Setter for the field <code>showCastingCost</code>.</p>
+     *
+     * @param showCastingCost a boolean.
+     */
     public void setShowCastingCost(boolean showCastingCost) {
         this.showCastingCost = showCastingCost;
     }
 
+    /** {@inheritDoc} */
     public void paint(Graphics g) {
         if (!displayEnabled) return;
         if (!isValid()) super.validate();
@@ -147,6 +219,7 @@ public class CardPanel extends JPanel implements CardContainer {
         super.paint(g2d);
     }
 
+    /** {@inheritDoc} */
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
@@ -193,6 +266,7 @@ public class CardPanel extends JPanel implements CardContainer {
         }
     }
 
+    /** {@inheritDoc} */
     protected void paintChildren(Graphics g) {
         super.paintChildren(g);
 
@@ -237,6 +311,11 @@ public class CardPanel extends JPanel implements CardContainer {
         }
     }
 
+    /**
+     * <p>doLayout.</p>
+     *
+     * @since 1.0.15
+     */
     public void doLayout() {
         int borderSize = Math.round(cardWidth * BLACK_BORDER_SIZE);
         imagePanel.setLocation(cardXOffset + borderSize, cardYOffset + borderSize);
@@ -263,10 +342,23 @@ public class CardPanel extends JPanel implements CardContainer {
             imagePanel.setScalingType(ScalingType.bilinear);
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         return gameCard.getName();
     }
 
+    /**
+     * <p>setCardBounds.</p>
+     *
+     * @param x      a int.
+     * @param y      a int.
+     * @param width  a int.
+     * @param height a int.
+     */
     public void setCardBounds(int x, int y, int width, int height) {
         cardWidth = width;
         cardHeight = height;
@@ -283,6 +375,9 @@ public class CardPanel extends JPanel implements CardContainer {
         setBounds(x + xOffset, y + yOffset, width, height);
     }
 
+    /**
+     * <p>repaint.</p>
+     */
     public void repaint() {
         Rectangle b = getBounds();
         JRootPane rootPane = SwingUtilities.getRootPane(this);
@@ -291,22 +386,47 @@ public class CardPanel extends JPanel implements CardContainer {
         rootPane.repaint(p.x, p.y, b.width, b.height);
     }
 
+    /**
+     * <p>getCardX.</p>
+     *
+     * @return a int.
+     */
     public int getCardX() {
         return getX() + cardXOffset;
     }
 
+    /**
+     * <p>getCardY.</p>
+     *
+     * @return a int.
+     */
     public int getCardY() {
         return getY() + cardYOffset;
     }
 
+    /**
+     * <p>Getter for the field <code>cardWidth</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCardWidth() {
         return cardWidth;
     }
 
+    /**
+     * <p>Getter for the field <code>cardHeight</code>.</p>
+     *
+     * @return a int.
+     */
     public int getCardHeight() {
         return cardHeight;
     }
 
+    /**
+     * <p>getCardLocation.</p>
+     *
+     * @return a {@link java.awt.Point} object.
+     */
     public Point getCardLocation() {
         Point p = getLocation();
         p.x += cardXOffset;
@@ -314,6 +434,11 @@ public class CardPanel extends JPanel implements CardContainer {
         return p;
     }
 
+    /**
+     * <p>setText.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     */
     public void setText(Card card) {
         if (card == null || !Gui_NewGame.cardOverlay.isSelected()) return;
         if (card.isFaceDown()) {
@@ -335,10 +460,16 @@ public class CardPanel extends JPanel implements CardContainer {
         }
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return gameCard;
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         if (gameCard != null && gameCard.equals(card) && isAnimationPanel && imagePanel.hasImage()) return;
         this.gameCard = card;

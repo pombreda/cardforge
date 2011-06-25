@@ -5,10 +5,21 @@ import forge.gui.input.Input_PayManaCostUtil;
 
 //handles mana costs like 2/R or 2/B
 //for cards like Flame Javelin (Shadowmoor)
+/**
+ * <p>Mana_PartSplit class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Mana_PartSplit extends Mana_Part {
     private Mana_Part manaPart = null;
     private String originalCost = "";
 
+    /**
+     * <p>Constructor for Mana_PartSplit.</p>
+     *
+     * @param manaCost a {@link java.lang.String} object.
+     */
     public Mana_PartSplit(String manaCost) {
         //is mana cost like "2/R"
         if (manaCost.length() != 3) throw new RuntimeException(
@@ -17,10 +28,20 @@ public class Mana_PartSplit extends Mana_Part {
         originalCost = manaCost;
     }
 
+    /**
+     * <p>isFirstTime.</p>
+     *
+     * @return a boolean.
+     */
     private boolean isFirstTime() {
         return manaPart == null;
     }
 
+    /**
+     * <p>setup.</p>
+     *
+     * @param manaToPay a {@link java.lang.String} object.
+     */
     private void setup(String manaToPay) {
         //get R out of "2/R"
         String color = originalCost.substring(2, 3);
@@ -38,6 +59,7 @@ public class Mana_PartSplit extends Mana_Part {
         }
     }//setup()
 
+    /** {@inheritDoc} */
     @Override
     public void reduce(String mana) {
         if (isFirstTime()) setup(mana);
@@ -45,6 +67,7 @@ public class Mana_PartSplit extends Mana_Part {
         manaPart.reduce(mana);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void reduce(Mana mana) {
         if (isFirstTime()) setup(Input_PayManaCostUtil.getShortColorString(mana.getColor()));
@@ -52,6 +75,7 @@ public class Mana_PartSplit extends Mana_Part {
         manaPart.reduce(mana);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isNeeded(String mana) {
         if (isFirstTime()) {
@@ -62,6 +86,7 @@ public class Mana_PartSplit extends Mana_Part {
         return manaPart.isNeeded(mana);
     }//isNeeded()
 
+    /** {@inheritDoc} */
     public boolean isNeeded(Mana mana) {
         if (isFirstTime()) {
             //always true because any mana can pay the colorless part of 2/G
@@ -71,6 +96,7 @@ public class Mana_PartSplit extends Mana_Part {
         return manaPart.isNeeded(mana);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isColor(String mana) {
         //ManaPart method
@@ -78,6 +104,7 @@ public class Mana_PartSplit extends Mana_Part {
         return mp.indexOf(mana) != -1;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isColor(Mana mana) {
         String color = Input_PayManaCostUtil.getShortColorString(mana.getColor());
@@ -85,6 +112,7 @@ public class Mana_PartSplit extends Mana_Part {
         return mp.indexOf(color) != -1;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isEasierToPay(Mana_Part mp) {
         if (mp instanceof Mana_PartColorless) return false;
@@ -92,6 +120,7 @@ public class Mana_PartSplit extends Mana_Part {
         return toString().length() >= mp.toString().length();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         if (isFirstTime()) return originalCost;
@@ -99,6 +128,7 @@ public class Mana_PartSplit extends Mana_Part {
         return manaPart.toString();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isPaid() {
         if (isFirstTime()) return false;
@@ -106,6 +136,7 @@ public class Mana_PartSplit extends Mana_Part {
         return manaPart.isPaid();
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getConvertedManaCost() {
         // grab the colorless portion of the split cost (usually 2, but possibly more later)

@@ -5,12 +5,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_AttackerUnblocked class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_AttackerUnblocked extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_AttackerUnblocked.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_AttackerUnblocked(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {
@@ -22,6 +35,7 @@ public class Trigger_AttackerUnblocked extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_AttackerUnblocked(mapParams, hostCard);
@@ -34,6 +48,7 @@ public class Trigger_AttackerUnblocked extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Attacker", runParams.get("Attacker"));

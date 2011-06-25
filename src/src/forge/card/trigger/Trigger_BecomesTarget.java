@@ -6,15 +6,26 @@ import forge.card.spellability.SpellAbility;
 import java.util.HashMap;
 
 /**
+ * <p>Trigger_BecomesTarget class.</p>
  *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
  */
 public class Trigger_BecomesTarget extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_BecomesTarget.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_BecomesTarget(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("SourceType")) {
@@ -43,6 +54,7 @@ public class Trigger_BecomesTarget extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_BecomesTarget(mapParams, hostCard);
@@ -55,6 +67,7 @@ public class Trigger_BecomesTarget extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("SourceSA", runParams.get("SourceSA"));

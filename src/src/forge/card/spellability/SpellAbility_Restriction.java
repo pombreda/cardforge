@@ -7,6 +7,12 @@ import forge.card.cardFactory.CardFactoryUtil;
 
 import java.util.HashMap;
 
+/**
+ * <p>SpellAbility_Restriction class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class SpellAbility_Restriction extends SpellAbility_Variables {
     // A class for handling SpellAbility Restrictions. These restrictions include:
     // Zone, Phase, OwnTurn, Speed (instant/sorcery), Amount per Turn, Player,
@@ -15,9 +21,18 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
     // The canPlay function will use these values to determine if the current game state is ok with these restrictions
 
 
+    /**
+     * <p>Constructor for SpellAbility_Restriction.</p>
+     */
     public SpellAbility_Restriction() {
     }
 
+    /**
+     * <p>setRestrictions.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @since 1.0.15
+     */
     public void setRestrictions(HashMap<String, String> params) {
         if (params.containsKey("Activation")) {
             String value = params.get("Activation");
@@ -101,6 +116,13 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
         }
     }//end setRestrictions()
 
+    /**
+     * <p>canPlay.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public boolean canPlay(Card c, SpellAbility sa) {
         if (!AllZone.getZone(c).getZoneName().equals(zone))
             return false;

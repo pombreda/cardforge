@@ -23,6 +23,12 @@ import java.util.Map;
 //OR non-static readAIQuestDeckFiles()
 //which reads the files "questDecks-easy", "questDecks-medium","questDecks-hard",
 
+/**
+ * <p>QuestData class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestData {
 
     int rankIndex;
@@ -58,12 +64,15 @@ public class QuestData {
 
     private transient String[] rankArray;
 
+    /** Constant <code>FANTASY="Fantasy"</code> */
     public static final String FANTASY = "Fantasy";
+    /** Constant <code>REALISTIC="Realistic"</code> */
     public static final String REALISTIC = "Realistic";
 
     QuestInventory inventory = new QuestInventory();
 
     //This field holds the version of the Quest Data
+    /** Constant <code>CURRENT_VERSION_NUMBER=1</code> */
     public static final int CURRENT_VERSION_NUMBER = 1;
 
     //This field places the version number into QD instance,
@@ -73,6 +82,9 @@ public class QuestData {
 
     QuestPetManager petManager = new QuestPetManager();
 
+    /**
+     * <p>Constructor for QuestData.</p>
+     */
     public QuestData() {
 
         for (int i = 0; i < QuestPreferences.getStartingBasic(); i++) {
@@ -95,6 +107,9 @@ public class QuestData {
         randomizeOpponents();
     }
 
+    /**
+     * <p>initTransients.</p>
+     */
     private void initTransients() {
         rankArray = new String[]{
                 "Level 0 - Confused Wizard",
@@ -116,6 +131,13 @@ public class QuestData {
 
     //adds cards to card pool and sets difficulty
 
+    /**
+     * <p>newGame.</p>
+     *
+     * @param difficulty a int.
+     * @param m a {@link java.lang.String} object.
+     * @param standardStart a boolean.
+     */
     public void newGame(int difficulty, String m, boolean standardStart) {
         setDifficulty(difficulty);
 
@@ -146,6 +168,9 @@ public class QuestData {
     }
 
 
+    /**
+     * <p>saveData.</p>
+     */
     public void saveData() {
         QuestDataIO.saveData(this);
     }
@@ -153,11 +178,21 @@ public class QuestData {
 
     //returns Strings of the card names
 
+    /**
+     * <p>getCardpool.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<String> getCardpool() {
         //make a copy so the internal ArrrayList cannot be changed externally
         return new ArrayList<String>(cardPool);
     }
 
+    /**
+     * <p>Getter for the field <code>shopList</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<String> getShopList() {
         if (shopList != null) {
             return new ArrayList<String>(shopList);
@@ -166,11 +201,21 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>Setter for the field <code>shopList</code>.</p>
+     *
+     * @param list a {@link java.util.List} object.
+     */
     public void setShopList(List<String> list) {
         shopList = list;
     }
 
 
+    /**
+     * <p>Getter for the field <code>availableQuests</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<Integer> getAvailableQuests() {
         if (availableQuests != null) {
             return new ArrayList<Integer>(availableQuests);
@@ -179,14 +224,27 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>Setter for the field <code>availableQuests</code>.</p>
+     *
+     * @param list a {@link java.util.List} object.
+     */
     public void setAvailableQuests(List<Integer> list) {
         availableQuests = list;
     }
 
+    /**
+     * <p>clearAvailableQuests.</p>
+     */
     public void clearAvailableQuests() {
         availableQuests.clear();
     }
 
+    /**
+     * <p>Getter for the field <code>completedQuests</code>.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<Integer> getCompletedQuests() {
         if (completedQuests != null) {
             return new ArrayList<Integer>(completedQuests);
@@ -195,21 +253,39 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>Setter for the field <code>completedQuests</code>.</p>
+     *
+     * @param list a {@link java.util.List} object.
+     */
     public void setCompletedQuests(List<Integer> list) {
         completedQuests = list;
     }
 
 
+    /**
+     * <p>clearShopList.</p>
+     */
     public void clearShopList() {
         shopList.clear();
     }
 
 
+    /**
+     * <p>removeDeck.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     */
     public void removeDeck(String deckName) {
         myDecks.remove(deckName);
     }
 
 
+    /**
+     * <p>addDeck.</p>
+     *
+     * @param d a {@link forge.deck.Deck} object.
+     */
     public void addDeck(Deck d) {
         myDecks.put(d.getName(), d);
     }
@@ -218,6 +294,12 @@ public class QuestData {
     //deck.getDeckType() is Constant.GameType.Sealed
     //sealed since the card pool is the Deck sideboard
 
+    /**
+     * <p>getDeck.</p>
+     *
+     * @param deckName a {@link java.lang.String} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
     public Deck getDeck(String deckName) {
         //have to always set the card pool aka the Deck sideboard
         //because new cards may have been added to the card pool by addCards()
@@ -248,6 +330,11 @@ public class QuestData {
     //returns human player decks
     //returns ArrayList of String deck names
 
+    /**
+     * <p>getDeckNames.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<String> getDeckNames() {
         return new ArrayList<String>(myDecks.keySet());
     }
@@ -255,6 +342,11 @@ public class QuestData {
 
     //get new cards that were added to your card pool by addCards()
 
+    /**
+     * <p>getAddedCards.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<String> getAddedCards() {
         return new ArrayList<String>(newCardList);
     }
@@ -262,6 +354,9 @@ public class QuestData {
     //adds 11 cards, to the current card pool
     //(I chose 11 cards instead of 15 in order to make things more challenging)
 
+    /**
+     * <p>addCards.</p>
+     */
     public void addCards() {
         CardList cards = AllZone.getCardFactory().getCards();
         int nCommon = QuestPreferences.getNumCommon();
@@ -280,6 +375,12 @@ public class QuestData {
 
     }
 
+    /**
+     * <p>addRandomRare.</p>
+     *
+     * @param n a int.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> addRandomRare(int n) {
         ArrayList<String> newCards = new ArrayList<String>();
         newCards.addAll(boosterPack.generateCards(AllZone.getCardFactory().getCards(), n, Constant.Rarity.Rare, null));
@@ -290,18 +391,38 @@ public class QuestData {
         return newCards;
     }
 
+    /**
+     * <p>addRandomRare.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String addRandomRare() {
         return addRandomRare(1).get(0);
     }
 
+    /**
+     * <p>addCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addCard(Card c) {
         cardPool.add(c.getName());
     }
 
+    /**
+     * <p>addCard.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addCard(String s) {
         cardPool.add(s);
     }
 
+    /**
+     * <p>removeCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeCard(Card c) {
 
         String s = c.getName();
@@ -318,10 +439,20 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>addCardToShopList.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addCardToShopList(Card c) {
         shopList.add(c.getName());
     }
 
+    /**
+     * <p>removeCardFromShopList.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeCardFromShopList(Card c) {
         String s = c.getName();
         if (!shopList.contains(s)) {
@@ -337,6 +468,12 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>getCreditsToAdd.</p>
+     *
+     * @param matchState a {@link forge.quest.data.QuestMatchState} object.
+     * @return a long.
+     */
     public long getCreditsToAdd(QuestMatchState matchState) {
         long creds = (long) (QuestPreferences.getMatchRewardBase() + (QuestPreferences.getMatchRewardTotalWins() * win));
         String[] wins = matchState.getWinMethods();
@@ -394,6 +531,11 @@ public class QuestData {
 
     //gets all of the cards that are in the cardpool
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<String> getCards() {
         //copy CardList in order to keep private variables private
         //if we just return cardPool, it could be changed externally
@@ -401,6 +543,12 @@ public class QuestData {
     }
 
 
+    /**
+     * <p>getTotalNumberOfGames.</p>
+     *
+     * @param difficulty a int.
+     * @return a int.
+     */
     public int getTotalNumberOfGames(int difficulty) {
         //-2 because you start a level 1, and the last level is secret
         int numberLevels = rankArray.length - 2;
@@ -411,6 +559,9 @@ public class QuestData {
 
     //this changes getRank()
 
+    /**
+     * <p>addWin.</p>
+     */
     public void addWin() {
         win++;
 
@@ -419,47 +570,93 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>addLost.</p>
+     */
     public void addLost() {
         lost++;
     }
 
+    /**
+     * <p>Getter for the field <code>win</code>.</p>
+     *
+     * @return a int.
+     */
     public int getWin() {
         return win;
     }
 
+    /**
+     * <p>Getter for the field <code>lost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLost() {
         return lost;
     }
 
     //********************FANTASY STUFF START***********************
 
+    /**
+     * <p>Setter for the field <code>life</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setLife(int n) {
         life = n;
     }
 
+    /**
+     * <p>Getter for the field <code>life</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLife() {
         return life;
     }
 
+    /**
+     * <p>addLife.</p>
+     *
+     * @param n a int.
+     */
     public void addLife(int n) {
         life += n;
     }
 
 
+    /**
+     * <p>Getter for the field <code>questsPlayed</code>.</p>
+     *
+     * @return a int.
+     */
     public int getQuestsPlayed() {
         return questsPlayed;
     }
 
+    /**
+     * <p>addQuestsPlayed.</p>
+     */
     public void addQuestsPlayed() {
         questsPlayed++;
     }
 
     //********************FANTASY STUFF END***********************
 
+    /**
+     * <p>addCredits.</p>
+     *
+     * @param c a long.
+     */
     public void addCredits(long c) {
         credits += c;
     }
 
+    /**
+     * <p>subtractCredits.</p>
+     *
+     * @param c a long.
+     */
     public void subtractCredits(long c) {
         credits -= c;
         if (credits < 0) {
@@ -467,10 +664,20 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>credits</code>.</p>
+     *
+     * @return a long.
+     */
     public long getCredits() {
         return credits;
     }
 
+    /**
+     * <p>Getter for the field <code>mode</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getMode() {
         if (mode == null) {
             return "";
@@ -480,19 +687,37 @@ public class QuestData {
 
     //should be called first, because the difficultly won't change
 
+    /**
+     * <p>Getter for the field <code>difficulty</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDifficulty() {
         return difficulty;
     }
 
+    /**
+     * <p>getDifficultyIndex.</p>
+     *
+     * @return a int.
+     */
     public int getDifficultyIndex() {
         return diffIndex;
     }
 
+    /**
+     * <p>Setter for the field <code>difficulty</code>.</p>
+     *
+     * @param i a int.
+     */
     public void setDifficulty(int i) {
         diffIndex = i;
         difficulty = QuestPreferences.getDifficulty(i);
     }
 
+    /**
+     * <p>setDifficultyIndex.</p>
+     */
     public void setDifficultyIndex() {
         String[] diffStr = QuestPreferences.getDifficulty();
         for (int i = 0; i < diffStr.length; i++) {
@@ -502,10 +727,20 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>getDifficultyChoices.</p>
+     *
+     * @return an array of {@link java.lang.String} objects.
+     */
     public String[] getDifficultyChoices() {
         return QuestPreferences.getDifficulty();
     }
 
+    /**
+     * <p>getRank.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getRank() {
         //is rankIndex too big?
         if (rankIndex >= rankArray.length) {
@@ -515,12 +750,24 @@ public class QuestData {
         return rankArray[rankIndex];
     }
 
+    /**
+     * <p>getLevel.</p>
+     *
+     * @return a int.
+     * @since 1.0.15
+     */
     public int getLevel() {
         return rankIndex;
     }
 
     //add cards after a certain number of wins or losses
 
+    /**
+     * <p>shouldAddCards.</p>
+     *
+     * @param didWin a boolean.
+     * @return a boolean.
+     */
     public boolean shouldAddCards(boolean didWin) {
         int n = QuestPreferences.getWinsForBooster(diffIndex);
 
@@ -531,6 +778,12 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>shouldAddAdditionalCards.</p>
+     *
+     * @param didWin a boolean.
+     * @return a boolean.
+     */
     public boolean shouldAddAdditionalCards(boolean didWin) {
         float chance = 0.5f;
         if (inventory.getItemLevel("Lucky Coin") == 1) {
@@ -546,11 +799,21 @@ public class QuestData {
         }
     }
 
+    /**
+     * <p>hasSaveFile.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasSaveFile() {
         return ForgeProps.getFile(NewConstants.QUEST.DATA).exists() ||
                 ForgeProps.getFile(NewConstants.QUEST.XMLDATA).exists();
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         QuestData q = new QuestData();
         for (int i = 0; i < 20; i++) {
@@ -565,25 +828,50 @@ public class QuestData {
         System.exit(1);
     }
 
+    /**
+     * <p>Getter for the field <code>petManager</code>.</p>
+     *
+     * @return a {@link forge.quest.data.pet.QuestPetManager} object.
+     */
     public QuestPetManager getPetManager() {
         return petManager;
     }
 
     //get new cards that were added to your card pool by addCards()
 
+    /**
+     * <p>addToNewList.</p>
+     *
+     * @param added a {@link java.util.ArrayList} object.
+     */
     public void addToNewList(ArrayList<String> added) {
         newCardList.addAll(added);
     }
 
+    /**
+     * <p>readResolve.</p>
+     *
+     * @return a {@link java.lang.Object} object.
+     */
     public Object readResolve() {
         initTransients();
         return this;
     }
 
+    /**
+     * <p>Getter for the field <code>inventory</code>.</p>
+     *
+     * @return a {@link forge.quest.data.item.QuestInventory} object.
+     */
     public QuestInventory getInventory() {
         return inventory;
     }
 
+    /**
+     * <p>Getter for the field <code>randomSeed</code>.</p>
+     *
+     * @return a long.
+     */
     public long getRandomSeed() {
         return randomSeed;
     }

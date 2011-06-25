@@ -16,7 +16,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 
+/**
+ * <p>GameActionUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GameActionUtil {
+    /**
+     * <p>executeUpkeepEffects.</p>
+     */
     public static void executeUpkeepEffects() {
         AllZone.getStack().freezeStack();
         upkeep_Braid_Of_Fire();
@@ -95,6 +104,9 @@ public class GameActionUtil {
         AllZone.getStack().unfreezeStack();
     }
 
+    /**
+     * <p>executeDrawStepEffects.</p>
+     */
     public static void executeDrawStepEffects() {
         AllZone.getStack().freezeStack();
         final Player player = AllZone.getPhase().getPlayerTurn();
@@ -104,6 +116,11 @@ public class GameActionUtil {
         AllZone.getStack().unfreezeStack();
     }
 
+    /**
+     * <p>executePlayCardEffects.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void executePlayCardEffects(SpellAbility sa) {
         // experimental:
         // this method check for cards that have triggered abilities whenever a
@@ -123,6 +140,11 @@ public class GameActionUtil {
 
     }
 
+    /**
+     * <p>playCard_Cascade.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Cascade(final Card c) {
         Command Cascade = new Command() {
             private static final long serialVersionUID = -845154812215847505L;
@@ -223,6 +245,11 @@ public class GameActionUtil {
         Cascade.execute();
     }
 
+    /**
+     * <p>playCard_Ripple.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Ripple(final Card c) {
         Command Ripple = new Command() {
             private static final long serialVersionUID = -845154812215847505L;
@@ -324,6 +351,11 @@ public class GameActionUtil {
         Ripple.execute();
     }//playCard_Ripple()
 
+    /**
+     * <p>playCard_Storm.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static void playCard_Storm(SpellAbility sa) {
         Card source = sa.getSourceCard();
         if (!source.isCopiedSpell()
@@ -334,6 +366,11 @@ public class GameActionUtil {
         }
     }//playCard_Storm()
 
+    /**
+     * <p>playCard_Vengevine.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Vengevine(Card c) {
         if (c.isCreature() == true && (Phase.getPlayerCreatureSpellCount() == 2 || Phase.getComputerCreatureSpellCount() == 2)) {
             final Player controller = c.getController();
@@ -366,6 +403,11 @@ public class GameActionUtil {
         }
     }//playCard_Vengevine()
 
+    /**
+     * <p>playCard_Ichneumon_Druid.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Ichneumon_Druid(Card c) {
         if (c.isInstant() && (Phase.getPlayerInstantSpellCount() >= 2 || Phase.getComputerInstantSpellCount() >= 2)) {
             final Player player = c.getController();
@@ -389,6 +431,11 @@ public class GameActionUtil {
         }
     }//playCard_Ichneumon_Druid()
 
+    /**
+     * <p>playCard_Venser_Emblem.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Venser_Emblem(Card c) {
         final Player controller = c.getController();
 
@@ -464,6 +511,11 @@ public class GameActionUtil {
     }
 
 
+    /**
+     * <p>playCard_Standstill.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Standstill(Card c) {
         CardList list = AllZoneUtil.getCardsInPlay("Standstill");
 
@@ -493,6 +545,11 @@ public class GameActionUtil {
     }
 
 
+    /**
+     * <p>playCard_Curse_of_Wizardry.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playCard_Curse_of_Wizardry(final Card c) {
         CardList list = AllZoneUtil.getCardsInPlay("Curse of Wizardry");
 
@@ -523,6 +580,14 @@ public class GameActionUtil {
 
     //UPKEEP CARDS:
 
+    /**
+     * <p>payManaDuringAbilityResolve.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param manaCost a {@link java.lang.String} object.
+     * @param paid a {@link forge.Command} object.
+     * @param unpaid a {@link forge.Command} object.
+     */
     public static void payManaDuringAbilityResolve(String message, String manaCost, Command paid, Command unpaid) {
         // temporarily disable the Resolve flag, so the user can payMana for the resolving Ability
         boolean bResolving = AllZone.getStack().getResolving();
@@ -531,6 +596,9 @@ public class GameActionUtil {
         AllZone.getStack().setResolving(bResolving);
     }
 
+    /**
+     * <p>upkeep_Braid_Of_Fire.</p>
+     */
     private static void upkeep_Braid_Of_Fire() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -566,6 +634,9 @@ public class GameActionUtil {
         }
     } //upkeep_Braid_of_Fire
 
+    /**
+     * <p>upkeep_CumulativeUpkeepCost.</p>
+     */
     public static void upkeep_CumulativeUpkeepCost() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
         list = list.filter(new CardListFilter() {
@@ -622,6 +693,9 @@ public class GameActionUtil {
         }
     }//upkeepCost
 
+    /**
+     * <p>upkeep_Echo.</p>
+     */
     private static void upkeep_Echo() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
         list = list.filter(new CardListFilter() {
@@ -673,6 +747,9 @@ public class GameActionUtil {
         }
     }//echo
 
+    /**
+     * <p>upkeep_Slowtrips.</p>
+     */
     private static void upkeep_Slowtrips() {  // Draw a card at the beginning of the next turn's upkeep.
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -719,6 +796,9 @@ public class GameActionUtil {
         opponent.clearSlowtripList();
     }
 
+    /**
+     * <p>upkeep_UpkeepCost.</p>
+     */
     private static void upkeep_UpkeepCost() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
 
@@ -815,6 +895,9 @@ public class GameActionUtil {
     }//upkeepCost
 
 
+    /**
+     * <p>upkeep_DamageUpkeepCost.</p>
+     */
     private static void upkeep_DamageUpkeepCost() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
         list = list.filter(new CardListFilter() {
@@ -877,6 +960,14 @@ public class GameActionUtil {
         }
     }//damageUpkeepCost
 
+    /**
+     * <p>upkeepAIPayment.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param cost a {@link java.lang.String} object.
+     * @param cost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.Ability} object.
+     */
     private static Ability upkeepAIPayment(Card c, String cost) {
         return new Ability_Static(c, cost) {
             @Override
@@ -886,6 +977,9 @@ public class GameActionUtil {
         };
     }
 
+    /**
+     * <p>upkeep_The_Abyss.</p>
+     */
     private static void upkeep_The_Abyss() {
         /*
 		 * At the beginning of each player's upkeep, destroy target
@@ -951,6 +1045,13 @@ public class GameActionUtil {
         }//end for
     }//The Abyss
 
+    /**
+     * <p>abyss_getTargets.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param card a {@link forge.Card} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList abyss_getTargets(final Player player, Card card) {
         CardList creats = AllZoneUtil.getCreaturesInPlay(player);
         creats = creats.filter(AllZoneUtil.nonartifacts);
@@ -958,6 +1059,9 @@ public class GameActionUtil {
         return creats;
     }
 
+    /**
+     * <p>upkeep_Mana_Vortex.</p>
+     */
     private static void upkeep_Mana_Vortex() {
         /*
 		 * At the beginning of each player's upkeep, that player
@@ -995,6 +1099,9 @@ public class GameActionUtil {
     }//Mana_Vortex
 
 
+    /**
+     * <p>upkeep_Yawgmoth_Demon.</p>
+     */
     private static void upkeep_Yawgmoth_Demon() {
         /*
 		 * At the beginning of your upkeep, you may sacrifice an artifact. If
@@ -1059,6 +1166,9 @@ public class GameActionUtil {
         }//end for
     }
 
+    /**
+     * <p>upkeep_Lord_of_the_Pit.</p>
+     */
     private static void upkeep_Lord_of_the_Pit() {
         /*
 		 * At the beginning of your upkeep, sacrifice a creature other than
@@ -1118,6 +1228,9 @@ public class GameActionUtil {
         }//end for
     }// upkeep_Lord_of_the_Pit()
 
+    /**
+     * <p>upkeep_Drop_of_Honey.</p>
+     */
     private static void upkeep_Drop_of_Honey() {
         /*
 		 * At the beginning of your upkeep, destroy the creature with the
@@ -1185,6 +1298,9 @@ public class GameActionUtil {
         }//end for
     }// upkeep_Drop_of_Honey()
 
+    /**
+     * <p>upkeep_Demonic_Hordes.</p>
+     */
     private static void upkeep_Demonic_Hordes() {
 
         /*
@@ -1273,6 +1389,9 @@ public class GameActionUtil {
 
     //START ENDOFTURN CARDS
 
+    /**
+     * <p>endOfTurn_Wall_Of_Reverence.</p>
+     */
     public static void endOfTurn_Wall_Of_Reverence() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Wall of Reverence");
@@ -1315,6 +1434,9 @@ public class GameActionUtil {
         }
     }//endOfTurn_Wall_Of_Reverence()
 
+    /**
+     * <p>endOfTurn_Predatory_Advantage.</p>
+     */
     public static void endOfTurn_Predatory_Advantage() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player.getOpponent(), "Predatory Advantage");
@@ -1334,6 +1456,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>endOfTurn_Lighthouse_Chronologist.</p>
+     */
     public static void endOfTurn_Lighthouse_Chronologist() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         final Player opponent = player.getOpponent();
@@ -1363,6 +1488,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>endOfTurn_Krovikan_Horror.</p>
+     */
     public static void endOfTurn_Krovikan_Horror() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         final Player opponent = player.getOpponent();
@@ -1370,6 +1498,11 @@ public class GameActionUtil {
         horrorReturn(opponent);
     }
 
+    /**
+     * <p>horrorReturn.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public static void horrorReturn(Player player) {
         // Find each Horror, peek at the card above it, if it's a creature return to hand
         CardList grave = AllZoneUtil.getPlayerGraveyard(player);
@@ -1403,6 +1536,9 @@ public class GameActionUtil {
     }
     //END ENDOFTURN CARDS
 
+    /**
+     * <p>removeAttackedBlockedThisTurn.</p>
+     */
     public static void removeAttackedBlockedThisTurn() {
         // resets the status of attacked/blocked this turn
         Player player = AllZone.getPhase().getPlayerTurn();
@@ -1421,6 +1557,13 @@ public class GameActionUtil {
         AllZone.getGameInfo().setResolvedFirstStrikeDamageThisCombat(false);
     }
 
+    /**
+     * <p>showYesNoDialog.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param question a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean showYesNoDialog(Card c, String question) {
         AllZone.getDisplay().setCard(c);
         StringBuilder title = new StringBuilder();
@@ -1436,10 +1579,22 @@ public class GameActionUtil {
         else return false;
     }
 
+    /**
+     * <p>showInfoDialg.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     public static void showInfoDialg(String message) {
         JOptionPane.showMessageDialog(null, message);
     }
 
+    /**
+     * <p>flipACoin.</p>
+     *
+     * @param caller a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean flipACoin(Player caller, Card source) {
         String choice = "";
         String choices[] = {"heads", "tails"};
@@ -1459,10 +1614,21 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>executeLandfallEffects.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void executeLandfallEffects(Card c) {
         if (c.getName().equals("Lotus Cobra")) landfall_Lotus_Cobra(c);
     }
 
+    /**
+     * <p>showLandfallDialog.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private static boolean showLandfallDialog(Card c) {
         AllZone.getDisplay().setCard(c);
         String[] choices = {"Yes", "No"};
@@ -1475,6 +1641,11 @@ public class GameActionUtil {
         else return true;
     }
 
+    /**
+     * <p>landfall_Lotus_Cobra.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void landfall_Lotus_Cobra(final Card c) {
         Ability ability = new Ability(c, "0") {
             @Override
@@ -1504,6 +1675,12 @@ public class GameActionUtil {
     }
 
     //not restricted to combat damage, not restricted to dealing damage to creatures/players
+    /**
+     * <p>executeDamageDealingEffects.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public static void executeDamageDealingEffects(final Card source, int damage) {
 
         if (damage <= 0) return;
@@ -1513,6 +1690,13 @@ public class GameActionUtil {
     }
 
     //restricted to combat damage and dealing damage to creatures
+    /**
+     * <p>executeCombatDamageToCreatureEffects.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param affected a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public static void executeCombatDamageToCreatureEffects(final Card source, final Card affected, int damage) {
 
         if (damage <= 0) return;
@@ -1521,6 +1705,13 @@ public class GameActionUtil {
     }
 
     //not restricted to combat damage, restricted to dealing damage to creatures
+    /**
+     * <p>executeDamageToCreatureEffects.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param affected a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public static void executeDamageToCreatureEffects(final Card source, final Card affected, int damage) {
 
         if (damage <= 0) return;
@@ -1617,6 +1808,11 @@ public class GameActionUtil {
 
     }
 
+    /**
+     * <p>executeSwordOfLightAndShadowEffects.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     */
     public static void executeSwordOfLightAndShadowEffects(final Card source) {
         final Card src = source;
         final Ability ability = new Ability(src, "0") {
@@ -1674,6 +1870,11 @@ public class GameActionUtil {
     }
 
     //this is for cards like Sengir Vampire
+    /**
+     * <p>executeVampiricEffects.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void executeVampiricEffects(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++) {
@@ -1707,6 +1908,13 @@ public class GameActionUtil {
     }
 
     //not restricted to just combat damage, restricted to players
+    /**
+     * <p>executeDamageToPlayerEffects.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param c a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public static void executeDamageToPlayerEffects(final Player player, final Card c, final int damage) {
         if (damage <= 0) return;
 
@@ -1792,6 +2000,13 @@ public class GameActionUtil {
 
 
     //restricted to combat damage, restricted to players
+    /**
+     * <p>executeCombatDamageToPlayerEffects.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param c a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public static void executeCombatDamageToPlayerEffects(final Player player, final Card c, final int damage) {
 
         if (damage <= 0) return;
@@ -1880,6 +2095,11 @@ public class GameActionUtil {
 
     }//executeCombatDamageToPlayerEffects
 
+    /**
+     * <p>execute_Celestial_Mantle.</p>
+     *
+     * @param enchanted a {@link forge.Card} object.
+     */
     private static void execute_Celestial_Mantle(final Card enchanted) {
         ArrayList<Card> auras = enchanted.getEnchantedBy();
         for (final Card aura : auras) {
@@ -1898,6 +2118,14 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>playerDamage_Farsight_Mask.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param c a {@link forge.Card} object.
+     * @param crd a {@link forge.Card} object.
+     * @param crd a {@link forge.Card} object.
+     */
     private static void playerDamage_Farsight_Mask(final Player player, final Card c, final Card crd) {
         Ability ability = new Ability(crd, "0") {
             public void resolve() {
@@ -1913,6 +2141,11 @@ public class GameActionUtil {
     }
 
 
+    /**
+     * <p>playerCombatDamage_Treva.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Treva(Card c) {
         SpellAbility[] sa = c.getSpellAbility();
         if (c.getController().isHuman()) AllZone.getGameAction().playSpellAbility(sa[1]);
@@ -1920,12 +2153,22 @@ public class GameActionUtil {
 
     }
 
+    /**
+     * <p>playerCombatDamage_Rith.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Rith(Card c) {
         SpellAbility[] sa = c.getSpellAbility();
         if (c.getController().isHuman()) AllZone.getGameAction().playSpellAbility(sa[1]);
         else ComputerUtil.playNoStack(sa[1]);
     }
 
+    /**
+     * <p>playerCombatDamage_Whirling_Dervish.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Whirling_Dervish(Card c) {
         final int power = c.getNetAttack();
         final Card card = c;
@@ -1955,6 +2198,11 @@ public class GameActionUtil {
         } // if
     }
 
+    /**
+     * <p>playerCombatDamage_lose_halflife_up.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_lose_halflife_up(Card c) {
         final Player player = c.getController();
         final Player opponent = player.getOpponent();
@@ -1993,6 +2241,11 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>playerCombatDamage_Scalpelexis.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Scalpelexis(Card c) {
         final Player player = c.getController();
         final Player opponent = player.getOpponent();
@@ -2051,6 +2304,11 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>playerCombatDamage_Spawnwrithe.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Spawnwrithe(Card c) {
         final Player player = c.getController();
         final Card crd = c;
@@ -2076,6 +2334,11 @@ public class GameActionUtil {
 
     }
 
+    /**
+     * <p>playerCombatDamage_Augury_Adept.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private static void playerCombatDamage_Augury_Adept(Card c) {
         final Player[] player = new Player[1];
         final Card crd = c;
@@ -2114,6 +2377,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>upkeep_AI_Aluren.</p>
+     */
     private static void upkeep_AI_Aluren() {
         CardList alurens = AllZoneUtil.getCardsInPlay("Aluren");
         if (alurens.size() == 0)
@@ -2132,6 +2398,9 @@ public class GameActionUtil {
     }
 
 
+    /**
+     * <p>upkeep_Dance_of_the_Dead.</p>
+     */
     private static void upkeep_Dance_of_the_Dead() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -2170,6 +2439,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>upkeep_Farmstead.</p>
+     */
     private static void upkeep_Farmstead() {
         final String auraName = "Farmstead";
         final Player player = AllZone.getPhase().getPlayerTurn();
@@ -2221,6 +2493,9 @@ public class GameActionUtil {
     /////////////////////////
 
 
+    /**
+     * <p>upkeep_Ink_Dissolver.</p>
+     */
     private static void upkeep_Ink_Dissolver() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         final Player opponent = player.getOpponent();
@@ -2296,6 +2571,9 @@ public class GameActionUtil {
     }// upkeep_Ink_Dissolver()
 
 
+    /**
+     * <p>upkeep_Kithkin_Zephyrnaut.</p>
+     */
     private static void upkeep_Kithkin_Zephyrnaut() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Kithkin Zephyrnaut");
@@ -2386,6 +2664,9 @@ public class GameActionUtil {
     }// upkeep_Kithkin_Zephyrnaut()
 
 
+    /**
+     * <p>upkeep_Leaf_Crowned_Elder.</p>
+     */
     private static void upkeep_Leaf_Crowned_Elder() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Leaf-Crowned Elder");
@@ -2475,6 +2756,9 @@ public class GameActionUtil {
     }// upkeep_Leaf_Crowned_Elder()
 
 
+    /**
+     * <p>upkeep_Mudbutton_Clanger.</p>
+     */
     private static void upkeep_Mudbutton_Clanger() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Mudbutton Clanger");
@@ -2560,6 +2844,9 @@ public class GameActionUtil {
     }// upkeep_Mudbutton_Clanger()
 
 
+    /**
+     * <p>upkeep_Nightshade_Schemers.</p>
+     */
     private static void upkeep_Nightshade_Schemers() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Nightshade Schemers");
@@ -2633,6 +2920,9 @@ public class GameActionUtil {
     }// upkeep_Nightshade_Schemers()
 
 
+    /**
+     * <p>upkeep_Pyroclast_Consul.</p>
+     */
     private static void upkeep_Pyroclast_Consul() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Pyroclast Consul");
@@ -2721,6 +3011,9 @@ public class GameActionUtil {
     }// upkeep_Pyroclast_Consul()
 
 
+    /**
+     * <p>upkeep_Sensation_Gorger.</p>
+     */
     private static void upkeep_Sensation_Gorger() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Sensation Gorger");
@@ -2802,6 +3095,9 @@ public class GameActionUtil {
     }// upkeep_Sensation_Gorger()
 
 
+    /**
+     * <p>upkeep_Squeaking_Pie_Grubfellows.</p>
+     */
     private static void upkeep_Squeaking_Pie_Grubfellows() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Squeaking Pie Grubfellows");
@@ -2877,6 +3173,9 @@ public class GameActionUtil {
     }// upkeep_Squeaking_Pie_Grubfellows()
 
 
+    /**
+     * <p>upkeep_Wandering_Graybeard.</p>
+     */
     private static void upkeep_Wandering_Graybeard() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Wandering Graybeard");
@@ -2949,6 +3248,9 @@ public class GameActionUtil {
     }// upkeep_Wandering_Graybeard()
 
 
+    /**
+     * <p>upkeep_Waterspout_Weavers.</p>
+     */
     private static void upkeep_Waterspout_Weavers() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Waterspout Weavers");
@@ -3042,6 +3344,9 @@ public class GameActionUtil {
     }// upkeep_Waterspout_Weavers()
 
 
+    /**
+     * <p>upkeep_Winnower_Patrol.</p>
+     */
     private static void upkeep_Winnower_Patrol() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Winnower Patrol");
@@ -3114,6 +3419,9 @@ public class GameActionUtil {
     }// upkeep_Winnower_Patrol()
 
 
+    /**
+     * <p>upkeep_Wolf_Skull_Shaman.</p>
+     */
     private static void upkeep_Wolf_Skull_Shaman() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Wolf-Skull Shaman");
@@ -3193,6 +3501,9 @@ public class GameActionUtil {
     ///////////////////////
 
 
+    /**
+     * <p>upkeep_Dark_Confidant.</p>
+     */
     private static void upkeep_Dark_Confidant() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3227,6 +3538,9 @@ public class GameActionUtil {
         }// for
     }// upkeep_Dark_Confidant()
 
+    /**
+     * <p>upkeep_Oversold_Cemetery.</p>
+     */
     private static void upkeep_Oversold_Cemetery() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList cemeteryList = AllZoneUtil.getPlayerCardsInPlay(player, "Oversold Cemetery");
@@ -3267,6 +3581,9 @@ public class GameActionUtil {
     }//Oversold Cemetery
 
 
+    /**
+     * <p>upkeep_Suspend.</p>
+     */
     public static void upkeep_Suspend() {
         Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3286,6 +3603,9 @@ public class GameActionUtil {
         }
     }//suspend	
 
+    /**
+     * <p>upkeep_Vanishing.</p>
+     */
     private static void upkeep_Vanishing() {
 
         final Player player = AllZone.getPhase().getPlayerTurn();
@@ -3316,6 +3636,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>upkeep_Fading.</p>
+     */
     private static void upkeep_Fading() {
 
         final Player player = AllZone.getPhase().getPlayerTurn();
@@ -3350,6 +3673,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>upkeep_Oath_of_Druids.</p>
+     */
     private static void upkeep_Oath_of_Druids() {
         CardList oathList = AllZoneUtil.getCardsInPlay("Oath of Druids");
         if (oathList.isEmpty())
@@ -3421,6 +3747,9 @@ public class GameActionUtil {
         }
     }// upkeep_Oath of Druids()
 
+    /**
+     * <p>upkeep_Oath_of_Ghouls.</p>
+     */
     private static void upkeep_Oath_of_Ghouls() {
         CardList oathList = AllZoneUtil.getCardsInPlay("Oath of Ghouls");
         if (oathList.isEmpty())
@@ -3465,6 +3794,9 @@ public class GameActionUtil {
     }//Oath of Ghouls
 
 
+    /**
+     * <p>upkeep_Karma.</p>
+     */
     private static void upkeep_Karma() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList karmas = AllZoneUtil.getCardsInPlay("Karma");
@@ -3500,6 +3832,9 @@ public class GameActionUtil {
     }// upkeep_Karma()
 
 
+    /**
+     * <p>upkeep_Dega_Sanctuary.</p>
+     */
     private static void upkeep_Dega_Sanctuary() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3529,6 +3864,9 @@ public class GameActionUtil {
         }//for
     }//upkeep_Dega_Sanctuary()
 
+    /**
+     * <p>upkeep_Ceta_Sanctuary.</p>
+     */
     private static void upkeep_Ceta_Sanctuary() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3563,6 +3901,9 @@ public class GameActionUtil {
         }//for
     }//upkeep_Ceta_Sanctuary()
 
+    /**
+     * <p>upkeep_Power_Surge.</p>
+     */
     private static void upkeep_Power_Surge() {
         /*
 		 * At the beginning of each player's upkeep, Power Surge deals X
@@ -3593,6 +3934,9 @@ public class GameActionUtil {
         }// for
     }// upkeep_Power_Surge()
 
+    /**
+     * <p>upkeep_Felidar_Sovereign.</p>
+     */
     private static void upkeep_Felidar_Sovereign() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3617,6 +3961,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Felidar_Sovereign
 
+    /**
+     * <p>upkeep_Battle_of_Wits.</p>
+     */
     private static void upkeep_Battle_of_Wits() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         PlayerZone libraryZone = AllZone.getZone(Constant.Zone.Library, player);
@@ -3643,6 +3990,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Battle_of_Wits
 
+    /**
+     * <p>upkeep_Mortal_Combat.</p>
+     */
     private static void upkeep_Mortal_Combat() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3671,6 +4021,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Mortal Combat
 
+    /**
+     * <p>upkeep_Helix_Pinnacle.</p>
+     */
     private static void upkeep_Helix_Pinnacle() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3696,6 +4049,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Helix_Pinnacle
 
+    /**
+     * <p>upkeep_Near_Death_Experience.</p>
+     */
     private static void upkeep_Near_Death_Experience() {
         /*
 		 * At the beginning of your upkeep, if you have exactly 1 life, you win the game.
@@ -3723,6 +4079,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Near_Death_Experience
 
+    /**
+     * <p>upkeep_Test_of_Endurance.</p>
+     */
     private static void upkeep_Test_of_Endurance() {
         /*
 		 * At the beginning of your upkeep, if you have 50 or more life, you win the game.
@@ -3751,6 +4110,9 @@ public class GameActionUtil {
     }// upkeep_Test_of_Endurance
 
 
+    /**
+     * <p>upkeep_Barren_Glory.</p>
+     */
     private static void upkeep_Barren_Glory() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         PlayerZone handZone = AllZone.getZone(Constant.Zone.Hand, player);
@@ -3789,6 +4151,9 @@ public class GameActionUtil {
         }// if
     }// upkeep_Barren_Glory
 
+    /**
+     * <p>upkeep_Sleeper_Agent.</p>
+     */
     private static void upkeep_Sleeper_Agent() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -3811,6 +4176,9 @@ public class GameActionUtil {
         }
     }//upkeep_Sleeper_Agent
 
+    /**
+     * <p>upkeep_Shapeshifter.</p>
+     */
     private static void upkeep_Shapeshifter() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Shapeshifter");
@@ -3842,6 +4210,9 @@ public class GameActionUtil {
         }//foreach(Card)
     }//upkeep_Shapeshifter
 
+    /**
+     * <p>upkeep_Vesuvan_Doppelganger_Keyword.</p>
+     */
     private static void upkeep_Vesuvan_Doppelganger_Keyword() {
         // TODO: what about enchantments? i dont know how great this solution is
         final Player player = AllZone.getPhase().getPlayerTurn();
@@ -3930,6 +4301,9 @@ public class GameActionUtil {
         }//foreach(Card)
     }//upkeep_Vesuvan_Doppelganger_Keyword
 
+    /**
+     * <p>upkeep_Tangle_Wire.</p>
+     */
     private static void upkeep_Tangle_Wire() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList wires = AllZoneUtil.getCardsInPlay("Tangle Wire");
@@ -3984,6 +4358,9 @@ public class GameActionUtil {
         }//foreach(wire)
     }//upkeep_Tangle_Wire()
 
+    /**
+     * <p>upkeep_Pillory_of_the_Sleepless.</p>
+     */
     private static void upkeep_Pillory_of_the_Sleepless() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4022,6 +4399,9 @@ public class GameActionUtil {
     }//cursed land
 
 
+    /**
+     * <p>upkeep_Masticore.</p>
+     */
     private static void upkeep_Masticore() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4084,6 +4464,9 @@ public class GameActionUtil {
     }//upkeep_Masticore
 
 
+    /**
+     * <p>upkeep_Eldrazi_Monument.</p>
+     */
     private static void upkeep_Eldrazi_Monument() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4129,6 +4512,9 @@ public class GameActionUtil {
 
     }//upkeep_Eldrazi_Monument
 
+    /**
+     * <p>upkeep_Blaze_Counters.</p>
+     */
     private static void upkeep_Blaze_Counters() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4158,6 +4544,9 @@ public class GameActionUtil {
         }
     }
 
+    /**
+     * <p>upkeep_Dragon_Broodmother.</p>
+     */
     private static void upkeep_Dragon_Broodmother() {
         CardList list = AllZoneUtil.getCardsInPlay("Dragon Broodmother");
 
@@ -4290,6 +4679,11 @@ public class GameActionUtil {
         }// for
     }// upkeep_Dragon_Broodmother()
 
+    /**
+     * <p>draw_Sylvan_Library.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     private static void draw_Sylvan_Library(final Player player) {
         /*
 		 * At the beginning of your draw step, you may draw two additional
@@ -4353,6 +4747,9 @@ public class GameActionUtil {
         }//end for
     }
 
+    /**
+     * <p>upkeep_Carnophage.</p>
+     */
     private static void upkeep_Carnophage() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4372,6 +4769,9 @@ public class GameActionUtil {
         }
     }// upkeep_Carnophage
 
+    /**
+     * <p>upkeep_Sangrophage.</p>
+     */
     private static void upkeep_Sangrophage() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4391,6 +4791,9 @@ public class GameActionUtil {
         }
     }// upkeep_Carnophage
 
+    /**
+     * <p>upkeep_Fallen_Empires_Storage_Lands.</p>
+     */
     private static void upkeep_Fallen_Empires_Storage_Lands() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4405,6 +4808,9 @@ public class GameActionUtil {
         }
     } //upkeep_Fallen_Empires_Storage_Lands
 
+    /**
+     * <p>upkeep_Vampire_Lacerator.</p>
+     */
     private static void upkeep_Vampire_Lacerator() {
         final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4422,6 +4828,9 @@ public class GameActionUtil {
         }
     }// upkeep_Vampire_Lacerator
 
+    /**
+     * <p>upkeep_Mirror_Sigil_Sergeant.</p>
+     */
     private static void upkeep_Mirror_Sigil_Sergeant() {
         final Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -4454,6 +4863,9 @@ public class GameActionUtil {
         } // for
     } //upkeep_Mirror_Sigil_Sergeant
 
+    /**
+     * <p>executeCardStateEffects.</p>
+     */
     public static void executeCardStateEffects() {
         Wonder.execute();
         Anger.execute();
@@ -4473,6 +4885,7 @@ public class GameActionUtil {
         topCardReveal_Update.execute();
     }// executeCardStateEffects()
 
+    /** Constant <code>Conspiracy</code> */
     public static Command Conspiracy = new Command() {
         private static final long serialVersionUID = -752798545956593342L;
 
@@ -4535,6 +4948,7 @@ public class GameActionUtil {
         }// execute()
     }; //Conspiracy
 
+    /** Constant <code>Mul_Daya_Channelers</code> */
     public static Command Mul_Daya_Channelers = new Command() {
         private static final long serialVersionUID = -2543659953307485051L;
 
@@ -4609,6 +5023,7 @@ public class GameActionUtil {
     }; // Mul Daya
 
 
+    /** Constant <code>Elspeth_Emblem</code> */
     public static Command Elspeth_Emblem = new Command() {
 
         private static final long serialVersionUID = 7414127991531889390L;
@@ -4649,6 +5064,7 @@ public class GameActionUtil {
         }// execute()
     };
 
+    /** Constant <code>Favor_of_the_Mighty</code> */
     public static Command Favor_of_the_Mighty = new Command() {
         private static final long serialVersionUID = 2920036758177137722L;
         private CardList pumped = new CardList();
@@ -4689,6 +5105,7 @@ public class GameActionUtil {
         }
     };
 
+    /** Constant <code>Koth_Emblem</code> */
     public static Command Koth_Emblem = new Command() {
 
         private static final long serialVersionUID = -3233715310427996429L;
@@ -4770,6 +5187,7 @@ public class GameActionUtil {
         }
     };
 
+    /** Constant <code>stPump</code> */
     public static Command stPump = new Command() {
         /** StaticEffectKeyword
          * Syntax:[ k[0] stPump[All][Self][Other] : k[1] Which Cards the Bonus Affects : 
@@ -5009,6 +5427,13 @@ public class GameActionUtil {
     };
 
     // Special Conditions
+    /**
+     * <p>specialConditionsMet.</p>
+     *
+     * @param SourceCard a {@link forge.Card} object.
+     * @param SpecialConditions a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean specialConditionsMet(Card SourceCard, String SpecialConditions) {
 
         if (SpecialConditions.contains("CardsInHandMore")) {
@@ -5142,6 +5567,7 @@ public class GameActionUtil {
 
     }
 
+    /** Constant <code>stLandManaAbilities</code> */
     public static Command stLandManaAbilities = new Command() {
         private static final long serialVersionUID = 8005448956536998277L;
 
@@ -5220,6 +5646,7 @@ public class GameActionUtil {
 
     };//stLandManaAbilities
 
+    /** Constant <code>stSetPT</code> */
     public static Command stSetPT = new Command() {
         /*
 		 * Syntax: K:stSetPT:power:toughness:Description
@@ -5335,6 +5762,7 @@ public class GameActionUtil {
 
     };//stSetPT
 
+    /** Constant <code>Coat_of_Arms</code> */
     public static Command Coat_of_Arms = new Command() {
         private static final long serialVersionUID = 583505612126735693L;
 
@@ -5406,6 +5834,7 @@ public class GameActionUtil {
         }// execute()
     };
 
+    /** Constant <code>Ajani_Avatar_Token</code> */
     public static Command Ajani_Avatar_Token = new Command() {
         private static final long serialVersionUID = 3027329837165436727L;
 
@@ -5427,6 +5856,7 @@ public class GameActionUtil {
         }// execute
     }; // Ajani Avatar
 
+    /** Constant <code>Old_Man_of_the_Sea</code> */
     public static Command Old_Man_of_the_Sea = new Command() {
         private static final long serialVersionUID = 8076177362922156784L;
 
@@ -5445,6 +5875,7 @@ public class GameActionUtil {
         }
     };//Old Man of the Sea
 
+    /** Constant <code>Homarid</code> */
     public static Command Homarid = new Command() {
         private static final long serialVersionUID = 7156319758035295773L;
 
@@ -5460,6 +5891,7 @@ public class GameActionUtil {
         }// execute()
     };
 
+    /** Constant <code>Liu_Bei</code> */
     public static Command Liu_Bei = new Command() {
 
         private static final long serialVersionUID = 4235093010715735727L;
@@ -5497,6 +5929,7 @@ public class GameActionUtil {
 
     }; //Liu_Bei
 
+    /** Constant <code>Phylactery_Lich</code> */
     public static Command Phylactery_Lich = new Command() {
 
         private static final long serialVersionUID = -1606115081917467754L;
@@ -5525,6 +5958,7 @@ public class GameActionUtil {
         }
     };//Phylactery_Lich
 
+    /** Constant <code>topCardReveal_Update</code> */
     public static Command topCardReveal_Update = new Command() {
 
         private static final long serialVersionUID = 8669404698350637963L;
@@ -5547,6 +5981,7 @@ public class GameActionUtil {
         }//execute()
     };//topCardReveal_Update
 
+    /** Constant <code>Sacrifice_NoIslands</code> */
     public static Command Sacrifice_NoIslands = new Command() {
 
         private static final long serialVersionUID = 8064452222949253952L;
@@ -5578,6 +6013,7 @@ public class GameActionUtil {
 
     };//Sacrifice_NoIslands
 
+    /** Constant <code>Sacrifice_NoForests</code> */
     public static Command Sacrifice_NoForests = new Command() {
         private static final long serialVersionUID = -5310856079162962126L;
 
@@ -5599,6 +6035,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoForests
 
+    /** Constant <code>Sacrifice_NoSwamps</code> */
     public static Command Sacrifice_NoSwamps = new Command() {
         private static final long serialVersionUID = 1961985826678794078L;
 
@@ -5620,6 +6057,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoForests
 
+    /** Constant <code>Sacrifice_NoArtifacts</code> */
     public static Command Sacrifice_NoArtifacts = new Command() {
         private static final long serialVersionUID = -2546650213674544590L;
         int artifacts = 0;
@@ -5644,6 +6082,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoArtifacts
 
+    /** Constant <code>Sacrifice_NoEnchantments</code> */
     private static Command Sacrifice_NoEnchantments = new Command() {
         private static final long serialVersionUID = -8280843743243927861L;
         int enchs = 0;
@@ -5668,6 +6107,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoEnchantments
 
+    /** Constant <code>Sacrifice_NoLands</code> */
     public static Command Sacrifice_NoLands = new Command() {
         private static final long serialVersionUID = 2768929064034728027L;
 
@@ -5689,6 +6129,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoLands
 
+    /** Constant <code>Sacrifice_NoCreatures</code> */
     public static Command Sacrifice_NoCreatures = new Command() {
         private static final long serialVersionUID = -177976088524215734L;
 
@@ -5710,6 +6151,7 @@ public class GameActionUtil {
         }//execute()
     };//Sacrifice_NoCreatures
 
+    /** Constant <code>Sacrifice_NoOtherCreatures</code> */
     private static Command Sacrifice_NoOtherCreatures = new Command() {
         private static final long serialVersionUID = 6941452572773927921L;
 
@@ -5731,6 +6173,7 @@ public class GameActionUtil {
         }//execute()
     }; //Sacrifice_NoOtherCreatures
 
+    /** Constant <code>Sound_the_Call_Wolf</code> */
     public static Command Sound_the_Call_Wolf = new Command() {
         private static final long serialVersionUID = 4614281706799537283L;
 
@@ -5758,6 +6201,7 @@ public class GameActionUtil {
 
     }; //Sound_the_Call_Wolf
 
+    /** Constant <code>Tarmogoyf</code> */
     public static Command Tarmogoyf = new Command() {
         private static final long serialVersionUID = 5895665460018262987L;
 
@@ -5834,6 +6278,7 @@ public class GameActionUtil {
     };
 
 
+    /** Constant <code>Filth</code> */
     public static Command Filth = new Command() {
         private static final long serialVersionUID = -8423145847505L;
 
@@ -5892,6 +6337,7 @@ public class GameActionUtil {
         }
     }; // Flith
 
+    /** Constant <code>Valor</code> */
     public static Command Valor = new Command() {
         private static final long serialVersionUID = -846781470342847505L;
 
@@ -5951,6 +6397,7 @@ public class GameActionUtil {
         }
     }; // Valor
 
+    /** Constant <code>Anger</code> */
     public static Command Anger = new Command() {
         private static final long serialVersionUID = -8463420545847505L;
 
@@ -6009,6 +6456,7 @@ public class GameActionUtil {
         }
     }; // Anger
 
+    /** Constant <code>Wonder</code> */
     public static Command Wonder = new Command() {
         private static final long serialVersionUID = -846723300545847505L;
 
@@ -6067,6 +6515,7 @@ public class GameActionUtil {
         }
     }; // Wonder
 
+    /** Constant <code>Brawn</code> */
     public static Command Brawn = new Command() {
         private static final long serialVersionUID = -8467814700545847505L;
 
@@ -6124,6 +6573,7 @@ public class GameActionUtil {
         }
     }; // Brawn
 
+    /** Constant <code>Muraganda_Petroglyphs</code> */
     public static Command Muraganda_Petroglyphs = new Command() {
         private static final long serialVersionUID = -6715848091817213517L;
         CardList gloriousAnthemList = new CardList();
@@ -6160,6 +6610,7 @@ public class GameActionUtil {
         }// execute()
     }; // Muraganda_Petroglyphs
 
+    /** Constant <code>Meddling_Mage</code> */
     public static Command Meddling_Mage = new Command() {
         private static final long serialVersionUID = 738264163993370439L;
         CardList gloriousAnthemList = new CardList();
@@ -6206,6 +6657,7 @@ public class GameActionUtil {
         }// execute()
     }; // Meddling_Mage
 
+    /** Constant <code>Gaddock_Teeg</code> */
     public static Command Gaddock_Teeg = new Command() {
         private static final long serialVersionUID = -479252814191086571L;
         CardList gloriousAnthemList = new CardList();
@@ -6257,6 +6709,7 @@ public class GameActionUtil {
         }// execute()
     }; //
 
+    /** Constant <code>Iona_Shield_of_Emeria</code> */
     public static Command Iona_Shield_of_Emeria = new Command() {
         private static final long serialVersionUID = 7349652597673216545L;
         CardList gloriousAnthemList = new CardList();
@@ -6306,6 +6759,12 @@ public class GameActionUtil {
     // returns all PlayerZones that has at least 1 Glorious Anthem
     // if Computer has 2 Glorious Anthems, AllZone.getComputerPlay() will be
     // returned twice
+    /**
+     * <p>getZone.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @return an array of {@link forge.PlayerZone} objects.
+     */
     private static PlayerZone[] getZone(String cardName) {
         CardList all = AllZoneUtil.getCardsInPlay();
 
@@ -6320,6 +6779,7 @@ public class GameActionUtil {
         return z;
     }
 
+    /** Constant <code>commands</code> */
     public static HashMap<String, Command> commands = new HashMap<String, Command>();
 
     static {
@@ -6352,6 +6812,7 @@ public class GameActionUtil {
         ///The commands above are in alphabetical order by cardname.
     }
 
+    /** Constant <code>stAnimate</code> */
     public static Command stAnimate = new Command() {
         /** stAnimate
          * Syntax:[ k[0] stAnimate[All][Self][Enchanted] 		: k[1] AnimateValid : 
@@ -6623,6 +7084,11 @@ public class GameActionUtil {
     };
 
 
+    /**
+     * <p>doPowerSink.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     */
     public static void doPowerSink(Player p) {
         //get all lands with mana abilities
         CardList lands = AllZoneUtil.getPlayerLandsInPlay(p);

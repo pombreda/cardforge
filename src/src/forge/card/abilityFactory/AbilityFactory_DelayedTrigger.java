@@ -14,10 +14,20 @@ import java.util.HashMap;
  * Date: 5/18/11
  * Time: 8:53 PM
  * To change this template use File | Settings | File Templates.
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class AbilityFactory_DelayedTrigger {
+    /** Constant <code>tempCreator</code> */
     private static AbilityFactory tempCreator = new AbilityFactory();
 
+    /**
+     * <p>getDrawback.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.Ability_Sub} object.
+     */
     public static Ability_Sub getDrawback(final AbilityFactory AF) {
         final Ability_Sub drawback = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6192972525033429820L;
@@ -41,6 +51,13 @@ public class AbilityFactory_DelayedTrigger {
         return drawback;
     }
 
+    /**
+     * <p>doChkAI_Drawback.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param SA a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean doChkAI_Drawback(final AbilityFactory AF, final SpellAbility SA) {
         HashMap<String, String> params = AF.getMapParams();
         String svarName = params.get("Execute");
@@ -53,6 +70,13 @@ public class AbilityFactory_DelayedTrigger {
         }
     }
 
+    /**
+     * <p>doTriggerAI.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param SA a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean doTriggerAI(final AbilityFactory AF, final SpellAbility SA) {
         HashMap<String, String> params = AF.getMapParams();
         String svarName = params.get("Execute");
@@ -65,6 +89,12 @@ public class AbilityFactory_DelayedTrigger {
         }
     }
 
+    /**
+     * <p>doResolve.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param SA a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void doResolve(AbilityFactory AF, SpellAbility SA) {
         HashMap<String, String> mapParams = AF.getMapParams();
 

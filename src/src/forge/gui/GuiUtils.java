@@ -15,11 +15,19 @@ import java.util.Collection;
 import java.util.List;
 
 
+/**
+ * <p>GuiUtils class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GuiUtils {
 
     /**
      * This method takes a collection of components and sets the width of each component
      * to the maximum of the collection
+     *
+     * @param components a {@link java.util.Collection} object.
      */
     public static void setWidthToMax(Collection<Component> components) {
         int maxWidth = 0;
@@ -40,6 +48,8 @@ public class GuiUtils {
 
     /**
      * Adds a Horizontal Glue to panel
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
      */
     public static void addExpandingHorizontalSpace(JPanel panel) {
         panel.add(Box.createHorizontalGlue());
@@ -47,6 +57,8 @@ public class GuiUtils {
 
     /**
      * Adds a Vertical Glue to panel
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
      */
     public static void addExpandingVerticalSpace(JPanel panel) {
         panel.add(Box.createHorizontalGlue());
@@ -54,6 +66,9 @@ public class GuiUtils {
 
     /**
      * Adds a rigid area of size strutSize to panel
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
+     * @param strutSize a int.
      */
     public static void addGap(JPanel panel, int strutSize) {
         panel.add(Box.createRigidArea(new Dimension(strutSize, strutSize)));
@@ -61,6 +76,8 @@ public class GuiUtils {
 
     /**
      * Adds a rigid area of size 5 to panel
+     *
+     * @param panel a {@link javax.swing.JPanel} object.
      */
     public static void addGap(JPanel panel) {
         panel.add(Box.createRigidArea(new Dimension(5, 5)));
@@ -68,12 +85,21 @@ public class GuiUtils {
 
     /**
      * Sets the font size of a component
+     *
+     * @param component a {@link java.awt.Component} object.
+     * @param newSize a int.
      */
     public static void setFontSize(Component component, int newSize) {
         Font oldFont = component.getFont();
         component.setFont(oldFont.deriveFont((float) newSize));
     }
 
+    /**
+     * <p>getIconFromFile.</p>
+     *
+     * @param iconName a {@link java.lang.String} object.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     public static ImageIcon getIconFromFile(String iconName) {
         File base = ForgeProps.getFile(NewConstants.IMAGE_ICON);
         File file = new File(base, iconName);
@@ -84,15 +110,38 @@ public class GuiUtils {
         }
     }
 
+    /**
+     * <p>getResizedIcon.</p>
+     *
+     * @param icon a {@link javax.swing.ImageIcon} object.
+     * @param width a int.
+     * @param height a int.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     public static ImageIcon getResizedIcon(ImageIcon icon, int width, int height) {
         return new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
     }
 
+    /**
+     * <p>getEmptyIcon.</p>
+     *
+     * @param width a int.
+     * @param height a int.
+     * @return a {@link javax.swing.ImageIcon} object.
+     */
     public static ImageIcon getEmptyIcon(int width, int height) {
         return new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
     }
 
     //returned Object could be null
+    /**
+     * <p>getChoiceOptional.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param choices a T object.
+     * @param <T> a T object.
+     * @return a T object.
+     */
     public static <T> T getChoiceOptional(String message, T... choices) {
         if (choices == null || choices.length == 0) return null;
         List<T> choice = getChoices(message, 0, 1, choices);
@@ -100,6 +149,14 @@ public class GuiUtils {
     }//getChoiceOptional()
 
     // returned Object will never be null
+    /**
+     * <p>getChoice.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param choices a T object.
+     * @param <T> a T object.
+     * @return a T object.
+     */
     public static <T> T getChoice(String message, T... choices) {
         List<T> choice = getChoices(message, 1, 1, choices);
         assert choice.size() == 1;
@@ -107,16 +164,42 @@ public class GuiUtils {
     }//getChoice()
 
     // returned Object will never be null
+    /**
+     * <p>getChoicesOptional.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param choices a T object.
+     * @param <T> a T object.
+     * @return a {@link java.util.List} object.
+     */
     public static <T> List<T> getChoicesOptional(String message, T... choices) {
         return getChoices(message, 0, choices.length, choices);
     }//getChoice()
 
     // returned Object will never be null
+    /**
+     * <p>getChoices.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param choices a T object.
+     * @param <T> a T object.
+     * @return a {@link java.util.List} object.
+     */
     public static <T> List<T> getChoices(String message, T... choices) {
         return getChoices(message, 1, choices.length, choices);
     }//getChoice()
 
     // returned Object will never be null
+    /**
+     * <p>getChoices.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param min a int.
+     * @param max a int.
+     * @param choices a T object.
+     * @param <T> a T object.
+     * @return a {@link java.util.List} object.
+     */
     public static <T> List<T> getChoices(String message, int min, int max, T... choices) {
         ListChooser<T> c = new ListChooser<T>(message, min, max, choices);
         final JList list = c.getJList();

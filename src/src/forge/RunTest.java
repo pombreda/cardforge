@@ -8,8 +8,17 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * <p>RunTest class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class RunTest {
     //@SuppressWarnings("unchecked") // HashSet needs <type>
+    /**
+     * <p>test.</p>
+     */
     static void test() {
         {
             Card c;
@@ -305,12 +314,23 @@ public class RunTest {
         }
     }//test()
 
+    /**
+     * <p>check.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ok a boolean.
+     */
     static void check(String message, boolean ok) {
         if (!ok)
             //throw new RuntimeException("RunTest test error : " +message);
             System.out.println("RunTest test error : " + message);
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String args[]) {
         RunTest.test();
     }

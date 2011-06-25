@@ -11,21 +11,45 @@ import java.text.AttributedString;
 import java.text.BreakIterator;
 import java.util.Locale;
 
+/**
+ * <p>GlowText class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class GlowText extends JLabel {
+    /** Constant <code>serialVersionUID=-2868833097364223352L</code> */
     private static final long serialVersionUID = -2868833097364223352L;
     private int glowSize;
     private Color glowColor;
     private boolean wrap;
 
+    /**
+     * <p>setGlow.</p>
+     *
+     * @param glowColor a {@link java.awt.Color} object.
+     * @param size a int.
+     * @param intensity a float.
+     */
     public void setGlow(Color glowColor, int size, float intensity) {
         this.glowColor = glowColor;
         this.glowSize = size;
     }
 
+    /**
+     * <p>Setter for the field <code>wrap</code>.</p>
+     *
+     * @param wrap a boolean.
+     */
     public void setWrap(boolean wrap) {
         this.wrap = wrap;
     }
 
+    /**
+     * <p>getPreferredSize.</p>
+     *
+     * @return a {@link java.awt.Dimension} object.
+     */
     public Dimension getPreferredSize() {
         Dimension size = super.getPreferredSize();
         size.width += glowSize;
@@ -33,10 +57,12 @@ public class GlowText extends JLabel {
         return size;
     }
 
+    /** {@inheritDoc} */
     public void setText(String text) {
         super.setText(text);
     }
 
+    /** {@inheritDoc} */
     public void paint(Graphics g) {
         if (getText().length() == 0) return;
 

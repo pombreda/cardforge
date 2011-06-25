@@ -8,7 +8,14 @@ import forge.card.spellability.Cost;
 import forge.card.spellability.SpellAbility;
 import forge.quest.data.bazaar.QuestStallManager;
 
+/**
+ * <p>QuestPetPlant class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestPetPlant extends QuestPetAbstract {
+    /** {@inheritDoc} */
     @Override
     public Card getPetCard() {
         final Card petCard = new Card();
@@ -84,17 +91,22 @@ public class QuestPetPlant extends QuestPetAbstract {
         return petCard;
     }
 
+    /**
+     * <p>Constructor for QuestPetPlant.</p>
+     */
     public QuestPetPlant() {
         super("Plant",
                 "Start each of your battles with this lush, verdant plant on your side. Excellent at blocking the nastiest of critters!",
                 6);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getAllUpgradePrices() {
         return new int[]{100, 150, 200, 300, 750, 1000};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllUpgradeDescriptions() {
         return new String[]{
@@ -107,6 +119,7 @@ public class QuestPetPlant extends QuestPetAbstract {
                 "You cannot train your plant any further"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a plant",
@@ -118,6 +131,7 @@ public class QuestPetPlant extends QuestPetAbstract {
                 "1/4, G, Defender, Deathtouch, T: Gain 1 life"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllImageNames() {
         return new String[]{
@@ -131,16 +145,19 @@ public class QuestPetPlant extends QuestPetAbstract {
         };
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getStallName() {
         return QuestStallManager.NURSERY;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void onPurchase() {
         AllZone.getQuestData().getPetManager().addPlantLevel();
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean isAvailableForPurchase() {
         QuestPetPlant plant = (QuestPetPlant) AllZone.getQuestData().getPetManager().getPlant();

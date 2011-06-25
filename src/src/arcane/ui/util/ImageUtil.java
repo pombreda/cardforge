@@ -9,7 +9,20 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * <p>ImageUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ImageUtil {
+    /**
+     * <p>getImage.</p>
+     *
+     * @param stream a {@link java.io.InputStream} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
+     * @throws java.io.IOException if any.
+     */
     static public BufferedImage getImage(InputStream stream) throws IOException {
         Image tempImage = ImageIO.read(stream);
         BufferedImage image = new BufferedImage(tempImage.getWidth(null), tempImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -19,6 +32,13 @@ public class ImageUtil {
         return image;
     }
 
+    /**
+     * <p>getImage.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     * @return a {@link java.awt.image.BufferedImage} object.
+     * @throws java.io.IOException if any.
+     */
     static public BufferedImage getImage(File file) throws IOException {
         Image tempImage = ImageIO.read(file);
         BufferedImage image = new BufferedImage(tempImage.getWidth(null), tempImage.getHeight(null), BufferedImage.TYPE_INT_ARGB);
@@ -28,6 +48,14 @@ public class ImageUtil {
         return image;
     }
 
+    /**
+     * <p>getBlurredImage.</p>
+     *
+     * @param image a {@link java.awt.image.BufferedImage} object.
+     * @param radius a int.
+     * @param intensity a float.
+     * @return a {@link java.awt.image.BufferedImage} object.
+     */
     static public BufferedImage getBlurredImage(BufferedImage image, int radius, float intensity) {
         float weight = intensity / (radius * radius);
         float[] elements = new float[radius * radius];

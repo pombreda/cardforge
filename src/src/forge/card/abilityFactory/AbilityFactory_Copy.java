@@ -9,12 +9,24 @@ import forge.gui.GuiUtils;
 
 import java.util.*;
 
+/**
+ * <p>AbilityFactory_Copy class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Copy {
 
     // *************************************************************************
     // ************************* CopyPermanent *********************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityCopyPermanent.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityCopyPermanent(final AbilityFactory af) {
 
         final SpellAbility abCopyPermanent = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -44,6 +56,12 @@ public class AbilityFactory_Copy {
         return abCopyPermanent;
     }
 
+    /**
+     * <p>createSpellCopyPermanent.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellCopyPermanent(final AbilityFactory af) {
         final SpellAbility spCopyPermanent = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 3313370358993251728L;
@@ -67,6 +85,12 @@ public class AbilityFactory_Copy {
         return spCopyPermanent;
     }
 
+    /**
+     * <p>createDrawbackCopyPermanent.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackCopyPermanent(final AbilityFactory af) {
         final SpellAbility dbCopyPermanent = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -7725564505830285184L;
@@ -95,6 +119,13 @@ public class AbilityFactory_Copy {
         return dbCopyPermanent;
     }
 
+    /**
+     * <p>copyPermanentStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String copyPermanentStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
         HashMap<String, String> params = af.getMapParams();
@@ -128,6 +159,13 @@ public class AbilityFactory_Copy {
         return sb.toString();
     }
 
+    /**
+     * <p>copyPermanentCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean copyPermanentCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         //TODO - I'm sure someone can do this AI better
 
@@ -137,6 +175,14 @@ public class AbilityFactory_Copy {
         } else return copyPermanentTriggerAI(af, sa, false);
     }
 
+    /**
+     * <p>copyPermanentTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean copyPermanentTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         //HashMap<String,String> params = af.getMapParams();
         Card source = sa.getSourceCard();
@@ -205,6 +251,12 @@ public class AbilityFactory_Copy {
         return randomReturn;
     }
 
+    /**
+     * <p>copyPermanentResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void copyPermanentResolve(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         Card hostCard = af.getHostCard();
@@ -342,6 +394,12 @@ public class AbilityFactory_Copy {
     // ************************* CopySpell *************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityCopySpell.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityCopySpell(final AbilityFactory af) {
 
         final SpellAbility abCopySpell = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -371,6 +429,12 @@ public class AbilityFactory_Copy {
         return abCopySpell;
     }
 
+    /**
+     * <p>createSpellCopySpell.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellCopySpell(final AbilityFactory af) {
         final SpellAbility spCopySpell = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 1878946074608916745L;
@@ -394,6 +458,12 @@ public class AbilityFactory_Copy {
         return spCopySpell;
     }
 
+    /**
+     * <p>createDrawbackCopySpell.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackCopySpell(final AbilityFactory af) {
         final SpellAbility dbCopySpell = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 1927508119173644632L;
@@ -422,6 +492,13 @@ public class AbilityFactory_Copy {
         return dbCopySpell;
     }
 
+    /**
+     * <p>copySpellStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String copySpellStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
         HashMap<String, String> params = af.getMapParams();
@@ -457,10 +534,25 @@ public class AbilityFactory_Copy {
         return sb.toString();
     }
 
+    /**
+     * <p>copySpellCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean copySpellCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         return false;
     }
 
+    /**
+     * <p>copySpellTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean copySpellTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         boolean randomReturn = false;
 
@@ -473,6 +565,12 @@ public class AbilityFactory_Copy {
         return randomReturn;
     }
 
+    /**
+     * <p>copySpellResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void copySpellResolve(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         Card card = af.getHostCard();

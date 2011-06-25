@@ -7,14 +7,42 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class CardArea extends CardPanelContainer implements CardPanelMouseListener {
+/**
+ * <p>CardArea class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
+public class CardArea extends CardPanelContainer
+        implements CardPanelMouseListener {
+    /**
+     *
+     */
     private static final long serialVersionUID = -5836122075999621592L;
-    static public final int GUTTER_Y = 5;
-    static public final int GUTTER_X = 5;
-    static private final float HORIZ_CARD_SPACING_X = 0.04f;
-    static private final float HORIZ_CARD_SPACING_Y = 0.06f;
-    static private final float VERT_CARD_SPACING_X = 0.06f;
-    static private final float VERT_CARD_SPACING_Y = 0.10f;
+    /**
+     * Constant <code>GUTTER_Y=5</code>
+     */
+    public static final int GUTTER_Y = 5;
+    /**
+     * Constant <code>GUTTER_X=5</code>
+     */
+    public static final int GUTTER_X = 5;
+    /**
+     *
+     */
+    private static final float HORIZ_CARD_SPACING_X = 0.04f;
+    /**
+     *
+     */
+    private static final float HORIZ_CARD_SPACING_Y = 0.06f;
+    /**
+     *
+     */
+    private static final float VERT_CARD_SPACING_X = 0.06f;
+    /**
+     *
+     */
+    private static final float VERT_CARD_SPACING_Y = 0.10f;
 
     private float maxCoverage = 0.5f;
     private int maxRows = 0;
@@ -27,11 +55,17 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
     private boolean isVertical;
     private boolean hasScrollbars;
 
+    /**
+     * <p>Constructor for CardArea.</p>
+     *
+     * @param scrollPane a {@link javax.swing.JScrollPane} object.
+     */
     public CardArea(JScrollPane scrollPane) {
         super(scrollPane);
         setBackground(Color.white);
     }
 
+    /** {@inheritDoc} */
     public CardPanel getCardPanel(int x, int y) {
         if (isVertical) {
             for (int i = cardPanels.size() - 1; i >= 0; i--) {
@@ -65,6 +99,11 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         return null;
     }
 
+    /**
+     * <p>doLayout.</p>
+     *
+     * @since 1.0.15
+     */
     public void doLayout() {
         if (cardPanels.isEmpty()) return;
 
@@ -173,6 +212,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         }
     }
 
+    /** {@inheritDoc} */
     public void paint(Graphics g) {
         boolean hasScrollbars = scrollPane.getVerticalScrollBar().isVisible();
         if (hasScrollbars != this.hasScrollbars) revalidate();
@@ -181,6 +221,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         super.paint(g);
     }
 
+    /** {@inheritDoc} */
     public void mouseDragStart(CardPanel dragPanel, MouseEvent evt) {
         super.mouseDragStart(dragPanel, evt);
 
@@ -198,6 +239,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         CardPanel.dragAnimationPanel.setCardBounds(p.x, p.y, dragPanel.getCardWidth(), dragPanel.getCardHeight());
     }
 
+    /** {@inheritDoc} */
     public void mouseDragged(CardPanel dragPanel, int dragOffsetX, int dragOffsetY, MouseEvent evt) {
         super.mouseDragged(dragPanel, dragOffsetX, dragOffsetY, evt);
 
@@ -220,6 +262,7 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
         revalidate();
     }
 
+    /** {@inheritDoc} */
     public void mouseDragEnd(CardPanel dragPanel, MouseEvent evt) {
         super.mouseDragEnd(dragPanel, evt);
         doLayout();
@@ -233,26 +276,56 @@ public class CardArea extends CardPanelContainer implements CardPanelMouseListen
                 layeredPane, 200);
     }
 
+    /**
+     * <p>Getter for the field <code>maxCoverage</code>.</p>
+     *
+     * @return a float.
+     */
     public float getMaxCoverage() {
         return maxCoverage;
     }
 
+    /**
+     * <p>Setter for the field <code>maxCoverage</code>.</p>
+     *
+     * @param maxCoverage a float.
+     */
     public void setMaxCoverage(float maxCoverage) {
         this.maxCoverage = maxCoverage;
     }
 
+    /**
+     * <p>Setter for the field <code>maxRows</code>.</p>
+     *
+     * @param maxRows a int.
+     */
     public void setMaxRows(int maxRows) {
         this.maxRows = maxRows;
     }
 
+    /**
+     * <p>Getter for the field <code>maxRows</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMaxRows() {
         return maxRows;
     }
 
+    /**
+     * <p>setVertical.</p>
+     *
+     * @param isVertical a boolean.
+     */
     public void setVertical(boolean isVertical) {
         this.isVertical = isVertical;
     }
 
+    /**
+     * <p>isVertical.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isVertical() {
         return isVertical;
     }

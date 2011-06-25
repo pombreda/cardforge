@@ -5,8 +5,20 @@ import forge.gui.input.Input;
 
 import java.util.ArrayList;
 
+/**
+ * <p>PhaseUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class PhaseUtil {
     // ******* UNTAP PHASE *****
+    /**
+     * <p>skipUntap.</p>
+     *
+     * @param p a {@link forge.Player} object.
+     * @return a boolean.
+     */
     private static boolean skipUntap(Player p) {
         if (AllZoneUtil.isCardInPlay("Sands of Time") || AllZoneUtil.isCardInPlay("Stasis"))
             return true;
@@ -19,6 +31,9 @@ public class PhaseUtil {
         return false;
     }
 
+    /**
+     * <p>handleUntap.</p>
+     */
     public static void handleUntap() {
         Player turn = AllZone.getPhase().getPlayerTurn();
 
@@ -59,6 +74,9 @@ public class PhaseUtil {
         AllZone.getPhase().setNeedToNextPhase(true);
     }
 
+    /**
+     * <p>doUntap.</p>
+     */
     private static void doUntap() {
         Player player = AllZone.getPhase().getPlayerTurn();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -232,6 +250,12 @@ public class PhaseUtil {
     }//end doUntap
 
 
+    /**
+     * <p>canUntap.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canUntap(Card c) {
 
         if (c.hasKeyword("CARDNAME doesn't untap during your untap step.")
@@ -257,6 +281,11 @@ public class PhaseUtil {
     }
 
 
+    /**
+     * <p>canOnlyUntapOneLand.</p>
+     *
+     * @return a boolean.
+     */
     private static boolean canOnlyUntapOneLand() {
         //Winter Orb was given errata so it no longer matters if it's tapped or not
         if (AllZoneUtil.getCardsInPlay("Winter Orb").size() > 0)
@@ -271,6 +300,11 @@ public class PhaseUtil {
         return false;
     }
 
+    /**
+     * <p>getAnZerrinRuinsTypes.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     private static ArrayList<String> getAnZerrinRuinsTypes() {
         ArrayList<String> types = new ArrayList<String>();
         CardList ruins = AllZoneUtil.getCardsInPlay("An-Zerrin Ruins");
@@ -280,6 +314,13 @@ public class PhaseUtil {
         return types;
     }
 
+    /**
+     * <p>isAnZerrinRuinsType.</p>
+     *
+     * @param types a {@link java.util.ArrayList} object.
+     * @param card a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private static boolean isAnZerrinRuinsType(ArrayList<String> types, Card card) {
         ArrayList<String> cardTypes = card.getType();
         for (String type : cardTypes) {
@@ -289,6 +330,9 @@ public class PhaseUtil {
     }
 
     // ******* UPKEEP PHASE *****
+    /**
+     * <p>handleUpkeep.</p>
+     */
     public static void handleUpkeep() {
         if (skipUpkeep()) {
             // Slowtrips all say "on the next turn's upkeep" if there is no upkeep next turn, the trigger will never occur.
@@ -302,6 +346,11 @@ public class PhaseUtil {
         GameActionUtil.executeUpkeepEffects();
     }
 
+    /**
+     * <p>skipUpkeep.</p>
+     *
+     * @return a boolean.
+     */
     public static boolean skipUpkeep() {
         if (AllZoneUtil.isCardInPlay("Eon Hub"))
             return true;
@@ -315,6 +364,9 @@ public class PhaseUtil {
     }
 
     // ******* DRAW PHASE *****
+    /**
+     * <p>handleDraw.</p>
+     */
     public static void handleDraw() {
         Player playerTurn = AllZone.getPhase().getPlayerTurn();
 
@@ -327,6 +379,12 @@ public class PhaseUtil {
         GameActionUtil.executeDrawStepEffects();
     }
 
+    /**
+     * <p>skipDraw.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     private static boolean skipDraw(Player player) {
         // starting player skips his draw
         if (AllZone.getPhase().getTurn() == 1) {
@@ -346,11 +404,17 @@ public class PhaseUtil {
 
     // ********* Declare Attackers ***********
 
+    /**
+     * <p>verifyCombat.</p>
+     */
     public static void verifyCombat() {
         AllZone.getCombat().verifyCreaturesInPlay();
         CombatUtil.showCombat();
     }
 
+    /**
+     * <p>handleDeclareAttackers.</p>
+     */
     public static void handleDeclareAttackers() {
         verifyCombat();
         CardList list = new CardList();
@@ -367,6 +431,9 @@ public class PhaseUtil {
         }
     }
 
+    /**
+     * <p>handleAttackingTriggers.</p>
+     */
     public static void handleAttackingTriggers() {
         CardList list = new CardList();
         list.addAll(AllZone.getCombat().getAttackers());
@@ -389,6 +456,9 @@ public class PhaseUtil {
         AllZone.getStack().unfreezeStack();
     }
 
+    /**
+     * <p>handleDeclareBlockers.</p>
+     */
     public static void handleDeclareBlockers() {
         verifyCombat();
 
@@ -423,6 +493,11 @@ public class PhaseUtil {
 
     // ***** Combat Utility **********
     // TODO: the below functions should be removed and the code blocks that use them should instead use SA_Restriction
+    /**
+     * <p>isBeforeAttackersAreDeclared.</p>
+     *
+     * @return a boolean.
+     */
     public static boolean isBeforeAttackersAreDeclared() {
         String phase = AllZone.getPhase().getPhase();
         return phase.equals(Constant.Phase.Untap) || phase.equals(Constant.Phase.Upkeep)

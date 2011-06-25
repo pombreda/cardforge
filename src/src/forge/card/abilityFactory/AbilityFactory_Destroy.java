@@ -9,11 +9,23 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Destroy class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Destroy {
     // An AbilityFactory subclass for destroying permanents
     // *********************************************************************************
     // ************************** DESTROY **********************************************
     // *********************************************************************************
+    /**
+     * <p>createAbilityDestroy.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDestroy(final AbilityFactory af) {
         final SpellAbility abDestroy = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4153613567150919283L;
@@ -42,6 +54,12 @@ public class AbilityFactory_Destroy {
         return abDestroy;
     }
 
+    /**
+     * <p>createSpellDestroy.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDestroy(final AbilityFactory af) {
         final SpellAbility spDestroy = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -317810567632846523L;
@@ -65,6 +83,12 @@ public class AbilityFactory_Destroy {
         return spDestroy;
     }
 
+    /**
+     * <p>createDrawbackDestroy.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.Ability_Sub} object.
+     */
     public static Ability_Sub createDrawbackDestroy(final AbilityFactory af) {
         final Ability_Sub dbDestroy = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -4153613567150919283L;
@@ -92,6 +116,13 @@ public class AbilityFactory_Destroy {
         return dbDestroy;
     }
 
+    /**
+     * <p>destroyCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean destroyCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         Random r = MyRandom.random;
@@ -195,6 +226,14 @@ public class AbilityFactory_Destroy {
         return ((r.nextFloat() < .6667) && chance);
     }
 
+    /**
+     * <p>destroyDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean destroyDoTriggerAI(final AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -286,6 +325,13 @@ public class AbilityFactory_Destroy {
         return true;
     }
 
+    /**
+     * <p>destroyStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String destroyStackDescription(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         final boolean noRegen = params.containsKey("NoRegen");
@@ -339,6 +385,12 @@ public class AbilityFactory_Destroy {
         return sb.toString();
     }
 
+    /**
+     * <p>destroyResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void destroyResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -367,6 +419,12 @@ public class AbilityFactory_Destroy {
     // *********************************************************************************
     // ************************ DESTROY ALL ********************************************
     // *********************************************************************************
+    /**
+     * <p>createAbilityDestroyAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDestroyAll(final AbilityFactory af) {
 
         final SpellAbility abDestroyAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -399,6 +457,12 @@ public class AbilityFactory_Destroy {
         return abDestroyAll;
     }
 
+    /**
+     * <p>createSpellDestroyAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDestroyAll(final AbilityFactory af) {
         final SpellAbility spDestroyAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -3712659336576469102L;
@@ -428,6 +492,12 @@ public class AbilityFactory_Destroy {
         return spDestroyAll;
     }
 
+    /**
+     * <p>createDrawbackDestroyAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackDestroyAll(final AbilityFactory af) {
         final SpellAbility dbDestroyAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -242160421677518351L;
@@ -463,6 +533,14 @@ public class AbilityFactory_Destroy {
         return dbDestroyAll;
     }
 
+    /**
+     * <p>destroyAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param noRegen a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     private static String destroyAllStackDescription(final AbilityFactory af, SpellAbility sa, boolean noRegen) {
 
         StringBuilder sb = new StringBuilder();
@@ -495,6 +573,14 @@ public class AbilityFactory_Destroy {
         return sb.toString();
     }
 
+    /**
+     * <p>destroyAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param noRegen a boolean.
+     * @return a boolean.
+     */
     private static boolean destroyAllCanPlayAI(final AbilityFactory af, final SpellAbility sa, final boolean noRegen) {
         // AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
         Random r = MyRandom.random;
@@ -563,6 +649,13 @@ public class AbilityFactory_Destroy {
         return ((r.nextFloat() < .9667) && chance);
     }
 
+    /**
+     * <p>destroyAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param noRegen a boolean.
+     */
     private static void destroyAllResolve(final AbilityFactory af, final SpellAbility sa, final boolean noRegen) {
         HashMap<String, String> params = af.getMapParams();
 

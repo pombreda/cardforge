@@ -8,6 +8,12 @@ import forge.gui.input.Input;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>TriggerHandler class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class TriggerHandler {
 
     private ArrayList<String> registeredModes = new ArrayList<String>();
@@ -16,25 +22,57 @@ public class TriggerHandler {
 
     private ArrayList<Trigger> delayedTriggers = new ArrayList<Trigger>();
 
+    /**
+     * <p>suppressMode.</p>
+     *
+     * @param mode a {@link java.lang.String} object.
+     */
     public void suppressMode(String mode) {
         suppressedModes.add(mode);
     }
 
+    /**
+     * <p>clearSuppression.</p>
+     *
+     * @param mode a {@link java.lang.String} object.
+     */
     public void clearSuppression(String mode) {
         suppressedModes.remove(mode);
     }
 
+    /**
+     * <p>parseTrigger.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param trigParse a {@link java.lang.String} object.
+     * @param host a {@link forge.Card} object.
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public static Trigger parseTrigger(String name, String trigParse, Card host) {
         Trigger ret = TriggerHandler.parseTrigger(trigParse, host);
         ret.setName(name);
         return ret;
     }
 
+    /**
+     * <p>parseTrigger.</p>
+     *
+     * @param trigParse a {@link java.lang.String} object.
+     * @param host a {@link forge.Card} object.
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public static Trigger parseTrigger(String trigParse, Card host) {
         HashMap<String, String> mapParams = parseParams(trigParse);
         return parseTrigger(mapParams, host);
     }
 
+    /**
+     * <p>parseTrigger.</p>
+     *
+     * @param mapParams a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public static Trigger parseTrigger(HashMap<String, String> mapParams, Card host) {
         Trigger ret = null;
 
@@ -98,6 +136,12 @@ public class TriggerHandler {
         return ret;
     }
 
+    /**
+     * <p>parseParams.</p>
+     *
+     * @param trigParse a {@link java.lang.String} object.
+     * @return a {@link java.util.HashMap} object.
+     */
     private static HashMap<String, String> parseParams(String trigParse) {
         HashMap<String, String> mapParams = new HashMap<String, String>();
 
@@ -129,6 +173,11 @@ public class TriggerHandler {
         return mapParams;
     }
 
+    /**
+     * <p>registerDelayedTrigger.</p>
+     *
+     * @param trig a {@link forge.card.trigger.Trigger} object.
+     */
     public void registerDelayedTrigger(Trigger trig) {
         delayedTriggers.add(trig);
 
@@ -137,6 +186,11 @@ public class TriggerHandler {
             registeredModes.add(mode);
     }
 
+    /**
+     * <p>registerTrigger.</p>
+     *
+     * @param trig a {@link forge.card.trigger.Trigger} object.
+     */
     public void registerTrigger(Trigger trig) {
         registeredTriggers.add(trig);
 
@@ -145,12 +199,20 @@ public class TriggerHandler {
             registeredModes.add(mode);
     }
 
+    /**
+     * <p>clearRegistered.</p>
+     */
     public void clearRegistered() {
         delayedTriggers.clear();
         registeredTriggers.clear();
         registeredModes.clear();
     }
 
+    /**
+     * <p>removeRegisteredTrigger.</p>
+     *
+     * @param trig a {@link forge.card.trigger.Trigger} object.
+     */
     public void removeRegisteredTrigger(Trigger trig) {
         for (int i = 0; i < registeredTriggers.size(); i++) {
             if (registeredTriggers.get(i).equals(trig))
@@ -158,10 +220,20 @@ public class TriggerHandler {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>registeredTriggers</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Trigger> getRegisteredTriggers() {
         return registeredTriggers;
     }
 
+    /**
+     * <p>removeAllFromCard.</p>
+     *
+     * @param crd a {@link forge.Card} object.
+     */
     public void removeAllFromCard(Card crd) {
         for (int i = 0; i < registeredTriggers.size(); i++) {
             if (registeredTriggers.get(i).getHostCard().equals(crd)) {
@@ -171,6 +243,12 @@ public class TriggerHandler {
         }
     }
 
+    /**
+     * <p>runTrigger.</p>
+     *
+     * @param mode a {@link java.lang.String} object.
+     * @param runParams a {@link java.util.HashMap} object.
+     */
     public void runTrigger(String mode, HashMap<String, Object> runParams) {
         if (suppressedModes.contains(mode) || !registeredModes.contains(mode)) {
             return;
@@ -210,6 +288,14 @@ public class TriggerHandler {
 
     //Checks if the conditions are right for a single trigger to go off, and runs it if so.
     //Return true if the trigger went off, false otherwise.
+    /**
+     * <p>runSingleTrigger.</p>
+     *
+     * @param regtrig a {@link forge.card.trigger.Trigger} object.
+     * @param mode a {@link java.lang.String} object.
+     * @param runParams a {@link java.util.HashMap} object.
+     * @return a boolean.
+     */
     private boolean runSingleTrigger(final Trigger regtrig, final String mode, final HashMap<String, Object> runParams) {
         if (!regtrig.zonesCheck()) {
             return false;

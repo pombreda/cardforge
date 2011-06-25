@@ -8,10 +8,22 @@ import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * <p>SealedDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
+ */
 public class SealedDeck {
     private ArrayList<BoosterGenerator> packs = new ArrayList<BoosterGenerator>();
     public String LandSetCode[] = {""};
 
+    /**
+     * <p>Constructor for SealedDeck.</p>
+     *
+     * @param sealedType a {@link java.lang.String} object.
+     */
     public SealedDeck(String sealedType) {
 
         if (sealedType.equals("Full")) {
@@ -152,6 +164,11 @@ public class SealedDeck {
         }
     }
 
+    /**
+     * <p>getCardpool.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCardpool() {
         CardList pool = new CardList();
 
@@ -161,6 +178,12 @@ public class SealedDeck {
         return pool;
     }
 
+    /**
+     * <p>buildAIDeck.</p>
+     *
+     * @param aiCardpool a {@link forge.CardList} object.
+     * @return a {@link forge.deck.Deck} object.
+     */
     public Deck buildAIDeck(CardList aiCardpool) {
         CardList deck = new CardList();
 

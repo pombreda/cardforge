@@ -12,9 +12,17 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * <p>QuestBazaarPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestBazaarPanel extends QuestAbstractPanel {
+    /** Constant <code>serialVersionUID=1418913010051869222L</code> */
     private static final long serialVersionUID = 1418913010051869222L;
 
+    /** Constant <code>stallList</code> */
     static List<QuestBazaarStall> stallList = new ArrayList<QuestBazaarStall>();
 
     JPanel buttonPanel = new JPanel(new BorderLayout());
@@ -26,6 +34,11 @@ public class QuestBazaarPanel extends QuestAbstractPanel {
 
     CardLayout stallLayout = new CardLayout();
 
+    /**
+     * <p>Constructor for QuestBazaarPanel.</p>
+     *
+     * @param mainFrame a {@link forge.quest.gui.QuestFrame} object.
+     */
     public QuestBazaarPanel(QuestFrame mainFrame) {
         super(mainFrame);
         this.setLayout(new BorderLayout());
@@ -105,14 +118,17 @@ public class QuestBazaarPanel extends QuestAbstractPanel {
 
     }
 
+    /**
+     * <p>showStall.</p>
+     *
+     * @param source a {@link java.lang.String} object.
+     */
     private void showStall(String source) {
         stallLayout.show(stallPanel, source);
     }
 
     /**
      * Slightly hackish, but should work.
-     *
-     * @return The last created instance of this object, used for updates after purchases.
      */
     static void refreshLastInstance() {
         for (QuestBazaarStall stall : stallList) {
@@ -120,6 +136,7 @@ public class QuestBazaarPanel extends QuestAbstractPanel {
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void refreshState() {
         refreshLastInstance();

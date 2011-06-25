@@ -9,9 +9,18 @@ import java.util.Arrays;
 import java.util.Collections;
 
 // The BoosterPack generates cards for the Card Pool in Quest Mode
+/**
+ * <p>QuestBoosterPack class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestBoosterPack implements NewConstants {
     ArrayList<String> choices;
 
+    /**
+     * <p>Constructor for QuestBoosterPack.</p>
+     */
     public QuestBoosterPack() {
         choices = new ArrayList<String>();
         choices.add("Multicolor");
@@ -22,6 +31,16 @@ public class QuestBoosterPack implements NewConstants {
         }
     }
 
+    /**
+     * <p>getQuestStarterDeck.</p>
+     *
+     * @param cards a {@link forge.CardList} object.
+     * @param numCommon a int.
+     * @param numUncommon a int.
+     * @param numRare a int.
+     * @param standardPool a boolean.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getQuestStarterDeck(CardList cards, int numCommon, int numUncommon, int numRare, boolean standardPool) {
         ArrayList<String> names = new ArrayList<String>();
 
@@ -60,6 +79,16 @@ public class QuestBoosterPack implements NewConstants {
         return names;
     }
 
+    /**
+     * <p>generateCards.</p>
+     *
+     * @param cards a {@link forge.CardList} object.
+     * @param num a int.
+     * @param rarity a {@link java.lang.String} object.
+     * @param color a {@link java.lang.String} object.
+     * @param colorOrder a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color, ArrayList<String> colorOrder) {
         // If color is null, use colorOrder progression to grab cards
         ArrayList<String> names = new ArrayList<String>();
@@ -87,14 +116,36 @@ public class QuestBoosterPack implements NewConstants {
         return names;
     }
 
+    /**
+     * <p>generateCards.</p>
+     *
+     * @param cards a {@link forge.CardList} object.
+     * @param num a int.
+     * @param rarity a {@link java.lang.String} object.
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color) {
         return generateCards(cards, num, rarity, color, choices);
     }
 
+    /**
+     * <p>getCardName.</p>
+     *
+     * @param cards a {@link forge.CardList} object.
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getCardName(CardList cards, String color) {
         return getCardName(cards.getColor(color));
     }
 
+    /**
+     * <p>getCardName.</p>
+     *
+     * @param cards a {@link forge.CardList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getCardName(CardList cards) {
         if (cards.isEmpty())    // Only should happen if something is programmed wrong
             return null;

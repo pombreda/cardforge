@@ -6,14 +6,24 @@ import forge.card.spellability.SpellAbility;
 import java.util.HashMap;
 
 /**
+ * <p>Trigger_Clashed class.</p>
  *
+ * @author Forge
+ * @version $Id: $
  */
 public class Trigger_Clashed extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Clashed.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Clashed(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("ValidPlayer")) {
@@ -30,6 +40,7 @@ public class Trigger_Clashed extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Clashed(mapParams, hostCard);
@@ -42,6 +53,7 @@ public class Trigger_Clashed extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         //No triggered-variables for you :(

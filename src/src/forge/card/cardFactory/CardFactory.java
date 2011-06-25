@@ -19,6 +19,12 @@ import javax.swing.*;
 import java.io.File;
 import java.util.*;
 
+/**
+ * <p>CardFactory class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFactory implements NewConstants {
     // String cardname is the key, Card is the value
     private Map<String, Card> map = new HashMap<String, Card>();
@@ -28,12 +34,22 @@ public class CardFactory implements NewConstants {
     private HashSet<String> removedCardList;
     private Card blankCard = new Card();                 //new code
 
+    /**
+     * <p>Constructor for CardFactory.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
     public CardFactory(String filename) {
         this(new File(filename));
     }
 
     public CardList CopiedList = new CardList();
 
+    /**
+     * <p>Constructor for CardFactory.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     */
     public CardFactory(File file) {
         SpellAbility spell = new SpellAbility(SpellAbility.Spell, blankCard) {
             //neither computer nor human play can play this card
@@ -76,15 +92,30 @@ public class CardFactory implements NewConstants {
         }
     }// constructor
 
+    /**
+     * <p>Getter for the field <code>allCards</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getAllCards() {
         return new CardList(allCards.toArray());
     }// getAllCards()
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCards() {
         return allCards;
     }// getAllCards()
 
 
+    /**
+     * <p>readCards.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     */
     private void readCards(File file) {
         map.clear();
 
@@ -108,6 +139,12 @@ public class CardFactory implements NewConstants {
     }// readCard()
 
     //TODO - this can probably be deleted.  I don't think it's used.
+    /**
+     * <p>dynamicCopyCard.</p>
+     *
+     * @param in a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     final public Card dynamicCopyCard(Card in) {
         if (in.isCreature()) {
             Card card2 = new Card();
@@ -141,6 +178,12 @@ public class CardFactory implements NewConstants {
         }
     }
 
+    /**
+     * <p>copyCard.</p>
+     *
+     * @param in a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     final public Card copyCard(Card in) {
 
         Card out = getCard(in.getName(), in.getOwner());
@@ -160,6 +203,12 @@ public class CardFactory implements NewConstants {
 
     }
 
+    /**
+     * <p>copyCardintoNew.</p>
+     *
+     * @param in a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     final public Card copyCardintoNew(Card in) {
 
         Card out = copyStats(in);
@@ -183,6 +232,14 @@ public class CardFactory implements NewConstants {
 
     }
 
+    /**
+     * <p>copySpellontoStack.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param original a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param bCopyDetails a boolean.
+     */
     public final void copySpellontoStack(Card source, Card original, SpellAbility sa, boolean bCopyDetails) {
         if (sa.getPayCosts() == null) {
             copySpellontoStack(source, source, bCopyDetails);
@@ -211,6 +268,13 @@ public class CardFactory implements NewConstants {
     }
 
 
+    /**
+     * <p>copySpellontoStack.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @param original a {@link forge.Card} object.
+     * @param bCopyDetails a boolean.
+     */
     public final void copySpellontoStack(Card source, Card original, boolean bCopyDetails) {
         SpellAbility[] sas = original.getSpellAbility();
         SpellAbility sa = null;
@@ -286,12 +350,26 @@ public class CardFactory implements NewConstants {
 
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //this is the new getCard() method, you have to remove the old getCard()
+    /**
+     * <p>getCard.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     final public Card getCard(String cardName, Player owner) {
         if (removedCardList.contains(cardName) || cardName.equals(blankCard.getName())) return blankCard;
 
         return getCard2(cardName, owner);
     }
 
+    /**
+     * <p>hasKeyword.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param k a {@link java.lang.String} object.
+     * @return a int.
+     */
     public final static int hasKeyword(Card c, String k) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -301,6 +379,14 @@ public class CardFactory implements NewConstants {
     }
 
     // Sol's Soulshift fix
+    /**
+     * <p>hasKeyword.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param k a {@link java.lang.String} object.
+     * @param startPos a int.
+     * @return a int.
+     */
     final static int hasKeyword(Card c, String k, int startPos) {
         ArrayList<String> a = c.getKeyword();
         for (int i = startPos; i < a.size(); i++)
@@ -309,6 +395,13 @@ public class CardFactory implements NewConstants {
         return -1;
     }
 
+    /**
+     * <p>getCard2.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     final private Card getCard2(final String cardName, final Player owner) {
         //o should be Card object
         Object o = map.get(cardName);
@@ -2582,6 +2675,12 @@ public class CardFactory implements NewConstants {
         return postFactoryKeywords(card);
     }//getCard2
 
+    /**
+     * <p>postFactoryKeywords.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public Card postFactoryKeywords(final Card card) {
         // this function should handle any keywords that need to be added after a spell goes through the factory
         // Cards with Cycling abilities
@@ -2936,6 +3035,12 @@ public class CardFactory implements NewConstants {
     }
 
     // copies stats like attack, defense, etc..
+    /**
+     * <p>copyStats.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card copyStats(Object o) {
         Card sim = (Card) o;
         Card c = new Card();
@@ -2962,6 +3067,11 @@ public class CardFactory implements NewConstants {
         return c;
     }// copyStats()
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         CardFactory f = new CardFactory(ForgeProps.getFile(CARDSFOLDER));
         Card c = f.getCard("Arc-Slogger", null);

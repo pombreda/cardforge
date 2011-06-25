@@ -9,32 +9,68 @@ import forge.gui.input.Input_PayManaCostUtil;
 
 import javax.swing.*;
 
+/**
+ * <p>Cost_Payment class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Cost_Payment {
     private Cost cost = null;
     private SpellAbility ability = null;
     private Card card = null;
     private SpellAbility_Requirements req = null;
 
+    /**
+     * <p>Getter for the field <code>cost</code>.</p>
+     *
+     * @return a {@link forge.card.spellability.Cost} object.
+     */
     public Cost getCost() {
         return cost;
     }
 
+    /**
+     * <p>Getter for the field <code>ability</code>.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbility() {
         return ability;
     }
 
+    /**
+     * <p>Getter for the field <code>card</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return card;
     }
 
+    /**
+     * <p>setRequirements.</p>
+     *
+     * @param reqs a {@link forge.card.spellability.SpellAbility_Requirements} object.
+     */
     public void setRequirements(SpellAbility_Requirements reqs) {
         req = reqs;
     }
 
+    /**
+     * <p>setCancel.</p>
+     *
+     * @param cancel a boolean.
+     */
     public void setCancel(boolean cancel) {
         bCancel = cancel;
     }
 
+    /**
+     * <p>isCanceled.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCanceled() {
         return bCancel;
     }
@@ -61,50 +97,111 @@ public class Cost_Payment {
 
     private CardList payTapXTypeTappedList = new CardList();
 
+    /**
+     * <p>addPayTapXTypeTappedList.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     private void addPayTapXTypeTappedList(Card c) {
         payTapXTypeTappedList.add(c);
     }
 
+    /**
+     * <p>Setter for the field <code>payMana</code>.</p>
+     *
+     * @param bPay a boolean.
+     */
     public void setPayMana(boolean bPay) {
         payMana = bPay;
     }
 
+    /**
+     * <p>Setter for the field <code>payXMana</code>.</p>
+     *
+     * @param bPay a boolean.
+     */
     public void setPayXMana(boolean bPay) {
         payXMana = bPay;
     }
 
+    /**
+     * <p>Setter for the field <code>payDiscard</code>.</p>
+     *
+     * @param bSac a boolean.
+     */
     public void setPayDiscard(boolean bSac) {
         payDiscard = bSac;
     }
 
+    /**
+     * <p>Setter for the field <code>paySac</code>.</p>
+     *
+     * @param bSac a boolean.
+     */
     public void setPaySac(boolean bSac) {
         paySac = bSac;
     }
 
+    /**
+     * <p>Setter for the field <code>payExile</code>.</p>
+     *
+     * @param bExile a boolean.
+     */
     public void setPayExile(boolean bExile) {
         payExile = bExile;
     }
 
+    /**
+     * <p>Setter for the field <code>payExileFromHand</code>.</p>
+     *
+     * @param bExileFromHand a boolean.
+     */
     public void setPayExileFromHand(boolean bExileFromHand) {
         payExileFromHand = bExileFromHand;
     }
 
+    /**
+     * <p>Setter for the field <code>payExileFromGrave</code>.</p>
+     *
+     * @param bExileFromGrave a boolean.
+     */
     public void setPayExileFromGrave(boolean bExileFromGrave) {
         payExileFromGrave = bExileFromGrave;
     }
 
+    /**
+     * <p>Setter for the field <code>payExileFromTop</code>.</p>
+     *
+     * @param bExileFromTop a boolean.
+     */
     public void setPayExileFromTop(boolean bExileFromTop) {
         payExileFromTop = bExileFromTop;
     }
 
+    /**
+     * <p>Setter for the field <code>payTapXType</code>.</p>
+     *
+     * @param bTapX a boolean.
+     */
     public void setPayTapXType(boolean bTapX) {
         payTapXType = bTapX;
     }
 
+    /**
+     * <p>Setter for the field <code>payReturn</code>.</p>
+     *
+     * @param bReturn a boolean.
+     */
     public void setPayReturn(boolean bReturn) {
         payReturn = bReturn;
     }
 
+    /**
+     * <p>Constructor for Cost_Payment.</p>
+     *
+     * @param cost a {@link forge.card.spellability.Cost} object.
+     * @param abil a {@link forge.card.spellability.SpellAbility} object.
+     */
     public Cost_Payment(Cost cost, SpellAbility abil) {
         this.cost = cost;
         this.ability = abil;
@@ -126,6 +223,13 @@ public class Cost_Payment {
         payReturn = !cost.getReturnCost();
     }
 
+    /**
+     * <p>canPayAdditionalCosts.</p>
+     *
+     * @param cost a {@link forge.card.spellability.Cost} object.
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public static boolean canPayAdditionalCosts(Cost cost, SpellAbility ability) {
         if (cost == null)
             return true;
@@ -269,10 +373,20 @@ public class Cost_Payment {
         return true;
     }
 
+    /**
+     * <p>setInput.</p>
+     *
+     * @param in a {@link forge.gui.input.Input} object.
+     */
     public void setInput(Input in) {
         AllZone.getInputControl().setInput(in, true);
     }
 
+    /**
+     * <p>payCost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean payCost() {
         if (bCancel) {
             req.finishPaying();
@@ -452,6 +566,11 @@ public class Cost_Payment {
         return true;
     }
 
+    /**
+     * <p>isAllPaid.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAllPaid() {
         // if you add a new Cost type add it here
         return (payTap && payUntap && payMana && payXMana && paySubCounter && payAddCounter &&
@@ -459,11 +578,17 @@ public class Cost_Payment {
                 payExileFromHand && payExileFromGrave && payExileFromTop);
     }
 
+    /**
+     * <p>resetUndoList.</p>
+     */
     public void resetUndoList() {
         // TODO: clear other undoLists here?
         payTapXTypeTappedList.clear();
     }
 
+    /**
+     * <p>cancelPayment.</p>
+     */
     public void cancelPayment() {
         // unpay anything we can.
         if (cost.getTap() && payTap) {
@@ -511,6 +636,11 @@ public class Cost_Payment {
         // can't really unreturn things
     }
 
+    /**
+     * <p>payComputerCosts.</p>
+     *
+     * @return a boolean.
+     */
     public boolean payComputerCosts() {
         // ******** NOTE for Adding Costs ************
         // make sure ComputerUtil.canPayAdditionalCosts() is updated so the AI knows if they can Pay the cost
@@ -709,6 +839,9 @@ public class Cost_Payment {
         return true;
     }
 
+    /**
+     * <p>changeCost.</p>
+     */
     public void changeCost() {
         cost.changeCost(ability);
     }
@@ -718,6 +851,14 @@ public class Cost_Payment {
     // *********** Inputs used by Cost_Payment below here ***************************
     // ******************************************************************************
 
+    /**
+     * <p>input_payMana.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @param manaToAdd a int.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_payMana(final SpellAbility sa, final Cost_Payment payment, int manaToAdd) {
         final ManaCost manaCost;
 
@@ -818,6 +959,14 @@ public class Cost_Payment {
         return payMana;
     }
 
+    /**
+     * <p>input_payXMana.</p>
+     *
+     * @param numX a int.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_payXMana(final int numX, final SpellAbility sa, final Cost_Payment payment) {
         Input payX = new Input() {
             private static final long serialVersionUID = -6900234444347364050L;
@@ -874,6 +1023,16 @@ public class Cost_Payment {
     }
 
 
+    /**
+     * <p>input_discardCost.</p>
+     *
+     * @param nCards a int.
+     * @param discType a {@link java.lang.String} object.
+     * @param handList a {@link forge.CardList} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_discardCost(final int nCards, final String discType, final CardList handList, SpellAbility sa, final Cost_Payment payment) {
         final SpellAbility sp = sa;
         Input target = new Input() {
@@ -945,6 +1104,13 @@ public class Cost_Payment {
         return target;
     }//input_discard() 
 
+    /**
+     * <p>sacrificeThis.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input sacrificeThis(final SpellAbility sa, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 2685832214519141903L;
@@ -978,6 +1144,14 @@ public class Cost_Payment {
         return target;
     }//input_sacrifice()
 
+    /**
+     * <p>sacrificeType.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input sacrificeType(final SpellAbility sa, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 2685832214519141903L;
@@ -1039,6 +1213,13 @@ public class Cost_Payment {
         return target;
     }//sacrificeType()
 
+    /**
+     * <p>sacrificeAllType.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     */
     public static void sacrificeAllType(final SpellAbility sa, final String type, final Cost_Payment payment) {
         // TODO Ask First
 
@@ -1055,6 +1236,14 @@ public class Cost_Payment {
         payment.payCost();
     }
 
+    /**
+     * <p>sacrificeXType.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input sacrificeXType(final SpellAbility sa, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = -4496270321029213839L;
@@ -1113,6 +1302,13 @@ public class Cost_Payment {
         return target;
     }//sacrificeXType()
 
+    /**
+     * <p>exileThis.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileThis(final SpellAbility sa, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 678668673002725001L;
@@ -1146,6 +1342,13 @@ public class Cost_Payment {
         return target;
     }//input_exile()
 
+    /**
+     * <p>exileFromHandThis.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromHandThis(final SpellAbility spell, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 2651542083913697972L;
@@ -1178,6 +1381,13 @@ public class Cost_Payment {
         return target;
     }//input_exile()
 
+    /**
+     * <p>exileFromTopThis.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromTopThis(final SpellAbility spell, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 3416809678763443014L;
@@ -1204,6 +1414,13 @@ public class Cost_Payment {
         return target;
     }//input_exile()
 
+    /**
+     * <p>exileFromGraveThis.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromGraveThis(final SpellAbility spell, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 6237561876518762902L;
@@ -1236,6 +1453,14 @@ public class Cost_Payment {
         return target;
     }//input_exile()
 
+    /**
+     * <p>exileType.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileType(final SpellAbility sa, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 1403915758082824694L;
@@ -1298,6 +1523,14 @@ public class Cost_Payment {
         return target;
     }//exileType()
 
+    /**
+     * <p>exileFromHandType.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromHandType(final SpellAbility spell, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 759041801001973859L;
@@ -1359,6 +1592,14 @@ public class Cost_Payment {
         return target;
     }//exileFromHandType()
 
+    /**
+     * <p>exileFromGraveType.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromGraveType(final SpellAbility spell, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 734256837615635021L;
@@ -1406,6 +1647,14 @@ public class Cost_Payment {
         return target;
     }//exileFromGraveType()
 
+    /**
+     * <p>exileFromTopType.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input exileFromTopType(final SpellAbility spell, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = -4764871768555887091L;
@@ -1452,6 +1701,16 @@ public class Cost_Payment {
         return target;
     }//exileFromTopType()
 
+    /**
+     * <p>input_tapXCost.</p>
+     *
+     * @param nCards a int.
+     * @param cardType a {@link java.lang.String} object.
+     * @param cardList a {@link forge.CardList} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_tapXCost(final int nCards, final String cardType, final CardList cardList, SpellAbility sa, final Cost_Payment payment) {
         //final SpellAbility sp = sa;
         Input target = new Input() {
@@ -1508,6 +1767,13 @@ public class Cost_Payment {
         return target;
     }//input_tapXCost() 
 
+    /**
+     * <p>returnThis.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input returnThis(final SpellAbility sa, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 2685832214519141903L;
@@ -1540,6 +1806,14 @@ public class Cost_Payment {
         return target;
     }//input_sacrifice()
 
+    /**
+     * <p>returnType.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param type a {@link java.lang.String} object.
+     * @param payment a {@link forge.card.spellability.Cost_Payment} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input returnType(final SpellAbility sa, final String type, final Cost_Payment payment) {
         Input target = new Input() {
             private static final long serialVersionUID = 2685832214519141903L;

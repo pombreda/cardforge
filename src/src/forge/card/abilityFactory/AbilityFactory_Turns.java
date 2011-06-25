@@ -8,12 +8,24 @@ import forge.card.spellability.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>AbilityFactory_Turns class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Turns {
 
     // *************************************************************************
     // ************************* ADD TURN **************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityAddTurn.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityAddTurn(final AbilityFactory af) {
 
         final SpellAbility abAddTurn = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -43,6 +55,12 @@ public class AbilityFactory_Turns {
         return abAddTurn;
     }
 
+    /**
+     * <p>createSpellAddTurn.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellAddTurn(final AbilityFactory af) {
         final SpellAbility spAddTurn = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -3921131887560356006L;
@@ -66,6 +84,12 @@ public class AbilityFactory_Turns {
         return spAddTurn;
     }
 
+    /**
+     * <p>createDrawbackAddTurn.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackAddTurn(final AbilityFactory af) {
         final SpellAbility dbAddTurn = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -562517287448810951L;
@@ -94,6 +118,13 @@ public class AbilityFactory_Turns {
         return dbAddTurn;
     }
 
+    /**
+     * <p>addTurnStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String addTurnStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -133,10 +164,25 @@ public class AbilityFactory_Turns {
         return sb.toString();
     }
 
+    /**
+     * <p>addTurnCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean addTurnCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         return addTurnTriggerAI(af, sa, false);
     }
 
+    /**
+     * <p>addTurnTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean addTurnTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -158,6 +204,12 @@ public class AbilityFactory_Turns {
         return true;
     }
 
+    /**
+     * <p>addTurnResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void addTurnResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         int numTurns = AbilityFactory.calculateAmount(af.getHostCard(), params.get("NumTurns"), sa);

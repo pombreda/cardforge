@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+/**
+ * <p>AbilityFactory_Regenerate class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Regenerate {
 
     // Ex: A:SP$Regenerate | Cost$W | Tgt$TgtC | SpellDescription$Regenerate target creature.
@@ -17,6 +23,12 @@ public class AbilityFactory_Regenerate {
     // ********************* Regenerate ****************************
     //**************************************************************
 
+    /**
+     * <p>getAbilityRegenerate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getAbilityRegenerate(final AbilityFactory af) {
 
         final SpellAbility abRegenerate = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -48,6 +60,12 @@ public class AbilityFactory_Regenerate {
         return abRegenerate;
     }
 
+    /**
+     * <p>getSpellRegenerate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getSpellRegenerate(final AbilityFactory af) {
 
         final SpellAbility spRegenerate = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -73,6 +91,12 @@ public class AbilityFactory_Regenerate {
         return spRegenerate;
     }
 
+    /**
+     * <p>createDrawbackRegenerate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackRegenerate(final AbilityFactory af) {
         final SpellAbility dbRegen = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -2295483806708528744L;
@@ -101,6 +125,13 @@ public class AbilityFactory_Regenerate {
         return dbRegen;
     }
 
+    /**
+     * <p>regenerateStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String regenerateStackDescription(AbilityFactory af, SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -139,6 +170,13 @@ public class AbilityFactory_Regenerate {
         return sb.toString();
     }
 
+    /**
+     * <p>regenerateCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean regenerateCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         final Card hostCard = af.getHostCard();
@@ -234,6 +272,14 @@ public class AbilityFactory_Regenerate {
         return chance;
     }//regenerateCanPlayAI
 
+    /**
+     * <p>doTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean doTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         boolean chance = false;
 
@@ -255,6 +301,14 @@ public class AbilityFactory_Regenerate {
         return chance;
     }
 
+    /**
+     * <p>regenMandatoryTarget.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean regenMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         final Card hostCard = af.getHostCard();
         Target tgt = sa.getTarget();
@@ -311,6 +365,12 @@ public class AbilityFactory_Regenerate {
         return true;
     }
 
+    /**
+     * <p>regenerateResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void regenerateResolve(final AbilityFactory af, final SpellAbility sa) {
         Card hostCard = af.getHostCard();
         final HashMap<String, String> params = af.getMapParams();
@@ -342,6 +402,12 @@ public class AbilityFactory_Regenerate {
     // ********************* RegenerateAll *************************
     //**************************************************************
 
+    /**
+     * <p>getAbilityRegenerateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getAbilityRegenerateAll(final AbilityFactory af) {
 
         final SpellAbility abRegenerateAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -373,6 +439,12 @@ public class AbilityFactory_Regenerate {
         return abRegenerateAll;
     }
 
+    /**
+     * <p>getSpellRegenerateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility getSpellRegenerateAll(final AbilityFactory af) {
 
         final SpellAbility spRegenerateAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -398,6 +470,12 @@ public class AbilityFactory_Regenerate {
         return spRegenerateAll;
     }
 
+    /**
+     * <p>createDrawbackRegenerateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackRegenerateAll(final AbilityFactory af) {
         final SpellAbility dbRegenAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 4777861790603705572L;
@@ -426,6 +504,13 @@ public class AbilityFactory_Regenerate {
         return dbRegenAll;
     }
 
+    /**
+     * <p>regenerateAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String regenerateAllStackDescription(AbilityFactory af, SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -453,6 +538,13 @@ public class AbilityFactory_Regenerate {
         return sb.toString();
     }
 
+    /**
+     * <p>regenerateAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean regenerateAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         final HashMap<String, String> params = af.getMapParams();
         final Card hostCard = af.getHostCard();
@@ -517,6 +609,14 @@ public class AbilityFactory_Regenerate {
         return chance;
     }
 
+    /**
+     * <p>regenerateAllDoTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean regenerateAllDoTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         boolean chance = true;
 
@@ -530,6 +630,12 @@ public class AbilityFactory_Regenerate {
         return chance;
     }
 
+    /**
+     * <p>regenerateAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void regenerateAllResolve(final AbilityFactory af, final SpellAbility sa) {
         Card hostCard = af.getHostCard();
         final HashMap<String, String> params = af.getMapParams();

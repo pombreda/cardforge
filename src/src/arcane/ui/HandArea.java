@@ -6,9 +6,22 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * <p>HandArea class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class HandArea extends CardArea {
+    /** Constant <code>serialVersionUID=7488132628637407745L</code> */
     private static final long serialVersionUID = 7488132628637407745L;
 
+    /**
+     * <p>Constructor for HandArea.</p>
+     *
+     * @param scrollPane a {@link javax.swing.JScrollPane} object.
+     * @param frame a {@link java.awt.Frame} object.
+     */
     public HandArea(JScrollPane scrollPane, final Frame frame) {
         super(scrollPane);
 

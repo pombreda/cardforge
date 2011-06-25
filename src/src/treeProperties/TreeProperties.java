@@ -82,10 +82,14 @@ import static java.util.Collections.unmodifiableList;
  * @see Properties
  */
 public class TreeProperties implements Iterable<PropertyElement> {
+    /** Constant <code>suffixes</code> */
     private static final Map<String, PropertyType<?>> suffixes;
+    /** Constant <code>types</code> */
     private static final Map<Class<?>, PropertyType<?>> types;
 
+    /** Constant <code>transparent="transparent-properties"</code> */
     private static final String transparent = "transparent-properties";
+    /** Constant <code>child="properties"</code> */
     private static final String child = "properties";
 
     static {
@@ -103,11 +107,21 @@ public class TreeProperties implements Iterable<PropertyElement> {
     private HashMap<String, Object> properties;
     private List<Exception> exceptions;
 
+    /**
+     * <p>addType.</p>
+     *
+     * @param type a {@link treeProperties.PropertyType} object.
+     */
     public static void addType(PropertyType<?> type) {
         types.put(type.getType(), type);
         suffixes.put(type.getSuffix(), type);
     }
 
+    /**
+     * <p>removeType.</p>
+     *
+     * @param type a {@link treeProperties.PropertyType} object.
+     */
     public static void removeType(PropertyType<?> type) {
         types.remove(type.getType());
         suffixes.remove(type.getSuffix());
@@ -115,6 +129,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Delegate to {@link #TreeProperties(File)} with a new {@link File#File(String)}
+     *
+     * @param f a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
      */
     public TreeProperties(String f) throws IOException {
         this(new File(f));
@@ -122,6 +139,10 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Delegate to {@link #TreeProperties(File)} with a new {@link File#File(File, String)}
+     *
+     * @param parent a {@link java.io.File} object.
+     * @param f a {@link java.lang.String} object.
+     * @throws java.io.IOException if any.
      */
     public TreeProperties(File parent, String f) throws IOException {
         this(new File(parent, f));
@@ -132,6 +153,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
      * is if the parameter is null or not found. Instead, the rest of the properties are processed, so that the
      * erroneous properties are the only ones not present in this TreeProperties. Afterwards, the exceptions can be
      * accessed.
+     *
+     * @param f a {@link java.io.File} object.
+     * @throws java.io.IOException if any.
      */
     public TreeProperties(File f) throws IOException {
         if (f == null) throw new FileNotFoundException("null");
@@ -182,6 +206,8 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Returns the exceptions that were thrown while creating the tree properties.
+     *
+     * @return a {@link java.util.List} object.
      */
     public List<Exception> getExceptions() {
         return exceptions;
@@ -190,6 +216,8 @@ public class TreeProperties implements Iterable<PropertyElement> {
     /**
      * If exceptions occurred during construction, this method throws an IOException that combines the messages of
      * those exceptions.
+     *
+     * @throws java.io.IOException if any.
      */
     public void rethrow() throws IOException {
         if (exceptions.isEmpty()) return;
@@ -203,6 +231,8 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Returns the parent directory of this TreeProperties.
+     *
+     * @return a {@link java.io.File} object.
      */
     public File getPath() {
         return path;
@@ -211,6 +241,8 @@ public class TreeProperties implements Iterable<PropertyElement> {
     /**
      * Checks if the key is valid for a query and throws an {@link IllegalArgumentException} if not. Slashes are
      * allowed in this method, but suffixes are not
+     *
+     * @param key a {@link java.lang.String} object.
      */
     private void checkQueryKey(String key) {
         if (key.contains("--")) throw new IllegalArgumentException("Invalid key: " + key);
@@ -218,6 +250,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Retrieves the string property for the given key.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
      */
     public String getProperty(String key) {
         return getProperty(key, String.class);
@@ -225,6 +260,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Convenience for {@code getProperty(key, File.class)}.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link java.io.File} object.
      */
     public File getFile(String key) {
         return getProperty(key, File.class);
@@ -232,6 +270,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Retrieves the child properties for the given key. Transparent properties can't be retrieved this way.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link treeProperties.TreeProperties} object.
      */
     public TreeProperties getChildProperties(String key) {
         return (TreeProperties) getProperty(key, "--" + child, true);
@@ -239,6 +280,9 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Retrieves the child properties for the given key.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @return a {@link treeProperties.TreeProperties} object.
      */
     public TreeProperties getTransparentProperties(String key) {
         return (TreeProperties) getProperty(key, "--" + transparent, true);
@@ -246,6 +290,11 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     /**
      * Returns a property of the given type. This does not work to retrieve tree properties.
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param cls a {@link java.lang.Class} object.
+     * @return a T object.
+     * @param <T> a T object.
      */
     @SuppressWarnings("unchecked")
     public <T> T getProperty(String key, Class<T> cls) {
@@ -258,6 +307,14 @@ public class TreeProperties implements Iterable<PropertyElement> {
         return (T) getProperty(key, suffix, true);
     }
 
+    /**
+     * <p>getProperty.</p>
+     *
+     * @param key a {@link java.lang.String} object.
+     * @param suffix a {@link java.lang.String} object.
+     * @param top a boolean.
+     * @return a {@link java.lang.Object} object.
+     */
     private Object getProperty(String key, String suffix, boolean top) {
         checkQueryKey(key);
         //first, try the key in the current file, as if there were no slash
@@ -302,6 +359,8 @@ public class TreeProperties implements Iterable<PropertyElement> {
     /**
      * Returns an iterator over all the regular entries of this object. That means that transparent or child tree
      * properties are not included.
+     *
+     * @return a {@link java.util.Iterator} object.
      */
     public Iterator<PropertyElement> iterator() {
         return iterator("");
@@ -309,6 +368,12 @@ public class TreeProperties implements Iterable<PropertyElement> {
 
     ;
 
+    /**
+     * <p>iterator.</p>
+     *
+     * @param prefix a {@link java.lang.String} object.
+     * @return a {@link treeProperties.TreeProperties.TreePropertiesIterator} object.
+     */
     private TreePropertiesIterator iterator(String prefix) {
         return new TreePropertiesIterator(prefix);
     }

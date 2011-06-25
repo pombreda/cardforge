@@ -10,12 +10,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Hashtable;
 
+/**
+ * <p>AbilityFactory_Animate class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Animate {
 
     //**************************************************************
     // *************************** Animate *************************
     //**************************************************************
 
+    /**
+     * <p>createAbilityAnimate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityAnimate(final AbilityFactory af) {
         final SpellAbility abAnimate = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 1938171749867735155L;
@@ -41,6 +53,12 @@ public class AbilityFactory_Animate {
         return abAnimate;
     }
 
+    /**
+     * <p>createSpellAnimate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellAnimate(final AbilityFactory af) {
         final SpellAbility spAnimate = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4047747186919390147L;
@@ -61,6 +79,12 @@ public class AbilityFactory_Animate {
         return spAnimate;
     }
 
+    /**
+     * <p>createDrawbackAnimate.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackAnimate(final AbilityFactory af) {
         final SpellAbility dbAnimate = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -8659938411460952874L;
@@ -87,6 +111,13 @@ public class AbilityFactory_Animate {
         return dbAnimate;
     }
 
+    /**
+     * <p>animateStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String animateStackDescription(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -165,6 +196,13 @@ public class AbilityFactory_Animate {
         return sb.toString();
     }
 
+    /**
+     * <p>animateCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean animateCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -210,6 +248,13 @@ public class AbilityFactory_Animate {
         return useAbility;
     }// end animateCanPlayAI()
 
+    /**
+     * <p>animatePlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean animatePlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         // AI should only activate this during Human's turn
         boolean chance = animateTgtAI(af, sa);
@@ -223,6 +268,14 @@ public class AbilityFactory_Animate {
         return chance;
     }
 
+    /**
+     * <p>animateTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean animateTriggerAI(final AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment
             return false;
@@ -242,6 +295,13 @@ public class AbilityFactory_Animate {
         return chance || mandatory;
     }
 
+    /**
+     * <p>animateTgtAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean animateTgtAI(AbilityFactory af, SpellAbility sa) {
         //This is reasonable for now.  Kamahl, Fist of Krosa and a sorcery or two are the only things
         //that animate a target.  Those can just use SVar:RemAIDeck:True until this can do a reasonalbly
@@ -249,6 +309,12 @@ public class AbilityFactory_Animate {
         return false;
     }
 
+    /**
+     * <p>animateResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void animateResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card source = sa.getSourceCard();
@@ -357,6 +423,18 @@ public class AbilityFactory_Animate {
         }
     }//animateResolve
 
+    /**
+     * <p>doAnimate.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param power a int.
+     * @param toughness a int.
+     * @param types a {@link java.util.ArrayList} object.
+     * @param colors a {@link java.lang.String} object.
+     * @param keywords a {@link java.util.ArrayList} object.
+     * @return a long.
+     */
     private static long doAnimate(Card c, AbilityFactory af, int power, int toughness, ArrayList<String> types, String colors, ArrayList<String> keywords) {
         HashMap<String, String> params = af.getMapParams();
         if (power != -1) c.setBaseAttack(power);
@@ -395,6 +473,19 @@ public class AbilityFactory_Animate {
         return timestamp;
     }
 
+    /**
+     * <p>doUnanimate.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param originalPower a int.
+     * @param originalToughness a int.
+     * @param originalTypes a {@link java.util.ArrayList} object.
+     * @param colorDesc a {@link java.lang.String} object.
+     * @param originalKeywords a {@link java.util.ArrayList} object.
+     * @param addedAbilities a {@link java.util.ArrayList} object.
+     * @param addedTriggers a {@link java.util.ArrayList} object.
+     * @param timestamp a long.
+     */
     private static void doUnanimate(Card c, int originalPower, int originalToughness, ArrayList<String> originalTypes, String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, long timestamp) {
         c.setBaseAttack(originalPower);
         c.setBaseDefense(originalToughness);
@@ -431,6 +522,12 @@ public class AbilityFactory_Animate {
     // ************************ AnimateAll *************************
     //**************************************************************
 
+    /**
+     * <p>createAbilityAnimateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityAnimateAll(final AbilityFactory af) {
         final SpellAbility abAnimateAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4969632476557290609L;
@@ -456,6 +553,12 @@ public class AbilityFactory_Animate {
         return abAnimateAll;
     }
 
+    /**
+     * <p>createSpellAnimateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellAnimateAll(final AbilityFactory af) {
         final SpellAbility spAnimateAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 2946847609068706237L;
@@ -476,6 +579,12 @@ public class AbilityFactory_Animate {
         return spAnimateAll;
     }
 
+    /**
+     * <p>createDrawbackAnimateAll.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackAnimateAll(final AbilityFactory af) {
         final SpellAbility dbAnimateAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 2056843302051205632L;
@@ -502,6 +611,13 @@ public class AbilityFactory_Animate {
         return dbAnimateAll;
     }
 
+    /**
+     * <p>animateAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String animateAllStackDescription(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -528,6 +644,13 @@ public class AbilityFactory_Animate {
         return sb.toString();
     }
 
+    /**
+     * <p>animateAllCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean animateAllCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         boolean useAbility = false;
 
@@ -538,6 +661,13 @@ public class AbilityFactory_Animate {
         return useAbility;
     }// end animateCanPlayAI()
 
+    /**
+     * <p>animateAllPlayDrawbackAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean animateAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
         boolean chance = false;
 
@@ -548,6 +678,14 @@ public class AbilityFactory_Animate {
         return chance;
     }
 
+    /**
+     * <p>animateAllTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean animateAllTriggerAI(final AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment
             return false;
@@ -561,6 +699,12 @@ public class AbilityFactory_Animate {
         return chance || mandatory;
     }
 
+    /**
+     * <p>animateAllResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void animateAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();

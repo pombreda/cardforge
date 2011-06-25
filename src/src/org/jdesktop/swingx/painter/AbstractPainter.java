@@ -52,6 +52,7 @@ import java.lang.ref.SoftReference;
  * </code></pre></p>
  *
  * @author rbair
+ * @version $Id$
  */
 public abstract class AbstractPainter<T> extends AbstractBean implements Painter<T> {
     /**
@@ -238,7 +239,7 @@ public abstract class AbstractPainter<T> extends AbstractBean implements Painter
      * <p/>
      * <p>If set to false, then #clearCache is called to free system resources.</p>
      *
-     * @param cacheable
+     * @param cacheable a boolean.
      */
     public void setCacheable(boolean cacheable) {
         boolean old = isCacheable();
@@ -272,6 +273,8 @@ public abstract class AbstractPainter<T> extends AbstractBean implements Painter
     /**
      * Only made package private for testing. Don't call this method outside
      * of this class! This is NOT a bound property
+     *
+     * @return a boolean.
      */
     boolean isCacheCleared() {
         return cacheCleared;
@@ -283,7 +286,7 @@ public abstract class AbstractPainter<T> extends AbstractBean implements Painter
      * the <code>Painter</code> has a chance to mark itself as dirty, thus causing a
      * repaint, even if cached.</p>
      *
-     * @param object
+     * @param object a T object.
      */
     protected void validate(T object) {
     }
@@ -356,16 +359,14 @@ public abstract class AbstractPainter<T> extends AbstractBean implements Painter
      * Subclasses must implement this method and perform custom painting operations
      * here.
      *
-     * @param width
-     * @param height
+     * @param width a int.
+     * @param height a int.
      * @param g      The Graphics2D object in which to paint
-     * @param object
+     * @param object a T object.
      */
     protected abstract void doPaint(Graphics2D g, T object, int width, int height);
 
-    /**
-     * @inheritDoc
-     */
+    /** {@inheritDoc} */
     public final void paint(Graphics2D g, T obj, int width, int height) {
         if (g == null) {
             throw new NullPointerException("The Graphics2D must be supplied");

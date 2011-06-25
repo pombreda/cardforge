@@ -4,6 +4,12 @@ import forge.card.mana.ManaCost;
 
 import java.util.EnumSet;
 
+/**
+ * <p>Color class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public enum Color {
     Colorless(0),
     White(1),
@@ -15,15 +21,31 @@ public enum Color {
     @SuppressWarnings("unused")
     private int flag = 0;
 
+    /**
+     * <p>Constructor for Color.</p>
+     *
+     * @param c a int.
+     */
     Color(int c) {
         flag = c;
     }
 
+    /**
+     * <p>Colorless.</p>
+     *
+     * @return a {@link java.util.EnumSet} object.
+     */
     public static EnumSet<Color> Colorless() {
         EnumSet<Color> colors = EnumSet.of(Color.Colorless);
         return colors;
     }
 
+    /**
+     * <p>ConvertStringsToColor.</p>
+     *
+     * @param s an array of {@link java.lang.String} objects.
+     * @return a {@link java.util.EnumSet} object.
+     */
     public static EnumSet<Color> ConvertStringsToColor(String[] s) {
         EnumSet<Color> colors = EnumSet.of(Color.Colorless);
 
@@ -37,6 +59,12 @@ public enum Color {
         return colors;
     }
 
+    /**
+     * <p>ConvertFromString.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a {@link forge.Color} object.
+     */
     public static Color ConvertFromString(String s) {
         {
             if (s.equals(Constant.Color.White))
@@ -54,6 +82,12 @@ public enum Color {
         }
     }
 
+    /**
+     * <p>ConvertManaCostToColor.</p>
+     *
+     * @param m a {@link forge.card.mana.ManaCost} object.
+     * @return a {@link java.util.EnumSet} object.
+     */
     public static EnumSet<Color> ConvertManaCostToColor(ManaCost m) {
         EnumSet<Color> colors = EnumSet.of(Color.Colorless);
 
@@ -74,6 +108,11 @@ public enum Color {
         return colors;
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         if (this.equals(Color.White))
             return Constant.Color.White;

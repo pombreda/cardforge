@@ -10,7 +10,14 @@ import java.util.Collections;
 import java.util.List;
 
 
+/**
+ * <p>Constant interface.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public interface Constant {
+    /** Constant <code>ProgramName="Forge - http://cardforge.org"</code> */
     public static final String ProgramName = "Forge - http://cardforge.org";
 
     //used to pass information between the GUI screens

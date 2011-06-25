@@ -13,27 +13,52 @@ import java.util.Map.Entry;
 import java.util.StringTokenizer;
 
 
+/**
+ * <p>NameChanger class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class NameChanger implements NewConstants {
     private Map<String, String> mutatedMap = new HashMap<String, String>();
     private Map<String, String> originalMap = new HashMap<String, String>();
 
     private boolean changeCardName;
 
+    /**
+     * <p>Constructor for NameChanger.</p>
+     */
     public NameChanger() {
 //      readFile();
         setShouldChangeCardName(false);
     }
 
     //should change card name?
+    /**
+     * <p>shouldChangeCardName.</p>
+     *
+     * @return a boolean.
+     */
     public boolean shouldChangeCardName() {
         return changeCardName;
     }
 
+    /**
+     * <p>setShouldChangeCardName.</p>
+     *
+     * @param b a boolean.
+     */
     public void setShouldChangeCardName(boolean b) {
         changeCardName = b;
     }
 
     //returns an array of copies
+    /**
+     * <p>changeCard.</p>
+     *
+     * @param c an array of {@link forge.Card} objects.
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] changeCard(Card c[]) {
         for (int i = 0; i < c.length; i++)
             changeCard(c[i]);
@@ -42,6 +67,12 @@ public class NameChanger implements NewConstants {
     }
 
     //changes card name, getText(), and all SpellAbility getStackDescription() and toString()
+    /**
+     * <p>changeCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public Card changeCard(Card c) {
         //change name
         String newName = changeName(c.getName());
@@ -65,6 +96,13 @@ public class NameChanger implements NewConstants {
         return c;
     }//getMutatedCard()
 
+    /**
+     * <p>changeString.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param in a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String changeString(Card c, String in) {
         //String name = getOriginalName(c.getName()); // unused
 //    in = in.replaceAll(name, changeName(name));
@@ -74,6 +112,12 @@ public class NameChanger implements NewConstants {
 
     //always returns mutated (alias) for the card name
     //if argument is a mutated name, it returns the same mutated name
+    /**
+     * <p>changeName.</p>
+     *
+     * @param originalName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String changeName(String originalName) {
         Object o = mutatedMap.get(originalName);
 
@@ -84,6 +128,12 @@ public class NameChanger implements NewConstants {
 
     //always returns the original cardname
     //if argument is a original name, it returns the same original name
+    /**
+     * <p>getOriginalName.</p>
+     *
+     * @param mutatedName a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getOriginalName(String mutatedName) {
         Object o = originalMap.get(mutatedName);
 
@@ -92,6 +142,9 @@ public class NameChanger implements NewConstants {
         return o.toString();
     }//getOriginalName()
 
+    /**
+     * <p>readFile.</p>
+     */
     @SuppressWarnings("unused")
     private void readFile() {
         try {
@@ -130,6 +183,11 @@ public class NameChanger implements NewConstants {
     }//readFile()
 
     //line is formated "original card name : alias card name"
+    /**
+     * <p>processLine.</p>
+     *
+     * @param line a {@link java.lang.String} object.
+     */
     private void processLine(String line) {
         StringTokenizer tok = new StringTokenizer(line, ":");
 
@@ -144,6 +202,11 @@ public class NameChanger implements NewConstants {
         originalMap.put(mutated, original);
     }
 
+    /**
+     * <p>printMap.</p>
+     *
+     * @param map a {@link java.util.Map} object.
+     */
     @SuppressWarnings("unused")
     // printMap
     private void printMap(Map<String, String> map) {
@@ -152,6 +215,11 @@ public class NameChanger implements NewConstants {
         }
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
     }//main()
 }

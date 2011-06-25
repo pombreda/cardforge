@@ -4,6 +4,9 @@ package com.cloudgarden.layout;
 
 /**
  * Used by both AnchorLayout (SWT) and AnchorLayoutManager (Swing)
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class AnchorConstraint {
 
@@ -40,6 +43,9 @@ public class AnchorConstraint {
     public int rightType;
     public int leftType;
 
+    /**
+     * <p>Constructor for AnchorConstraint.</p>
+     */
     public AnchorConstraint() {
         this(0, 0, 0, 0, ANCHOR_NONE, ANCHOR_NONE, ANCHOR_NONE, ANCHOR_NONE);
     }
@@ -47,17 +53,18 @@ public class AnchorConstraint {
     /**
      * Creates an AnchorConstraint.
      *
-     * @param top        - value (relative or absolute) for top side
-     * @param right      - like 'top' but for right side
-     * @param bottom     - like 'top' but for bottom side
-     * @param left       - like 'top' but for left side
-     * @param topType    - either ANCHOR_ABS, ANCHOR_REL or ANCHOR_NONE
+     * @param top         value (relative or absolute) for top side
+     * @param topType     either ANCHOR_ABS, ANCHOR_REL or ANCHOR_NONE
      *                   to indicate whether the 'top' parameter is an absolute value (in pixels) or
      *                   a fractional value (in 1/1000 ths) of the height of this component's parent,
      *                   denoting where the anchor will be applied (if at all).
-     * @param rightType  - like 'topType' but for right side
-     * @param bottomType - like 'topType' but for bottom side
-     * @param leftType   - like 'topType' but for left side
+     * @param right  like 'top' but for right side
+     * @param rightType   like 'topType' but for right side
+     * @param bottom      like 'top' but for bottom side
+     * @param bottomType  like 'topType' but for bottom side
+     * @param left  like 'top' but for left side
+     * @param leftType    like 'topType' but for left side
+     *                   denoting where the anchor will be applied (if at all).
      */
     public AnchorConstraint(
             int top,
@@ -69,13 +76,12 @@ public class AnchorConstraint {
             int bottomType,
             int leftType) {
         this.top = top;
+        this.right = right;
         this.bottom = bottom;
         this.left = left;
-        this.right = right;
         this.topType = topType;
         this.rightType = rightType;
         this.bottomType = bottomType;
         this.leftType = leftType;
     }
-
 }

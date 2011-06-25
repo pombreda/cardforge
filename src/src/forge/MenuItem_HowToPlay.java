@@ -9,9 +9,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+/**
+ * <p>MenuItem_HowToPlay class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class MenuItem_HowToPlay extends JMenuItem implements NewConstants.LANG.HowTo {
+    /** Constant <code>serialVersionUID=5552000208438248428L</code> */
     private static final long serialVersionUID = 5552000208438248428L;
 
+    /**
+     * <p>Constructor for MenuItem_HowToPlay.</p>
+     */
     public MenuItem_HowToPlay() {
         super(ForgeProps.getLocalized(TITLE));
 
@@ -32,6 +42,11 @@ public class MenuItem_HowToPlay extends JMenuItem implements NewConstants.LANG.H
         });
     }//constructor
 
+    /**
+     * <p>getString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     @SuppressWarnings("unused")
     private String getString() {
         String newLine = "\r\n\r\n";

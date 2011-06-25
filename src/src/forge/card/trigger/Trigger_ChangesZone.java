@@ -5,12 +5,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_ChangesZone class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_ChangesZone extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_ChangesZone.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_ChangesZone(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("Origin")) {
@@ -42,6 +55,7 @@ public class Trigger_ChangesZone extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_ChangesZone(mapParams, hostCard);
@@ -54,6 +68,7 @@ public class Trigger_ChangesZone extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Card", runParams.get("Card"));

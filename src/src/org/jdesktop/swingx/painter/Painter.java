@@ -53,6 +53,7 @@ import java.awt.*;
  * <p>This class is <strong>not</strong> threadsafe.</p>
  *
  * @author rbair
+ * @version $Id$
  */
 public interface Painter<T> {
     /**
@@ -96,6 +97,7 @@ public interface Painter<T> {
      * @param object an optional configuration parameter. This may be null.
      * @param width  width of the area to paint.
      * @param height height of the area to paint.
+     * @param <T> a T object.
      */
     public void paint(Graphics2D g, T object, int width, int height);
 } 

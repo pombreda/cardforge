@@ -1,8 +1,21 @@
 package forge;
 
+/**
+ * <p>CardFilter class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFilter {
 
 
+    /**
+     * <p>CardListNameFilter.</p>
+     *
+     * @param all a {@link forge.CardList} object.
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList CardListNameFilter(CardList all, String name) {
         Card CardName;
         String s;
@@ -22,6 +35,13 @@ public class CardFilter {
         return listFilter;
     }
 
+    /**
+     * <p>CardListTextFilter.</p>
+     *
+     * @param all a {@link forge.CardList} object.
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList CardListTextFilter(CardList all, String name) {
         Card CardName;
         String s;
@@ -42,6 +62,13 @@ public class CardFilter {
     }
 
 
+    /**
+     * <p>CardListColorFilter.</p>
+     *
+     * @param all a {@link forge.CardList} object.
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList CardListColorFilter(CardList all, String name) {
         Card CardName = new Card();
         CardList listFilter = new CardList();
@@ -109,6 +136,13 @@ public class CardFilter {
         return listFilter;
     }
 
+    /**
+     * <p>CardListTypeFilter.</p>
+     *
+     * @param all a {@link forge.CardList} object.
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList CardListTypeFilter(CardList all, String name) {
         Card CardName = new Card();
         CardList listFilter = new CardList();

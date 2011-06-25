@@ -4,21 +4,37 @@ import com.esotericsoftware.minlog.Log;
 import forge.gui.input.Input;
 
 
+/**
+ * <p>ComputerAI_Input class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ComputerAI_Input extends Input {
+    /** Constant <code>serialVersionUID=-3091338639571662216L</code> */
     private static final long serialVersionUID = -3091338639571662216L;
 
     private final Computer computer;
 
+    /**
+     * <p>Constructor for ComputerAI_Input.</p>
+     *
+     * @param i_computer a {@link forge.Computer} object.
+     */
     public ComputerAI_Input(Computer i_computer) {
         computer = i_computer;
     }
 
     //wrapper method that ComputerAI_StackNotEmpty class calls
     //ad-hoc way for ComptuerAI_StackNotEmpty to get to the Computer class
+    /**
+     * <p>stackNotEmpty.</p>
+     */
     public void stackNotEmpty() {
         computer.stack_not_empty();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         /*
@@ -31,10 +47,18 @@ public class ComputerAI_Input extends Input {
         think();
     }//getMessage();
 
+    /**
+     * <p>Getter for the field <code>computer</code>.</p>
+     *
+     * @return a {@link forge.Computer} object.
+     */
     public Computer getComputer() {
         return computer;
     }
 
+    /**
+     * <p>think.</p>
+     */
     private void think() {
         //TODO: instead of setNextPhase, pass priority
         final String phase = AllZone.getPhase().getPhase();

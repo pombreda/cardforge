@@ -8,6 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Pump class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Pump {
 
     private final ArrayList<String> Keywords = new ArrayList<String>();
@@ -19,6 +25,11 @@ public class AbilityFactory_Pump {
     private HashMap<String, String> params = null;
     private Card hostCard = null;
 
+    /**
+     * <p>Constructor for AbilityFactory_Pump.</p>
+     *
+     * @param newAF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     */
     public AbilityFactory_Pump(AbilityFactory newAF) {
         AF = newAF;
 
@@ -46,6 +57,11 @@ public class AbilityFactory_Pump {
             Keywords.add("none");
     }
 
+    /**
+     * <p>getSpellPump.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpellPump() {
         SpellAbility spPump = new Spell(hostCard, AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 42244224L;
@@ -69,6 +85,11 @@ public class AbilityFactory_Pump {
         return spPump;
     }
 
+    /**
+     * <p>getAbilityPump.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbilityPump() {
         final SpellAbility abPump = new Ability_Activated(hostCard, AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -1118592153328758083L;
@@ -101,6 +122,11 @@ public class AbilityFactory_Pump {
         return abPump;
     }
 
+    /**
+     * <p>getDrawbackPump.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawbackPump() {
         SpellAbility dbPump = new Ability_Sub(hostCard, AF.getAbTgt()) {
             private static final long serialVersionUID = 42244224L;
@@ -134,14 +160,33 @@ public class AbilityFactory_Pump {
         return dbPump;
     }
 
+    /**
+     * <p>Getter for the field <code>numAttack</code>.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     private int getNumAttack(SpellAbility sa) {
         return AbilityFactory.calculateAmount(hostCard, numAttack, sa);
     }
 
+    /**
+     * <p>Getter for the field <code>numDefense</code>.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     private int getNumDefense(SpellAbility sa) {
         return AbilityFactory.calculateAmount(hostCard, numDefense, sa);
     }
 
+    /**
+     * <p>getPumpCreatures.</p>
+     *
+     * @param defense a int.
+     * @param attack a int.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getPumpCreatures(final int defense, final int attack) {
 
         final boolean kHaste = Keywords.contains("Haste");
@@ -208,6 +253,14 @@ public class AbilityFactory_Pump {
         return list;
     }//getPumpCreatures()
 
+    /**
+     * <p>getCurseCreatures.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param defense a int.
+     * @param attack a int.
+     * @return a {@link forge.CardList} object.
+     */
     private CardList getCurseCreatures(SpellAbility sa, final int defense, int attack) {
         CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
         list = list.filter(AllZoneUtil.getCanTargetFilter(hostCard));
@@ -240,6 +293,12 @@ public class AbilityFactory_Pump {
         return list;
     }//getCurseCreatures()
 
+    /**
+     * <p>pumpPlayAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean pumpPlayAI(SpellAbility sa) {
         // if there is no target and host card isn't in play, don't activate
         if (AF.getAbTgt() == null && !AllZoneUtil.isCardInPlay(hostCard))
@@ -349,6 +408,15 @@ public class AbilityFactory_Pump {
         return false;
     }//pumpPlayAI()
 
+    /**
+     * <p>pumpTgtAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param defense a int.
+     * @param attack a int.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean pumpTgtAI(SpellAbility sa, int defense, int attack, boolean mandatory) {
         if (!mandatory && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Blockers_InstantAbility) && !(AF.isCurse() && defense < 0))
             return false;
@@ -414,6 +482,14 @@ public class AbilityFactory_Pump {
         return true;
     }//pumpTgtAI()
 
+    /**
+     * <p>pumpMandatoryTarget.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean pumpMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         CardList list = AllZoneUtil.getCardsInPlay();
         Target tgt = sa.getTarget();
@@ -479,6 +555,14 @@ public class AbilityFactory_Pump {
     }//pumpMandatoryTarget()
 
 
+    /**
+     * <p>pumpTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean pumpTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -518,6 +602,12 @@ public class AbilityFactory_Pump {
         return true;
     }//pumpTriggerAI
 
+    /**
+     * <p>pumpDrawbackAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean pumpDrawbackAI(SpellAbility sa) {
         Card source = sa.getSourceCard();
         int defense;
@@ -545,6 +635,13 @@ public class AbilityFactory_Pump {
         return true;
     }//pumpDrawbackAI()
 
+    /**
+     * <p>pumpStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String pumpStackDescription(AbilityFactory af, SpellAbility sa) {
         // when damageStackDescription is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
@@ -599,6 +696,11 @@ public class AbilityFactory_Pump {
         return sb.toString();
     }//pumpStackDescription()
 
+    /**
+     * <p>pumpResolve.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void pumpResolve(SpellAbility sa) {
         ArrayList<Card> tgtCards;
         Target tgt = AF.getAbTgt();
@@ -663,6 +765,11 @@ public class AbilityFactory_Pump {
     //
     //////////////////////////////////////
 
+    /**
+     * <p>getAbilityPumpAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getAbilityPumpAll() {
         final SpellAbility abPumpAll = new Ability_Activated(hostCard, AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -8299417521903307630L;
@@ -694,6 +801,11 @@ public class AbilityFactory_Pump {
         return abPumpAll;
     }
 
+    /**
+     * <p>getSpellPumpAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getSpellPumpAll() {
         SpellAbility spPumpAll = new Spell(hostCard, AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -4055467978660824703L;
@@ -715,6 +827,11 @@ public class AbilityFactory_Pump {
         return spPumpAll;
     }
 
+    /**
+     * <p>getDrawbackPumpAll.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getDrawbackPumpAll() {
         SpellAbility dbPumpAll = new Ability_Sub(hostCard, AF.getAbTgt()) {
             private static final long serialVersionUID = 6411531984691660342L;
@@ -743,6 +860,12 @@ public class AbilityFactory_Pump {
         return dbPumpAll;
     }
 
+    /**
+     * <p>pumpAllCanPlayAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean pumpAllCanPlayAI(SpellAbility sa) {
         String valid = "";
         Random r = MyRandom.random;
@@ -801,6 +924,11 @@ public class AbilityFactory_Pump {
         return (r.nextFloat() < .6667) && chance;
     }//pumpAllCanPlayAI()
 
+    /**
+     * <p>pumpAllResolve.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private void pumpAllResolve(SpellAbility sa) {
         String valid = "";
 
@@ -854,6 +982,14 @@ public class AbilityFactory_Pump {
         }
     }//pumpAllResolve()
 
+    /**
+     * <p>pumpAllTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private boolean pumpAllTriggerAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -863,10 +999,23 @@ public class AbilityFactory_Pump {
         return true;
     }
 
+    /**
+     * <p>pumpAllChkDrawbackAI.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private boolean pumpAllChkDrawbackAI(SpellAbility sa) {
         return true;
     }
 
+    /**
+     * <p>pumpAllStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String pumpAllStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 

@@ -4,21 +4,38 @@ package forge;
 import java.util.ArrayList;
 
 
+/**
+ * <p>TestMove class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 class TestMove extends Move {
     private final int myNumber;
 
+    /** Constant <code>classNumber=-1</code> */
     private static int classNumber = -1;
+    /** Constant <code>array=</code> */
     private static int[] array;
 
+    /** Constant <code>classIndex=</code> */
     private static int classIndex;
     private int myIndex = -1;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         test();
     }
 
     //branching 2
     //fully test depths 1 and 2, one test of depth 3
+    /**
+     * <p>test.</p>
+     */
     public static void test() {
         TestMove t;
 
@@ -45,10 +62,21 @@ class TestMove extends Move {
         test("7", t.max(t, 2, true) == 3);
     }
 
+    /**
+     * <p>test.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param shouldBeTrue a boolean.
+     */
     public static void test(String message, boolean shouldBeTrue) {
         if (!shouldBeTrue) throw new RuntimeException(message);
     }
 
+    /**
+     * <p>Constructor for TestMove.</p>
+     *
+     * @param i_array an array of int.
+     */
     public TestMove(int i_array[]) {
         this();
 
@@ -56,19 +84,33 @@ class TestMove extends Move {
         array = i_array;
     }
 
+    /**
+     * <p>Constructor for TestMove.</p>
+     */
     public TestMove() {
         myNumber = classNumber;
         classNumber++;
     }
 
+    /**
+     * <p>Getter for the field <code>classNumber</code>.</p>
+     *
+     * @return a int.
+     */
     public int getClassNumber() {
         return classNumber;
     }
 
+    /**
+     * <p>Getter for the field <code>myNumber</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMyNumber() {
         return myNumber;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Move[] generateMoves() {
         ArrayList<TestMove> list = new ArrayList<TestMove>();
@@ -81,6 +123,7 @@ class TestMove extends Move {
         return m;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getScore() {
         if (myIndex == -1) {

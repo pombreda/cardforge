@@ -12,8 +12,21 @@ import forge.card.spellability.SpellAbility;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * <p>AbilityFactory_Clash class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Clash {
 
+    /**
+     * <p>getAbilityClash.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility getAbilityClash(final AbilityFactory AF) {
         final SpellAbility abClash = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -8019637116128196248L;
@@ -47,6 +60,13 @@ public class AbilityFactory_Clash {
         return abClash;
     }
 
+    /**
+     * <p>getSpellClash.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility getSpellClash(final AbilityFactory AF) {
         final SpellAbility spClash = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -4991665176268317172L;
@@ -80,6 +100,13 @@ public class AbilityFactory_Clash {
         return spClash;
     }
 
+    /**
+     * <p>getDrawbackClash.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility getDrawbackClash(final AbilityFactory AF) {
         final SpellAbility dbClash = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -3850086157052881360L;
@@ -118,6 +145,12 @@ public class AbilityFactory_Clash {
         return dbClash;
     }
 
+    /**
+     * <p>clashResolve.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param SA a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void clashResolve(final AbilityFactory AF, final SpellAbility SA) {
         AbilityFactory AF_Outcomes = new AbilityFactory();
         boolean victory = AF.getHostCard().getController().clashWithOpponent(AF.getHostCard());
@@ -153,6 +186,13 @@ public class AbilityFactory_Clash {
     // ************************* FlipACoin *************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityFlip.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createAbilityFlip(final AbilityFactory af) {
         final SpellAbility abFlip = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -8293336773930687488L;
@@ -181,6 +221,13 @@ public class AbilityFactory_Clash {
         return abFlip;
     }
 
+    /**
+     * <p>createSpellFlip.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createSpellFlip(final AbilityFactory af) {
         final SpellAbility spFlip = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4402144245527547151L;
@@ -214,6 +261,13 @@ public class AbilityFactory_Clash {
         return spFlip;
     }
 
+    /**
+     * <p>createDrawbackFlip.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createDrawbackFlip(final AbilityFactory af) {
         final SpellAbility dbFlip = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 8581978154811461324L;
@@ -252,6 +306,13 @@ public class AbilityFactory_Clash {
         return dbFlip;
     }
 
+    /**
+     * <p>flipGetStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String flipGetStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -274,6 +335,12 @@ public class AbilityFactory_Clash {
         return sb.toString();
     }
 
+    /**
+     * <p>flipResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void flipResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();

@@ -4,9 +4,21 @@ import forge.AllZone;
 import forge.Card;
 import forge.CardList;
 
+/**
+ * <p>DownloadDeck class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class DownloadDeck {
 
 
+    /**
+     * <p>foundNumberCard.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String foundNumberCard(String rStr) {
         int temp;
         int i;
@@ -26,6 +38,12 @@ public class DownloadDeck {
         }
     }
 
+    /**
+     * <p>foundNameCard.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String foundNameCard(String rStr) {
         int temp;
         int i;
@@ -42,6 +60,12 @@ public class DownloadDeck {
     }
 
 
+    /**
+     * <p>removeSpace.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String removeSpace(String rStr) {
         int temp;
         int i;
@@ -57,6 +81,12 @@ public class DownloadDeck {
         return rStr.substring(i);
     }
 
+    /**
+     * <p>removeSpaceBack.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String removeSpaceBack(String rStr) {
         int temp;
         int i;
@@ -72,6 +102,13 @@ public class DownloadDeck {
         return rStr.substring(0, i + 1);
     }
 
+    /**
+     * <p>removeFoundNumberCard.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @param Number a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String removeFoundNumberCard(String rStr, String Number) {
         int a;
         int temp;
@@ -85,6 +122,13 @@ public class DownloadDeck {
 
     }
 
+    /**
+     * <p>removeFoundNameCard.</p>
+     *
+     * @param rStr a {@link java.lang.String} object.
+     * @param Name a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String removeFoundNameCard(String rStr, String Name) {
         int a;
         a = Name.length();
@@ -92,6 +136,12 @@ public class DownloadDeck {
 
     }
 
+    /**
+     * <p>isCardSupport.</p>
+     *
+     * @param CardName a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isCardSupport(String CardName) {
         CardList all = AllZone.getCardFactory().getAllCards();
 
@@ -105,6 +155,13 @@ public class DownloadDeck {
         return false;
     }
 
+    /**
+     * <p>getCardDownload.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param CardName a {@link java.lang.String} object.
+     * @return a {@link forge.Card} object.
+     */
     public Card getCardDownload(Card c, String CardName) {
         CardList all = AllZone.getCardFactory().getAllCards();
 

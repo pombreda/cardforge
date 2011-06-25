@@ -9,21 +9,33 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 
 
+/**
+ * <p>ImagePreviewPanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ImagePreviewPanel extends JPanel implements PropertyChangeListener {
 
 
+    /** Constant <code>serialVersionUID=2163809931940286240L</code> */
     private static final long serialVersionUID = 2163809931940286240L;
     private int width, height;
     private ImageIcon icon;
     private Image image;
+    /** Constant <code>ACCSIZE=155</code> */
     private static final int ACCSIZE = 155;
     private Color bg;
 
+    /**
+     * <p>Constructor for ImagePreviewPanel.</p>
+     */
     public ImagePreviewPanel() {
         setPreferredSize(new Dimension(ACCSIZE, -1));
         bg = getBackground();
     }
 
+    /** {@inheritDoc} */
     public void propertyChange(PropertyChangeEvent e) {
         String propertyName = e.getPropertyName();
 
@@ -50,6 +62,9 @@ public class ImagePreviewPanel extends JPanel implements PropertyChangeListener 
         }
     }
 
+    /**
+     * <p>scaleImage.</p>
+     */
     private void scaleImage() {
         width = image.getWidth(this);
         height = image.getHeight(this);
@@ -79,6 +94,7 @@ public class ImagePreviewPanel extends JPanel implements PropertyChangeListener 
         image = image.getScaledInstance(width, height, Image.SCALE_DEFAULT);
     }
 
+    /** {@inheritDoc} */
     @Override
     public void paintComponent(Graphics g) {
         g.setColor(bg);

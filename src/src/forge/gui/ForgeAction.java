@@ -19,10 +19,13 @@ import javax.swing.*;
  */
 public abstract class ForgeAction extends AbstractAction {
 
+    /** Constant <code>serialVersionUID=-1881183151063146955L</code> */
     private static final long serialVersionUID = -1881183151063146955L;
     private String property;
 
     /**
+     * <p>Constructor for ForgeAction.</p>
+     *
      * @param property A Property key containing the keys "/button" and "/menu".
      */
     public ForgeAction(String property) {
@@ -32,10 +35,21 @@ public abstract class ForgeAction extends AbstractAction {
         putValue("menuText", ForgeProps.getLocalized(property + "/menu"));
     }
 
+    /**
+     * <p>Getter for the field <code>property</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     protected String getProperty() {
         return property;
     }
 
+    /**
+     * <p>setupButton.</p>
+     *
+     * @param button a T object.
+     * @return a T object.
+     */
     public <T extends AbstractButton> T setupButton(T button) {
         button.setAction(this);
         button.setText((String) getValue(button instanceof JMenuItem ? "menuText" : "buttonText"));

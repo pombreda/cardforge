@@ -9,7 +9,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 
 
+/**
+ * <p>Gui_MultipleBlockers class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_MultipleBlockers extends JFrame {
+    /** Constant <code>serialVersionUID=-3585314684734680978L</code> */
     private static final long serialVersionUID = -3585314684734680978L;
 
     private int assignDamage;
@@ -24,6 +31,11 @@ public class Gui_MultipleBlockers extends JFrame {
     private BorderLayout borderLayout3 = new BorderLayout();
     private JPanel creaturePanel = new JPanel();
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         CardList list = new CardList();
         list.add(AllZone.getCardFactory().getCard("Elvish Piper", null));
@@ -36,6 +48,14 @@ public class Gui_MultipleBlockers extends JFrame {
             new Gui_MultipleBlockers(list.get(i), list, i + 1, null);
     }
 
+    /**
+     * <p>Constructor for Gui_MultipleBlockers.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @param creatureList a {@link forge.CardList} object.
+     * @param damage a int.
+     * @param display a {@link forge.CardContainer} object.
+     */
     @SuppressWarnings("deprecation")
     // dialog.show is deprecated
     public Gui_MultipleBlockers(Card attacker, CardList creatureList, int damage, CardContainer display) {
@@ -55,6 +75,9 @@ public class Gui_MultipleBlockers extends JFrame {
         dialog.show();
     }
 
+    /**
+     * <p>Constructor for Gui_MultipleBlockers.</p>
+     */
     public Gui_MultipleBlockers() {
         try {
             jbInit();
@@ -65,6 +88,11 @@ public class Gui_MultipleBlockers extends JFrame {
 //    show();
     }
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
         this.getContentPane().setLayout(borderLayout1);
         this.setTitle("Multiple Blockers");
@@ -94,10 +122,20 @@ public class Gui_MultipleBlockers extends JFrame {
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * <p>okButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void okButton_actionPerformed(ActionEvent e) {
         dispose();
     }
 
+    /**
+     * <p>creaturePanel_mousePressed.</p>
+     *
+     * @param e a {@link java.awt.event.MouseEvent} object.
+     */
     void creaturePanel_mousePressed(MouseEvent e) {
         Object o = creaturePanel.getComponentAt(e.getPoint());
         if (o instanceof CardPanel) {
@@ -116,10 +154,18 @@ public class Gui_MultipleBlockers extends JFrame {
         if (assignDamage == 0) dispose();
     }//creaturePanel_mousePressed()
 
+    /**
+     * <p>updateDamageLabel.</p>
+     */
     void updateDamageLabel() {
         numberLabel.setText("Assign " + assignDamage + " damage - click on card to assign damage");
     }
 
+    /**
+     * <p>creaturePanel_mouseMoved.</p>
+     *
+     * @param e a {@link java.awt.event.MouseEvent} object.
+     */
     void creaturePanel_mouseMoved(MouseEvent e) {
         Object o = creaturePanel.getComponentAt(e.getPoint());
         if (o instanceof CardPanel) {

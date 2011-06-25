@@ -5,12 +5,25 @@ import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
 
+/**
+ * <p>Trigger_Cycled class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_Cycled extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Cycled.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Cycled(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Cycled(mapParams, hostCard);
@@ -23,11 +36,13 @@ public class Trigger_Cycled extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Card", runParams.get("Card"));
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {

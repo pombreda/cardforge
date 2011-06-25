@@ -3,7 +3,14 @@ package forge.quest.data.pet;
 import forge.AllZone;
 import forge.Card;
 
+/**
+ * <p>QuestPetCrocodile class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestPetCrocodile extends QuestPetAbstract {
+    /** {@inheritDoc} */
     @Override
     public Card getPetCard() {
         Card petCard = new Card();
@@ -41,17 +48,22 @@ public class QuestPetCrocodile extends QuestPetAbstract {
         return petCard;
     }
 
+    /**
+     * <p>Constructor for QuestPetCrocodile.</p>
+     */
     public QuestPetCrocodile() {
         super("Crocodile",
                 "With its razor sharp teeth, this swamp-dwelling monster is extremely dangerous.",
                 4);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int[] getAllUpgradePrices() {
         return new int[]{250, 300, 450, 600};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllUpgradeDescriptions() {
         return new String[]{
@@ -62,6 +74,7 @@ public class QuestPetCrocodile extends QuestPetAbstract {
                 "You cannot train your crocodile any further"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllStats() {
         return new String[]{"You do not own a crocodile",
@@ -71,6 +84,7 @@ public class QuestPetCrocodile extends QuestPetAbstract {
                 "3/1, B, Swampwalking"};
     }
 
+    /** {@inheritDoc} */
     @Override
     public String[] getAllImageNames() {
         return new String[]{

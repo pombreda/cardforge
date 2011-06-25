@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.util.*;
 
 
+/**
+ * <p>Abstract Player class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public abstract class Player extends MyObservable {
     protected String name;
     protected int poisonCounters;
@@ -31,10 +37,22 @@ public abstract class Player extends MyObservable {
     protected int numDrawnThisTurn = 0;
     protected CardList slowtripList = new CardList();
 
+    /**
+     * <p>Constructor for Player.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     */
     public Player(String myName) {
         this(myName, 20, 0);
     }
 
+    /**
+     * <p>Constructor for Player.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     * @param myLife a int.
+     * @param myPoisonCounters a int.
+     */
     public Player(String myName, int myLife, int myPoisonCounters) {
         name = myName;
         life = myLife;
@@ -54,6 +72,9 @@ public abstract class Player extends MyObservable {
         handSizeOperations = new ArrayList<HandSizeOp>();
     }
 
+    /**
+     * <p>reset.</p>
+     */
     public void reset() {
         life = 20;
         poisonCounters = 0;
@@ -72,16 +93,42 @@ public abstract class Player extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <p>isHuman.</p>
+     *
+     * @return a boolean.
+     */
     public abstract boolean isHuman();
 
+    /**
+     * <p>isComputer.</p>
+     *
+     * @return a boolean.
+     */
     public abstract boolean isComputer();
 
+    /**
+     * <p>isPlayer.</p>
+     *
+     * @param p1 a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public abstract boolean isPlayer(Player p1);
 
+    /**
+     * <p>getOpponent.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public abstract Player getOpponent();
 
     //////////////////////////
@@ -90,6 +137,13 @@ public abstract class Player extends MyObservable {
     //
     //////////////////////////
 
+    /**
+     * <p>Setter for the field <code>life</code>.</p>
+     *
+     * @param newLife a int.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean setLife(final int newLife, final Card source) {
         boolean change = false;
         //rule 118.5
@@ -105,15 +159,32 @@ public abstract class Player extends MyObservable {
         return change;
     }
 
+    /**
+     * <p>Getter for the field <code>life</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLife() {
         return life;
     }
 
+    /**
+     * <p>addLife.</p>
+     *
+     * @param toAdd a int.
+     */
     private void addLife(final int toAdd) {
         life += toAdd;
         this.updateObservers();
     }
 
+    /**
+     * <p>gainLife.</p>
+     *
+     * @param toGain a int.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean gainLife(final int toGain, final Card source) {
         boolean newLifeSet = false;
         if (!canGainLife()) return false;
@@ -146,6 +217,11 @@ public abstract class Player extends MyObservable {
         return newLifeSet;
     }
 
+    /**
+     * <p>canGainLife.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canGainLife() {
         if (AllZoneUtil.isCardInPlay("Sulfuric Vortex") || AllZoneUtil.isCardInPlay("Leyline of Punishment") ||
                 AllZoneUtil.isCardInPlay("Platinum Emperion", this) || AllZoneUtil.isCardInPlay("Forsaken Wastes"))
@@ -153,6 +229,13 @@ public abstract class Player extends MyObservable {
         return true;
     }
 
+    /**
+     * <p>loseLife.</p>
+     *
+     * @param toLose a int.
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean loseLife(final int toLose, final Card c) {
         boolean newLifeSet = false;
         if (!canLoseLife()) return false;
@@ -175,22 +258,45 @@ public abstract class Player extends MyObservable {
         return newLifeSet;
     }
 
+    /**
+     * <p>canLoseLife.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canLoseLife() {
         if (AllZoneUtil.isCardInPlay("Platinum Emperion", this)) return false;
         return true;
     }
 
+    /**
+     * <p>subtractLife.</p>
+     *
+     * @param toSub a int.
+     */
     private void subtractLife(final int toSub) {
         life -= toSub;
         this.updateObservers();
     }
 
+    /**
+     * <p>canPayLife.</p>
+     *
+     * @param lifePayment a int.
+     * @return a boolean.
+     */
     public boolean canPayLife(int lifePayment) {
         if (life < lifePayment) return false;
         if (lifePayment > 0 && AllZoneUtil.isCardInPlay("Platinum Emperion", this)) return false;
         return true;
     }
 
+    /**
+     * <p>payLife.</p>
+     *
+     * @param lifePayment a int.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean payLife(int lifePayment, Card source) {
         if (!canPayLife(lifePayment)) return false;
         //rule 118.8
@@ -207,6 +313,12 @@ public abstract class Player extends MyObservable {
     //
     //////////////////////////
 
+    /**
+     * <p>addDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addDamage(final int damage, final Card source) {
         int damageToDo = damage;
 
@@ -216,6 +328,12 @@ public abstract class Player extends MyObservable {
         addDamageAfterPrevention(damageToDo, source, false);
     }
 
+    /**
+     * <p>addDamageWithoutPrevention.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addDamageWithoutPrevention(final int damage, final Card source) {
         int damageToDo = damage;
 
@@ -225,6 +343,13 @@ public abstract class Player extends MyObservable {
     }
 
     //This function handles damage after replacement and prevention effects are applied
+    /**
+     * <p>addDamageAfterPrevention.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     */
     public void addDamageAfterPrevention(final int damage, final Card source, final boolean isCombat) {
         int damageToDo = damage;
 
@@ -253,6 +378,14 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>predictDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int predictDamage(final int damage, final Card source, final boolean isCombat) {
 
         int restDamage = damage;
@@ -264,6 +397,14 @@ public abstract class Player extends MyObservable {
     }
 
     //This should be also usable by the AI to forecast an effect (so it must not change the game state)
+    /**
+     * <p>staticDamagePrevention.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int staticDamagePrevention(final int damage, final Card source, final boolean isCombat) {
 
         if (AllZoneUtil.isCardInPlay("Leyline of Punishment")) return damage;
@@ -314,6 +455,14 @@ public abstract class Player extends MyObservable {
     }
 
     //This should be also usable by the AI to forecast an effect (so it must not change the game state)
+    /**
+     * <p>staticReplaceDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int staticReplaceDamage(final int damage, Card source, boolean isCombat) {
 
         int restDamage = damage;
@@ -363,6 +512,14 @@ public abstract class Player extends MyObservable {
         return restDamage;
     }
 
+    /**
+     * <p>replaceDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int replaceDamage(final int damage, Card source, boolean isCombat) {
 
         int restDamage = staticReplaceDamage(damage, source, isCombat);
@@ -392,6 +549,14 @@ public abstract class Player extends MyObservable {
         return restDamage;
     }
 
+    /**
+     * <p>preventDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int preventDamage(final int damage, Card source, boolean isCombat) {
 
         if (AllZoneUtil.isCardInPlay("Leyline of Punishment")) return damage;
@@ -417,18 +582,39 @@ public abstract class Player extends MyObservable {
         return restDamage;
     }
 
+    /**
+     * <p>Setter for the field <code>assignedDamage</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setAssignedDamage(int n) {
         assignedDamage = n;
     }
 
+    /**
+     * <p>addAssignedDamage.</p>
+     *
+     * @param n a int.
+     */
     public void addAssignedDamage(int n) {
         assignedDamage += n;
     }
 
+    /**
+     * <p>Getter for the field <code>assignedDamage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getAssignedDamage() {
         return assignedDamage;
     }
 
+    /**
+     * <p>addCombatDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addCombatDamage(final int damage, final Card source) {
 
         int damageToDo = damage;
@@ -450,22 +636,45 @@ public abstract class Player extends MyObservable {
     //////////////////////////
 
     //PreventNextDamage
+    /**
+     * <p>Setter for the field <code>preventNextDamage</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setpreventNextDamage(int n) {
         preventNextDamage = n;
     }
 
+    /**
+     * <p>Getter for the field <code>preventNextDamage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getPreventNextDamage() {
         return preventNextDamage;
     }
 
+    /**
+     * <p>addPreventNextDamage.</p>
+     *
+     * @param n a int.
+     */
     public void addPreventNextDamage(int n) {
         preventNextDamage += n;
     }
 
+    /**
+     * <p>subtractPreventNextDamage.</p>
+     *
+     * @param n a int.
+     */
     public void subtractPreventNextDamage(int n) {
         preventNextDamage -= n;
     }
 
+    /**
+     * <p>resetPreventNextDamage.</p>
+     */
     public void resetPreventNextDamage() {
         preventNextDamage = 0;
     }
@@ -476,41 +685,88 @@ public abstract class Player extends MyObservable {
     //
     //////////////////////////
 
+    /**
+     * <p>addPoisonCounters.</p>
+     *
+     * @param num a int.
+     */
     public void addPoisonCounters(int num) {
         poisonCounters += num;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>poisonCounters</code>.</p>
+     *
+     * @param num a int.
+     */
     public void setPoisonCounters(int num) {
         poisonCounters = num;
         this.updateObservers();
     }
 
+    /**
+     * <p>Getter for the field <code>poisonCounters</code>.</p>
+     *
+     * @return a int.
+     */
     public int getPoisonCounters() {
         return poisonCounters;
     }
 
+    /**
+     * <p>subtractPoisonCounters.</p>
+     *
+     * @param num a int.
+     */
     public void subtractPoisonCounters(int num) {
         poisonCounters -= num;
         this.updateObservers();
     }
 
+    /**
+     * <p>hasShroud.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasShroud() {
         return false;
     }
 
+    /**
+     * <p>canTarget.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean canTarget(Card card) {
         return !hasShroud();
     }
 
+    /**
+     * <p>canPlaySpells.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canPlaySpells() {
         return true;
     }
 
+    /**
+     * <p>canPlayAbilities.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canPlayAbilities() {
         return true;
     }
 
+    /**
+     * <p>getCards.</p>
+     *
+     * @param zone a {@link forge.PlayerZone} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCards(PlayerZone zone) {
         //TODO
         return new CardList();
@@ -523,20 +779,44 @@ public abstract class Player extends MyObservable {
     ///
     ////////////////////////////////
 
+    /**
+     * <p>mayDrawCard.</p>
+     */
     public abstract void mayDrawCard();
 
+    /**
+     * <p>mayDrawCards.</p>
+     *
+     * @param numCards a int.
+     */
     public abstract void mayDrawCards(int numCards);
 
+    /**
+     * <p>drawCard.</p>
+     */
     public void drawCard() {
         drawCards(1);
     }
 
+    /**
+     * <p>drawCards.</p>
+     */
     public void drawCards() {
         drawCards(1);
     }
 
+    /**
+     * <p>dredge.</p>
+     *
+     * @return a boolean.
+     */
     public abstract boolean dredge();
 
+    /**
+     * <p>drawCards.</p>
+     *
+     * @param n a int.
+     */
     public void drawCards(int n) {
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
 
@@ -548,6 +828,11 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>doDraw.</p>
+     *
+     * @param library a {@link forge.PlayerZone} object.
+     */
     private void doDraw(PlayerZone library) {
         if (library.size() != 0) {
             Card c = library.get(0);
@@ -571,6 +856,11 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>getDredge.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     protected CardList getDredge() {
         CardList dredge = new CardList();
         CardList cl = AllZoneUtil.getPlayerGraveyard(this);
@@ -586,6 +876,12 @@ public abstract class Player extends MyObservable {
         return dredge;
     }//hasDredge()
 
+    /**
+     * <p>getDredgeNumber.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     protected int getDredgeNumber(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -597,10 +893,18 @@ public abstract class Player extends MyObservable {
         throw new RuntimeException("Input_Draw : getDredgeNumber() card doesn't have dredge - " + c.getName());
     }//getDredgeNumber()
 
+    /**
+     * <p>resetNumDrawnThisTurn.</p>
+     */
     public void resetNumDrawnThisTurn() {
         numDrawnThisTurn = 0;
     }
 
+    /**
+     * <p>Getter for the field <code>numDrawnThisTurn</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNumDrawnThisTurn() {
         return numDrawnThisTurn;
     }
@@ -611,16 +915,42 @@ public abstract class Player extends MyObservable {
     ///
     ////////////////////////////////
 
+    /**
+     * <p>discard.</p>
+     *
+     * @param num a int.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param duringResolution a boolean.
+     * @return a {@link forge.CardList} object.
+     */
     public abstract CardList discard(final int num, final SpellAbility sa, boolean duringResolution);
 
+    /**
+     * <p>discard.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.CardList} object.
+     */
     public CardList discard(final SpellAbility sa) {
         return discard(1, sa, false);
     }
 
+    /**
+     * <p>discard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void discard(Card c, SpellAbility sa) {
         doDiscard(c, sa);
     }
 
+    /**
+     * <p>doDiscard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void doDiscard(final Card c, final SpellAbility sa) {
         // TODO: This line should be moved inside CostPayment somehow
         if (sa != null) {
@@ -675,15 +1005,31 @@ public abstract class Player extends MyObservable {
 
     }//end doDiscard
 
+    /**
+     * <p>discardHand.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void discardHand(SpellAbility sa) {
         CardList list = AllZoneUtil.getPlayerHand(this);
         discardRandom(list.size(), sa);
     }
 
+    /**
+     * <p>discardRandom.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void discardRandom(SpellAbility sa) {
         discardRandom(1, sa);
     }
 
+    /**
+     * <p>discardRandom.</p>
+     *
+     * @param num a int.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void discardRandom(final int num, final SpellAbility sa) {
         for (int i = 0; i < num; i++) {
             CardList list = AllZoneUtil.getPlayerHand(this);
@@ -692,12 +1038,30 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>discardUnless.</p>
+     *
+     * @param num a int.
+     * @param uType a {@link java.lang.String} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public abstract void discardUnless(int num, String uType, SpellAbility sa);
 
+    /**
+     * <p>mill.</p>
+     *
+     * @param n a int.
+     */
     public void mill(int n) {
         mill(n, Constant.Zone.Graveyard);
     }
 
+    /**
+     * <p>mill.</p>
+     *
+     * @param n a int.
+     * @param zone a {@link java.lang.String} object.
+     */
     public void mill(int n, String zone) {
         CardList lib = AllZoneUtil.getPlayerCardsInLibrary(this);
 
@@ -710,9 +1074,18 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>handToLibrary.</p>
+     *
+     * @param numToLibrary a int.
+     * @param libPos a {@link java.lang.String} object.
+     */
     public abstract void handToLibrary(final int numToLibrary, String libPos);
 
     ////////////////////////////////
+    /**
+     * <p>shuffle.</p>
+     */
     public void shuffle() {
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
         Card c[] = AllZoneUtil.getPlayerCardsInLibrary(this).toArray();
@@ -755,8 +1128,19 @@ public abstract class Player extends MyObservable {
     ////////////////////////////////
 
     ////////////////////////////////
+    /**
+     * <p>doScry.</p>
+     *
+     * @param topN a {@link forge.CardList} object.
+     * @param N a int.
+     */
     protected abstract void doScry(CardList topN, int N);
 
+    /**
+     * <p>scry.</p>
+     *
+     * @param numScry a int.
+     */
     public void scry(int numScry) {
         CardList topN = new CardList();
         PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
@@ -768,6 +1152,11 @@ public abstract class Player extends MyObservable {
     }
     ///////////////////////////////
 
+    /**
+     * <p>playLand.</p>
+     *
+     * @param land a {@link forge.Card} object.
+     */
     public void playLand(Card land) {
         if (canPlayLand()) {
             AllZone.getGameAction().moveToPlay(land);
@@ -786,6 +1175,11 @@ public abstract class Player extends MyObservable {
         AllZone.getStack().unfreezeStack();
     }
 
+    /**
+     * <p>canPlayLand.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canPlayLand() {
         return Phase.canCastSorcery(this) && (numLandsPlayed < maxLandsToPlay ||
                 AllZoneUtil.getPlayerCardsInPlay(this, "Fastbond").size() > 0);
@@ -796,98 +1190,205 @@ public abstract class Player extends MyObservable {
     ////	properties about the player and his/her cards/game status
     ////
     ///////////////////////////////
+    /**
+     * <p>hasPlaneswalker.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasPlaneswalker() {
         return null != getPlaneswalker();
     }
 
+    /**
+     * <p>getPlaneswalker.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getPlaneswalker() {
         CardList c = AllZoneUtil.getPlayerTypeInPlay(this, "Planeswalker");
         if (null != c && c.size() > 0) return c.get(0);
         else return null;
     }
 
+    /**
+     * <p>Getter for the field <code>numPowerSurgeLands</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNumPowerSurgeLands() {
         return numPowerSurgeLands;
     }
 
+    /**
+     * <p>Setter for the field <code>numPowerSurgeLands</code>.</p>
+     *
+     * @param n a int.
+     * @return a int.
+     */
     public int setNumPowerSurgeLands(int n) {
         numPowerSurgeLands = n;
         return numPowerSurgeLands;
     }
 
+    /**
+     * <p>Getter for the field <code>lastDrawnCard</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getLastDrawnCard() {
         return lastDrawnCard;
     }
 
+    /**
+     * <p>Setter for the field <code>lastDrawnCard</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public Card setLastDrawnCard(Card c) {
         lastDrawnCard = c;
         return lastDrawnCard;
     }
 
+    /**
+     * <p>resetLastDrawnCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card resetLastDrawnCard() {
         Card old = lastDrawnCard;
         lastDrawnCard = null;
         return old;
     }
 
+    /**
+     * <p>skipNextUntap.</p>
+     *
+     * @return a boolean.
+     */
     public boolean skipNextUntap() {
         return skipNextUntap;
     }
 
+    /**
+     * <p>Setter for the field <code>skipNextUntap</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSkipNextUntap(boolean b) {
         skipNextUntap = b;
     }
 
+    /**
+     * <p>Getter for the field <code>slowtripList</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getSlowtripList() {
         return slowtripList;
     }
 
+    /**
+     * <p>clearSlowtripList.</p>
+     */
     public void clearSlowtripList() {
         slowtripList.clear();
     }
 
+    /**
+     * <p>addSlowtripList.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     */
     public void addSlowtripList(Card card) {
         slowtripList.add(card);
     }
 
+    /**
+     * <p>getTurn.</p>
+     *
+     * @return a int.
+     */
     public int getTurn() {
         return nTurns;
     }
 
+    /**
+     * <p>incrementTurn.</p>
+     */
     public void incrementTurn() {
         nTurns++;
     }
 
     ////////////////////////////////
+    /**
+     * <p>sacrificePermanent.</p>
+     *
+     * @param prompt a {@link java.lang.String} object.
+     * @param choices a {@link forge.CardList} object.
+     */
     public abstract void sacrificePermanent(String prompt, CardList choices);
 
+    /**
+     * <p>sacrificeCreature.</p>
+     */
     public void sacrificeCreature() {
         CardList choices = AllZoneUtil.getCreaturesInPlay(this);
         sacrificePermanent("Select a creature to sacrifice.", choices);
     }
 
+    /**
+     * <p>sacrificeCreature.</p>
+     *
+     * @param choices a {@link forge.CardList} object.
+     */
     public void sacrificeCreature(CardList choices) {
         sacrificePermanent("Select a creature to sacrifice.", choices);
     }
 
     // Game win/loss
 
+    /**
+     * <p>Getter for the field <code>altWin</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAltWin() {
         return altWin;
     }
 
+    /**
+     * <p>Getter for the field <code>altLose</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAltLose() {
         return altLose;
     }
 
+    /**
+     * <p>Getter for the field <code>winCondition</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getWinCondition() {
         return winCondition;
     }
 
+    /**
+     * <p>Getter for the field <code>loseCondition</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getLoseCondition() {
         return loseCondition;
     }
 
+    /**
+     * <p>altWinConditionMet.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void altWinConditionMet(String s) {
         if (cantWin()) {
             System.out.println("Tried to win, but currently can't.");
@@ -897,6 +1398,12 @@ public abstract class Player extends MyObservable {
         winCondition = s;
     }
 
+    /**
+     * <p>altLoseConditionMet.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean altLoseConditionMet(String s) {
         if (cantLose()) {
             System.out.println("Tried to lose, but currently can't.");
@@ -907,6 +1414,11 @@ public abstract class Player extends MyObservable {
         return true;
     }
 
+    /**
+     * <p>cantLose.</p>
+     *
+     * @return a boolean.
+     */
     public boolean cantLose() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(this);
         list = list.getKeyword("You can't lose the game.");
@@ -920,6 +1432,11 @@ public abstract class Player extends MyObservable {
         return oppList.size() > 0;
     }
 
+    /**
+     * <p>cantLoseForZeroOrLessLife.</p>
+     *
+     * @return a boolean.
+     */
     public boolean cantLoseForZeroOrLessLife() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(this);
         list = list.getKeyword("You don't lose the game for having 0 or less life.");
@@ -927,6 +1444,11 @@ public abstract class Player extends MyObservable {
         return list.size() > 0;
     }
 
+    /**
+     * <p>cantWin.</p>
+     *
+     * @return a boolean.
+     */
     public boolean cantWin() {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(getOpponent());
         list = list.getKeyword("You can't win the game.");
@@ -940,6 +1462,11 @@ public abstract class Player extends MyObservable {
         return oppList.size() > 0;
     }
 
+    /**
+     * <p>hasLost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasLost() {
 
         if (cantLose())
@@ -962,6 +1489,11 @@ public abstract class Player extends MyObservable {
     }
 
 
+    /**
+     * <p>hasWon.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasWon() {
         if (cantWin())
             return false;
@@ -969,16 +1501,31 @@ public abstract class Player extends MyObservable {
         return altWin;
     }
 
+    /**
+     * <p>hasMetalcraft.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasMetalcraft() {
         CardList list = AllZoneUtil.getPlayerTypeInPlay(this, "Artifact");
         return list.size() >= 3;
     }
 
+    /**
+     * <p>hasThreshold.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasThreshold() {
         CardList grave = AllZoneUtil.getPlayerGraveyard(this);
         return grave.size() >= 7;
     }
 
+    /**
+     * <p>hasHellbent.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasHellbent() {
         CardList hand = AllZoneUtil.getPlayerHand(this);
         return hand.size() == 0;
@@ -986,6 +1533,11 @@ public abstract class Player extends MyObservable {
 
     private ArrayList<HandSizeOp> handSizeOperations;
 
+    /**
+     * <p>getMaxHandSize.</p>
+     *
+     * @return a int.
+     */
     public int getMaxHandSize() {
 
         int ret = 7;
@@ -1004,6 +1556,9 @@ public abstract class Player extends MyObservable {
         return ret;
     }
 
+    /**
+     * <p>sortHandSizeOperations.</p>
+     */
     public void sortHandSizeOperations() {
         if (handSizeOperations.size() < 2) {
             return;
@@ -1024,10 +1579,20 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>addHandSizeOperation.</p>
+     *
+     * @param theNew a {@link forge.HandSizeOp} object.
+     */
     public void addHandSizeOperation(HandSizeOp theNew) {
         handSizeOperations.add(theNew);
     }
 
+    /**
+     * <p>removeHandSizeOperation.</p>
+     *
+     * @param timestamp a int.
+     */
     public void removeHandSizeOperation(int timestamp) {
         for (int i = 0; i < handSizeOperations.size(); i++) {
             if (handSizeOperations.get(i).hsTimeStamp == timestamp) {
@@ -1037,32 +1602,66 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>clearHandSizeOperations.</p>
+     */
     public void clearHandSizeOperations() {
         handSizeOperations.clear();
     }
 
+    /** Constant <code>NextHandSizeStamp=0</code> */
     private static int NextHandSizeStamp = 0;
 
+    /**
+     * <p>getHandSizeStamp.</p>
+     *
+     * @return a int.
+     */
     public static int getHandSizeStamp() {
         return NextHandSizeStamp++;
     }
 
+    /**
+     * <p>Getter for the field <code>maxLandsToPlay</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMaxLandsToPlay() {
         return maxLandsToPlay;
     }
 
+    /**
+     * <p>Setter for the field <code>maxLandsToPlay</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setMaxLandsToPlay(int n) {
         maxLandsToPlay = n;
     }
 
+    /**
+     * <p>addMaxLandsToPlay.</p>
+     *
+     * @param n a int.
+     */
     public void addMaxLandsToPlay(int n) {
         maxLandsToPlay += n;
     }
 
+    /**
+     * <p>Getter for the field <code>numLandsPlayed</code>.</p>
+     *
+     * @return a int.
+     */
     public int getNumLandsPlayed() {
         return numLandsPlayed;
     }
 
+    /**
+     * <p>Setter for the field <code>numLandsPlayed</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setNumLandsPlayed(int n) {
         numLandsPlayed = n;
     }
@@ -1073,6 +1672,12 @@ public abstract class Player extends MyObservable {
     //
     /////////////////////////////////
 
+    /**
+     * <p>clashWithOpponent.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean clashWithOpponent(Card source) {
         /*
            * Each clashing player reveals the top card of his or
@@ -1120,6 +1725,11 @@ public abstract class Player extends MyObservable {
         }
     }
 
+    /**
+     * <p>clashMoveToTopOrBottom.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     protected abstract void clashMoveToTopOrBottom(Card c);
 
     ////////////////////////////////
@@ -1128,6 +1738,7 @@ public abstract class Player extends MyObservable {
     //
     /////////////////////////////////
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Player) {
@@ -1136,6 +1747,7 @@ public abstract class Player extends MyObservable {
         } else return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return name;

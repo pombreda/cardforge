@@ -39,7 +39,14 @@ import java.util.List;
 import static org.jdesktop.swingx.MultiSplitLayout.parseModel;
 
 
+/**
+ * <p>GuiDisplay4 class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewConstants, NewConstants.GUI.GuiDisplay, NewConstants.LANG.GuiDisplay {
+    /** Constant <code>serialVersionUID=4519302185194841060L</code> */
     private static final long serialVersionUID = 4519302185194841060L;
 
     private GuiInput inputControl;
@@ -49,6 +56,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
     Font checkboxFont = new Font("Dialog", Font.PLAIN, 9);
 
 
+    /** Constant <code>greenColor</code> */
     public static Color greenColor = new Color(0, 164, 0);
 
     private Action HUMAN_GRAVEYARD_ACTION;
@@ -61,6 +69,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 
     //private CardList multiBlockers = new CardList();
 
+    /**
+     * <p>Constructor for GuiDisplay4.</p>
+     */
     public GuiDisplay4() {
         AllZone.setDisplay(this);
         setupActions();
@@ -72,6 +83,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         inputControl = new GuiInput();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
@@ -85,12 +97,16 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         super.setVisible(visible);
     }
 
+    /** {@inheritDoc} */
     public void assignDamage(Card attacker, CardList blockers, int damage) {
         if (damage <= 0)
             return;
         new Gui_MultipleBlockers4(attacker, blockers, damage, this);
     }
 
+    /**
+     * <p>setupActions.</p>
+     */
     private void setupActions() {
         HUMAN_GRAVEYARD_ACTION = new ZoneAction(AllZone.getHumanGraveyard(), HUMAN_GRAVEYARD);
         HUMAN_REMOVED_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_REMOVED);
@@ -118,6 +134,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         CONCEDE_ACTION = new ConcedeAction();
     }
 
+    /**
+     * <p>addMenu.</p>
+     */
     private void addMenu() {
         // Game Menu Creation
         Object[] obj = {
@@ -207,10 +226,20 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         this.setJMenuBar(menuBar);
     }//addMenu()
 
+    /**
+     * <p>canLoseByDecking.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canLoseByDecking() {
         return canLoseByDecking.isSelected();
     }
 
+    /**
+     * <p>getButtonOK.</p>
+     *
+     * @return a {@link forge.MyButton} object.
+     */
     public MyButton getButtonOK() {
         MyButton ok = new MyButton() {
             public void select() {
@@ -241,6 +270,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         return ok;
     }//getButtonOK()
 
+    /**
+     * <p>getButtonCancel.</p>
+     *
+     * @return a {@link forge.MyButton} object.
+     */
     public MyButton getButtonCancel() {
         MyButton cancel = new MyButton() {
             public void select() {
@@ -270,10 +304,12 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         return cancel;
     }//getButtonCancel()
 
+    /** {@inheritDoc} */
     public void showCombat(String message) {
         combatArea.setText(message);
     }
 
+    /** {@inheritDoc} */
     public void showMessage(String s) {
         messageArea.setText(s);
 
@@ -298,6 +334,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         messageArea.setBorder(border);
     }
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         //mouse Card Detail
         playerHandPanel.addMouseMotionListener(new MouseMotionAdapter() {
@@ -436,15 +475,24 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 
     }//addListener()
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return detail.getCard();
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
 
+    /**
+     * <p>addObservers.</p>
+     */
     private void addObservers() {
         //Human Hand, Graveyard, and Library totals
         {//make sure to not interfer with anything below, since this is a very long method
@@ -651,6 +699,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 
     }//addObservers()
 
+    /**
+     * <p>initComponents.</p>
+     */
     private void initComponents() {
         //Preparing the Frame
         setTitle(ForgeProps.getLocalized(LANG.PROGRAM_NAME));
@@ -718,6 +769,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         initCardPicture(pane);
     }
 
+    /**
+     * <p>initFonts.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initFonts(JPanel pane) {
         messageArea.setFont(getFont());
 
@@ -743,6 +799,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         combatArea.setFont(getFont());
     }
 
+    /**
+     * <p>initMsgYesNo.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initMsgYesNo(JPanel pane) {
         //messageArea.setBorder(BorderFactory.createEtchedBorder());
         messageArea.setEditable(false);
@@ -797,6 +858,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         pane.add(new ExternalPanel(panel), "info");
     }
 
+    /**
+     * <p>initOpp.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initOpp(JPanel pane) {
         //oppLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -855,6 +921,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         pane.add(new ExternalPanel(oppPanel), "compy");
     }
 
+    /**
+     * <p>initStackCombat.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initStackCombat(JPanel pane) {
         stackPanel.setLayout(new GridLayout(0, 1, 10, 10));
         JScrollPane stackPane = new JScrollPane(stackPanel);
@@ -871,6 +942,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         pane.add(new ExternalPanel(combatPane), "combat");
     }
 
+    /**
+     * <p>initPlayer.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initPlayer(JPanel pane) {
         //int fontSize = 12;
         playerLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -940,6 +1016,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         pane.add(new ExternalPanel(playerPanel), "human");
     }
 
+    /**
+     * <p>initZones.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initZones(JPanel pane) {
         JScrollPane oppScroll = new JScrollPane();
         oppPlayPanel = new PlayArea(oppScroll, true);
@@ -960,16 +1041,31 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         pane.add(new ExternalPanel(handScroll), "humanHand");
     }
 
+    /**
+     * <p>initCardPicture.</p>
+     *
+     * @param pane a {@link javax.swing.JPanel} object.
+     */
     private void initCardPicture(JPanel pane) {
         pane.add(new ExternalPanel(detail), "detail");
         pane.add(new ExternalPanel(picturePanel), "picture");
         picturePanel.setCardPanel(picture);
     }
 
+    /**
+     * <p>cancelButtonActionPerformed.</p>
+     *
+     * @param evt a {@link java.awt.event.ActionEvent} object.
+     */
     private void cancelButtonActionPerformed(ActionEvent evt) {
         inputControl.selectButtonCancel();
     }
 
+    /**
+     * <p>okButtonActionPerformed.</p>
+     *
+     * @param evt a {@link java.awt.event.ActionEvent} object.
+     */
     private void okButtonActionPerformed(ActionEvent evt) {
         inputControl.selectButtonOK();
     }
@@ -998,6 +1094,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
     }
 
     // ********** Phase stuff in Display ******************
+    /** {@inheritDoc} */
     public boolean stopAtPhase(Player turn, String phase) {
         if (turn.isComputer()) {
             if (phase.equals(Constant.Phase.End_Of_Turn))
@@ -1025,6 +1122,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         return true;
     }
 
+    /**
+     * <p>loadPrefs.</p>
+     *
+     * @return a boolean.
+     */
     public boolean loadPrefs() {
         ForgePreferences fp = Gui_NewGame.preferences;
 
@@ -1045,6 +1147,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         return true;
     }
 
+    /**
+     * <p>savePrefs.</p>
+     *
+     * @return a boolean.
+     */
     public boolean savePrefs() {
         Constant.Runtime.Mill[0] = canLoseByDecking.isSelected();
         ForgePreferences fp = Gui_NewGame.preferences;
@@ -1066,25 +1173,37 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         return true;
     }
 
+    /** Constant <code>playsoundCheckboxForMenu</code> */
     public static JCheckBoxMenuItem playsoundCheckboxForMenu = new JCheckBoxMenuItem("Play Sound", false);
 
     // Phases
+    /** Constant <code>cbAIUpkeep</code> */
     public static JCheckBoxMenuItem cbAIUpkeep = new JCheckBoxMenuItem("Upkeep", true);
+    /** Constant <code>cbAIDraw</code> */
     public static JCheckBoxMenuItem cbAIDraw = new JCheckBoxMenuItem("Draw", true);
+    /** Constant <code>cbAIEndOfTurn</code> */
     public static JCheckBoxMenuItem cbAIEndOfTurn = new JCheckBoxMenuItem("End of Turn", true);
+    /** Constant <code>cbAIBeginCombat</code> */
     public static JCheckBoxMenuItem cbAIBeginCombat = new JCheckBoxMenuItem("Begin Combat", true);
+    /** Constant <code>cbAIEndCombat</code> */
     public static JCheckBoxMenuItem cbAIEndCombat = new JCheckBoxMenuItem("End Combat", true);
 
+    /** Constant <code>cbHumanUpkeep</code> */
     public static JCheckBoxMenuItem cbHumanUpkeep = new JCheckBoxMenuItem("Upkeep", true);
+    /** Constant <code>cbHumanDraw</code> */
     public static JCheckBoxMenuItem cbHumanDraw = new JCheckBoxMenuItem("Draw", true);
+    /** Constant <code>cbHumanEndOfTurn</code> */
     public static JCheckBoxMenuItem cbHumanEndOfTurn = new JCheckBoxMenuItem("End of Turn", true);
+    /** Constant <code>cbHumanBeginCombat</code> */
     public static JCheckBoxMenuItem cbHumanBeginCombat = new JCheckBoxMenuItem("Begin Combat", true);
+    /** Constant <code>cbHumanEndCombat</code> */
     public static JCheckBoxMenuItem cbHumanEndCombat = new JCheckBoxMenuItem("End Combat", true);
 
     // ********** End of Phase stuff in Display ******************
 
     // ****** Developer Mode ******* 
 
+    /** Constant <code>canLoseByDecking</code> */
     public static JCheckBoxMenuItem canLoseByDecking = new JCheckBoxMenuItem("Lose by Decking", true);
 
     // *****************************
@@ -1135,6 +1254,11 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         }
 
         public void actionPerformed(ActionEvent e) {
+            /**
+             * <p>main.</p>
+             *
+             * @param args an array of {@link java.lang.String} objects.
+             */
             Card[] c = getCards();
 
             if (AllZone.getNameChanger().shouldChangeCardName()) c = AllZone.getNameChanger().changeCard(c);
@@ -1169,167 +1293,6 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 
         public void actionPerformed(ActionEvent e) {
             concede();
-        }
-    }
-}
-
-//very hacky
-
-
-class Gui_MultipleBlockers4 extends JFrame {
-    private static final long serialVersionUID = 7622818310877381045L;
-
-    private int assignDamage;
-    private Card att;
-    private CardList blockers;
-    private CardContainer guiDisplay;
-
-    private BorderLayout borderLayout1 = new BorderLayout();
-    private JPanel mainPanel = new JPanel();
-    private JScrollPane jScrollPane1 = new JScrollPane();
-    private JLabel numberLabel = new JLabel();
-    private JPanel jPanel3 = new JPanel();
-    private BorderLayout borderLayout3 = new BorderLayout();
-    private JPanel creaturePanel = new JPanel();
-
-
-    public static void main(String[] args) {
-        CardList list = new CardList();
-        list.add(AllZone.getCardFactory().getCard("Elvish Piper", null));
-        list.add(AllZone.getCardFactory().getCard("Lantern Kami", null));
-        list.add(AllZone.getCardFactory().getCard("Frostling", null));
-        list.add(AllZone.getCardFactory().getCard("Frostling", null));
-
-        for (int i = 0; i < 2; i++)
-            new Gui_MultipleBlockers4(null, list, i + 1, null);
-    }
-
-    Gui_MultipleBlockers4(Card attacker, CardList creatureList, int damage, CardContainer display) {
-        this();
-        assignDamage = damage;
-        updateDamageLabel();//update user message about assigning damage
-        guiDisplay = display;
-        att = attacker;
-        blockers = creatureList;
-
-        for (int i = 0; i < creatureList.size(); i++)
-            creaturePanel.add(new CardPanel(creatureList.get(i)));
-
-        if (att.hasKeyword("Trample")) {
-            Card player = new Card();
-            player.setName("Player");
-            player.addIntrinsicKeyword("Shroud");
-            player.addIntrinsicKeyword("Indestructible");
-            creaturePanel.add(new CardPanel(player));
-        }
-
-        JDialog dialog = new JDialog(this, true);
-        dialog.setTitle("Multiple Blockers");
-        dialog.setContentPane(mainPanel);
-        dialog.setSize(470, 260);
-        dialog.setVisible(true);
-    }
-
-    public Gui_MultipleBlockers4() {
-        try {
-            jbInit();
-        } catch (Exception ex) {
-            ErrorViewer.showError(ex);
-        }
-        //    setSize(470, 280);
-        //    show();
-    }
-
-    private void jbInit() throws Exception {
-        this.getContentPane().setLayout(borderLayout1);
-        this.setTitle("Multiple Blockers");
-        mainPanel.setLayout(null);
-        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        numberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-        numberLabel.setText("Assign");
-        numberLabel.setBounds(new Rectangle(52, 30, 343, 24));
-        jPanel3.setLayout(borderLayout3);
-        jPanel3.setBounds(new Rectangle(26, 75, 399, 114));
-        creaturePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                creaturePanel_mousePressed(e);
-            }
-        });
-        creaturePanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                creaturePanel_mouseMoved(e);
-            }
-        });
-        mainPanel.add(jPanel3, null);
-        jPanel3.add(jScrollPane1, BorderLayout.CENTER);
-        mainPanel.add(numberLabel, null);
-        jScrollPane1.getViewport().add(creaturePanel, null);
-        this.getContentPane().add(mainPanel, BorderLayout.CENTER);
-    }
-
-    void okButton_actionPerformed(ActionEvent e) {
-        dispose();
-    }
-
-    void creaturePanel_mousePressed(MouseEvent e) {
-        Object o = creaturePanel.getComponentAt(e.getPoint());
-        if (o instanceof CardPanel) {
-
-            boolean assignedDamage = true;
-
-            CardContainer cardPanel = (CardContainer) o;
-            Card c = cardPanel.getCard();
-            //c.setAssignedDamage(c.getAssignedDamage() + 1);
-            CardList cl = new CardList();
-            cl.add(att);
-
-            boolean assignedLethalDamageToAllBlockers = true;
-            for (Card crd : blockers) {
-                if (crd.getLethalDamage() > 0
-                        && (!att.hasKeyword("Deathtouch") || crd.getTotalAssignedDamage() < 1))
-                    assignedLethalDamageToAllBlockers = false;
-            }
-
-
-            if (c.getName().equals("Player")
-                    && att.hasKeyword("Trample")
-                    && assignedLethalDamageToAllBlockers) {
-                AllZone.getCombat().addDefendingDamage(1, att);
-                c.addAssignedDamage(1, att);
-            } else if (!c.getName().equals("Player")) {
-                c.addAssignedDamage(1, att);
-            } else
-                assignedDamage = false;
-
-            if (assignedDamage) {
-                assignDamage--;
-                updateDamageLabel();
-                if (assignDamage == 0) dispose();
-            }
-
-            if (guiDisplay != null) {
-                guiDisplay.setCard(c);
-            }
-        }
-        //reduce damage, show new user message, exit if necessary
-
-    }//creaturePanel_mousePressed()
-
-    void updateDamageLabel() {
-        numberLabel.setText("Assign " + assignDamage + " damage - click on card to assign damage");
-    }
-
-    void creaturePanel_mouseMoved(MouseEvent e) {
-        Object o = creaturePanel.getComponentAt(e.getPoint());
-        if (o instanceof CardPanel) {
-            CardContainer cardPanel = (CardContainer) o;
-            Card c = cardPanel.getCard();
-
-            if (guiDisplay != null) {
-                guiDisplay.setCard(c);
-            }
         }
     }
 }

@@ -8,10 +8,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * <p>Abstract Trigger class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public abstract class Trigger {
 
+    /** Constant <code>nextID=0</code> */
     private static int nextID = 0;
 
+    /**
+     * <p>resetIDs.</p>
+     */
     public static void resetIDs() {
         nextID = 50000;
     }
@@ -20,64 +30,133 @@ public abstract class Trigger {
 
     protected String name;
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <p>Setter for the field <code>name</code>.</p>
+     *
+     * @param n a {@link java.lang.String} object.
+     */
     public void setName(String n) {
         name = n;
     }
 
+    /**
+     * <p>setID.</p>
+     *
+     * @param id a int.
+     */
     public void setID(int id) {
         ID = id;
     }
 
     protected HashMap<String, String> mapParams = new HashMap<String, String>();
 
+    /**
+     * <p>Getter for the field <code>mapParams</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<String, String> getMapParams() {
         return mapParams;
     }
 
     protected HashMap<String, Object> runParams;
 
+    /**
+     * <p>Setter for the field <code>runParams</code>.</p>
+     *
+     * @param rp a {@link java.util.HashMap} object.
+     */
     public void setRunParams(HashMap<String, Object> rp) {
         runParams = rp;
     }
 
+    /**
+     * <p>Getter for the field <code>runParams</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<String, Object> getRunParams() {
         return runParams;
     }
 
     protected SpellAbility overridingAbility = null;
 
+    /**
+     * <p>Getter for the field <code>overridingAbility</code>.</p>
+     *
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public SpellAbility getOverridingAbility() {
         return overridingAbility;
     }
 
+    /**
+     * <p>Setter for the field <code>overridingAbility</code>.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void setOverridingAbility(SpellAbility sa) {
         overridingAbility = sa;
     }
 
     private HashMap<String, Object> storedTriggeredObjects = null;
 
+    /**
+     * <p>Setter for the field <code>storedTriggeredObjects</code>.</p>
+     *
+     * @param storedTriggeredObjects a {@link java.util.HashMap} object.
+     * @since 1.0.15
+     */
     public void setStoredTriggeredObjects(HashMap<String, Object> storedTriggeredObjects) {
         this.storedTriggeredObjects = storedTriggeredObjects;
     }
 
+    /**
+     * <p>Getter for the field <code>storedTriggeredObjects</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     * @since 1.0.15
+     */
     public HashMap<String, Object> getStoredTriggeredObjects() {
         return storedTriggeredObjects;
     }
 
     protected Card hostCard;
 
+    /**
+     * <p>Getter for the field <code>hostCard</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getHostCard() {
         return hostCard;
     }
 
+    /**
+     * <p>Setter for the field <code>hostCard</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void setHostCard(Card c) {
         hostCard = c;
     }
 
+    /**
+     * <p>Constructor for Trigger.</p>
+     *
+     * @param n a {@link java.lang.String} object.
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger(String n, HashMap<String, String> params, Card host) {
         name = n;
         mapParams = new HashMap<String, String>();
@@ -87,6 +166,12 @@ public abstract class Trigger {
         hostCard = host;
     }
 
+    /**
+     * <p>Constructor for Trigger.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger(HashMap<String, String> params, Card host) {
         mapParams = new HashMap<String, String>();
         for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -95,12 +180,22 @@ public abstract class Trigger {
         hostCard = host;
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         if (mapParams.containsKey("TriggerDescription")) {
             return mapParams.get("TriggerDescription").replace("CARDNAME", hostCard.getName());
         } else return "";
     }
 
+    /**
+     * <p>zonesCheck.</p>
+     *
+     * @return a boolean.
+     */
     public boolean zonesCheck() {
         if (mapParams.containsKey("TriggerZones")) {
             ArrayList<String> triggerZones = new ArrayList<String>();
@@ -118,6 +213,11 @@ public abstract class Trigger {
         return true;
     }
 
+    /**
+     * <p>phasesCheck.</p>
+     *
+     * @return a boolean.
+     */
     public boolean phasesCheck() {
         if (mapParams.containsKey("TriggerPhases")) {
             String phases = mapParams.get("TriggerPhases");
@@ -151,6 +251,11 @@ public abstract class Trigger {
         return true;
     }
 
+    /**
+     * <p>requirementsCheck.</p>
+     *
+     * @return a boolean.
+     */
     public boolean requirementsCheck() {
         if (mapParams.containsKey("Metalcraft")) {
             if (mapParams.get("Metalcraft").equals("True") && !hostCard.getController().hasMetalcraft()) {
@@ -293,6 +398,14 @@ public abstract class Trigger {
     }
 
 
+    /**
+     * <p>matchesValid.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     * @param valids an array of {@link java.lang.String} objects.
+     * @param srcCard a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean matchesValid(Object o, String[] valids, Card srcCard) {
         if (o instanceof Card) {
             Card c = (Card) o;
@@ -321,6 +434,11 @@ public abstract class Trigger {
         return false;
     }
 
+    /**
+     * <p>isSecondary.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSecondary() {
         if (mapParams.containsKey("Secondary")) {
             if (mapParams.get("Secondary").equals("True"))
@@ -329,6 +447,7 @@ public abstract class Trigger {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Trigger))
@@ -337,9 +456,25 @@ public abstract class Trigger {
         return this.ID == ((Trigger) o).ID;
     }
 
+    /**
+     * <p>performTest.</p>
+     *
+     * @param runParams a {@link java.util.HashMap} object.
+     * @return a boolean.
+     */
     public abstract boolean performTest(HashMap<String, Object> runParams);
 
+    /**
+     * <p>getCopy.</p>
+     *
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public abstract Trigger getCopy();
 
+    /**
+     * <p>setTriggeringObjects.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public abstract void setTriggeringObjects(SpellAbility sa);
 }

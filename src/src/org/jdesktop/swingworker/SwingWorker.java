@@ -216,7 +216,7 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
 
     /**
      * everything is run inside this FutureTask. Also it is used as
-     * a delegatee for the Future API.
+     * a delegate for the Future API.
      */
     private final FutureTask<T> future;
 
@@ -235,9 +235,15 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      */
     private AccumulativeRunnable<Integer> doNotifyProgressChange;
 
+    /**
+     * Constant <code>doSubmit</code>
+     */
     private static final AccumulativeRunnable<Runnable> doSubmit =
             new DoSubmitAccumulativeRunnable();
 
+    /**
+     * Constant <code>executorService</code>
+     */
     private static ExecutorService executorService = null;
 
     /**
@@ -300,7 +306,7 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      * Note: this method is executed in a background thread.
      *
      * @return the computed result
-     * @throws Exception if unable to compute a result
+     * @throws java.lang.Exception if unable to compute a result
      */
     protected abstract T doInBackground() throws Exception;
 
@@ -417,10 +423,6 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      * perform completion actions on the <i>Event Dispatch Thread</i>. Note
      * that you can query status inside the implementation of this method to
      * determine the result of this task or whether this task has been cancelled.
-     *
-     * @see #doInBackground
-     * @see #isCancelled()
-     * @see #get
      */
     protected void done() {
     }
@@ -450,7 +452,8 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      * the value {@code 3}.
      *
      * @param progress the progress value to set
-     * @throws IllegalArgumentException is value not from 0 to 100
+     * @throws java.lang.IllegalArgumentException
+     *          is value not from 0 to 100
      */
     protected final void setProgress(int progress) {
         if (progress < 0 || progress > 100) {
@@ -513,15 +516,15 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
 
     // Future methods START
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public final boolean cancel(boolean mayInterruptIfRunning) {
         return future.cancel(mayInterruptIfRunning);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return a boolean.
      */
     public final boolean isCancelled() {
         return future.isCancelled();
@@ -529,6 +532,8 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
 
     /**
      * {@inheritDoc}
+     *
+     * @return a boolean.
      */
     public final boolean isDone() {
         return future.isDone();
@@ -571,6 +576,11 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
      * //the dialog will be visible until the SwingWorker is done
      * dialog.setVisible(true);
      * </pre>
+     *
+     * @return a T object.
+     * @throws java.lang.InterruptedException if any.
+     * @throws java.util.concurrent.ExecutionException
+     *                                        if any.
      */
     public final T get() throws InterruptedException, ExecutionException {
         return future.get();
@@ -694,7 +704,7 @@ public abstract class SwingWorker<T, V> implements Future<T>, Runnable {
     /**
      * Sets this {@code SwingWorker} state bound property.
      *
-     * @param the state state to set
+     * @param state a {@link org.jdesktop.swingworker.SwingWorker.StateValue} object.
      */
     private void setState(StateValue state) {
         StateValue old = this.state;

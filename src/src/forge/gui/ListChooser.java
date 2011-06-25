@@ -35,8 +35,17 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  * <li>If the dialog was canceled, the selection will be empty.</li>
  * <li>
  * </ul>
+ *
+ * @author Forge
+ * @version $Id: $
  */
 public class ListChooser<T> {
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     * @param <T> a T object.
+     */
     public static void main(String[] args) {
         ListChooser<String> c = new ListChooser<String>("test", "choose a or b", 0, 2, "a", "b");
         System.out.println(c.show());
@@ -61,50 +70,140 @@ public class ListChooser<T> {
     private JOptionPane p;
     private Action ok, cancel;
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param list a T object.
+     */
     public ListChooser(String title, T... list) {
         this(title, 1, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param numChoices a int.
+     * @param list a T object.
+     */
     public ListChooser(String title, int numChoices, T... list) {
         this(title, numChoices, numChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param minChoices a int.
+     * @param maxChoices a int.
+     * @param list a T object.
+     */
     public ListChooser(String title, int minChoices, int maxChoices, T... list) {
         this(title, null, minChoices, maxChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param list a T object.
+     */
     public ListChooser(String title, String message, T... list) {
         this(title, message, 1, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param numChoices a int.
+     * @param list a T object.
+     */
     public ListChooser(String title, String message, int numChoices, T... list) {
         this(title, message, numChoices, numChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param minChoices a int.
+     * @param maxChoices a int.
+     * @param list a T object.
+     */
     public ListChooser(String title, String message, int minChoices, int maxChoices, T... list) {
         this(title, message, minChoices, maxChoices, asList(list));
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, List<T> list) {
         this(title, 1, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param numChoices a int.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, int numChoices, List<T> list) {
         this(title, numChoices, numChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param minChoices a int.
+     * @param maxChoices a int.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, int minChoices, int maxChoices, List<T> list) {
         this(title, null, minChoices, maxChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, String message, List<T> list) {
         this(title, message, 1, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param numChoices a int.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, String message, int numChoices, List<T> list) {
         this(title, message, numChoices, numChoices, list);
     }
 
+    /**
+     * <p>Constructor for ListChooser.</p>
+     *
+     * @param title a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param minChoices a int.
+     * @param maxChoices a int.
+     * @param list a {@link java.util.List} object.
+     */
     public ListChooser(String title, String message, int minChoices, int maxChoices, List<T> list) {
         this.title = title;
         this.minChoices = minChoices;
@@ -125,6 +224,11 @@ public class ListChooser<T> {
         jList.addMouseListener(new DblListener());
     }
 
+    /**
+     * <p>getChoices.</p>
+     *
+     * @return a {@link java.util.List} object.
+     */
     public List<T> getChoices() {
         return list;
     }
@@ -132,6 +236,8 @@ public class ListChooser<T> {
     /**
      * Returns the JList used in the list chooser. this is useful for registering listeners before showing the
      * dialog.
+     *
+     * @return a {@link javax.swing.JList} object.
      */
     public JList getJList() {
         return jList;
@@ -139,6 +245,8 @@ public class ListChooser<T> {
 
     /**
      * Shows the dialog and returns after the dialog was closed.
+     *
+     * @return a boolean.
      */
     public synchronized boolean show() {
         if (called) throw new IllegalStateException("Already shown");
@@ -161,6 +269,8 @@ public class ListChooser<T> {
 
     /**
      * Returns if the dialog was closed by pressing "OK" or double clicking an option the last time
+     *
+     * @return a boolean.
      */
     public boolean isCommitted() {
         if (!called) throw new IllegalStateException("not yet shown");
@@ -169,6 +279,8 @@ public class ListChooser<T> {
 
     /**
      * Returns the selected indices as a list of integers
+     *
+     * @return a {@link java.util.List} object.
      */
     public List<Integer> getSelectedIndices() {
         if (!called) throw new IllegalStateException("not yet shown");
@@ -188,6 +300,8 @@ public class ListChooser<T> {
 
     /**
      * Returns the selected values as a list of objects. no casts are necessary when retrieving the objects.
+     *
+     * @return a {@link java.util.List} object.
      */
     public List<T> getSelectedValues() {
         if (!called) throw new IllegalStateException("not yet shown");
@@ -208,6 +322,8 @@ public class ListChooser<T> {
 
     /**
      * Returns the (minimum) selected index, or -1
+     *
+     * @return a int.
      */
     public int getSelectedIndex() {
         if (!called) throw new IllegalStateException("not yet shown");
@@ -216,6 +332,8 @@ public class ListChooser<T> {
 
     /**
      * Returns the (first) selected value, or null
+     *
+     * @return a T object.
      */
     @SuppressWarnings("unchecked")
     public T getSelectedValue() {
@@ -223,6 +341,9 @@ public class ListChooser<T> {
         return (T) jList.getSelectedValue();
     }
 
+    /**
+     * <p>commit.</p>
+     */
     private void commit() {
         if (ok.isEnabled()) p.setValue(OK_OPTION);
     }

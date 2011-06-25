@@ -16,10 +16,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
+/**
+ * <p>QuestBazaarItem class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestBazaarItem {
 
     QuestStallPurchasable item;
 
+    /**
+     * <p>Constructor for QuestBazaarItem.</p>
+     *
+     * @param purchasable a {@link forge.quest.data.bazaar.QuestStallPurchasable} object.
+     */
     protected QuestBazaarItem(QuestStallPurchasable purchasable) {
         this.item = purchasable;
     }
@@ -31,6 +42,11 @@ public class QuestBazaarItem {
         item.onPurchase();
     }
 
+    /**
+     * <p>getItemPanel.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
     protected final JPanel getItemPanel() {
         ImageIcon icon = GuiUtils.getIconFromFile(item.getImageName());
         if (icon == null) {

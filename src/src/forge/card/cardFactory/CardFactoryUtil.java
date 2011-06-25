@@ -12,9 +12,23 @@ import java.util.*;
 import java.util.Map.Entry;
 
 
+/**
+ * <p>CardFactoryUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFactoryUtil {
     private static Random random = MyRandom.random;
 
+    /**
+     * <p>AI_getMostExpensivePermanent.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getMostExpensivePermanent(CardList list, final Card spell, boolean targeted) {
         CardList all = list;
         if (targeted) {
@@ -51,6 +65,14 @@ public class CardFactoryUtil {
     }
 
     //for Sarkhan the Mad
+    /**
+     * <p>AI_getCheapestCreature.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getCheapestCreature(CardList list, final Card spell, boolean targeted) {
         list = list.filter(new CardListFilter() {
             public boolean addCard(Card c) {
@@ -60,6 +82,14 @@ public class CardFactoryUtil {
         return AI_getCheapestPermanent(list, spell, targeted);
     }
 
+    /**
+     * <p>AI_getCheapestPermanent.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getCheapestPermanent(CardList list, final Card spell, boolean targeted) {
         CardList all = list;
         if (targeted) {
@@ -85,6 +115,12 @@ public class CardFactoryUtil {
 
     }
 
+    /**
+     * <p>AI_getBestLand.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getBestLand(CardList list) {
         CardList land = list.getType("Land");
         if (!(land.size() > 0)) return null;
@@ -129,6 +165,14 @@ public class CardFactoryUtil {
 
 
     //The AI doesn't really pick the best enchantment, just the most expensive.
+    /**
+     * <p>AI_getBestEnchantment.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getBestEnchantment(CardList list, final Card spell, boolean targeted) {
         CardList all = list;
         all = all.getType("Enchantment");
@@ -163,6 +207,12 @@ public class CardFactoryUtil {
 
 
     //The AI doesn't really pick the best artifact, just the most expensive.
+    /**
+     * <p>AI_getBestArtifact.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getBestArtifact(CardList list) {
         CardList all = list;
         all = all.getType("Artifact");
@@ -187,6 +237,13 @@ public class CardFactoryUtil {
         return biggest;
     }
 
+    /**
+     * <p>AI_getHumanArtifact.</p>
+     *
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList AI_getHumanArtifact(final Card spell, boolean targeted) {
         CardList artifact = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         artifact = artifact.getType("Artifact");
@@ -200,6 +257,12 @@ public class CardFactoryUtil {
         return artifact;
     }
 
+    /**
+     * <p>AI_doesCreatureAttack.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean AI_doesCreatureAttack(Card card) {
         Combat combat = ComputerUtil.getAttackers();
         Card[] att = combat.getAttackers();
@@ -209,6 +272,12 @@ public class CardFactoryUtil {
         return false;
     }
 
+    /**
+     * <p>evaluateCreatureList.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int evaluateCreatureList(CardList list) {
         int value = 0;
         for (int i = 0; i < list.size(); i++) value += evaluateCreature(list.get(i));
@@ -216,6 +285,12 @@ public class CardFactoryUtil {
         return value;
     }
 
+    /**
+     * <p>evaluatePermanentList.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int evaluatePermanentList(CardList list) {
         int value = 0;
         for (int i = 0; i < list.size(); i++) value += list.get(i).getCMC() + 1;
@@ -223,6 +298,12 @@ public class CardFactoryUtil {
         return value;
     }
 
+    /**
+     * <p>evaluateCreature.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int evaluateCreature(Card c) {
 
         int value = 100;
@@ -319,6 +400,12 @@ public class CardFactoryUtil {
     } //evaluateCreature
 
     //returns null if list.size() == 0
+    /**
+     * <p>AI_getBestCreature.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getBestCreature(CardList list) {
         CardList all = list;
         all = all.getType("Creature");
@@ -334,6 +421,12 @@ public class CardFactoryUtil {
     }
 
     //This selection rates tokens higher
+    /**
+     * <p>AI_getBestCreatureToBounce.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getBestCreatureToBounce(CardList list) {
         int tokenBonus = 40;
         CardList all = list;
@@ -357,6 +450,12 @@ public class CardFactoryUtil {
     }
 
     //returns null if list.size() == 0
+    /**
+     * <p>AI_getWorstCreature.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getWorstCreature(CardList list) {
         CardList all = list;
         all = all.getType("Creature");
@@ -372,6 +471,16 @@ public class CardFactoryUtil {
         return smallest;
     }
 
+    /**
+     * <p>AI_getWorstPermanent.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param biasEnch a boolean.
+     * @param biasLand a boolean.
+     * @param biasArt a boolean.
+     * @param biasCreature a boolean.
+     * @return a {@link forge.Card} object.
+     */
     public static Card AI_getWorstPermanent(final CardList list, boolean biasEnch, boolean biasLand, boolean biasArt, boolean biasCreature) {
         if (list.size() == 0) return null;
 
@@ -411,6 +520,14 @@ public class CardFactoryUtil {
         return AI_getCheapestPermanent(list, null, false);
     }
 
+    /**
+     * <p>input_Spell.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param choices a {@link forge.CardList} object.
+     * @param free a boolean.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_Spell(final SpellAbility spell, final CardList choices, final boolean free) {
         Input target = new Input() {
             private static final long serialVersionUID = 2781418414287281005L;
@@ -444,6 +561,13 @@ public class CardFactoryUtil {
         return target;
     }//input_targetSpell()
 
+    /**
+     * <p>input_destroyNoRegeneration.</p>
+     *
+     * @param choices a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_destroyNoRegeneration(final CardList choices, final String message) {
         Input target = new Input() {
             private static final long serialVersionUID = -6637588517573573232L;
@@ -465,16 +589,36 @@ public class CardFactoryUtil {
         return target;
     }//input_destroyNoRegeneration()
 
+    /**
+     * <p>input_sacrificePermanent.</p>
+     *
+     * @param choices a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_sacrificePermanent(final CardList choices, final String message) {
         return input_sacrificePermanentsFromList(1, choices, message);
     }//input_sacrifice()
 
+    /**
+     * <p>input_sacrificePermanents.</p>
+     *
+     * @param nCards a int.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_sacrificePermanents(final int nCards) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         list.remove("Mana Pool");            // is this needed?
         return input_sacrificePermanentsFromList(nCards, list, "Select a permanent to sacrifice");
     }//input_sacrificePermanents()
 
+    /**
+     * <p>input_sacrificePermanents.</p>
+     *
+     * @param nCards a int.
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_sacrificePermanents(final int nCards, final String type) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         list.remove("Mana Pool");            // is this needed?
@@ -483,6 +627,14 @@ public class CardFactoryUtil {
         return input_sacrificePermanentsFromList(nCards, list, "Select a " + type + " to sacrifice");
     }//input_sacrificePermanents()
 
+    /**
+     * <p>input_sacrificePermanentsFromList.</p>
+     *
+     * @param nCards a int.
+     * @param list a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_sacrificePermanentsFromList(final int nCards, final CardList list, final String message) {
         Input target = new Input() {
             private static final long serialVersionUID = 1981791992623774490L;
@@ -520,6 +672,13 @@ public class CardFactoryUtil {
     }//input_sacrificePermanents()
 
 
+    /**
+     * <p>input_putFromHandToLibrary.</p>
+     *
+     * @param TopOrBottom a {@link java.lang.String} object.
+     * @param num a int.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_putFromHandToLibrary(final String TopOrBottom, final int num) {
         Input target = new Input() {
             private static final long serialVersionUID = 5178077952030689103L;
@@ -557,6 +716,14 @@ public class CardFactoryUtil {
         return target;
     }
 
+    /**
+     * <p>input_discardNumUnless.</p>
+     *
+     * @param nCards a int.
+     * @param uType a {@link java.lang.String} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_discardNumUnless(final int nCards, final String uType, SpellAbility sa) {
         final SpellAbility sp = sa;
         Input target = new Input() {
@@ -597,6 +764,13 @@ public class CardFactoryUtil {
         return target;
     }//input_discardNumUnless
 
+    /**
+     * <p>ability_Flashback.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_Flashback(final Card sourceCard, String cost) {
         Cost fbCost = new Cost(cost, sourceCard.getName(), true);
         final SpellAbility flashback = new Spell(sourceCard) {
@@ -645,6 +819,13 @@ public class CardFactoryUtil {
 
     }//ability_Flashback()
 
+    /**
+     * <p>ability_Unearth.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param manaCost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.Ability_Activated} object.
+     */
     public static Ability_Activated ability_Unearth(final Card sourceCard, String manaCost) {
 
         Cost cost = new Cost(manaCost, sourceCard.getName(), true);
@@ -679,6 +860,12 @@ public class CardFactoryUtil {
         return unearth;
     }//ability_Unearth()
 
+    /**
+     * <p>ability_Morph_Down.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_Morph_Down(final Card sourceCard) {
         final SpellAbility morph_down = new Spell(sourceCard) {
             private static final long serialVersionUID = -1438810964807867610L;
@@ -715,6 +902,16 @@ public class CardFactoryUtil {
         return morph_down;
     }
 
+    /**
+     * <p>ability_Morph_Up.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cost a {@link forge.card.spellability.Cost} object.
+     * @param orgManaCost a {@link java.lang.String} object.
+     * @param a a int.
+     * @param d a int.
+     * @return a {@link forge.card.spellability.Ability_Activated} object.
+     */
     public static Ability_Activated ability_Morph_Up(final Card sourceCard, Cost cost, String orgManaCost, int a, int d) {
         //final String player = sourceCard.getController();
         //final String manaCost = cost;
@@ -766,6 +963,13 @@ public class CardFactoryUtil {
         return morph_up;
     }
 
+    /**
+     * <p>ability_Rebel_Search.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_Rebel_Search(final Card sourceCard, String cost) {
         final int converted = Integer.parseInt(cost) - 1;
 
@@ -870,6 +1074,13 @@ public class CardFactoryUtil {
         return ability;
     }
 
+    /**
+     * <p>ability_cycle.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cycleCost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_cycle(final Card sourceCard, String cycleCost) {
         cycleCost += " Discard<1/CARDNAME>";
         Cost abCost = new Cost(cycleCost, sourceCard.getName(), true);
@@ -918,6 +1129,14 @@ public class CardFactoryUtil {
         return cycle;
     }//ability_cycle()
 
+    /**
+     * <p>ability_typecycle.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param cycleCost a {@link java.lang.String} object.
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_typecycle(final Card sourceCard, String cycleCost, final String type) {
         String description;
         cycleCost += " Discard<1/CARDNAME>";
@@ -987,6 +1206,13 @@ public class CardFactoryUtil {
     }//ability_typecycle()
 
 
+    /**
+     * <p>ability_transmute.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param transmuteCost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_transmute(final Card sourceCard, String transmuteCost) {
         transmuteCost += " Discard<1/CARDNAME>";
         Cost abCost = new Cost(transmuteCost, sourceCard.getName(), true);
@@ -1047,6 +1273,14 @@ public class CardFactoryUtil {
         return transmute;
     }//ability_transmute()
 
+    /**
+     * <p>ability_suspend.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param suspendCost a {@link java.lang.String} object.
+     * @param suspendCounters a int.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility ability_suspend(final Card sourceCard, final String suspendCost, final int suspendCounters) {
         // be careful with Suspend ability, it will not hit the stack
         final SpellAbility suspend = new Ability_Static(sourceCard, suspendCost) {
@@ -1088,6 +1322,16 @@ public class CardFactoryUtil {
         return suspend;
     }//ability_suspend()
 
+    /**
+     * <p>eqPump_Equip.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param abCost a {@link forge.card.spellability.Cost} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility eqPump_Equip(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords, final Cost abCost) {
         Target target = new Target(sourceCard, "Select target creature you control", "Creature.YouCtrl".split(","));
         final SpellAbility equip = new Ability_Activated(sourceCard, abCost, target) {
@@ -1182,6 +1426,16 @@ public class CardFactoryUtil {
         return equip;
     }//eqPump_Equip() ( was vanila_equip() )
 
+    /**
+     * <p>eqPump_onEquip.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param abCost a {@link forge.card.spellability.Cost} object.
+     * @return a {@link forge.Command} object.
+     */
     public static Command eqPump_onEquip(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords, final Cost abCost) {
 
         Command onEquip = new Command() {
@@ -1208,6 +1462,16 @@ public class CardFactoryUtil {
         return onEquip;
     }//eqPump_onEquip ( was vanila_onequip() )
 
+    /**
+     * <p>eqPump_unEquip.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param abCost a {@link forge.card.spellability.Cost} object.
+     * @return a {@link forge.Command} object.
+     */
     public static Command eqPump_unEquip(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords, final Cost abCost) {
 
         Command onUnEquip = new Command() {
@@ -1233,6 +1497,17 @@ public class CardFactoryUtil {
         return onUnEquip;
     }//eqPump_unEquip ( was vanila_unequip() )
 
+    /**
+     * <p>enPump_Enchant.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param spellDescription an array of {@link java.lang.String} objects.
+     * @param stackDescription an array of {@link java.lang.String} objects.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility enPump_Enchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                               final String[] spellDescription, final String[] stackDescription) {
 
@@ -1326,6 +1601,17 @@ public class CardFactoryUtil {
         return enchant;
     }//enPump_Enchant()
 
+    /**
+     * <p>enPump_onEnchant.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param spellDescription an array of {@link java.lang.String} objects.
+     * @param stackDescription an array of {@link java.lang.String} objects.
+     * @return a {@link forge.Command} object.
+     */
     public static Command enPump_onEnchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                            final String[] spellDescription, final String[] stackDescription) {
 
@@ -1352,6 +1638,17 @@ public class CardFactoryUtil {
         return onEnchant;
     }//enPump_onEnchant
 
+    /**
+     * <p>enPump_unEnchant.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param spellDescription an array of {@link java.lang.String} objects.
+     * @param stackDescription an array of {@link java.lang.String} objects.
+     * @return a {@link forge.Command} object.
+     */
     public static Command enPump_unEnchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                            final String[] spellDescription, final String[] stackDescription) {
 
@@ -1376,6 +1673,17 @@ public class CardFactoryUtil {
         return onUnEnchant;
     }//enPump_unEnchant
 
+    /**
+     * <p>enPump_LeavesPlay.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param spellDescription an array of {@link java.lang.String} objects.
+     * @param stackDescription an array of {@link java.lang.String} objects.
+     * @return a {@link forge.Command} object.
+     */
     public static Command enPump_LeavesPlay(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                             final String[] spellDescription, final String[] stackDescription) {
 
@@ -1394,6 +1702,17 @@ public class CardFactoryUtil {
         return onLeavesPlay;
     }//enPump_LeavesPlay
 
+    /**
+     * <p>enPumpCurse_Enchant.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @param Tough a int.
+     * @param extrinsicKeywords an array of {@link java.lang.String} objects.
+     * @param spellDescription an array of {@link java.lang.String} objects.
+     * @param stackDescription an array of {@link java.lang.String} objects.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility enPumpCurse_Enchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                                    final String[] spellDescription, final String[] stackDescription) {
 
@@ -1541,6 +1860,12 @@ public class CardFactoryUtil {
         return enchant;
     }//enPumpCurse_Enchant()
 
+    /**
+     * <p>getEldraziSpawnAbility.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link forge.card.spellability.Ability_Mana} object.
+     */
     public static Ability_Mana getEldraziSpawnAbility(final Card c) {
         Cost cost = new Cost("Sac<1/CARDNAME>", c.getName(), true);
         Ability_Mana mana = new Ability_Mana(c, cost, "1") {
@@ -1551,6 +1876,14 @@ public class CardFactoryUtil {
     }
 
 
+    /**
+     * <p>entersBattleFieldWithCounters.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param type a {@link forge.Counters} object.
+     * @param n a int.
+     * @return a {@link forge.Command} object.
+     */
     public static Command entersBattleFieldWithCounters(final Card c, final Counters type, final int n) {
         Command addCounters = new Command() {
             private static final long serialVersionUID = 4825430555490333062L;
@@ -1562,6 +1895,13 @@ public class CardFactoryUtil {
         return addCounters;
     }
 
+    /**
+     * <p>fading.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @return a {@link forge.Command} object.
+     */
     public static Command fading(final Card sourceCard, final int Power) {
         Command fade = new Command() {
             private static final long serialVersionUID = 431920157968451817L;
@@ -1579,6 +1919,13 @@ public class CardFactoryUtil {
         return fade;
     } // fading
 
+    /**
+     * <p>vanishing.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Power a int.
+     * @return a {@link forge.Command} object.
+     */
     public static Command vanishing(final Card sourceCard, final int Power) {
         Command age = new Command() {
             private static final long serialVersionUID = 431920157968451817L;
@@ -1596,6 +1943,13 @@ public class CardFactoryUtil {
         return age;
     } // vanishing
 
+    /**
+     * <p>ability_Soulshift.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Manacost a {@link java.lang.String} object.
+     * @return a {@link forge.Command} object.
+     */
     public static Command ability_Soulshift(final Card sourceCard, final String Manacost) {
         final Command Soulshift = new Command() {
             private static final long serialVersionUID = -4960704261761785512L;
@@ -1609,6 +1963,13 @@ public class CardFactoryUtil {
         return Soulshift;
     }//ability_Soulshift()
 
+    /**
+     * <p>soulshiftTrigger.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param Manacost a {@link java.lang.String} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility soulshiftTrigger(final Card sourceCard, final String Manacost) {
         final SpellAbility desc = new Ability(sourceCard, "0") {
             private static final long serialVersionUID = -4960704261761785512L;
@@ -1668,11 +2029,32 @@ public class CardFactoryUtil {
     }//soul_desc()
 
     //CardList choices are the only cards the user can successful select
+    /**
+     * <p>input_targetSpecific.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param choices a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @param targeted a boolean.
+     * @param free a boolean.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_targetSpecific(final SpellAbility spell, final CardList choices, final String message, final boolean targeted, final boolean free) {
         return input_targetSpecific(spell, choices, message, Command.Blank, targeted, free);
     }
 
     //CardList choices are the only cards the user can successful select
+    /**
+     * <p>input_targetSpecific.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param choices a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @param paid a {@link forge.Command} object.
+     * @param targeted a boolean.
+     * @param free a boolean.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_targetSpecific(final SpellAbility spell, final CardList choices, final String message, final Command paid, final boolean targeted, final boolean free) {
         Input target = new Input() {
             private static final long serialVersionUID = -1779224307654698954L;
@@ -1708,6 +2090,17 @@ public class CardFactoryUtil {
     }//input_targetSpecific()
 
     //CardList choices are the only cards the user can successful select
+    /**
+     * <p>input_targetChampionSac.</p>
+     *
+     * @param crd a {@link forge.Card} object.
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param choices a {@link forge.CardList} object.
+     * @param message a {@link java.lang.String} object.
+     * @param targeted a boolean.
+     * @param free a boolean.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_targetChampionSac(final Card crd, final SpellAbility spell, final CardList choices, final String message, final boolean targeted, final boolean free) {
         Input target = new Input() {
             private static final long serialVersionUID = -3320425330743678663L;
@@ -1748,6 +2141,12 @@ public class CardFactoryUtil {
         return target;
     }//input_targetSpecific()
 
+    /**
+     * <p>input_equipCreature.</p>
+     *
+     * @param equip a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_equipCreature(final SpellAbility equip) {
         Input runtime = new Input() {
             private static final long serialVersionUID = 2029801495067540196L;
@@ -1764,6 +2163,13 @@ public class CardFactoryUtil {
         return runtime;
     }
 
+    /**
+     * <p>input_discard.</p>
+     *
+     * @param nCards a int.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_discard(final int nCards, SpellAbility sa) {
         final SpellAbility sp = sa;
         Input target = new Input() {
@@ -1799,9 +2205,9 @@ public class CardFactoryUtil {
     /**
      * custom input method only for use in Recall
      *
-     * @param numCards
-     * @param recall
-     * @param sa
+     * @param numCards a int.
+     * @param recall a {@link forge.Card} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @return input
      */
     public static Input input_discardRecall(final int numCards, final Card recall, final SpellAbility sa) {
@@ -1848,6 +2254,14 @@ public class CardFactoryUtil {
         return target;
     }//input_discardRecall()
 
+    /**
+     * <p>MasteroftheWildHunt_input_targetCreature.</p>
+     *
+     * @param spell a {@link forge.card.spellability.SpellAbility} object.
+     * @param choices a {@link forge.CardList} object.
+     * @param paid a {@link forge.Command} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input MasteroftheWildHunt_input_targetCreature(final SpellAbility spell, final CardList choices, final Command paid) {
         Input target = new Input() {
             private static final long serialVersionUID = -1779224307654698954L;
@@ -1876,6 +2290,13 @@ public class CardFactoryUtil {
         return target;
     }//input_MasteroftheWildHunt_input_targetCreature()
 
+    /**
+     * <p>modularInput.</p>
+     *
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     * @param card a {@link forge.Card} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input modularInput(final SpellAbility ability, final Card card) {
         Input modularInput = new Input() {
 
@@ -1907,6 +2328,13 @@ public class CardFactoryUtil {
         return modularInput;
     }
 
+    /**
+     * <p>AI_getHumanCreature.</p>
+     *
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList AI_getHumanCreature(final Card spell, boolean targeted) {
         CardList creature = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
         if (targeted) {
@@ -1915,6 +2343,14 @@ public class CardFactoryUtil {
         return creature;
     }
 
+    /**
+     * <p>AI_getHumanCreature.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList AI_getHumanCreature(final String keyword, final Card spell, final boolean targeted) {
         CardList creature = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         creature = creature.filter(new CardListFilter() {
@@ -1931,6 +2367,14 @@ public class CardFactoryUtil {
         return creature;
     }//AI_getHumanCreature()
 
+    /**
+     * <p>AI_getHumanCreature.</p>
+     *
+     * @param toughness a int.
+     * @param spell a {@link forge.Card} object.
+     * @param targeted a boolean.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList AI_getHumanCreature(final int toughness, final Card spell, final boolean targeted) {
         CardList creature = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
         creature = creature.filter(new CardListFilter() {
@@ -1942,6 +2386,11 @@ public class CardFactoryUtil {
         return creature;
     }//AI_getHumanCreature()
 
+    /**
+     * <p>AI_targetHuman.</p>
+     *
+     * @return a {@link forge.CommandArgs} object.
+     */
     public static CommandArgs AI_targetHuman() {
         return new CommandArgs() {
             private static final long serialVersionUID = 8406907523134006697L;
@@ -1953,6 +2402,12 @@ public class CardFactoryUtil {
         };
     }//targetHuman()
 
+    /**
+     * <p>getNumberOfPermanentsByColor.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int getNumberOfPermanentsByColor(String color) {
         CardList cards = AllZoneUtil.getCardsInPlay();
 
@@ -1964,6 +2419,12 @@ public class CardFactoryUtil {
         return coloredPerms.size();
     }
 
+    /**
+     * <p>multipleControlled.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean multipleControlled(Card c) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(c.getController());
         list.remove(c);
@@ -1971,6 +2432,12 @@ public class CardFactoryUtil {
         return list.containsName(c.getName());
     }
 
+    /**
+     * <p>oppHasKismet.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public static boolean oppHasKismet(Player player) {
         Player opp = player.getOpponent();
         CardList list = AllZoneUtil.getPlayerCardsInPlay(opp);
@@ -1983,11 +2450,25 @@ public class CardFactoryUtil {
         return list.size() > 0;
     }
 
+    /**
+     * <p>getNumberOfManaSymbolsControlledByColor.</p>
+     *
+     * @param colorAbb a {@link java.lang.String} object.
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public static int getNumberOfManaSymbolsControlledByColor(String colorAbb, Player player) {
         CardList cards = AllZoneUtil.getPlayerCardsInPlay(player);
         return getNumberOfManaSymbolsByColor(colorAbb, cards);
     }
 
+    /**
+     * <p>getNumberOfManaSymbolsByColor.</p>
+     *
+     * @param colorAbb a {@link java.lang.String} object.
+     * @param cards a {@link forge.CardList} object.
+     * @return a int.
+     */
     public static int getNumberOfManaSymbolsByColor(String colorAbb, CardList cards) {
         int count = 0;
         for (int i = 0; i < cards.size(); i++) {
@@ -2001,6 +2482,13 @@ public class CardFactoryUtil {
         return count;
     }
 
+    /**
+     * <p>multiplyManaCost.</p>
+     *
+     * @param manacost a {@link java.lang.String} object.
+     * @param multiplier a int.
+     * @return a {@link java.lang.String} object.
+     */
     public static String multiplyManaCost(String manacost, int multiplier) {
         if (multiplier == 0) return "";
         if (multiplier == 1) return manacost;
@@ -2037,6 +2525,13 @@ public class CardFactoryUtil {
         return result;
     }
 
+    /**
+     * <p>isTargetStillValid.</p>
+     *
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     * @param target a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isTargetStillValid(SpellAbility ability, Card target) {
 
         if (AllZone.getZone(target) == null) return false; // for tokens that disappeared
@@ -2061,14 +2556,34 @@ public class CardFactoryUtil {
         return canTarget(source, target);
     }
 
+    /**
+     * <p>canTarget.</p>
+     *
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     * @param target a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canTarget(SpellAbility ability, Card target) {
         return canTarget(ability.getSourceCard(), target);
     }
 
+    /**
+     * <p>isColored.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isColored(Card c) {
         return c.isWhite() || c.isBlue() || c.isBlack() || c.isRed() || c.isGreen();
     }
 
+    /**
+     * <p>canTarget.</p>
+     *
+     * @param spell a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean canTarget(Card spell, Card target) {
         if (target == null) return true;
         //System.out.println("Target:" + target);
@@ -2127,6 +2642,13 @@ public class CardFactoryUtil {
     }
 
     //does "target" have protection from "card"?
+    /**
+     * <p>hasProtectionFrom.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param target a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean hasProtectionFrom(Card card, Card target) {
         if (target == null) return false;
 
@@ -2194,6 +2716,12 @@ public class CardFactoryUtil {
         return false;
     }
 
+    /**
+     * <p>isCounterable.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isCounterable(Card c) {
         if (!c.hasKeyword("CARDNAME can't be countered.")) return true;
         else return false;
@@ -2201,6 +2729,13 @@ public class CardFactoryUtil {
 
 
     //returns the number of equipments named "e" card c is equipped by
+    /**
+     * <p>hasNumberEquipments.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param e a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int hasNumberEquipments(Card c, String e) {
         if (!c.isEquipped()) return 0;
 
@@ -2217,6 +2752,12 @@ public class CardFactoryUtil {
 
     }
 
+    /**
+     * <p>getGraveyardActivationCards.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getGraveyardActivationCards(final Player player) {
         CardList cl = AllZoneUtil.getPlayerGraveyard(player);
         cl = cl.filter(new CardListFilter() {
@@ -2227,6 +2768,13 @@ public class CardFactoryUtil {
         return cl;
     }
 
+    /**
+     * <p>activateFromGrave.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public static boolean activateFromGrave(Card c, Player player) {
         if (c.hasFlashback() || c.hasUnearth())
             return true;
@@ -2243,6 +2791,13 @@ public class CardFactoryUtil {
         return false;
     }
 
+    /**
+     * <p>countOccurrences.</p>
+     *
+     * @param arg1 a {@link java.lang.String} object.
+     * @param arg2 a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int countOccurrences(String arg1, String arg2) {
 
         int count = 0;
@@ -2254,6 +2809,12 @@ public class CardFactoryUtil {
         return count;
     }
 
+    /**
+     * <p>parseMath.</p>
+     *
+     * @param l an array of {@link java.lang.String} objects.
+     * @return an array of {@link java.lang.String} objects.
+     */
     public static String[] parseMath(String[] l) {
         String[] m = {"none"};
         if (l.length > 1) m[0] = l[1];
@@ -2263,6 +2824,14 @@ public class CardFactoryUtil {
 
 
     //parser for player targeted X variables
+    /**
+     * <p>playerXCount.</p>
+     *
+     * @param players a {@link java.util.ArrayList} object.
+     * @param s a {@link java.lang.String} object.
+     * @param source a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int playerXCount(ArrayList<Player> players, String s, Card source) {
         if (players.size() == 0) return 0;
 
@@ -2330,6 +2899,13 @@ public class CardFactoryUtil {
     }
 
     //parser for non-mana X variables
+    /**
+     * <p>xCount.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param s a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int xCount(Card c, String s) {
         int n = 0;
 
@@ -2756,6 +3332,14 @@ public class CardFactoryUtil {
         else return num;
     }
 
+    /**
+     * <p>doXMath.</p>
+     *
+     * @param num a int.
+     * @param m an array of {@link java.lang.String} objects.
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int doXMath(int num, String[] m, Card c) {
         if (m.length == 0)
             return num;
@@ -2763,6 +3347,14 @@ public class CardFactoryUtil {
         return doXMath(num, m[0], c);
     }
 
+    /**
+     * <p>handlePaid.</p>
+     *
+     * @param paidList a {@link forge.CardList} object.
+     * @param string a {@link java.lang.String} object.
+     * @param source a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int handlePaid(CardList paidList, String string, Card source) {
         if (paidList == null || paidList.size() == 0)
             return 0;
@@ -2941,11 +3533,25 @@ public class CardFactoryUtil {
 
     }*/
 
+    /**
+     * <p>getNumberOfMostProminentCreatureType.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param type a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int getNumberOfMostProminentCreatureType(CardList list, String type) {
         list = list.getType(type);
         return list.size();
     }
 
+    /**
+     * <p>input_UntapUpToNType.</p>
+     *
+     * @param n a int.
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link forge.gui.input.Input} object.
+     */
     public static Input input_UntapUpToNType(final int n, final String type) {
         Input untap = new Input() {
             private static final long serialVersionUID = -2167059918040912025L;
@@ -2977,6 +3583,12 @@ public class CardFactoryUtil {
         return untap;
     }
 
+    /**
+     * <p>getMostProminentCreatureType.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getMostProminentCreatureType(CardList list) {
 
         if (list.size() == 0) return "";
@@ -3010,6 +3622,12 @@ public class CardFactoryUtil {
         return maxType;
     }
 
+    /**
+     * <p>getMostProminentColor.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getMostProminentColor(CardList list) {
 
         Map<String, Integer> map = new HashMap<String, Integer>();
@@ -3043,6 +3661,12 @@ public class CardFactoryUtil {
     }
 
 
+    /**
+     * <p>chooseCreatureTypeAI.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String chooseCreatureTypeAI(Card c) {
         String s = "";
         //TODO, take into account what human has
@@ -3111,6 +3735,12 @@ public class CardFactoryUtil {
         return s;
     }
 
+    /**
+     * <p>countBasicLandTypes.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public static int countBasicLandTypes(Player player) {
         String basic[] = {"Forest", "Plains", "Mountain", "Island", "Swamp"};
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
@@ -3123,6 +3753,12 @@ public class CardFactoryUtil {
     }
 
     //total cost to pay for an attacker c, cards like Propaganda, Ghostly Prison, Collective Restraint, ...
+    /**
+     * <p>getPropagandaCost.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getPropagandaCost(Card c) {
         int cost = 0;
 
@@ -3152,6 +3788,12 @@ public class CardFactoryUtil {
         return s;
     }
 
+    /**
+     * <p>getUsableManaSources.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public static int getUsableManaSources(Player player) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
         list = list.filter(new CardListFilter() {
@@ -3165,6 +3807,12 @@ public class CardFactoryUtil {
         return list.size();
     }
 
+    /**
+     * <p>getTopCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getTopCard(Card c) {
         PlayerZone lib = AllZone.getZone(Constant.Zone.Library, c.getController());
         if (lib.size() > 0)
@@ -3173,10 +3821,29 @@ public class CardFactoryUtil {
             return null;
     }
 
+    /**
+     * <p>makeTokenSaproling.</p>
+     *
+     * @param controller a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList makeTokenSaproling(Player controller) {
         return makeToken("Saproling", "G 1 1 Saproling", controller, "G", new String[]{"Creature", "Saproling"}, 1, 1, new String[]{""});
     }
 
+    /**
+     * <p>makeToken.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param imageName a {@link java.lang.String} object.
+     * @param controller a {@link forge.Player} object.
+     * @param manaCost a {@link java.lang.String} object.
+     * @param types an array of {@link java.lang.String} objects.
+     * @param baseAttack a int.
+     * @param baseDefense a int.
+     * @param intrinsicKeywords an array of {@link java.lang.String} objects.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList makeToken(String name, String imageName, Player controller, String manaCost, String[] types, int baseAttack, int baseDefense, String[] intrinsicKeywords) {
         CardList list = new CardList();
         Card c = new Card();
@@ -3215,6 +3882,12 @@ public class CardFactoryUtil {
         return list;
     }
 
+    /**
+     * <p>copyTokens.</p>
+     *
+     * @param tokenList a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList copyTokens(CardList tokenList) {
         CardList list = new CardList();
 
@@ -3235,6 +3908,12 @@ public class CardFactoryUtil {
         return list;
     }
 
+    /**
+     * <p>getBushidoEffects.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Ability> getBushidoEffects(Card c) {
         ArrayList<String> keywords = c.getKeyword();
         ArrayList<Ability> list = new ArrayList<Ability>();
@@ -3284,6 +3963,12 @@ public class CardFactoryUtil {
         return list;
     }
 
+    /**
+     * <p>getNeededXDamage.</p>
+     *
+     * @param ability a {@link forge.card.spellability.SpellAbility} object.
+     * @return a int.
+     */
     static public int getNeededXDamage(SpellAbility ability) {
         //when targeting a creature, make sure the AI won't overkill on X damage
         Card target = ability.getTargetCard();
@@ -3326,6 +4011,12 @@ public class CardFactoryUtil {
         return getWorstLand(lands);
     }//end getWorstLand
 
+    /**
+     * <p>getWorstLand.</p>
+     *
+     * @param lands a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getWorstLand(CardList lands) {
         Card worstLand = null;
         //first, check for tapped, basic lands
@@ -3366,6 +4057,12 @@ public class CardFactoryUtil {
     }//end getWorstLand
 
     //may return null
+    /**
+     * <p>getRandomCard.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.Card} object.
+     */
     static public Card getRandomCard(CardList list) {
         if (list.size() == 0) return null;
 
@@ -3373,6 +4070,13 @@ public class CardFactoryUtil {
         return list.get(index);
     }
 
+    /**
+     * <p>revertManland.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param cost a {@link java.lang.String} object.
+     * @param timeStamp a long.
+     */
     public static void revertManland(Card c, String[] removeTypes, String[] removeKeywords, String cost, long timeStamp) {
         c.setBaseAttack(0);
         c.setBaseDefense(0);
@@ -3387,6 +4091,13 @@ public class CardFactoryUtil {
         c.unEquipAllCards();
     }
 
+    /**
+     * <p>activateManland.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param cost a {@link java.lang.String} object.
+     * @return a long.
+     */
     public static long activateManland(Card c, int attack, int defense, String[] addTypes, String[] addKeywords, String cost) {
         c.setBaseAttack(attack);
         c.setBaseDefense(defense);
@@ -3410,6 +4121,11 @@ public class CardFactoryUtil {
         return timestamp;
     }
 
+    /**
+     * <p>playLandEffects.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public static void playLandEffects(Card c) {
         final Player player = c.getController();
 
@@ -3434,11 +4150,23 @@ public class CardFactoryUtil {
     }
 
 
+    /**
+     * <p>isNegativeCounter.</p>
+     *
+     * @param c a {@link forge.Counters} object.
+     * @return a boolean.
+     */
     public static boolean isNegativeCounter(Counters c) {
         return c == Counters.AGE || c == Counters.BLAZE || c == Counters.BRIBERY || c == Counters.DOOM || c == Counters.ICE ||
                 c == Counters.M1M1 || c == Counters.M0M2 || c == Counters.M0M1 || c == Counters.TIME;
     }
 
+    /**
+     * <p>checkEmblemKeyword.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String checkEmblemKeyword(Card c) {
         if (c.hasKeyword("Artifacts, creatures, enchantments, and lands you control are indestructible."))
             return "Elspeth_Emblem";
@@ -3578,6 +4306,11 @@ public class CardFactoryUtil {
     }*/
 
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
 
         CardList in = AllZone.getCardFactory().getAllCards();

@@ -4,22 +4,42 @@ import com.esotericsoftware.minlog.Log;
 import forge.*;
 
 
+/**
+ * <p>Abstract Ability class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 abstract public class Ability extends SpellAbility {
     //Slight hack for Pithing Needle
     private String sourceCardName;
 
+    /**
+     * <p>Constructor for Ability.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param manaCost a {@link java.lang.String} object.
+     */
     public Ability(Card sourceCard, String manaCost) {
         super(SpellAbility.Ability, sourceCard);
         setManaCost(manaCost);
         sourceCardName = sourceCard.getName();
     }
 
+    /**
+     * <p>Constructor for Ability.</p>
+     *
+     * @param sourceCard a {@link forge.Card} object.
+     * @param manaCost a {@link java.lang.String} object.
+     * @param stackDescription a {@link java.lang.String} object.
+     */
     public Ability(Card sourceCard, String manaCost, String stackDescription) {
         this(sourceCard, manaCost);
         setStackDescription(stackDescription);
         Log.debug("an ability is being played from" + sourceCard.getName());
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean canPlay() {
         if (AllZone.getStack().isSplitSecondOnStack()) return false;

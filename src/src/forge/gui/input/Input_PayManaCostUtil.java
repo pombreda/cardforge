@@ -14,10 +14,24 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * <p>Input_PayManaCostUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_PayManaCostUtil {
     //all mana abilities start with this and typical look like "tap: add G"
     //mana abilities are Strings and are retrieved by calling card.getKeyword()
     //taps any card that has mana ability, not just land
+    /**
+     * <p>activateManaAbility.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param card a {@link forge.Card} object.
+     * @param manaCost a {@link forge.card.mana.ManaCost} object.
+     * @return a {@link forge.card.mana.ManaCost} object.
+     */
     public static ManaCost activateManaAbility(SpellAbility sa, Card card, ManaCost manaCost) {
         //make sure computer's lands aren't selected
         if (card.getController().isComputer())
@@ -94,11 +108,24 @@ public class Input_PayManaCostUtil {
 
     }
 
+    /**
+     * <p>getManaAbilities.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Ability_Mana> getManaAbilities(Card card) {
         return card.getManaAbility();
     }
 
     //color is like "G", returns "Green"
+    /**
+     * <p>canMake.</p>
+     *
+     * @param am a {@link forge.card.spellability.Ability_Mana} object.
+     * @param mana a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public static boolean canMake(Ability_Mana am, String mana) {
         if (mana.contains("1")) return true;
         if (mana.contains("S") && am.isSnow()) return true;
@@ -109,6 +136,12 @@ public class Input_PayManaCostUtil {
     }
 
 
+    /**
+     * <p>getLongColorString.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getLongColorString(String color) {
         Map<String, String> m = new HashMap<String, String>();
         m.put("G", Constant.Color.Green);
@@ -127,6 +160,12 @@ public class Input_PayManaCostUtil {
         return o.toString();
     }
 
+    /**
+     * <p>getShortColorString.</p>
+     *
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String getShortColorString(String color) {
         Map<String, String> m = new HashMap<String, String>();
         m.put(Constant.Color.Green, "G");

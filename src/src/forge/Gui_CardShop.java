@@ -23,8 +23,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * <p>Gui_CardShop class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, NewConstants {
 
+    /** Constant <code>serialVersionUID=3988857075791576483L</code> */
     private static final long serialVersionUID = 3988857075791576483L;
 
     Gui_DeckEditor_Menu customMenu;
@@ -67,11 +74,13 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
 
     private forge.quest.data.QuestData questData;
 
+    /** {@inheritDoc} */
     @Override
     public void setTitle(String message) {
         super.setTitle(message);
     }
 
+    /** {@inheritDoc} */
     public void updateDisplay(CardList top, CardList bottom) {
 
         this.top = top;
@@ -157,6 +166,9 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         bottomModel.resort();
     }// updateDisplay
 
+    /**
+     * <p>updateDisplay.</p>
+     */
     public void updateDisplay() {
         //updateDisplay(this.top, this.bottom);
 
@@ -189,19 +201,39 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
     }
 
 
+    /**
+     * <p>getTopTableModel.</p>
+     *
+     * @return a {@link forge.CardShopTableModel} object.
+     */
     public CardShopTableModel getTopTableModel() {
         return topModel;
     }
 
+    /**
+     * <p>Getter for the field <code>top</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getTop() {
         return topModel.getCards();
     }
 
     //bottom shows cards that the user has chosen for his library
+    /**
+     * <p>Getter for the field <code>bottom</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getBottom() {
         return bottomModel.getCards();
     }
 
+    /**
+     * <p>show.</p>
+     *
+     * @param exitCommand a {@link forge.Command} object.
+     */
     public void show(final Command exitCommand) {
         final Command exit = new Command() {
             private static final long serialVersionUID = 5210924838133689758L;
@@ -320,6 +352,9 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         bottomModel.sort(1, true);
     }//show(Command)
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         MouseInputListener l = new MouseInputListener() {
             public void mouseReleased(MouseEvent e) {
@@ -378,6 +413,9 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         });
     }//addListeners()
 
+    /**
+     * <p>setup.</p>
+     */
     private void setup() {
         multi = 0.20 + (0.001 * questData.getWin());
         if (multi > 0.6)
@@ -423,6 +461,11 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
 //        setExtendedState(Frame.MAXIMIZED_BOTH);
     }//setupAndDisplay()
 
+    /**
+     * <p>Constructor for Gui_CardShop.</p>
+     *
+     * @param qd a {@link forge.quest.data.QuestData} object.
+     */
     public Gui_CardShop(forge.quest.data.QuestData qd) {
         questData = qd;
         try {
@@ -432,15 +475,26 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         }
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return detail.getCard();
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
 
+    /**
+     * <p>jbInit.</p>
+     *
+     * @throws java.lang.Exception if any.
+     */
     private void jbInit() throws Exception {
 
         //Replace cell renderer with one that displays the cell text as tooltip.
@@ -548,6 +602,11 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         setGlassPane(glassPane);
     }
 
+    /**
+     * <p>buyButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void buyButton_actionPerformed(ActionEvent e) {
         int n = topTable.getSelectedRow();
         if (n != -1) {
@@ -579,6 +638,11 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
     }//buyButton_actionPerformed
 
 
+    /**
+     * <p>sellButton_actionPerformed.</p>
+     *
+     * @param e a {@link java.awt.event.ActionEvent} object.
+     */
     void sellButton_actionPerformed(ActionEvent e) {
 
         int n = bottomTable.getSelectedRow();
@@ -628,6 +692,11 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
     }//sellButton_actionPerformed
 
 
+    /**
+     * <p>stats_actionPerformed.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     */
     @SuppressWarnings("unused")
     // stats_actionPerformed
     private void stats_actionPerformed(CardList list) {
@@ -635,6 +704,9 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
     }
 
     //refresh Gui from deck, Gui shows the cards in the deck
+    /**
+     * <p>refreshGui.</p>
+     */
     @SuppressWarnings("unused")
     // refreshGui
     private void refreshGui() {

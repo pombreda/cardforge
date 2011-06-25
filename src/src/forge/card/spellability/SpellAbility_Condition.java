@@ -7,6 +7,13 @@ import forge.card.cardFactory.CardFactoryUtil;
 
 import java.util.HashMap;
 
+/**
+ * <p>SpellAbility_Condition class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
+ */
 public class SpellAbility_Condition extends SpellAbility_Variables {
     // A class for handling SpellAbility Conditions. These restrictions include:
     // Zone, Phase, OwnTurn, Speed (instant/sorcery), Amount per Turn, Player,
@@ -14,9 +21,17 @@ public class SpellAbility_Condition extends SpellAbility_Variables {
     // Each value will have a default, that can be overridden (mostly by AbilityFactory)
     // The CanPlay function will use these values to determine if the current game state is ok with these restrictions
 
+    /**
+     * <p>Constructor for SpellAbility_Condition.</p>
+     */
     public SpellAbility_Condition() {
     }
 
+    /**
+     * <p>setConditions.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     */
     public void setConditions(HashMap<String, String> params) {
         if (params.containsKey("Condition")) {
             String value = params.get("Condition");
@@ -81,6 +96,12 @@ public class SpellAbility_Condition extends SpellAbility_Variables {
         }
     }//setConditions
 
+    /**
+     * <p>checkConditions.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     public boolean checkConditions(SpellAbility sa) {
 
         Player activator = sa.getActivatingPlayer();

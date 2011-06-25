@@ -7,143 +7,264 @@ import forge.card.mana.ManaCost;
 
 import java.util.regex.Pattern;
 
+/**
+ * <p>Cost class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Cost {
     private boolean isAbility = true;
 
     private boolean sacCost = false;
 
+    /**
+     * <p>Getter for the field <code>sacCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getSacCost() {
         return sacCost;
     }
 
     private String sacType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>sacType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSacType() {
         return sacType;
     }
 
     private boolean sacThis = false;
 
+    /**
+     * <p>Getter for the field <code>sacThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getSacThis() {
         return sacThis;
     }
 
     private int sacAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>sacAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getSacAmount() {
         return sacAmount;
     }
 
     private boolean sacX = false;
 
+    /**
+     * <p>isSacX.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSacX() {
         return sacX;
     }
 
     private boolean sacAll = false;
 
+    /**
+     * <p>isSacAll.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSacAll() {
         return sacAll;
     }
 
     private boolean exileCost = false;
 
+    /**
+     * <p>Getter for the field <code>exileCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileCost() {
         return exileCost;
     }
 
     private String exileType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>exileType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getExileType() {
         return exileType;
     }
 
     private boolean exileThis = false;
 
+    /**
+     * <p>Getter for the field <code>exileThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileThis() {
         return exileThis;
     }
 
     private int exileAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>exileAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getExileAmount() {
         return exileAmount;
     }
 
     private boolean exileFromHandCost = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromHandCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromHandCost() {
         return exileFromHandCost;
     }
 
     private String exileFromHandType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>exileFromHandType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getExileFromHandType() {
         return exileFromHandType;
     }
 
     private boolean exileFromHandThis = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromHandThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromHandThis() {
         return exileFromHandThis;
     }
 
     private int exileFromHandAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>exileFromHandAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getExileFromHandAmount() {
         return exileFromHandAmount;
     }
 
     private boolean exileFromGraveCost = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromGraveCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromGraveCost() {
         return exileFromGraveCost;
     }
 
     private String exileFromGraveType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>exileFromGraveType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getExileFromGraveType() {
         return exileFromGraveType;
     }
 
     private boolean exileFromGraveThis = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromGraveThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromGraveThis() {
         return exileFromGraveThis;
     }
 
     private int exileFromGraveAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>exileFromGraveAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getExileFromGraveAmount() {
         return exileFromGraveAmount;
     }
 
     private boolean exileFromTopCost = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromTopCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromTopCost() {
         return exileFromTopCost;
     }
 
     private String exileFromTopType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>exileFromTopType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getExileFromTopType() {
         return exileFromTopType;
     }
 
     private boolean exileFromTopThis = false;
 
+    /**
+     * <p>Getter for the field <code>exileFromTopThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getExileFromTopThis() {
         return exileFromTopThis;
     }
 
     private int exileFromTopAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>exileFromTopAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getExileFromTopAmount() {
         return exileFromTopAmount;
     }
 
     private boolean tapCost = false;
 
+    /**
+     * <p>getTap.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getTap() {
         return tapCost;
     }
@@ -151,145 +272,275 @@ public class Cost {
     // future expansion of Ability_Cost class: tap untapped type
     private boolean tapXTypeCost = false;
 
+    /**
+     * <p>Getter for the field <code>tapXTypeCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getTapXTypeCost() {
         return tapXTypeCost;
     }
 
     private int tapXTypeAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>tapXTypeAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTapXTypeAmount() {
         return tapXTypeAmount;
     }
 
     private String tapXType = "";
 
+    /**
+     * <p>Getter for the field <code>tapXType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTapXType() {
         return tapXType;
     }
 
     private boolean untapCost = false;
 
+    /**
+     * <p>getUntap.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getUntap() {
         return untapCost;
     }
 
     private boolean subtractCounterCost = false;
 
+    /**
+     * <p>getSubCounter.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getSubCounter() {
         return subtractCounterCost;
     }
 
     private boolean addCounterCost = false;
 
+    /**
+     * <p>getAddCounter.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getAddCounter() {
         return addCounterCost;
     }
 
     private int counterAmount = 0;
 
+    /**
+     * <p>getCounterNum.</p>
+     *
+     * @return a int.
+     */
     public int getCounterNum() {
         return counterAmount;
     }
 
     private Counters counterType;
 
+    /**
+     * <p>Getter for the field <code>counterType</code>.</p>
+     *
+     * @return a {@link forge.Counters} object.
+     */
     public Counters getCounterType() {
         return counterType;
     }
 
     private boolean lifeCost = false;
 
+    /**
+     * <p>Getter for the field <code>lifeCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getLifeCost() {
         return lifeCost;
     }
 
     private int lifeAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>lifeAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLifeAmount() {
         return lifeAmount;
     }
 
     private boolean discardCost = false;
 
+    /**
+     * <p>Getter for the field <code>discardCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getDiscardCost() {
         return discardCost;
     }
 
     private int discardAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>discardAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getDiscardAmount() {
         return discardAmount;
     }
 
     private String discardType = "";
 
+    /**
+     * <p>Getter for the field <code>discardType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getDiscardType() {
         return discardType;
     }
 
     private boolean discardThis = false;
 
+    /**
+     * <p>Getter for the field <code>discardThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getDiscardThis() {
         return discardThis;
     }
 
     private boolean returnCost = false;    // Return something to owner's hand
 
+    /**
+     * <p>Getter for the field <code>returnCost</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getReturnCost() {
         return returnCost;
     }
 
     private String returnType = "";    // <type> or CARDNAME
 
+    /**
+     * <p>Getter for the field <code>returnType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getReturnType() {
         return returnType;
     }
 
     private boolean returnThis = false;
 
+    /**
+     * <p>Getter for the field <code>returnThis</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getReturnThis() {
         return returnThis;
     }
 
     private int returnAmount = 0;
 
+    /**
+     * <p>Getter for the field <code>returnAmount</code>.</p>
+     *
+     * @return a int.
+     */
     public int getReturnAmount() {
         return returnAmount;
     }
 
+    /**
+     * <p>hasNoManaCost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasNoManaCost() {
         return manaCost.equals("") || manaCost.equals("0");
     }
 
     private String manaCost = "";
 
+    /**
+     * <p>getMana.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getMana() {
         return manaCost;
     }    // Only used for Human to pay for non-X cost first
 
+    /**
+     * <p>setMana.</p>
+     *
+     * @param sCost a {@link java.lang.String} object.
+     */
     public void setMana(String sCost) {
         manaCost = sCost;
     }
 
+    /**
+     * <p>hasNoXManaCost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasNoXManaCost() {
         return manaXCost == 0;
     }
 
     private int manaXCost = 0;
 
+    /**
+     * <p>getXMana.</p>
+     *
+     * @return a int.
+     */
     public int getXMana() {
         return manaXCost;
     }
 
+    /**
+     * <p>setXMana.</p>
+     *
+     * @param xCost a int.
+     */
     public void setXMana(int xCost) {
         manaXCost = xCost;
     }
 
+    /**
+     * <p>isOnlyManaCost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isOnlyManaCost() {
         return !sacCost && !exileCost && !exileFromHandCost && !exileFromGraveCost && !exileFromTopCost && !tapCost &&
                 !tapXTypeCost && !untapCost && !subtractCounterCost && !addCounterCost && !lifeCost && !discardCost && !returnCost;
     }
 
+    /**
+     * <p>getTotalMana.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTotalMana() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < manaXCost; i++)
@@ -307,6 +558,13 @@ public class Cost {
 
     private String name;
 
+    /**
+     * <p>Constructor for Cost.</p>
+     *
+     * @param parse a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param bAbility a boolean.
+     */
     public Cost(String parse, String cardName, boolean bAbility) {
         isAbility = bAbility;
         // when adding new costs for cost string, place them here
@@ -460,6 +718,14 @@ public class Cost {
             manaCost = "0";
     }
 
+    /**
+     * <p>abCostParse.</p>
+     *
+     * @param parse a {@link java.lang.String} object.
+     * @param subkey a {@link java.lang.String} object.
+     * @param numParse a int.
+     * @return an array of {@link java.lang.String} objects.
+     */
     String[] abCostParse(String parse, String subkey, int numParse) {
         int startPos = parse.indexOf(subkey);
         int endPos = parse.indexOf(">", startPos);
@@ -471,6 +737,13 @@ public class Cost {
         return splitStr;
     }
 
+    /**
+     * <p>abUpdateParse.</p>
+     *
+     * @param parse a {@link java.lang.String} object.
+     * @param subkey a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     String abUpdateParse(String parse, String subkey) {
         int startPos = parse.indexOf(subkey);
         int endPos = parse.indexOf(">", startPos);
@@ -478,6 +751,11 @@ public class Cost {
         return parse.replace(str, "").trim();
     }
 
+    /**
+     * <p>changeCost.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void changeCost(SpellAbility sa) {
         if (getTotalMana() != "0") {    // 11/15/10 use getTotalMana() to account for X reduction
             String mana = getTotalMana();
@@ -485,6 +763,11 @@ public class Cost {
         }
     }
 
+    /**
+     * <p>refundPaidCost.</p>
+     *
+     * @param source a {@link forge.Card} object.
+     */
     public void refundPaidCost(Card source) {
         // prereq: isUndoable is called first
         if (tapCost)
@@ -500,18 +783,33 @@ public class Cost {
         // refund chained mana abilities?
     }
 
+    /**
+     * <p>isUndoable.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUndoable() {
         return !(sacCost || exileCost || exileFromHandCost || exileFromGraveCost || tapXTypeCost || discardCost ||
                 returnCost || lifeCost || exileFromTopCost) && hasNoXManaCost() && hasNoManaCost();
     }
 
 
+    /**
+     * <p>isReusuableResource.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isReusuableResource() {
         return !(sacCost || exileCost || exileFromHandCost || tapXTypeCost || discardCost ||
                 returnCost || lifeCost) && isAbility;
         // TODO: add/sub counter? Maybe check if it's we're adding a positive counter, or removing a negative counter
     }
 
+    /**
+     * <p>toString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toString() {
         if (isAbility)
             return abilityToString();
@@ -521,10 +819,21 @@ public class Cost {
 
     // maybe add a conversion method that turns the amounts into words 1=a(n), 2=two etc.
 
+    /**
+     * <p>toStringAlt.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String toStringAlt() {
         return spellToString(false);
     }
 
+    /**
+     * <p>spellToString.</p>
+     *
+     * @param bFlag a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     private String spellToString(boolean bFlag) {
         StringBuilder cost = new StringBuilder();
 
@@ -609,6 +918,11 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>abilityToString.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     private String abilityToString() {
         StringBuilder cost = new StringBuilder();
         boolean first = true;
@@ -739,6 +1053,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>discardString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String discardString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -771,6 +1091,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>sacString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String sacString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -790,6 +1116,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>exileString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String exileString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -809,6 +1141,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>exileFromHandString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String exileFromHandString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -829,6 +1167,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>exileFromGraveString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String exileFromGraveString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -849,6 +1193,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>exileFromTopString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String exileFromTopString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -870,6 +1220,12 @@ public class Cost {
         return cost.toString();
     }
 
+    /**
+     * <p>returnString.</p>
+     *
+     * @param first a boolean.
+     * @return a {@link java.lang.String} object.
+     */
     public String returnString(boolean first) {
         StringBuilder cost = new StringBuilder();
         if (first) {
@@ -896,10 +1252,19 @@ public class Cost {
     }
 
     // TODO: If an Ability_Cost needs to pay more than 10 of something, fill this array as appropriate
+    /** Constant <code>numNames="{zero, a, two, three, four, five, six, "{trunked}</code> */
     private static final String[] numNames = {"zero", "a", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+    /** Constant <code>vowelPattern</code> */
     private static final Pattern vowelPattern = Pattern.compile("^[aeiou]", Pattern.CASE_INSENSITIVE);
 
 
+    /**
+     * <p>convertIntAndTypeToWords.</p>
+     *
+     * @param i a int.
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     private String convertIntAndTypeToWords(int i, String type) {
         StringBuilder sb = new StringBuilder();
 

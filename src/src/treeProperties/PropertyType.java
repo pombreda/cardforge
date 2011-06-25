@@ -18,16 +18,25 @@ package treeProperties;
 public interface PropertyType<T> {
     /**
      * The suffix, not including "--", that identifies this content type.
+     *
+     * @return a {@link java.lang.String} object.
+     * @param <T> a T object.
      */
     public String getSuffix();
 
     /**
      * The class that identifies this content type.
+     *
+     * @return a {@link java.lang.Class} object.
      */
     public Class<T> getType();
 
     /**
      * Returns an object for the specified value, in the context of a TreeProperties.
+     *
+     * @param p a {@link treeProperties.TreeProperties} object.
+     * @param s a {@link java.lang.String} object.
+     * @return a T object.
      */
     public T toObject(TreeProperties p, String s);
 }

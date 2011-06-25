@@ -9,11 +9,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
+/**
+ * <p>AbilityFactory_Choose class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Choose {
     // *************************************************************************
     // ************************* ChooseType ************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityChooseType.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityChooseType(final AbilityFactory af) {
 
         final SpellAbility abChooseType = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -43,6 +55,12 @@ public class AbilityFactory_Choose {
         return abChooseType;
     }
 
+    /**
+     * <p>createSpellChooseType.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellChooseType(final AbilityFactory af) {
         final SpellAbility spChooseType = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 3395765985146644736L;
@@ -66,6 +84,12 @@ public class AbilityFactory_Choose {
         return spChooseType;
     }
 
+    /**
+     * <p>createDrawbackChooseType.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackChooseType(final AbilityFactory af) {
         final SpellAbility dbChooseType = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 5555184803257696143L;
@@ -94,6 +118,13 @@ public class AbilityFactory_Choose {
         return dbChooseType;
     }
 
+    /**
+     * <p>chooseTypeStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String chooseTypeStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -124,10 +155,25 @@ public class AbilityFactory_Choose {
         return sb.toString();
     }
 
+    /**
+     * <p>chooseTypeCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean chooseTypeCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         return chooseTypeTriggerAI(af, sa, false);
     }
 
+    /**
+     * <p>chooseTypeTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean chooseTypeTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -146,6 +192,12 @@ public class AbilityFactory_Choose {
         return true;
     }
 
+    /**
+     * <p>chooseTypeResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void chooseTypeResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = af.getHostCard();
@@ -208,6 +260,13 @@ public class AbilityFactory_Choose {
     // ************************* ChooseColor ***********************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityChooseColor.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createAbilityChooseColor(final AbilityFactory af) {
 
         final SpellAbility abChooseColor = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -237,6 +296,13 @@ public class AbilityFactory_Choose {
         return abChooseColor;
     }
 
+    /**
+     * <p>createSpellChooseColor.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createSpellChooseColor(final AbilityFactory af) {
         final SpellAbility spChooseColor = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -5627273779759130247L;
@@ -260,6 +326,13 @@ public class AbilityFactory_Choose {
         return spChooseColor;
     }
 
+    /**
+     * <p>createDrawbackChooseColor.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
+     */
     public static SpellAbility createDrawbackChooseColor(final AbilityFactory af) {
         final SpellAbility dbChooseColor = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = 6969618586164278998L;
@@ -288,6 +361,13 @@ public class AbilityFactory_Choose {
         return dbChooseColor;
     }
 
+    /**
+     * <p>chooseColorStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String chooseColorStackDescription(AbilityFactory af, SpellAbility sa) {
         StringBuilder sb = new StringBuilder();
 
@@ -317,10 +397,25 @@ public class AbilityFactory_Choose {
         return sb.toString();
     }
 
+    /**
+     * <p>chooseColorCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean chooseColorCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         return chooseColorTriggerAI(af, sa, false);
     }
 
+    /**
+     * <p>chooseColorTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean chooseColorTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -339,6 +434,12 @@ public class AbilityFactory_Choose {
         return true;
     }
 
+    /**
+     * <p>chooseColorResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void chooseColorResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card card = af.getHostCard();

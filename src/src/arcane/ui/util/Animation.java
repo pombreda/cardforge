@@ -8,25 +8,49 @@ import java.awt.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * <p>Abstract Animation class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 abstract public class Animation {
+    /** Constant <code>TARGET_MILLIS_PER_FRAME=30</code> */
     static private final long TARGET_MILLIS_PER_FRAME = 30;
 
+    /** Constant <code>timer</code> */
     static private Timer timer = new Timer("Animation", true);
 
+    /** Constant <code>delayedCardPanel</code> */
     static private CardPanel delayedCardPanel;
+    /** Constant <code>delayedTime=</code> */
     static private long delayedTime;
+    /** Constant <code>enlargedCardPanel</code> */
     static private CardPanel enlargedCardPanel;
+    /** Constant <code>enlargedAnimationPanel</code> */
     static private CardPanel enlargedAnimationPanel;
+    /** Constant <code>enlargeLock</code> */
     static private Object enlargeLock = new Object();
 
     private TimerTask timerTask;
     private FrameTimer frameTimer;
     private long elapsed;
 
+    /**
+     * <p>Constructor for Animation.</p>
+     *
+     * @param duration a long.
+     */
     public Animation(final long duration) {
         this(duration, 0);
     }
 
+    /**
+     * <p>Constructor for Animation.</p>
+     *
+     * @param duration a long.
+     * @param delay a long.
+     */
     public Animation(final long duration, long delay) {
         timerTask = new TimerTask() {
             public void run() {
@@ -46,16 +70,30 @@ abstract public class Animation {
         timer.scheduleAtFixedRate(timerTask, delay, TARGET_MILLIS_PER_FRAME);
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param percentage a float.
+     */
     abstract protected void update(float percentage);
 
+    /**
+     * <p>cancel.</p>
+     */
     protected void cancel() {
         timerTask.cancel();
         end();
     }
 
+    /**
+     * <p>start.</p>
+     */
     protected void start() {
     }
 
+    /**
+     * <p>end.</p>
+     */
     protected void end() {
     }
 
@@ -98,6 +136,11 @@ abstract public class Animation {
         }
     }
 
+    /**
+     * <p>tapCardToggle.</p>
+     *
+     * @param panel a {@link arcane.ui.CardPanel} object.
+     */
     static public void tapCardToggle(final CardPanel panel) {
         new Animation(200) {
             protected void start() {
@@ -117,6 +160,20 @@ abstract public class Animation {
     }
 
     // static public void moveCardToPlay (Component source, final CardPanel dest, final CardPanel animationPanel) {
+    /**
+     * <p>moveCardToPlay.</p>
+     *
+     * @param startX a int.
+     * @param startY a int.
+     * @param startWidth a int.
+     * @param endX a int.
+     * @param endY a int.
+     * @param endWidth a int.
+     * @param animationPanel a {@link arcane.ui.CardPanel} object.
+     * @param placeholder a {@link arcane.ui.CardPanel} object.
+     * @param layeredPane a {@link javax.swing.JLayeredPane} object.
+     * @param speed a int.
+     */
     static public void moveCardToPlay(final int startX, final int startY, final int startWidth, final int endX, final int endY,
                                       final int endWidth, final CardPanel animationPanel, final CardPanel placeholder, final JLayeredPane layeredPane,
                                       final int speed) {
@@ -182,6 +239,20 @@ abstract public class Animation {
         });
     }
 
+    /**
+     * <p>moveCard.</p>
+     *
+     * @param startX a int.
+     * @param startY a int.
+     * @param startWidth a int.
+     * @param endX a int.
+     * @param endY a int.
+     * @param endWidth a int.
+     * @param animationPanel a {@link arcane.ui.CardPanel} object.
+     * @param placeholder a {@link arcane.ui.CardPanel} object.
+     * @param layeredPane a {@link javax.swing.JLayeredPane} object.
+     * @param speed a int.
+     */
     static public void moveCard(final int startX, final int startY, final int startWidth, final int endX, final int endY,
                                 final int endWidth, final CardPanel animationPanel, final CardPanel placeholder, final JLayeredPane layeredPane,
                                 final int speed) {
@@ -226,6 +297,11 @@ abstract public class Animation {
         });
     }
 
+    /**
+     * <p>moveCard.</p>
+     *
+     * @param placeholder a {@link arcane.ui.CardPanel} object.
+     */
     static public void moveCard(final CardPanel placeholder) {
         UI.invokeLater(new Runnable() {
             public void run() {
@@ -242,6 +318,9 @@ abstract public class Animation {
         });
     }
 
+    /**
+     * <p>shrinkCard.</p>
+     */
     static public void shrinkCard() {
         CardPanel enlargedCardPanel, enlargedAnimationPanel;
         synchronized (enlargeLock) {
@@ -292,6 +371,13 @@ abstract public class Animation {
         };
     }
 
+    /**
+     * <p>enlargeCard.</p>
+     *
+     * @param overPanel a {@link arcane.ui.CardPanel} object.
+     * @param clientFrame a {@link java.awt.Frame} object.
+     * @param delay a long.
+     */
     static public void enlargeCard(final CardPanel overPanel, final Frame clientFrame, long delay) {
         if (SwingUtilities.getRootPane(overPanel) == null) {
             synchronized (enlargeLock) {
@@ -378,6 +464,11 @@ abstract public class Animation {
         };
     }
 
+    /**
+     * <p>isShowingEnlargedCard.</p>
+     *
+     * @return a boolean.
+     */
     static public boolean isShowingEnlargedCard() {
         synchronized (enlargeLock) {
             return enlargedAnimationPanel != null;

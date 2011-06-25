@@ -23,14 +23,27 @@ import static javax.swing.JOptionPane.DEFAULT_OPTION;
 import static javax.swing.JOptionPane.PLAIN_MESSAGE;
 
 
+/**
+ * <p>Gui_DownloadPictures class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Runnable, NewConstants, NewConstants.LANG.Gui_DownloadPictures {
 
+    /** Constant <code>serialVersionUID=-7890794857949935256L</code> */
     private static final long serialVersionUID = -7890794857949935256L;
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         startDownload(null);
     }
 
+    /** Constant <code>types</code> */
     public static final Proxy.Type[] types = Proxy.Type.values();
 
     //proxy
@@ -49,6 +62,11 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
     private JLabel jLabel1;
     private String url;
 
+    /**
+     * <p>Constructor for Gui_DownloadPictures.</p>
+     *
+     * @param c an array of {@link forge.Gui_DownloadPictures.Card} objects.
+     */
     private Gui_DownloadPictures(Card[] c) {
         this.cards = c;
         addr = new JTextField(ForgeProps.getLocalized(PROXY_ADDRESS));
@@ -134,26 +152,35 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         dlg = new JOptionPane(p0, DEFAULT_OPTION, PLAIN_MESSAGE, null, options, options[1]);
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMinimum() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getValue() {
         return card;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getExtent() {
         return 0;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int getMaximum() {
         return cards == null ? 0 : cards.length;
     }
 
+    /**
+     * <p>update.</p>
+     *
+     * @param card a int.
+     */
     private void update(int card) {
         this.card = card;
         final class Worker implements Runnable {
@@ -174,6 +201,12 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         EventQueue.invokeLater(new Worker(card));
     }
 
+    /**
+     * <p>Getter for the field <code>dlg</code>.</p>
+     *
+     * @param frame a {@link javax.swing.JFrame} object.
+     * @return a {@link javax.swing.JDialog} object.
+     */
     public JDialog getDlg(JFrame frame) {
         final JDialog dlg = this.dlg.createDialog(frame, ForgeProps.getLocalized(TITLE));
         close.addActionListener(new ActionListener() {
@@ -184,11 +217,19 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         return dlg;
     }
 
+    /**
+     * <p>Setter for the field <code>cancel</code>.</p>
+     *
+     * @param cancel a boolean.
+     */
     public void setCancel(boolean cancel) {
         this.cancel = cancel;
     }
 
 
+    /**
+     * <p>run.</p>
+     */
     public void run() {
         BufferedInputStream in = null;
         BufferedOutputStream out = null;
@@ -267,6 +308,13 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         close.setText(ForgeProps.getLocalized(BUTTONS.CLOSE));
     }//run
 
+    /**
+     * <p>flushAndCloseStreams.</p>
+     *
+     * @param in a {@link java.io.BufferedInputStream} object.
+     * @param out a {@link java.io.BufferedOutputStream} object.
+     * @throws java.io.IOException if any.
+     */
     private void flushAndCloseStreams(BufferedInputStream in, BufferedOutputStream out) throws IOException {
         if (in != null)
             in.close();
@@ -276,6 +324,11 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         }
     }
 
+    /**
+     * <p>startDownload.</p>
+     *
+     * @param frame a {@link javax.swing.JFrame} object.
+     */
     public static void startDownload(JFrame frame) {
         final Card[] card = getNeededCards();
 
@@ -291,6 +344,11 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         download.setCancel(true);
     }//startDownload()
 
+    /**
+     * <p>getNeededCards.</p>
+     *
+     * @return an array of {@link forge.Gui_DownloadPictures.Card} objects.
+     */
     private static Card[] getNeededCards() {
         //read all card names and urls
         Card[] cardA = readFile(CARD_PICTURES_A);
@@ -596,6 +654,12 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         return out;
     }//getNeededCards()
 
+    /**
+     * <p>readFile.</p>
+     *
+     * @param ABC a {@link java.lang.String} object.
+     * @return an array of {@link forge.Gui_DownloadPictures.Card} objects.
+     */
     private static Card[] readFile(String ABC) {
         try {
             FileReader zrc = new FileReader(ForgeProps.getFile(ABC));

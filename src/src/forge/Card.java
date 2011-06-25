@@ -14,6 +14,12 @@ import forge.card.trigger.Trigger;
 import java.util.*;
 import java.util.Map.Entry;
 
+/**
+ * <p>Card class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Card extends MyObservable {
     private static int nextUniqueNumber;
     private int uniqueNumber = nextUniqueNumber++;
@@ -182,42 +188,91 @@ public class Card extends MyObservable {
 
     private int abilityUsed;                                                           //How many times has this ability been used?
 
+    /**
+     * <p>addRemembered.</p>
+     *
+     * @param o a {@link java.lang.Object} object.
+     */
     public void addRemembered(Object o) {
         rememberedObjects.add(o);
     }
 
+    /**
+     * <p>getRemembered.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Object> getRemembered() {
         return rememberedObjects;
     }
 
+    /**
+     * <p>clearRemembered.</p>
+     */
     public void clearRemembered() {
         rememberedObjects.clear();
     }
 
+    /**
+     * <p>addImprinted.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addImprinted(Card c) {
         imprintedCards.add(c);
     }
 
+    /**
+     * <p>addImprinted.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     public void addImprinted(ArrayList<Card> list) {
         imprintedCards.addAll(list);
     }
 
+    /**
+     * <p>getImprinted.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getImprinted() {
         return imprintedCards;
     }
 
+    /**
+     * <p>clearImprinted.</p>
+     */
     public void clearImprinted() {
         imprintedCards.clear();
     }
 
+    /**
+     * <p>Setter for the field <code>championedCard</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @since 1.0.15
+     */
     public void setChampionedCard(Card c) {
         championedCard = c;
     }
 
+    /**
+     * <p>Getter for the field <code>championedCard</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     * @since 1.0.15
+     */
     public Card getChampionedCard() {
         return championedCard;
     }
 
+    /**
+     * <p>addTrigger.</p>
+     *
+     * @param t a {@link forge.card.trigger.Trigger} object.
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public Trigger addTrigger(Trigger t) {
         Trigger newtrig = t.getCopy();
         newtrig.setHostCard(this);
@@ -225,14 +280,30 @@ public class Card extends MyObservable {
         return newtrig;
     }
 
+    /**
+     * <p>removeTrigger.</p>
+     *
+     * @param t a {@link forge.card.trigger.Trigger} object.
+     */
     public void removeTrigger(Trigger t) {
         triggers.remove(t);
     }
 
+    /**
+     * <p>Getter for the field <code>triggers</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Trigger> getTriggers() {
         return triggers;
     }
 
+    /**
+     * <p>getNamedTrigger.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link forge.card.trigger.Trigger} object.
+     */
     public Trigger getNamedTrigger(String name) {
         for (Trigger t : triggers) {
             if (t.getName() != null) {
@@ -245,6 +316,11 @@ public class Card extends MyObservable {
         return null;
     }
 
+    /**
+     * <p>Setter for the field <code>triggers</code>.</p>
+     *
+     * @param trigs a {@link java.util.ArrayList} object.
+     */
     public void setTriggers(ArrayList<Trigger> trigs) {
         for (Trigger t : trigs) {
             Trigger newtrig = t.getCopy();
@@ -253,62 +329,131 @@ public class Card extends MyObservable {
         }
     }
 
+    /**
+     * <p>clearTriggersNew.</p>
+     */
     public void clearTriggersNew() {
         triggers.clear();
     }
 
+    /**
+     * <p>getTriggeringObject.</p>
+     *
+     * @param type a {@link java.lang.String} object.
+     * @return a {@link java.lang.Object} object.
+     */
     public Object getTriggeringObject(String type) {
         return triggeringObjects.get(type);
     }
 
+    /**
+     * <p>Setter for the field <code>abilityUsed</code>.</p>
+     *
+     * @param i a int.
+     */
     public void setAbilityUsed(int i) {
         abilityUsed = i;
     }
 
+    /**
+     * <p>Getter for the field <code>abilityUsed</code>.</p>
+     *
+     * @return a int.
+     */
     public int getAbilityUsed() {
         return abilityUsed;
     }
 
+    /**
+     * <p>Getter for the field <code>sunburstValue</code>.</p>
+     *
+     * @return a int.
+     */
     public int getSunburstValue() {
         return sunburstValue;
     }
 
+    /**
+     * <p>Setter for the field <code>sunburstValue</code>.</p>
+     *
+     * @param value a int.
+     */
     public void setSunburstValue(int value) {
         sunburstValue = value;
     }
 
     //****************TOhaveDOne:Use somehow
+    /**
+     * <p>setX.</p>
+     *
+     * @param i a int.
+     */
     public void setX(int i) {
         X = i;
     }
 
+    /**
+     * <p>getX.</p>
+     *
+     * @return a int.
+     */
     public int getX() {
         return X;
     }
 
     //***************/
 
+    /**
+     * <p>addXManaCostPaid.</p>
+     *
+     * @param n a int.
+     */
     public void addXManaCostPaid(int n) {
         xManaCostPaid += n;
     }
 
+    /**
+     * <p>Setter for the field <code>xManaCostPaid</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setXManaCostPaid(int n) {
         xManaCostPaid = n;
     }
 
+    /**
+     * <p>Getter for the field <code>xManaCostPaid</code>.</p>
+     *
+     * @return a int.
+     */
     public int getXManaCostPaid() {
         return xManaCostPaid;
     }
 
+    /**
+     * <p>Setter for the field <code>xLifePaid</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setXLifePaid(int n) {
         xLifePaid = n;
     }
 
+    /**
+     * <p>Getter for the field <code>xLifePaid</code>.</p>
+     *
+     * @return a int.
+     */
     public int getXLifePaid() {
         return xLifePaid;
     }
 
     //used to see if an attacking creature with a triggering attack ability triggered this phase:
+    /**
+     * <p>Setter for the field <code>creatureAttackedThisCombat</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCreatureAttackedThisCombat(boolean b) {
         creatureAttackedThisCombat = b;
         if (true == b) {
@@ -316,30 +461,65 @@ public class Card extends MyObservable {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>creatureAttackedThisCombat</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getCreatureAttackedThisCombat() {
         return creatureAttackedThisCombat;
     }
 
+    /**
+     * <p>Setter for the field <code>creatureAttackedThisTurn</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCreatureAttackedThisTurn(boolean b) {
         creatureAttackedThisTurn = b;
     }
 
+    /**
+     * <p>Getter for the field <code>creatureAttackedThisTurn</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getCreatureAttackedThisTurn() {
         return creatureAttackedThisTurn;
     }
 
+    /**
+     * <p>Setter for the field <code>creatureBlockedThisCombat</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCreatureBlockedThisCombat(boolean b) {
         creatureBlockedThisCombat = b;
     }
 
+    /**
+     * <p>Getter for the field <code>creatureBlockedThisCombat</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getCreatureBlockedThisCombat() {
         return creatureBlockedThisCombat;
     }
 
+    /**
+     * <p>Setter for the field <code>creatureGotBlockedThisCombat</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCreatureGotBlockedThisCombat(boolean b) {
         creatureGotBlockedThisCombat = b;
     }
 
+    /**
+     * <p>Getter for the field <code>creatureGotBlockedThisCombat</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getCreatureGotBlockedThisCombat() {
         return creatureGotBlockedThisCombat;
     }
@@ -352,6 +532,11 @@ public class Card extends MyObservable {
         return dealtCombatDmgToOppThisTurn;
     }*/
 
+    /**
+     * <p>canAnyPlayerActivate.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canAnyPlayerActivate() {
         for (SpellAbility s : spellAbility) {
             if (s.getRestrictions().getAnyPlayer())
@@ -360,115 +545,253 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /**
+     * <p>Setter for the field <code>dealtDmgToHumanThisTurn</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setDealtDmgToHumanThisTurn(boolean b) {
         dealtDmgToHumanThisTurn = b;
     }
 
+    /**
+     * <p>Getter for the field <code>dealtDmgToHumanThisTurn</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getDealtDmgToHumanThisTurn() {
         return dealtDmgToHumanThisTurn;
     }
 
+    /**
+     * <p>Setter for the field <code>dealtDmgToComputerThisTurn</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setDealtDmgToComputerThisTurn(boolean b) {
         dealtDmgToComputerThisTurn = b;
     }
 
+    /**
+     * <p>Getter for the field <code>dealtDmgToComputerThisTurn</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getDealtDmgToComputerThisTurn() {
         return dealtDmgToComputerThisTurn;
     }
 
+    /**
+     * <p>Setter for the field <code>sirenAttackOrDestroy</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSirenAttackOrDestroy(boolean b) {
         sirenAttackOrDestroy = b;
     }
 
+    /**
+     * <p>Getter for the field <code>sirenAttackOrDestroy</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getSirenAttackOrDestroy() {
         return sirenAttackOrDestroy;
     }
 
+    /**
+     * <p>Getter for the field <code>clones</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getClones() {
         return clones;
     }
 
+    /**
+     * <p>Setter for the field <code>clones</code>.</p>
+     *
+     * @param c a {@link java.util.ArrayList} object.
+     */
     public void setClones(ArrayList<Card> c) {
         clones.clear();
         clones.addAll(c);
     }
 
+    /**
+     * <p>addClone.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addClone(Card c) {
         clones.add(c);
     }
 
+    /**
+     * <p>addClones.</p>
+     *
+     * @param c a {@link java.util.ArrayList} object.
+     */
     public void addClones(ArrayList<Card> c) {
         clones.addAll(c);
     }
 
+    /**
+     * <p>clearClones.</p>
+     */
     public void clearClones() {
         clones.clear();
     }
 
+    /**
+     * <p>Getter for the field <code>cloneOrigin</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCloneOrigin() {
         return cloneOrigin;
     }
 
+    /**
+     * <p>Setter for the field <code>cloneOrigin</code>.</p>
+     *
+     * @param name a {@link forge.Card} object.
+     */
     public void setCloneOrigin(Card name) {
         cloneOrigin = name;
     }
 
+    /**
+     * <p>Getter for the field <code>cloneLeavesPlayCommand</code>.</p>
+     *
+     * @return a {@link forge.Command} object.
+     */
     public Command getCloneLeavesPlayCommand() {
         return cloneLeavesPlayCommand;
     }
 
+    /**
+     * <p>Setter for the field <code>cloneLeavesPlayCommand</code>.</p>
+     *
+     * @param com a {@link forge.Command} object.
+     */
     public void setCloneLeavesPlayCommand(Command com) {
         cloneLeavesPlayCommand = com;
     }
 
+    /**
+     * <p>Getter for the field <code>currentlyCloningCard</code>.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCurrentlyCloningCard() {
         return currentlyCloningCard;
     }
 
+    /**
+     * <p>Setter for the field <code>currentlyCloningCard</code>.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void setCurrentlyCloningCard(Card c) {
         currentlyCloningCard = c;
     }
 
+    /**
+     * <p>Getter for the field <code>sacrificeAtEOT</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getSacrificeAtEOT() {
         return sacrificeAtEOT || hasKeyword("At the beginning of the end step, sacrifice CARDNAME.");
     }
 
+    /**
+     * <p>Setter for the field <code>sacrificeAtEOT</code>.</p>
+     *
+     * @param sacrificeAtEOT a boolean.
+     */
     public void setSacrificeAtEOT(boolean sacrificeAtEOT) {
         this.sacrificeAtEOT = sacrificeAtEOT;
     }
 
+    /**
+     * <p>Getter for the field <code>bounceAtUntap</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getBounceAtUntap() {
         return bounceAtUntap;
     }
 
+    /**
+     * <p>Setter for the field <code>bounceAtUntap</code>.</p>
+     *
+     * @param bounce a boolean.
+     */
     public void setBounceAtUntap(boolean bounce) {
         this.bounceAtUntap = bounce;
     }
 
+    /**
+     * <p>Getter for the field <code>finishedEnteringBF</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getFinishedEnteringBF() {
         return finishedEnteringBF;
     }
 
+    /**
+     * <p>Setter for the field <code>finishedEnteringBF</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setFinishedEnteringBF(boolean b) {
         this.finishedEnteringBF = b;
     }
 
+    /**
+     * <p>hasFirstStrike.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasFirstStrike() {
         return firstStrike || hasKeyword("First Strike");
     }
 
+    /**
+     * <p>Setter for the field <code>firstStrike</code>.</p>
+     *
+     * @param firstStrike a boolean.
+     */
     public void setFirstStrike(boolean firstStrike) {
         this.firstStrike = firstStrike;
     }
 
+    /**
+     * <p>Setter for the field <code>doubleStrike</code>.</p>
+     *
+     * @param doubleStrike a boolean.
+     */
     public void setDoubleStrike(boolean doubleStrike) {
         this.doubleStrike = doubleStrike;
     }
 
+    /**
+     * <p>hasDoubleStrike.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasDoubleStrike() {
         return doubleStrike || hasKeyword("Double Strike");
     }
 
+    /**
+     * <p>hasSecondStrike.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasSecondStrike() {
         return !hasFirstStrike() || (hasFirstStrike() && hasDoubleStrike());
     }
@@ -476,6 +799,12 @@ public class Card extends MyObservable {
     ;
 
     //for costs (like Planeswalker abilities) Doubling Season gets ignored.
+    /**
+     * <p>addCounterFromNonEffect.</p>
+     *
+     * @param counterName a {@link forge.Counters} object.
+     * @param n a int.
+     */
     public void addCounterFromNonEffect(Counters counterName, int n) {
         if (this.hasKeyword("CARDNAME can't have counters placed on it."))
             return;
@@ -527,6 +856,12 @@ public class Card extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>addCounter.</p>
+     *
+     * @param counterName a {@link forge.Counters} object.
+     * @param n a int.
+     */
     public void addCounter(Counters counterName, int n) {
         if (this.hasKeyword("CARDNAME can't have counters placed on it."))
             return;
@@ -551,6 +886,12 @@ public class Card extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>subtractCounter.</p>
+     *
+     * @param counterName a {@link forge.Counters} object.
+     * @param n a int.
+     */
     public void subtractCounter(Counters counterName, int n) {
         if (counters.containsKey(counterName)) {
             Integer aux = counters.get(counterName) - n;
@@ -581,6 +922,12 @@ public class Card extends MyObservable {
         }
     }
 
+    /**
+     * <p>Getter for the field <code>counters</code>.</p>
+     *
+     * @param counterName a {@link forge.Counters} object.
+     * @return a int.
+     */
     public int getCounters(Counters counterName) {
         if (counters.containsKey(counterName)) {
             return counters.get(counterName);
@@ -588,14 +935,32 @@ public class Card extends MyObservable {
     }
 
     //get all counters from a card
+    /**
+     * <p>Getter for the field <code>counters</code>.</p>
+     *
+     * @return a {@link java.util.Hashtable} object.
+     * @since 1.0.15
+     */
     public Hashtable<Counters, Integer> getCounters() {
         return counters;
     }
 
+    /**
+     * <p>hasCounters.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasCounters() {
         return counters.size() > 0;
     }
 
+    /**
+     * <p>setCounter.</p>
+     *
+     * @param counterName a {@link forge.Counters} object.
+     * @param n a int.
+     * @param bSetValue a boolean.
+     */
     public void setCounter(Counters counterName, int n, boolean bSetValue) {
         if (this.hasKeyword("CARDNAME can't have counters placed on it."))
             return;
@@ -612,11 +977,22 @@ public class Card extends MyObservable {
     }
 
     //get all counters from a card
+    /**
+     * <p>Setter for the field <code>counters</code>.</p>
+     *
+     * @param allCounters a {@link java.util.Hashtable} object.
+     * @since 1.0.15
+     */
     public void setCounters(Hashtable<Counters, Integer> allCounters) {
         counters = allCounters;
     }
 
     //get all counters from a card
+    /**
+     * <p>clearCounters.</p>
+     *
+     * @since 1.0.15
+     */
     public void clearCounters() {
         counters = new Hashtable<Counters, Integer>();
     }
@@ -630,29 +1006,61 @@ public class Card extends MyObservable {
         return levelUp;
     }
 
+    /**
+     * <p>Setter for the field <code>levelUp</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setLevelUp(boolean b) {
         levelUp = b;
     }
 
+    /**
+     * <p>getSVar.</p>
+     *
+     * @param Var a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getSVar(String Var) {
         if (SVars.containsKey(Var)) return SVars.get(Var);
         else return "";
     }
 
+    /**
+     * <p>setSVar.</p>
+     *
+     * @param Var a {@link java.lang.String} object.
+     * @param str a {@link java.lang.String} object.
+     */
     public void setSVar(String Var, String str) {
         if (SVars.containsKey(Var)) SVars.remove(Var);
 
         SVars.put(Var, str);
     }
 
+    /**
+     * <p>getSVars.</p>
+     *
+     * @return a {@link java.util.Hashtable} object.
+     */
     public Hashtable<String, String> getSVars() {
         return SVars;
     }
 
+    /**
+     * <p>setSVars.</p>
+     *
+     * @param newSVars a {@link java.util.Hashtable} object.
+     */
     public void setSVars(Hashtable<String, String> newSVars) {
         SVars = newSVars;
     }
 
+    /**
+     * <p>sumAllCounters.</p>
+     *
+     * @return a int.
+     */
     public int sumAllCounters() {
         Object[] values = counters.values().toArray();
         int count = 0;
@@ -664,40 +1072,89 @@ public class Card extends MyObservable {
         return count;
     }
 
+    /**
+     * <p>getNetPTCounters.</p>
+     *
+     * @return a int.
+     */
     public int getNetPTCounters() {
         return getCounters(Counters.P1P1) - getCounters(Counters.M1M1);
     }
 
+    /**
+     * <p>Getter for the field <code>turnInZone</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTurnInZone() {
         return turnInZone;
     }
 
+    /**
+     * <p>Setter for the field <code>turnInZone</code>.</p>
+     *
+     * @param turn a int.
+     */
     public void setTurnInZone(int turn) {
         turnInZone = turn;
     }
 
+    /**
+     * <p>Setter for the field <code>echoCost</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setEchoCost(String s) {
         echoCost = s;
     }
 
+    /**
+     * <p>Getter for the field <code>echoCost</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getEchoCost() {
         return echoCost;
     }
 
+    /**
+     * <p>Setter for the field <code>manaCost</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setManaCost(String s) {
         manaCost = s;
     }
 
+    /**
+     * <p>Getter for the field <code>manaCost</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getManaCost() {
         return manaCost;
     }
 
+    /**
+     * <p>addColor.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addColor(String s) {
         if (s.equals(""))
             s = "0";
         cardColor.add(new Card_Color(new ManaCost(s), this, false, true));
     }
 
+    /**
+     * <p>addColor.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param c a {@link forge.Card} object.
+     * @param addToColors a boolean.
+     * @param bIncrease a boolean.
+     * @return a long.
+     */
     public long addColor(String s, Card c, boolean addToColors, boolean bIncrease) {
         if (bIncrease)
             Card_Color.increaseTimestamp();
@@ -705,6 +1162,14 @@ public class Card extends MyObservable {
         return Card_Color.getTimestamp();
     }
 
+    /**
+     * <p>removeColor.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     * @param c a {@link forge.Card} object.
+     * @param addTo a boolean.
+     * @param timestamp a long.
+     */
     public void removeColor(String s, Card c, boolean addTo, long timestamp) {
         Card_Color removeCol = null;
         for (Card_Color cc : cardColor)
@@ -715,6 +1180,11 @@ public class Card extends MyObservable {
             cardColor.remove(removeCol);
     }
 
+    /**
+     * <p>determineColor.</p>
+     *
+     * @return a {@link forge.Card_Color} object.
+     */
     public Card_Color determineColor() {
         if (this.isImmutable()) {
             return new Card_Color(this);
@@ -726,10 +1196,20 @@ public class Card extends MyObservable {
         return colors;
     }
 
+    /**
+     * <p>setColor.</p>
+     *
+     * @param colors a {@link java.util.ArrayList} object.
+     */
     public void setColor(ArrayList<Card_Color> colors) {
         cardColor = colors;
     }
 
+    /**
+     * <p>getColor.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card_Color> getColor() {
         return cardColor;
     }
@@ -776,68 +1256,148 @@ public class Card extends MyObservable {
         return colors;
     }
 
+    /**
+     * <p>getCMC.</p>
+     *
+     * @return a int.
+     */
     public int getCMC() {
         return CardUtil.getConvertedManaCost(manaCost);
     }
 
+    /**
+     * <p>Setter for the field <code>upkeepCost</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setUpkeepCost(String s) {
         upkeepCost = s;
     }
 
+    /**
+     * <p>Getter for the field <code>upkeepCost</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getUpkeepCost() {
         return upkeepCost;
     }
 
+    /**
+     * <p>hasUpkeepCost.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasUpkeepCost() {
         return upkeepCost.length() > 0 && !upkeepCost.equals("0");
     }
 
     //used for cards like Belbe's Portal, Conspiracy, Cover of Darkness, etc.
+    /**
+     * <p>Getter for the field <code>chosenType</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getChosenType() {
         return chosenType;
     }
 
+    /**
+     * <p>Setter for the field <code>chosenType</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setChosenType(String s) {
         chosenType = s;
     }
 
+    /**
+     * <p>Getter for the field <code>chosenColor</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getChosenColor() {
         return chosenColor;
     }
 
+    /**
+     * <p>Setter for the field <code>chosenColor</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setChosenColor(String s) {
         chosenColor = s;
     }
 
     //used for cards like Meddling Mage...
+    /**
+     * <p>Getter for the field <code>namedCard</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getNamedCard() {
         return namedCard;
     }
 
+    /**
+     * <p>Setter for the field <code>namedCard</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setNamedCard(String s) {
         namedCard = s;
     }
 
+    /**
+     * <p>Getter for the field <code>topCardName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getTopCardName() {
         return topCardName;
     }
 
+    /**
+     * <p>Setter for the field <code>topCardName</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setTopCardName(String s) {
         topCardName = s;
     }
 
+    /**
+     * <p>Setter for the field <code>drawnThisTurn</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setDrawnThisTurn(boolean b) {
         drawnThisTurn = b;
     }
 
+    /**
+     * <p>Getter for the field <code>drawnThisTurn</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getDrawnThisTurn() {
         return drawnThisTurn;
     }
 
+    /**
+     * <p>Getter for the field <code>reflectableMana</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getReflectableMana() {
         return reflectableMana;
     }
 
+    /**
+     * <p>Setter for the field <code>reflectableMana</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setReflectableMana(String s) {
         reflectableMana = s;
     }
@@ -857,6 +1417,8 @@ public class Card extends MyObservable {
      * add a Card to the list of Cards this card has gained control of
      * <p/>
      * used primarily with AbilityFactory_GainControl
+     *
+     * @param c a {@link forge.Card} object.
      */
     public void addGainControlTarget(Card c) {
         gainControlTargets.add(c);
@@ -876,6 +1438,8 @@ public class Card extends MyObservable {
      * card has gained control of
      * <p/>
      * used primarily with AbilityFactory_GainControl (Old Man of the Sea specifically)
+     *
+     * @return a {@link java.util.ArrayList} object.
      */
     public ArrayList<Command> getGainControlReleaseCommands() {
         return gainControlReleaseCommands;
@@ -893,19 +1457,37 @@ public class Card extends MyObservable {
         gainControlReleaseCommands.add(c);
     }
 
+    /**
+     * <p>clearGainControlReleaseCommands.</p>
+     */
     public void clearGainControlReleaseCommands() {
         gainControlReleaseCommands.clear();
     }
 
+    /**
+     * <p>getSpellText.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getSpellText() {
         return text;
     }
 
+    /**
+     * <p>Setter for the field <code>text</code>.</p>
+     *
+     * @param t a {@link java.lang.String} object.
+     */
     public void setText(String t) {
         text = t;
     }
 
     // get the text that should be displayed
+    /**
+     * <p>Getter for the field <code>text</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getText() {
         StringBuilder sb = new StringBuilder();
         sb.append(this.getAbilityText());
@@ -919,6 +1501,11 @@ public class Card extends MyObservable {
     }
 
     // get the text that does not belong to a cards abilities (and is not really there ruleswise)
+    /**
+     * <p>getNonAbilityText.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getNonAbilityText() {
         StringBuilder sb = new StringBuilder();
         ArrayList<String> keyword = getHiddenExtrinsicKeyword();
@@ -929,6 +1516,12 @@ public class Card extends MyObservable {
     }
 
     // convert a keyword list to the String that should be displayed ingame
+    /**
+     * <p>keywordsToText.</p>
+     *
+     * @param keyword a {@link java.util.ArrayList} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String keywordsToText(ArrayList<String> keyword) {
         StringBuilder sb = new StringBuilder();
         StringBuilder sbLong = new StringBuilder();
@@ -1026,6 +1619,11 @@ public class Card extends MyObservable {
     }
 
     //get the text of the abilities of a card
+    /**
+     * <p>getAbilityText.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getAbilityText() {
         if (isInstant() || isSorcery()) {
             String s = getSpellText();
@@ -1209,11 +1807,21 @@ public class Card extends MyObservable {
         return sb.toString().replaceAll("CARDNAME", getName()).trim();
     }//getText()
 
+    /**
+     * <p>Getter for the field <code>manaAbility</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Ability_Mana> getManaAbility() {
         return new ArrayList<Ability_Mana>(manaAbility);
     }
 
     // Returns basic mana abilities plus "reflected mana" abilities
+    /**
+     * <p>getAIPlayableMana.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Ability_Mana> getAIPlayableMana() {
         ArrayList<Ability_Mana> res = new ArrayList<Ability_Mana>();
         for (Ability_Mana am : getManaAbility())
@@ -1227,6 +1835,11 @@ public class Card extends MyObservable {
 
     }
 
+    /**
+     * <p>getBasicMana.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Ability_Mana> getBasicMana() {
         ArrayList<Ability_Mana> res = new ArrayList<Ability_Mana>();
         for (Ability_Mana am : getManaAbility())
@@ -1234,10 +1847,16 @@ public class Card extends MyObservable {
         return res;
     }
 
+    /**
+     * <p>clearFirstSpellAbility.</p>
+     */
     public void clearFirstSpellAbility() {
         spellAbility.remove(0);
     }
 
+    /**
+     * <p>clearAllButFirstSpellAbility.</p>
+     */
     public void clearAllButFirstSpellAbility() {
         if (!spellAbility.isEmpty()) {
             SpellAbility first = spellAbility.get(0);
@@ -1247,6 +1866,11 @@ public class Card extends MyObservable {
         manaAbility.clear();
     }
 
+    /**
+     * <p>getAllButFirstSpellAbility.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getAllButFirstSpellAbility() {
         ArrayList<SpellAbility> sas = new ArrayList<SpellAbility>();
         sas.addAll(spellAbility);
@@ -1259,11 +1883,19 @@ public class Card extends MyObservable {
         return sas;
     }
 
+    /**
+     * <p>clearSpellAbility.</p>
+     */
     public void clearSpellAbility() {
         spellAbility.clear();
         manaAbility.clear();
     }
 
+    /**
+     * <p>getSpellPermanent.</p>
+     *
+     * @return a {@link forge.card.spellability.Spell_Permanent} object.
+     */
     public Spell_Permanent getSpellPermanent() {
         for (SpellAbility sa : spellAbility) {
             if (sa instanceof Spell_Permanent) return (Spell_Permanent) sa;
@@ -1271,27 +1903,48 @@ public class Card extends MyObservable {
         return null;
     }
 
+    /**
+     * <p>clearSpellKeepManaAbility.</p>
+     */
     public void clearSpellKeepManaAbility() {
         spellAbility.clear();
     }
 
+    /**
+     * <p>clearManaAbility.</p>
+     */
     public void clearManaAbility() {
         manaAbility.clear();
     }
 
 
+    /**
+     * <p>addFirstSpellAbility.</p>
+     *
+     * @param a a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void addFirstSpellAbility(SpellAbility a) {
         a.setSourceCard(this);
         if (a instanceof Ability_Mana) manaAbility.add(0, (Ability_Mana) a);
         else spellAbility.add(0, a);
     }
 
+    /**
+     * <p>addSpellAbility.</p>
+     *
+     * @param a a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void addSpellAbility(SpellAbility a) {
         a.setSourceCard(this);
         if (a instanceof Ability_Mana) manaAbility.add((Ability_Mana) a);
         else spellAbility.add(a);
     }
 
+    /**
+     * <p>removeSpellAbility.</p>
+     *
+     * @param a a {@link forge.card.spellability.SpellAbility} object.
+     */
     public void removeSpellAbility(SpellAbility a) {
         if (a instanceof Ability_Mana)
             //if (a.isExtrinsic()) //never remove intrinsic mana abilities, is this the way to go??
@@ -1300,6 +1953,9 @@ public class Card extends MyObservable {
     }
 
 
+    /**
+     * <p>removeAllExtrinsicManaAbilities.</p>
+     */
     public void removeAllExtrinsicManaAbilities() {
         //temp ArrayList, otherwise ConcurrentModificationExceptions occur:
         ArrayList<SpellAbility> saList = new ArrayList<SpellAbility>();
@@ -1312,6 +1968,11 @@ public class Card extends MyObservable {
         }
     }
 
+    /**
+     * <p>getIntrinsicManaAbilitiesDescriptions.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getIntrinsicManaAbilitiesDescriptions() {
         ArrayList<String> list = new ArrayList<String>();
         for (SpellAbility var : manaAbility) {
@@ -1320,6 +1981,11 @@ public class Card extends MyObservable {
         return list;
     }
 
+    /**
+     * <p>Getter for the field <code>spellAbility</code>.</p>
+     *
+     * @return an array of {@link forge.card.spellability.SpellAbility} objects.
+     */
     public SpellAbility[] getSpellAbility() {
         ArrayList<SpellAbility> res = new ArrayList<SpellAbility>(spellAbility);
         res.addAll(getManaAbility());
@@ -1328,12 +1994,22 @@ public class Card extends MyObservable {
         return s;
     }
 
+    /**
+     * <p>getSpellAbilities.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getSpellAbilities() {
         ArrayList<SpellAbility> res = new ArrayList<SpellAbility>(spellAbility);
         res.addAll(getManaAbility());
         return res;
     }
 
+    /**
+     * <p>getSpells.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getSpells() {
         ArrayList<SpellAbility> s = new ArrayList<SpellAbility>(spellAbility);
         ArrayList<SpellAbility> res = new ArrayList<SpellAbility>();
@@ -1344,6 +2020,11 @@ public class Card extends MyObservable {
         return res;
     }
 
+    /**
+     * <p>getBasicSpells.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getBasicSpells() {
         ArrayList<SpellAbility> s = new ArrayList<SpellAbility>(spellAbility);
         ArrayList<SpellAbility> res = new ArrayList<SpellAbility>();
@@ -1354,6 +2035,11 @@ public class Card extends MyObservable {
         return res;
     }
 
+    /**
+     * <p>getAdditionalCostSpells.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SpellAbility> getAdditionalCostSpells() {
         ArrayList<SpellAbility> s = new ArrayList<SpellAbility>(spellAbility);
         ArrayList<SpellAbility> res = new ArrayList<SpellAbility>();
@@ -1366,177 +2052,382 @@ public class Card extends MyObservable {
 
 
     //PreventNextDamage
+    /**
+     * <p>Setter for the field <code>preventNextDamage</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setpreventNextDamage(int n) {
         preventNextDamage = n;
     }
 
+    /**
+     * <p>Getter for the field <code>preventNextDamage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getPreventNextDamage() {
         return preventNextDamage;
     }
 
+    /**
+     * <p>addPreventNextDamage.</p>
+     *
+     * @param n a int.
+     */
     public void addPreventNextDamage(int n) {
         preventNextDamage += n;
     }
 
+    /**
+     * <p>subtractPreventNextDamage.</p>
+     *
+     * @param n a int.
+     */
     public void subtractPreventNextDamage(int n) {
         preventNextDamage -= n;
     }
 
+    /**
+     * <p>resetPreventNextDamage.</p>
+     */
     public void resetPreventNextDamage() {
         preventNextDamage = 0;
     }
 
     //shield = regeneration
+    /**
+     * <p>setShield.</p>
+     *
+     * @param n a int.
+     */
     public void setShield(int n) {
         nShield = n;
     }
 
+    /**
+     * <p>getShield.</p>
+     *
+     * @return a int.
+     */
     public int getShield() {
         return nShield;
     }
 
+    /**
+     * <p>addShield.</p>
+     */
     public void addShield() {
         nShield++;
     }
 
+    /**
+     * <p>subtractShield.</p>
+     */
     public void subtractShield() {
         nShield--;
     }
 
+    /**
+     * <p>resetShield.</p>
+     */
     public void resetShield() {
         nShield = 0;
     }
 
+    /**
+     * <p>canBeShielded.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canBeShielded() {
         return !hasKeyword("CARDNAME can't be regenerated.");
     }
 
     //is this "Card" supposed to be a token?
+    /**
+     * <p>Setter for the field <code>token</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setToken(boolean b) {
         token = b;
     }
 
+    /**
+     * <p>isToken.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isToken() {
         return token;
     }
 
+    /**
+     * <p>Setter for the field <code>copiedToken</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCopiedToken(boolean b) {
         copiedToken = b;
     }
 
+    /**
+     * <p>isCopiedToken.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCopiedToken() {
         return copiedToken;
     }
 
+    /**
+     * <p>Setter for the field <code>copiedSpell</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCopiedSpell(boolean b) {
         copiedSpell = b;
     }
 
+    /**
+     * <p>isCopiedSpell.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCopiedSpell() {
         return copiedSpell;
     }
 
+    /**
+     * <p>addSpellChoice.</p>
+     *
+     * @param string a {@link java.lang.String} object.
+     */
     public void addSpellChoice(String string) {
         ChoicesMade.add(string);
     }
 
+    /**
+     * <p>getChoices.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getChoices() {
         return ChoicesMade;
     }
 
+    /**
+     * <p>getChoice.</p>
+     *
+     * @param i a int.
+     * @return a {@link java.lang.String} object.
+     */
     public String getChoice(int i) {
         return ChoicesMade.get(i);
     }
 
+    /**
+     * <p>setSpellChoiceTarget.</p>
+     *
+     * @param string a {@link java.lang.String} object.
+     */
     public void setSpellChoiceTarget(String string) {
         Targets_for_Choices.add(string);
     }
 
+    /**
+     * <p>getChoiceTargets.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getChoiceTargets() {
         return Targets_for_Choices;
     }
 
+    /**
+     * <p>getChoiceTarget.</p>
+     *
+     * @param i a int.
+     * @return a {@link java.lang.String} object.
+     */
     public String getChoiceTarget(int i) {
         return Targets_for_Choices.get(i);
     }
 
+    /**
+     * <p>setSpellWithChoices.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSpellWithChoices(boolean b) {
         SpellwithChoices = b;
     }
 
+    /**
+     * <p>hasChoices.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasChoices() {
         return SpellwithChoices;
     }
 
+    /**
+     * <p>setCopiesSpells.</p>
+     *
+     * @param b a boolean.
+     */
     public void setCopiesSpells(boolean b) {
         SpellCopyingCard = b;
     }
 
+    /**
+     * <p>copiesSpells.</p>
+     *
+     * @return a boolean.
+     */
     public boolean copiesSpells() {
         return SpellCopyingCard;
     }
 
+    /**
+     * <p>Setter for the field <code>exaltedBonus</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setExaltedBonus(boolean b) {
         exaltedBonus = b;
     }
 
+    /**
+     * <p>hasExaltedBonus.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasExaltedBonus() {
         return exaltedBonus;
     }
 
+    /**
+     * <p>Setter for the field <code>exaltedMagnitude</code>.</p>
+     *
+     * @param i a int.
+     */
     public void setExaltedMagnitude(int i) {
         exaltedMagnitude = i;
     }
 
+    /**
+     * <p>Getter for the field <code>exaltedMagnitude</code>.</p>
+     *
+     * @return a int.
+     */
     public int getExaltedMagnitude() {
         return exaltedMagnitude;
     }
 
+    /**
+     * <p>setIsFaceDown.</p>
+     *
+     * @param b a boolean.
+     */
     public void setIsFaceDown(boolean b) {
         faceDown = b;
     }
 
+    /**
+     * <p>isFaceDown.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isFaceDown() {
         return faceDown;
     }
 
+    /**
+     * <p>addTrigger.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     * @param type a {@link forge.ZCTrigger} object.
+     */
     public void addTrigger(Command c, ZCTrigger type) {
         zcTriggers.add(new Ability_Triggered(this, c, type));
     }
 
+    /**
+     * <p>removeTrigger.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     * @param type a {@link forge.ZCTrigger} object.
+     */
     public void removeTrigger(Command c, ZCTrigger type) {
         zcTriggers.remove(new Ability_Triggered(this, c, type));
     }
 
+    /**
+     * <p>executeTrigger.</p>
+     *
+     * @param type a {@link forge.ZCTrigger} object.
+     */
     public void executeTrigger(ZCTrigger type) {
         for (Ability_Triggered t : zcTriggers)
             if (t.trigger.equals(type) && t.isBasic()) t.execute();//AllZone.getStack().addSimultaneousStackEntry(t);
     }
 
+    /**
+     * <p>clearTriggers.</p>
+     */
     public void clearTriggers() {
         zcTriggers.clear();
     }
 
+    /**
+     * <p>addComesIntoPlayCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addComesIntoPlayCommand(Command c) {
         addTrigger(c, ZCTrigger.ENTERFIELD);
     }
 
+    /**
+     * <p>removeComesIntoPlayCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeComesIntoPlayCommand(Command c) {
         removeTrigger(c, ZCTrigger.ENTERFIELD);
     }
 
+    /**
+     * <p>comesIntoPlay.</p>
+     */
     public void comesIntoPlay() {
         executeTrigger(ZCTrigger.ENTERFIELD);
     }
 
+    /**
+     * <p>addTurnFaceUpCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addTurnFaceUpCommand(Command c) {
         turnFaceUpCommandList.add(c);
     }
 
+    /**
+     * <p>removeTurnFaceUpCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeTurnFaceUpCommand(Command c) {
         turnFaceUpCommandList.remove(c);
     }
 
+    /**
+     * <p>turnFaceUp.</p>
+     */
     public void turnFaceUp() {
         for (Command var : turnFaceUpCommandList)
             var.execute();
@@ -1547,171 +2438,344 @@ public class Card extends MyObservable {
         AllZone.getTriggerHandler().runTrigger("TurnFaceUp", runParams);
     }
 
+    /**
+     * <p>addDestroyCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addDestroyCommand(Command c) {
         addTrigger(c, ZCTrigger.DESTROY);
     }
 
+    /**
+     * <p>removeDestroyCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeDestroyCommand(Command c) {
         removeTrigger(c, ZCTrigger.DESTROY);
     }
 
+    /**
+     * <p>destroy.</p>
+     */
     public void destroy() {
         executeTrigger(ZCTrigger.DESTROY);
     }
 
+    /**
+     * <p>addLeavesPlayCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addLeavesPlayCommand(Command c) {
         addTrigger(c, ZCTrigger.LEAVEFIELD);
     }
 
+    /**
+     * <p>removeLeavesPlayCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeLeavesPlayCommand(Command c) {
         removeTrigger(c, ZCTrigger.LEAVEFIELD);
     }
 
+    /**
+     * <p>leavesPlay.</p>
+     */
     public void leavesPlay() {
         executeTrigger(ZCTrigger.LEAVEFIELD);
     }
 
+    /**
+     * <p>addEquipCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addEquipCommand(Command c) {
         equipCommandList.add(c);
     }
 
+    /**
+     * <p>removeEquipCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeEquipCommand(Command c) {
         equipCommandList.remove(c);
     }
 
+    /**
+     * <p>equip.</p>
+     */
     public void equip() {
         for (Command var : equipCommandList)
             var.execute();
     }
 
+    /**
+     * <p>addUnEquipCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addUnEquipCommand(Command c) {
         unEquipCommandList.add(c);
     }
 
+    /**
+     * <p>removeUnEquipCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void removeUnEquipCommand(Command c) {
         unEquipCommandList.remove(c);
     }
 
+    /**
+     * <p>unEquip.</p>
+     */
     public void unEquip() {
         for (Command var : unEquipCommandList)
             var.execute();
     }
 
+    /**
+     * <p>addEnchantCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addEnchantCommand(Command c) {
         enchantCommandList.add(c);
     }
 
+    /**
+     * <p>clearEnchantCommand.</p>
+     */
     public void clearEnchantCommand() {
         enchantCommandList.clear();
     }
 
+    /**
+     * <p>enchant.</p>
+     */
     public void enchant() {
         for (Command var : enchantCommandList)
             var.execute();
     }
 
+    /**
+     * <p>addUnEnchantCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addUnEnchantCommand(Command c) {
         unEnchantCommandList.add(c);
     }
 
+    /**
+     * <p>clearUnEnchantCommand.</p>
+     */
     public void clearUnEnchantCommand() {
         unEnchantCommandList.clear();
     }
 
+    /**
+     * <p>unEnchant.</p>
+     */
     public void unEnchant() {
         for (Command var : unEnchantCommandList)
             var.execute();
     }
 
+    /**
+     * <p>addUntapCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addUntapCommand(Command c) {
         untapCommandList.add(c);
     }
 
+    /**
+     * <p>addChangeControllerCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addChangeControllerCommand(Command c) {
         changeControllerCommandList.add(c);
     }
 
+    /**
+     * <p>getReplaceMoveToGraveyard.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Command> getReplaceMoveToGraveyard() {
         return replaceMoveToGraveyardCommandList;
     }
 
+    /**
+     * <p>addReplaceMoveToGraveyardCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addReplaceMoveToGraveyardCommand(Command c) {
         replaceMoveToGraveyardCommandList.add(c);
     }
 
+    /**
+     * <p>clearReplaceMoveToGraveyardCommandList.</p>
+     */
     public void clearReplaceMoveToGraveyardCommandList() {
         replaceMoveToGraveyardCommandList.clear();
     }
 
+    /**
+     * <p>replaceMoveToGraveyard.</p>
+     */
     public void replaceMoveToGraveyard() {
         for (Command var : replaceMoveToGraveyardCommandList)
             var.execute();
     }
 
+    /**
+     * <p>addCycleCommand.</p>
+     *
+     * @param c a {@link forge.Command} object.
+     */
     public void addCycleCommand(Command c) {
         cycleCommandList.add(c);
     }
 
+    /**
+     * <p>cycle.</p>
+     */
     public void cycle() {
         for (Command var : cycleCommandList)
             var.execute();
     }
 
+    /**
+     * <p>Setter for the field <code>sickness</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSickness(boolean b) {
         sickness = b;
     }
 
+    /**
+     * <p>hasSickness.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasSickness() {
         if (hasKeyword("Haste")) return false;
 
         return sickness;
     }
 
+    /**
+     * <p>isSick.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSick() {
         if (hasKeyword("Haste")) return false;
 
         return sickness && isCreature();
     }
 
+    /**
+     * <p>Setter for the field <code>rarity</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setRarity(String s) {
         rarity = s;
     }
 
+    /**
+     * <p>Getter for the field <code>rarity</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getRarity() {
         return rarity;
     }
 
+    /**
+     * <p>Setter for the field <code>imageName</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setImageName(String s) {
         imageName = s;
     }
 
+    /**
+     * <p>Getter for the field <code>imageName</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getImageName() {
         if (!imageName.equals("")) return imageName;
         return name;
     }
 
+    /**
+     * <p>Getter for the field <code>name</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * <p>Getter for the field <code>owner</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getOwner() {
         return owner;
     }
 
+    /**
+     * <p>Getter for the field <code>controller</code>.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getController() {
         return controller;
     }
 
+    /**
+     * <p>Setter for the field <code>name</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setName(String s) {
         name = s;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>owner</code>.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void setOwner(Player player) {
         owner = player;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>controller</code>.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     */
     public void setController(Player player) {
         if (null != controller && !controller.isPlayer(player)) {
             for (Command var : changeControllerCommandList)
@@ -1721,56 +2785,116 @@ public class Card extends MyObservable {
         this.updateObservers();
     }
 
+    /**
+     * <p>Getter for the field <code>equippedBy</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getEquippedBy() {
         return equippedBy;
     }
 
+    /**
+     * <p>Setter for the field <code>equippedBy</code>.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     public void setEquippedBy(ArrayList<Card> list) {
         equippedBy = list;
     }
 
+    /**
+     * <p>Getter for the field <code>equipping</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getEquipping() {
         return equipping;
     }
 
+    /**
+     * <p>getEquippingCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getEquippingCard() {
         if (equipping.size() == 0)
             return null;
         return equipping.get(0);
     }
 
+    /**
+     * <p>Setter for the field <code>equipping</code>.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     public void setEquipping(ArrayList<Card> list) {
         equipping = list;
     }
 
+    /**
+     * <p>isEquipped.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEquipped() {
         return equippedBy.size() != 0;
     }
 
+    /**
+     * <p>isEquipping.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEquipping() {
         return equipping.size() != 0;
     }
 
+    /**
+     * <p>addEquippedBy.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addEquippedBy(Card c) {
         equippedBy.add(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>removeEquippedBy.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeEquippedBy(Card c) {
         equippedBy.remove(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>addEquipping.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addEquipping(Card c) {
         equipping.add(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>removeEquipping.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeEquipping(Card c) {
         equipping.remove(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>equipCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void equipCard(Card c) //equipment.equipCard(cardToBeEquipped);
     {
         equipping.add(c);
@@ -1778,6 +2902,11 @@ public class Card extends MyObservable {
         this.equip();
     }
 
+    /**
+     * <p>unEquipCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void unEquipCard(Card c) //equipment.unEquipCard(equippedCard);
     {
         this.unEquip();
@@ -1791,48 +2920,96 @@ public class Card extends MyObservable {
         AllZone.getTriggerHandler().runTrigger("Unequip", runParams);
     }
 
+    /**
+     * <p>unEquipAllCards.</p>
+     */
     public void unEquipAllCards() {
         while (equippedBy.size() > 0) {    // while there exists equipment, unequip the first one
             equippedBy.get(0).unEquipCard(this);
         }
     }
 
+    /**
+     * <p>Getter for the field <code>enchantedBy</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getEnchantedBy() {
         return enchantedBy;
     }
 
+    /**
+     * <p>Setter for the field <code>enchantedBy</code>.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     public void setEnchantedBy(ArrayList<Card> list) {
         enchantedBy = list;
     }
 
+    /**
+     * <p>Getter for the field <code>enchanting</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<Card> getEnchanting() {
         return enchanting;
     }
 
+    /**
+     * <p>getEnchantingCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getEnchantingCard() {
         if (enchanting.size() == 0)
             return null;
         return enchanting.get(0);
     }
 
+    /**
+     * <p>Setter for the field <code>enchanting</code>.</p>
+     *
+     * @param list a {@link java.util.ArrayList} object.
+     */
     public void setEnchanting(ArrayList<Card> list) {
         enchanting = list;
     }
 
+    /**
+     * <p>isEnchanted.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEnchanted() {
         return enchantedBy.size() != 0;
     }
 
+    /**
+     * <p>isEnchanting.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEnchanting() {
         ;
         return enchanting.size() != 0;
     }
 
+    /**
+     * <p>addEnchantedBy.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addEnchantedBy(Card c) {
         enchantedBy.add(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>removeEnchantedBy.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeEnchantedBy(Card c) {
         enchantedBy.remove(c);
         this.updateObservers();
@@ -1852,28 +3029,51 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /**
+     * <p>addEnchanting.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void addEnchanting(Card c) {
         enchanting.add(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>removeEnchanting.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void removeEnchanting(Card c) {
         enchanting.remove(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>enchantCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void enchantCard(Card c) {
         enchanting.add(c);
         c.addEnchantedBy(this);
         this.enchant();
     }
 
+    /**
+     * <p>unEnchantCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void unEnchantCard(Card c) {
         this.unEnchant();
         enchanting.remove(c);
         c.removeEnchantedBy(this);
     }
 
+    /**
+     * <p>unEnchantAllCards.</p>
+     */
     public void unEnchantAllCards() {
         for (int i = 0; i < enchantedBy.size(); i++) {
             enchantedBy.get(i).unEnchantCard(this);
@@ -1881,44 +3081,89 @@ public class Card extends MyObservable {
     }
 
     //array size might equal 0, will NEVER be null
+    /**
+     * <p>getAttachedCards.</p>
+     *
+     * @return an array of {@link forge.Card} objects.
+     */
     public Card[] getAttachedCards() {
         Card c[] = new Card[attached.size()];
         attached.toArray(c);
         return c;
     }
 
+    /**
+     * <p>hasAttachedCards.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasAttachedCards() {
         return getAttachedCards().length != 0;
     }
 
+    /**
+     * <p>attachCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void attachCard(Card c) {
         attached.add(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>unattachCard.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     */
     public void unattachCard(Card c) {
         attached.remove(c);
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>type</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setType(ArrayList<String> a) {
         type = new ArrayList<String>(a);
     }
 
+    /**
+     * <p>addType.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     */
     public void addType(String a) {
         type.add(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>removeType.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     */
     public void removeType(String a) {
         type.remove(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>Getter for the field <code>type</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getType() {
         return new ArrayList<String>(type);
     }
 
+    /**
+     * <p>clearAllTypes.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> clearAllTypes() {
         ArrayList<String> originalTypes = new ArrayList<String>();
         originalTypes.addAll(type);
@@ -1926,72 +3171,147 @@ public class Card extends MyObservable {
         return originalTypes;
     }
 
+    /**
+     * <p>Setter for the field <code>prevType</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setPrevType(ArrayList<String> a) {
         prevType = new ArrayList<String>(a);
     }
 
+    /**
+     * <p>addPrevType.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     */
     public void addPrevType(String a) {
         prevType.add(a);
     }
 
+    /**
+     * <p>removePrevType.</p>
+     *
+     * @param a a {@link java.lang.String} object.
+     */
     public void removePrevType(String a) {
         prevType.remove(a);
     }
 
+    /**
+     * <p>Getter for the field <code>prevType</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getPrevType() {
         return new ArrayList<String>(prevType);
     }
 
     //values that are printed on card
+    /**
+     * <p>Getter for the field <code>baseLoyalty</code>.</p>
+     *
+     * @return a int.
+     */
     public int getBaseLoyalty() {
         return baseLoyalty;
     }
 
     //values that are printed on card
+    /**
+     * <p>Setter for the field <code>baseLoyalty</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setBaseLoyalty(int n) {
         baseLoyalty = n;
     }
 
     //values that are printed on card
+    /**
+     * <p>Getter for the field <code>baseAttack</code>.</p>
+     *
+     * @return a int.
+     */
     public int getBaseAttack() {
         return baseAttack;
     }
 
+    /**
+     * <p>Getter for the field <code>baseDefense</code>.</p>
+     *
+     * @return a int.
+     */
     public int getBaseDefense() {
         return baseDefense;
     }
 
     //values that are printed on card
+    /**
+     * <p>Setter for the field <code>baseAttack</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setBaseAttack(int n) {
         baseAttack = n;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>baseDefense</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setBaseDefense(int n) {
         baseDefense = n;
         this.updateObservers();
     }
 
     //values that are printed on card
+    /**
+     * <p>Getter for the field <code>baseAttackString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getBaseAttackString() {
         return (null == baseAttackString) ? "" + getBaseAttack() : baseAttackString;
     }
 
+    /**
+     * <p>Getter for the field <code>baseDefenseString</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getBaseDefenseString() {
         return (null == baseDefenseString) ? "" + getBaseDefense() : baseDefenseString;
     }
 
     //values that are printed on card
+    /**
+     * <p>Setter for the field <code>baseAttackString</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setBaseAttackString(String s) {
         baseAttackString = s;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>baseDefenseString</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setBaseDefenseString(String s) {
         baseDefenseString = s;
         this.updateObservers();
     }
 
+    /**
+     * <p>getUnswitchedAttack.</p>
+     *
+     * @return a int.
+     */
     public int getUnswitchedAttack() {
         int total = getBaseAttack();
         total += getTempAttackBoost() + getSemiPermanentAttackBoost() + getOtherAttackBoost()
@@ -2002,12 +3322,22 @@ public class Card extends MyObservable {
         return total;
     }
 
+    /**
+     * <p>getNetAttack.</p>
+     *
+     * @return a int.
+     */
     public int getNetAttack() {
         if (this.getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0)
             return getUnswitchedDefense();
         else return getUnswitchedAttack();
     }
 
+    /**
+     * <p>getUnswitchedDefense.</p>
+     *
+     * @return a int.
+     */
     public int getUnswitchedDefense() {
         int total = getBaseDefense();
         total += getTempDefenseBoost() + getSemiPermanentDefenseBoost() + getOtherDefenseBoost()
@@ -2019,6 +3349,11 @@ public class Card extends MyObservable {
         return total;
     }
 
+    /**
+     * <p>getNetDefense.</p>
+     *
+     * @return a int.
+     */
     public int getNetDefense() {
         if (this.getAmountOfKeyword("CARDNAME's power and toughness are switched") % 2 != 0)
             return getUnswitchedAttack();
@@ -2026,143 +3361,306 @@ public class Card extends MyObservable {
     }
 
     //How much combat damage does the card deal
+    /**
+     * <p>getNetCombatDamage.</p>
+     *
+     * @return a int.
+     */
     public int getNetCombatDamage() {
         if (AllZoneUtil.isCardInPlay("Doran, the Siege Tower")) return getNetDefense();
         return getNetAttack();
     }
 
+    /**
+     * <p>Setter for the field <code>randomPicture</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setRandomPicture(int n) {
         randomPicture = n;
     }
 
+    /**
+     * <p>Getter for the field <code>randomPicture</code>.</p>
+     *
+     * @return a int.
+     */
     public int getRandomPicture() {
         return randomPicture;
     }
 
+    /**
+     * <p>Setter for the field <code>upkeepDamage</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setUpkeepDamage(int n) {
         upkeepDamage = n;
     }
 
+    /**
+     * <p>Getter for the field <code>upkeepDamage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getUpkeepDamage() {
         return upkeepDamage;
     }
 
+    /**
+     * <p>addMultiKickerMagnitude.</p>
+     *
+     * @param n a int.
+     */
     public void addMultiKickerMagnitude(int n) {
         multiKickerMagnitude += n;
     }
 
+    /**
+     * <p>Setter for the field <code>multiKickerMagnitude</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setMultiKickerMagnitude(int n) {
         multiKickerMagnitude = n;
     }
 
+    /**
+     * <p>Getter for the field <code>multiKickerMagnitude</code>.</p>
+     *
+     * @return a int.
+     */
     public int getMultiKickerMagnitude() {
         return multiKickerMagnitude;
     }
 
+    /**
+     * <p>addReplicateMagnitude.</p>
+     *
+     * @param n a int.
+     */
     public void addReplicateMagnitude(int n) {
         replicateMagnitude += n;
     }
 
+    /**
+     * <p>Setter for the field <code>replicateMagnitude</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setReplicateMagnitude(int n) {
         replicateMagnitude = n;
     }
 
+    /**
+     * <p>Getter for the field <code>replicateMagnitude</code>.</p>
+     *
+     * @return a int.
+     */
     public int getReplicateMagnitude() {
         return replicateMagnitude;
     }
 
     //for cards like Giant Growth, etc.
+    /**
+     * <p>Getter for the field <code>tempAttackBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTempAttackBoost() {
         return tempAttackBoost;
     }
 
+    /**
+     * <p>Getter for the field <code>tempDefenseBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getTempDefenseBoost() {
         return tempDefenseBoost;
     }
 
+    /**
+     * <p>addTempAttackBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addTempAttackBoost(int n) {
         tempAttackBoost += n;
         this.updateObservers();
     }
 
+    /**
+     * <p>addTempDefenseBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addTempDefenseBoost(int n) {
         tempDefenseBoost += n;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>tempAttackBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setTempAttackBoost(int n) {
         tempAttackBoost = n;
         this.updateObservers();
     }
 
+    /**
+     * <p>Setter for the field <code>tempDefenseBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setTempDefenseBoost(int n) {
         tempDefenseBoost = n;
         this.updateObservers();
     }
 
     //for cards like Glorious Anthem, etc.
+    /**
+     * <p>Getter for the field <code>semiPermanentAttackBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getSemiPermanentAttackBoost() {
         return semiPermanentAttackBoost;
     }
 
+    /**
+     * <p>Getter for the field <code>semiPermanentDefenseBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getSemiPermanentDefenseBoost() {
         return semiPermanentDefenseBoost;
     }
 
+    /**
+     * <p>addSemiPermanentAttackBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addSemiPermanentAttackBoost(int n) {
         semiPermanentAttackBoost += n;
     }
 
+    /**
+     * <p>addSemiPermanentDefenseBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addSemiPermanentDefenseBoost(int n) {
         semiPermanentDefenseBoost += n;
     }
 
+    /**
+     * <p>Setter for the field <code>semiPermanentAttackBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setSemiPermanentAttackBoost(int n) {
         semiPermanentAttackBoost = n;
     }
 
+    /**
+     * <p>Setter for the field <code>semiPermanentDefenseBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setSemiPermanentDefenseBoost(int n) {
         semiPermanentDefenseBoost = n;
     }
 
     //for cards like Relentless Rats, Master of Etherium, etc.
+    /**
+     * <p>Getter for the field <code>otherAttackBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getOtherAttackBoost() {
         return otherAttackBoost;
     }
 
+    /**
+     * <p>Getter for the field <code>otherDefenseBoost</code>.</p>
+     *
+     * @return a int.
+     */
     public int getOtherDefenseBoost() {
         return otherDefenseBoost;
     }
 
+    /**
+     * <p>addOtherAttackBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addOtherAttackBoost(int n) {
         otherAttackBoost += n;
     }
 
+    /**
+     * <p>addOtherDefenseBoost.</p>
+     *
+     * @param n a int.
+     */
     public void addOtherDefenseBoost(int n) {
         otherDefenseBoost += n;
     }
 
+    /**
+     * <p>Setter for the field <code>otherAttackBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setOtherAttackBoost(int n) {
         otherAttackBoost = n;
     }
 
+    /**
+     * <p>Setter for the field <code>otherDefenseBoost</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setOtherDefenseBoost(int n) {
         otherDefenseBoost = n;
     }
 
+    /**
+     * <p>isUntapped.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUntapped() {
         return !tapped;
     }
 
+    /**
+     * <p>isTapped.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isTapped() {
         return tapped;
     }
 
+    /**
+     * <p>Setter for the field <code>tapped</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setTapped(boolean b) {
         tapped = b;
         updateObservers();
     }
 
+    /**
+     * <p>tap.</p>
+     */
     public void tap() {
         if (isUntapped()) {
             //Run triggers
@@ -2173,6 +3671,9 @@ public class Card extends MyObservable {
         setTapped(true);
     }
 
+    /**
+     * <p>untap.</p>
+     */
     public void untap() {
         if (isTapped()) {
             //Run triggers
@@ -2189,16 +3690,31 @@ public class Card extends MyObservable {
         setTapped(false);
     }
 
+    /**
+     * <p>isUnCastable.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUnCastable() {
         return unCastable;
     }
 
+    /**
+     * <p>Setter for the field <code>unCastable</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setUnCastable(boolean b) {
         unCastable = b;
         updateObservers();
     }
 
     //keywords are like flying, fear, first strike, etc...
+    /**
+     * <p>getKeyword.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getKeyword() {
         ArrayList<String> a1 = new ArrayList<String>(getIntrinsicKeyword());
         ArrayList<String> a2 = new ArrayList<String>(getExtrinsicKeyword());
@@ -2217,6 +3733,11 @@ public class Card extends MyObservable {
 
     //keywords are like flying, fear, first strike, etc...
     // Hidden keywords will be left out
+    /**
+     * <p>getUnhiddenKeyword.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getUnhiddenKeyword() {
         ArrayList<String> a1 = new ArrayList<String>(getIntrinsicKeyword());
         ArrayList<String> a2 = new ArrayList<String>(getExtrinsicKeyword());
@@ -2231,23 +3752,44 @@ public class Card extends MyObservable {
         return a1;
     }
 
+    /**
+     * <p>getIntrinsicAbilities.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getIntrinsicAbilities() {
         return intrinsicAbility;
     }
 
+    /**
+     * <p>Getter for the field <code>intrinsicKeyword</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getIntrinsicKeyword() {
         return new ArrayList<String>(intrinsicKeyword);
     }
 
+    /**
+     * <p>clearIntrinsicKeyword.</p>
+     */
     public void clearIntrinsicKeyword() {
         intrinsicKeyword.clear();
     }
 
+    /**
+     * <p>Setter for the field <code>intrinsicKeyword</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setIntrinsicKeyword(ArrayList<String> a) {
         intrinsicKeyword = new ArrayList<String>(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>clearAllKeywords.</p>
+     */
     public void clearAllKeywords() {
         intrinsicKeyword.clear();
         extrinsicKeyword.clear();
@@ -2255,21 +3797,41 @@ public class Card extends MyObservable {
         HiddenExtrinsicKeyword.clear();        //Hidden keywords won't be displayed on the card
     }
 
+    /**
+     * <p>setIntrinsicAbilities.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setIntrinsicAbilities(ArrayList<String> a) {
         intrinsicAbility = new ArrayList<String>(a);
     }
 
+    /**
+     * <p>addIntrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addIntrinsicKeyword(String s) {
         if (s.trim().length() != 0)
             intrinsicKeyword.add(s);
         //intrinsicKeyword.add((getName().trim().length()== 0 ? s :s.replaceAll(getName(), "CARDNAME")));
     }
 
+    /**
+     * <p>addIntrinsicAbility.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addIntrinsicAbility(String s) {
         if (s.trim().length() != 0)
             intrinsicAbility.add(s);
     }
 
+    /**
+     * <p>addNonStackingIntrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addNonStackingIntrinsicKeyword(String s) {
         if (!getIntrinsicKeyword().contains(s)) {
             if (s.trim().length() != 0)
@@ -2277,24 +3839,49 @@ public class Card extends MyObservable {
         }
     }
 
+    /**
+     * <p>removeIntrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removeIntrinsicKeyword(String s) {
         intrinsicKeyword.remove(s);
         this.updateObservers();
     }
 
+    /**
+     * <p>getIntrinsicKeywordSize.</p>
+     *
+     * @return a int.
+     */
     public int getIntrinsicKeywordSize() {
         return intrinsicKeyword.size();
     }
 
+    /**
+     * <p>Getter for the field <code>extrinsicKeyword</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getExtrinsicKeyword() {
         return new ArrayList<String>(extrinsicKeyword);
     }
 
+    /**
+     * <p>Setter for the field <code>extrinsicKeyword</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setExtrinsicKeyword(ArrayList<String> a) {
         extrinsicKeyword = new ArrayList<String>(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>addExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addExtrinsicKeyword(String s) {
         //if(!hasKeyword(s)){
         if (s.startsWith("HIDDEN")) addHiddenExtrinsicKeyword(s);
@@ -2304,70 +3891,145 @@ public class Card extends MyObservable {
         //}
     }
 
+    /**
+     * <p>addStackingExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addStackingExtrinsicKeyword(String s) {
         if (s.startsWith("HIDDEN")) addHiddenExtrinsicKeyword(s);
         else extrinsicKeyword.add(s);
     }
 
+    /**
+     * <p>removeExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removeExtrinsicKeyword(String s) {
         if (s.startsWith("HIDDEN")) removeHiddenExtrinsicKeyword(s);
         else extrinsicKeyword.remove(s);
         this.updateObservers();
     }
 
+    /**
+     * <p>getExtrinsicKeywordSize.</p>
+     *
+     * @return a int.
+     */
     public int getExtrinsicKeywordSize() {
         return extrinsicKeyword.size();
     }
 
+    /**
+     * <p>Getter for the field <code>otherExtrinsicKeyword</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getOtherExtrinsicKeyword() {
         return new ArrayList<String>(otherExtrinsicKeyword);
     }
 
+    /**
+     * <p>Setter for the field <code>otherExtrinsicKeyword</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setOtherExtrinsicKeyword(ArrayList<String> a) {
         otherExtrinsicKeyword = new ArrayList<String>(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>addOtherExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addOtherExtrinsicKeyword(String s) {
         otherExtrinsicKeyword.add((getName().trim().length() == 0 ? s : s.replaceAll(getName(), "CARDNAME")));
     }
 
+    /**
+     * <p>addStackingOtherExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addStackingOtherExtrinsicKeyword(String s) {
         extrinsicKeyword.add(s);
     }
 
+    /**
+     * <p>removeOtherExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removeOtherExtrinsicKeyword(String s) {
         otherExtrinsicKeyword.remove(s);
         this.updateObservers();
     }
 
+    /**
+     * <p>getOtherExtrinsicKeywordSize.</p>
+     *
+     * @return a int.
+     */
     public int getOtherExtrinsicKeywordSize() {
         return otherExtrinsicKeyword.size();
     }
 
+    /**
+     * <p>Getter for the field <code>prevIntrinsicKeyword</code>.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getPrevIntrinsicKeyword() {
         return new ArrayList<String>(prevIntrinsicKeyword);
     }
 
+    /**
+     * <p>Setter for the field <code>prevIntrinsicKeyword</code>.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
     public void setPrevIntrinsicKeyword(ArrayList<String> a) {
         prevIntrinsicKeyword = new ArrayList<String>(a);
         this.updateObservers();
     }
 
+    /**
+     * <p>addPrevIntrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addPrevIntrinsicKeyword(String s) {
         prevIntrinsicKeyword.add(s);
     }
 
+    /**
+     * <p>removePrevIntrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removePrevIntrinsicKeyword(String s) {
         prevIntrinsicKeyword.remove(s);
         this.updateObservers();
     }
 
+    /**
+     * <p>getPrevIntrinsicKeywordSize.</p>
+     *
+     * @return a int.
+     */
     public int getPrevIntrinsicKeywordSize() {
         return prevIntrinsicKeyword.size();
     }
 
     // Hidden Keywords will be returned without the indicator HIDDEN
+    /**
+     * <p>getHiddenExtrinsicKeyword.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<String> getHiddenExtrinsicKeyword() {
         ArrayList<String> Keyword = new ArrayList<String>();
         for (int i = 0; i < HiddenExtrinsicKeyword.size(); i++) {
@@ -2377,80 +4039,175 @@ public class Card extends MyObservable {
         return Keyword;
     }
 
+    /**
+     * <p>addHiddenExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void addHiddenExtrinsicKeyword(String s) {
         HiddenExtrinsicKeyword.add(s);
     }
 
+    /**
+     * <p>removeHiddenExtrinsicKeyword.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void removeHiddenExtrinsicKeyword(String s) {
         HiddenExtrinsicKeyword.remove(s);
         //this.updateObservers();
     }
 
+    /**
+     * <p>isPermanent.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isPermanent() {
         return !(isInstant() || isSorcery() || isImmutable());
     }
 
+    /**
+     * <p>isSpell.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSpell() {
         return (isInstant() || isSorcery() || (isAura() && !AllZoneUtil.getCardsInPlay().contains(this)));
     }
 
+    /**
+     * <p>isCreature.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isCreature() {
         return type.contains("Creature");
     }
 
+    /**
+     * <p>isWall.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isWall() {
         return type.contains("Wall");
     }
 
+    /**
+     * <p>isBasicLand.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBasicLand() {
         return type.contains("Basic");
     }
 
+    /**
+     * <p>isLand.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isLand() {
         return type.contains("Land");
     }
 
+    /**
+     * <p>isSorcery.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSorcery() {
         return type.contains("Sorcery");
     }
 
+    /**
+     * <p>isInstant.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isInstant() {
         return type.contains("Instant");
     }
 
+    /**
+     * <p>isArtifact.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isArtifact() {
         return type.contains("Artifact");
     }
 
+    /**
+     * <p>isEquipment.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEquipment() {
         return type.contains("Equipment");
     }
 
+    /**
+     * <p>isPlaneswalker.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isPlaneswalker() {
         return type.contains("Planeswalker");
     }
 
+    /**
+     * <p>isEmblem.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEmblem() {
         return type.contains("Emblem");
     }
 
+    /**
+     * <p>isTribal.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isTribal() {
         return type.contains("Tribal");
     }
 
+    /**
+     * <p>isSnow.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSnow() {
         return type.contains("Snow");
     }
 
     //global and local enchantments
+    /**
+     * <p>isEnchantment.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEnchantment() {
         return typeContains("Enchantment");
     }
 
+    /**
+     * <p>isAura.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAura() {
         return typeContains("Aura");
     }
 
+    /**
+     * <p>isGlobalEnchantment.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isGlobalEnchantment() {
         return typeContains("Enchantment") && (!isAura());
     }
@@ -2463,23 +4220,44 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /**
+     * <p>Setter for the field <code>uniqueNumber</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setUniqueNumber(int n) {
         uniqueNumber = n;
         this.updateObservers();
     }
 
+    /**
+     * <p>Getter for the field <code>uniqueNumber</code>.</p>
+     *
+     * @return a int.
+     */
     public int getUniqueNumber() {
         return uniqueNumber;
     }
 
+    /**
+     * <p>Setter for the field <code>value</code>.</p>
+     *
+     * @param n a long.
+     */
     public void setValue(long n) {
         value = n;
     }
 
+    /**
+     * <p>Getter for the field <code>value</code>.</p>
+     *
+     * @return a long.
+     */
     public long getValue() {
         return value;
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean equals(Object o) {
         if (o instanceof Card) {
@@ -2491,92 +4269,196 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /** {@inheritDoc} */
     @Override
     public int hashCode() {
         return getUniqueNumber();
     }
 
+    /** {@inheritDoc} */
     @Override
     public String toString() {
         return this.getName() + " (" + this.getUniqueNumber() + ")";
     }
 
+    /**
+     * <p>hasFlashback.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasFlashback() {
         return flashback;
     }
 
+    /**
+     * <p>Setter for the field <code>flashback</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setFlashback(boolean b) {
         flashback = b;
     }
 
+    /**
+     * <p>hasUnearth.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasUnearth() {
         return unearth;
     }
 
+    /**
+     * <p>Setter for the field <code>unearth</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setUnearth(boolean b) {
         unearth = b;
     }
 
+    /**
+     * <p>isUnearthed.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isUnearthed() {
         return unearthed;
     }
 
+    /**
+     * <p>Setter for the field <code>unearthed</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setUnearthed(boolean b) {
         unearthed = b;
     }
 
+    /**
+     * <p>hasMadness.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasMadness() {
         return madness;
     }
 
+    /**
+     * <p>Setter for the field <code>madness</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setMadness(boolean b) {
         madness = b;
     }
 
+    /**
+     * <p>Getter for the field <code>madnessCost</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getMadnessCost() {
         return madnessCost;
     }
 
+    /**
+     * <p>Setter for the field <code>madnessCost</code>.</p>
+     *
+     * @param cost a {@link java.lang.String} object.
+     */
     public void setMadnessCost(String cost) {
         madnessCost = cost;
     }
 
+    /**
+     * <p>hasSuspend.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasSuspend() {
         return suspend;
     }
 
+    /**
+     * <p>Setter for the field <code>suspend</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSuspend(boolean b) {
         suspend = b;
     }
 
+    /**
+     * <p>wasSuspendCast.</p>
+     *
+     * @return a boolean.
+     */
     public boolean wasSuspendCast() {
         return suspendCast;
     }
 
+    /**
+     * <p>Setter for the field <code>suspendCast</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setSuspendCast(boolean b) {
         suspendCast = b;
     }
 
+    /**
+     * <p>Setter for the field <code>kicked</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setKicked(boolean b) {
         kicked = b;
     }
 
+    /**
+     * <p>isKicked.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isKicked() {
         return kicked;
     }
 
+    /**
+     * <p>Setter for the field <code>reflectedLand</code>.</p>
+     *
+     * @param b a boolean.
+     */
     public void setReflectedLand(boolean b) {
         reflectedLand = b;
     }
 
+    /**
+     * <p>isReflectedLand.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isReflectedLand() {
         return reflectedLand;
     }
 
+    /**
+     * <p>hasKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean hasKeyword(String keyword) {
         return getKeyword().contains(keyword);
     }
 
+    /**
+     * <p>hasStartOfKeyword.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean hasStartOfKeyword(String keyword) {
         ArrayList<String> a = getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -2584,6 +4466,12 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /**
+     * <p>getKeywordPosition.</p>
+     *
+     * @param k a {@link java.lang.String} object.
+     * @return a int.
+     */
     public int getKeywordPosition(String k) {
         ArrayList<String> a = getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -2591,6 +4479,12 @@ public class Card extends MyObservable {
         return -1;
     }
 
+    /**
+     * <p>keywordsContain.</p>
+     *
+     * @param keyword a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean keywordsContain(String keyword) {
         ArrayList<String> a = getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -2599,6 +4493,12 @@ public class Card extends MyObservable {
     }
 
 
+    /**
+     * <p>hasAnyKeyword.</p>
+     *
+     * @param keywords an array of {@link java.lang.String} objects.
+     * @return a boolean.
+     */
     public boolean hasAnyKeyword(String keywords[]) {
         for (int i = 0; i < keywords.length; i++)
             if (hasKeyword(keywords[i]))
@@ -2607,6 +4507,12 @@ public class Card extends MyObservable {
         return false;
     }
 
+    /**
+     * <p>hasAnyKeyword.</p>
+     *
+     * @param keywords a {@link java.util.ArrayList} object.
+     * @return a boolean.
+     */
     public boolean hasAnyKeyword(ArrayList<String> keywords) {
         for (int i = 0; i < keywords.size(); i++)
             if (hasKeyword(keywords.get(i)))
@@ -2616,6 +4522,12 @@ public class Card extends MyObservable {
     }
 
     //This counts the number of instances of a keyword a card has
+    /**
+     * <p>getAmountOfKeyword.</p>
+     *
+     * @param k a {@link java.lang.String} object.
+     * @return a int.
+     */
     public int getAmountOfKeyword(String k) {
         int count = 0;
         ArrayList<String> keywords = getKeyword();
@@ -2627,6 +4539,12 @@ public class Card extends MyObservable {
     }
 
     // This is for keywords with a number like Bushido, Annihilator and Rampage. It returns the total.
+    /**
+     * <p>getKeywordMagnitude.</p>
+     *
+     * @param k a {@link java.lang.String} object.
+     * @return a int.
+     */
     public int getKeywordMagnitude(String k) {
         int count = 0;
         ArrayList<String> keywords = getKeyword();
@@ -2656,6 +4574,12 @@ public class Card extends MyObservable {
     }
 
     //usable to check for changelings
+    /**
+     * <p>isType.</p>
+     *
+     * @param cardType a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isType(String cardType) {
         cardType = toMixedCase(cardType);
 
@@ -2666,7 +4590,15 @@ public class Card extends MyObservable {
     }
 
 
-    // Takes an array of arguments like Permanent.Blue+withFlying, only one of them has to be true
+    /**
+     * <p>isValidCard.</p>
+     * Takes an array of arguments like Permanent.Blue+withFlying, only one of them has to be true
+     *
+     * @param Restrictions an array of {@link java.lang.String} objects.
+     * @param sourceController a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isValidCard(final String Restrictions[], final Player sourceController, final Card source) {
 
         if (getName().equals("Mana Pool") || isImmutable()) return false;
@@ -2680,6 +4612,14 @@ public class Card extends MyObservable {
 
 
     // Takes one argument like Permanent.Blue+withFlying
+    /**
+     * <p>isValid.</p>
+     *
+     * @param Restriction a {@link java.lang.String} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isValid(final String Restriction, final Player sourceController, final Card source) {
 
         if (getName().equals("Mana Pool") || isImmutable()) return false;
@@ -2708,6 +4648,14 @@ public class Card extends MyObservable {
     }//isValidCard(String Restriction)
 
     // Takes arguments like Blue or withFlying
+    /**
+     * <p>hasProperty.</p>
+     *
+     * @param Property a {@link java.lang.String} object.
+     * @param sourceController a {@link forge.Player} object.
+     * @param source a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean hasProperty(String Property, final Player sourceController, final Card source) {
         //by name can also have color names, so needs to happen before colors.
         if (Property.startsWith("named")) {
@@ -2893,10 +4841,20 @@ public class Card extends MyObservable {
         return true;
     }//hasProperty
 
+    /**
+     * <p>setImmutable.</p>
+     *
+     * @param isImmutable a boolean.
+     */
     public void setImmutable(boolean isImmutable) {
         this.isImmutable = isImmutable;
     }
 
+    /**
+     * <p>isImmutable.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isImmutable() {
         return isImmutable;
     }
@@ -2906,34 +4864,76 @@ public class Card extends MyObservable {
       * be made part of the Card class, so calling out is not necessary
       */
 
+    /**
+     * <p>isColor.</p>
+     *
+     * @param col a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     public boolean isColor(String col) {
         return CardUtil.getColors(this).contains(col);
     }
 
+    /**
+     * <p>isBlack.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBlack() {
         return CardUtil.getColors(this).contains(Constant.Color.Black);
     }
 
+    /**
+     * <p>isBlue.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBlue() {
         return CardUtil.getColors(this).contains(Constant.Color.Blue);
     }
 
+    /**
+     * <p>isRed.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isRed() {
         return CardUtil.getColors(this).contains(Constant.Color.Red);
     }
 
+    /**
+     * <p>isGreen.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isGreen() {
         return CardUtil.getColors(this).contains(Constant.Color.Green);
     }
 
+    /**
+     * <p>isWhite.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isWhite() {
         return CardUtil.getColors(this).contains(Constant.Color.White);
     }
 
+    /**
+     * <p>isColorless.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isColorless() {
         return CardUtil.getColors(this).contains(Constant.Color.Colorless);
     }
 
+    /**
+     * <p>sharesColorWith.</p>
+     *
+     * @param c1 a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean sharesColorWith(final Card c1) {
         boolean shares = false;
         shares |= (isBlack() && c1.isBlack());
@@ -2944,19 +4944,41 @@ public class Card extends MyObservable {
         return shares;
     }
 
+    /**
+     * <p>isAttacking.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isAttacking() {
         return AllZone.getCombat().isAttacking(this);
     }
 
+    /**
+     * <p>isBlocking.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isBlocking() {
         CardList blockers = AllZone.getCombat().getAllBlockers();
         return blockers.contains(this);
     }
 
+    /**
+     * <p>isBlocking.</p>
+     *
+     * @param attacker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isBlocking(Card attacker) {
         return attacker.equals(AllZone.getCombat().getAttackerBlockedBy(this));
     }
 
+    /**
+     * <p>isBlockedBy.</p>
+     *
+     * @param blocker a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public boolean isBlockedBy(Card blocker) {
         return this.equals(AllZone.getCombat().getAttackerBlockedBy(blocker));
     }
@@ -2968,43 +4990,98 @@ public class Card extends MyObservable {
     //////////////////////////
 
     //all damage to cards is now handled in Card.java, no longer AllZone.getGameAction()...
+    /**
+     * <p>addReceivedDamageFromThisTurn.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public void addReceivedDamageFromThisTurn(Card c, int damage) {
         receivedDamageFromThisTurn.put(c, damage);
     }
 
+    /**
+     * <p>Setter for the field <code>receivedDamageFromThisTurn</code>.</p>
+     *
+     * @param receivedDamageList a {@link java.util.HashMap} object.
+     */
     public void setReceivedDamageFromThisTurn(HashMap<Card, Integer> receivedDamageList) {
         receivedDamageFromThisTurn = receivedDamageList;
     }
 
+    /**
+     * <p>Getter for the field <code>receivedDamageFromThisTurn</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<Card, Integer> getReceivedDamageFromThisTurn() {
         return receivedDamageFromThisTurn;
     }
 
+    /**
+     * <p>resetReceivedDamageFromThisTurn.</p>
+     */
     public void resetReceivedDamageFromThisTurn() {
         receivedDamageFromThisTurn.clear();
     }
 
+    /**
+     * <p>addDealtDamageToThisTurn.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param damage a int.
+     */
     public void addDealtDamageToThisTurn(Card c, int damage) {
         dealtDamageToThisTurn.put(c, damage);
     }
 
+    /**
+     * <p>Setter for the field <code>dealtDamageToThisTurn</code>.</p>
+     *
+     * @param dealtDamageList a {@link java.util.HashMap} object.
+     */
     public void setDealtDamageToThisTurn(HashMap<Card, Integer> dealtDamageList) {
         dealtDamageToThisTurn = dealtDamageList;
     }
 
+    /**
+     * <p>Getter for the field <code>dealtDamageToThisTurn</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<Card, Integer> getDealtDamageToThisTurn() {
         return dealtDamageToThisTurn;
     }
 
+    /**
+     * <p>resetDealtDamageToThisTurn.</p>
+     */
     public void resetDealtDamageToThisTurn() {
         dealtDamageToThisTurn.clear();
     }
 
     //how much damage is enough to kill the creature (for AI)
+    /**
+     * <p>getEnoughDamageToKill.</p>
+     *
+     * @param maxDamage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int getEnoughDamageToKill(int maxDamage, Card source, boolean isCombat) {
         return getEnoughDamageToKill(maxDamage, source, isCombat, false);
     }
 
+    /**
+     * <p>getEnoughDamageToKill.</p>
+     *
+     * @param maxDamage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @param noPrevention a boolean.
+     * @return a int.
+     */
     public int getEnoughDamageToKill(int maxDamage, Card source, boolean isCombat, boolean noPrevention) {
         int killDamage = getKillDamage();
 
@@ -3035,6 +5112,11 @@ public class Card extends MyObservable {
     }
 
     //the amount of damage needed to kill the creature (for AI)
+    /**
+     * <p>getKillDamage.</p>
+     *
+     * @return a int.
+     */
     public int getKillDamage() {
         int killDamage = getLethalDamage() + preventNextDamage;
         if (killDamage > preventNextDamage && hasStartOfKeyword("When CARDNAME is dealt damage, destroy it."))
@@ -3044,21 +5126,42 @@ public class Card extends MyObservable {
     }
 
     //this is the minimal damage a trampling creature has to assign to a blocker
+    /**
+     * <p>getLethalDamage.</p>
+     *
+     * @return a int.
+     */
     public int getLethalDamage() {
         int lethalDamage = getNetDefense() - getDamage() - getTotalAssignedDamage();
 
         return lethalDamage;
     }
 
+    /**
+     * <p>Setter for the field <code>damage</code>.</p>
+     *
+     * @param n a int.
+     */
     public void setDamage(int n) {
         //if (this.hasKeyword("Prevent all damage that would be dealt to CARDNAME.")) n = 0;
         damage = n;
     }
 
+    /**
+     * <p>Getter for the field <code>damage</code>.</p>
+     *
+     * @return a int.
+     */
     public int getDamage() {
         return damage;
     }
 
+    /**
+     * <p>addAssignedDamage.</p>
+     *
+     * @param damage a int.
+     * @param sourceCard a {@link forge.Card} object.
+     */
     public void addAssignedDamage(int damage, Card sourceCard) {
         if (damage < 0) damage = 0;
 
@@ -3082,10 +5185,18 @@ public class Card extends MyObservable {
         */
     }
 
+    /**
+     * <p>clearAssignedDamage.</p>
+     */
     public void clearAssignedDamage() {
         assignedDamageHashMap.clear();
     }
 
+    /**
+     * <p>getTotalAssignedDamage.</p>
+     *
+     * @return a int.
+     */
     public int getTotalAssignedDamage() {
         int total = 0;
 
@@ -3098,10 +5209,20 @@ public class Card extends MyObservable {
         return total;
     }
 
+    /**
+     * <p>Getter for the field <code>assignedDamageHashMap</code>.</p>
+     *
+     * @return a {@link java.util.HashMap} object.
+     */
     public HashMap<Card, Integer> getAssignedDamageHashMap() {
         return assignedDamageHashMap;
     }
 
+    /**
+     * <p>addCombatDamage.</p>
+     *
+     * @param map a {@link java.util.HashMap} object.
+     */
     public void addCombatDamage(HashMap<Card, Integer> map) {
         CardList list = new CardList();
 
@@ -3126,6 +5247,15 @@ public class Card extends MyObservable {
     }
 
     //This function helps the AI calculate the actual amount of damage an effect would deal
+    /**
+     * <p>predictDamage.</p>
+     *
+     * @param damage a int.
+     * @param possiblePrevention a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int predictDamage(final int damage, final int possiblePrevention, final Card source, final boolean isCombat) {
 
         int restDamage = damage;
@@ -3138,6 +5268,14 @@ public class Card extends MyObservable {
     }
 
     //This function helps the AI calculate the actual amount of damage an effect would deal
+    /**
+     * <p>predictDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int predictDamage(final int damage, final Card source, final boolean isCombat) {
 
         int restDamage = damage;
@@ -3150,6 +5288,15 @@ public class Card extends MyObservable {
     }
 
     //This should be also usable by the AI to forecast an effect (so it must not change the game state)
+    /**
+     * <p>staticDamagePrevention.</p>
+     *
+     * @param damage a int.
+     * @param possiblePrvenetion a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int staticDamagePrevention(final int damage, final int possiblePrvenetion, final Card source, final boolean isCombat) {
 
         if (AllZoneUtil.isCardInPlay("Leyline of Punishment")) return damage;
@@ -3162,6 +5309,14 @@ public class Card extends MyObservable {
     }
 
     //This should be also usable by the AI to forecast an effect (so it must not change the game state)
+    /**
+     * <p>staticDamagePrevention.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int staticDamagePrevention(final int damage, final Card source, final boolean isCombat) {
 
         if (AllZoneUtil.isCardInPlay("Leyline of Punishment")) return damage;
@@ -3233,6 +5388,14 @@ public class Card extends MyObservable {
         else return 0;
     }
 
+    /**
+     * <p>preventDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int preventDamage(final int damage, Card source, boolean isCombat) {
 
         if (AllZoneUtil.isCardInPlay("Leyline of Punishment")) return damage;
@@ -3270,6 +5433,14 @@ public class Card extends MyObservable {
     }
 
     //This should be also usable by the AI to forecast an effect (so it must not change the game state)
+    /**
+     * <p>staticReplaceDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int staticReplaceDamage(final int damage, Card source, boolean isCombat) {
 
         int restDamage = damage;
@@ -3325,6 +5496,14 @@ public class Card extends MyObservable {
         return restDamage;
     }
 
+    /**
+     * <p>replaceDamage.</p>
+     *
+     * @param damage a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     * @return a int.
+     */
     public int replaceDamage(final int damage, Card source, boolean isCombat) {
 
         int restDamage = damage;
@@ -3350,6 +5529,11 @@ public class Card extends MyObservable {
         return restDamage;
     }
 
+    /**
+     * <p>addDamage.</p>
+     *
+     * @param sourcesMap a {@link java.util.HashMap} object.
+     */
     public void addDamage(HashMap<Card, Integer> sourcesMap) {
         for (Entry<Card, Integer> entry : sourcesMap.entrySet()) {
             addDamageAfterPrevention(entry.getValue(), entry.getKey(), true); // damage prevention is already checked!
@@ -3357,6 +5541,12 @@ public class Card extends MyObservable {
     }
 
     //This is for noncombat damage
+    /**
+     * <p>addDamage.</p>
+     *
+     * @param damageIn a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addDamage(final int damageIn, final Card source) {
         int damageToAdd = damageIn;
 
@@ -3367,6 +5557,12 @@ public class Card extends MyObservable {
 
     }
 
+    /**
+     * <p>addDamageWithoutPrevention.</p>
+     *
+     * @param damageIn a int.
+     * @param source a {@link forge.Card} object.
+     */
     public void addDamageWithoutPrevention(final int damageIn, final Card source) {
         int damageToAdd = damageIn;
 
@@ -3376,6 +5572,13 @@ public class Card extends MyObservable {
     }
 
     //This function handles damage after replacement and prevention effects are applied
+    /**
+     * <p>addDamageAfterPrevention.</p>
+     *
+     * @param damageIn a int.
+     * @param source a {@link forge.Card} object.
+     * @param isCombat a boolean.
+     */
     public void addDamageAfterPrevention(final int damageIn, final Card source, final boolean isCombat) {
         int damageToAdd = damageIn;
         boolean wither = false;
@@ -3416,26 +5619,54 @@ public class Card extends MyObservable {
     private ArrayList<SetInfo> Sets = new ArrayList<SetInfo>();
     private String curSetCode = "";
 
+    /**
+     * <p>addSet.</p>
+     *
+     * @param sInfo a {@link forge.SetInfo} object.
+     */
     public void addSet(SetInfo sInfo) {
         Sets.add(sInfo);
     }
 
+    /**
+     * <p>getSets.</p>
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
     public ArrayList<SetInfo> getSets() {
         return Sets;
     }
 
+    /**
+     * <p>setSets.</p>
+     *
+     * @param siList a {@link java.util.ArrayList} object.
+     */
     public void setSets(ArrayList<SetInfo> siList) {
         Sets = siList;
     }
 
+    /**
+     * <p>Setter for the field <code>curSetCode</code>.</p>
+     *
+     * @param setCode a {@link java.lang.String} object.
+     */
     public void setCurSetCode(String setCode) {
         curSetCode = setCode;
     }
 
+    /**
+     * <p>Getter for the field <code>curSetCode</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCurSetCode() {
         return curSetCode;
     }
 
+    /**
+     * <p>setRandomSetCode.</p>
+     */
     public void setRandomSetCode() {
         if (Sets.size() < 1)
             return;
@@ -3446,14 +5677,30 @@ public class Card extends MyObservable {
         curSetCode = si.Code;
     }
 
+    /**
+     * <p>getSetImageName.</p>
+     *
+     * @param setCode a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getSetImageName(String setCode) {
         return "/" + setCode + "/" + getImageName();
     }
 
+    /**
+     * <p>getCurSetImage.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCurSetImage() {
         return getSetImageName(curSetCode);
     }
 
+    /**
+     * <p>getCurSetRarity.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCurSetRarity() {
         for (int i = 0; i < Sets.size(); i++)
             if (Sets.get(i).Code.equals(curSetCode))
@@ -3462,6 +5709,11 @@ public class Card extends MyObservable {
         return "";
     }
 
+    /**
+     * <p>getCurSetURL.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getCurSetURL() {
         for (int i = 0; i < Sets.size(); i++)
             if (Sets.get(i).Code.equals(curSetCode))
@@ -3470,24 +5722,49 @@ public class Card extends MyObservable {
         return "";
     }
 
+    /**
+     * <p>getMostRecentSet.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getMostRecentSet() {
         return SetInfoUtil.getMostRecentSet(Sets);
     }
 
     private String ImageFilename = "";
 
+    /**
+     * <p>setImageFilename.</p>
+     *
+     * @param iFN a {@link java.lang.String} object.
+     */
     public void setImageFilename(String iFN) {
         ImageFilename = iFN;
     }
 
+    /**
+     * <p>getImageFilename.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getImageFilename() {
         return ImageFilename;
     }
 
+    /**
+     * <p>Setter for the field <code>evoked</code>.</p>
+     *
+     * @param evoked a boolean.
+     */
     public void setEvoked(boolean evoked) {
         this.evoked = evoked;
     }
 
+    /**
+     * <p>isEvoked.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isEvoked() {
         return evoked;
     }

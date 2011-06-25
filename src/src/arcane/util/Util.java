@@ -14,10 +14,19 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * <p>Util class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class Util {
+    /** Constant <code>isMac=System.getProperty("os.name").toLowerCase().indexOf("mac") != -1</code> */
     static public final boolean isMac = System.getProperty("os.name").toLowerCase().indexOf("mac") != -1;
+    /** Constant <code>isWindows=System.getProperty("os.name").toLowerCase().indexOf("windows") == -1</code> */
     static public final boolean isWindows = System.getProperty("os.name").toLowerCase().indexOf("windows") == -1;
 
+    /** Constant <code>robot</code> */
     static public Robot robot;
 
     static {
@@ -28,7 +37,9 @@ public class Util {
         }
     }
 
+    /** Constant <code>threadPool</code> */
     static public ThreadPoolExecutor threadPool;
+    /** Constant <code>threadCount</code> */
     static private int threadCount;
 
     static {
@@ -43,12 +54,28 @@ public class Util {
         threadPool.prestartAllCoreThreads();
     }
 
+    /**
+     * <p>broadcast.</p>
+     *
+     * @param data an array of byte.
+     * @param port a int.
+     * @throws java.io.IOException if any.
+     */
     public static void broadcast(byte[] data, int port) throws IOException {
         DatagramSocket socket = new DatagramSocket();
         broadcast(socket, data, port, NetworkInterface.getNetworkInterfaces());
         socket.close();
     }
 
+    /**
+     * <p>broadcast.</p>
+     *
+     * @param socket a {@link java.net.DatagramSocket} object.
+     * @param data an array of byte.
+     * @param port a int.
+     * @param ifaces a {@link java.util.Enumeration} object.
+     * @throws java.io.IOException if any.
+     */
     private static void broadcast(DatagramSocket socket, byte[] data, int port, Enumeration<NetworkInterface> ifaces)
             throws IOException {
         for (NetworkInterface iface : Collections.list(ifaces)) {
@@ -64,6 +91,12 @@ public class Util {
         }
     }
 
+    /**
+     * <p>invokeAndWait.</p>
+     *
+     * @param runnable a {@link java.lang.Runnable} object.
+     * @throws java.lang.Exception if any.
+     */
     public static void invokeAndWait(Runnable runnable) throws Exception {
         try {
             SwingUtilities.invokeAndWait(runnable);

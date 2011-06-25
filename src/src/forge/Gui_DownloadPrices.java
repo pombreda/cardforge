@@ -13,8 +13,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 
+/**
+ * <p>Gui_DownloadPrices class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Gui_DownloadPrices extends JFrame {
 
+    /** Constant <code>serialVersionUID=1L</code> */
     private static final long serialVersionUID = 1L;
     private JPanel jContentPane = null;
     private JButton jButton = null;
@@ -29,8 +36,6 @@ public class Gui_DownloadPrices extends JFrame {
 
     /**
      * This method initializes this
-     *
-     * @return void
      */
     private void initialize() {
         this.setSize(386, 200);

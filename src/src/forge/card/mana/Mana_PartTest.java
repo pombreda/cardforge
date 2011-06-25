@@ -3,7 +3,16 @@ package forge.card.mana;
 import forge.Card;
 import forge.Constant;
 
+/**
+ * <p>Mana_PartTest class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Mana_PartTest {
+    /**
+     * <p>testPayManaCost.</p>
+     */
     static void testPayManaCost() {
         {
             //test constructor
@@ -481,11 +490,24 @@ public class Mana_PartTest {
     } //testPayManaCost()
 
 
+    /**
+     * <p>check.</p>
+     *
+     * @param n a double.
+     * @param b a boolean.
+     */
     static void check(double n, boolean b) {
         if (!b)
             System.out.println("failed : " + n);
     }
 
+    /**
+     * <p>check.</p>
+     *
+     * @param n a double.
+     * @param b a boolean.
+     * @param p a {@link forge.card.mana.ManaCost} object.
+     */
     static void check(double n, boolean b, ManaCost p) {
         if (!b) {
             System.out.println("failed : " + n);
@@ -493,6 +515,11 @@ public class Mana_PartTest {
         }
     }
 
+    /**
+     * <p>main.</p>
+     *
+     * @param args an array of {@link java.lang.String} objects.
+     */
     public static void main(String[] args) {
         try {
 

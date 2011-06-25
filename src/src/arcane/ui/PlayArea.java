@@ -10,13 +10,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * <p>PlayArea class.</p>
+ *
+ * @author Forge
+ * @version $Id$
+ */
 public class PlayArea extends CardPanelContainer implements CardPanelMouseListener {
+    /** Constant <code>serialVersionUID=8333013579724492513L</code> */
     private static final long serialVersionUID = 8333013579724492513L;
+    /** Constant <code>GUTTER_Y=5</code> */
     static private final int GUTTER_Y = 5;
+    /** Constant <code>GUTTER_X=5</code> */
     static private final int GUTTER_X = 5;
+    /** Constant <code>EXTRA_CARD_SPACING_X=0.04f</code> */
     static final float EXTRA_CARD_SPACING_X = 0.04f;
+    /** Constant <code>CARD_SPACING_Y=0.06f</code> */
     static private final float CARD_SPACING_Y = 0.06f;
+    /** Constant <code>STACK_SPACING_X=0.07f</code> */
     static private final float STACK_SPACING_X = 0.07f;
+    /** Constant <code>STACK_SPACING_Y=0.07f</code> */
     static private final float STACK_SPACING_Y = 0.07f;
 
     private int landStackMax = 5;
@@ -31,12 +44,23 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
     private int extraCardSpacingX, cardSpacingX, cardSpacingY;
     private int stackSpacingX, stackSpacingY;
 
+    /**
+     * <p>Constructor for PlayArea.</p>
+     *
+     * @param scrollPane a {@link javax.swing.JScrollPane} object.
+     * @param mirror a boolean.
+     */
     public PlayArea(JScrollPane scrollPane, boolean mirror) {
         super(scrollPane);
         setBackground(Color.white);
         this.mirror = mirror;
     }
 
+    /**
+     * <p>doLayout.</p>
+     *
+     * @since 1.0.15
+     */
     public void doLayout() {
         int tokenStackMax = 5;
         // Collect lands.
@@ -211,6 +235,14 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         }
     }
 
+    /**
+     * <p>wrap.</p>
+     *
+     * @param sourceRow a {@link arcane.ui.PlayArea.Row} object.
+     * @param rows a {@link java.util.List} object.
+     * @param insertIndex a int.
+     * @return a int.
+     */
     private int wrap(Row sourceRow, List<Row> rows, int insertIndex) {
         // The cards are sure to fit (with vertical scrolling) at the minimum card width.
         boolean allowHeightOverflow = cardWidth == cardWidthMin;
@@ -245,6 +277,14 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         return insertIndex;
     }
 
+    /**
+     * <p>fillRow.</p>
+     *
+     * @param sourceRow a {@link arcane.ui.PlayArea.Row} object.
+     * @param rows a {@link java.util.List} object.
+     * @param rows a {@link java.util.List} object.
+     * @param row a {@link arcane.ui.PlayArea.Row} object.
+     */
     private void fillRow(Row sourceRow, List<Row> rows, Row row) {
         int rowWidth = row.getWidth();
         while (!sourceRow.isEmpty()) {
@@ -258,6 +298,12 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         }
     }
 
+    /**
+     * <p>getRowsHeight.</p>
+     *
+     * @param rows a {@link java.util.List} object.
+     * @return a int.
+     */
     private int getRowsHeight(List<Row> rows) {
         int height = 0;
         for (Row row : rows)
@@ -265,6 +311,7 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         return height - cardSpacingY + GUTTER_Y * 2;
     }
 
+    /** {@inheritDoc} */
     public CardPanel getCardPanel(int x, int y) {
         for (Row row : rows) {
             for (Stack stack : row) {
@@ -292,23 +339,44 @@ public class PlayArea extends CardPanelContainer implements CardPanelMouseListen
         return null;
     }
 
+    /** {@inheritDoc} */
     public void mouseLeftClicked(CardPanel panel, MouseEvent evt) {
         if (panel.tappedAngle != 0 && panel.tappedAngle != CardPanel.TAPPED_ANGLE) return;
         super.mouseLeftClicked(panel, evt);
     }
 
+    /**
+     * <p>Getter for the field <code>landStackMax</code>.</p>
+     *
+     * @return a int.
+     */
     public int getLandStackMax() {
         return landStackMax;
     }
 
+    /**
+     * <p>Setter for the field <code>landStackMax</code>.</p>
+     *
+     * @param landStackMax a int.
+     */
     public void setLandStackMax(int landStackMax) {
         this.landStackMax = landStackMax;
     }
 
+    /**
+     * <p>Getter for the field <code>stackVertical</code>.</p>
+     *
+     * @return a boolean.
+     */
     public boolean getStackVertical() {
         return stackVertical;
     }
 
+    /**
+     * <p>Setter for the field <code>stackVertical</code>.</p>
+     *
+     * @param stackVertical a boolean.
+     */
     public void setStackVertical(boolean stackVertical) {
         this.stackVertical = stackVertical;
     }

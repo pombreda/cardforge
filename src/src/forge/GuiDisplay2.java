@@ -15,19 +15,35 @@ import java.util.Observable;
 import java.util.Observer;
 
 
+/**
+ * <p>GuiDisplay2 class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Display, NewConstants {
+    /** Constant <code>serialVersionUID=8974795337536720207L</code> */
     private static final long serialVersionUID = 8974795337536720207L;
 
     //private CardList multiBlockers = new CardList();
 
     private GuiInput inputControl;
+    /** Constant <code>eotCheckboxForMenu</code> */
     public static JCheckBoxMenuItem eotCheckboxForMenu = new JCheckBoxMenuItem("Stop at End of Turn", false);
 
+    /**
+     * <p>stopEOT.</p>
+     *
+     * @return a boolean.
+     */
     public boolean stopEOT() {
         return eotCheckboxForMenu.isSelected();
     }
 
 
+    /**
+     * <p>Constructor for GuiDisplay2.</p>
+     */
     public GuiDisplay2() {
         AllZone.setDisplay(this);
         initComponents();
@@ -39,6 +55,7 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
         inputControl = new GuiInput();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setVisible(boolean visible) {
         if (visible) {
@@ -62,10 +79,14 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
     }
     */
 
+    /** {@inheritDoc} */
     public void assignDamage(Card attacker, CardList blockers, int damage) {
         new Gui_MultipleBlockers(attacker, blockers, damage, this);
     }
 
+    /**
+     * <p>addMenu.</p>
+     */
     private void addMenu() {
         JMenuItem humanGraveyard = new JMenuItem("View Graveyard");
         humanGraveyard.addActionListener(new ActionListener() {
@@ -116,6 +137,11 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
         this.setJMenuBar(menuBar);
     }//addMenu()
 
+    /**
+     * <p>getButtonOK.</p>
+     *
+     * @return a {@link forge.MyButton} object.
+     */
     public MyButton getButtonOK() {
         MyButton ok = new MyButton() {
             public void select() {
@@ -145,6 +171,11 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
         return ok;
     }//getButtonOK()
 
+    /**
+     * <p>getButtonCancel.</p>
+     *
+     * @return a {@link forge.MyButton} object.
+     */
     public MyButton getButtonCancel() {
         MyButton cancel = new MyButton() {
             public void select() {
@@ -174,14 +205,19 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
         return cancel;
     }//getButtonCancel()
 
+    /** {@inheritDoc} */
     public void showCombat(String message) {
         combatArea.setText(message);
     }
 
+    /** {@inheritDoc} */
     public void showMessage(String s) {
         messageArea.setText(s);
     }
 
+    /**
+     * <p>addListeners.</p>
+     */
     private void addListeners() {
         //mouse Card Detail
         playerHandPanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
@@ -270,15 +306,24 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
 
     }//addListener()
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @return a {@link forge.Card} object.
+     */
     public Card getCard() {
         return detail.getCard();
     }
 
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
     }
 
+    /**
+     * <p>addObservers.</p>
+     */
     private void addObservers() {
         //Human Hand, Graveyard, and Library totals
         {//make sure to not interfer with anything below, since this is a very long method
@@ -769,11 +814,21 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
         pack();
     }//GEN-END:initComponents
 
+    /**
+     * <p>cancelButtonActionPerformed.</p>
+     *
+     * @param evt a {@link java.awt.event.ActionEvent} object.
+     */
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_cancelButtonActionPerformed
     {//GEN-HEADEREND:event_cancelButtonActionPerformed
         inputControl.selectButtonCancel();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+    /**
+     * <p>okButtonActionPerformed.</p>
+     *
+     * @param evt a {@link java.awt.event.ActionEvent} object.
+     */
     private void okButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_okButtonActionPerformed
     {//GEN-HEADEREND:event_okButtonActionPerformed
         inputControl.selectButtonOK();
@@ -781,6 +836,8 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
 
     /**
      * Exit the Application
+     *
+     * @param evt a {@link java.awt.event.WindowEvent} object.
      */
     private void exitForm(java.awt.event.WindowEvent evt)//GEN-FIRST:event_exitForm
     {
@@ -835,21 +892,37 @@ public class GuiDisplay2 extends javax.swing.JFrame implements CardContainer, Di
     private CardPicturePanel picture;
     // End of variables declaration//GEN-END:variables
 
+    /** {@inheritDoc} */
     public boolean stopAtPhase(Player turn, String phase) {
         // is display2 even used?
         return true;
     }
 
+    /**
+     * <p>loadPrefs.</p>
+     *
+     * @return a boolean.
+     */
     public boolean loadPrefs() {
 
         return false;
     }
 
+    /**
+     * <p>savePrefs.</p>
+     *
+     * @return a boolean.
+     */
     public boolean savePrefs() {
         return false;
     }
 
 
+    /**
+     * <p>canLoseByDecking.</p>
+     *
+     * @return a boolean.
+     */
     public boolean canLoseByDecking() {
         return true;
     }

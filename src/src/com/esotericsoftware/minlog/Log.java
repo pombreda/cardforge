@@ -8,6 +8,7 @@ import java.util.Date;
  * A low overhead, lightweight logging system.
  *
  * @author Nathan Sweet <misc@n4te.com>
+ * @version $Id$
  */
 public class Log {
     /**
@@ -64,6 +65,8 @@ public class Log {
 
     /**
      * Sets the level to log. If a version of this class is being used that has a final log level, this has no affect.
+     *
+     * @param level a int.
      */
     static public void set(int level) {
         // Comment out method contents when compiling fixed level JARs.
@@ -75,119 +78,263 @@ public class Log {
         TRACE = level <= LEVEL_TRACE;
     }
 
+    /**
+     * <p>NONE.</p>
+     */
     static public void NONE() {
         set(LEVEL_NONE);
     }
 
+    /**
+     * <p>ERROR.</p>
+     */
     static public void ERROR() {
         set(LEVEL_ERROR);
     }
 
+    /**
+     * <p>WARN.</p>
+     */
     static public void WARN() {
         set(LEVEL_WARN);
     }
 
+    /**
+     * <p>INFO.</p>
+     */
     static public void INFO() {
         set(LEVEL_INFO);
     }
 
+    /**
+     * <p>DEBUG.</p>
+     */
     static public void DEBUG() {
         set(LEVEL_DEBUG);
     }
 
+    /**
+     * <p>TRACE.</p>
+     */
     static public void TRACE() {
         set(LEVEL_TRACE);
     }
 
     /**
      * Sets the logger that will write the log messages.
+     *
+     * @param logger a {@link com.esotericsoftware.minlog.Log.Logger} object.
      */
     static public void setLogger(Logger logger) {
         Log.logger = logger;
     }
 
+    /** Constant <code>logger</code> */
     static private Logger logger = new Logger();
 
+    /**
+     * <p>error.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void error(String message, Throwable ex) {
         if (ERROR) logger.log(LEVEL_ERROR, null, message, ex);
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void error(String category, String message, Throwable ex) {
         if (ERROR) logger.log(LEVEL_ERROR, category, message, ex);
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     static public void error(String message) {
         if (ERROR) logger.log(LEVEL_ERROR, null, message, null);
     }
 
+    /**
+     * <p>error.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     */
     static public void error(String category, String message) {
         if (ERROR) logger.log(LEVEL_ERROR, category, message, null);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void warn(String message, Throwable ex) {
         if (WARN) logger.log(LEVEL_WARN, null, message, ex);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void warn(String category, String message, Throwable ex) {
         if (WARN) logger.log(LEVEL_WARN, category, message, ex);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     static public void warn(String message) {
         if (WARN) logger.log(LEVEL_WARN, null, message, null);
     }
 
+    /**
+     * <p>warn.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     */
     static public void warn(String category, String message) {
         if (WARN) logger.log(LEVEL_WARN, category, message, null);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void info(String message, Throwable ex) {
         if (INFO) logger.log(LEVEL_INFO, null, message, ex);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void info(String category, String message, Throwable ex) {
         if (INFO) logger.log(LEVEL_INFO, category, message, ex);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     static public void info(String message) {
         if (INFO) logger.log(LEVEL_INFO, null, message, null);
     }
 
+    /**
+     * <p>info.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     */
     static public void info(String category, String message) {
         if (INFO) logger.log(LEVEL_INFO, category, message, null);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void debug(String message, Throwable ex) {
         if (DEBUG) logger.log(LEVEL_DEBUG, null, message, ex);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void debug(String category, String message, Throwable ex) {
         if (DEBUG) logger.log(LEVEL_DEBUG, category, message, ex);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     static public void debug(String message) {
         if (DEBUG) logger.log(LEVEL_DEBUG, null, message, null);
     }
 
+    /**
+     * <p>debug.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     */
     static public void debug(String category, String message) {
         if (DEBUG) logger.log(LEVEL_DEBUG, category, message, null);
     }
 
+    /**
+     * <p>trace.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void trace(String message, Throwable ex) {
         if (TRACE) logger.log(LEVEL_TRACE, null, message, ex);
     }
 
+    /**
+     * <p>trace.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     * @param ex a {@link java.lang.Throwable} object.
+     */
     static public void trace(String category, String message, Throwable ex) {
         if (TRACE) logger.log(LEVEL_TRACE, category, message, ex);
     }
 
+    /**
+     * <p>trace.</p>
+     *
+     * @param message a {@link java.lang.String} object.
+     */
     static public void trace(String message) {
         if (TRACE) logger.log(LEVEL_TRACE, null, message, null);
     }
 
+    /**
+     * <p>trace.</p>
+     *
+     * @param category a {@link java.lang.String} object.
+     * @param message a {@link java.lang.String} object.
+     */
     static public void trace(String category, String message) {
         if (TRACE) logger.log(LEVEL_TRACE, category, message, null);
     }
 
+    /**
+     * <p>Constructor for Log.</p>
+     */
     private Log() {
     }
 

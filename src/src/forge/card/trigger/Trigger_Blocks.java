@@ -6,12 +6,25 @@ import forge.card.spellability.SpellAbility;
 import java.util.HashMap;
 
 
+/**
+ * <p>Trigger_Blocks class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Trigger_Blocks extends Trigger {
 
+    /**
+     * <p>Constructor for Trigger_Blocks.</p>
+     *
+     * @param params a {@link java.util.HashMap} object.
+     * @param host a {@link forge.Card} object.
+     */
     public Trigger_Blocks(HashMap<String, String> params, Card host) {
         super(params, host);
     }
 
+    /** {@inheritDoc} */
     @Override
     public boolean performTest(HashMap<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {
@@ -28,6 +41,7 @@ public class Trigger_Blocks extends Trigger {
         return true;
     }
 
+    /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
         Trigger copy = new Trigger_Blocks(mapParams, hostCard);
@@ -40,6 +54,7 @@ public class Trigger_Blocks extends Trigger {
         return copy;
     }
 
+    /** {@inheritDoc} */
     @Override
     public void setTriggeringObjects(SpellAbility sa) {
         sa.setTriggeringObject("Blocker", runParams.get("Blocker"));

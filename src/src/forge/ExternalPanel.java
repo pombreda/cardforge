@@ -23,14 +23,26 @@ import java.awt.event.WindowEvent;
  */
 public class ExternalPanel extends JPanel {
 
+    /** Constant <code>serialVersionUID=9098962430872706173L</code> */
     private static final long serialVersionUID = 9098962430872706173L;
     private Component child, head;
     private JFrame frame;
 
+    /**
+     * <p>Constructor for ExternalPanel.</p>
+     *
+     * @param child a {@link java.awt.Component} object.
+     */
     public ExternalPanel(Component child) {
         this(child, BorderLayout.EAST);
     }
 
+    /**
+     * <p>Constructor for ExternalPanel.</p>
+     *
+     * @param child a {@link java.awt.Component} object.
+     * @param side a {@link java.lang.String} object.
+     */
     public ExternalPanel(Component child, String side) {
         super(new BorderLayout());
         add(this.child = child);
@@ -42,11 +54,17 @@ public class ExternalPanel extends JPanel {
         setHeadSide(side);
     }
 
+    /**
+     * <p>setHeadSide.</p>
+     *
+     * @param side a {@link java.lang.String} object.
+     */
     public void setHeadSide(String side) {
         remove(head);
         add(head, side);
     }
 
+    /** {@inheritDoc} */
     @Override
     protected void addImpl(Component comp, Object constraints, int index) {
         if (comp != child && comp != head) throw new IllegalArgumentException();

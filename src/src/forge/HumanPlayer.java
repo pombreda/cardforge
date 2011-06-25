@@ -6,16 +6,39 @@ import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 
 
+/**
+ * <p>HumanPlayer class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class HumanPlayer extends Player {
 
+    /**
+     * <p>Constructor for HumanPlayer.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     */
     public HumanPlayer(String myName) {
         this(myName, 20, 0);
     }
 
+    /**
+     * <p>Constructor for HumanPlayer.</p>
+     *
+     * @param myName a {@link java.lang.String} object.
+     * @param myLife a int.
+     * @param myPoisonCounters a int.
+     */
     public HumanPlayer(String myName, int myLife, int myPoisonCounters) {
         super(myName, myLife, myPoisonCounters);
     }
 
+    /**
+     * <p>getOpponent.</p>
+     *
+     * @return a {@link forge.Player} object.
+     */
     public Player getOpponent() {
         return AllZone.getComputerPlayer();
     }
@@ -26,14 +49,25 @@ public class HumanPlayer extends Player {
     ///
     ///////////////
 
+    /**
+     * <p>isHuman.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isHuman() {
         return true;
     }
 
+    /**
+     * <p>isComputer.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isComputer() {
         return false;
     }
 
+    /** {@inheritDoc} */
     public boolean isPlayer(Player p1) {
         return p1.getName().equals(this.name);
     }
@@ -44,6 +78,7 @@ public class HumanPlayer extends Player {
     ///
     ///////////////
 
+    /** {@inheritDoc} */
     public void mayDrawCards(int n) {
         String[] choices = {"Yes", "No"};
         Object choice = GuiUtils.getChoice("Draw " + n + " cards?", choices);
@@ -51,10 +86,18 @@ public class HumanPlayer extends Player {
             drawCards(n);
     }
 
+    /**
+     * <p>mayDrawCard.</p>
+     */
     public void mayDrawCard() {
         mayDrawCards(1);
     }
 
+    /**
+     * <p>dredge.</p>
+     *
+     * @return a boolean.
+     */
     public boolean dredge() {
         boolean dredged = false;
         String choices[] = {"Yes", "No"};
@@ -80,6 +123,7 @@ public class HumanPlayer extends Player {
         return dredged;
     }
 
+    /** {@inheritDoc} */
     public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
         AllZone.getInputControl().setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
 
@@ -87,10 +131,12 @@ public class HumanPlayer extends Player {
         return new CardList();
     }
 
+    /** {@inheritDoc} */
     public void discardUnless(int num, String uType, SpellAbility sa) {
         AllZone.getInputControl().setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
     }
 
+    /** {@inheritDoc} */
     public void handToLibrary(final int numToLibrary, String libPos) {
         if (libPos.equals("Top") || libPos.equals("Bottom")) libPos = libPos.toLowerCase();
         else {
@@ -104,6 +150,7 @@ public class HumanPlayer extends Player {
         AllZone.getInputControl().setInput(CardFactoryUtil.input_putFromHandToLibrary(libPos, numToLibrary));
     }
 
+    /** {@inheritDoc} */
     protected void doScry(final CardList topN, final int N) {
         int num = N;
         for (int i = 0; i < num; i++) {
@@ -128,11 +175,13 @@ public class HumanPlayer extends Player {
         }
     }
 
+    /** {@inheritDoc} */
     public void sacrificePermanent(String prompt, CardList choices) {
         Input in = CardFactoryUtil.input_sacrificePermanent(choices, prompt);
         AllZone.getInputControl().setInput(in);
     }
 
+    /** {@inheritDoc} */
     protected void clashMoveToTopOrBottom(Card c) {
         String choice = "";
         String choices[] = {"top", "bottom"};

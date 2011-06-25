@@ -8,7 +8,14 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
+/**
+ * <p>QuestSelectablePanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class QuestSelectablePanel extends JPanel {
+    /** Constant <code>serialVersionUID=-1502285997894190742L</code> */
     private static final long serialVersionUID = -1502285997894190742L;
 
     protected Color backgroundColor;
@@ -20,6 +27,14 @@ public class QuestSelectablePanel extends JPanel {
     String difficulty;
     JPanel centerPanel = new JPanel();
 
+    /**
+     * <p>Constructor for QuestSelectablePanel.</p>
+     *
+     * @param name a {@link java.lang.String} object.
+     * @param difficulty a {@link java.lang.String} object.
+     * @param description a {@link java.lang.String} object.
+     * @param icon a {@link javax.swing.ImageIcon} object.
+     */
     public QuestSelectablePanel(String name, String difficulty, String description, ImageIcon icon) {
         this.backgroundColor = getBackground();
 
@@ -78,10 +93,20 @@ public class QuestSelectablePanel extends JPanel {
         this.setBorder(new CompoundBorder(new LineBorder(Color.BLACK), new EmptyBorder(5, 5, 5, 5)));
     }
 
+    /**
+     * <p>isSelected.</p>
+     *
+     * @return a boolean.
+     */
     public boolean isSelected() {
         return selected;
     }
 
+    /**
+     * <p>Setter for the field <code>selected</code>.</p>
+     *
+     * @param selected a boolean.
+     */
     public void setSelected(boolean selected) {
         if (selected) {
             this.setBackground(backgroundColor.darker());
@@ -92,6 +117,7 @@ public class QuestSelectablePanel extends JPanel {
         this.selected = selected;
     }
 
+    /** {@inheritDoc} */
     @Override
     public String getName() {
         return name;

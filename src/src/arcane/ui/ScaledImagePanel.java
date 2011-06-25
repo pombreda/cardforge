@@ -4,8 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * <p>ScaledImagePanel class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class ScaledImagePanel extends JPanel {
 
+    /** Constant <code>serialVersionUID=-5691107238620895385L</code> */
     private static final long serialVersionUID = -5691107238620895385L;
     public volatile Image srcImage;
     public volatile Image srcImageBlurred;
@@ -15,42 +22,84 @@ public class ScaledImagePanel extends JPanel {
     private MultipassType multiPassType = MultipassType.bilinear;
     private boolean blur;
 
+    /**
+     * <p>Constructor for ScaledImagePanel.</p>
+     */
     public ScaledImagePanel() {
         super(false);
         setOpaque(false);
     }
 
+    /**
+     * <p>setImage.</p>
+     *
+     * @param srcImage a {@link java.awt.Image} object.
+     * @param srcImageBlurred a {@link java.awt.Image} object.
+     */
     public void setImage(Image srcImage, Image srcImageBlurred) {
         this.srcImage = srcImage;
         this.srcImageBlurred = srcImageBlurred;
     }
 
+    /**
+     * <p>clearImage.</p>
+     */
     public void clearImage() {
         srcImage = null;
         srcImageBlurred = null;
         repaint();
     }
 
+    /**
+     * <p>setScalingMultiPassType.</p>
+     *
+     * @param multiPassType a {@link arcane.ui.ScaledImagePanel.MultipassType} object.
+     */
     public void setScalingMultiPassType(MultipassType multiPassType) {
         this.multiPassType = multiPassType;
     }
 
+    /**
+     * <p>Setter for the field <code>scalingType</code>.</p>
+     *
+     * @param scalingType a {@link arcane.ui.ScaledImagePanel.ScalingType} object.
+     */
     public void setScalingType(ScalingType scalingType) {
         this.scalingType = scalingType;
     }
 
+    /**
+     * <p>setScalingBlur.</p>
+     *
+     * @param blur a boolean.
+     */
     public void setScalingBlur(boolean blur) {
         this.blur = blur;
     }
 
+    /**
+     * <p>Setter for the field <code>scaleLarger</code>.</p>
+     *
+     * @param scaleLarger a boolean.
+     */
     public void setScaleLarger(boolean scaleLarger) {
         this.scaleLarger = scaleLarger;
     }
 
+    /**
+     * <p>hasImage.</p>
+     *
+     * @return a boolean.
+     */
     public boolean hasImage() {
         return srcImage != null;
     }
 
+    /**
+     * <p>getScalingInfo.</p>
+     *
+     * @return a {@link arcane.ui.ScaledImagePanel.ScalingInfo} object.
+     */
     private ScalingInfo getScalingInfo() {
         int panelWidth = getWidth();
         int panelHeight = getHeight();
@@ -76,6 +125,7 @@ public class ScaledImagePanel extends JPanel {
         return info;
     }
 
+    /** {@inheritDoc} */
     public void paint(Graphics g) {
         if (srcImage == null) return;
 
@@ -101,12 +151,26 @@ public class ScaledImagePanel extends JPanel {
         }
     }
 
+    /**
+     * <p>scaleWithGetScaledInstance.</p>
+     *
+     * @param g2 a {@link java.awt.Graphics2D} object.
+     * @param info a {@link arcane.ui.ScaledImagePanel.ScalingInfo} object.
+     * @param hints a int.
+     */
     private void scaleWithGetScaledInstance(Graphics2D g2, ScalingInfo info, int hints) {
         Image srcImage = getSourceImage(info);
         Image scaledImage = srcImage.getScaledInstance(info.targetWidth, info.targetHeight, hints);
         g2.drawImage(scaledImage, info.x, info.y, null);
     }
 
+    /**
+     * <p>scaleWithDrawImage.</p>
+     *
+     * @param g2 a {@link java.awt.Graphics2D} object.
+     * @param info a {@link arcane.ui.ScaledImagePanel.ScalingInfo} object.
+     * @param hint a {@link java.lang.Object} object.
+     */
     private void scaleWithDrawImage(Graphics2D g2, ScalingInfo info, Object hint) {
         g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
 
@@ -165,6 +229,12 @@ public class ScaledImagePanel extends JPanel {
                 tempSrcHeight, null);
     }
 
+    /**
+     * <p>getSourceImage.</p>
+     *
+     * @param info a {@link arcane.ui.ScaledImagePanel.ScalingInfo} object.
+     * @return a {@link java.awt.Image} object.
+     */
     private Image getSourceImage(ScalingInfo info) {
         if (!blur || srcImageBlurred == null) return srcImage;
         if (info.srcWidth / 2 < info.targetWidth || info.srcHeight / 2 < info.targetHeight) return srcImage;

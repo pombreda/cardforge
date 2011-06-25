@@ -6,6 +6,12 @@ import forge.PlayerZone;
 
 import java.util.ArrayList;
 
+/**
+ * <p>SpellAbility_Requirements class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class SpellAbility_Requirements {
     private SpellAbility ability = null;
     private Target_Selection select = null;
@@ -13,10 +19,20 @@ public class SpellAbility_Requirements {
     private boolean isFree = false;
     private boolean skipStack = false;
 
+    /**
+     * <p>Setter for the field <code>skipStack</code>.</p>
+     *
+     * @param bSkip a boolean.
+     */
     public void setSkipStack(boolean bSkip) {
         skipStack = bSkip;
     }
 
+    /**
+     * <p>setFree.</p>
+     *
+     * @param bFree a boolean.
+     */
     public void setFree(boolean bFree) {
         isFree = bFree;
     }
@@ -24,16 +40,31 @@ public class SpellAbility_Requirements {
     private PlayerZone fromZone = null;
     private boolean bCasting = false;
 
+    /**
+     * <p>Constructor for SpellAbility_Requirements.</p>
+     *
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param ts a {@link forge.card.spellability.Target_Selection} object.
+     * @param cp a {@link forge.card.spellability.Cost_Payment} object.
+     */
     public SpellAbility_Requirements(SpellAbility sa, Target_Selection ts, Cost_Payment cp) {
         ability = sa;
         select = ts;
         payment = cp;
     }
 
+    /**
+     * <p>fillRequirements.</p>
+     */
     public void fillRequirements() {
         fillRequirements(false);
     }
 
+    /**
+     * <p>fillRequirements.</p>
+     *
+     * @param skipTargeting a boolean.
+     */
     public void fillRequirements(boolean skipTargeting) {
         if (ability instanceof Spell && !bCasting) {
             // remove from hand
@@ -58,6 +89,9 @@ public class SpellAbility_Requirements {
             needPayment();
     }
 
+    /**
+     * <p>finishedTargeting.</p>
+     */
     public void finishedTargeting() {
         if (select.isCanceled()) {
             // cancel ability during target choosing
@@ -74,6 +108,9 @@ public class SpellAbility_Requirements {
             needPayment();
     }
 
+    /**
+     * <p>needPayment.</p>
+     */
     public void needPayment() {
         if (!isFree)
             startPaying();
@@ -81,11 +118,17 @@ public class SpellAbility_Requirements {
             finishPaying();
     }
 
+    /**
+     * <p>startPaying.</p>
+     */
     public void startPaying() {
         payment.setRequirements(this);
         payment.payCost();
     }
 
+    /**
+     * <p>finishPaying.</p>
+     */
     public void finishPaying() {
         if (isFree || payment.isAllPaid()) {
             if (skipStack)
@@ -111,6 +154,9 @@ public class SpellAbility_Requirements {
         }
     }
 
+    /**
+     * <p>addAbilityToStack.</p>
+     */
     public void addAbilityToStack() {
         // For older abilities that don't setStackDescription set it here
         if (ability.getStackDescription().equals("")) {

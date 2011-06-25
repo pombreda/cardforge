@@ -14,8 +14,27 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Vector;
 
+/**
+ * <p>CardFactory_Sorceries class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFactory_Sorceries {
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, final String cardName, Player owner) {
 
         //*************** START *********** START **************************

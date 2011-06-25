@@ -24,7 +24,19 @@ import java.util.*;
 import java.util.List;
 
 
+/**
+ * <p>GuiDisplayUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class GuiDisplayUtil implements NewConstants {
+    /**
+     * <p>getCardDetailMouse.</p>
+     *
+     * @param visual a {@link forge.CardContainer} object.
+     * @return a {@link java.awt.event.MouseMotionListener} object.
+     */
     public static MouseMotionListener getCardDetailMouse(final CardContainer visual) {
         return new MouseMotionAdapter() {
             @Override
@@ -42,6 +54,9 @@ public class GuiDisplayUtil implements NewConstants {
 
     /**
      * Returns the listener that updates the card preview panel
+     *
+     * @param visual a {@link forge.GuiDisplay2} object.
+     * @return a {@link java.awt.event.MouseMotionListener} object.
      */
     public static MouseMotionListener getCardDetailMouse(final GuiDisplay2 visual) {
         return new MouseInputAdapter() {
@@ -68,6 +83,12 @@ public class GuiDisplayUtil implements NewConstants {
         };
     }
 
+    /**
+     * <p>getBorder.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link javax.swing.border.Border} object.
+     */
     public static Border getBorder(Card card) {
         // color info
         if (card == null)
@@ -122,6 +143,9 @@ public class GuiDisplayUtil implements NewConstants {
         } else return BorderFactory.createLineBorder(Color.gray, 2);
     }
 
+    /**
+     * <p>devModeGenerateMana.</p>
+     */
     public static void devModeGenerateMana() {
         Card dummy = new Card();
         dummy.setOwner(AllZone.getHumanPlayer());
@@ -133,6 +157,12 @@ public class GuiDisplayUtil implements NewConstants {
         abMana.produceMana();
     }
 
+    /**
+     * <p>formatCardType.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String formatCardType(Card card) {
         ArrayList<String> list = card.getType();
         StringBuilder sb = new StringBuilder();
@@ -148,6 +178,12 @@ public class GuiDisplayUtil implements NewConstants {
         return sb.toString();
     }
 
+    /**
+     * <p>cleanString.</p>
+     *
+     * @param in a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String cleanString(String in) {
         StringBuffer out = new StringBuffer();
         char c;
@@ -161,6 +197,12 @@ public class GuiDisplayUtil implements NewConstants {
         return out.toString().toLowerCase();
     }
 
+    /**
+     * <p>cleanStringMWS.</p>
+     *
+     * @param in a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public static String cleanStringMWS(String in) {
         StringBuffer out = new StringBuffer();
         char c;
@@ -174,6 +216,12 @@ public class GuiDisplayUtil implements NewConstants {
         return out.toString();
     }
 
+    /**
+     * <p>setupNoLandPanel.</p>
+     *
+     * @param j a {@link javax.swing.JPanel} object.
+     * @param c an array of {@link forge.Card} objects.
+     */
     public static void setupNoLandPanel(JPanel j, Card c[]) {
         ArrayList<Card> a = new ArrayList<Card>();
         /*
@@ -207,6 +255,12 @@ public class GuiDisplayUtil implements NewConstants {
         setupNoLandPermPanel(j, a, true);
     }
 
+    /**
+     * <p>setupLandPanel.</p>
+     *
+     * @param j a {@link javax.swing.JPanel} object.
+     * @param c an array of {@link forge.Card} objects.
+     */
     public static void setupLandPanel(JPanel j, Card c[]) {
         ArrayList<Card> a = new ArrayList<Card>();
         for (int i = 0; i < c.length; i++)
@@ -227,6 +281,13 @@ public class GuiDisplayUtil implements NewConstants {
     //list holds Card objects
     //puts local enchanments in the right order
     //adds "<<" to local enchanments names
+    /**
+     * <p>setupPanel.</p>
+     *
+     * @param p a {@link javax.swing.JPanel} object.
+     * @param list a {@link java.util.ArrayList} object.
+     * @param stack a boolean.
+     */
     private static void setupPanel(JPanel p, ArrayList<Card> list, boolean stack) {
 
         int maxY = 0;
@@ -467,6 +528,13 @@ public class GuiDisplayUtil implements NewConstants {
         }
     }//setupPanel()
 
+    /**
+     * <p>setupNoLandPermPanel.</p>
+     *
+     * @param p a {@link javax.swing.JPanel} object.
+     * @param list a {@link java.util.ArrayList} object.
+     * @param stack a boolean.
+     */
     private static void setupNoLandPermPanel(JPanel p, ArrayList<Card> list, boolean stack) {
 
         int maxY = 0;
@@ -636,6 +704,12 @@ public class GuiDisplayUtil implements NewConstants {
         }
     }//setupPanel()
 
+    /**
+     * <p>getPlaneswalkers.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getPlaneswalkers(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -644,6 +718,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getEquippedEnchantedCreatures.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getEquippedEnchantedCreatures(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -659,6 +739,12 @@ public class GuiDisplayUtil implements NewConstants {
     }
 
 
+    /**
+     * <p>getNonTokenCreatures.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getNonTokenCreatures(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -667,6 +753,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getTokenCreatures.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getTokenCreatures(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -675,6 +767,13 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getTokenCreatures.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @param tokenName a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getTokenCreatures(ArrayList<Card> cards, String tokenName) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -684,6 +783,13 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getMoxen.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @param moxName a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getMoxen(ArrayList<Card> cards, String moxName) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -693,6 +799,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getNonCreatureArtifacts.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getNonCreatureArtifacts(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -705,6 +817,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getGlobalEnchantments.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getGlobalEnchantments(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -713,6 +831,13 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @param name a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getCard(ArrayList<Card> cards, String name) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -721,6 +846,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getEnchantedLands.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getEnchantedLands(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -734,6 +865,13 @@ public class GuiDisplayUtil implements NewConstants {
     }
 
 
+    /**
+     * <p>getBasics.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @param color a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getBasics(ArrayList<Card> cards, String color) {
         ArrayList<Card> ret = new ArrayList<Card>();
 
@@ -771,6 +909,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getNonBasics.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getNonBasics(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
 
@@ -797,6 +941,13 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getNonBasicLand.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @param landName a {@link java.lang.String} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getNonBasicLand(ArrayList<Card> cards, String landName) {
         ArrayList<Card> ret = new ArrayList<Card>();
 
@@ -806,6 +957,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>getManaPools.</p>
+     *
+     * @param cards a {@link java.util.ArrayList} object.
+     * @return a {@link java.util.ArrayList} object.
+     */
     public static ArrayList<Card> getManaPools(ArrayList<Card> cards) {
         ArrayList<Card> ret = new ArrayList<Card>();
         for (Card c : cards) {
@@ -816,6 +973,12 @@ public class GuiDisplayUtil implements NewConstants {
         return ret;
     }
 
+    /**
+     * <p>isStackable.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isStackable(Card c) {
 
         /*String name = c.getName();
@@ -837,6 +1000,11 @@ public class GuiDisplayUtil implements NewConstants {
     }
 
     //~
+    /**
+     * <p>setupConnectedCards.</p>
+     *
+     * @param connectedCards a {@link java.util.ArrayList} object.
+     */
     public static void setupConnectedCards(ArrayList<CardPanel> connectedCards) {
         for (int i = connectedCards.size() - 1; i > 0; i--) {
             //System.out.println("We should have a stack");
@@ -846,6 +1014,12 @@ public class GuiDisplayUtil implements NewConstants {
     }
     //~
 
+    /**
+     * <p>setupPlayZone.</p>
+     *
+     * @param p a {@link arcane.ui.PlayArea} object.
+     * @param c an array of {@link forge.Card} objects.
+     */
     public static void setupPlayZone(PlayArea p, Card c[]) {
         List<Card> tmp, diff;
         tmp = new ArrayList<Card>();
@@ -909,12 +1083,18 @@ public class GuiDisplayUtil implements NewConstants {
         p.repaint();
     }
 
+    /**
+     * <p>updateGUI.</p>
+     */
     public static void updateGUI() {
         AllZone.getComputerBattlefield().updateObservers();
         AllZone.getHumanBattlefield().updateObservers();
         AllZone.getHumanHand().updateObservers();
     }
 
+    /**
+     * <p>devSetupGameState.</p>
+     */
     public static void devSetupGameState() {
         String t_humanLife = "-1";
         String t_computerLife = "-1";
@@ -1116,6 +1296,13 @@ public class GuiDisplayUtil implements NewConstants {
         AllZone.getComputerLibrary().updateObservers();
     }
 
+    /**
+     * <p>devProcessCardsForZone.</p>
+     *
+     * @param data an array of {@link java.lang.String} objects.
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList devProcessCardsForZone(String[] data, Player player) {
         CardList cl = new CardList();
         for (int i = 0; i < data.length; i++) {
@@ -1137,6 +1324,11 @@ public class GuiDisplayUtil implements NewConstants {
         return cl;
     }
 
+    /**
+     * <p>devModeTutor.</p>
+     *
+     * @since 1.0.15
+     */
     public static void devModeTutor() {
         CardList lib = AllZoneUtil.getPlayerCardsInLibrary(AllZone.getHumanPlayer());
         Object o = GuiUtils.getChoiceOptional("Choose a card", lib.toArray());

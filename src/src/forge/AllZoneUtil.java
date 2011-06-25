@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * cards in various zones.
  *
  * @author dennis.r.friedrichsen (slapshot5 on slightlymagic.net)
+ * @version $Id: $
  */
 public class AllZoneUtil {
 
@@ -212,7 +213,6 @@ public class AllZoneUtil {
      * @param card   the specific card to look for
      * @return true if the card is present in this player's hand; false otherwise
      */
-
     public static boolean isCardInPlayerGraveyard(Player player, Card card) {
         return isCardInZone(AllZone.getZone(Constant.Zone.Graveyard, player), card);
     }
@@ -324,6 +324,7 @@ public class AllZoneUtil {
      * gets a list of all cards in a given player's library
      *
      * @return a CardList with all the cards currently in that player's library
+     * @param player a {@link forge.Player} object.
      */
     public static CardList getPlayerCardsInLibrary(final Player player) {
         CardList cards = new CardList();
@@ -368,16 +369,34 @@ public class AllZoneUtil {
         return cards;
     }
 
+    /**
+     * <p>isCardExiled.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isCardExiled(Card c) {
         return getCardsInExile().contains(c);
     }
 
+    /**
+     * <p>isCardInGrave.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isCardInGrave(Card c) {
         return getCardsInGraveyard().contains(c);
     }
 
     ///Check if a certain card is in play
 
+    /**
+     * <p>isCardInPlay.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a boolean.
+     */
     public static boolean isCardInPlay(Card card) {
         return getCardsInPlay().contains(card);
     }
@@ -403,12 +422,13 @@ public class AllZoneUtil {
         return getPlayerCardsInPlay(player, cardName).size() > 0;
     }
     
-    /**
+	/**
 	 * Answers the question: "Does <player> have <given card> in play?"
-	 * 
+	 *
 	 * @param card the card to look for
 	 * @param player the player whose battlefield we want to check
 	 * @return true if that player has that card in play, false otherwise
+	 * @since 1.0.15
 	 */
 	public static boolean isCardInPlay(final Card card, final Player player) {
 		return getPlayerCardsInPlay(player).contains(card);
@@ -499,6 +519,12 @@ public class AllZoneUtil {
         return cards;
     }
 
+    /**
+     * <p>getCardState.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCardState(Card card) {
         PlayerZone zone = AllZone.getZone(card);
         if (zone == null)    // for tokens
@@ -513,14 +539,33 @@ public class AllZoneUtil {
         return card;
     }
 
+    /**
+     * <p>getCardsInZone.</p>
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getCardsInZone(String zone) {
         return getCardsInZone(zone, null);
     }
 
+    /**
+     * <p>getCardsInZone.</p>
+     *
+     * @param zone a {@link forge.PlayerZone} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getCardsInZone(PlayerZone zone) {
         return new CardList(zone.getCards());
     }
 
+    /**
+     * <p>getCardsInZone.</p>
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @param player a {@link forge.Player} object.
+     * @return a {@link forge.CardList} object.
+     */
     public static CardList getCardsInZone(String zone, Player player) {
         CardList all = new CardList();
 
@@ -558,6 +603,13 @@ public class AllZoneUtil {
         return all;
     }
 
+    /**
+     * <p>compareTypeAmountInPlay.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param type a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int compareTypeAmountInPlay(final Player player, String type) {
         // returns the difference between player's
         Player opponent = player.getOpponent();
@@ -566,6 +618,13 @@ public class AllZoneUtil {
         return (playerList.size() - opponentList.size());
     }
 
+    /**
+     * <p>compareTypeAmountInGraveyard.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @param type a {@link java.lang.String} object.
+     * @return a int.
+     */
     public static int compareTypeAmountInGraveyard(final Player player, String type) {
         // returns the difference between player's
         Player opponent = player.getOpponent();
@@ -803,6 +862,8 @@ public class AllZoneUtil {
 
     /**
      * a CardListFilter to get all cards that are a part of this game
+     *
+     * @return a {@link forge.CardList} object.
      */
     public static CardList getCardsInGame() {
         CardList all = new CardList();
@@ -825,6 +886,12 @@ public class AllZoneUtil {
         return all;
     }
 
+    /**
+     * <p>getDoublingSeasonMagnitude.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a int.
+     */
     public static int getDoublingSeasonMagnitude(Player player) {
         int multiplier = 1;
         int doublingSeasons = getPlayerCardsInPlay(player, "Doubling Season").size();
@@ -856,6 +923,15 @@ public class AllZoneUtil {
         return list;
     }
 
+    /**
+     * <p>compare.</p>
+     *
+     * @param leftSide a int.
+     * @param comp a {@link java.lang.String} object.
+     * @param rightSide a int.
+     * @return a boolean.
+     * @since 1.0.15
+     */
     public static boolean compare(int leftSide, String comp, int rightSide) {
         // should this function be somewhere else?
         // leftSide COMPARED to rightSide:

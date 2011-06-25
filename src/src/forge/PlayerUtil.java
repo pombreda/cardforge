@@ -1,7 +1,19 @@
 package forge;
 
 
+/**
+ * <p>PlayerUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class PlayerUtil {
+    /**
+     * <p>worshipFlag.</p>
+     *
+     * @param player a {@link forge.Player} object.
+     * @return a boolean.
+     */
     public static boolean worshipFlag(Player player) {
         // Instead of hardcoded Ali from Cairo like cards, it is now a Keyword
         CardList list = AllZoneUtil.getPlayerCardsInPlay(player);

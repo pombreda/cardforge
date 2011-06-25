@@ -10,12 +10,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
+/**
+ * <p>AbilityFactory_Reveal class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class AbilityFactory_Reveal {
 
     // *************************************************************************
     // ************************* Dig *******************************************
     // *************************************************************************
 
+    /**
+     * <p>createAbilityDig.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityDig(final AbilityFactory af) {
 
         final SpellAbility abDig = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -44,6 +56,12 @@ public class AbilityFactory_Reveal {
         return abDig;
     }
 
+    /**
+     * <p>createSpellDig.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellDig(final AbilityFactory af) {
         final SpellAbility spDig = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 3389143507816474146L;
@@ -66,6 +84,12 @@ public class AbilityFactory_Reveal {
         return spDig;
     }
 
+    /**
+     * <p>createDrawbackDig.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackDig(final AbilityFactory af) {
         final SpellAbility dbDig = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -3372788479421357024L;
@@ -94,6 +118,13 @@ public class AbilityFactory_Reveal {
         return dbDig;
     }
 
+    /**
+     * <p>digStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String digStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -135,6 +166,13 @@ public class AbilityFactory_Reveal {
         return sb.toString();
     }
 
+    /**
+     * <p>digCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean digCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card source = sa.getSourceCard();
@@ -178,6 +216,14 @@ public class AbilityFactory_Reveal {
         return randomReturn;
     }
 
+    /**
+     * <p>digTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean digTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -192,6 +238,12 @@ public class AbilityFactory_Reveal {
         return true;
     }
 
+    /**
+     * <p>digResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void digResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
@@ -371,6 +423,12 @@ public class AbilityFactory_Reveal {
     }//end resolve
 
     //returns a CardList that is a subset of list with cards that share a name with a permanent on the battlefield
+    /**
+     * <p>sharesNameWithCardOnBattlefield.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} object.
+     */
     private static CardList sharesNameWithCardOnBattlefield(CardList list) {
         CardList toReturn = new CardList();
         CardList play = AllZoneUtil.getCardsInPlay();
@@ -386,6 +444,12 @@ public class AbilityFactory_Reveal {
     //******************************* RevealHand ***************************
     //**********************************************************************
 
+    /**
+     * <p>createAbilityRevealHand.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityRevealHand(final AbilityFactory af) {
         final SpellAbility abRevealHand = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 2785654059206102004L;
@@ -414,6 +478,12 @@ public class AbilityFactory_Reveal {
         return abRevealHand;
     }
 
+    /**
+     * <p>createSpellRevealHand.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellRevealHand(final AbilityFactory af) {
         final SpellAbility spRevealHand = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -668943560971904791L;
@@ -437,6 +507,12 @@ public class AbilityFactory_Reveal {
         return spRevealHand;
     }
 
+    /**
+     * <p>createDrawbackRevealHand.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackRevealHand(final AbilityFactory af) {
         final SpellAbility dbRevealHand = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -6079668770576878801L;
@@ -466,6 +542,13 @@ public class AbilityFactory_Reveal {
         return dbRevealHand;
     }
 
+    /**
+     * <p>revealHandStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String revealHandStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -501,6 +584,13 @@ public class AbilityFactory_Reveal {
         return sb.toString();
     }
 
+    /**
+     * <p>revealHandCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean revealHandCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         // AI cannot use this properly until he can use SAs during Humans turn
         if (!ComputerUtil.canPayCost(sa))
@@ -543,6 +633,15 @@ public class AbilityFactory_Reveal {
         return randomReturn;
     }
 
+    /**
+     * <p>revealHandTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param primarySA a boolean.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean revealHandTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
         Target tgt = af.getAbTgt();
         Card source = sa.getSourceCard();
@@ -566,6 +665,14 @@ public class AbilityFactory_Reveal {
         return true;
     }// revealHandTargetAI()
 
+    /**
+     * <p>revealHandTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean revealHandTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))    // If there is a cost payment
             return false;
@@ -582,6 +689,12 @@ public class AbilityFactory_Reveal {
         return true;
     }
 
+    /**
+     * <p>revealHandResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void revealHandResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -616,6 +729,12 @@ public class AbilityFactory_Reveal {
     //******************************* SCRY *********************************
     //**********************************************************************
 
+    /**
+     * <p>createAbilityScry.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createAbilityScry(final AbilityFactory af) {
         final SpellAbility abScry = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 2631175859655699419L;
@@ -643,6 +762,12 @@ public class AbilityFactory_Reveal {
         return abScry;
     }
 
+    /**
+     * <p>createSpellScry.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createSpellScry(final AbilityFactory af) {
         final SpellAbility spScry = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 6273876397392154403L;
@@ -665,6 +790,12 @@ public class AbilityFactory_Reveal {
         return spScry;
     }
 
+    /**
+     * <p>createDrawbackScry.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createDrawbackScry(final AbilityFactory AF) {
         final SpellAbility dbScry = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = 7763043327497404630L;
@@ -695,6 +826,12 @@ public class AbilityFactory_Reveal {
         return dbScry;
     }
 
+    /**
+     * <p>scryResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void scryResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
 
@@ -717,6 +854,13 @@ public class AbilityFactory_Reveal {
         }
     }
 
+    /**
+     * <p>scryTargetAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean scryTargetAI(AbilityFactory af, SpellAbility sa) {
         Target tgt = af.getAbTgt();
 
@@ -730,6 +874,13 @@ public class AbilityFactory_Reveal {
         return true;
     }// scryTargetAI()
 
+    /**
+     * <p>scryTriggerAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean scryTriggerAI(AbilityFactory af, SpellAbility sa) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -737,6 +888,13 @@ public class AbilityFactory_Reveal {
         return scryTargetAI(af, sa);
     }// scryTargetAI()
 
+    /**
+     * <p>scryStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String scryStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         StringBuilder sb = new StringBuilder();
@@ -771,6 +929,13 @@ public class AbilityFactory_Reveal {
         return sb.toString();
     }
 
+    /**
+     * <p>scryCanPlayAI.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a boolean.
+     */
     private static boolean scryCanPlayAI(final AbilityFactory af, SpellAbility sa) {
         Card source = sa.getSourceCard();
 
@@ -796,6 +961,12 @@ public class AbilityFactory_Reveal {
     //*********************** REARRANGETOPOFLIBRARY ************************
     //**********************************************************************
 
+    /**
+     * <p>createRearrangeTopOfLibraryAbility.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createRearrangeTopOfLibraryAbility(final AbilityFactory AF) {
         final SpellAbility RTOLAbility = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = -548494891203983219L;
@@ -825,6 +996,12 @@ public class AbilityFactory_Reveal {
         return RTOLAbility;
     }
 
+    /**
+     * <p>createRearrangeTopOfLibrarySpell.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createRearrangeTopOfLibrarySpell(final AbilityFactory AF) {
         final SpellAbility RTOLSpell = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 6977502611509431864L;
@@ -854,6 +1031,12 @@ public class AbilityFactory_Reveal {
         return RTOLSpell;
     }
 
+    /**
+     * <p>createRearrangeTopOfLibraryDrawback.</p>
+     *
+     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @return a {@link forge.card.spellability.SpellAbility} object.
+     */
     public static SpellAbility createRearrangeTopOfLibraryDrawback(final AbilityFactory AF) {
         final SpellAbility dbDraw = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
             private static final long serialVersionUID = -777856059960750319L;
@@ -883,6 +1066,13 @@ public class AbilityFactory_Reveal {
         return dbDraw;
     }
 
+    /**
+     * <p>rearrangeTopOfLibraryStackDescription.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String rearrangeTopOfLibraryStackDescription(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         int numCards = 0;
@@ -929,6 +1119,14 @@ public class AbilityFactory_Reveal {
         return ret.toString();
     }
 
+    /**
+     * <p>rearrangeTopOfLibraryTrigger.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param mandatory a boolean.
+     * @return a boolean.
+     */
     private static boolean rearrangeTopOfLibraryTrigger(final AbilityFactory af, final SpellAbility sa, final boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
@@ -941,6 +1139,12 @@ public class AbilityFactory_Reveal {
         return false;
     }
 
+    /**
+     * <p>rearrangeTopOfLibraryResolve.</p>
+     *
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     */
     private static void rearrangeTopOfLibraryResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         int numCards = 0;
@@ -970,7 +1174,7 @@ public class AbilityFactory_Reveal {
      * @param src      the source card
      * @param player   the player to target
      * @param numCards the number of cards from the top to rearrange
-     * @param shuffle  true if a shuffle is desired at the end, false otherwise
+     * @param mayshuffle a boolean.
      */
     private static void rearrangeTopOfLibrary(final Card src, final Player player, final int numCards, boolean mayshuffle) {
         PlayerZone lib = AllZone.getZone(Constant.Zone.Library, player);

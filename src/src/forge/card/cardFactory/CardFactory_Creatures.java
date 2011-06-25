@@ -18,8 +18,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * <p>CardFactory_Creatures class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class CardFactory_Creatures {
 
+    /**
+     * <p>hasKeyword.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param k a {@link java.lang.String} object.
+     * @return a int.
+     */
     private static final int hasKeyword(Card c, String k) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -28,6 +41,12 @@ public class CardFactory_Creatures {
         return -1;
     }
 
+    /**
+     * <p>shouldCycle.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldCycle(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -36,6 +55,12 @@ public class CardFactory_Creatures {
         return -1;
     }
 
+    /**
+     * <p>shouldTypeCycle.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldTypeCycle(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -44,6 +69,12 @@ public class CardFactory_Creatures {
         return -1;
     }
 
+    /**
+     * <p>shouldTransmute.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldTransmute(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -52,6 +83,12 @@ public class CardFactory_Creatures {
         return -1;
     }
 
+    /**
+     * <p>shouldSoulshift.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldSoulshift(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -61,6 +98,16 @@ public class CardFactory_Creatures {
     }
 
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @param cf a {@link forge.card.cardFactory.CardFactory} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, final String cardName, Player owner, CardFactory cf) {
 
         //*************** START *********** START **************************

@@ -12,8 +12,20 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 
+/**
+ * <p>CardFactory_Auras class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 class CardFactory_Auras {
 
+    /**
+     * <p>shouldCycle.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldCycle(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -22,6 +34,12 @@ class CardFactory_Auras {
         return -1;
     }
 
+    /**
+     * <p>shouldEnchant.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldEnchant(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -30,6 +48,12 @@ class CardFactory_Auras {
         return -1;
     }
 
+    /**
+     * <p>shouldControl.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     public static int shouldControl(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
@@ -38,6 +62,12 @@ class CardFactory_Auras {
         return -1;
     }
 
+    /**
+     * <p>shouldControlArtifact.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @return a int.
+     */
     private static int shouldControlArtifact(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++) {
@@ -48,6 +78,19 @@ class CardFactory_Auras {
         return -1;
     }
 
+    /**
+     * <p>getCard.</p>
+     *
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     public static Card getCard(final Card card, final String cardName, Player owner) {
 
         Command standardUnenchant = new Command() {
@@ -1772,6 +1815,13 @@ class CardFactory_Auras {
     }
 
     //checks if an aura is a given type based on: Enchant <type> in cards.txt
+    /**
+     * <p>isAuraType.</p>
+     *
+     * @param aura a {@link forge.Card} object.
+     * @param type a {@link java.lang.String} object.
+     * @return a boolean.
+     */
     private static boolean isAuraType(final Card aura, final String type) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1783,6 +1833,12 @@ class CardFactory_Auras {
     }
 
     //gets the type of aura based on Enchant <type> in cards.txt
+    /**
+     * <p>getAuraType.</p>
+     *
+     * @param aura a {@link forge.Card} object.
+     * @return a {@link java.lang.String} object.
+     */
     private static String getAuraType(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1797,6 +1853,12 @@ class CardFactory_Auras {
 
     //checks if an aura is a curse based on Enchant <type> [Curse] in cards.txt
     //Curse just means computer will target human's stuff with this
+    /**
+     * <p>isCurseAura.</p>
+     *
+     * @param aura a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private static boolean isCurseAura(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1808,6 +1870,12 @@ class CardFactory_Auras {
     }
 
     //checks if the aura can only target the controller's cards
+    /**
+     * <p>isTypeYouControl.</p>
+     *
+     * @param aura a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private static boolean isTypeYouControl(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1819,6 +1887,12 @@ class CardFactory_Auras {
     }
 
     //checks if the aura can only target the opponent's cards
+    /**
+     * <p>isTypeOppControl.</p>
+     *
+     * @param aura a {@link forge.Card} object.
+     * @return a boolean.
+     */
     private static boolean isTypeOppControl(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {

@@ -2,9 +2,17 @@ package forge.gui.input;
 
 import forge.*;
 
+/**
+ * <p>Input_Mulligan class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ */
 public class Input_Mulligan extends Input {
+    /** Constant <code>serialVersionUID=-8112954303001155622L</code> */
     private static final long serialVersionUID = -8112954303001155622L;
 
+    /** {@inheritDoc} */
     @Override
     public void showMessage() {
         ButtonUtil.enableAll();
@@ -13,11 +21,13 @@ public class Input_Mulligan extends Input {
         AllZone.getDisplay().showMessage("Do you want to Mulligan?");
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonOK() {
         end();
     }
 
+    /** {@inheritDoc} */
     @Override
     public void selectButtonCancel() {
         AllZone.getGameInfo().setHumanMulliganedToZero(false);
@@ -46,6 +56,9 @@ public class Input_Mulligan extends Input {
         }
     }//selectButtonOK()
 
+    /**
+     * <p>end.</p>
+     */
     void end() {
         //Computer mulligan
         CardList CHandList = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
