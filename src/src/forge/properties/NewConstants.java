@@ -324,6 +324,27 @@ public interface NewConstants {
                 public static final String BUTTON = "%s/Display/tutor/button";
                 public static final String MENU = "%s/Display/tutor/menu";
             }
+            
+            public static final String ADDCOUNTER = "%s/Display/addcounter";
+
+            public static interface ADDCOUNTER {
+                public static final String BUTTON = "%s/Display/addcounter/button";
+                public static final String MENU = "%s/Display/addcounter/menu";
+            }
+            
+            public static final String TAPPERM = "%s/Display/tapperm";
+
+            public static interface TAPPERM {
+                public static final String BUTTON = "%s/Display/tapperm/button";
+                public static final String MENU = "%s/Display/tapperm/menu";
+            }
+            
+            public static final String UNTAPPERM = "%s/Display/untapperm";
+
+            public static interface UNTAPPERM {
+                public static final String BUTTON = "%s/Display/untapperm/button";
+                public static final String MENU = "%s/Display/untapperm/menu";
+            }
         }
 
         public static interface Gui_DownloadPictures {
