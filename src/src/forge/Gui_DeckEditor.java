@@ -314,27 +314,11 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     private boolean filterByName(Card c) {
         boolean filterOut = false;
         if (!(simplifiedNameString == "")) {
-            filterOut = !(simplifyNameString(c.getName()).toLowerCase().contains(searchTextField.getText().toLowerCase()));
+            filterOut = !(CardUtil.simplifyNameString(c.getName()).toLowerCase().contains(searchTextField.getText().toLowerCase()));
         }
         return filterOut;
     }
     /*CHOPPIC*/
-
-    //This is so as not to make Lim-Dûl cards or Khabál Ghoul/Dandân/El-Hajjâj too obnoxious to search for.
-    private String simplifyNameString(String in)
-    {
-        String out = in;
-
-        out = out.replace("û","u");
-        out = out.replace("â","a");
-        out = out.replace("á","a");
-        out = out.replace("å","a");
-        out = out.replace("ä","a");
-        out = out.replace("ö","o");
-        out = out.replace("Æ","AE");
-
-        return out;
-    }
 
     /**
      * <p>filterByCardType.</p>
@@ -994,7 +978,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
      * @param e a {@link java.awt.event.ActionEvent} object.
      */
     void filterButton_actionPerformed(ActionEvent e) {
-        simplifiedNameString = simplifyNameString(searchTextField.getText());
+        simplifiedNameString = CardUtil.simplifyNameString(searchTextField.getText());
         updateDisplay();
     }
     /*CHOPPIC*/

@@ -200,20 +200,23 @@ public class GuiDisplayUtil implements NewConstants {
     /**
      * <p>cleanStringMWS.</p>
      *
-     * @param in a {@link java.lang.String} object.
+     * @param orig a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
      */
-    public static String cleanStringMWS(String in) {
-        StringBuffer out = new StringBuffer();
-        char c;
-        for (int i = 0; i < in.length(); i++) {
-            c = in.charAt(i);
-            if (c == '"' || c == '/')
-                out.append("");
-            else
-                out.append(c);
-        }
-        return out.toString();
+    public static String cleanStringMWS(String orig)
+    {
+        String in = CardUtil.simplifyNameString(orig);
+    	StringBuffer out = new StringBuffer();
+    	char c;
+    	for (int i=0; i<in.length(); i++)
+    	{
+    		c = in.charAt(i);
+    		if (c == '"' || c == '/')
+    			out.append("");
+    		else
+    			out.append(c);
+    	}
+    	return out.toString();
     }
 
     /**
