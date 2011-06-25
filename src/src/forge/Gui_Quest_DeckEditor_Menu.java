@@ -1214,11 +1214,28 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         CardList c = new CardList();
         Card card;
         for (String aList : list) {
+
             card = AllZone.getCardFactory().getCard(aList, null);
             c.add(card);
         }
 
         return c;
+    }
+
+    //This should only remain for a few betas, til most of everyones questData have been converted.
+    public static String cardNameBackwardsCompatibility(String in)
+    {
+        if(in.equals("Dandan"))
+            return "Dandân";
+
+        String out = in.replace("AE","Æ");
+
+        out = out.replace("Lim-Dul","Lim-Dûl");
+        out = out.replace("Khabal","Khabál");
+        out = out.replace("Hajjaj","Hajjâj");
+
+
+        return out;
     }
 
 }

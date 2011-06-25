@@ -1,4 +1,4 @@
-Name:Surging AEther
+Name:Surging Æther
 ManaCost:3 U
 Types:Instant
 Text:
