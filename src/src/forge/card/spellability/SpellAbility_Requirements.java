@@ -3,6 +3,7 @@ package forge.card.spellability;
 import forge.AllZone;
 import forge.Card;
 import forge.PlayerZone;
+import forge.card.abilityFactory.AbilityFactory;
 
 import java.util.ArrayList;
 
@@ -132,8 +133,7 @@ public class SpellAbility_Requirements {
     public void finishPaying() {
         if (isFree || payment.isAllPaid()) {
             if (skipStack)
-                ability.resolve();
-
+                AbilityFactory.resolve(ability);
             else
                 addAbilityToStack();
 

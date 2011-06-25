@@ -1,6 +1,7 @@
 package forge.gui.input;
 
 import forge.*;
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.ManaCost;
 import forge.card.spellability.SpellAbility;
 
@@ -158,7 +159,7 @@ public class Input_PayManaCost extends Input {
                 stopSetNext(spell.getAfterPayMana());
             else {
                 if (skipStack) {
-                    spell.resolve();
+                	AbilityFactory.resolve(spell);
                 } else {
                     AllZone.getStack().add(spell);
                 }

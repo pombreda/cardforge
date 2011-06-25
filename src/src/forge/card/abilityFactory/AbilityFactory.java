@@ -1596,6 +1596,10 @@ public class AbilityFactory {
     public static void resolve(SpellAbility sa) {
         if (sa == null) return;
         AbilityFactory af = sa.getAbilityFactory();
+        if(af == null) {
+        	sa.resolve();
+        	return;
+        }
         HashMap<String, String> params = af.getMapParams();
 
 
