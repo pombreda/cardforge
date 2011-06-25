@@ -50,9 +50,13 @@ public class QuestBazaarItem {
     protected final JPanel getItemPanel() {
         ImageIcon icon = GuiUtils.getIconFromFile(item.getImageName());
         if (icon == null) {
-            icon = GuiUtils.getEmptyIcon(40, 40);
+        	// The original size was only 40 x 40 pixels.
+        	// Increased the size to give added pixels for more detail.
+            icon = GuiUtils.getEmptyIcon(80, 80);
         }
-        ImageIcon resizedImage = GuiUtils.getResizedIcon(icon, 40, 40);
+        // The original size was only 40 x 40 pixels.
+        // Increased the size to give added pixels for more detail.
+        ImageIcon resizedImage = GuiUtils.getResizedIcon(icon, 80, 80);
 
         JLabel iconLabel = new JLabel(resizedImage);
         iconLabel.setBorder(new LineBorder(Color.BLACK));
