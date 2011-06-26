@@ -231,7 +231,7 @@ public class AbilityFactory_Animate {
 
             boolean bFlag = false;
             for (Card c : defined) {
-                bFlag |= (!c.isCreature() && !c.isTapped());
+                bFlag |= (!c.isCreature() && !c.isTapped() && !(c.getTurnInZone() == AllZone.getPhase().getTurn()));
             }
 
             if (!bFlag)    // All of the defined stuff is animated, not very useful
