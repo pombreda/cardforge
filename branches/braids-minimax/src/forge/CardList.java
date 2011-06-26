@@ -381,6 +381,14 @@ public class CardList implements Iterable<Card>, Serializable {
     	return total;
     }
     
+    public int getHighestConvertedManaCost() {
+    	int total = 0;
+    	for (int i=0; i<size(); i++) {
+    		total = Math.max(total, get(i).getCMC());
+    	}
+    	return total;
+    }
+    
     public CardList getColored() {
     	return this.filter(new CardListFilter() {
     		public boolean addCard(Card c) {

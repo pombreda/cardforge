@@ -526,6 +526,10 @@ public class QuestData {
         return rankArray[rankIndex];
     }
 
+    public int getLevel(){
+    	return rankIndex;
+    }
+    
     //add cards after a certain number of wins or losses
 
     public boolean shouldAddCards(boolean didWin) {

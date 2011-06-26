@@ -25,19 +25,17 @@ public class AbilityFactory_Destroy {
 	// *********************************************************************************
 	// ************************** DESTROY **********************************************
 	// *********************************************************************************
-	public static SpellAbility createAbilityDestroy(final AbilityFactory AF){
-		final SpellAbility abDestroy = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityDestroy(final AbilityFactory af) {
+		final SpellAbility abDestroy = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -4153613567150919283L;
 
-			final AbilityFactory af = AF;
-
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return destroyStackDescription(af, this);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return destroyCanPlayAI(af, this);
 			}
 
@@ -55,19 +53,17 @@ public class AbilityFactory_Destroy {
 		return abDestroy;
 	}
 
-	public static SpellAbility createSpellDestroy(final AbilityFactory AF){
-		final SpellAbility spDestroy = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellDestroy(final AbilityFactory af) {
+		final SpellAbility spDestroy = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -317810567632846523L;
-
-			final AbilityFactory af = AF;
 
 			@Override
 			public String getStackDescription(){
 				return destroyStackDescription(af, this);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return destroyCanPlayAI(af, this);
 			}
 
@@ -80,14 +76,12 @@ public class AbilityFactory_Destroy {
 		return spDestroy;
 	}
 	
-	public static Ability_Sub createDrawbackDestroy(final AbilityFactory AF){
-		final Ability_Sub dbDestroy = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static Ability_Sub createDrawbackDestroy(final AbilityFactory af) {
+		final Ability_Sub dbDestroy = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -4153613567150919283L;
 	
-			final AbilityFactory af = AF;
-	
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return destroyStackDescription(af, this);
 			}
 	
@@ -109,7 +103,7 @@ public class AbilityFactory_Destroy {
 		return dbDestroy;
 	}
 
-	public static boolean destroyCanPlayAI(final AbilityFactory af, final SpellAbility sa){
+	private static boolean destroyCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
 		// AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
 		Random r = MyRandom.random;
 		Cost abCost = sa.getPayCosts();
@@ -215,7 +209,7 @@ public class AbilityFactory_Destroy {
 		return ((r.nextFloat() < .6667) && chance);
 	}
 
-	public static boolean destroyDoTriggerAI(final AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean destroyDoTriggerAI(final AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
 		
@@ -367,7 +361,7 @@ public class AbilityFactory_Destroy {
 		return sb.toString();
 	}
 
-	public static void destroyResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void destroyResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 
 		final boolean noRegen = params.containsKey("NoRegen");
@@ -395,23 +389,21 @@ public class AbilityFactory_Destroy {
 	// *********************************************************************************
 	// ************************ DESTROY ALL ********************************************
 	// *********************************************************************************
-	public static SpellAbility createAbilityDestroyAll(final AbilityFactory AF){
+	public static SpellAbility createAbilityDestroyAll(final AbilityFactory af){
 
-		final SpellAbility abDestroyAll = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+		final SpellAbility abDestroyAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -1376444173137861437L;
 			
-			final AbilityFactory af = AF;
 			final HashMap<String,String> params = af.getMapParams();
-
 			final boolean noRegen = params.containsKey("NoRegen");
 		
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return destroyAllStackDescription(af, this, noRegen);
 			}
 			
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return destroyAllCanPlayAI(af, this, noRegen);
 			}
 			
@@ -429,25 +421,23 @@ public class AbilityFactory_Destroy {
 		return abDestroyAll;
 	}
 	
-	public static SpellAbility createSpellDestroyAll(final AbilityFactory AF){
-		final SpellAbility spDestroyAll = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellDestroyAll(final AbilityFactory af) {
+		final SpellAbility spDestroyAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -3712659336576469102L;
 			
-			final AbilityFactory af = AF;
 			final HashMap<String,String> params = af.getMapParams();
-			
 			final boolean noRegen = params.containsKey("NoRegen");
 			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				if(params.containsKey("SpellDescription"))
-					return AF.getHostCard().getName() + " - " + params.get("SpellDescription");
+					return af.getHostCard().getName() + " - " + params.get("SpellDescription");
 				else
 					return destroyAllStackDescription(af, this, noRegen);
 			}
 
-			public boolean canPlayAI()
-			{
+			@Override
+			public boolean canPlayAI() {
 				return destroyAllCanPlayAI(af, this, noRegen);
 			}
 			
@@ -460,18 +450,17 @@ public class AbilityFactory_Destroy {
 		return spDestroyAll;
 	}
 	
-	public static SpellAbility createDrawbackDestroyAll(final AbilityFactory AF){
-		final SpellAbility dbDestroyAll = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackDestroyAll(final AbilityFactory af) {
+		final SpellAbility dbDestroyAll = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -242160421677518351L;
-			final AbilityFactory af = AF;
-			final HashMap<String,String> params = af.getMapParams();
 			
+			final HashMap<String,String> params = af.getMapParams();
 			final boolean noRegen = params.containsKey("NoRegen");
 			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				if(params.containsKey("SpellDescription"))
-					return AF.getHostCard().getName() + " - " + params.get("SpellDescription");
+					return af.getHostCard().getName() + " - " + params.get("SpellDescription");
 				else
 					return destroyAllStackDescription(af, this, noRegen);
 			}
@@ -496,8 +485,7 @@ public class AbilityFactory_Destroy {
 		return dbDestroyAll;
 	}
 	
-	public static String destroyAllStackDescription(final AbilityFactory af, SpellAbility sa, boolean noRegen){
-		// when getStackDesc is called, just build exactly what is happening
+	private static String destroyAllStackDescription(final AbilityFactory af, SpellAbility sa, boolean noRegen) {
 
 		StringBuilder sb = new StringBuilder();
 		String name = af.getHostCard().getName();
@@ -517,9 +505,9 @@ public class AbilityFactory_Destroy {
 			tgtCards.add(sa.getSourceCard());
 		}
 
-		sb.append(name).append(" - Destroy permanents");
+		sb.append(name).append(" - Destroy permanents.");
 
-		if(noRegen) sb.append(". They can't be regenerated");
+		if(noRegen) sb.append(" They can't be regenerated");
 
 		Ability_Sub abSub = sa.getSubAbility();
 		if (abSub != null) {
@@ -529,7 +517,7 @@ public class AbilityFactory_Destroy {
 		return sb.toString();
 	}
 	
-	public static boolean destroyAllCanPlayAI(final AbilityFactory af, final SpellAbility sa, final boolean noRegen){
+	private static boolean destroyAllCanPlayAI(final AbilityFactory af, final SpellAbility sa, final boolean noRegen) {
 		// AI needs to be expanded, since this function can be pretty complex based on what the expected targets could be
 		Random r = MyRandom.random;
 		Cost abCost = sa.getPayCosts();
@@ -597,7 +585,7 @@ public class AbilityFactory_Destroy {
 		return ((r.nextFloat() < .9667) && chance);
 	}
 	
-	public static void destroyAllResolve(final AbilityFactory af, final SpellAbility sa, final boolean noRegen){
+	private static void destroyAllResolve(final AbilityFactory af, final SpellAbility sa, final boolean noRegen) {
 		HashMap<String,String> params = af.getMapParams();
 
 		Card card = sa.getSourceCard();

@@ -258,6 +258,22 @@ public class CombatUtil {
     	//if the attacker has no lure effect, but the blocker can block another attacker with lure, the blocker can't block the former
     	if (!attacker.hasKeyword("All creatures able to block CARDNAME do so.") 
     			&& canBlockAnAttackerWithLure(blocker,combat)) return false;
+
+        if(blocker.hasStartOfKeyword("CARDNAME can't block "))
+        {
+            for(String kw : blocker.getKeyword())
+            {
+                if(kw.startsWith("CARDNAME can't block "))
+                {
+                    String unblockableCard = kw.substring(21);
+                    int ID = Integer.parseInt(unblockableCard.substring(unblockableCard.lastIndexOf("(")+1,unblockableCard.length()-1));
+                    if(attacker.getUniqueNumber() == ID)
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
         
         return canBlock(attacker, blocker);
     }
@@ -1737,8 +1753,6 @@ public class CombatUtil {
         	// opponent discards their hand,
         	opp.discardRandom(handSize, a.getSpellAbility()[0]);
         	opp.drawCards(handSize);
-        } else if(a.getName().equals("Elven Warhounds")) {
-        	AllZone.getGameAction().moveToLibrary(b);
         }
         
         a.setCreatureGotBlockedThisCombat(true);

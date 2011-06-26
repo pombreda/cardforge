@@ -68,7 +68,7 @@ public class Spell_Permanent extends Spell {
         	
             CardList creature = (CardList) championGetCreature.execute();
             if(creature.size() == 0) {
-                AllZone.getGameAction().sacrifice(getSourceCard());
+                AllZone.getGameAction().sacrifice(source);
                 return;
             } else if(controller.isHuman()) {
             	AllZone.getInputControl().setInput(championInputComes);
