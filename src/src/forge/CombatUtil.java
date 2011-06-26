@@ -1691,7 +1691,7 @@ public class CombatUtil {
                                 CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
                                 ComputerUtil.sacrificePermanents(a, list);
                             } else {
-                                AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanents(a));
+                                AllZone.getInputControl().setInput(PlayerUtil.input_sacrificePermanents(a));
                             }
 
                         }

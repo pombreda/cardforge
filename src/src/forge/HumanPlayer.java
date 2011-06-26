@@ -1,6 +1,5 @@
 package forge;
 
-import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
@@ -125,7 +124,7 @@ public class HumanPlayer extends Player {
 
     /** {@inheritDoc} */
     public CardList discard(final int num, final SpellAbility sa, boolean duringResolution) {
-        AllZone.getInputControl().setInput(CardFactoryUtil.input_discard(num, sa), duringResolution);
+        AllZone.getInputControl().setInput(PlayerUtil.input_discard(num, sa), duringResolution);
 
         // why is CardList returned?
         return new CardList();
@@ -133,7 +132,7 @@ public class HumanPlayer extends Player {
 
     /** {@inheritDoc} */
     public void discardUnless(int num, String uType, SpellAbility sa) {
-        AllZone.getInputControl().setInput(CardFactoryUtil.input_discardNumUnless(num, uType, sa));
+        AllZone.getInputControl().setInput(PlayerUtil.input_discardNumUnless(num, uType, sa));
     }
 
     /** {@inheritDoc} */
@@ -147,7 +146,7 @@ public class HumanPlayer extends Player {
                     + " on the top or bottom of your library?", new Object[]{"top", "bottom"});
             libPos = o.toString();
         }
-        AllZone.getInputControl().setInput(CardFactoryUtil.input_putFromHandToLibrary(libPos, numToLibrary));
+        AllZone.getInputControl().setInput(PlayerUtil.input_putFromHandToLibrary(libPos, numToLibrary));
     }
 
     /** {@inheritDoc} */
@@ -177,7 +176,7 @@ public class HumanPlayer extends Player {
 
     /** {@inheritDoc} */
     public void sacrificePermanent(String prompt, CardList choices) {
-        Input in = CardFactoryUtil.input_sacrificePermanent(choices, prompt);
+        Input in = PlayerUtil.input_sacrificePermanent(choices, prompt);
         AllZone.getInputControl().setInput(in);
     }
 
