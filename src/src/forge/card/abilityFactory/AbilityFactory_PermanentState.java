@@ -279,10 +279,16 @@ public class AbilityFactory_PermanentState {
      */
     private static boolean untapPrefTargeting(Target tgt, AbilityFactory af, SpellAbility sa, boolean mandatory) {
         Card source = sa.getSourceCard();
+        
+        Player targetController = AllZone.getComputerPlayer();
+        
+        if(af.isCurse())
+        	targetController = AllZone.getHumanPlayer();
 
-        CardList untapList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+        CardList untapList = AllZoneUtil.getPlayerCardsInPlay(targetController);
         untapList = untapList.getTargetableCards(source);
         untapList = untapList.getValidCards(tgt.getValidTgts(), source.getController(), source);
+
 
         untapList = untapList.filter(AllZoneUtil.tapped);
         // filter out enchantments and planeswalkers, their tapped state doesn't matter.

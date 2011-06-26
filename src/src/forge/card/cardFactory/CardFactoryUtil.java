@@ -1090,6 +1090,9 @@ public class CardFactoryUtil {
 
             @Override
             public boolean canPlayAI() {
+            	
+            	if(AllZone.getPhase().isBefore(Constant.Phase.Main2))
+            		return false;
 
                 //The AI should cycle lands if it has 6 already and no cards in hand with higher CMC
                 CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
