@@ -408,7 +408,7 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         //BEGIN Backwards compatibility block. We should be able to remove this after a few betas, when most users questData has been converted.
         for(int i = 0;i< list.size();i++)
         {
-            list.set(i,Gui_Quest_DeckEditor_Menu.cardNameBackwardsCompatibility(list.get(i)));
+            list.set(i,CardUtil.cardNameBackwardsCompatibility(list.get(i)));
         }
         AllZone.getQuestData().setCardpool(list);
         //END Backwards compatibility block.

@@ -586,4 +586,20 @@ public class CardUtil {
 
         return out;
     }
+
+    //This should only remain for a few betas, til most of everyones questData have been converted.
+    public static String cardNameBackwardsCompatibility(String in)
+    {
+        if(in.equals("Dandan"))
+            return "Dandân";
+
+        String out = in.replace("AE","Æ");
+
+        out = out.replace("Lim-Dul","Lim-Dûl");
+        out = out.replace("Khabal","Khabál");
+        out = out.replace("Hajjaj","Hajjâj");
+
+
+        return out;
+    }
 }

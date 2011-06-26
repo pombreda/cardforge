@@ -93,7 +93,7 @@ public class BoosterGenerator {
                 setCode = s[1];
             }
 
-            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
+            Card c = AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer());
 
             if (!setCode.equals(""))
                 c.setCurSetCode(setCode);
