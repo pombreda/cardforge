@@ -781,6 +781,7 @@ public class CardFactory_Creatures {
 
                 @Override
                 public void resolve() {
+                	//TODO - this needs to be targeted
                     Player opp = card.getController().getOpponent();
 
                     CardList list = AllZoneUtil.getCardsInPlay();
@@ -854,73 +855,6 @@ public class CardFactory_Creatures {
             });
 
             card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Disciple of Kangee")) {
-            Cost abCost = new Cost("U T", cardName, true);
-            final Ability_Activated ability = new Ability_Activated(card, abCost, new Target(card, "TgtC")) {
-                private static final long serialVersionUID = -5169389637917649036L;
-
-                @Override
-                public boolean canPlayAI() {
-                    if (CardFactoryUtil.AI_doesCreatureAttack(card)) return false;
-
-                    return CardFactoryUtil.AI_getHumanCreature("Flying", card, false).isEmpty()
-                            && (getCreature().size() != 0);
-                }
-
-                @Override
-                public void chooseTargetAI() {
-                    card.tap();
-                    Card target = CardFactoryUtil.AI_getBestCreature(getCreature());
-                    setTargetCard(target);
-                }
-
-                CardList getCreature() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                    list = list.filter(new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.isCreature()
-                                    && (!CardFactoryUtil.AI_doesCreatureAttack(c))
-                                    && (!c.hasKeyword("Flying"))
-                                    && CardFactoryUtil.canTarget(card, c);
-                        }
-                    });
-                    list.remove(card);
-                    return list;
-                }//getCreature()
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(getTargetCard()) &&
-                            CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        final Card[] creature = new Card[1];
-                        final long timestamp;
-
-                        creature[0] = getTargetCard();
-                        creature[0].addExtrinsicKeyword("Flying");
-                        timestamp = creature[0].addColor("U", card, false, true);
-
-                        final Command EOT = new Command() {
-                            private static final long serialVersionUID = -1899153704584793548L;
-                            long stamp = timestamp;
-
-                            public void execute() {
-                                if (AllZoneUtil.isCardInPlay(creature[0])) {
-                                    creature[0].removeExtrinsicKeyword("Flying");
-                                    creature[0].removeColor("U", card, false, stamp);
-                                }
-                            }
-                        };
-                        AllZone.getEndOfTurn().addUntil(EOT);
-
-                    }//if (card is in play)
-                }//resolve()
-            };//SpellAbility
-            card.addSpellAbility(ability);
-            ability.setDescription(abCost + "Target creature gains flying and becomes blue until end of turn.");
         }//*************** END ************ END **************************
 
 
@@ -1203,6 +1137,7 @@ public class CardFactory_Creatures {
             card.addComesIntoPlayCommand(comesIntoPlay);
         }//*************** END ************ END **************************
 
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Wojek Embermage")) {
             Cost abCost = new Cost("T", cardName, true);
@@ -1266,24 +1201,24 @@ public class CardFactory_Creatures {
             final Card[] target = new Card[1];
 
             final Command destroy = new Command() {
-                private static final long serialVersionUID = -2433442359225521472L;
+            	private static final long serialVersionUID = -2433442359225521472L;
 
-                public void execute() {
+            	public void execute() {
 
-                    AllZone.getStack().addSimultaneousStackEntry(new Ability(card, "0", "Adarkar Valkyrie - Return " + target[0] + " from graveyard to the battlefield") {
-                        @Override
-                        public void resolve() {
-                            PlayerZone grave = AllZone.getZone(target[0]);
-                            //checks to see if card is still in the graveyard
+            		AllZone.getStack().addSimultaneousStackEntry(new Ability(card, "0", "Adarkar Valkyrie - Return " + target[0] + " from graveyard to the battlefield") {
+            			@Override
+            			public void resolve() {
+            				PlayerZone grave = AllZone.getZone(target[0]);
+            				//checks to see if card is still in the graveyard
 
-                            if (grave != null && AllZoneUtil.isCardInZone(grave, target[0])) {
-                                PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, card.getController());
-                                target[0].setController(card.getController());
-                                AllZone.getGameAction().moveTo(play, target[0]);
-                            }
-                        }
-                    });
-                }//execute()
+            				if (grave != null && AllZoneUtil.isCardInZone(grave, target[0])) {
+            					PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, card.getController());
+            					target[0].setController(card.getController());
+            					AllZone.getGameAction().moveTo(play, target[0]);
+            				}
+            			}
+            		});
+            	}//execute()
             };
 
             final Command untilEOT = new Command() {
