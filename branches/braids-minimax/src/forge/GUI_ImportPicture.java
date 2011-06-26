@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -97,16 +99,35 @@ public class GUI_ImportPicture extends JDialog implements NewConstants {
             jLabelNeedSpace.setText("HDD Need Space: Unknown.");
             jLabelHDDFree = new JLabel();
             jLabelHDDFree.setBounds(new Rectangle(15, 119, 177, 16));
+
+            File file = ForgeProps.getFile(IMAGE_BASE);
+
+            Exception exception = null;
             try {
-                File file = ForgeProps.getFile(IMAGE_BASE);
-                long freeSpace = file.getFreeSpace();
+                // Call Java 6 method without making the Java 5 compiler 
+                // unhappy:
+                Method getFreeSpaceMethod = file.getClass().getMethod("getFreeSpace");
+                long freeSpace = (Long) getFreeSpaceMethod.invoke(file);
+                
                 freeSpaceM = freeSpace / 1024 / 1024;
                 jLabelHDDFree.setText("HDD Free Space: " + freeSpaceM + " MB");
-            } catch(NoSuchMethodError err) {
-                // getFreeSpace is @since 1.6
-                err.printStackTrace();
-                jLabelHDDFree.setText("HDD Free Space could not be determined");
+
+            } catch(NoSuchMethodException err) {
+            	exception = err;
+            } catch (IllegalArgumentException err) {
+            	exception = err;
+			} catch (IllegalAccessException err) {
+            	exception = err;
+			} catch (InvocationTargetException err) {
+            	exception = err;
+			} finally {
+            	if (exception != null) {
+            		System.err.print("Exception thrown: " + exception);
+            		exception.printStackTrace();
+            		jLabelHDDFree.setText("HDD Free Space could not be determined");
+            	}
             }
+            
             jLabelSource = new JLabel();
             jLabelSource.setBounds(new Rectangle(63, 45, 267, 17));
             jLabelSource.setBorder(BorderFactory.createLineBorder(Color.black, 1));

@@ -35,6 +35,10 @@ public class SpellAbility_Variables {
 	protected String presentCompare = "GE1";	// Default Compare to Greater or Equal to 1
 	protected String presentDefined = null;
 
+    protected String svarToCheck = null;
+    protected String svarOperator = "GE";
+    protected String svarOperand = "1";
+
 	protected String lifeTotal = null;
 	protected String lifeAmount = "GE1";
 
@@ -143,6 +147,22 @@ public class SpellAbility_Variables {
 	//used to define as a Planeswalker ability
 	public void setPlaneswalker(boolean bPlaneswalker) { pwAbility = bPlaneswalker; }
 	public boolean getPlaneswalker() { return pwAbility; }
+
+    //Checking the values of SVars (Mostly for Traps)
+    public void setSvarToCheck(String SVar)
+    {
+        svarToCheck = SVar;
+    }
+
+    public void setSvarOperator(String Operator)
+    {
+         svarOperator = Operator;
+    }
+
+    public void setSvarOperand(String Operand)
+    {
+        svarOperand = Operand;
+    }
 
 	/*
 	 * Restrictions of the future

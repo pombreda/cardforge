@@ -12,6 +12,11 @@ import forge.gui.input.InputControl;
 import forge.properties.NewConstants;
 
 
+/**
+ * Please use public getters and setters instead of direct field access.
+ * 
+ * If you need a setter, by all means, add it.
+ */
 public class AllZone implements NewConstants {
     //only for testing, should read decks from local directory
 //  public static final IO IO = new IO("all-decks");
@@ -38,12 +43,12 @@ public class AllZone implements NewConstants {
 	
     public static void setQuestAssignment(Quest_Assignment assignment) {
 		Unstatic.getGlobalGameState().setQuestAssignment(assignment);
-	}
+    }
     
     public static NameChanger getNameChanger() {
          return Unstatic.getGlobalGameState().getNameChanger(); 
     }
-    
+
     public static EndOfTurn getEndOfTurn() {
          return Unstatic.getGlobalGameState().getEndOfTurn(); 
     }
@@ -211,3 +216,4 @@ public class AllZone implements NewConstants {
         ((DefaultPlayerZone)getComputerGraveyard()).resetCardsAddedThisTurn();
     }
 }//AllZone
+

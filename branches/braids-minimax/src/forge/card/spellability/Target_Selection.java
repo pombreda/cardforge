@@ -94,54 +94,40 @@ public class Target_Selection {
     		final Target_Selection select, final SpellAbility_Requirements req, final boolean mandatory)
     {
     	Input target = new Input() {
-			private static final long serialVersionUID = -2397096454771577476L;
+		private static final long serialVersionUID = -2397096454771577476L;
 
-			@Override
-	        public void showMessage() {
-				Target tgt = select.getTgt();
-				String zone = tgt.getZone();
-				
-				if (zone.equals(Constant.Zone.Stack)){
-					// If Zone is Stack, the choices are handled slightly differently
-					stopSetNext(input_cardFromStack(sa, message, select, req, mandatory));
-					return;
-				}
-				
-				CardList choices = AllZoneUtil.getCardsInZone(zone).getValidCards(Tgts, sa.getActivatingPlayer(), sa.getSourceCard());
-				
-				// Remove cards already targeted
-				ArrayList<Card> targeted = tgt.getTargetCards();
-				for(Card c : targeted){
-					if (choices.contains(c))
-						choices.remove(c);
-				}
-				
-				if (zone.equals(Constant.Zone.Battlefield)){
-		            boolean canTargetPlayer = false;
-		            boolean canTargetOpponent = false;
-		            for(String s : Tgts){
-		            	
-		            	if (s.equalsIgnoreCase("Player"))
-		            		canTargetPlayer = true;
-		            	if (s.equalsIgnoreCase("Opponent"))
-		            		canTargetOpponent = true;
-		            }
-	
-		            stopSetNext(input_targetSpecific(sa, choices, message, true, canTargetPlayer, canTargetOpponent, select, req, mandatory));
-				}
-				else{
-					stopSetNext(input_cardFromList(sa, choices, message, true, select, req, mandatory));
-				}
-	        }
+		@Override
+		public Collection<MinimaxMove> getMoves() {
+			// TODO Auto-generated method stub
+			throw new NotImplementedError();
+		}
 
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
-    	};
-    	
-        return target;
+	// braids TODO: make sure this is correct
+	public void chooseValidInput(){
+		Target tgt = this.getTgt();
+		String zone = tgt.getZone();
+		final boolean mandatory = target.getMandatory() ? target.hasCandidates() : false;
+		
+		if (zone.equals(Constant.Zone.Stack)){
+			// If Zone is Stack, the choices are handled slightly differently
+			chooseCardFromStack(mandatory);
+			return;
+		}
+		
+		CardList choices = AllZoneUtil.getCardsInZone(zone).getValidCards(target.getValidTgts(), ability.getActivatingPlayer(), ability.getSourceCard());
+		
+		// Remove cards already targeted
+		ArrayList<Card> targeted = tgt.getTargetCards();
+		for(Card c : targeted){
+			if (choices.contains(c))
+				choices.remove(c);
+		}
+		
+		if (zone.equals(Constant.Zone.Battlefield)){
+			AllZone.getInputControl().setInput(input_targetSpecific(choices, true, mandatory));
+		}
+		else
+			chooseCardFromList(choices, true, mandatory);
     }//input_targetValid
 
     //CardList choices are the only cards the user can successful select
@@ -160,9 +146,8 @@ public class Target_Selection {
 				sb.append("\n");
 				sb.append(message);
 				
-                AllZone.getDisplay().showMessage(sb.toString());
-                
-                Target t = select.getTgt();
+                AllZone.getDisplay().showMessage(sb.toString());     
+               
                 // If reached Minimum targets, enable OK button
                 if (t.getMinTargets(sa.getSourceCard(), sa) > t.getNumTargeted())
                 	ButtonUtil.enableOnlyCancel();

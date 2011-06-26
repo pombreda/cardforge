@@ -939,7 +939,17 @@ public class CardFactoryUtil {
             
             @Override
             public boolean canPlayAI() {
-            	//TODO: When should AI Cycle?
+            	
+            	//The AI should cycle lands if it has 6 already and no cards in hand with higher CMC
+            	CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
+            	CardList lands = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+            	lands.addAll(hand);
+            	lands = lands.getType("Land");
+            	
+            	if(sourceCard.isLand() && lands.size() >= Math.max(hand.getHighestConvertedManaCost(), 6))
+            		return true;
+            	
+            	//TODO: When else should AI Cycle?
                 return false;
             }
             
@@ -2620,7 +2630,7 @@ public class CardFactoryUtil {
         //Count$ThisTurnEntered <ZoneDestination <Valid>
         if(sq[0].startsWith("ThisTurnEntered"))
         {
-            String[] workingCopy = sq[0].split(" ");
+            String[] workingCopy = l[0].split(" ");
             String destination,origin,validFilter;
 
             destination = workingCopy[1];
@@ -2640,12 +2650,13 @@ public class CardFactoryUtil {
             CardList res = ((DefaultPlayerZone)AllZone.getZone(destination, AllZone.getHumanPlayer())).getCardsAddedThisTurn(origin);
             res.addAll(((DefaultPlayerZone)AllZone.getZone(destination, AllZone.getComputerPlayer())).getCardsAddedThisTurn(origin));
 
-            res.filter(new CardListFilter() {
+            res = res.filter(new CardListFilter() {
                public boolean addCard(Card csubject)
                {
                    return csubject.isValidCard(valid,csource.getController(),csource);
                }
             });
+
 
             return doXMath(res.size(),m, c);
         }
@@ -3246,24 +3257,30 @@ public class CardFactoryUtil {
     
     //total cost to pay for an attacker c, cards like Propaganda, Ghostly Prison, Collective Restraint, ...
     public static String getPropagandaCost(Card c) {
-        String s = "";
+        int cost = 0;
         
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(c.getController().getOpponent());
-        list = list.filter(new CardListFilter() {
-            public boolean addCard(Card c) {
-                return c.getName().equals("Propaganda") || c.getName().equals("Windborn Muse")
-                        || c.getName().equals("Ghostly Prison");
-            }
-        });
-        int cost = list.size() * 2;
+        CardList list = AllZoneUtil.getCardsInPlay();
+        for(Card card : list) {
+			if (card.hasStartOfKeyword("Creatures can't attack unless their controller pays")) {
+	        	int KeywordPosition = card.getKeywordPosition("Creatures can't attack unless their controller pays");
+	        	String parse = card.getKeyword().get(KeywordPosition).toString();
+	    		String k[] = parse.split(":");
+	    		
+	    		String restrictions[] = k[1].split(",");
+	    		if (!c.isValidCard(restrictions,  card.getController(), card))
+	    			continue;
+	    		
+	    		String costString = k[2];
+	    		if (costString.equals("X"))
+	    			cost += CardFactoryUtil.xCount(card, card.getSVar("X"));
+	    		else if (costString.equals("Y"))
+	    			cost += CardFactoryUtil.xCount(card, card.getSVar("Y"));
+	    		else
+	    			cost += Integer.parseInt(k[2]);
+			}
+        }
         
-        list = AllZoneUtil.getPlayerCardsInPlay(c.getController().getOpponent(), "Collective Restraint");
-        
-        int domain = countBasicLandTypes(c.getController().getOpponent());
-        
-        cost += domain * list.size();
-        
-        s = Integer.toString(cost);
+        String s = Integer.toString(cost);
         
         return s;
     }
@@ -3533,8 +3550,7 @@ public class CardFactoryUtil {
 
     public static void playLandEffects(Card c){
     	final Player player = c.getController();
-    	CardList cityOfTraitors = AllZoneUtil.getPlayerCardsInPlay(player, "City of Traitors");
-    	cityOfTraitors.remove(c);
+
 		// > 0 because land amount isn't incremented until after playLandEffects
     	boolean extraLand = player.getNumLandsPlayed() > 0;
     	
@@ -3548,21 +3564,6 @@ public class CardFactoryUtil {
 	                }
 	            };
 	            ability.setStackDescription("Fastbond - Deals 1 damage to you.");
-
-                AllZone.getStack().addSimultaneousStackEntry(ability);
-
-	        }
-        }
-		
-		if(cityOfTraitors.size() > 0) {
-	        for(final Card city : cityOfTraitors){
-	            SpellAbility ability = new Ability(city, "0") {
-	                @Override
-	                public void resolve() {
-	                	AllZone.getGameAction().sacrifice(city);
-	                }
-	            };
-	            ability.setStackDescription(city.getName()+" - sacrifice "+city.getName());
 
                 AllZone.getStack().addSimultaneousStackEntry(ability);
 
@@ -3587,15 +3588,14 @@ public class CardFactoryUtil {
     	
     	return "";
     }
-    
+    /*
     //whenever CARDNAME becomes the target of a spell or ability, ... :
     public static void checkTargetingEffects(SpellAbility sa, final Card c)
     {
     	
     	//if (AllZoneUtil.isCardInPlay(c)) 
     	//{
-    	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, return CARDNAME to its owner's hand.") 
-    			|| (c.isCreature() && AllZoneUtil.isCardInPlay("Cowardice"))) {
+    	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, return CARDNAME to its owner's hand.") ) { // || (c.isCreature() && AllZoneUtil.isCardInPlay("Cowardice"))
     		SpellAbility ability = new Ability(c, "0")
     		{
     			public void resolve()
@@ -3624,7 +3624,7 @@ public class CardFactoryUtil {
     		ability.setStackDescription(sb.toString());
     		
     		AllZone.getStack().add(ability);
-    	}/*
+    	}
     	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, sacrifice it.")) {
     		SpellAbility ability = new Ability(c, "0")
     		{
@@ -3714,8 +3714,8 @@ public class CardFactoryUtil {
     			}
     		}
     	}
-    	//}*/
-    }
+    	//}
+    }*/
 
     
     public static void main(String[] args) {

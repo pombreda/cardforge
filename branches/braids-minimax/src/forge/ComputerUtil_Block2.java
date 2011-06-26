@@ -1,4 +1,3 @@
-
 package forge;
 
 import java.util.ArrayList;
@@ -91,7 +90,7 @@ public class ComputerUtil_Block2
 	   
 	   ArrayList<Object> defenders = combat.getDefenders();
 	   
-	   //Begin with the Attackers that pose the biggest threat
+	   //Begin with the attackers that pose the biggest threat
 	   CardListUtil.sortByEvaluateCreature(attackerLists[0]);
 	   CardListUtil.sortAttack(attackerLists[0]);
 	   
@@ -105,7 +104,7 @@ public class ComputerUtil_Block2
        // defend planeswalkers with more loyalty before planeswalkers with less loyalty
 	   // if planeswalker will be too difficult to defend don't even bother
 	   for(int i = 1; i < attackerLists.length; i++){
-		   //Begin with the Attackers that pose the biggest threat
+		   //Begin with the attackers that pose the biggest threat
 		   CardListUtil.sortAttack(attackerLists[i]);
 		   for(Card c : attackerLists[i])
 			   sortedAttackers.add(c);
@@ -492,3 +491,4 @@ public class ComputerUtil_Block2
 	 return combat;
    }
 }
+

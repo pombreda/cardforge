@@ -154,7 +154,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 			}
 			int left = list.size();
 
-			if (!Card.compare(left, presentCompare, right))
+			if (!AllZoneUtil.compare(left, presentCompare, right))
 				return false;
 		}
 
@@ -174,7 +174,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 
 			int left = list.size();
 
-			return Card.compare(left, presentCompare, right);
+			return AllZoneUtil.compare(left, presentCompare, right);
 		}
 		else if (sIsPresent != null) {
 			CardList list = AllZoneUtil.getCardsInPlay();
@@ -191,7 +191,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 			}
 			int left = list.size();
 
-			if (!Card.compare(left, presentCompare, right))
+			if (!AllZoneUtil.compare(left, presentCompare, right))
 				return false;
 		}
 
@@ -213,7 +213,7 @@ public class SpellAbility_Condition extends SpellAbility_Variables{
 				right = Integer.parseInt(lifeAmount.substring(2));
 			}
 
-			if(!Card.compare(life, lifeAmount, right)) {
+			if(!AllZoneUtil.compare(life, lifeAmount, right)) {
 				return false;
 			}
 		}

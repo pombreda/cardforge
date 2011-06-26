@@ -927,6 +927,7 @@ public class AbilityFactory_Counters {
 		for (Player player : nonOustedPlayers) {
 			unchosenPermanents.addAll(getPermanentsWithCountersOnThemControlledBy(player));
 		}
+				// TODO check !crd.getName().equals("Mana Pool") /*&& crd.hasCounters()*/;
 		
 		final Collection<Player> unchosenPlayers = 
 			new ArrayList<Player>(nonOustedPlayers);
@@ -1496,3 +1497,4 @@ public class AbilityFactory_Counters {
 	}
 	
 }//end class AbilityFactory_Counters
+

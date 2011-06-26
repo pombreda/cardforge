@@ -1,4 +1,3 @@
-
 package forge;
 
 
@@ -224,7 +223,7 @@ public class Gui_WinLose extends JFrame implements NewConstants {
     
     void continueButton_actionPerformed(ActionEvent e) {
         //open up "Game" screen
-    	//AllZone.getComputer_Play().reset();//sometimes computer has creature in play in the 2nd game of the match
+    	//AllZone.getComputerPlay().reset();//sometimes computer has creature in play in the 2nd game of the match
         
     	if (!Constant.Quest.fantasyQuest[0])
     		AllZone.getGameAction().newGame(Constant.Runtime.HumanDeck[0], Constant.Runtime.ComputerDeck[0]);
@@ -522,3 +521,4 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         quitButton_actionPerformed(null);
     }
 }
+

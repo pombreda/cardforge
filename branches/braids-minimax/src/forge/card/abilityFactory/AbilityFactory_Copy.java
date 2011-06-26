@@ -14,7 +14,6 @@ import forge.Command;
 import forge.ComputerUtil;
 import forge.Constant;
 import forge.MyRandom;
-import forge.PlayerZone_ComesIntoPlay;
 import forge.card.cardFactory.CardFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability;
@@ -254,10 +253,7 @@ public class AbilityFactory_Copy {
 				multiplier *= numCopies;
 				Card[] crds = new Card[multiplier];
 				
-				PlayerZone_ComesIntoPlay.setSimultaneousEntry(true);
-				
 				for(int i = 0; i < multiplier; i++) {
-					if(i + 1 == multiplier) PlayerZone_ComesIntoPlay.setSimultaneousEntry(false);
 					//TODO: Use central copy methods
 					Card copy;
 					if(!c.isToken()) {
