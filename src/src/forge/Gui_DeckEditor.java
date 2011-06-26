@@ -18,7 +18,6 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
-import javax.tools.JavaCompiler;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
