@@ -10,5 +10,5 @@ SVar:RemRandomDeck:True
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/aquitects_will.jpg
-SetInfo:LOR|Common|http://magiccards.info/scans/en/lor/233.jpg
+SetInfo:LRW|Common|http://magiccards.info/scans/en/lw/52.jpg
 End
