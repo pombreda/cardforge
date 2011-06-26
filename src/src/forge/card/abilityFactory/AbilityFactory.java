@@ -1524,7 +1524,7 @@ public class AbilityFactory {
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
-    public static void passUnlessCost(final SpellAbility sa) {
+    public static void passUnlessCost(final SpellAbility sa, final boolean usedStack) {
         Card source = sa.getSourceCard();
         AbilityFactory af = sa.getAbilityFactory();
         final HashMap<String, String> params = af.getMapParams();
@@ -1556,7 +1556,8 @@ public class AbilityFactory {
 
             public void execute() {
                 resolveSubAbilities(sa);
-                AllZone.getStack().finishResolving(sa, false);
+                if(usedStack)
+                	AllZone.getStack().finishResolving(sa, false);
             }
         };
 
@@ -1567,7 +1568,8 @@ public class AbilityFactory {
                 sa.resolve();
                 if (params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.getHumanPlayer());
                 resolveSubAbilities(sa);
-                AllZone.getStack().finishResolving(sa, false);
+                if(usedStack)
+                	AllZone.getStack().finishResolving(sa, false);
             }
         };
 
@@ -1578,12 +1580,14 @@ public class AbilityFactory {
             if (ComputerUtil.canPayCost(ability)) {
                 ComputerUtil.playNoStack(ability); //Unless cost was payed - no resolve
                 resolveSubAbilities(sa);
-                AllZone.getStack().finishResolving(sa, false);
+                if(usedStack)
+                	AllZone.getStack().finishResolving(sa, false);
             } else {
                 sa.resolve();
                 if (params.containsKey("PowerSink")) GameActionUtil.doPowerSink(AllZone.getComputerPlayer());
                 resolveSubAbilities(sa);
-                AllZone.getStack().finishResolving(sa, false);
+                if(usedStack)
+                	AllZone.getStack().finishResolving(sa, false);
             }
         }
     }
@@ -1593,7 +1597,7 @@ public class AbilityFactory {
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
-    public static void resolve(SpellAbility sa) {
+    public static void resolve(SpellAbility sa, boolean usedStack) {
         if (sa == null) return;
         AbilityFactory af = sa.getAbilityFactory();
         if(af == null) {
@@ -1610,8 +1614,9 @@ public class AbilityFactory {
 
                 //try to resolve subabilities (see null check above)
                 resolveSubAbilities(sa);
-                AllZone.getStack().finishResolving(sa, false);
-            } else passUnlessCost(sa);
+                if(usedStack)
+                	AllZone.getStack().finishResolving(sa, false);
+            } else passUnlessCost(sa, usedStack);
         } else
             resolveSubAbilities(sa);
     }

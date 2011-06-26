@@ -607,7 +607,7 @@ public class AbilityFactory_Mana {
         if (af.hasSubAbility()) {
             abMana.setUndoable(false);
             Ability_Sub abSub = abMana.getSubAbility();
-            AbilityFactory.resolve(abSub);
+            AbilityFactory.resolve(abSub, false);
         }
     }
 

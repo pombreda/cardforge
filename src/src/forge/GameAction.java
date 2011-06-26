@@ -2059,7 +2059,7 @@ public class GameAction {
             }
             if (manaCost.isPaid() && sa.getBeforePayMana() == null) {
                 if (sa.getAfterPayMana() == null) {
-                	AbilityFactory.resolve(sa);
+                	AbilityFactory.resolve(sa, false);
                     if (sa.isTapAbility() && !sa.wasCancelled()) sa.getSourceCard().tap();
                     if (sa.isUntapAbility()) sa.getSourceCard().untap();
                     return;
