@@ -617,14 +617,12 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
      * <p>setup.</p>
      */
     private void setup() {
-        Font tableFont = new Font(ForgeProps.getProperty(GUI.GuiDeckEditor.CARDTABLE_FONT),0,12);
         addListeners();
 
         //construct topTable, get all cards
         topModel = new TableModel(new CardList(), this);
         topModel.addListeners(topTable);
 
-        topTable.setFont(tableFont);
         topTable.setModel(topModel);
         topModel.resizeCols(topTable);
 
@@ -632,7 +630,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         bottomModel = new TableModel(this);
         bottomModel.addListeners(bottomTable);
 
-        bottomTable.setFont(tableFont);
         bottomTable.setModel(bottomModel);
         topModel.resizeCols(bottomTable);
 

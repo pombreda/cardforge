@@ -162,13 +162,11 @@ public interface NewConstants {
         public static interface GuiDisplay {
             public static final String LAYOUT = "gui/Display";
             public static final String LAYOUT_NEW = "gui/Display/new";
-            public static final String CARDPANEL_FONT = "gui/CardPanel/font";
-            public static final String CARDDETAILPANEL_FONT = "gui/CardDetailPanel/font";
         }
 
         public static interface GuiDeckEditor {
             public static final String LAYOUT = "gui/DeckEditor";
-            public static final String CARDTABLE_FONT = "gui/DeckEditor/CardTable/font";
+
         }
     }
 
