@@ -916,7 +916,7 @@ public class ComputerUtil {
                         lands = lands.getType("Land");
 
                         if (lands.size() >= Math.max(hand.getHighestConvertedManaCost(), 6))
-                            return true;
+                            return false;
                 	}
                 		
                 
