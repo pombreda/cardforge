@@ -384,6 +384,12 @@ public class TriggerHandler {
             //Yes, it must wrap ALL SpellAbility methods in order to handle possible corner cases.
             //(The trigger can have a hardcoded OverridingAbility which can make use of any of the methods)
             final Ability wrapperAbility = new Ability(regtrig.getHostCard(), "0") {
+            	
+                @Override
+                public boolean isWrapper() {
+                    return true;
+                }
+            	
                 @Override
                 public void setPaidHash(HashMap<String, CardList> hash) {
                     sa[0].setPaidHash(hash);
@@ -556,7 +562,7 @@ public class TriggerHandler {
 
                 @Override
                 public Ability_Sub getSubAbility() {
-                    return null;//sa[0].getSubAbility(); //the wrapper ability should not return a subability
+                    return sa[0].getSubAbility();
                 }
 
                 @Override

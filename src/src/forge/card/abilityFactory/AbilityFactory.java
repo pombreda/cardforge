@@ -1624,7 +1624,7 @@ public class AbilityFactory {
      */
     public static void resolveSubAbilities(SpellAbility sa) {
         Ability_Sub abSub = sa.getSubAbility();
-        if (abSub == null) return;
+        if (abSub == null || sa.isWrapper()) return;
         //check conditions
         if (AbilityFactory.checkConditional(abSub)) {
             abSub.resolve();

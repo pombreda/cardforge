@@ -1150,4 +1150,10 @@ public abstract class SpellAbility {
 
         return res;
     }
+    
+    //is this a wrapping ability (used by trigger abilities)
+    public boolean isWrapper() {
+    	return false;
+    }
+
 }
