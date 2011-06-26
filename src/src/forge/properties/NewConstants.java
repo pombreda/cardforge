@@ -7,9 +7,6 @@ package forge.properties;
  * Created on 22.08.2009
  */
 
-
-import forge.StaticEffect;
-
 /**
  * property keys
  *
