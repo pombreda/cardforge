@@ -863,7 +863,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are a part of this game
      *
-     * @return a {@link forge.CardList} object.
+     * @return a {@link forge.CardList} with all cards in all Battlefields, Hands, Graveyards, Libraries, and Exiles.
      */
     public static CardList getCardsInGame() {
         CardList all = new CardList();
@@ -889,7 +889,7 @@ public class AllZoneUtil {
     /**
      * <p>getDoublingSeasonMagnitude.</p>
      *
-     * @param player a {@link forge.Player} object.
+     * @param player the {@link forge.Player} player to determine if is affected by Doubling Season
      * @return a int.
      */
     public static int getDoublingSeasonMagnitude(Player player) {

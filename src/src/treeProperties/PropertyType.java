@@ -20,7 +20,6 @@ public interface PropertyType<T> {
      * The suffix, not including "--", that identifies this content type.
      *
      * @return a {@link java.lang.String} object.
-     * @param <T> a T object.
      */
     public String getSuffix();
 

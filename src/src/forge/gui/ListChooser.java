@@ -44,7 +44,6 @@ public class ListChooser<T> {
      * <p>main.</p>
      *
      * @param args an array of {@link java.lang.String} objects.
-     * @param <T> a T object.
      */
     public static void main(String[] args) {
         ListChooser<String> c = new ListChooser<String>("test", "choose a or b", 0, 2, "a", "b");
