@@ -8,6 +8,8 @@ package forge.gui.game;
 
 
 import forge.*;
+import forge.properties.ForgeProps;
+import forge.properties.NewConstants;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
@@ -43,6 +45,8 @@ public class CardDetailPanel extends JPanel implements CardContainer {
      * @param card a {@link forge.Card} object.
      */
     public CardDetailPanel(Card card) {
+        Font f = new Font(ForgeProps.getProperty(NewConstants.GUI.GuiDisplay.CARDDETAILPANEL_FONT),0,14);
+        setFont(f);
         setLayout(new GridLayout(2, 0, 0, 5));
         setBorder(new EtchedBorder());
 
@@ -81,18 +85,18 @@ public class CardDetailPanel extends JPanel implements CardContainer {
         cdArea.setWrapStyleWord(true);
 
         if (!Gui_NewGame.useLAFFonts.isSelected()) {
-            cdLabel1.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel2.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel3.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel4.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel5.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel6.setFont(new java.awt.Font("Dialog", 0, 14));
+            cdLabel1.setFont(f);
+            cdLabel2.setFont(f);
+            cdLabel3.setFont(f);
+            cdLabel4.setFont(f);
+            cdLabel5.setFont(f);
+            cdLabel6.setFont(f);
 
-            java.awt.Font f = new java.awt.Font("Dialog", 0, 14);
-            f = f.deriveFont(java.awt.Font.BOLD);
-            cdLabel7.setFont(f);
 
-            cdArea.setFont(new java.awt.Font("Dialog", 0, 14));
+            Font f2 = f.deriveFont(java.awt.Font.BOLD);
+            cdLabel7.setFont(f2);
+
+            cdArea.setFont(f);
         }
 
         setCard(card);

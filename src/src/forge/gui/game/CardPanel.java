@@ -5,6 +5,8 @@ import forge.Card;
 import forge.CardContainer;
 import forge.GuiDisplayUtil;
 import forge.ImageCache;
+import forge.properties.ForgeProps;
+import forge.properties.NewConstants;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +29,7 @@ public class CardPanel extends JPanel implements CardContainer {
      * @param card a {@link forge.Card} object.
      */
     public CardPanel(Card card) {
+        setFont(new Font(ForgeProps.getProperty(NewConstants.GUI.GuiDisplay.CARDPANEL_FONT),0,12));
         setCard(card);
     }
 

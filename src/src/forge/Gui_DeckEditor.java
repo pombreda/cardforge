@@ -18,6 +18,7 @@ import javax.swing.event.MouseInputListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
+import javax.tools.JavaCompiler;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
@@ -617,12 +618,14 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
      * <p>setup.</p>
      */
     private void setup() {
+        Font tableFont = new Font(ForgeProps.getProperty(GUI.GuiDeckEditor.CARDTABLE_FONT),0,12);
         addListeners();
 
         //construct topTable, get all cards
         topModel = new TableModel(new CardList(), this);
         topModel.addListeners(topTable);
 
+        topTable.setFont(tableFont);
         topTable.setModel(topModel);
         topModel.resizeCols(topTable);
 
@@ -630,6 +633,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         bottomModel = new TableModel(this);
         bottomModel.addListeners(bottomTable);
 
+        bottomTable.setFont(tableFont);
         bottomTable.setModel(bottomModel);
         topModel.resizeCols(bottomTable);
 
