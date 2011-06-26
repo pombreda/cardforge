@@ -1190,7 +1190,7 @@ public class GameActionUtil {
                     CardList creatures = AllZoneUtil.getCreaturesInPlay(player);
                     creatures.remove(c);
                     if (player.isHuman()) {
-                        AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanent(creatures, c.getName() + " - Select a creature to sacrifice."));
+                        AllZone.getInputControl().setInput(PlayerUtil.input_sacrificePermanent(creatures, c.getName() + " - Select a creature to sacrifice."));
                     } else { //computer
                         Card target = CardFactoryUtil.AI_getWorstCreature(creatures);
                         AllZone.getGameAction().sacrifice(target);
@@ -1325,7 +1325,7 @@ public class GameActionUtil {
                     c.tap();
                     if (c.getController().isComputer()) {
                         if (playerLand.size() > 0)
-                            AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanent(playerLand, c.getName() + " - Select a land to sacrifice."));
+                            AllZone.getInputControl().setInput(PlayerUtil.input_sacrificePermanent(playerLand, c.getName() + " - Select a land to sacrifice."));
                     } else {
                         Card target = CardFactoryUtil.AI_getBestLand(playerLand);
 

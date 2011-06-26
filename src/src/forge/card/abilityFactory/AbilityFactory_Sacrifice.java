@@ -405,7 +405,7 @@ public class AbilityFactory_Sacrifice {
         list = list.getValidCards(valid.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
 
         // TODO: Wait for Input to finish before moving on with the rest of Resolution
-        AllZone.getInputControl().setInput(CardFactoryUtil.input_sacrificePermanentsFromList(amount, list, message), true);
+        AllZone.getInputControl().setInput(PlayerUtil.input_sacrificePermanentsFromList(amount, list, message), true);
     }
 
 
