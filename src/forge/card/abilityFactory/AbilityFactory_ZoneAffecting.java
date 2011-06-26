@@ -31,19 +31,17 @@ public class AbilityFactory_ZoneAffecting {
 	//**********************************************************************
 	//******************************* DRAW *********************************
 	//**********************************************************************
-	public static SpellAbility createAbilityDraw(final AbilityFactory AF){
-		final SpellAbility abDraw = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityDraw(final AbilityFactory af) {
+		final SpellAbility abDraw = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = 5445572699000471299L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
-			// when getStackDesc is called, just build exactly what is happening
+			public String getStackDescription() {
 				return drawStackDescription(af, this);
 			}
 
-			public boolean canPlayAI(){
+			@Override
+			public boolean canPlayAI() {
 				return drawCanPlayAI(af,this);
 			}
 			
@@ -61,19 +59,17 @@ public class AbilityFactory_ZoneAffecting {
 		return abDraw;
 	}
 	
-	public static SpellAbility createSpellDraw(final AbilityFactory AF){
-		final SpellAbility spDraw = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellDraw(final AbilityFactory af) {
+		final SpellAbility spDraw = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
-				// when getStackDesc is called, just build exactly what is happening
+			public String getStackDescription() {
 				return drawStackDescription(af, this);
 			}
 
-			public boolean canPlayAI(){
+			@Override
+			public boolean canPlayAI() {
 				return drawCanPlayAI(af, this);
 			}
 			
@@ -86,15 +82,12 @@ public class AbilityFactory_ZoneAffecting {
 		return spDraw;
 	}
 	
-	public static SpellAbility createDrawbackDraw(final AbilityFactory AF){
-		final SpellAbility dbDraw = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackDraw(final AbilityFactory af) {
+		final SpellAbility dbDraw = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
-				// when getStackDesc is called, just build exactly what is happening
+			public String getStackDescription() {
 				return drawStackDescription(af, this);
 			}
 
@@ -117,7 +110,7 @@ public class AbilityFactory_ZoneAffecting {
 		return dbDraw;
 	}
 	
-	public static String drawStackDescription(AbilityFactory af, SpellAbility sa) {
+	private static String drawStackDescription(AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		StringBuilder sb = new StringBuilder();
 		
@@ -162,7 +155,7 @@ public class AbilityFactory_ZoneAffecting {
 		return sb.toString();
 	}
 	
-	public static boolean drawCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean drawCanPlayAI(final AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		// AI cannot use this properly until he can use SAs during Humans turn
 		if (!ComputerUtil.canPayCost(sa))
@@ -225,7 +218,7 @@ public class AbilityFactory_ZoneAffecting {
 		return randomReturn;
 	}
 	
-    public static boolean drawTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
+    private static boolean drawTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
         Target tgt = af.getAbTgt();
         HashMap<String,String> params = af.getMapParams();
         Card source = sa.getSourceCard();
@@ -324,7 +317,7 @@ public class AbilityFactory_ZoneAffecting {
         return true;
     }// drawTargetAI()
 	
-    public static boolean drawTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+    private static boolean drawTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
 		if (!ComputerUtil.canPayCost(sa))	// If there is a cost payment
 			return false;
     	
@@ -340,7 +333,7 @@ public class AbilityFactory_ZoneAffecting {
     	return true;
     }
     
-	public static void drawResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void drawResolve(final AbilityFactory af, final SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		
 		Card source = sa.getSourceCard();
@@ -359,7 +352,7 @@ public class AbilityFactory_ZoneAffecting {
 		boolean optional = params.containsKey("OptionalDecider");
 		boolean slowDraw = params.containsKey("NextUpkeep");
 		
-		for(Player p : tgtPlayers)
+		for(Player p : tgtPlayers) {
 			if (tgt == null || p.canTarget(af.getHostCard())){
 				if (optional){
 					if (p.isComputer()){
@@ -389,24 +382,24 @@ public class AbilityFactory_ZoneAffecting {
 					p.drawCards(numCards);		
 				
 			}
-	}
+		}
+	}//drawResolve()
 	
 	//**********************************************************************
 	//******************************* MILL *********************************
 	//**********************************************************************
 	
-	public static SpellAbility createAbilityMill(final AbilityFactory AF){
-		final SpellAbility abMill = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createAbilityMill(final AbilityFactory af) {
+		final SpellAbility abMill = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = 5445572699000471299L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return millStackDescription(this, af);
 			}
 
-			public boolean canPlayAI(){
+			@Override
+			public boolean canPlayAI() {
 				return millCanPlayAI(af,this);
 			}
 			
@@ -424,18 +417,17 @@ public class AbilityFactory_ZoneAffecting {
 		return abMill;
 	}
 	
-	public static SpellAbility createSpellMill(final AbilityFactory AF){
-		final SpellAbility spMill = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()){
+	public static SpellAbility createSpellMill(final AbilityFactory af){
+		final SpellAbility spMill = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return millStackDescription(this, af);
 			}
 			
-			public boolean canPlayAI(){
+			@Override
+			public boolean canPlayAI() {
 				return millCanPlayAI(af, this);
 			}
 			
@@ -448,14 +440,12 @@ public class AbilityFactory_ZoneAffecting {
 		return spMill;
 	}
 	
-	public static SpellAbility createDrawbackMill(final AbilityFactory AF){
-		final SpellAbility dbMill = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()){
+	public static SpellAbility createDrawbackMill(final AbilityFactory af) {
+		final SpellAbility dbMill = new Ability_Sub(af.getHostCard(), af.getAbTgt()){
 			private static final long serialVersionUID = -4990932993654533449L;
 			
-			final AbilityFactory af = AF;
-			
 			@Override
-			public String getStackDescription(){
+			public String getStackDescription() {
 				return millStackDescription(this, af);
 			}
 
@@ -478,7 +468,7 @@ public class AbilityFactory_ZoneAffecting {
 		return dbMill;
 	}
 	
-	public static String millStackDescription(SpellAbility sa, AbilityFactory af) {
+	private static String millStackDescription(SpellAbility sa, AbilityFactory af) {
 		HashMap<String,String> params = af.getMapParams();
 		StringBuilder sb = new StringBuilder();
 		int numCards = AbilityFactory.calculateAmount(sa.getSourceCard(), params.get("NumCards"), sa);
@@ -521,7 +511,7 @@ public class AbilityFactory_ZoneAffecting {
 		return sb.toString();
 	}
 	
-	public static boolean millCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean millCanPlayAI(final AbilityFactory af, SpellAbility sa){
 		HashMap<String,String> params = af.getMapParams();
 		if (!ComputerUtil.canPayCost(sa))
 			return false;
@@ -582,7 +572,7 @@ public class AbilityFactory_ZoneAffecting {
 		return randomReturn;
 	}
 	
-	public static boolean millTargetAI(AbilityFactory af, SpellAbility sa, boolean mandatory){
+	private static boolean millTargetAI(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		Target tgt = af.getAbTgt();
 		HashMap<String,String> params = af.getMapParams();
 		
@@ -624,7 +614,7 @@ public class AbilityFactory_ZoneAffecting {
 		return true;
 	}
 	
-    public static boolean millDrawback(AbilityFactory af, SpellAbility sa){
+    private static boolean millDrawback(AbilityFactory af, SpellAbility sa) {
 		if (!millTargetAI(af, sa, true))
 			return false;
 		
@@ -637,7 +627,8 @@ public class AbilityFactory_ZoneAffecting {
     	return true;
     }
 	
-    public static boolean millTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory){
+    /* TODO - not currently used anywhere.  was it meant to be?
+    private static boolean millTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))	// If there is a cost payment
 			return false;
     	
@@ -662,8 +653,9 @@ public class AbilityFactory_ZoneAffecting {
     	
     	return true;
     }
+    */
 	
-	public static void millResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void millResolve(final AbilityFactory af, final SpellAbility sa){
 		HashMap<String,String> params = af.getMapParams();
 
 		int numCards = AbilityFactory.calculateAmount(sa.getSourceCard(), params.get("NumCards"), sa);
@@ -706,14 +698,12 @@ public class AbilityFactory_ZoneAffecting {
 	//A:SP$Discard | Cost$B | Tgt$TgtP | NumCards$2 | Mode$Random | SpellDescription$<...>
 	//A:AB$Discard | Cost$U | ValidTgts$ Opponent | Mode$RevealYouChoose | NumCards$X | SpellDescription$<...>
 	
-	public static SpellAbility createAbilityDiscard(final AbilityFactory AF) {
-		final SpellAbility abDiscard = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+	public static SpellAbility createAbilityDiscard(final AbilityFactory af) {
+		final SpellAbility abDiscard = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = 4348585353456736817L;
-			final AbilityFactory af = AF;
 			
 			@Override
 			public String getStackDescription() {
-				// when getStackDesc is called, just build exactly what is happening
 				return discardStackDescription(af, this);
 			}
 			
@@ -736,14 +726,12 @@ public class AbilityFactory_ZoneAffecting {
 		return abDiscard;
 	}
 
-	public static SpellAbility createSpellDiscard(final AbilityFactory AF) {
-		final SpellAbility spDiscard = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+	public static SpellAbility createSpellDiscard(final AbilityFactory af) {
+		final SpellAbility spDiscard = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
 			private static final long serialVersionUID = 4348585353456736817L;
-			final AbilityFactory af = AF;
 			
 			@Override
 			public String getStackDescription() {
-				// when getStackDesc is called, just build exactly what is happening
 				return discardStackDescription(af, this);
 			}
 
@@ -761,14 +749,12 @@ public class AbilityFactory_ZoneAffecting {
 		return spDiscard;
 	}
 	
-	public static SpellAbility createDrawbackDiscard(final AbilityFactory AF) {
-		final SpellAbility dbDiscard = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
+	public static SpellAbility createDrawbackDiscard(final AbilityFactory af) {
+		final SpellAbility dbDiscard = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
 			private static final long serialVersionUID = 4348585353456736817L;
-			final AbilityFactory af = AF;
 			
 			@Override
 			public String getStackDescription() {
-				// when getStackDesc is called, just build exactly what is happening
 				return discardStackDescription(af, this);
 			}
 			
@@ -791,7 +777,7 @@ public class AbilityFactory_ZoneAffecting {
 		return dbDiscard;
 	}
 
-	private static void discardResolve(final AbilityFactory af, final SpellAbility sa){
+	private static void discardResolve(final AbilityFactory af, final SpellAbility sa) {
 		Card source = sa.getSourceCard();
 		HashMap<String,String> params = af.getMapParams();
 
@@ -805,7 +791,7 @@ public class AbilityFactory_ZoneAffecting {
 		else
 			tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
 
-		for(Player p : tgtPlayers)
+		for(Player p : tgtPlayers) {
 			if (tgt == null || p.canTarget(af.getHostCard())) {	
 				if(mode.equals("Hand")) {
 					p.discardHand(sa);
@@ -917,9 +903,10 @@ public class AbilityFactory_ZoneAffecting {
 					}
 				}
 			}
-	}
+		}
+	}//discardResolve()
 	
-	private static String discardStackDescription(AbilityFactory af, SpellAbility sa){
+	private static String discardStackDescription(AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		String mode = params.get("Mode");
 		StringBuilder sb = new StringBuilder();
@@ -986,9 +973,9 @@ public class AbilityFactory_ZoneAffecting {
         	sb.append(abSub.getStackDescription());
 		
 		return sb.toString();
-	}
+	}//discardStackDescription()
 	
-	private static boolean discardCanPlayAI(final AbilityFactory af, SpellAbility sa){
+	private static boolean discardCanPlayAI(final AbilityFactory af, SpellAbility sa) {
 		HashMap<String,String> params = af.getMapParams();
 		// AI cannot use this properly until he can use SAs during Humans turn
 		if (!ComputerUtil.canPayCost(sa))
@@ -1078,7 +1065,7 @@ public class AbilityFactory_ZoneAffecting {
         if (subAb != null)
         	randomReturn &= subAb.chkAI_Drawback();
 		return randomReturn;
-	}
+	}//discardCanPlayAI()
 	
 	private static boolean discardTargetAI(AbilityFactory af) {
 		Target tgt = af.getAbTgt();
@@ -1107,7 +1094,7 @@ public class AbilityFactory_ZoneAffecting {
 		}
 
 		return true;
-	}// discardCheckDrawbackAI()
+	}// discardTrigger()
 	
 	private static boolean discardCheckDrawbackAI(AbilityFactory af, Ability_Sub subAb) {
 		// Drawback AI improvements
@@ -1232,7 +1219,7 @@ public class AbilityFactory_ZoneAffecting {
 			}
 		}
 		else {
-			sb.append("Error - no target players for RevealHand. ");
+			sb.append("Error - no target players for Shuffle. ");
 		}
 		sb.append(" shuffle");
 		if(tgtPlayers.size() > 1) sb.append(" their libraries");
@@ -1272,7 +1259,7 @@ public class AbilityFactory_ZoneAffecting {
 
 	private static boolean shuffleTargetAI(AbilityFactory af, SpellAbility sa, boolean primarySA, boolean mandatory) {
 		return false;
-	}// revealHandTargetAI()
+	}// shuffleTargetAI()
 
 	private static boolean shuffleTrigger(AbilityFactory af, SpellAbility sa, boolean mandatory) {
 		if (!ComputerUtil.canPayCost(sa))	// If there is a cost payment

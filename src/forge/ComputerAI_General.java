@@ -50,7 +50,7 @@ public class ComputerAI_General
     	//Card list of all cards to consider
     	CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
     	
-    	if (AllZone.getComputerPlayer().getManaPool().isEmpty())
+    	if (AllZone.getComputerManaPool().isEmpty())
 	    	hand = hand.filter(new CardListFilter() {
 	    		public boolean addCard(Card c) {
 
@@ -104,7 +104,6 @@ public class ComputerAI_General
 	    			return false;
 	    		}
 	    	});
-
     	CardList all = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
     	all.addAll(hand);
 

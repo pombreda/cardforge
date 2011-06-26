@@ -1,4 +1,3 @@
-
 package forge;
 
 
@@ -487,7 +486,10 @@ public class GameAction implements java.io.Serializable {
         }
         
         //do this twice, sometimes creatures/permanents will survive when they shouldn't
-        for (int q = 0; q < 2; q++) {
+        for (int q = 0; q < 9; q++) {
+        	
+        	boolean checkAgain = false;
+        	
         	//card state effects like Glorious Anthem
         	for(String effect:AllZone.getStaticEffects().getStateBasedMap().keySet()) {
         		Command com = GameActionUtil.commands.get(effect);
@@ -512,16 +514,23 @@ public class GameAction implements java.io.Serializable {
         				Card equipment = c.getEquippedBy().get(i);
         				if(!AllZoneUtil.isCardInPlay(equipment)) {
         					equipment.unEquipCard(c);
+        					checkAgain = true;
         				}
         			}
         		}//if isEquipped()
 
         		if( c.isEquipping()) {
         			Card equippedCreature = c.getEquipping().get(0);
-        			if (!AllZoneUtil.isCardInPlay(equippedCreature)) c.unEquipCard(equippedCreature);
+        			if (!AllZoneUtil.isCardInPlay(equippedCreature)) {
+        				c.unEquipCard(equippedCreature);
+        				checkAgain = true;
+        			}
 
         			//make sure any equipment that has become a creature stops equipping
-        			if (c.isCreature()) c.unEquipCard(equippedCreature);
+        			if (c.isCreature()) {
+        				c.unEquipCard(equippedCreature);
+        				checkAgain = true;
+        			}
         		}//if isEquipping()
 
         		if (c.isAura()) {
@@ -535,6 +544,7 @@ public class GameAction implements java.io.Serializable {
         					c.unEnchantCard(perm);
         					//changed from destroy (and rules-wise, I don't think it's a sacrifice)
         					moveToGraveyard(c);
+        					checkAgain = true;
         				}
         			}
         		}//if isAura
@@ -544,14 +554,18 @@ public class GameAction implements java.io.Serializable {
         				&& !c.hasKeyword("Indestructible")) {
         			destroy(c);
         			AllZone.getCombat().removeFromCombat(c); //this is untested with instants and abilities but required for First Strike combat phase
+        			checkAgain = true;
         		}
 
         		else if (c.isCreature() && c.getNetDefense() <= 0) {
         			destroy(c);
         			AllZone.getCombat().removeFromCombat(c);
+        			checkAgain = true;
         		}
 
         	}//while it.hasNext()
+        	
+        	if (!checkAgain) break; //do not continue the loop
 
         }//for q=0;q<2
         
@@ -1047,7 +1061,7 @@ public class GameAction implements java.io.Serializable {
     }//newGame()
     
     //this is where the computer cheats
-    //changes AllZone.getComputer_Library()
+    //changes AllZone.getComputerLibrary()
     private Card[] smoothComputerManaCurve(Card[] in) {
         CardList library = new CardList(in);
         library.shuffle();
@@ -1692,7 +1706,7 @@ public class GameAction implements java.io.Serializable {
     							}
 
     							String[] Numbers = new String[Max];
-    							if("X".equals(k[3])) {
+    							/*if("X".equals(k[3])) {
     								for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
     								String Number_ManaCost = " ";
     								if(Mana.toString().length() == 1) {
@@ -1714,8 +1728,15 @@ public class GameAction implements java.io.Serializable {
     									if(Mana.equals("")) Mana = "0";
     									manaCost = new ManaCost(Mana);	
     								}
-    							}
-    							else if(!"WUGRB".contains(k[3])) {
+    							}*/
+    							if(!"WUGRB".contains(k[3])) {
+    								
+    								int value = 0;
+    								if ("X".equals(k[3]))
+    									value = CardFactoryUtil.xCount(card, card.getSVar("X"));
+    								else 
+    									value = Integer.valueOf(k[3]);
+    								
     								for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
     								String Number_ManaCost = " ";
     								if(Mana.toString().length() == 1) Number_ManaCost = Mana.toString().substring(0, 1);
@@ -1725,9 +1746,10 @@ public class GameAction implements java.io.Serializable {
 
     								for(int check = 0; check < Max; check ++) {
     									if(Number_ManaCost.equals(Numbers[check])) {
-    										if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
-    										if(check - Integer.valueOf(k[3]) < 0) k[3] = String.valueOf(check);
-    										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - Integer.valueOf(k[3])));	                  		
+    										if((spell.isXCost()) || (spell.isMultiKicker()) && (check - value) < 0)
+    											XBonus = XBonus - check + value;
+    										if(check - value < 0) value = check;
+    										Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - value));	                  		
     									}
     									if(Mana.equals("")) Mana = "0";
     									manaCost = new ManaCost(Mana);	

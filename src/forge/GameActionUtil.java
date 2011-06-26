@@ -1,4 +1,3 @@
-
 package forge;
 
 
@@ -4125,6 +4124,8 @@ public class GameActionUtil {
 		final Player player = AllZone.getPhase().getPlayerTurn();
 
 		CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Masticore");
+        list.addAll(AllZoneUtil.getPlayerCardsInPlay(player,"Molten-Tail Masticore"));
+        list.addAll(AllZoneUtil.getPlayerCardsInPlay(player,"Razormane Masticore"));
 
 		Ability ability;
 		for(int i = 0; i < list.size(); i++) {
@@ -4177,8 +4178,9 @@ public class GameActionUtil {
 			};//Ability
 			
 			StringBuilder sb = new StringBuilder();
-			sb.append(crd).append(" - sacrifice Masticore unless you discard a card.");
+			sb.append(crd).append(" - sacrifice ").append(crd).append(" unless you discard a card.");
 			ability.setStackDescription(sb.toString());
+            ability.setDescription(sb.toString());
 
             AllZone.getStack().addSimultaneousStackEntry(ability);
 
@@ -6455,7 +6457,7 @@ public class GameActionUtil {
 	}; //end Iona, Shield of Emeria
 	
 	// returns all PlayerZones that has at least 1 Glorious Anthem
-	// if Computer has 2 Glorious Anthems, AllZone.getComputer_Play() will be
+	// if Computer has 2 Glorious Anthems, AllZone.getComputerPlay() will be
 	// returned twice
 	private static PlayerZone[] getZone(String cardName) {
 		CardList all = AllZoneUtil.getCardsInPlay();
@@ -6798,3 +6800,4 @@ public class GameActionUtil {
 	}
 
 }//end class GameActionUtil
+

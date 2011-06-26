@@ -275,12 +275,4 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
         trigger = b;
         leavesTrigger = b;
     }
-
-	public static void setSimultaneousEntry(boolean simultaneousEntry) {
-		Unstatic.getGlobalGameState().setSimultaneousEntry(simultaneousEntry);
-	}
-
-	public static boolean isSimultaneousEntry() {
-		return Unstatic.getGlobalGameState().isSimultaneousEntry();
-	}
 }

@@ -9,6 +9,7 @@ import forge.Card;
 import forge.CardList;
 import forge.Phase;
 import forge.Player;
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 
 public class SpellAbility_Restriction extends SpellAbility_Variables {
@@ -94,6 +95,16 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
 				lifeAmount = params.get("ActivationLifeAmount");
 			}				
 		}
+
+        if(params.containsKey("CheckSVar"))
+        {
+            setSvarToCheck(params.get("CheckSVar"));
+        }
+        if(params.containsKey("SVarCompare"))
+        {
+            setSvarOperator(params.get("SVarCompare").substring(0,2));
+            setSvarOperand(params.get("SVarCompare").substring(2));
+        }
 	}//end setRestrictions()
 
 	public boolean canPlay(Card c, SpellAbility sa){
@@ -167,7 +178,7 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
 			}
 			int left = list.size();
 			
-			if (!Card.compare(left, presentCompare, right))
+			if (!AllZoneUtil.compare(left, presentCompare, right))
 				return false;
 		}
 		
@@ -189,7 +200,7 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
 				right = Integer.parseInt(lifeAmount.substring(2));
 			}
 			
-			if(!Card.compare(life, lifeAmount, right)) {
+			if(!AllZoneUtil.compare(life, lifeAmount, right)) {
 				return false;
 			}
 		}
@@ -206,6 +217,16 @@ public class SpellAbility_Restriction extends SpellAbility_Variables {
 					return false;
 			}
 		}
+
+        if(svarToCheck != null)
+        {
+            int svarValue = AbilityFactory.calculateAmount(c,svarToCheck,sa);
+            int operandValue = AbilityFactory.calculateAmount(c,svarOperand,sa);
+
+            if(!AllZoneUtil.compare(svarValue,svarOperator,operandValue))
+                return false;
+
+        }
 			
 		return true;
 	}//canPlay()

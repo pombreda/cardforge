@@ -24,7 +24,8 @@ public class Phase extends MyObservable implements java.io.Serializable
 	
 	private int nCombatsThisTurn;
 	
-    private Player playerTurn;
+    //private Player playerTurn;
+    private Player playerTurn = AllZone.getHumanPlayer();
     public boolean isPlayerTurn(Player player) {
         return playerTurn.isPlayer(player);
     }
@@ -39,7 +40,8 @@ public class Phase extends MyObservable implements java.io.Serializable
     
     // priority player
     
-    private Player pPlayerPriority;
+    //private Player pPlayerPriority;
+    private Player pPlayerPriority = AllZone.getHumanPlayer();
 
     public Player getPriorityPlayer() {
     	return pPlayerPriority;
@@ -49,7 +51,9 @@ public class Phase extends MyObservable implements java.io.Serializable
     	pPlayerPriority = p;
     }
     
-    private Player pFirstPriority;
+    //private Player pFirstPriority;
+    private Player pFirstPriority = AllZone.getHumanPlayer();
+
     public Player getFirstPriority() {
     	return pFirstPriority;
     }
@@ -59,12 +63,8 @@ public class Phase extends MyObservable implements java.io.Serializable
     }
     
     public void setPriority(Player p) {
-    	setPriority(p, AllZone.getStack());
-    }
-
-    protected void setPriority(Player p, MagicStack stack) {
-        if(stack != null)
-            stack.chooseOrderOfSimultaneousStackEntryAll(this);
+        if(AllZone.getStack() != null)
+            AllZone.getStack().chooseOrderOfSimultaneousStackEntryAll();
 
     	pFirstPriority = p;
     	pPlayerPriority = p;
@@ -147,7 +147,8 @@ public class Phase extends MyObservable implements java.io.Serializable
     
     protected void reset(Player playerTurn, MagicStack stack) {
         turn = 1;
-        resetPriority(stack);
+        playerTurn = AllZone.getHumanPlayer();
+        resetPriority();
         bPhaseEffects = true;
         needToNextPhase = false;
         setGameBegins(0);
@@ -352,8 +353,10 @@ public class Phase extends MyObservable implements java.io.Serializable
             	display.showCombat("");
             }
 			
-        	resetAttackedThisCombat(getPlayerTurn());
-        	this.bCombat = false;
+            AllZone.getCombat().reset();
+            AllZone.getDisplay().showCombat("");
+            resetAttackedThisCombat(getPlayerTurn());
+            this.bCombat = false;
         }
         
         if (phaseOrder[phaseIndex].equals(Constant.Phase.Cleanup))
@@ -616,7 +619,7 @@ public class Phase extends MyObservable implements java.io.Serializable
 
 	public static void increaseSpellCount(SpellAbility sp){
 		incrementStormCount();
-		
+
 		if (sp.getActivatingPlayer().isHuman()) {
 			incrementPlayerSpellCount();
 			if (sp instanceof Spell_Permanent && sp.getSourceCard().isCreature()) {
@@ -749,3 +752,4 @@ public class Phase extends MyObservable implements java.io.Serializable
     	Unstatic.getGlobalGameState().setComputerInstantSpellCount(i);
     }
 }
+

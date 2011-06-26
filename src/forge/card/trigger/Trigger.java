@@ -238,7 +238,7 @@ public abstract class Trigger {
 				right = Integer.parseInt(lifeCompare.substring(2));
 			}
 			
-			if(!Card.compare(life, lifeCompare, right)) {
+			if(!AllZoneUtil.compare(life, lifeCompare, right)) {
 				return false;
 			}
 				
@@ -283,7 +283,7 @@ public abstract class Trigger {
 			}
 			int left = list.size();
 			
-			if (!Card.compare(left, presentCompare, right))
+			if (!AllZoneUtil.compare(left, presentCompare, right))
 			{
 				return false;
 			}
@@ -329,7 +329,7 @@ public abstract class Trigger {
 			}
 			int left = list.size();
 			
-			if (!Card.compare(left, presentCompare, right))
+			if (!AllZoneUtil.compare(left, presentCompare, right))
 			{
 				return false;
 			}
