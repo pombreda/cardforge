@@ -533,8 +533,15 @@ public class AbilityFactory_ChangeZone {
      */
     private static void changeHiddenOriginResolve(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
-
-        ArrayList<Player> fetchers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+        
+        ArrayList<Player> fetchers;
+        
+        Target tgt = af.getAbTgt();
+        if (tgt != null)
+        	fetchers = tgt.getTargetPlayers();
+        else 
+        	fetchers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+        
         Player chooser = null;
         if (params.containsKey("Chooser")) {
             String choose = params.get("Chooser");
