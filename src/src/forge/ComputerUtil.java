@@ -905,6 +905,21 @@ public class ComputerUtil {
                     if (list.containsName(c.getName()))
                         return false;
                 }
+                
+                //don't play the land if it has cycling and enough lands are available
+                ArrayList<SpellAbility> spellAbilities = c.getSpellAbilities();
+                for (SpellAbility sa : spellAbilities) 
+                	if (sa.isCycling()) {
+                		CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
+                        CardList lands = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+                        lands.addAll(hand);
+                        lands = lands.getType("Land");
+
+                        if (lands.size() >= Math.max(hand.getHighestConvertedManaCost(), 6))
+                            return true;
+                	}
+                		
+                
                 return true;
             }
         });
