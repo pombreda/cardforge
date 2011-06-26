@@ -133,7 +133,7 @@ public class SpellAbility_Requirements {
     public void finishPaying() {
         if (isFree || payment.isAllPaid()) {
             if (skipStack)
-                AbilityFactory.resolve(ability);
+                AbilityFactory.resolve(ability, false);
             else
                 addAbilityToStack();
 

@@ -280,7 +280,7 @@ public class ComputerUtil {
 
             payManaCost(sa);
 
-            AbilityFactory.resolve(sa);
+            AbilityFactory.resolve(sa, false);
 
             //destroys creatures if they have lethal damage, etc..
             AllZone.getGameAction().checkStateEffects();
