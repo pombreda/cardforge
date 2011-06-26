@@ -2992,6 +2992,11 @@ class CardFactory_Planeswalkers {
                 @Override
                 public boolean canPlayAI() {
                     CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
+                    creatures = creatures.filter(new CardListFilter() {
+                        public boolean addCard(Card c) {
+                            return !(c.isToken() && c.isType("Dragon"));
+                        }
+                    });
                     return creatures.size() >= 1;
                 }
 
@@ -3006,7 +3011,7 @@ class CardFactory_Planeswalkers {
                     });
                     setTargetCard(CardFactoryUtil.AI_getCheapestCreature(cards, card, true));
                     Log.debug("Sarkhan the Mad", "Sarkhan the Mad caused sacrifice of: " +
-                            CardFactoryUtil.AI_getCheapestCreature(cards, card, true).getName());
+                            CardFactoryUtil.AI_getCheapestCreature(cards, card, true));
                 }
 
                 @Override
