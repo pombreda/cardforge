@@ -1,4 +1,4 @@
-Name:Lim-DÃ»l's Cohort
+Name:Lim-Džl's Cohort
 ManaCost:1 B B
 Types:Creature Zombie
 Text:no text
