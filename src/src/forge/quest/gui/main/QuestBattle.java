@@ -176,9 +176,8 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Grampa Simpson 1", "easy", "WR Double and First Strike deck with equipments and auras");
         addToDeckList("Grampa Simpson 2", "medium", "WR Double Strike deck with equipments and auras");
         addToDeckList("Grampa Simpson 3", "hard", "WRG Double Strike deck with equipments and auras");
-//        addToDeckList("Green Arrow 2", "medium", "G Anti-Air deck");
-//        addToDeckList("Green Arrow 3", "hard", "G Angry Large Monsters deck");
-        addToDeckList("Green Arrow 2", "medium", "Mono G Archer deck");
+        addToDeckList("Green Arrow 2", "medium", "Mono G Archer deck with Greatbow Doyen and Jagged-Scar Archers");
+        addToDeckList("Green Arrow 3", "hard", "WRG Archer Aggro deck with Greatbow Doyen and Changelings");
         addToDeckList("Green Lantern 3", "hard", "UBR Deathtouch deck with auras and several equipments");
 //        addToDeckList("Gunslinger 3", "hard", "WBRG Cascade deck");
 
