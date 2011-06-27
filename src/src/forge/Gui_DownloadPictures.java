@@ -382,6 +382,12 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         ArrayList<Card> list = new ArrayList<Card>();
         File file;
 
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable)."
+		 */
         CardList all = AllZone.getCardFactory().getAllCards();
 
         File base = ForgeProps.getFile(IMAGE_BASE);

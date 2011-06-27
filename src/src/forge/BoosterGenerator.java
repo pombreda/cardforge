@@ -46,6 +46,12 @@ public class BoosterGenerator {
         numMythics = 0;
         numSpecials = 0;
 
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i))."
+		 */
         CardList tList = AllZone.getCardFactory().getAllCards();
         for (int i = 0; i < tList.size(); i++) {
             Card c = tList.get(i);
@@ -133,6 +139,12 @@ public class BoosterGenerator {
         numMythics = 0;
         numSpecials = 0;
 
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable)."
+		 */
         CardList tList = AllZone.getCardFactory().getAllCards();
         for (int i = 0; i < tList.size(); i++) {
             Card c = tList.get(i);

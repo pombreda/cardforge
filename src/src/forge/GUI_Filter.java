@@ -775,6 +775,13 @@ public class GUI_Filter extends javax.swing.JDialog {
 
         String name = NameText.getText();
         String cText = cardText.getText();
+
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable)."
+		 */
         CardList filterCardList = AllZone.getCardFactory().getAllCards();
         CardFilter filter = new CardFilter();
         Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;

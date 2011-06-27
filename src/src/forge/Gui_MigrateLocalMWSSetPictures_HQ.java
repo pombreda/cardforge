@@ -397,6 +397,13 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         //mCard[] cardTokenLQ = readFile(CARD_PICTURES_TOKEN_LQ);
 
         ArrayList<mCard> CList = new ArrayList<mCard>();
+
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable)."
+		 */
         CardList AllCards = AllZone.getCardFactory().getAllCards();
         //Log.error("AllCards.size: " + AllCards.size());
 

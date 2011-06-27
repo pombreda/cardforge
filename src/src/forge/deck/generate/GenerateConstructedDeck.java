@@ -83,6 +83,12 @@ public class GenerateConstructedDeck {
      * @return a {@link forge.CardList} object.
      */
     private CardList getCards() {
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable)."
+		 */
         return filterBadCards(AllZone.getCardFactory().getAllCards());
     }//getCards()
 
