@@ -3770,43 +3770,6 @@ public class CardFactory_Creatures {
             card.addSpellAbility(discard);
         }//*************** END ************ END **************************
 
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Anurid Brushhopper")) {
-
-            final SpellAbility toPlay = new Ability(card, "0") {
-                @Override
-                public void resolve() {
-                    AllZone.getGameAction().moveToPlay(card);
-                }
-            }; //ability
-            StringBuilder sb = new StringBuilder();
-            sb.append("Return " + card + " to the battlefield.");
-            toPlay.setStackDescription(sb.toString());
-
-            final Command eot = new Command() {
-                private static final long serialVersionUID = 911163814565333484L;
-
-                public void execute() {
-                    AllZone.getStack().addSimultaneousStackEntry(toPlay);
-
-                }
-            };
-
-            final Cost abCost = new Cost("Discard<2/Card>", cardName, true);
-            final Ability_Activated toExile = new Ability_Activated(card, abCost, null) {
-                private static final long serialVersionUID = 7850843970664800204L;
-
-                public void resolve() {
-                    AllZone.getGameAction().exile(card);
-                    AllZone.getEndOfTurn().addAt(eot);
-                }
-            };
-            toExile.setDescription(abCost + "Exile CARDNAME. Return it to the battlefield under its owner's control at the beginning of the next end step.");
-            toExile.setStackDescription(card + " - exile " + card + ".");
-            card.addSpellAbility(toExile);
-        }//*************** END ************ END **************************
-
         /*
        //*************** START *********** START **************************
        else if(cardName.equals("Frost Titan")) {
