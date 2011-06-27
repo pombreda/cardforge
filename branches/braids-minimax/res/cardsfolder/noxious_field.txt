@@ -1,5 +1,5 @@
 Name:Noxious Field
-ManaCost:2 B B
+ManaCost:1 B B
 Types:Enchantment Aura
 Text:no text
 K:Enchant Land

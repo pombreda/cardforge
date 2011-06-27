@@ -4,7 +4,7 @@ Types:Creature Elf Rogue
 Text:CARDNAME can't be blocked except by creatures with flying.
 PT:1/1
 K:CantBeBlockedBy Creature.withoutFlying
-K:CARDNAME can't be the target of spells or abilities your opponents control.
+K:Hexproof
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/silhana_ledgewalker.jpg
 SetInfo:GPT|Common|http://magiccards.info/scans/en/gp/94.jpg

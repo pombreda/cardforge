@@ -3,7 +3,7 @@ ManaCost:3 G
 Types:Creature Elf
 Text:no text
 PT:*/*
-K:CARDNAME can't be the target of spells or abilities your opponents control.
+K:Hexproof
 K:stSetPT:Count$Valid Permanent.Green+YouCtrl:Count$Valid Permanent.Green+YouCtrl:Drove of Elves's power and toughness are each equal to the number of green permanents you control.
 SVar:BuffedBy:Permanent.Green
 SVar:Rarity:Uncommon
