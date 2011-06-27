@@ -15,7 +15,8 @@ public class ForgePreferences extends Preferences {
     public boolean stackAiLand;
     public boolean millingLossCondition;
     public boolean developerMode;
-
+    public boolean uploadDraftAI;
+    
     public String laf;
     public boolean lafFonts;
     public StackOffsetType stackOffset;
@@ -65,6 +66,8 @@ public class ForgePreferences extends Preferences {
         stackAiLand = getBoolean("AI.stack.land", false);
         millingLossCondition = getBoolean("loss.condition.milling", true);
         developerMode = getBoolean("developer.mode", false);
+        
+        uploadDraftAI = getBoolean("upload.Draft.AI", true);
 
         laf = get("gui.laf", "");
         lafFonts = getBoolean("gui.laf.fonts", false);
@@ -100,6 +103,7 @@ public class ForgePreferences extends Preferences {
         set("AI.stack.land", stackAiLand);
         set("loss.condition.milling", millingLossCondition);
         set("developer.mode", developerMode);
+        set("upload.Draft.AI", uploadDraftAI);
 
         set("gui.laf", laf);
         set("gui.laf.fonts", lafFonts);
