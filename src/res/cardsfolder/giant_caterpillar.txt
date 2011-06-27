@@ -8,4 +8,6 @@ SVar:TrigToken:AB$ Token | Cost$ 0 | TokenAmount$ 1 | TokenName$ Butterfly | Tok
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/giant_caterpillar.jpg
+SetInfo:VIS|Common|http://magiccards.info/scans/en/vi/58.jpg
+SetInfo:MMQ|Common|http://magiccards.info/scans/en/mm/249.jpg
 End
