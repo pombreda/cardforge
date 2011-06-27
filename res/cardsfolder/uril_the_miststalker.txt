@@ -3,7 +3,7 @@ ManaCost:2 R G W
 Types:Legendary Creature Beast
 Text:no text
 PT:5/5
-K:CARDNAME can't be the target of spells or abilities your opponents control.
+K:Hexproof
 K:stPumpSelf:Creature:X/X:no Condition:CARDNAME gets +2/+2 for each Aura attached to it.
 SVar:X:Count$Valid Aura.Attached/Times.2
 SVar:EnchantMe:Multiple

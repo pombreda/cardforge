@@ -4,7 +4,9 @@ Types:Creature Horror
 Text:no text
 PT:1/1
 K:Flying
-K:stPumpSelf:Creature:2/2/When CARDNAME becomes the target of a spell or ability, sacrifice it.:Threshold:Threshold - As long as seven or more cards are in your graveyard, Boneshard Slasher gets +2/+2 and has "When Boneshard Slasher becomes the target of a spell or ability, sacrifice it."
+K:stPumpSelf:Creature:2/2:Threshold:Threshold - As long as seven or more cards are in your graveyard, Boneshard Slasher gets +2/+2 and has "When Boneshard Slasher becomes the target of a spell or ability, sacrifice it."
+T:Mode$ SpellAbilityCast | TargetsValid$ Card.Self | TriggerZones$ Battlefield | Execute$ TrigSac | Threshold$ True | Secondary$ True | TriggerDescription$ When CARDNAME becomes the target of a spell or ability, sacrifice it.
+SVar:TrigSac:AB$Sacrifice | Cost$ 0 | Defined$ Self
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/boneshard_slasher.jpg
 SetInfo:TOR|Uncommon|http://magiccards.info/scans/en/tr/50.jpg
