@@ -9,7 +9,6 @@ import forge.card.mana.ManaPool;
 import forge.card.spellability.*;
 import forge.card.trigger.Trigger;
 import forge.deck.Deck;
-import forge.deck.generate.GenerateConstructedDeck;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input_Mulligan;
 import forge.gui.input.Input_PayManaCost;
@@ -46,7 +45,7 @@ public class GameAction {
      *
      * @param prev a {@link forge.PlayerZone} object.
      * @param zone a {@link forge.PlayerZone} object.
-     * @param c a {@link forge.Card} object.
+     * @param c    a {@link forge.Card} object.
      * @return a {@link forge.Card} object.
      */
     public static Card changeZone(PlayerZone prev, PlayerZone zone, Card c) {
@@ -125,7 +124,7 @@ public class GameAction {
      * <p>moveTo.</p>
      *
      * @param zone a {@link forge.PlayerZone} object.
-     * @param c a {@link forge.Card} object.
+     * @param c    a {@link forge.Card} object.
      * @return a {@link forge.Card} object.
      */
     public Card moveTo(PlayerZone zone, Card c) {
@@ -156,7 +155,7 @@ public class GameAction {
     /**
      * <p>changeController.</p>
      *
-     * @param list a {@link forge.CardList} object.
+     * @param list          a {@link forge.CardList} object.
      * @param oldController a {@link forge.Player} object.
      * @param newController a {@link forge.Player} object.
      */
@@ -357,7 +356,7 @@ public class GameAction {
     /**
      * <p>moveToLibrary.</p>
      *
-     * @param c a {@link forge.Card} object.
+     * @param c           a {@link forge.Card} object.
      * @param libPosition a int.
      * @return a {@link forge.Card} object.
      */
@@ -406,8 +405,8 @@ public class GameAction {
     /**
      * <p>moveTo.</p>
      *
-     * @param name a {@link java.lang.String} object.
-     * @param c a {@link forge.Card} object.
+     * @param name        a {@link java.lang.String} object.
+     * @param c           a {@link forge.Card} object.
      * @param libPosition a int.
      * @return a {@link forge.Card} object.
      */
@@ -431,8 +430,8 @@ public class GameAction {
      * <p>AI_discardNumType.</p>
      *
      * @param numDiscard a int.
-     * @param uTypes an array of {@link java.lang.String} objects.
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param uTypes     an array of {@link java.lang.String} objects.
+     * @param sa         a {@link forge.card.spellability.SpellAbility} object.
      * @return a boolean.
      */
     public boolean AI_discardNumType(int numDiscard, String[] uTypes, SpellAbility sa) {
@@ -934,6 +933,7 @@ public class GameAction {
     }
 
     //removes all damage from player's creatures
+
     /**
      * <p>removeDamage.</p>
      *
@@ -949,12 +949,12 @@ public class GameAction {
      * <p>newGame.</p>
      * for Quest fantasy mode
      *
-     * @param humanDeck a {@link forge.deck.Deck} object.
+     * @param humanDeck    a {@link forge.deck.Deck} object.
      * @param computerDeck a {@link forge.deck.Deck} object.
-     * @param human a {@link forge.CardList} object.
-     * @param humanLife a int.
+     * @param human        a {@link forge.CardList} object.
+     * @param humanLife    a int.
      * @param computerLife a int.
-     * @param qa a {@link forge.Quest_Assignment} object.
+     * @param qa           a {@link forge.Quest_Assignment} object.
      */
     public void newGame(Deck humanDeck, Deck computerDeck, CardList human, CardList computer, int humanLife, int computerLife, Quest_Assignment qa) {
         this.newGame(humanDeck, computerDeck);
@@ -991,7 +991,7 @@ public class GameAction {
     /**
      * <p>newGame.</p>
      *
-     * @param humanDeck a {@link forge.deck.Deck} object.
+     * @param humanDeck    a {@link forge.deck.Deck} object.
      * @param computerDeck a {@link forge.deck.Deck} object.
      */
     public void newGame(Deck humanDeck, Deck computerDeck) {
@@ -1185,13 +1185,14 @@ public class GameAction {
 
     //this is where the computer cheats
     //changes AllZone.getComputerLibrary()
+
     /**
      * <p>smoothComputerManaCurve.</p>
      *
      * @param in an array of {@link forge.Card} objects.
      * @return an array of {@link forge.Card} objects.
      */
-    private Card[] smoothComputerManaCurve(Card[] in) {
+    Card[] smoothComputerManaCurve(Card[] in) {
         CardList library = new CardList(in);
         library.shuffle();
 
@@ -1235,6 +1236,7 @@ public class GameAction {
 
     //non-basic lands are removed, because the computer doesn't seem to
     //effectively used them very well
+
     /**
      * <p>threadLand.</p>
      *
@@ -1319,6 +1321,7 @@ public class GameAction {
     }
 
     //decides who goes first when starting another game, used by newGame()
+
     /**
      * <p>seeWhoPlaysFirst_CoinToss.</p>
      */
@@ -1428,6 +1431,7 @@ public class GameAction {
 
     //if Card had the type "Aura" this method would always return true, since local enchantments are always attached to something
     //if Card is "Equipment", returns true if attached to something
+
     /**
      * <p>isAttachee.</p>
      *
@@ -1582,7 +1586,7 @@ public class GameAction {
     /**
      * <p>getSpellCostChange.</p>
      *
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param sa           a {@link forge.card.spellability.SpellAbility} object.
      * @param originalCost a {@link forge.card.mana.ManaCost} object.
      * @return a {@link forge.card.mana.ManaCost} object.
      */
@@ -2033,7 +2037,7 @@ public class GameAction {
     /**
      * <p>playSpellAbility_NoStack.</p>
      *
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param sa            a {@link forge.card.spellability.SpellAbility} object.
      * @param skipTargeting a boolean.
      */
     public void playSpellAbility_NoStack(SpellAbility sa, boolean skipTargeting) {
@@ -2059,7 +2063,7 @@ public class GameAction {
             }
             if (manaCost.isPaid() && sa.getBeforePayMana() == null) {
                 if (sa.getAfterPayMana() == null) {
-                	AbilityFactory.resolve(sa, false);
+                    AbilityFactory.resolve(sa, false);
                     if (sa.isTapAbility() && !sa.wasCancelled()) sa.getSourceCard().tap();
                     if (sa.isUntapAbility()) sa.getSourceCard().untap();
                     return;
@@ -2095,8 +2099,8 @@ public class GameAction {
     /**
      * <p>searchLibraryBasicLand.</p>
      *
-     * @param player a {@link forge.Player} object.
-     * @param Zone1 a {@link java.lang.String} object.
+     * @param player  a {@link forge.Player} object.
+     * @param Zone1   a {@link java.lang.String} object.
      * @param tapLand a boolean.
      */
     public void searchLibraryBasicLand(Player player, String Zone1, boolean tapLand) {
@@ -2106,11 +2110,11 @@ public class GameAction {
     /**
      * <p>searchLibraryTwoLand.</p>
      *
-     * @param type a {@link java.lang.String} object.
-     * @param player a {@link forge.Player} object.
-     * @param Zone1 a {@link java.lang.String} object.
-     * @param tapFirstLand a boolean.
-     * @param Zone2 a {@link java.lang.String} object.
+     * @param type          a {@link java.lang.String} object.
+     * @param player        a {@link forge.Player} object.
+     * @param Zone1         a {@link java.lang.String} object.
+     * @param tapFirstLand  a boolean.
+     * @param Zone2         a {@link java.lang.String} object.
      * @param tapSecondLand a boolean.
      */
     public void searchLibraryTwoLand(String type, Player player,
@@ -2129,10 +2133,10 @@ public class GameAction {
     /**
      * <p>searchLibraryTwoBasicLand.</p>
      *
-     * @param player a {@link forge.Player} object.
-     * @param Zone1 a {@link java.lang.String} object.
-     * @param tapFirstLand a boolean.
-     * @param Zone2 a {@link java.lang.String} object.
+     * @param player        a {@link forge.Player} object.
+     * @param Zone1         a {@link java.lang.String} object.
+     * @param tapFirstLand  a boolean.
+     * @param Zone2         a {@link java.lang.String} object.
      * @param tapSecondLand a boolean.
      */
     public void searchLibraryTwoBasicLand(Player player,
@@ -2144,10 +2148,10 @@ public class GameAction {
     /**
      * <p>aiSearchTwoLand.</p>
      *
-     * @param type a {@link java.lang.String} object.
-     * @param Zone1 a {@link java.lang.String} object.
-     * @param tapFirstLand a boolean.
-     * @param Zone2 a {@link java.lang.String} object.
+     * @param type          a {@link java.lang.String} object.
+     * @param Zone1         a {@link java.lang.String} object.
+     * @param tapFirstLand  a boolean.
+     * @param Zone2         a {@link java.lang.String} object.
      * @param tapSecondLand a boolean.
      */
     private void aiSearchTwoLand(String type, String Zone1, boolean tapFirstLand,
@@ -2210,10 +2214,10 @@ public class GameAction {
     /**
      * <p>humanSearchTwoLand.</p>
      *
-     * @param type a {@link java.lang.String} object.
-     * @param Zone1 a {@link java.lang.String} object.
-     * @param tapFirstLand a boolean.
-     * @param Zone2 a {@link java.lang.String} object.
+     * @param type          a {@link java.lang.String} object.
+     * @param Zone1         a {@link java.lang.String} object.
+     * @param tapFirstLand  a boolean.
+     * @param Zone2         a {@link java.lang.String} object.
      * @param tapSecondLand a boolean.
      */
     private void humanSearchTwoLand(String type, String Zone1, boolean tapFirstLand, String Zone2, boolean tapSecondLand) {
@@ -2256,31 +2260,6 @@ public class GameAction {
                 c.tap();
             moveTo(secondZone, c);
         }
-    }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        GameAction gameAction = new GameAction();
-        GenerateConstructedDeck gen = new GenerateConstructedDeck();
-
-        for (int i = 0; i < 2000; i++) {
-            CardList list = gen.generateDeck();
-
-            Card[] card = gameAction.smoothComputerManaCurve(list.toArray());
-
-            CardList check = new CardList();
-            for (int a = 0; a < 30; a++)
-                check.add(card[a]);
-
-            if (check.getType("Land").size() != 7) {
-                System.out.println("error - " + check);
-                break;
-            }
-        }//for
     }
 
     /**
