@@ -736,45 +736,6 @@ public class CardFactory_Creatures {
             card.addComesIntoPlayCommand(intoPlay);
         }//*************** END ************ END **************************
 
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Whirlpool Rider") || cardName.equals("Whirlpool Drake")) {
-            final SpellAbility ability = new Ability(card, "0") {
-
-                @Override
-                public void resolve() {
-                    //shuffle hand into library, then shuffle library
-                    PlayerZone library = AllZone.getZone(Constant.Zone.Library, card.getController());
-                    CardList hand = AllZoneUtil.getPlayerHand(card.getController());
-                    for (int i = 0; i < hand.size(); i++) {
-                        AllZone.getGameAction().moveTo(library, hand.get(i));
-                    }
-                    card.getController().shuffle();
-
-                    //draw same number of cards as before
-                    for (int i = 0; i < hand.size(); i++)
-                        card.getController().drawCard();
-                }
-            };//SpellAbility
-
-            Command shuffle = new Command() {
-                private static final long serialVersionUID = 6290392806910817877L;
-
-                public void execute() {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(card.getController());
-                    sb.append(" shuffles the cards from his hand into his library, then draws that many cards.");
-                    ability.setStackDescription(sb.toString());
-
-                    AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                }
-            };
-            card.addComesIntoPlayCommand(shuffle);
-            if (cardName.equals("Whirlpool Drake")) card.addDestroyCommand(shuffle);
-        }//*************** END ************ END **************************
-
-
         //*************** START *********** START **************************
         else if (cardName.equals("Sky Swallower")) {
             final SpellAbility ability = new Ability(card, "0") {
