@@ -576,6 +576,19 @@ public class CardUtil {
     {
         String out = in;
 
+		/*
+		 * Braids: "i'm not questioning the usefulness of this code, but it is
+		 * fundamentally the wrong approach. once we get a text value into a
+		 * Java String, it must already be Unicode. it is the responsibility of
+		 * the stream Reader to make that conversion. in other words, because we
+		 * are dealing with java Strings, we must not look for the characters
+		 * "û", but rather for the single character '\u00fb', which is
+		 * "LATIN SMALL LETTER U WITH CIRCUMFLEX".
+		 * @see http://www.fileformat.info/info/unicode/char/fb/index.htm
+		 * 
+		 * anyway, i'm pretty sure the first arguments below are UTF-8 
+		 * sequences. 
+		 */
         out = out.replace("û","u");
         out = out.replace("â","a");
         out = out.replace("á","a");
@@ -602,4 +615,34 @@ public class CardUtil {
 
         return out;
     }
+
+    /**
+     * Compute the canonicalized ASCII form of a card name.
+     * 
+     * @param cardName the name to transform (but not side effect)
+     * 
+     * @return the name in ASCII characters
+     */
+	public static String canonicalizeCardName(String cardName) {
+		String result = cardName;
+		result = result.replace("\u00ae", "(R)");  // Ultimate Nightmare ...
+		result = result.replace("\u00c6", "AE");
+		result = result.replace("\u00e0", "a");
+		result = result.replace("\u00e1", "a");
+		result = result.replace("\u00e2", "a");
+		result = result.replace("\u00e9", "e");
+		result = result.replace("\u00ed", "i");
+		result = result.replace("\u00f6", "o");
+		result = result.replace("\u00fa", "u");
+		result = result.replace("\u00fb", "u");
+		result = result.replace("\u2012", "-");
+		result = result.replace("\u2013", "-");
+		result = result.replace("\u2014", "-");
+		result = result.replace("\u2015", "-");
+		result = result.replace("\u2018", "'");
+		result = result.replace("\u2019", "'");
+		result = result.replace("\u221e", "Infinity");  // Mox Lo...
+		
+		return result;
+	}
 }

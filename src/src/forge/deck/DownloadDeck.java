@@ -143,6 +143,10 @@ public class DownloadDeck {
      * @return a boolean.
      */
     public boolean isCardSupport(String CardName) {
+    	/*
+		 * TODO Braids: "For performance, rewrite this to use 
+		 * CardFactory.loadCard instead."
+		 */
         CardList all = AllZone.getCardFactory().getAllCards();
 
         Card gCard;
@@ -163,6 +167,11 @@ public class DownloadDeck {
      * @return a {@link forge.Card} object.
      */
     public Card getCardDownload(Card c, String CardName) {
+
+    	/*
+		 * TODO Braids: "For performance, rewrite this to use 
+		 * CardFactory.loadCard instead."
+		 */
         CardList all = AllZone.getCardFactory().getAllCards();
 
         Card newCard = null;

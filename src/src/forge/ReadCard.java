@@ -1,16 +1,23 @@
 package forge;
 
-import forge.card.trigger.TriggerHandler;
-import forge.error.ErrorViewer;
-import forge.properties.ForgeProps;
-import forge.properties.NewConstants;
-
-import java.io.*;
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import forge.card.trigger.TriggerHandler;
+import forge.error.ErrorViewer;
+import forge.properties.NewConstants;
 
 
 /**
@@ -20,18 +27,35 @@ import java.util.zip.ZipFile;
  * @version $Id: $
  */
 public class ReadCard implements Runnable, NewConstants {
-    private BufferedReader in;
-    private String fileList[];
-    private ArrayList<Card> allCards = new ArrayList<Card>();
-    /** Constant <code>zipFile</code> */
-    private static File zipFile;
+    public static final String DEFAULT_CHARSET_NAME = "US-ASCII";
 
-    /**
+	public static final Pattern HYPHENS_AND_SPACES = Pattern.compile("[ -]");
+	public static final Pattern PUNCTUATION_TO_ZAP = Pattern.compile("[,'\"]");
+	public static final Pattern MULTIPLE_UNDERSCORES = Pattern.compile("__+");
+
+    
+	private Charset charset;
+    private File cardsFolder;
+	private Map<String, Card> namesToCards;
+	private ZipFile zip;
+
+	private Enumeration<? extends ZipEntry> zipEnum;
+
+	private String[] fileList;
+	private int fileListIx;
+
+    //private String fileList[];
+    //private ArrayList<Card> allCards = new ArrayList<Card>();
+    
+    /*
      * <p>main.</p>
-     *
+     * 
+     * @deprecated
+     * 
      * @param args an array of {@link java.lang.String} objects.
      * @throws java.lang.Exception if any.
      */
+	/*
     public static void main(String args[]) throws Exception {
         try {
             ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER));
@@ -54,129 +78,208 @@ public class ReadCard implements Runnable, NewConstants {
             System.out.println("Error reading file " + ex);
         }
     }
+    */
 
-    /**
-     * <p>getCards.</p>
-     *
-     * @return a {@link java.util.ArrayList} object.
-     */
-    public ArrayList<Card> getCards() {
-        return new ArrayList<Card>(allCards);
+	/**
+	 * Create a lazy card reader.
+	 * 
+	 * @param dirname  path to the cardsfolder directory as a String
+	 * @param namesToCards  we populate this map as we read cards 
+	 */
+    public ReadCard(String dirname, Map<String,Card> namesToCards) {
+        this(new File(dirname), namesToCards);
     }
 
-    /**
-     * <p>Constructor for ReadCard.</p>
-     *
-     * @param filename a {@link java.lang.String} object.
-     */
-    public ReadCard(String filename) {
-        this(new File(filename));
-    }
-
-    /**
-     * <p>Constructor for ReadCard.</p>
-     *
-     * @param file a {@link java.io.File} object.
-     */
-    public ReadCard(File file) {
-        if (!file.exists())
+	/**
+	 * Create a lazy card reader.
+	 * 
+	 * @param cardsfolder  indicates location of the cardsfolder
+	 * @param namesToCards  we populate this map as we read cards 
+	 */
+    public ReadCard(File cardsFolder, Map<String,Card> namesToCards) {
+        if (!cardsFolder.exists())
             throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
-                    + file.getAbsolutePath());
+                    + cardsFolder.getAbsolutePath());
 
-        if (!file.isDirectory())
+        if (!cardsFolder.isDirectory())
             throw new RuntimeException("ReadCard : constructor error -- not a direcotry -- "
-                    + file.getAbsolutePath());
-        zipFile = new File(file, CARDSFOLDER + ".zip");
+                    + cardsFolder.getAbsolutePath());
 
-        if (!zipFile.exists())
-            fileList = file.list();
-        //makes the checked exception, into an unchecked runtime exception
-        //try {
-        //    in = new BufferedReader(new FileReader(file));
-        //} catch(Exception ex) {
-        //    ErrorViewer.showError(ex, "File \"%s\" not found", file.getAbsolutePath());
-        //    throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
-        //            + file.getPath());
-        //}
+        if (namesToCards == null) {
+        	throw new NullPointerException();
+        }
+        
+        this.cardsFolder = cardsFolder;
+        this.namesToCards = namesToCards;
+        
+        File zipFile = new File(cardsFolder, CARDSFOLDER + ".zip");
+        
+        // Prepare resources to read cards lazily.
+    	if (zipFile.exists()) {
+			try {
+				this.zip = new ZipFile(zipFile);
+			} catch (Exception exn) {
+				System.err.println("Error reading zip file \"" + 
+						 zipFile.getAbsolutePath() + "\": " + exn + ". " +
+						 "Defaulting to txt files in \"" +
+						 cardsFolder.getAbsolutePath() +
+						 "\"."
+						 );
+			}
+				
+    	}
+
+    	if (zip != null) {
+            zipEnum = zip.entries();
+    	}
+    	else {
+            fileList = cardsFolder.list();
+            fileListIx = 0;
+    	}
+    	setEncoding(DEFAULT_CHARSET_NAME);
     }//ReadCard()
 
     /**
-     * <p>run.</p>
+     * Set the character encoding to use when loading cards.
+     * 
+     * @param charsetName  the name of the charset, for example, "UTF-8"
+     */
+    public void setEncoding(String charsetName) {
+    	this.charset = Charset.forName(charsetName);
+    }
+    
+    
+    /**
+     * Reads the rest of ALL the cards into memory.  This is not lazy.
      */
     public void run() {
+    	loadCardsUntilYouFind(null);
+    }
+
+    /**
+     * Starts reading cards into memory until the given card is found.
+     * 
+     * After that, we save our place in the list of cards (on disk) in case we
+     * need to load more. 
+     * 
+     * @param cardName the name to find; if null, load all cards.
+     * 
+     * @return the Card or null if it was not found.
+     */
+    protected Card loadCardsUntilYouFind(String cardName) {
+
         Card c = null;
-        ArrayList<String> cardNames = new ArrayList<String>();
-        File fl = null;
 
-        if (zipFile.exists()) {
-            try {
-                ZipFile zip = new ZipFile(zipFile);
-                ZipEntry entry;
-                Enumeration<? extends ZipEntry> e = zip.entries();
-                while (e.hasMoreElements()) {
-                    entry = (ZipEntry) e.nextElement();
-                    if (!entry.getName().endsWith(".txt"))
-                        continue;
-                    in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
-                    c = new Card();
-                    loadCard(c, cardNames);
-                    cardNames.add(c.getName());
-                    allCards.add(c);
-                    in.close();
+        if (zip != null) {
+            ZipEntry entry;
+
+        	// zipEnum was initialized in the constructor.
+            while (zipEnum.hasMoreElements()) {
+                entry = (ZipEntry) zipEnum.nextElement();
+                
+                if (!entry.getName().endsWith(".txt")) {
+                    continue;
                 }
-            } catch (Exception e) {
 
+                c = loadCard(entry);
+                if (cardName != null && cardName.equals(c.getName())) {
+                	return c;
+                }
             }
 
         } else {
-            for (int i = 0; i < fileList.length; i++) {
-                if (!fileList[i].endsWith(".txt"))
+        	// fileListIx was initialized in the constructor.
+            for (; fileListIx < fileList.length; fileListIx++) {
+                if (!fileList[fileListIx].endsWith(".txt")) {
                     continue;
-
-                try {
-                    fl = new File("res/cardsfolder/" + fileList[i]);
-                    in = new BufferedReader(new FileReader(fl));
-                } catch (Exception ex) {
-                    ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
-                    throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
-                            + fl.getPath());
                 }
 
-                c = new Card();
-                loadCard(c, cardNames);
-                cardNames.add(c.getName());
-                allCards.add(c);
+                c = loadCard(fileList[fileListIx]);
 
-                try {
-                    in.close();
-                } catch (IOException ex) {
-                    ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
-                    throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
-                            + fl.getPath());
+                if (cardName != null && cardName.equals(c.getName())) {
+                	return c;
                 }
+
             }
         }
 
+        return null;
     }//run()
 
+
+    protected Card loadCard(String fileBaseName) {
+    	File fl = new File(cardsFolder, fileBaseName);
+        FileInputStream fileInputStream = null;
+        try {
+            fileInputStream = new FileInputStream(fl);
+            return loadCard(fileInputStream);
+        } 
+        catch (FileNotFoundException ex) {
+            ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
+            throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
+                    + fl.getPath(), ex);
+        }
+        finally {
+            try {
+                fileInputStream.close();
+            } catch (IOException ignored) {
+            	;
+            }
+        }
+    }
+    
+    
+    protected Card loadCard(ZipEntry entry) {
+        InputStream zipInputStream = null;
+        try {
+        	zipInputStream = zip.getInputStream(entry);
+            return loadCard(zipInputStream);
+            
+        } 
+        catch (IOException exn) {
+        	throw new RuntimeException(exn);
+		}
+        finally {
+            try {
+				zipInputStream.close();
+			} catch (IOException ignored) {
+				;
+			}
+        }
+    }
+    
+    
+    /*
+     * <p>getCards.</p>
+     *
+     * @deprecated
+     *
+     * @return a {@link java.util.ArrayList} object.
+     */
+    /*
+    public ArrayList<Card> getCards() {
+        return new ArrayList<Card>(allCards);
+    }
+    */
+
     /**
-     * <p>addTypes.</p>
+     * <p>addTypes to an existing card</p>
      *
      * @param c a {@link forge.Card} object.
      * @param types a {@link java.lang.String} object.
      */
-    private void addTypes(Card c, String types) {
+    public static void addTypes(Card c, String types) {
         StringTokenizer tok = new StringTokenizer(types);
         while (tok.hasMoreTokens())
             c.addType(tok.nextToken());
     }
 
     /**
-     * <p>readLine.</p>
+     * <p>Reads a line from the given reader and handles exceptions.</p>
      *
      * @return a {@link java.lang.String} object.
      */
-    private String readLine() {
+    public static String readLine(BufferedReader in) {
         //makes the checked exception, into an unchecked runtime exception
         try {
             String s = in.readLine();
@@ -184,73 +287,152 @@ public class ReadCard implements Runnable, NewConstants {
             return s;
         } catch (Exception ex) {
             ErrorViewer.showError(ex);
-            throw new RuntimeException("ReadCard : readLine(Card) error");
+            throw new RuntimeException("ReadCard : readLine(Card) error", ex);
         }
     }//readLine(Card)
 
     /**
-     * <p>loadCard.</p>
+     * <p>load a card.</p>
      *
-     * @param c a {@link forge.Card} object.
-     * @param cardNames a {@link java.util.ArrayList} object.
+     * @param c a {@link forge.Card} object; an input and an output variable
      */
-    private void loadCard(Card c, ArrayList<String> cardNames) {
-        String s = readLine();
-        while (!s.equals("End")) {
-            if (s.startsWith("#")) {
-                //no need to do anything, this indicates a comment line
-            } else if (s.startsWith("Name:")) {
-                String t = s.substring(5);
-                //System.out.println(s);
-                if (cardNames.contains(t)) {
-                    System.out.println("ReadCard:run() error - duplicate card name: " + t);
-                    throw new RuntimeException("ReadCard:run() error - duplicate card name: " + t);
-                } else
-                    c.setName(t);
-            } else if (s.startsWith("ManaCost:")) {
-                String t = s.substring(9);
-                //System.out.println(s);
-                if (!t.equals("no cost"))
-                    c.setManaCost(t);
-            } else if (s.startsWith("Types:"))
-                addTypes(c, s.substring(6));
+    protected Card loadCard(InputStream inputStream) {
+        Card c = new Card();
+    	
+    	InputStreamReader inputStreamReader = null;
+    	BufferedReader in = null;
+    	try {
+	        inputStreamReader = new InputStreamReader(inputStream, charset);
+			in = new BufferedReader(inputStreamReader);
+	        
+	        String s = readLine(in);
+	        while (!s.equals("End")) {
+	            if (s.startsWith("#")) {
+	                //no need to do anything, this indicates a comment line
+	            } else if (s.startsWith("Name:")) {
+	                String t = s.substring(5);
+	                //System.out.println(s);
+	                if (!namesToCards.containsKey(t)) {
+	                    c.setName(t);
+	                }
+	                else {
+	                	break;  // this card has already been loaded.
+	                }
+	            } else if (s.startsWith("ManaCost:")) {
+	                String t = s.substring(9);
+	                //System.out.println(s);
+	                if (!t.equals("no cost"))
+	                    c.setManaCost(t);
+	            } else if (s.startsWith("Types:"))
+	                addTypes(c, s.substring(6));
+	
+	            else if (s.startsWith("Text:")) {
+	                String t = s.substring(5);
+	                // if (!t.equals("no text"));
+	                if (t.equals("no text")) t = ("");
+	                c.setText(t);
+	            } else if (s.startsWith("PT:")) {
+	                String t = s.substring(3);
+	                String pt[] = t.split("/");
+	                int att = pt[0].contains("*") ? 0 : Integer.parseInt(pt[0]);
+	                int def = pt[1].contains("*") ? 0 : Integer.parseInt(pt[1]);
+	                c.setBaseAttackString(pt[0]);
+	                c.setBaseDefenseString(pt[1]);
+	                c.setBaseAttack(att);
+	                c.setBaseDefense(def);
+	            } else if (s.startsWith("Loyalty:")) {
+	                String splitStr[] = s.split(":");
+	                int loyal = Integer.parseInt(splitStr[1]);
+	                c.setBaseLoyalty(loyal);
+	            } else if (s.startsWith("K:")) {
+	                String t = s.substring(2);
+	                c.addIntrinsicKeyword(t);
+	            } else if (s.startsWith("SVar:")) {
+	                String t[] = s.split(":", 3);
+	                c.setSVar(t[1], t[2]);
+	            } else if (s.startsWith("A:")) {
+	                String t = s.substring(2);
+	                c.addIntrinsicAbility(t);
+	            } else if (s.startsWith("T:")) {
+	                String t = s.substring(2);
+	                c.addTrigger(TriggerHandler.parseTrigger(t, c));
+	            } else if (s.startsWith("SetInfo:")) {
+	                String t = s.substring(8);
+	                c.addSet(new SetInfo(t));
+	            }
+	
+	            s = readLine(in);
+	        } // while !End
+    	}
+    	finally {
+            try {
+				in.close();
+			} catch (IOException ignored) {
+				;
+			}
+            try {
+				inputStreamReader.close();
+			} catch (IOException ignored) {
+				;
+			}
+    	}
 
-            else if (s.startsWith("Text:")) {
-                String t = s.substring(5);
-                // if (!t.equals("no text"));
-                if (t.equals("no text")) t = ("");
-                c.setText(t);
-            } else if (s.startsWith("PT:")) {
-                String t = s.substring(3);
-                String pt[] = t.split("/");
-                int att = pt[0].contains("*") ? 0 : Integer.parseInt(pt[0]);
-                int def = pt[1].contains("*") ? 0 : Integer.parseInt(pt[1]);
-                c.setBaseAttackString(pt[0]);
-                c.setBaseDefenseString(pt[1]);
-                c.setBaseAttack(att);
-                c.setBaseDefense(def);
-            } else if (s.startsWith("Loyalty:")) {
-                String splitStr[] = s.split(":");
-                int loyal = Integer.parseInt(splitStr[1]);
-                c.setBaseLoyalty(loyal);
-            } else if (s.startsWith("K:")) {
-                String t = s.substring(2);
-                c.addIntrinsicKeyword(t);
-            } else if (s.startsWith("SVar:")) {
-                String t[] = s.split(":", 3);
-                c.setSVar(t[1], t[2]);
-            } else if (s.startsWith("A:")) {
-                String t = s.substring(2);
-                c.addIntrinsicAbility(t);
-            } else if (s.startsWith("T:")) {
-                String t = s.substring(2);
-                c.addTrigger(TriggerHandler.parseTrigger(t, c));
-            } else if (s.startsWith("SetInfo:")) {
-                String t = s.substring(8);
-                c.addSet(new SetInfo(t));
-            }
-
-            s = readLine();
-        } // while !End
+    	namesToCards.put(c.getName(), c);
+    	return c;
     }
+
+    /**
+     * Attempt to guess what a given card's file name would be.  
+     * 
+     * @param asciiCardName  the card name in canonicalized ASCII form
+     * 
+     * @return  the likeliest name of the card's txt file, including the ".txt" 
+     * suffix
+     * 
+     * @see CardUtil#canonicalizeCardName
+     */
+	public static String toFileName(String asciiCardName) {
+		String result = asciiCardName;
+
+		/*
+		 * friarsol wrote: "hyphens and spaces are converted to underscores,
+		 * commas and apostrophes are removed (I'm not sure if there are any
+		 * other punctuation used)."
+		 * 
+		 * @see http://www.slightlymagic.net/forum/viewtopic.php?f=52&t=4887#p63189
+		 */
+
+		result = HYPHENS_AND_SPACES.matcher(result).replaceAll("_");
+		result = MULTIPLE_UNDERSCORES.matcher(result).replaceAll("_");
+		result = PUNCTUATION_TO_ZAP.matcher(result).replaceAll("");
+
+		result = result.toLowerCase();
+		result += ".txt";
+		
+		return result;
+	}
+
+	public Card findCard(String cardFileBaseName, String canonicalASCIIName) {
+		
+		Card result = null;
+		
+        if (zip != null) {
+        	ZipEntry entry = zip.getEntry(cardFileBaseName);
+        	
+        	if (entry != null) {
+        		result = loadCard(entry);
+        	}
+        }
+        
+        if (result == null) {
+        	result = loadCard(cardFileBaseName);
+        }
+
+        if (result.getName().equals(canonicalASCIIName)) {
+			return result;
+		}
+		else {
+			return loadCardsUntilYouFind(canonicalASCIIName);
+		}
+	}
 }
