@@ -764,6 +764,10 @@ public class AbilityFactory {
         }
 
         if (API.equals("DelayedTrigger")) {
+        	if (isAb)
+                SA = AbilityFactory_DelayedTrigger.getAbility(this);
+            else if (isSp)
+                SA = AbilityFactory_DelayedTrigger.getSpell(this);
             if (isDb)
                 SA = AbilityFactory_DelayedTrigger.getDrawback(this);
         }
