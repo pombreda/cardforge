@@ -208,6 +208,7 @@ public class AbilityFactory_Effect {
         String[] effectTriggers = null;
         String[] effectSVars = null;
         String[] effectKeywords = null;
+        String effectRemembered = null;
 
         if (params.containsKey("Abilities"))
             effectAbilities = params.get("Abilities").split(",");
@@ -220,6 +221,9 @@ public class AbilityFactory_Effect {
 
         if (params.containsKey("Keywords"))
             effectKeywords = params.get("Keywords").split(",");
+
+        if (params.containsKey("RememberCard"))
+            effectRemembered = params.get("RememberCard");
 
         //Effect eff = new Effect();
         String name = params.get("Name");
@@ -292,6 +296,14 @@ public class AbilityFactory_Effect {
             for (String s : effectKeywords) {
                 String actualKeyword = af.getHostCard().getSVar(s);
                 eff.addIntrinsicKeyword(actualKeyword);
+            }
+        }
+
+        //Set Remembered
+        if(effectRemembered != null) {
+            for(Card c : AbilityFactory.getDefinedCards(card,effectRemembered,sa))
+            {
+                eff.addRemembered(c);
             }
         }
 

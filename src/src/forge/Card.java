@@ -4856,6 +4856,8 @@ public class Card extends MyObservable {
             if (isType(Property.substring(3))) return false;
         } else if (Property.equals("CostsPhyrexianMana")) {
             if (!manaCost.contains("P")) return false;
+        } else if (Property.equals("IsRemembered")) {
+            if(!source.getRemembered().contains(this)) return false;
         } else {
             if (Property.equals("ChosenType")) {
                 if (!isType(source.getChosenType())) return false;
