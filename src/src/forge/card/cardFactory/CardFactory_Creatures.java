@@ -1409,61 +1409,6 @@ public class CardFactory_Creatures {
 
 
         //*************** START *********** START **************************
-        else if (cardName.equals("Spiritmonger")) {
-
-            final String[] color = new String[1];
-            final long[] timeStamp = new long[1];
-
-            //color change ability
-            Cost abCost = new Cost("G", cardName, true);
-            final Ability_Activated ability = new Ability_Activated(card, abCost, null) {
-                private static final long serialVersionUID = -5362934962417382279L;
-
-                @Override
-                public boolean canPlayAI() {
-                    return false;
-                }
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(card)) {
-                        if (card.getController().isHuman()) {
-                            String[] colors = Constant.Color.onlyColors;
-
-                            Object o = GuiUtils.getChoice("Choose color", colors);
-                            color[0] = (String) o;
-                            card.setChosenColor(color[0]);
-                            String s = CardUtil.getShortColor(color[0]);
-                            timeStamp[0] = card.addColor(s, card, false, true);
-
-                            //until EOT
-                            final Command untilEOT = new Command() {
-                                private static final long serialVersionUID = -7093762180313802891L;
-                                long stamp = timeStamp[0];
-                                String s = CardUtil.getShortColor(color[0]);
-
-                                public void execute() {
-                                    card.removeColor(s, card, false, stamp);
-                                    card.setChosenColor("");
-                                }
-                            };
-
-                            AllZone.getEndOfTurn().addUntil(untilEOT);
-                        }
-                    }
-                }//resolve()
-            };//SpellAbility
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(card).append(" becomes the color of your choice until end of turn.");
-            ability.setStackDescription(sb.toString());
-
-            ability.setDescription(abCost + cardName + " becomes the color of your choice until end of turn.");
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
         else if (cardName.equals("Painter's Servant")) {
             final long[] timeStamp = new long[1];
             final String[] color = new String[1];

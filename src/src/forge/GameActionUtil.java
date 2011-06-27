@@ -1733,22 +1733,6 @@ public class GameActionUtil {
 
         }
 
-        if (source.getName().equals("Spiritmonger")) {
-            Ability ability2 = new Ability(source, "0") {
-                @Override
-                public void resolve() {
-                    source.addCounter(Counters.P1P1, 1);
-                }
-            }; // ability2
-
-            StringBuilder sb2 = new StringBuilder();
-            sb2.append(source.getName()).append(" - gets a +1/+1 counter");
-            ability2.setStackDescription(sb2.toString());
-
-            AllZone.getStack().addSimultaneousStackEntry(ability2);
-
-        }
-
         if (affected.hasKeyword("Whenever CARDNAME is dealt damage, put a +1/+1 counter on it.")) {
             Ability ability2 = new Ability(affected, "0") {
                 @Override
