@@ -19,7 +19,7 @@ import java.util.Hashtable;
 public class AbilityFactory_Animate {
 
     //**************************************************************
-    // *************************** Animate *************************
+    //************************** Animate ***************************
     //**************************************************************
 
     /**
@@ -32,6 +32,7 @@ public class AbilityFactory_Animate {
         final SpellAbility abAnimate = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 1938171749867735155L;
 
+            @Override
             public boolean canPlayAI() {
                 return animateCanPlayAI(af, this);
             }
@@ -41,6 +42,7 @@ public class AbilityFactory_Animate {
                 animateResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateStackDescription(af, this);
             }
@@ -63,6 +65,7 @@ public class AbilityFactory_Animate {
         final SpellAbility spAnimate = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4047747186919390147L;
 
+            @Override
             public boolean canPlayAI() {
                 return animateCanPlayAI(af, this);
             }
@@ -72,6 +75,7 @@ public class AbilityFactory_Animate {
                 animateResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateStackDescription(af, this);
             }
@@ -99,6 +103,7 @@ public class AbilityFactory_Animate {
                 return animatePlayDrawbackAI(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateStackDescription(af, this);
             }
@@ -169,7 +174,7 @@ public class AbilityFactory_Animate {
 
         if (colors.size() > 0) sb.append(" ");
         if(colors.contains("ChosenColor")) {
-        	sb.append("color of that player's choice ");
+        	sb.append("color of that player's choice");
         }
         else {
         	for (int i = 0; i < colors.size(); i++) {
@@ -199,7 +204,7 @@ public class AbilityFactory_Animate {
             sb.append(abSub.getStackDescription());
 
         return sb.toString();
-    }
+    }//end animateStackDescription()
 
     /**
      * <p>animateCanPlayAI.</p>
@@ -309,7 +314,7 @@ public class AbilityFactory_Animate {
      */
     private static boolean animateTgtAI(AbilityFactory af, SpellAbility sa) {
         //This is reasonable for now.  Kamahl, Fist of Krosa and a sorcery or two are the only things
-        //that animate a target.  Those can just use SVar:RemAIDeck:True until this can do a reasonalbly
+        //that animate a target.  Those can just use SVar:RemAIDeck:True until this can do a reasonably
         //good job of picking a good target
         return false;
     }
@@ -537,6 +542,7 @@ public class AbilityFactory_Animate {
         final SpellAbility abAnimateAll = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -4969632476557290609L;
 
+            @Override
             public boolean canPlayAI() {
                 return animateAllCanPlayAI(af, this);
             }
@@ -546,6 +552,7 @@ public class AbilityFactory_Animate {
                 animateAllResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateAllStackDescription(af, this);
             }
@@ -568,6 +575,7 @@ public class AbilityFactory_Animate {
         final SpellAbility spAnimateAll = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = 2946847609068706237L;
 
+            @Override
             public boolean canPlayAI() {
                 return animateAllCanPlayAI(af, this);
             }
@@ -577,6 +585,7 @@ public class AbilityFactory_Animate {
                 animateAllResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateAllStackDescription(af, this);
             }
@@ -604,6 +613,7 @@ public class AbilityFactory_Animate {
                 return animateAllPlayDrawbackAI(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return animateAllStackDescription(af, this);
             }
@@ -664,7 +674,7 @@ public class AbilityFactory_Animate {
             useAbility &= subAb.chkAI_Drawback();
 
         return useAbility;
-    }// end animateCanPlayAI()
+    }// end animateAllCanPlayAI()
 
     /**
      * <p>animateAllPlayDrawbackAI.</p>
@@ -815,6 +825,6 @@ public class AbilityFactory_Animate {
                 else AllZone.getEndOfTurn().addUntil(unanimate);
             }
         }
-    }//animateResolve
+    }//animateAllResolve
 
 }//end class AbilityFactory_Animate
