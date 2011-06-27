@@ -1,4 +1,4 @@
-Name:Æther Shockwave
+Name:AEther Shockwave
 ManaCost:3 W
 Types:Instant
 Text:no text

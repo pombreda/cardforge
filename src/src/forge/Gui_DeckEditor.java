@@ -128,8 +128,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
     private ViewPanel pictureViewPanel = new ViewPanel();
     private JPanel glassPane;
 
-    private String simplifiedNameString = "";
-
     /** {@inheritDoc} */
     @Override
     public void setTitle(String message) {
@@ -313,9 +311,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
      */
     private boolean filterByName(Card c) {
         boolean filterOut = false;
-        if (!(simplifiedNameString == "")) {
-            filterOut = !(CardUtil.simplifyNameString(c.getName()).toLowerCase().contains(searchTextField.getText().toLowerCase()));
-        }
+        filterOut = !(c.getName().toLowerCase().contains(searchTextField.getText().toLowerCase()));
         return filterOut;
     }
     /*CHOPPIC*/
@@ -978,7 +974,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
      * @param e a {@link java.awt.event.ActionEvent} object.
      */
     void filterButton_actionPerformed(ActionEvent e) {
-        simplifiedNameString = CardUtil.simplifyNameString(searchTextField.getText());
         updateDisplay();
     }
     /*CHOPPIC*/
@@ -1006,7 +1001,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         if (!colorlessCheckBox.isSelected()) colorlessCheckBox.doClick();
 
         searchTextField.setText("");
-        simplifiedNameString = "";
         searchTextField2.setText("");
         searchTextField3.setText("");
         searchSetCombo.setSelectedIndex(0);

@@ -1,4 +1,4 @@
-Name:Æther Vial
+Name:AEther Vial
 ManaCost:1
 Types:Artifact
 Text:no text

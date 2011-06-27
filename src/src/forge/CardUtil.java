@@ -571,52 +571,7 @@ public class CardUtil {
         return colorDesc;
     }
 
-    //This is so as not to make Lim-Dûl cards or Khabál Ghoul/Dandân/El-Hajjâj too obnoxious to search for.
-    public static String simplifyNameString(String in)
-    {
-        String out = in;
-
-		/*
-		 * Braids: "i'm not questioning the usefulness of this code, but it is
-		 * fundamentally the wrong approach. once we get a text value into a
-		 * Java String, it must already be Unicode. it is the responsibility of
-		 * the stream Reader to make that conversion. in other words, because we
-		 * are dealing with java Strings, we must not look for the characters
-		 * "û", but rather for the single character '\u00fb', which is
-		 * "LATIN SMALL LETTER U WITH CIRCUMFLEX".
-		 * @see http://www.fileformat.info/info/unicode/char/fb/index.htm
-		 * 
-		 * anyway, i'm pretty sure the first arguments below are UTF-8 
-		 * sequences. 
-		 */
-        out = out.replace("û","u");
-        out = out.replace("â","a");
-        out = out.replace("á","a");
-        out = out.replace("å","a");
-        out = out.replace("ä","a");
-        out = out.replace("ö","o");
-        out = out.replace("Æ","AE");
-
-        return out;
-    }
-
-    //This should only remain for a few betas, til most of everyones questData have been converted.
-    public static String cardNameBackwardsCompatibility(String in)
-    {
-        if(in.equals("Dandan"))
-            return "Dandân";
-
-        String out = in.replace("AE","Æ");
-
-        out = out.replace("Lim-Dul","Lim-Dûl");
-        out = out.replace("Khabal","Khabál");
-        out = out.replace("Hajjaj","Hajjâj");
-
-
-        return out;
-    }
-
-    /**
+     /**
      * Compute the canonicalized ASCII form of a card name.
      * 
      * @param cardName the name to transform (but not side effect)

@@ -405,14 +405,6 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
 
         java.util.ArrayList<String> list = (ArrayList<String>)AllZone.getQuestData().getCardpool();
 
-        //BEGIN Backwards compatibility block. We should be able to remove this after a few betas, when most users questData has been converted.
-        for(int i = 0;i< list.size();i++)
-        {
-            list.set(i,CardUtil.cardNameBackwardsCompatibility(list.get(i)));
-        }
-        AllZone.getQuestData().setCardpool(list);
-        //END Backwards compatibility block.
-
         CardList cardpool = Gui_Quest_DeckEditor_Menu.covertToCardList(list);
 
         //remove bottom cards that are in the deck from the card pool

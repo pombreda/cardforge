@@ -1,4 +1,4 @@
-Name:Æther Membrane
+Name:AEther Membrane
 ManaCost:1 R R
 Types:Creature Wall
 Text:no text

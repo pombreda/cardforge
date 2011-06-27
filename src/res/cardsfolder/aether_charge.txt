@@ -1,4 +1,4 @@
-Name:Æther Charge
+Name:AEther Charge
 ManaCost:4 R
 Types:Enchantment
 Text:no text
