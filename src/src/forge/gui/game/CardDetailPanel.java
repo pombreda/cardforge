@@ -8,8 +8,6 @@ package forge.gui.game;
 
 
 import forge.*;
-import forge.properties.ForgeProps;
-import forge.properties.NewConstants;
 
 import javax.swing.*;
 import javax.swing.border.EtchedBorder;
