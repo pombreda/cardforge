@@ -611,7 +611,7 @@ public class ComputerUtil {
                 String xSvar = card.getSVar("X").equals("Count$xPaid") ? "PayX" : "X";
                 if (!card.getSVar(xSvar).equals("")) {
                     if (xSvar.equals("PayX"))
-                        manaToAdd = Integer.parseInt(card.getSVar(xSvar)); // X has already been decided
+                        manaToAdd = Integer.parseInt(card.getSVar(xSvar)) * cost.getXcounter(); // X has already been decided
                     else {
                         manaToAdd = AbilityFactory.calculateAmount(card, xSvar, sa) * cost.getXcounter();
                     }
