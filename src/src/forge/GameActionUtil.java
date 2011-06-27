@@ -1598,7 +1598,7 @@ public class GameActionUtil {
     public static boolean flipACoin(Player caller, Card source) {
         String choice = "";
         String choices[] = {"heads", "tails"};
-        boolean flip = MyRandom.percentTrue(50);
+        boolean flip = (50 > MyRandom.random.nextInt(100));
         if (caller.isHuman()) {
             choice = (String) GuiUtils.getChoice(source.getName() + " - Call coin flip", choices);
         } else {
