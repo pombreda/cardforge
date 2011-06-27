@@ -31,19 +31,14 @@ import static javax.swing.JOptionPane.PLAIN_MESSAGE;
  */
 public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Runnable, NewConstants, NewConstants.LANG.Gui_DownloadPictures {
 
-    /** Constant <code>serialVersionUID=-7890794857949935256L</code> */
+    /**
+     * Constant <code>serialVersionUID=-7890794857949935256L</code>
+     */
     private static final long serialVersionUID = -7890794857949935256L;
 
     /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
+     * Constant <code>types</code>
      */
-    public static void main(String[] args) {
-        startDownload(null);
-    }
-
-    /** Constant <code>types</code> */
     public static final Proxy.Type[] types = Proxy.Type.values();
 
     //proxy
@@ -152,25 +147,33 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         dlg = new JOptionPane(p0, DEFAULT_OPTION, PLAIN_MESSAGE, null, options, options[1]);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMinimum() {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getValue() {
         return card;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getExtent() {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getMaximum() {
         return cards == null ? 0 : cards.length;
@@ -311,7 +314,7 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
     /**
      * <p>flushAndCloseStreams.</p>
      *
-     * @param in a {@link java.io.BufferedInputStream} object.
+     * @param in  a {@link java.io.BufferedInputStream} object.
      * @param out a {@link java.io.BufferedOutputStream} object.
      * @throws java.io.IOException if any.
      */
@@ -382,12 +385,12 @@ public class Gui_DownloadPictures extends DefaultBoundedRangeModel implements Ru
         ArrayList<Card> list = new ArrayList<Card>();
         File file;
 
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
+        /*
+           * TODO Braids: "getAllCards copies the entire array, but that does not
+           * seem to be needed here. Significant performance improvement is
+           * possible if this code used getCards instead (along with a for each
+           * loop instead of using get(i), if applicable)."
+           */
         CardList all = AllZone.getCardFactory().getAllCards();
 
         File base = ForgeProps.getFile(IMAGE_BASE);

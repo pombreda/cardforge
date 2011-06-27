@@ -3,6 +3,7 @@ package forge;
 import forge.card.cardFactory.CardFactory;
 import forge.card.mana.ManaCost;
 import forge.gui.input.Input_PayManaCostUtil;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -14,11 +15,14 @@ import java.util.Set;
  * @author Forge
  * @version $Id: $
  */
+@Test
 public class RunTest {
     //@SuppressWarnings("unchecked") // HashSet needs <type>
+
     /**
      * <p>test.</p>
      */
+    @Test
     static void test() {
         {
             Card c;
@@ -318,20 +322,11 @@ public class RunTest {
      * <p>check.</p>
      *
      * @param message a {@link java.lang.String} object.
-     * @param ok a boolean.
+     * @param ok      a boolean.
      */
     static void check(String message, boolean ok) {
         if (!ok)
             //throw new RuntimeException("RunTest test error : " +message);
             System.out.println("RunTest test error : " + message);
-    }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String args[]) {
-        RunTest.test();
     }
 }
