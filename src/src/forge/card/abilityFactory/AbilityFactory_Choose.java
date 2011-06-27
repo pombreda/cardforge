@@ -460,8 +460,9 @@ public class AbilityFactory_Choose {
                     String choice = (String) o;
                     card.setChosenColor(choice);
                 } else {
-                    //TODO
-                    //computer will need to choose a color, and let the human know
+                	//TODO - needs improvement
+                    card.setChosenColor(Constant.Color.Black);
+                    JOptionPane.showMessageDialog(null, "Computer chooses "+Constant.Color.Black, ""+card, JOptionPane.PLAIN_MESSAGE); 
                 }
             }
         }
