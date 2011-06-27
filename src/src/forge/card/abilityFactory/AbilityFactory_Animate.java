@@ -168,9 +168,14 @@ public class AbilityFactory_Animate {
         if (power != -1) sb.append(" ").append(power).append("/").append(toughness);
 
         if (colors.size() > 0) sb.append(" ");
-        for (int i = 0; i < colors.size(); i++) {
-            sb.append(colors.get(i));
-            if (i < (colors.size() - 1)) sb.append(" and ");
+        if(colors.contains("ChosenColor")) {
+        	sb.append("color of that player's choice ");
+        }
+        else {
+        	for (int i = 0; i < colors.size(); i++) {
+        		sb.append(colors.get(i));
+        		if (i < (colors.size() - 1)) sb.append(" and ");
+        	}
         }
         sb.append(" ");
         for (int i = types.size() - 1; i >= 0; i--) {
