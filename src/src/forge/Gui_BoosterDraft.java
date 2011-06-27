@@ -6,7 +6,6 @@ import forge.deck.DeckManager;
 import forge.error.ErrorViewer;
 import forge.gui.game.CardDetailPanel;
 import forge.gui.game.CardPicturePanel;
-import forge.properties.ForgePreferences;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
@@ -20,7 +19,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 
 
 /**
@@ -30,12 +28,16 @@ import java.util.Set;
  * @version $Id: $
  */
 public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConstants, NewConstants.LANG.Gui_BoosterDraft {
-    /** Constant <code>serialVersionUID=-6055633915602448260L</code> */
+    /**
+     * Constant <code>serialVersionUID=-6055633915602448260L</code>
+     */
     private static final long serialVersionUID = -6055633915602448260L;
 
     private BoosterDraft boosterDraft;
 
-    /** Constant <code>limitedDeckEditor=true</code> */
+    /**
+     * Constant <code>limitedDeckEditor=true</code>
+     */
     private static final boolean limitedDeckEditor = true;
 
     private TableModel allCardModel;
@@ -57,20 +59,6 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     private JButton jButton1 = new JButton();
     private CardDetailPanel detail = new CardDetailPanel(null);
     private CardPicturePanel picture = new CardPicturePanel(null);
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        Constant.Runtime.GameType[0] = Constant.GameType.Draft;
-        Constant.Runtime.HumanDeck[0] = new Deck(Constant.GameType.Sealed);
-
-        Gui_BoosterDraft g = new Gui_BoosterDraft();
-        g.showGui(new BoosterDraftTest());
-    }
-
 
     /**
      * <p>showGui.</p>
@@ -200,7 +188,9 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         return detail.getCard();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);
@@ -314,6 +304,7 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }//removeButton_actionPerformed
 
     //if true, don't do anything else
+
     /**
      * <p>checkSaveDeck.</p>
      *
@@ -493,6 +484,7 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }/*setupMenu();  */
 
     //refresh Gui from deck, Gui shows the cards in the deck
+
     /**
      * <p>refreshGui.</p>
      */
@@ -526,12 +518,12 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
                 allCardModel.addCard(c);
             }
         } else {
-    		/*
-    		 * TODO Braids: "getAllCards copies the entire array, but that does not
-    		 * seem to be needed here. Significant performance improvement is
-    		 * possible if this code used getCards instead (along with a for each
-    		 * loop instead of using get(i), if applicable)."
-    		 */
+            /*
+                * TODO Braids: "getAllCards copies the entire array, but that does not
+                * seem to be needed here. Significant performance improvement is
+                * possible if this code used getCards instead (along with a for each
+                * loop instead of using get(i), if applicable)."
+                */
             CardList all = AllZone.getCardFactory().getAllCards();
             for (int i = 0; i < all.size(); i++)
                 allCardModel.addCard(all.get(i));
@@ -542,6 +534,7 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
     }//refreshGui()
 
     //updates Constant.Runtime.HumanDeck[0] from the cards shown in the GUI
+
     /**
      * <p>refreshDeck.</p>
      */
@@ -587,25 +580,25 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         if (boosterDraft.hasNextChoice()) {
             showChoices(boosterDraft.nextChoice());
         } else {
-        	if (Constant.Runtime.UpldDrft[0]) {
-	        	if (boosterDraft.draftPicks.size() > 1) {
-	        		ArrayList<String> outDraftData = new ArrayList<String>();
-	        		
-	        		String keys[] = {""};
-	        		keys = boosterDraft.draftPicks.keySet().toArray(keys);
-	        		
-	        		for (int i=0; i<keys.length; i++) {
-	        			outDraftData.add(keys[i] + "|" + boosterDraft.draftPicks.get(keys[i]));
-	        		}
-	        		
-	        		FileUtil.writeFile("res/draft/tmpDraftData.txt", outDraftData);
-	        		
-	        		HttpUtil poster = new HttpUtil();
-	        		poster.upload("http://cardforge.org/draftAI/submitDraftData.php?fmt=" + boosterDraft.draftFormat[0], "res/draft/tmpDraftData.txt");
-	        	}
-        	}
-        	
-        	//quit
+            if (Constant.Runtime.UpldDrft[0]) {
+                if (boosterDraft.draftPicks.size() > 1) {
+                    ArrayList<String> outDraftData = new ArrayList<String>();
+
+                    String keys[] = {""};
+                    keys = boosterDraft.draftPicks.keySet().toArray(keys);
+
+                    for (int i = 0; i < keys.length; i++) {
+                        outDraftData.add(keys[i] + "|" + boosterDraft.draftPicks.get(keys[i]));
+                    }
+
+                    FileUtil.writeFile("res/draft/tmpDraftData.txt", outDraftData);
+
+                    HttpUtil poster = new HttpUtil();
+                    poster.upload("http://cardforge.org/draftAI/submitDraftData.php?fmt=" + boosterDraft.draftFormat[0], "res/draft/tmpDraftData.txt");
+                }
+            }
+
+            //quit
             saveDraft();
             dispose();
         }

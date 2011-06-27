@@ -17,78 +17,28 @@ public class BoosterDraftAI {
     //picks a card, so the final computer deck has 12-20 creatures
     //minimum of creatures per deck
     //private static final int nCreatures = 16;
-    /** Constant <code>nDecks=7</code> */
+    /**
+     * Constant <code>nDecks=7</code>
+     */
     private static final int nDecks = 7;
 
     //holds all the cards for each of the computer's decks
     private CardList[] deck = new CardList[nDecks];
     private String[][] deckColor = new String[nDecks][];
 
-    /** Constant <code>colorToLand</code> */
+    /**
+     * Constant <code>colorToLand</code>
+     */
     private static Map<String, String> colorToLand = new HashMap<String, String>();
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        BoosterDraftAI ai = new BoosterDraftAI();
-        ai.runTestPrint();
-    }
-
-    /**
-     * <p>runTestPrint.</p>
-     */
-    public void runTestPrint() {
-        BoosterDraftAI ai = new BoosterDraftAI();
-        ai.runTest(ai);
-
-        Deck[] deck = ai.getDecks();
-
-        for (int outer = 0; outer < 7; outer++) {
-            System.out.print(deck[outer].countMain() + " - ");
-
-            for (int i = 0; i < 16; i++)
-                System.out.print(deck[outer].getMain(i) + ", ");
-
-            System.out.println("");
-
-            for (int i = 16; i < 22; i++)
-                System.out.print(deck[outer].getMain(i) + ", ");
-
-            System.out.println("\n");
-        }//for outer
-    }//runTestPrint()
-
-    //throws Exception if error
-    /**
-     * <p>runTest.</p>
-     *
-     * @param ai a {@link forge.BoosterDraftAI} object.
-     */
-    public void runTest(BoosterDraftAI ai) {
-        ReadDraftBoosterPack booster = new ReadDraftBoosterPack();
-        for (int outer = 0; outer < 1; outer++) {
-            CardList allBooster = new CardList();
-            for (int i = 0; i < 21; i++)
-                allBooster.addAll(booster.getBoosterPack());
-
-            int stop = allBooster.size();
-            for (int i = 0; i < stop; i++) {
-                ai.choose(allBooster, i);
-            }
-            //ai.checkDeckList(ai.deck);
-        }
-    }//runTest()
 
     //picks one Card from in_choose, removes that card, and returns the list
     //returns the cards not picked
+
     /**
      * <p>choose.</p>
      *
      * @param in_choose a {@link forge.CardList} object.
-     * @param player a int.
+     * @param player    a int.
      * @return a {@link forge.CardList} object.
      */
     public CardList choose(final CardList in_choose, int player) {
@@ -566,6 +516,7 @@ public class BoosterDraftAI {
 */
 
     //returns 7 different ints, within the range of 0-9
+
     /**
      * <p>getDeckColors.</p>
      *

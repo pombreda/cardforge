@@ -37,7 +37,9 @@ public class Card_Color {
         return stamp;
     }
 
-    /** Constant <code>timeStamp=0</code> */
+    /**
+     * Constant <code>timeStamp=0</code>
+     */
     private static long timeStamp = 0;
 
     /**
@@ -52,10 +54,10 @@ public class Card_Color {
     /**
      * <p>Constructor for Card_Color.</p>
      *
-     * @param mc a {@link forge.card.mana.ManaCost} object.
-     * @param c a {@link forge.Card} object.
+     * @param mc          a {@link forge.card.mana.ManaCost} object.
+     * @param c           a {@link forge.Card} object.
      * @param addToColors a boolean.
-     * @param baseColor a boolean.
+     * @param baseColor   a boolean.
      */
     Card_Color(ManaCost mc, Card c, boolean addToColors, boolean baseColor) {
         additional = addToColors;
@@ -112,11 +114,11 @@ public class Card_Color {
     /**
      * <p>equals.</p>
      *
-     * @param cost a {@link java.lang.String} object.
-     * @param cost a {@link java.lang.String} object.
-     * @param c a {@link forge.Card} object.
+     * @param cost        a {@link java.lang.String} object.
+     * @param cost        a {@link java.lang.String} object.
+     * @param c           a {@link forge.Card} object.
      * @param addToColors a boolean.
-     * @param time a long.
+     * @param time        a long.
      * @return a boolean.
      */
     public boolean equals(String cost, Card c, boolean addToColors, long time) {
@@ -133,16 +135,5 @@ public class Card_Color {
         for (Color c : col)
             list.add(c.toString());
         return list;
-    }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        ManaCost mc = new ManaCost("R W U");
-        EnumSet<Color> col = Color.ConvertManaCostToColor(mc);
-        System.out.println(col.toString());
     }
 }
