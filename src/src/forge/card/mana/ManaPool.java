@@ -38,7 +38,6 @@ public class ManaPool extends Card {
      */
     public ManaPool(Player player) {
         super();
-        setUniqueNumber(0);
         updateObservers();
         owner = player;
         this.setController(player);
