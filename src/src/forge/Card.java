@@ -880,6 +880,31 @@ public class Card extends MyObservable {
         for (int i = 0; i < (multiplier * n); i++) {
             AllZone.getTriggerHandler().runTrigger("CounterAdded", runParams);
         }
+        
+        if (counterName.equals(Counters.P1P1) || counterName.equals(Counters.M1M1)) {
+            // +1/+1 counters should erase -1/-1 counters
+            int plusOneCounters = 0;
+            int minusOneCounters = 0;
+
+            Counters p1Counter = Counters.P1P1;
+            Counters m1Counter = Counters.M1M1;
+            if (counters.containsKey(p1Counter))
+                plusOneCounters = counters.get(p1Counter);
+            if (counters.containsKey(m1Counter))
+                minusOneCounters = counters.get(m1Counter);
+
+            if (plusOneCounters == minusOneCounters) {
+                counters.remove(m1Counter);
+                counters.remove(p1Counter);
+            }
+            if (plusOneCounters > minusOneCounters) {
+                counters.remove(m1Counter);
+                counters.put(p1Counter, (Integer) (plusOneCounters - minusOneCounters));
+            } else {
+                counters.put(m1Counter, (Integer) (minusOneCounters - plusOneCounters));
+                counters.remove(p1Counter);
+            }
+        }
 
         AllZone.getGameAction().checkStateEffects();
 
