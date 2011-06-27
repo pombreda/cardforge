@@ -28,6 +28,11 @@ public class BoosterPack {
      * @return a {@link forge.CardList} object.
      */
     public static CardList getBoosterPack() {
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead."
+		 */
         CardList all = AllZone.getCardFactory().getAllCards();
         CardList pack = new CardList();
 

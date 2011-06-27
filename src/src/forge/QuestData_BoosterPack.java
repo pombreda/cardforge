@@ -126,6 +126,13 @@ public class QuestData_BoosterPack implements NewConstants {
         //setup(ForgeProps.getFile(QUEST.UNCOMMON), uncommonCreature, uncommonSpell);
         //setup(ForgeProps.getFile(QUEST.RARE), rareCreature, rareSpell);
 
+		/*
+		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 * seem to be needed here. Significant performance improvement is
+		 * possible if this code used getCards instead (along with a for each
+		 * loop instead of using get(i), if applicable).  In fact, it looks
+		 * like it's shallowly copying the array 3 times!"
+		 */
         CardList AllCards = new CardList(AllZone.getCardFactory().getAllCards().toArray());
 
         for (int i = 0; i < AllCards.size(); i++) {
