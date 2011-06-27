@@ -10,7 +10,6 @@ import forge.card.trigger.TriggerHandler;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost;
-import forge.gui.input.Input_PayManaCost_Ability;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -736,6 +735,7 @@ public class CardFactory_Creatures {
             card.addComesIntoPlayCommand(intoPlay);
         }//*************** END ************ END **************************
 
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Sky Swallower")) {
             final SpellAbility ability = new Ability(card, "0") {
@@ -1336,54 +1336,6 @@ public class CardFactory_Creatures {
 
             card.addComesIntoPlayCommand(comesIntoPlay);
             card.addLeavesPlayCommand(leavesBattlefield);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Transluminant")) {
-            final Command atEOT = new Command() {
-                private static final long serialVersionUID = -5126793112740563180L;
-
-                public void execute() {
-                    CardFactoryUtil.makeToken("Spirit", "W 1 1 Spirit", card.getController(), "W", new String[]{
-                            "Creature", "Spirit"}, 1, 1, new String[]{"Flying"});
-                }//execute()
-            };//Command
-
-            final Ability ability = new Ability(card, "W") {
-                @Override
-                public boolean canPlayAI() {
-                    /*
-                    CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
-                    String phase = AllZone.getPhase().getPhase();
-                    return phase.equals(Constant.Phase.Main2) && list.size() != 0;
-                    */
-                    return false;
-                }
-
-                @Override
-                public void chooseTargetAI() {
-                    AllZone.getGameAction().sacrifice(card);
-                }
-
-                @Override
-                public void resolve() {
-                    AllZone.getEndOfTurn().addAt(atEOT);
-                }//resolve()
-            };//SpellAbility
-
-            card.addSpellAbility(ability);
-            ability.setDescription("W, Sacrifice Transluminant: Put a 1/1 white Spirit creature token with flying onto the battlefield at the beginning of the next end step.");
-            ability.setStackDescription("Put a 1/1 white Spirit creature token with flying onto the battlefield at end of turn.");
-            ability.setBeforePayMana(new Input_PayManaCost_Ability(ability.getManaCost(), new Command() {
-                private static final long serialVersionUID = -6553009833190713980L;
-
-                public void execute() {
-                    AllZone.getGameAction().sacrifice(card);
-                    AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                }
-            }));
         }//*************** END ************ END **************************
 
 
