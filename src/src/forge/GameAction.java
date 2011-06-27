@@ -1038,7 +1038,7 @@ public class GameAction {
         {//re-number cards just so their unique numbers are low, just for user friendliness
             CardFactory c = AllZone.getCardFactory();
             Card card;
-            int nextUniqueNumber = 1;
+            int nextUniqueNumber = 10;
 
             Random generator = MyRandom.random;
 
