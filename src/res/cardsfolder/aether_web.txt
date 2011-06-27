@@ -1,4 +1,4 @@
-Name:Æther Web
+Name:AEther Web
 ManaCost:1 G
 Types:Enchantment Aura
 Text:no text

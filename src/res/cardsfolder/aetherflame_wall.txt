@@ -1,4 +1,4 @@
-Name:Ætherflame Wall
+Name:AEtherflame Wall
 ManaCost:1 R
 Types:Creature Wall
 Text:no text

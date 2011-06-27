@@ -1,4 +1,4 @@
-Name:Æther Tradewinds
+Name:AEther Tradewinds
 ManaCost:2 U
 Types:Instant
 Text:no text

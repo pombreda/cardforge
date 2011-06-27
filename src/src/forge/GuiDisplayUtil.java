@@ -203,9 +203,8 @@ public class GuiDisplayUtil implements NewConstants {
      * @param orig a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
      */
-    public static String cleanStringMWS(String orig)
+    public static String cleanStringMWS(String in)
     {
-        String in = CardUtil.simplifyNameString(orig);
     	StringBuffer out = new StringBuffer();
     	char c;
     	for (int i=0; i<in.length(); i++)

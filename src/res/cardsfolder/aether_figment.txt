@@ -1,4 +1,4 @@
-Name:Æther Figment
+Name:AEther Figment
 ManaCost:1 U
 Types:Creature Illusion
 Text:no text

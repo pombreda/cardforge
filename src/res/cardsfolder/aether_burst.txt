@@ -1,4 +1,4 @@
-Name:Æther Burst
+Name:AEther Burst
 ManaCost:1 U
 Types:Instant
 Text:no text

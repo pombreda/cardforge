@@ -870,7 +870,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 setCode = s[1];
             }
 
-            Card c = AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer());
+            Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
 
             if (!setCode.equals("")) {
                 c.setCurSetCode(setCode);
@@ -929,7 +929,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                     cardName = s[0];
                     setCode = s[1];
                 }
-                Card c = AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer());
+                Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
                 c.setCurSetCode(setCode);
                 top.add(c);
             }
@@ -944,7 +944,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                     cardName = s[0];
                     setCode = s[1];
                 }
-                Card c = AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer());
+                Card c = AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer());
                 c.setCurSetCode(setCode);
                 bottom.add(c);
             }
@@ -990,7 +990,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            top.add(AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer()));
+            top.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         CardList bottom = new CardList();
@@ -1001,7 +1001,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
                 cardName = s[0];
             }
 
-            bottom.add(AllZone.getCardFactory().getCard(CardUtil.cardNameBackwardsCompatibility(cardName), AllZone.getHumanPlayer()));
+            bottom.add(AllZone.getCardFactory().getCard(cardName, AllZone.getHumanPlayer()));
         }
 
         deckDisplay.updateDisplay(top, bottom);

@@ -1,4 +1,4 @@
-Name:Æthersnipe
+Name:AEthersnipe
 ManaCost:5 U
 Types:Creature Elemental
 Text:

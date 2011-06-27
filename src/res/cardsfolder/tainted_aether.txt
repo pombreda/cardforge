@@ -1,4 +1,4 @@
-Name:Tainted Æther
+Name:Tainted AEther
 ManaCost:2 B B
 Types:Enchantment
 Text:no text
