@@ -6,6 +6,7 @@ import forge.deck.DeckManager;
 import forge.error.ErrorViewer;
 import forge.gui.game.CardDetailPanel;
 import forge.gui.game.CardPicturePanel;
+import forge.properties.ForgePreferences;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
@@ -17,7 +18,9 @@ import javax.swing.event.TableModelListener;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -584,7 +587,25 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         if (boosterDraft.hasNextChoice()) {
             showChoices(boosterDraft.nextChoice());
         } else {
-            //quit
+        	if (Constant.Runtime.UpldDrft[0]) {
+	        	if (boosterDraft.draftPicks.size() > 1) {
+	        		ArrayList<String> outDraftData = new ArrayList<String>();
+	        		
+	        		String keys[] = {""};
+	        		keys = boosterDraft.draftPicks.keySet().toArray(keys);
+	        		
+	        		for (int i=0; i<keys.length; i++) {
+	        			outDraftData.add(keys[i] + "|" + boosterDraft.draftPicks.get(keys[i]));
+	        		}
+	        		
+	        		FileUtil.writeFile("res/draft/tmpDraftData.txt", outDraftData);
+	        		
+	        		HttpUtil poster = new HttpUtil();
+	        		poster.upload("http://cardforge.org/draftAI/submitDraftData.php?fmt=" + boosterDraft.draftFormat[0], "res/draft/tmpDraftData.txt");
+	        	}
+        	}
+        	
+        	//quit
             saveDraft();
             dispose();
         }

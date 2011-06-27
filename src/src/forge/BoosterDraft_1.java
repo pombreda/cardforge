@@ -58,6 +58,7 @@ class BoosterDraft_1 implements BoosterDraft {
      */
     public BoosterDraft_1(String draftType) {
         draftAI.bd = this;
+        draftFormat[0] = draftType;
 
         if (draftType.equals("Full")) {    // Draft from all cards in Forge
             BoosterGenerator bpFull = new BoosterGenerator();
@@ -296,7 +297,29 @@ class BoosterDraft_1 implements BoosterDraft {
 
         if (!list.contains(c))
             throw new RuntimeException("BoosterDraft : setChoice() error - card not found - " + c + " - booster pack = " + list);
-
+        
+        if (Constant.Runtime.UpldDrft[0]) {
+	        for (int i=0; i<list.size(); i++) {
+	        	Card cc = list.get(i);
+	        	String CnBk = cc.getName() + "|" + cc.getCurSetCode();
+	        	
+	        	float pickValue = 0;
+	        	if (cc.equals(c))
+	        		pickValue = 10;
+	        	else
+	        		pickValue = 1;
+	        	
+	        	if (!draftPicks.containsKey(CnBk))  {
+	        		draftPicks.put(CnBk, pickValue);
+	        	}
+	        	else {
+	        		float curValue = draftPicks.get(CnBk);
+	        		float newValue = (curValue + pickValue) / 2;
+	        		draftPicks.put(CnBk, newValue);
+	        	}
+	        }
+        }
+        
         list.remove(c);
     }//setChoice()
 }

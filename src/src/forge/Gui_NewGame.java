@@ -78,6 +78,8 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     private static JCheckBox smoothLandCheckBox = new JCheckBox("", false);
     /** Constant <code>devModeCheckBox</code> */
     private static JCheckBox devModeCheckBox = new JCheckBox("", true);
+    
+    private static JCheckBox upldDrftCheckBox = new JCheckBox("", true);
 
     // GenerateConstructedDeck.get2Colors() and GenerateSealedDeck.get2Colors()
     // use these two variables
@@ -143,6 +145,16 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             CardStackOffsetAction.set(preferences.stackOffset);
             CardStackAction.setVal(preferences.maxStackSize);
             CardSizesAction.set(preferences.cardSize);
+            Constant.Runtime.UpldDrft[0] = preferences.uploadDraftAI;
+            upldDrftCheckBox.setSelected(preferences.uploadDraftAI);
+            
+            HttpUtil pinger = new HttpUtil();
+            if (pinger.getURL("http://cardforge.org/draftAI/ping.php").equals("pong"))
+            	Constant.Runtime.NetConn[0] = true;
+            else {
+            	Constant.Runtime.UpldDrft[0] = false;
+            }
+            
         } catch (Exception e) {
             Log.error("Error loading preferences");
         }
@@ -507,7 +519,16 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         devModeCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Constant.Runtime.DevMode[0] = devModeCheckBox.isSelected();
+                preferences.developerMode = Constant.Runtime.DevMode[0];
             }
+        });
+        
+        upldDrftCheckBox.setText("Upload Draft Picks");
+        upldDrftCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Constant.Runtime.UpldDrft[0] = upldDrftCheckBox.isSelected();
+        		preferences.uploadDraftAI = Constant.Runtime.UpldDrft[0];
+        	}
         });
 
         /*
@@ -557,6 +578,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         jPanel3.add(newGuiCheckBox, "wrap");
         jPanel3.add(smoothLandCheckBox, "wrap");
         jPanel3.add(devModeCheckBox, "wrap");
+        jPanel3.add(upldDrftCheckBox, "wrap");
         updatePanelDisplay(jPanel3);
 
         this.getContentPane().add(startButton, "sg buttons, align 50% 50%, split 2, flowy");
@@ -1432,6 +1454,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             preferences.developerMode = Constant.Runtime.DevMode[0];
             preferences.cardOverlay = cardOverlay.isSelected();
             preferences.scaleLargerThanOriginal = ImageCache.scaleLargerThanOriginal;
+            preferences.uploadDraftAI = Constant.Runtime.UpldDrft[0];
             preferences.save();
         } catch (Exception ex) {
             int result = JOptionPane.showConfirmDialog(this,
