@@ -822,6 +822,15 @@ public class AbilityFactory {
             else if (isDb)
                 SA = AbilityFactory_Mana.createDrawbackDrainMana(this);
         }
+        
+        if (API.equals("Protection")) {
+            if (isAb)
+                SA = AbilityFactory_Protection.createAbilityProtection(this);
+            else if (isSp)
+                SA = AbilityFactory_Protection.createSpellProtection(this);
+            else if (isDb)
+                SA = AbilityFactory_Protection.createDrawbackProtection(this);
+        }
 
         if (SA == null)
             throw new RuntimeException("AbilityFactory : SpellAbility was not created for " + hostCard.getName() + ". Looking for API: " + API);
