@@ -188,6 +188,7 @@ public class ReadCard implements Runnable, NewConstants {
         }
     }//readLine(Card)
 
+
     /**
      * <p>loadCard.</p>
      *
@@ -201,7 +202,10 @@ public class ReadCard implements Runnable, NewConstants {
                 //no need to do anything, this indicates a comment line
             } else if (s.startsWith("Name:")) {
                 String t = s.substring(5);
-                //System.out.println(s);
+
+                if (Constant.Runtime.DevMode[0])
+                	System.out.println("ReadCard: " + s);
+
                 if (cardNames.contains(t)) {
                     System.out.println("ReadCard:run() error - duplicate card name: " + t);
                     throw new RuntimeException("ReadCard:run() error - duplicate card name: " + t);
