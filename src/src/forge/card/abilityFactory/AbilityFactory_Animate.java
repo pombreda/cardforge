@@ -226,10 +226,16 @@ public class AbilityFactory_Animate {
         //TODO - add some kind of check to answer "Am I going to attack with this?"
         //TODO - add some kind of check for during human turn to answer "Can I use this to block something?"
 
-        //don't use instant speed animate abilities outside computers Combat_Begin phase
-        if ((!AllZone.getPhase().is(Constant.Phase.Combat_Begin) || AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
+        //don't use instant speed animate abilities outside computers Combat_Begin step
+        if (!AllZone.getPhase().is(Constant.Phase.Combat_Begin) && AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer())
                 && !AbilityFactory.isSorcerySpeed(sa) && !params.containsKey("ActivatingPhases")
                 && !params.containsKey("Permanent"))
+            return false;
+        
+        //don't use instant speed animate abilities outside humans Combat_Declare_Attackers_InstantAbility step
+        if ((!AllZone.getPhase().is(Constant.Phase.Combat_Declare_Attackers_InstantAbility)
+        		|| AllZone.getCombat().getAttackers().length == 0)
+        		&& AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
             return false;
 
         //don't activate during main2 unless this effect is permanent
