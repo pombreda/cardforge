@@ -21,7 +21,8 @@ public class HttpUtil {
 			url = new URL(sURL);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
     	
         HttpURLConnection theUrlConnection = null;
@@ -29,7 +30,8 @@ public class HttpUtil {
 			theUrlConnection = (HttpURLConnection) url.openConnection();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
         theUrlConnection.setDoOutput(true);
         theUrlConnection.setDoInput(true);
@@ -44,7 +46,9 @@ public class HttpUtil {
 			httpOut = new DataOutputStream(theUrlConnection.getOutputStream());
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
+			return;
+			
 		}
 
             File f = new File(file);
@@ -57,7 +61,8 @@ public class HttpUtil {
 				httpOut.write(str.getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return;
 			}
 
             FileInputStream uploadFileReader = null;
@@ -65,7 +70,8 @@ public class HttpUtil {
 				uploadFileReader = new FileInputStream(f);
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return;
 			}
             int numBytesToRead = 1024;
             int availableBytesToRead;
@@ -81,13 +87,15 @@ public class HttpUtil {
 				}
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return;
 			}
             try {
 				httpOut.write(("--" + Boundary + "--\r\n").getBytes());
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
+				return;
 			}
 
 
@@ -97,13 +105,15 @@ public class HttpUtil {
 			httpOut.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
         try {
 			httpOut.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
 
         // read & parse the response
@@ -112,7 +122,8 @@ public class HttpUtil {
 			is = theUrlConnection.getInputStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
         StringBuilder response = new StringBuilder();
         byte[] respBuffer = new byte[8192];
@@ -123,13 +134,15 @@ public class HttpUtil {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
         try {
 			is.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return;
 		}
         System.out.println(response.toString());
     } 
@@ -140,14 +153,16 @@ public class HttpUtil {
 			url = new URL(sURL);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return "error 1";
 		}
     	InputStream is = null;
 		try {
 			is = url.openStream();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return "error 2";
 		}
     	int ptr = 0;
     	StringBuffer buffer = new StringBuffer();
@@ -157,7 +172,8 @@ public class HttpUtil {
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
+			return "error 3";
 		}
     	
     	return buffer.toString();
