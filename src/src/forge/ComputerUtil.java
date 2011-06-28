@@ -779,13 +779,50 @@ public class ComputerUtil {
         });//CardListFilter
 
         CardList sortedManaSources = new CardList();
+        
+        // 1. Use lands that can only produce colorless mana without drawback/cost first
+        for (int i = 0; i < manaSources.size(); i++) {
+            Card card = manaSources.get(i);
 
-        //Search for mana sources that have a certain number of mana abilities (start with 1 and go up to 5) and no drawback/costs
+            if (card.isCreature()) continue; //don't use creatures before other permanents
+
+            int usableManaAbilities = 0;
+            boolean needsLimitedResources = false;
+            ArrayList<Ability_Mana> manaAbilities = card.getAIPlayableMana();
+
+            for (Ability_Mana m : manaAbilities) {
+
+                Cost cost = m.getPayCosts();
+
+                //if the AI can't pay the additional costs skip the mana ability
+                if (cost != null) {
+                    if (!canPayAdditionalCosts(m, player))
+                        continue;
+                    if (cost.getSubCounter() || cost.getLifeCost())
+                        needsLimitedResources = true;
+                } else if (card.isTapped())
+                    continue;
+
+                //don't use abilities with dangerous drawbacks
+                if (m.getSubAbility() != null) {
+                    if (!m.getSubAbility().chkAI_Drawback())
+                        continue;
+                    needsLimitedResources = true; //TODO: check for good drawbacks (gainLife)
+                }
+                usableManaAbilities++;
+            }
+            
+            //use lands that can only produce colorless mana first
+            if (usableManaAbilities == 1 && !needsLimitedResources && manaAbilities.get(0).mana().equals("1"))
+            	sortedManaSources.add(card); 	
+        }
+
+        // 2. Search for mana sources that have a certain number of mana abilities (start with 1 and go up to 5) and no drawback/costs
         for (int number = 1; number < 6; number++)
             for (int i = 0; i < manaSources.size(); i++) {
                 Card card = manaSources.get(i);
 
-                if (card.isCreature()) break; //don't use creatures before other permanents
+                if (card.isCreature()) continue; //don't use creatures before other permanents
 
                 int usableManaAbilities = 0;
                 boolean needsLimitedResources = false;
@@ -813,7 +850,7 @@ public class ComputerUtil {
                     usableManaAbilities++;
                 }
 
-                if (usableManaAbilities == number && !needsLimitedResources)
+                if (usableManaAbilities == number && !needsLimitedResources && !sortedManaSources.contains(card))
                     sortedManaSources.add(card);
             }
 
