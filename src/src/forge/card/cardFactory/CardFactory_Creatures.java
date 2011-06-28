@@ -370,7 +370,7 @@ public class CardFactory_Creatures {
             sbStack.append(" controls gain protection from the color of his/her choice until end of turn");
             ability.setStackDescription(sbStack.toString());
         }//*************** END ************ END **************************
-
+/*
 
         //*************** START *********** START **************************
         else if (cardName.equals("Anger")) {
@@ -395,7 +395,7 @@ public class CardFactory_Creatures {
             };
             card.addDestroyCommand(destroy);
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Valor")) {
