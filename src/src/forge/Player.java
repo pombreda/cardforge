@@ -1530,6 +1530,16 @@ public abstract class Player extends MyObservable {
         CardList hand = AllZoneUtil.getPlayerHand(this);
         return hand.size() == 0;
     }
+    
+    /**
+     * <p>hasLandfall.</p>
+     *
+     * @return a boolean.
+     */
+    public boolean hasLandfall() {
+        CardList list = ((DefaultPlayerZone) AllZone.getZone("Battlefield", this)).getCardsAddedThisTurn("Any").getType("Land");
+        return !list.isEmpty();
+    }
 
     private ArrayList<HandSizeOp> handSizeOperations;
 
