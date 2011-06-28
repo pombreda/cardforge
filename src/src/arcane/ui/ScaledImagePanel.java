@@ -35,6 +35,7 @@ public class ScaledImagePanel extends JPanel {
      *
      * @param srcImage a {@link java.awt.Image} object.
      * @param srcImageBlurred a {@link java.awt.Image} object.
+     *
      */
     public void setImage(Image srcImage, Image srcImageBlurred) {
         this.srcImage = srcImage;

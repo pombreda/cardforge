@@ -102,6 +102,7 @@ public class CardFactory_Creatures {
      *
      * @param card a {@link forge.Card} object.
      * @param cardName a {@link java.lang.String} object.
+     * @param cardName a {@link java.lang.String} object.
      * @param owner a {@link forge.Player} object.
      * @param cf a {@link forge.card.cardFactory.CardFactory} object.
      * @return a {@link forge.Card} object.

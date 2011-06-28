@@ -102,6 +102,7 @@ public class ReadCard implements Runnable, NewConstants {
 
     /**
      * <p>run.</p>
+     * @since 1.0.15
      */
     public void run() {
         Card c = null;
@@ -175,6 +176,7 @@ public class ReadCard implements Runnable, NewConstants {
      * <p>readLine.</p>
      *
      * @return a {@link java.lang.String} object.
+     * @param in a {@link java.io.BufferedReader} object.
      */
     private String readLine() {
         //makes the checked exception, into an unchecked runtime exception

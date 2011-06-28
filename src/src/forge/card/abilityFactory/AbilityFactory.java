@@ -1536,6 +1536,7 @@ public class AbilityFactory {
      * <p>passUnlessCost.</p>
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param usedStack a boolean.
      */
     public static void passUnlessCost(final SpellAbility sa, final boolean usedStack) {
         Card source = sa.getSourceCard();
@@ -1609,6 +1610,7 @@ public class AbilityFactory {
      * <p>resolve.</p>
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @param usedStack a boolean.
      */
     public static void resolve(SpellAbility sa, boolean usedStack) {
         if (sa == null) return;

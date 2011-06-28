@@ -2619,6 +2619,7 @@ public class CardFactoryUtil {
      * @param players a {@link java.util.ArrayList} object.
      * @param s a {@link java.lang.String} object.
      * @param source a {@link forge.Card} object.
+     * @param source a {@link forge.Card} object.
      * @return a int.
      */
     public static int playerXCount(ArrayList<Player> players, String s, Card source) {
@@ -3872,6 +3873,8 @@ public class CardFactoryUtil {
      * @param c a {@link forge.Card} object.
      * @param cost a {@link java.lang.String} object.
      * @param timeStamp a long.
+     * @param removeTypes an array of {@link java.lang.String} objects.
+     * @param removeKeywords an array of {@link java.lang.String} objects.
      */
     public static void revertManland(Card c, String[] removeTypes, String[] removeKeywords, String cost, long timeStamp) {
         c.setBaseAttack(0);
@@ -3893,6 +3896,10 @@ public class CardFactoryUtil {
      * @param c a {@link forge.Card} object.
      * @param cost a {@link java.lang.String} object.
      * @return a long.
+     * @param attack a int.
+     * @param defense a int.
+     * @param addTypes an array of {@link java.lang.String} objects.
+     * @param addKeywords an array of {@link java.lang.String} objects.
      */
     public static long activateManland(Card c, int attack, int defense, String[] addTypes, String[] addKeywords, String cost) {
         c.setBaseAttack(attack);

@@ -47,17 +47,15 @@ public class Mana_PartPhyrexian extends Mana_Part {
      * {@inheritDoc}
      *
      * <p>isColor.</p>
+     *
+     * @param mana a {@link java.lang.String} object.
+     * @return a boolean.
      */
     public boolean isColor(String mana) {
         return wrappedColor.isColor(mana);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param mana a {@link forge.card.mana.Mana} object.
-     * @return a boolean.
-     */
+    /** {@inheritDoc} */
     public boolean isColor(Mana mana) {
         return wrappedColor.isColor(mana);
     }
@@ -77,11 +75,7 @@ public class Mana_PartPhyrexian extends Mana_Part {
         return wrappedColor.isNeeded(mana);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param mana a {@link java.lang.String} object.
-     */
+    /** {@inheritDoc} */
     public void reduce(String mana) {
         wrappedColor.reduce(mana);
     }
@@ -90,6 +84,8 @@ public class Mana_PartPhyrexian extends Mana_Part {
      * {@inheritDoc}
      *
      * <p>reduce.</p>
+     *
+     * @param mana a {@link forge.card.mana.Mana} object.
      */
     public void reduce(Mana mana) {
         wrappedColor.reduce(mana);

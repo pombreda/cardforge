@@ -200,8 +200,8 @@ public class GuiDisplayUtil implements NewConstants {
     /**
      * <p>cleanStringMWS.</p>
      *
-     * @param orig a {@link java.lang.String} object.
      * @return a {@link java.lang.String} object.
+     * @param in a {@link java.lang.String} object.
      */
     public static String cleanStringMWS(String in)
     {

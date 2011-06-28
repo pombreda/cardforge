@@ -188,6 +188,12 @@ public class QuestData {
         return new ArrayList<String>(cardPool);
     }
 
+    /**
+     * <p>setCardpool.</p>
+     *
+     * @param pool a {@link java.util.ArrayList} object.
+     * @since 1.0.15
+     */
     public void setCardpool(ArrayList<String> pool) {
         cardPool = pool;
     }

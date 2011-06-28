@@ -29,6 +29,7 @@ public class AbilityFactory_DelayedTrigger {
      *
      * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
      */
     public static SpellAbility getAbility(final AbilityFactory af) {
         final SpellAbility ability = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
@@ -62,6 +63,7 @@ public class AbilityFactory_DelayedTrigger {
      *
      * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
+     * @since 1.0.15
      */
     public static SpellAbility getSpell(final AbilityFactory af) {
         final SpellAbility spell = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {

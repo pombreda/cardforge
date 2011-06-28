@@ -14,6 +14,9 @@ package treeProperties;
  *
  * @author Clemens Koza
  * @version V0.0 19.08.2009
+ *
+ *  @param <T>
+ *
  */
 public interface PropertyType<T> {
     /**

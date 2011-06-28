@@ -188,9 +188,7 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         return detail.getCard();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setCard(Card card) {
         detail.setCard(card);
         picture.setCard(card);

@@ -585,7 +585,6 @@ public class CardList implements Iterable<Card> {
      *
      * @param Restrictions a {@link java.lang.String} object.
      * @param sourceController a {@link forge.Player} object.
-     * @param sourceController a {@link forge.Player} object.
      * @param source a {@link forge.Card} object.
      * @return a {@link forge.CardList} object.
      */
@@ -597,7 +596,6 @@ public class CardList implements Iterable<Card> {
      * <p>getValidCards.</p>
      *
      * @param Restrictions a {@link java.lang.String} object.
-     * @param sourceController a {@link forge.Player} object.
      * @param sourceController a {@link forge.Player} object.
      * @param source a {@link forge.Card} object.
      * @return a {@link forge.CardList} object.

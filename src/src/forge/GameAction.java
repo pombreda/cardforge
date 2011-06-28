@@ -955,6 +955,7 @@ public class GameAction {
      * @param humanLife    a int.
      * @param computerLife a int.
      * @param qa           a {@link forge.Quest_Assignment} object.
+     * @param computer a {@link forge.CardList} object.
      */
     public void newGame(Deck humanDeck, Deck computerDeck, CardList human, CardList computer, int humanLife, int computerLife, Quest_Assignment qa) {
         this.newGame(humanDeck, computerDeck);

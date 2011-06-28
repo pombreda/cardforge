@@ -83,11 +83,6 @@ class CardFactory_Auras {
      *
      * @param card a {@link forge.Card} object.
      * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
      * @param owner a {@link forge.Player} object.
      * @return a {@link forge.Card} object.
      */

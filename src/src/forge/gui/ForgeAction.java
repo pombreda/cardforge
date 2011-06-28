@@ -49,6 +49,7 @@ public abstract class ForgeAction extends AbstractAction {
      *
      * @param button a T object.
      * @return a T object.
+     * @param <T> a T object.
      */
     public <T extends AbstractButton> T setupButton(T button) {
         button.setAction(this);
