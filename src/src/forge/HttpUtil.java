@@ -10,10 +10,23 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * <p>HttpUtil class.</p>
+ *
+ * @author Forge
+ * @version $Id: $
+ * @since 1.0.15
+ */
 public class HttpUtil { 
 
 	private static final String Boundary = "--7d021a37605f0";
 
+    /**
+     * <p>upload.</p>
+     *
+     * @param sURL a {@link java.lang.String} object.
+     * @param file a {@link java.lang.String} object.
+     */
     public void upload(String sURL, String file)// throws Exception
     {
     	URL url = null;
@@ -147,6 +160,12 @@ public class HttpUtil {
         System.out.println(response.toString());
     } 
     
+    /**
+     * <p>getURL.</p>
+     *
+     * @param sURL a {@link java.lang.String} object.
+     * @return a {@link java.lang.String} object.
+     */
     public String getURL(String sURL) {
     	URL url = null;
 		try {

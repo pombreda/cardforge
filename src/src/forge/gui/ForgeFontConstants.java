@@ -73,6 +73,10 @@ public class ForgeFontConstants {
     /** Constant <code>MONOSPACED</code> */
     /** Constant <code>SANS_SERIF</code> */
     /** Constant <code>SERIF</code> */
+    /** Constant <code>DIALOG_INPUT</code> */
+    /** Constant <code>MONOSPACED</code> */
+    /** Constant <code>SANS_SERIF</code> */
+    /** Constant <code>SERIF</code> */
     public static final String DIALOG, DIALOG_INPUT, MONOSPACED, SANS_SERIF, SERIF;
 
     static {

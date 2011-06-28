@@ -277,9 +277,7 @@ class BoosterDraft_1 implements BoosterDraft {
         return currentCount < stopCount;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     public void setChoice(Card c) {
         CardList list = pack[getMod()];
         currentCount++;

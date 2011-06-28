@@ -115,7 +115,6 @@ public class Card_Color {
      * <p>equals.</p>
      *
      * @param cost        a {@link java.lang.String} object.
-     * @param cost        a {@link java.lang.String} object.
      * @param c           a {@link forge.Card} object.
      * @param addToColors a boolean.
      * @param time        a long.

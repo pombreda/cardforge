@@ -37,6 +37,7 @@ public class PlayerUtil {
      * @param uType a {@link java.lang.String} object.
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_discardNumUnless(final int nCards, final String uType, SpellAbility sa) {
         final SpellAbility sp = sa;
@@ -84,6 +85,7 @@ public class PlayerUtil {
      * @param nCards a int.
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_discard(final int nCards, SpellAbility sa) {
         final SpellAbility sp = sa;
@@ -123,6 +125,7 @@ public class PlayerUtil {
      * @param choices a {@link forge.CardList} object.
      * @param message a {@link java.lang.String} object.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_sacrificePermanent(final CardList choices, final String message) {
         return input_sacrificePermanentsFromList(1, choices, message);
@@ -133,6 +136,7 @@ public class PlayerUtil {
      *
      * @param nCards a int.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_sacrificePermanents(final int nCards) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
@@ -146,6 +150,7 @@ public class PlayerUtil {
      * @param nCards a int.
      * @param type a {@link java.lang.String} object.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_sacrificePermanents(final int nCards, final String type) {
         CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
@@ -162,6 +167,7 @@ public class PlayerUtil {
      * @param list a {@link forge.CardList} object.
      * @param message a {@link java.lang.String} object.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_sacrificePermanentsFromList(final int nCards, final CardList list, final String message) {
         Input target = new Input() {
@@ -205,6 +211,7 @@ public class PlayerUtil {
      * @param TopOrBottom a {@link java.lang.String} object.
      * @param num a int.
      * @return a {@link forge.gui.input.Input} object.
+     * @since 1.0.15
      */
     public static Input input_putFromHandToLibrary(final String TopOrBottom, final int num) {
         Input target = new Input() {

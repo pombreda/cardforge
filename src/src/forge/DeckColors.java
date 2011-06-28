@@ -9,13 +9,6 @@ package forge;
  */
 class DeckColors {
     public String Color1 = "none";
-    /**
-     * <p>Constructor for deckColors.</p>
-     *
-     * @param c1 a {@link java.lang.String} object.
-     * @param c2 a {@link java.lang.String} object.
-     * @param sp a {@link java.lang.String} object.
-     */
     public String Color2 = "none";
     //public String Splash = "none";
     public String Mana1 = "";
@@ -33,12 +26,6 @@ class DeckColors {
         Color1 = c1;
         Color2 = c2;
         //Splash = sp;
-    /**
-     * <p>ColorToMana.</p>
-     *
-     * @param color a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
-     */
     }
 
     /**

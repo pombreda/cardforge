@@ -1152,6 +1152,12 @@ public abstract class SpellAbility {
     }
     
     //is this a wrapping ability (used by trigger abilities)
+    /**
+     * <p>isWrapper.</p>
+     *
+     * @return a boolean.
+     * @since 1.0.15
+     */
     public boolean isWrapper() {
     	return false;
     }

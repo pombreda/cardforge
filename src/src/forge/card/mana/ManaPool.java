@@ -595,6 +595,7 @@ public class ManaPool extends Card {
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @param m a {@link forge.card.mana.ManaCost} object.
      * @param mAbilities a {@link forge.card.spellability.Ability_Mana} object.
+     * @param mAbilities a {@link forge.card.spellability.Ability_Mana} object.
      * @return a {@link forge.card.mana.ManaCost} object.
      */
     public ManaCost subtractMana(SpellAbility sa, ManaCost m, Ability_Mana... mAbilities) {

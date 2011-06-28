@@ -19,8 +19,6 @@ class CCnt {
     /**
      * <p>deckColors class.</p>
      *
-     * @author Forge
-     * @version $Id: $
      * @param clr a {@link java.lang.String} object.
      * @param cnt a int.
      */
