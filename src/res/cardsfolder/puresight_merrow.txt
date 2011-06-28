@@ -1,4 +1,4 @@
-Name:Puresight Merror
+Name:Puresight Merrow
 ManaCost:WU WU
 Types:Creature Merfolk Wizard
 Text:no text
@@ -8,4 +8,3 @@ SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/puresight_merrow.jpg
 End
-
