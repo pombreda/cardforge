@@ -1390,7 +1390,6 @@ public class AbilityFactory_Counters {
         boolean chance = r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed());
 
         if (curse) {
-
             if (type.equals("M1M1")) {
                 CardList killable = hList.filter(new CardListFilter() {
                     public boolean addCard(Card c) {
@@ -1404,7 +1403,7 @@ public class AbilityFactory_Counters {
             }
         } else {
             //human has more things that will benefit, don't play
-            if (hList.size() > cList.size()) return false;
+            if (hList.size() >= cList.size()) return false;
         }
 
         Ability_Sub subAb = sa.getSubAbility();
