@@ -2844,6 +2844,13 @@ public class CardFactoryUtil {
             else
                 return doXMath(Integer.parseInt(sq[2]), m, c); // not Threshold
         }
+        
+        if (sq[0].contains("Landfall")) {
+            if (cardController.hasLandfall())
+                return doXMath(Integer.parseInt(sq[1]), m, c); // Have Landfall
+            else
+                return doXMath(Integer.parseInt(sq[2]), m, c); // not Landfall
+        }
 
         // Count$CardPower
         if (sq[0].contains("CardPower")) return doXMath(c.getNetAttack(), m, c);
