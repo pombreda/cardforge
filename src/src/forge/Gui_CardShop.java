@@ -703,10 +703,10 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
 
     }
 
-    //refresh Gui from deck, Gui shows the cards in the deck
-    /**
+/*    //refresh Gui from deck, Gui shows the cards in the deck
+    *//**
      * <p>refreshGui.</p>
-     */
+     *//*
     @SuppressWarnings("unused")
     // refreshGui
     private void refreshGui() {
@@ -736,12 +736,12 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
                 topModel.addCard(c);
             }
         } else {
-    		/*
-    		 * TODO Braids: "getAllCards copies the entire array, but that does not
+    		
+    		 *  Braids: "getAllCards copies the entire array, but that does not
     		 * seem to be needed here. Significant performance improvement is
     		 * possible if this code used getCards instead (along with a for each
     		 * loop instead of using get(i), if applicable)."
-    		 */
+    		 
             CardList all = AllZone.getCardFactory().getAllCards();
             for (int i = 0; i < all.size(); i++)
                 topModel.addCard(all.get(i));
@@ -750,7 +750,7 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         topModel.resort();
         bottomModel.resort();
     }////refreshGui()
-
+*/
     public class CustomListener extends MouseAdapter {
 
     }
