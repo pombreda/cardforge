@@ -4,11 +4,9 @@ Types:Creature Human Knight
 Text:no text
 PT:2/2
 K:First Strike
-A:AB$ Pump | Cost$ W W | KW$ Protection from black | SpellDescription$ CARDNAME gains protection from black until end of turn.
-A:AB$ Pump | Cost$ W W | KW$ Protection from blue | SpellDescription$ CARDNAME gains protection from blue until end of turn.
-A:AB$ Pump | Cost$ W W | KW$ Protection from green | SpellDescription$ CARDNAME gains protection from green until end of turn.
-A:AB$ Pump | Cost$ W W | KW$ Protection from red | SpellDescription$ CARDNAME gains protection from red until end of turn.
-A:AB$ Pump | Cost$ W W | KW$ Protection from white | SpellDescription$ CARDNAME gains protection from white until end of turn.
+A:AB$ Protection | Cost$ W W | Defined$ Self | Colors$ Any | SpellDescription$ CARDNAME gains protection from the color of your choice until end of turn.
+#Computer isn't very good at picking a color to get protection from yet
+SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/knight_of_dawn.jpg
 SetInfo:TMP|Uncommon|http://magiccards.info/scans/en/tp/238.jpg
