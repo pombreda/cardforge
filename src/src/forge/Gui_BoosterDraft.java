@@ -334,7 +334,7 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         while (deck.countMain() != 0)
             deck.addSideboard(deck.removeMain(0));
 
-        refreshGui();
+        //refreshGui();
     }//newItem_actionPerformed
 
     /**
@@ -485,10 +485,10 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
 
     //refresh Gui from deck, Gui shows the cards in the deck
 
-    /**
-     * <p>refreshGui.</p>
-     */
-    private void refreshGui() {
+//    /**
+//     * <p>refreshGui.</p>
+//     */
+/*    private void refreshGui() {
         Deck deck = Constant.Runtime.HumanDeck[0];
         if (deck == null) //this is just a patch, i know
             deck = new Deck(Constant.Runtime.GameType[0]);
@@ -497,14 +497,14 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         deckModel.clear();
 
         Card c;
-        ReadDraftBoosterPack pack = new ReadDraftBoosterPack();
+        //ReadDraftBoosterPack pack = new ReadDraftBoosterPack();
         for (int i = 0; i < deck.countMain(); i++) {
             c = AllZone.getCardFactory().getCard(deck.getMain(i), AllZone.getHumanPlayer());
 
             //add rarity to card if this is a sealed card pool
-            if (!Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed))
-                c.setRarity(pack.getRarity(c.getName()));
-            ;
+            //if (!Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed))
+            //    c.setRarity(pack.getRarity(c.getName()));
+            //;
 
 
             deckModel.addCard(c);
@@ -514,25 +514,25 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
             //add sideboard to GUI
             for (int i = 0; i < deck.countSideboard(); i++) {
                 c = AllZone.getCardFactory().getCard(deck.getSideboard(i), AllZone.getHumanPlayer());
-                c.setRarity(pack.getRarity(c.getName()));
+                //c.setRarity(pack.getRarity(c.getName()));
                 allCardModel.addCard(c);
             }
         } else {
-            /*
-                * TODO Braids: "getAllCards copies the entire array, but that does not
+            
+                * Braids: "getAllCards copies the entire array, but that does not
                 * seem to be needed here. Significant performance improvement is
                 * possible if this code used getCards instead (along with a for each
                 * loop instead of using get(i), if applicable)."
-                */
-            CardList all = AllZone.getCardFactory().getAllCards();
-            for (int i = 0; i < all.size(); i++)
-                allCardModel.addCard(all.get(i));
+                
+//            CardList all = AllZone.getCardFactory().getAllCards();
+//            for (int i = 0; i < all.size(); i++)
+//                allCardModel.addCard(all.get(i));
         }
 
         allCardModel.resort();
         deckModel.resort();
     }//refreshGui()
-
+*/
     //updates Constant.Runtime.HumanDeck[0] from the cards shown in the GUI
 
     /**
