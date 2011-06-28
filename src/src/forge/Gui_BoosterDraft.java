@@ -581,20 +581,20 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
             showChoices(boosterDraft.nextChoice());
         } else {
             if (Constant.Runtime.UpldDrft[0]) {
-                if (boosterDraft.draftPicks.size() > 1) {
+                if (BoosterDraft.draftPicks.size() > 1) {
                     ArrayList<String> outDraftData = new ArrayList<String>();
 
                     String keys[] = {""};
-                    keys = boosterDraft.draftPicks.keySet().toArray(keys);
+                    keys = BoosterDraft.draftPicks.keySet().toArray(keys);
 
                     for (int i = 0; i < keys.length; i++) {
-                        outDraftData.add(keys[i] + "|" + boosterDraft.draftPicks.get(keys[i]));
+                        outDraftData.add(keys[i] + "|" + BoosterDraft.draftPicks.get(keys[i]));
                     }
 
                     FileUtil.writeFile("res/draft/tmpDraftData.txt", outDraftData);
 
                     HttpUtil poster = new HttpUtil();
-                    poster.upload("http://cardforge.org/draftAI/submitDraftData.php?fmt=" + boosterDraft.draftFormat[0], "res/draft/tmpDraftData.txt");
+                    poster.upload("http://cardforge.org/draftAI/submitDraftData.php?fmt=" + BoosterDraft.draftFormat[0], "res/draft/tmpDraftData.txt");
                 }
             }
 
