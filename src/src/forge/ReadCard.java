@@ -15,6 +15,9 @@ import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import net.slightlymagic.braids.util.progress_monitor.ProgressMonitor;
+import net.slightlymagic.braids.util.progress_monitor.StderrProgressMonitor;
+
 import forge.card.trigger.TriggerHandler;
 import forge.error.ErrorViewer;
 import forge.properties.NewConstants;
@@ -44,7 +47,10 @@ public class ReadCard implements Runnable, NewConstants {
 	private String[] fileList;
 	private int fileListIx;
 
-    //private String fileList[];
+	private ProgressMonitor monitor;
+	
+
+	//private String fileList[];
     //private ArrayList<Card> allCards = new ArrayList<Card>();
     
     /*
@@ -118,6 +124,7 @@ public class ReadCard implements Runnable, NewConstants {
     	if (zipFile.exists()) {
 			try {
 				this.zip = new ZipFile(zipFile);
+
 			} catch (Exception exn) {
 				System.err.println("Error reading zip file \"" + 
 						 zipFile.getAbsolutePath() + "\": " + exn + ". " +
@@ -136,7 +143,10 @@ public class ReadCard implements Runnable, NewConstants {
             fileList = cardsFolder.list();
             fileListIx = 0;
     	}
+    	
     	setEncoding(DEFAULT_CHARSET_NAME);
+    	
+    	monitor = new StderrProgressMonitor(1, 0L);
     }//ReadCard()
 
     /**
@@ -168,6 +178,17 @@ public class ReadCard implements Runnable, NewConstants {
      */
     protected Card loadCardsUntilYouFind(String cardName) {
 
+    	if (cardName == null) {
+    		int numCardsAlreadyRead = namesToCards.size();
+
+    		if (zip != null) {
+    			monitor.setTotalUnitsThisPhase(zip.size() - numCardsAlreadyRead);
+    		}
+    		else {
+    			monitor.setTotalUnitsThisPhase(fileList.length - numCardsAlreadyRead);
+    		}
+    	}
+    	
         Card c = null;
 
         if (zip != null) {
@@ -177,6 +198,9 @@ public class ReadCard implements Runnable, NewConstants {
             while (zipEnum.hasMoreElements()) {
                 entry = (ZipEntry) zipEnum.nextElement();
                 
+            	if (cardName == null) {
+            		monitor.incrementUnitsCompletedThisPhase(1);
+            	}
                 if (!entry.getName().endsWith(".txt")) {
                     continue;
                 }
@@ -190,12 +214,25 @@ public class ReadCard implements Runnable, NewConstants {
         } else {
         	// fileListIx was initialized in the constructor.
             for (; fileListIx < fileList.length; fileListIx++) {
-                if (!fileList[fileListIx].endsWith(".txt")) {
+            	if (cardName == null) {
+            		monitor.incrementUnitsCompletedThisPhase(1);
+            	}
+
+            	if (!fileList[fileListIx].endsWith(".txt")) {
                     continue;
                 }
 
-                c = loadCard(fileList[fileListIx]);
-
+            	c = null;
+            	try {
+                    c = loadCard(fileList[fileListIx]);
+            	}
+            	catch (FileNotFoundException ex) {
+            		File fl = new File(fileList[fileListIx]);
+                    ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
+                    throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
+                            + fl.getPath(), ex);
+            	}
+            	
                 if (cardName != null && cardName.equals(c.getName())) {
                 	return c;
                 }
@@ -207,34 +244,32 @@ public class ReadCard implements Runnable, NewConstants {
     }//run()
 
 
-    protected Card loadCard(String fileBaseName) {
+    protected Card loadCard(String fileBaseName) throws FileNotFoundException {
     	File fl = new File(cardsFolder, fileBaseName);
         FileInputStream fileInputStream = null;
+        Card result = null;
         try {
             fileInputStream = new FileInputStream(fl);
-            return loadCard(fileInputStream);
+            result = loadCard(fileInputStream);
         } 
-        catch (FileNotFoundException ex) {
-            ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
-            throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
-                    + fl.getPath(), ex);
-        }
         finally {
             try {
                 fileInputStream.close();
-            } catch (IOException ignored) {
+            } catch (Throwable ignored) {
             	;
             }
         }
+
+        return result;
     }
     
     
     protected Card loadCard(ZipEntry entry) {
         InputStream zipInputStream = null;
+        Card result = null;
         try {
         	zipInputStream = zip.getInputStream(entry);
-            return loadCard(zipInputStream);
-            
+            result = loadCard(zipInputStream);
         } 
         catch (IOException exn) {
         	throw new RuntimeException(exn);
@@ -246,6 +281,8 @@ public class ReadCard implements Runnable, NewConstants {
 				;
 			}
         }
+
+        return result;
     }
     
     
@@ -377,8 +414,13 @@ public class ReadCard implements Runnable, NewConstants {
 			}
     	}
 
-    	namesToCards.put(c.getName(), c);
-    	return c;
+    	// Never put the card in twice.
+    	Card cardInMap = namesToCards.get(c.getName()); 
+    	if (cardInMap == null) {
+    		namesToCards.put(c.getName(), c);
+    		cardInMap = c;
+    	}
+    	return cardInMap;
     }
 
     /**
@@ -425,13 +467,22 @@ public class ReadCard implements Runnable, NewConstants {
         }
         
         if (result == null) {
-        	result = loadCard(cardFileBaseName);
+        	try {
+        		result = loadCard(cardFileBaseName);
+        	}
+        	catch (FileNotFoundException ignored) {
+        		;  // result is still null
+        	}
         }
 
-        if (result.getName().equals(canonicalASCIIName)) {
+        if (result != null && result.getName().equals(canonicalASCIIName)) {
 			return result;
 		}
 		else {
+			System.err.println("ReadCard.findCard: guessed wrong name for canonical name \"" + 
+					canonicalASCIIName + "\", estimated base name =\"" + 
+					cardFileBaseName + "\".");
+
 			return loadCardsUntilYouFind(canonicalASCIIName);
 		}
 	}

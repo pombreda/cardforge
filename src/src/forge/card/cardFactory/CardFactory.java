@@ -53,14 +53,14 @@ import java.util.*;
  */
 public class CardFactory implements NewConstants {
     // String cardname is the key, Card is the value
-    private Map<String, Card> map = new HashMap<String, Card>();
+    private Map<String, Card> map = new TreeMap<String, Card>();
 
     private CardList allCards = null;
 
     private HashSet<String> removedCardList;
     private Card blankCard = new Card();                 //new code
 
-	private File repositoryFile;
+	private File repositoryDir;
 
     public CardList CopiedList = new CardList();
 
@@ -69,10 +69,10 @@ public class CardFactory implements NewConstants {
     /**
      * <p>Constructor for CardFactory.</p>
      *
-     * @param file a {@link java.io.File} object.
+     * @param cardsfolder  represents a directory, usually res/cardsfolder.
      */
-    public CardFactory(File file) {
-    	this.repositoryFile = file;
+    public CardFactory(File cardsfolder) {
+    	this.repositoryDir = cardsfolder;
     	
 	    SpellAbility spell = new SpellAbility(SpellAbility.Spell, blankCard) {
 	        //neither computer nor human play can play this card
@@ -97,7 +97,9 @@ public class CardFactory implements NewConstants {
 
         removedCardList = new HashSet<String>(FileUtil.readFile(ForgeProps.getFile(REMOVED)));
 
-		cardReader = new ReadCard(repositoryFile, map);
+		cardReader = new ReadCard(repositoryDir, map);
+		
+		getCards();  //TODO: remove this line for faster startup but weird behavior
     }// constructor
 
     /**
@@ -125,9 +127,7 @@ public class CardFactory implements NewConstants {
             return allCards;
     	}
 
-    	Exception stackTracer = new Exception("not really an error; just note the stack trace");
-		System.err.println("Prepare for a significant delay. I was forced to load all cards into memory by the following chain of events (most recent first):");
-		stackTracer.printStackTrace();
+		System.err.println("I am loading all cards into memory. Prepare for a significant delay.");
 
     	try {
             cardReader.run();
@@ -421,11 +421,13 @@ public class CardFactory implements NewConstants {
     /**
      * Unlike getCard, this will never return blankCard.
      * 
+     * This has package access (instead of protected) for unit testing.
+     * 
      * @param cardName the card name; may contain non-ASCII characters
      * @param owner the player to whom we assign ownership of the card
      * @return a {@link forge.Card} object.
      */
-    final private Card getCard2(final String cardName, final Player owner) {
+    final Card getCard2(final String cardName, final Player owner) {
     	Card o = null;
     	try {
     		o = loadCard(cardName);
@@ -2705,10 +2707,12 @@ public class CardFactory implements NewConstants {
     /**
      * Load a single card from the cache (if present) or from disk (if not).
      * 
+     * This has package access (instead of protected) for unit testing.
+     * 
      * @param cardName must not be null
      * @return a card instance that must be copied before it is used
      */
-    protected Card loadCard(String cardName) 
+    Card loadCard(String cardName) 
     	throws CardNotFoundException
     {
     	if (cardName == null)  throw new NullPointerException();
