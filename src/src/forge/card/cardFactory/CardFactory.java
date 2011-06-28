@@ -2,36 +2,10 @@ package forge.card.cardFactory;
 
 
 import com.esotericsoftware.minlog.Log;
-
-import forge.AllZone;
-import forge.AllZoneUtil;
-import forge.ButtonUtil;
-import forge.Card;
-import forge.CardList;
-import forge.CardListFilter;
-import forge.CardUtil;
-import forge.Command;
-import forge.ComputerUtil;
-import forge.Constant;
-import forge.Counters;
-import forge.FileUtil;
-import forge.GameActionUtil;
-import forge.HandSizeOp;
-import forge.Player;
-import forge.PlayerZone;
-import forge.ReadCard;
+import forge.*;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.ManaCost;
-import forge.card.spellability.Ability;
-import forge.card.spellability.Ability_Activated;
-import forge.card.spellability.Ability_Mana;
-import forge.card.spellability.Ability_Static;
-import forge.card.spellability.Ability_Sub;
-import forge.card.spellability.Cost;
-import forge.card.spellability.Spell;
-import forge.card.spellability.SpellAbility;
-import forge.card.spellability.Spell_Permanent;
-import forge.card.spellability.Target;
+import forge.card.spellability.*;
 import forge.card.trigger.Trigger;
 import forge.error.ErrorViewer;
 import forge.gui.GuiUtils;
@@ -53,113 +27,124 @@ import java.util.*;
  */
 public class CardFactory implements NewConstants {
     // String cardname is the key, Card is the value
-    private Map<String, Card> map = new TreeMap<String, Card>();
+    private Map<String, Card> map = new HashMap<String, Card>();
 
-    private CardList allCards = null;
+    private CardList allCards = new CardList();
 
     private HashSet<String> removedCardList;
     private Card blankCard = new Card();                 //new code
 
-	private File repositoryDir;
+    /**
+     * <p>Constructor for CardFactory.</p>
+     *
+     * @param filename a {@link java.lang.String} object.
+     */
+    public CardFactory(String filename) {
+        this(new File(filename));
+    }
 
     public CardList CopiedList = new CardList();
-
-	private ReadCard cardReader;
 
     /**
      * <p>Constructor for CardFactory.</p>
      *
-     * @param cardsfolder  represents a directory, usually res/cardsfolder.
+     * @param file a {@link java.io.File} object.
      */
-    public CardFactory(File cardsfolder) {
-    	this.repositoryDir = cardsfolder;
-    	
-	    SpellAbility spell = new SpellAbility(SpellAbility.Spell, blankCard) {
-	        //neither computer nor human play can play this card
-	        @Override
-	        public boolean canPlay() {
-	            return false;
-	        }
-	
-	        @Override
-	        public void resolve() {
-	        }
-	    };
-	    blankCard.addSpellAbility(spell);
-	    spell.setManaCost("1");
-	    blankCard.setName("Removed Card");
-	
-	    //owner and controller will be wrong sometimes
-	    //but I don't think it will matter
-	    //theoretically blankCard will go to the wrong graveyard
-	    blankCard.setOwner(AllZone.getHumanPlayer());
-	    blankCard.setController(AllZone.getHumanPlayer());
+    public CardFactory(File file) {
+        SpellAbility spell = new SpellAbility(SpellAbility.Spell, blankCard) {
+            //neither computer nor human play can play this card
+            @Override
+            public boolean canPlay() {
+                return false;
+            }
+
+            @Override
+            public void resolve() {
+            }
+        };
+        blankCard.addSpellAbility(spell);
+        spell.setManaCost("1");
+        blankCard.setName("Removed Card");
+
+        //owner and controller will be wrong sometimes
+        //but I don't think it will matter
+        //theoretically blankCard will go to the wrong graveyard
+        blankCard.setOwner(AllZone.getHumanPlayer());
+        blankCard.setController(AllZone.getHumanPlayer());
 
         removedCardList = new HashSet<String>(FileUtil.readFile(ForgeProps.getFile(REMOVED)));
 
-		cardReader = new ReadCard(repositoryDir, map);
-		
-		getCards();  //TODO: remove this line for faster startup but weird behavior
+
+        try {
+            readCards(file);
+
+            // initialize CardList allCards
+            Iterator<String> it = map.keySet().iterator();
+            Card c;
+            while (it.hasNext()) {
+                c = getCard(it.next().toString(), AllZone.getHumanPlayer());
+                allCards.add(c);
+                //System.out.println("cardName: " + c.getName());
+
+            }
+        } catch (Exception ex) {
+            ErrorViewer.showError(ex);
+        }
     }// constructor
 
     /**
-     * This operation is very expensive, because it not only loads all cards
-     * into memory, but it also makes a shallow copy of the CardList that holds
-     * them.
-     * 
-     * @return a shallow copy of the internal CardList
+     * <p>Getter for the field <code>allCards</code>.</p>
+     *
+     * @return a {@link forge.CardList} object.
      */
     public CardList getAllCards() {
-        return new CardList(getCards());
+        return new CardList(allCards.toArray());
     }// getAllCards()
 
-	/**
-	 * Somewhat cheaper form of getAllCards, but take care not to modify the
-	 * contents of the CardList!
-	 * 
-	 * TODO Braids: "I suggest creating an ImmutableCardList interface and 
-	 * using that here as the return type."
-	 * 
-	 * @return the internal list of all cards
-	 */
+    /**
+     * <p>getCards.</p>
+     *
+     * @return a {@link forge.CardList} object.
+     */
     public CardList getCards() {
-    	if (allCards != null) {
-            return allCards;
-    	}
+        return allCards;
+    }// getAllCards()
 
-		System.err.println("I am loading all cards into memory. Prepare for a significant delay.");
 
-    	try {
-            cardReader.run();
+    /**
+     * <p>readCards.</p>
+     *
+     * @param file a {@link java.io.File} object.
+     */
+    private void readCards(File file) {
+        map.clear();
+
+        ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER));
+        try {
+            read.run();
+            // javax.swing.SwingUtilities.invokeAndWait(read);
         } catch (Exception ex) {
             ErrorViewer.showError(ex);
-            throw new RuntimeException("CardFactory : getCards() thread error - " + ex.getMessage());
+            throw new RuntimeException("CardFactory : readCards() thread error - " + ex.getMessage());
         }
 
-        // initialize CardList allCards
-    	allCards = new CardList();
-        Iterator<String> it = map.keySet().iterator();
-        Card c;
+        ArrayList<Card> simpleList = read.getCards();
+        Card s;
+        Iterator<Card> it = simpleList.iterator();
         while (it.hasNext()) {
-            c = map.get(it.next());
-            allCards.add(c);
-            //System.out.println("cardName: " + c.getName());
-
+            s = it.next();
+            map.put(s.getName(), s);
+            //System.out.println("cardName: " + s.getName());
         }
-        
-		return allCards;
-    }// getAllCards()
+    }// readCard()
 
-
-    /*
+    //TODO - this can probably be deleted.  I don't think it's used.
+    /**
      * <p>dynamicCopyCard.</p>
      *
-     * @deprecated
-     * 
      * @param in a {@link forge.Card} object.
      * @return a {@link forge.Card} object.
      */
-    /*
     final public Card dynamicCopyCard(Card in) {
         if (in.isCreature()) {
             Card card2 = new Card();
@@ -192,7 +177,6 @@ public class CardFactory implements NewConstants {
             return out;
         }
     }
-    */
 
     /**
      * <p>copyCard.</p>
@@ -364,22 +348,15 @@ public class CardFactory implements NewConstants {
             ComputerUtil.playStackFree(copySA);
     }
 
-	/**
-	 * Fetch a copy of the card with the given name. 
-	 * 
-	 * This lazily loads the card from disk if we haven't loaded it yet. 
-	 * 
-	 * Developer note: Why is this final? Are we afraid someone is going to try
-	 * to extend the CardFactory class and override this method?
-	 * 
-	 * @param cardName
-	 *            the name of the card to find; may contain non-ASCII characters
-	 * 
-	 * @param owner
-	 *            the player to whom we assign ownership of the card
-	 * 
-	 * @return a {@link forge.Card} object.
-	 */
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //this is the new getCard() method, you have to remove the old getCard()
+    /**
+     * <p>getCard.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
+     * @return a {@link forge.Card} object.
+     */
     final public Card getCard(String cardName, Player owner) {
         if (removedCardList.contains(cardName) || cardName.equals(blankCard.getName())) return blankCard;
 
@@ -391,7 +368,7 @@ public class CardFactory implements NewConstants {
      *
      * @param c a {@link forge.Card} object.
      * @param k a {@link java.lang.String} object.
-     * @return an int.
+     * @return a int.
      */
     public final static int hasKeyword(Card c, String k) {
         ArrayList<String> a = c.getKeyword();
@@ -407,8 +384,8 @@ public class CardFactory implements NewConstants {
      *
      * @param c a {@link forge.Card} object.
      * @param k a {@link java.lang.String} object.
-     * @param startPos an int.
-     * @return an int.
+     * @param startPos a int.
+     * @return a int.
      */
     final static int hasKeyword(Card c, String k, int startPos) {
         ArrayList<String> a = c.getKeyword();
@@ -419,21 +396,15 @@ public class CardFactory implements NewConstants {
     }
 
     /**
-     * Unlike getCard, this will never return blankCard.
-     * 
-     * This has package access (instead of protected) for unit testing.
-     * 
-     * @param cardName the card name; may contain non-ASCII characters
-     * @param owner the player to whom we assign ownership of the card
+     * <p>getCard2.</p>
+     *
+     * @param cardName a {@link java.lang.String} object.
+     * @param owner a {@link forge.Player} object.
      * @return a {@link forge.Card} object.
      */
-    final Card getCard2(final String cardName, final Player owner) {
-    	Card o = null;
-    	try {
-    		o = loadCard(cardName);
-    	} catch (CardNotFoundException exn) {
-    		throw new RuntimeException(exn);
-    	}
+    final private Card getCard2(final String cardName, final Player owner) {
+        //o should be Card object
+        Object o = map.get(cardName);
         if (o == null) throw new RuntimeException("CardFactory : getCard() invalid card name - " + cardName);
 
         final Card card = copyStats(o);
@@ -2703,42 +2674,6 @@ public class CardFactory implements NewConstants {
 
         return postFactoryKeywords(card);
     }//getCard2
-    
-    /**
-     * Load a single card from the cache (if present) or from disk (if not).
-     * 
-     * This has package access (instead of protected) for unit testing.
-     * 
-     * @param cardName must not be null
-     * @return a card instance that must be copied before it is used
-     */
-    Card loadCard(String cardName) 
-    	throws CardNotFoundException
-    {
-    	if (cardName == null)  throw new NullPointerException();
-    	
-    	Card result = map.get(cardName);
-    	
-    	if (result != null) {
-    		return result;
-    	}
-    	else if (allCards != null) {
-    		// We've already loaded all the cards, so this one does not seem to
-    		// exist.
-    		throw new CardNotFoundException(cardName);
-    	}
-    	
-    	// This is a basename, meaning it has no path.
-    	String canonicalASCIIName = CardUtil.canonicalizeCardName(cardName);
-    	String cardFileBaseName = ReadCard.toFileName(canonicalASCIIName);
-    	result = cardReader.findCard(cardFileBaseName, canonicalASCIIName);
-    	
-    	if (result != null) {
-    		return result;
-    	}
-
-    	throw new CardNotFoundException(cardName);
-	}
 
     /**
      * <p>postFactoryKeywords.</p>
@@ -3099,13 +3034,15 @@ public class CardFactory implements NewConstants {
         return card;
     }
 
+    // copies stats like attack, defense, etc..
     /**
-     * <p>copies stats like attack, defense, etc.</p>
+     * <p>copyStats.</p>
      *
-     * @param sim  the card to copy
-     * @return a copy of sim
+     * @param o a {@link java.lang.Object} object.
+     * @return a {@link forge.Card} object.
      */
-    public static Card copyStats(Card sim) {
+    public static Card copyStats(Object o) {
+        Card sim = (Card) o;
         Card c = new Card();
 
         c.setBaseAttack(sim.getBaseAttack());

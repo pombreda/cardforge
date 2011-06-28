@@ -571,33 +571,4 @@ public class CardUtil {
         return colorDesc;
     }
 
-     /**
-     * Compute the canonicalized ASCII form of a card name.
-     * 
-     * @param cardName the name to transform (but not side effect)
-     * 
-     * @return the name in ASCII characters
-     */
-	public static String canonicalizeCardName(String cardName) {
-		String result = cardName;
-		result = result.replace("\u00ae", "(R)");  // Ultimate Nightmare ...
-		result = result.replace("\u00c6", "AE");
-		result = result.replace("\u00e0", "a");
-		result = result.replace("\u00e1", "a");
-		result = result.replace("\u00e2", "a");
-		result = result.replace("\u00e9", "e");
-		result = result.replace("\u00ed", "i");
-		result = result.replace("\u00f6", "o");
-		result = result.replace("\u00fa", "u");
-		result = result.replace("\u00fb", "u");
-		result = result.replace("\u2012", "-");
-		result = result.replace("\u2013", "-");
-		result = result.replace("\u2014", "-");
-		result = result.replace("\u2015", "-");
-		result = result.replace("\u2018", "'");
-		result = result.replace("\u2019", "'");
-		result = result.replace("\u221e", "Infinity");  // Mox Lo...
-		
-		return result;
-	}
 }
