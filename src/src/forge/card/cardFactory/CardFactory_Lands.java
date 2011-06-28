@@ -6,7 +6,6 @@ import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 
 import javax.swing.*;
-import java.util.HashMap;
 
 /**
  * <p>CardFactory_Lands class.</p>
@@ -84,6 +83,7 @@ class CardFactory_Lands {
         }//*************** END ************ END **************************
 
 
+        /*
         //*************** START *********** START **************************
         else if (cardName.equals("Sejiri Steppe")) {
             final HashMap<Card, String[]> creatureMap = new HashMap<Card, String[]>();
@@ -194,6 +194,7 @@ class CardFactory_Lands {
             };
             card.addComesIntoPlayCommand(intoPlay);
         }//*************** END ************ END **************************
+        */
 
 
         //*************** START *********** START **************************
@@ -901,4 +902,4 @@ class CardFactory_Lands {
         return card;
     }
 
-}
+}//end class CardFactory_Lands
