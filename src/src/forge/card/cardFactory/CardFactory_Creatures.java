@@ -395,7 +395,7 @@ public class CardFactory_Creatures {
             };
             card.addDestroyCommand(destroy);
         }//*************** END ************ END **************************
-*/
+
 
         //*************** START *********** START **************************
         else if (cardName.equals("Valor")) {
@@ -420,7 +420,7 @@ public class CardFactory_Creatures {
             };
             card.addDestroyCommand(destroy);
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Wonder")) {
