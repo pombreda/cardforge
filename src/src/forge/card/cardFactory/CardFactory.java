@@ -138,13 +138,13 @@ public class CardFactory implements NewConstants {
         }
     }// readCard()
 
-    //TODO - this can probably be deleted.  I don't think it's used.
-    /**
+/*    // - this can probably be deleted.  I don't think it's used.
+    *//**
      * <p>dynamicCopyCard.</p>
      *
      * @param in a {@link forge.Card} object.
      * @return a {@link forge.Card} object.
-     */
+     *//*
     final public Card dynamicCopyCard(Card in) {
         if (in.isCreature()) {
             Card card2 = new Card();
@@ -176,7 +176,7 @@ public class CardFactory implements NewConstants {
             out.setUniqueNumber(in.getUniqueNumber());
             return out;
         }
-    }
+    }*/
 
     /**
      * <p>copyCard.</p>
