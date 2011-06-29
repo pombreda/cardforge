@@ -7,4 +7,5 @@ A:SP$ Protection | Cost$ 1 W | ValidTgts$ Permanent.YouCtrl | TgtPrompt$ Select 
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/razor_barrier.jpg
+SetInfo:MRD|Common|http://magiccards.info/scans/en/mi/17.jpg
 End
