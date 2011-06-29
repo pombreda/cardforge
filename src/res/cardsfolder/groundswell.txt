@@ -6,4 +6,5 @@ A:SP$ Pump | Cost$ G | ValidTgts$ Creature | TgtPrompt$ Select target creature |
 SVar:X:Count$Landfall.4.2
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/groundswell.jpg
+SetInfo:WWK|Common|http://magiccards.info/scans/en/wwk/104.jpg
 End
