@@ -3,7 +3,7 @@ ManaCost:W
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPump:CARDNAME can't be blocked by red creatures.
+K:enPump:CARDNAME can't be blocked by red creatures.:Enchanted creature can't be blocked by red creatures.
 K:stPumpEnchanted:Creature:2/2:isPresent Permanent.Red+YouDontCtrl:Enchanted creature gets +2/+2 as long as an opponent controls a red permanent.
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
