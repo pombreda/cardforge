@@ -63,4 +63,24 @@ public class Gui_ProgressBarWindow extends JDialog {
         if (progressBar.getValue() % 10 == 0)
             contentPanel.paintImmediately(progressBar.getBounds());
     }
+
+	/**
+	 * Get the progressBar for fine tuning (e.g., adding text).
+	 * 
+	 * @return the progressBar
+	 */
+	public JProgressBar getProgressBar() {
+		return progressBar;
+	}
+	
+	/**
+	 * Set the progress back to zero units completed.
+	 * 
+	 * It is not certain whether this method actually works the way it was
+	 * intended.
+	 */
+	public void reset() {
+		getProgressBar().setValue(0);
+        contentPanel.paintImmediately(getProgressBar().getBounds());
+	}
 }
