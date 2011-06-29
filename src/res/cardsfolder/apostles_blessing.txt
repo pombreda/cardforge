@@ -2,12 +2,9 @@ Name:Apostle's Blessing
 ManaCost:1 PW
 Types:Instant
 Text:no text
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from white | SpellDescription$ Target creature or artifact you control gains protection from white until end of turn.
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from black | SpellDescription$ Target creature or artifact you control gains protection from black until end of turn.
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from blue | SpellDescription$ Target creature or artifact you control gains protection from blue until end of turn.
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from red | SpellDescription$ Target creature or artifact you control gains protection from red until end of turn.
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from green | SpellDescription$ Target creature or artifact you control gains protection from green until end of turn.
-A:SP$ Pump | Cost$ 1 PW | ValidTgts$ Creature,Artifact | TgtPrompt$ Select target creature or artifact | KW$ Protection from artifacts | SpellDescription$ Target creature or artifact you control gains protection from artifacts until end of turn.
+A:SP$ Protection | Cost$ 1 PW | ValidTgts$ Creature.YouCtrl,Artifact.YouCtrl | TgtPrompt$ Select target artifact or creature you control | Gains$ Choice | Choices$ AnyColor,artifacts | SpellDescription$ Target artifact or creature you control gains protection from artifacts or from the color of your choice until end of turn.
+#Computer isn't very good at picking a color to get protection from yet
+SVar:RemAIDeck:True
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/apostles_blessing.jpg
