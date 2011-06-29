@@ -501,10 +501,6 @@ public class AbilityFactory_Protection {
     		else
     			sb.append(host).append(" - ");
 
-    		//TODO - add iterator
-    		for(Card c : tgtCards)
-    			sb.append(c).append(" ");
-    		
     		Iterator<Card> it = tgtCards.iterator();
             while (it.hasNext()) {
                 Card tgtC = it.next();
@@ -514,20 +510,24 @@ public class AbilityFactory_Protection {
                 if (it.hasNext()) sb.append(", ");
             }
 
-    		sb.append("gain");
+    		sb.append(" gain");
     		if(tgtCards.size() == 1) sb.append("s");
     		sb.append(" protection from ");
     		
     		if(choose) sb.append("your choice of ");
 
     		for(int i = 0; i < gains.size(); i++) {
+    			if (i != 0)
+    				sb.append(", ");
+    			
+    			if (i == gains.size() - 1)
+    				sb.append(joiner).append(" ");
+    			
     			sb.append(gains.get(i));
-    			if(i < (gains.size() - 1)) sb.append(joiner);
-    			sb.append(" ");
     		}
 
     		if(!params.containsKey("Permanent"))
-    			sb.append("until end of turn");
+    			sb.append(" until end of turn");
     		
     		sb.append(".");
     	}
@@ -550,33 +550,26 @@ public class AbilityFactory_Protection {
     	HashMap<String,String> params = af.getMapParams();
     	final Card host = af.getHostCard();
     	
+    	boolean isChoice = params.get("Gains").contains("Choice");
+    	ArrayList<String> choices = getProtectionList(host, params);
     	final ArrayList<String> gains = new ArrayList<String>();
-        if(params.containsKey("Gains")) gains.addAll(Arrays.asList(params.get("Gains").split(",")));
-        
-        if(gains.contains("Choice")) {
-        	gains.clear();
+        if(isChoice) {        	
         	if(sa.getActivatingPlayer().isHuman()) {
-        		Object o;
-        		if(params.get("Choices").equals("AnyColor")) {
-        			o = GuiUtils.getChoice("Choose a color", Constant.Color.onlyColors);
-        		}
-        		else {
-        			ArrayList<String> choices = new ArrayList<String>();
-        			choices.addAll(Arrays.asList(params.get("Choices").split(",")));
-        			o = GuiUtils.getChoice("Choose a protection", choices.toArray());
-        		}
+        		Object o = GuiUtils.getChoice("Choose a protection", choices.toArray());
+
                 if(null == o) return;
                 String choice = (String) o;
                 gains.add(choice);
             }
         	else {
         		//TODO - needs improvement
-        		ArrayList<String> choices = new ArrayList<String>();
-    			choices.addAll(Arrays.asList(params.get("Choices").split(",")));
-                gains.add(choices.get(0));
-                JOptionPane.showMessageDialog(null, "Computer chooses "+choices.get(0), ""+host, JOptionPane.PLAIN_MESSAGE); 
+        		String choice = choices.get(0);
+                gains.add(choice);
+                JOptionPane.showMessageDialog(null, "Computer chooses "+gains, ""+host, JOptionPane.PLAIN_MESSAGE); 
             }
         }
+        else
+        	gains.addAll(choices);
     	
         ArrayList<Card> tgtCards;
         Target tgt = af.getAbTgt();
@@ -625,16 +618,21 @@ public class AbilityFactory_Protection {
     private static ArrayList<String> getProtectionList(Card host, HashMap<String,String> params) {
     	final ArrayList<String> gains = new ArrayList<String>();
     	
-    	if(params.get("Gains").equals("Choice")) {
-    		if(params.get("Choices").equals("AnyColor")) {
+    	String gainStr = params.get("Gains"); 
+    	if(gainStr.equals("Choice")) {
+    		String choices = params.get("Choices");
+
+    		// Replace AnyColor with the 5 colors
+    		if (choices.contains("AnyColor")){
     			gains.addAll(Arrays.asList(Constant.Color.onlyColors));
+    			choices = choices.replaceAll("AnyColor,?", "");
     		}
-    		else {
-    			gains.addAll(Arrays.asList(params.get("Choices").split(",")));
-    		}
+    		// Add any remaining choices
+    		if (choices.length() > 0)
+    			gains.addAll(Arrays.asList(choices.split(",")));
     	}
     	else {
-    		gains.addAll(Arrays.asList(params.get("Gains").split(",")));
+    		gains.addAll(Arrays.asList(gainStr.split(",")));
     	}
         return gains;
     }
