@@ -4852,8 +4852,8 @@ public class GameActionUtil {
      */
     public static void executeCardStateEffects() {
         Wonder.execute();
-        Anger.execute();
-        Valor.execute();
+        //Anger.execute();
+        //Valor.execute();
         Brawn.execute();
         Filth.execute();
 
@@ -5194,7 +5194,10 @@ public class GameActionUtil {
 
             //Gather Cards on the Battlefield with the stPump Keyword
             CardList cards_WithKeyword = AllZoneUtil.getCardsInPlay();
-            cards_WithKeyword.getKeywordsContain("stPump");
+            cards_WithKeyword = cards_WithKeyword.getKeywordsContain("stPump");
+            CardList cardsInGrave = AllZoneUtil.getCardsInGraveyard();
+            cardsInGrave = cardsInGrave.getKeywordsContain("stGravePump");
+            cards_WithKeyword.addAll(cardsInGrave);
 
             // check each card
             for (int i = 0; i < cards_WithKeyword.size(); i++) {
@@ -5205,7 +5208,8 @@ public class GameActionUtil {
                 for (int j = 0; j < keywords.size(); j++) {
                     String keyword = keywords.get(j);
 
-                    if (keyword.startsWith("stPump")) {
+                    if (keyword.startsWith("stPump") || keyword.startsWith("stGravePump")) {
+                    	
                         StaticEffect se = new StaticEffect();     //create a new StaticEffect
                         se.setSource(cardWithKeyword);
                         se.setKeywordNumber(j);
@@ -5373,12 +5377,12 @@ public class GameActionUtil {
         CardList AffectedCards(Card SourceCard, String[] Keyword_Details) {
             // [Self], [All], [Other]
             CardList Cards_inZone = new CardList();
-            String Range = Keyword_Details[0].replaceFirst("stPump", "");
+            String Range = Keyword_Details[0];
 
-            if (Range.equals("Self")) {
+            if (Range.contains("Self")) {
                 Cards_inZone.add(SourceCard);
             }
-            if (Range.equals("All")) {
+            if (Range.contains("All")) {
                 Cards_inZone.addAll(AllZoneUtil.getCardsInPlay());
                 //this is a hack for Quick Sliver
                 if (Keyword_Details.length >= 2
@@ -5396,12 +5400,12 @@ public class GameActionUtil {
       			}
       			*/
             }
-            if (Range.equals("Enchanted")) {
+            if (Range.contains("Enchanted")) {
                 if (SourceCard.getEnchanting().size() > 0)
                     Cards_inZone.addAll(SourceCard.getEnchanting().toArray());
             }
 
-            if (Range.equals("Equipped")) {
+            if (Range.contains("Equipped")) {
                 if (SourceCard.getEquipping().size() > 0)
                     Cards_inZone.addAll(SourceCard.getEquipping().toArray());
             }
@@ -6320,9 +6324,9 @@ public class GameActionUtil {
             }
         }
     }; // Flith
-
+    
     /** Constant <code>Valor</code> */
-    public static Command Valor = new Command() {
+    /*public static Command Valor = new Command() {
         private static final long serialVersionUID = -846781470342847505L;
 
         CardList old = new CardList();
@@ -6382,7 +6386,7 @@ public class GameActionUtil {
     }; // Valor
 
     /** Constant <code>Anger</code> */
-    public static Command Anger = new Command() {
+    /*public static Command Anger = new Command() {
         private static final long serialVersionUID = -8463420545847505L;
 
         CardList old = new CardList();
