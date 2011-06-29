@@ -2,7 +2,6 @@ package forge;
 
 import forge.card.trigger.TriggerHandler;
 import forge.error.ErrorViewer;
-import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
 import java.io.*;
