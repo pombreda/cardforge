@@ -536,12 +536,7 @@ public class AbilityFactory_ChangeZone {
         
         ArrayList<Player> fetchers;
         
-        /*
-        Target tgt = af.getAbTgt();
-        if (tgt != null)
-        	fetchers = tgt.getTargetPlayers();
-        else */
-        	fetchers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+        fetchers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
         
         Player chooser = null;
         if (params.containsKey("Chooser")) {
