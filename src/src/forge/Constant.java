@@ -4,8 +4,6 @@ package forge;
 import forge.deck.Deck;
 import forge.quest.data.QuestMatchState;
 
-import javax.swing.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

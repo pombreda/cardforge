@@ -1,7 +1,6 @@
 package forge;
 
 
-import forge.deck.Deck;
 import forge.error.ErrorViewer;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
