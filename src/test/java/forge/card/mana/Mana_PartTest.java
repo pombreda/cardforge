@@ -2,6 +2,7 @@ package forge.card.mana;
 
 import forge.Card;
 import forge.Constant;
+import org.testng.annotations.Test;
 
 /**
  * <p>Mana_PartTest class.</p>
@@ -9,14 +10,15 @@ import forge.Constant;
  * @author Forge
  * @version $Id: $
  */
+@Test(timeOut = 1000)
 public class Mana_PartTest {
     /**
      * <p>testPayManaCost.</p>
      */
-    static void testPayManaCost() {
+    @Test
+    public void testPayManaCost() {
         {
             //test constructor
-            @SuppressWarnings("unused")
             ManaCost p = new ManaCost("G");
             p = new ManaCost("U");
             p = new ManaCost("W");
@@ -496,9 +498,10 @@ public class Mana_PartTest {
      * @param n a double.
      * @param b a boolean.
      */
-    static void check(double n, boolean b) {
-        if (!b)
+    void check(double n, boolean b) {
+        if (!b) {
             System.out.println("failed : " + n);
+        }
     }
 
     /**
@@ -508,28 +511,10 @@ public class Mana_PartTest {
      * @param b a boolean.
      * @param p a {@link forge.card.mana.ManaCost} object.
      */
-    static void check(double n, boolean b, ManaCost p) {
+    void check(double n, boolean b, ManaCost p) {
         if (!b) {
             System.out.println("failed : " + n);
             System.out.println(p.toString());
-        }
-    }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        try {
-
-//      magic.core.ErrorReport.setThrowException(true);
-
-            testPayManaCost();
-            System.out.println("all tests passed");
-        } catch (Exception ex) {
-            System.out.println("failed : exception " + ex);
-            ex.printStackTrace();
         }
     }
 }
