@@ -63,19 +63,19 @@ public class SpellAbility_StackInstance {
         // TODO getXManaCostPaid should be on the SA, not the Card
         xManaPaid = sa.getSourceCard().getXManaCostPaid();
 
-        // Targeting info
-        Target target = sa.getTarget();
-        if (target != null) {
-            tc = target.getTargetChoices();
-            ability.getTarget().resetTargets();
-        }
-
         // Triggering info
         triggeringObjects = sa.getTriggeringObjects();
 
         Ability_Sub subAb = ability.getSubAbility();
         if (subAb != null)
             subInstace = new SpellAbility_StackInstance(subAb);
+
+        // Targeting info  -- 29/06/11 Moved to after taking care of SubAbilities because otherwise AF_DealDamage SubAbilities that use Defined$ Targeted breaks (since it's parents target is reset)
+        Target target = sa.getTarget();
+        if (target != null) {
+            tc = target.getTargetChoices();
+            ability.getTarget().resetTargets();
+        }
     }
 
     /**
