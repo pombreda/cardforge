@@ -18,7 +18,7 @@ import java.net.Proxy;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.StringTokenizer;
+//import java.util.StringTokenizer;
 
 import static java.lang.Integer.parseInt;
 import static javax.swing.JOptionPane.DEFAULT_OPTION;
@@ -389,25 +389,27 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
     private static mCard[] getNeededCards() {
         //read all card names and urls
         //mCard[] cardPlay = readFile(CARD_PICTURES);
-        mCard[] cardTokenLQ = readFile(CARD_PICTURES_TOKEN_LQ);
+        //mCard[] cardTokenLQ = readFile(CARD_PICTURES_TOKEN_LQ);
 
         ArrayList<mCard> CList = new ArrayList<mCard>();
 
 		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 *  Braids: "getAllCards copies the entire array, but that does not
 		 * seem to be needed here. Significant performance improvement is
 		 * possible if this code used getCards instead (along with a for each
 		 * loop instead of using get(i), if applicable)."
 		 */
-        CardList AllCards = AllZone.getCardFactory().getAllCards();
+        //CardList AllCards = AllZone.getCardFactory().getAllCards();
+        CardList AllCards = AllZone.getCardFactory().getCards();
         //Log.error("AllCards.size: " + AllCards.size());
 
         //File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);
         String URLBase = "http://cardforge.org/fpics/";
         String imgFN = "";
 
-        for (int i = 0; i < AllCards.size(); i++) {
-            Card c = AllCards.get(i);
+        //for (int i = 0; i < AllCards.size(); i++) {
+        for (Card c : AllCards) {
+            //Card c = AllCards.get(i);
 
             ArrayList<SetInfo> cSetInfo = c.getSets();
             if (cSetInfo.size() > 0) {
@@ -452,13 +454,13 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
         }
 
         //ArrayList<mCard> list = new ArrayList<mCard>();
-        File file;
+        //File file;
 
-        File base = ForgeProps.getFile(IMAGE_TOKEN);
-        for (int i = 0; i < cardTokenLQ.length; i++) {
-            file = new File(base, cardTokenLQ[i].name.substring(3, cardTokenLQ[i].name.length()));
-            if (!file.exists()) CList.add(cardTokenLQ[i]);
-        }
+        //File base = ForgeProps.getFile(IMAGE_TOKEN);
+        //for (int i = 0; i < cardTokenLQ.length; i++) {
+        //    file = new File(base, cardTokenLQ[i].name.substring(3, cardTokenLQ[i].name.length()));
+        //    if (!file.exists()) CList.add(cardTokenLQ[i]);
+        //}
 
         //return all card names and urls that are needed
         mCard[] out = new mCard[CList.size()];
@@ -469,12 +471,12 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
         return out;
     }//getNeededCards()
 
-    /**
+/*    *//**
      * <p>readFile.</p>
      *
      * @param ABC a {@link java.lang.String} object.
      * @return an array of {@link forge.Gui_DownloadSetPictures_LQ.mCard} objects.
-     */
+     *//*
     private static mCard[] readFile(String ABC) {
         try {
             FileReader zrc = new FileReader(ForgeProps.getFile(ABC));
@@ -500,7 +502,7 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
             throw new RuntimeException("Gui_DownloadPictures : readFile() error");
         }
     }//readFile()
-
+*/
     private class ProxyHandler implements ChangeListener {
         private int type;
 
