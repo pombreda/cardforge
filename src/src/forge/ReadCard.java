@@ -1,5 +1,6 @@
 package forge;
 
+import forge.Card;
 import forge.card.trigger.TriggerHandler;
 import forge.error.ErrorViewer;
 import forge.properties.NewConstants;
@@ -10,6 +11,8 @@ import java.util.Enumeration;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+
+import forge.gui.MultiPhaseProgressMonitorWithETA;
 
 
 /**
@@ -46,20 +49,20 @@ public class ReadCard implements Runnable, NewConstants {
     /**
      * <p>Constructor for ReadCard.</p>
      *
-     * @param file a {@link java.io.File} object.
+     * @param cardsfolder a {@link java.io.File} object.
      */
-    public ReadCard(File file) {
-        if (!file.exists())
+    public ReadCard(File cardsfolder) {
+        if (!cardsfolder.exists())
             throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
-                    + file.getAbsolutePath());
+                    + cardsfolder.getAbsolutePath());
 
-        if (!file.isDirectory())
+        if (!cardsfolder.isDirectory())
             throw new RuntimeException("ReadCard : constructor error -- not a direcotry -- "
-                    + file.getAbsolutePath());
-        zipFile = new File(file, CARDSFOLDER + ".zip");
+                    + cardsfolder.getAbsolutePath());
+        zipFile = new File(cardsfolder, CARDSFOLDER + ".zip");
 
         if (!zipFile.exists())
-            fileList = file.list();
+            fileList = cardsfolder.list();
         //makes the checked exception, into an unchecked runtime exception
         //try {
         //    in = new BufferedReader(new FileReader(file));
@@ -83,11 +86,25 @@ public class ReadCard implements Runnable, NewConstants {
             try {
                 ZipFile zip = new ZipFile(zipFile);
                 ZipEntry entry;
+                
+                int zipSize = zip.size();
+                
+                MultiPhaseProgressMonitorWithETA monitor = 
+                	new MultiPhaseProgressMonitorWithETA("Loading card database from ZIP", 
+                			1, zipSize, 1.0f);
+                
                 Enumeration<? extends ZipEntry> e = zip.entries();
                 while (e.hasMoreElements()) {
-                    entry = (ZipEntry) e.nextElement();
-                    if (!entry.getName().endsWith(".txt"))
+                	monitor.incrementUnitsCompletedThisPhase(1L);
+
+                	entry = (ZipEntry) e.nextElement();
+                    
+                    if (entry.isDirectory() || !entry.getName().endsWith(".txt")) {
                         continue;
+                    }
+                    
+                    System.err.println("Loading card file: " + entry.getName());
+                    
                     in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
                     c = new Card();
                     loadCard(c, cardNames);
@@ -95,13 +112,22 @@ public class ReadCard implements Runnable, NewConstants {
                     allCards.add(c);
                     in.close();
                 }
+                
+                monitor.getDialog().dispose();
+                
             } catch (Exception e) {
 
             }
 
         } else {
+            MultiPhaseProgressMonitorWithETA monitor = 
+            	new MultiPhaseProgressMonitorWithETA("Loading card database from files", 
+            			1, fileList.length, 1.0f);
+            
             for (int i = 0; i < fileList.length; i++) {
-                if (!fileList[i].endsWith(".txt"))
+            	monitor.incrementUnitsCompletedThisPhase(1L);
+
+            	if (!fileList[i].endsWith(".txt"))
                     continue;
 
                 try {
@@ -125,8 +151,12 @@ public class ReadCard implements Runnable, NewConstants {
                     throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
                             + fl.getPath());
                 }
-            }
-        }
+
+            } //endfor
+
+            monitor.getDialog().dispose();
+
+        } //endif
 
     }//run()
 
