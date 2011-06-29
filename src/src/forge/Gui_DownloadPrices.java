@@ -113,8 +113,7 @@ public class Gui_DownloadPrices extends JFrame {
                         out.flush();
                         out.close();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
+                        return;
                     } finally {
                         try {
                             if (in != null)
@@ -122,7 +121,7 @@ public class Gui_DownloadPrices extends JFrame {
                             if (out != null)
                                 out.close();
                         } catch (IOException ex) {
-                            // TODO: handle exception
+                            return;
                         }
                     }// while - read and write file
 
@@ -242,8 +241,7 @@ public class Gui_DownloadPrices extends JFrame {
                         fr.close();
                         f.delete();
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
-                        e1.printStackTrace();
+                        return;
                     } finally {
                         try {
                             if (fr != null)
@@ -251,7 +249,7 @@ public class Gui_DownloadPrices extends JFrame {
                             if (fw != null)
                                 fw.close();
                         } catch (IOException ex) {
-                            // TODO: handle exception
+                            return;
                         }
                     }
                     return;
