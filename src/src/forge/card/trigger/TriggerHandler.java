@@ -364,9 +364,7 @@ public class TriggerHandler {
                 sa[0].setAllTriggeringObjects(regtrig.getStoredTriggeredObjects());
 
             sa[0].setActivatingPlayer(host.getController());
-            if (sa[0].getStackDescription().equals("")) {
-                sa[0].setStackDescription(sa[0].toString());
-            }
+            sa[0].setStackDescription(sa[0].toString());
 
             boolean mand = false;
             if (trigParams.containsKey("OptionalDecider")) {
