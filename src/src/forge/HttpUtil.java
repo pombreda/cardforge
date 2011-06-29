@@ -27,14 +27,12 @@ public class HttpUtil {
      * @param sURL a {@link java.lang.String} object.
      * @param file a {@link java.lang.String} object.
      */
-    public void upload(String sURL, String file)// throws Exception
+    public void upload(String sURL, String file)
     {
     	URL url = null;
 		try {
 			url = new URL(sURL);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
     	
@@ -42,8 +40,6 @@ public class HttpUtil {
 		try {
 			theUrlConnection = (HttpURLConnection) url.openConnection();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
         theUrlConnection.setDoOutput(true);
@@ -51,81 +47,59 @@ public class HttpUtil {
         theUrlConnection.setUseCaches(false);    
         theUrlConnection.setChunkedStreamingMode(1024);
 
-        theUrlConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary="
-                + Boundary);
+        theUrlConnection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + Boundary);
 
         DataOutputStream httpOut = null;
 		try {
 			httpOut = new DataOutputStream(theUrlConnection.getOutputStream());
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			//e1.printStackTrace();
-			return;
-			
+			return;			
 		}
 
-            File f = new File(file);
-            String str = "--" + Boundary + "\r\n"
-                       + "Content-Disposition: form-data;name=\"data\"; filename=\"" + f.getName() + "\"\r\n"
-                       + "Content-Type: text/plain\r\n"
-                       + "\r\n";
+        File f = new File(file);
+        String str = "--" + Boundary + "\r\n"
+                   + "Content-Disposition: form-data;name=\"data\"; filename=\"" + f.getName() + "\"\r\n"
+                   + "Content-Type: text/plain\r\n\r\n";
 
-            try {
-				httpOut.write(str.getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return;
-			}
+        try {
+			httpOut.write(str.getBytes());
+		} catch (IOException e) {
+			return;
+		}
 
-            FileInputStream uploadFileReader = null;
-			try {
-				uploadFileReader = new FileInputStream(f);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return;
+        FileInputStream uploadFileReader = null;
+		try {
+			uploadFileReader = new FileInputStream(f);
+		} catch (FileNotFoundException e) {
+			return;
+		}
+        int numBytesToRead = 1024;
+        int availableBytesToRead;
+        try {
+			while ((availableBytesToRead = uploadFileReader.available()) > 0) {
+			    byte[] bufferBytesRead;
+			    bufferBytesRead = availableBytesToRead >= numBytesToRead ? new byte[numBytesToRead] : new byte[availableBytesToRead];
+			    uploadFileReader.read(bufferBytesRead);
+			    httpOut.write(bufferBytesRead);
+			    httpOut.flush();
 			}
-            int numBytesToRead = 1024;
-            int availableBytesToRead;
-            try {
-				while ((availableBytesToRead = uploadFileReader.available()) > 0)
-				{
-				    byte[] bufferBytesRead;
-				    bufferBytesRead = availableBytesToRead >= numBytesToRead ? new byte[numBytesToRead]
-				            : new byte[availableBytesToRead];
-				    uploadFileReader.read(bufferBytesRead);
-				    httpOut.write(bufferBytesRead);
-				    httpOut.flush();
-				}
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return;
-			}
-            try {
-				httpOut.write(("--" + Boundary + "--\r\n").getBytes());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				return;
-			}
-
-
-        //httpOut.write(("--" + Boundary + "--\r\n").getBytes());
+		} catch (IOException e) {
+			return;
+		}
+        try {
+			httpOut.write(("--" + Boundary + "--\r\n").getBytes());
+		} catch (IOException e) {
+			return;
+		}
 
         try {
 			httpOut.flush();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
         try {
 			httpOut.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
 
@@ -134,30 +108,24 @@ public class HttpUtil {
 		try {
 			is = theUrlConnection.getInputStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
         StringBuilder response = new StringBuilder();
         byte[] respBuffer = new byte[8192];
         try {
-			while (is.read(respBuffer) >= 0)
-			{
+			while (is.read(respBuffer) >= 0) {
 			    response.append(new String(respBuffer).trim());
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
         try {
 			is.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return;
 		}
-        System.out.println(response.toString());
+        if (Constant.Runtime.DevMode[0])
+        	System.out.println(response.toString());
     } 
     
     /**
@@ -171,16 +139,12 @@ public class HttpUtil {
 		try {
 			url = new URL(sURL);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return "error 1";
 		}
     	InputStream is = null;
 		try {
 			is = url.openStream();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return "error 2";
 		}
     	int ptr = 0;
@@ -190,8 +154,6 @@ public class HttpUtil {
 			    buffer.append((char)ptr);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
 			return "error 3";
 		}
     	
