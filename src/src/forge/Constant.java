@@ -5,6 +5,7 @@ import forge.deck.Deck;
 import forge.quest.data.QuestMatchState;
 
 import javax.swing.*;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -48,19 +49,19 @@ public interface Constant {
                 Sealed, Draft));
     }
 
-    public interface IO {
-        //TODO: probably should read this from a file, or set from GUI
+    //public interface IO {
+        // probably should read this from a file, or set from GUI
 
-        public static final String deckFile = "all-decks2";
-        public static final String boosterDeckFile = "booster-decks";
+        //public static final String deckFile = "all-decks2";
+        //public static final String boosterDeckFile = "booster-decks";
 
-        public static final String imageBaseDir = "pics";
+        //public static final String imageBaseDir = "pics";
 
-        public static final ImageIcon upIcon = new ImageIcon("up.gif");
-        public static final ImageIcon downIcon = new ImageIcon("down.gif");
-        public static final ImageIcon leftIcon = new ImageIcon("left.gif");
-        public static final ImageIcon rightIcon = new ImageIcon("right.gif");
-    }
+        //public static final ImageIcon upIcon = new ImageIcon("up.gif");
+        //public static final ImageIcon downIcon = new ImageIcon("down.gif");
+        //public static final ImageIcon leftIcon = new ImageIcon("left.gif");
+        //public static final ImageIcon rightIcon = new ImageIcon("right.gif");
+    //}
 
     public interface Ability {
         public static final String Triggered = "Triggered";
@@ -113,6 +114,9 @@ public interface Constant {
 
         public static final String Snow = "snow";
         public static final String ManaColors[] = {White, Blue, Black, Red, Green, Colorless, Snow};
+        
+        public static final boolean loaded[] = {false};
+        //public static final Constant_StringHashMap[] LandColor = new Constant_StringHashMap[1];
 
         public static final String BasicLands[] = {"Plains", "Island", "Swamp", "Mountain", "Forest"};
     }
@@ -138,9 +142,25 @@ public interface Constant {
 
         public static final String[] oppIconName = new String[1];
     }
-
-
+    
+    public interface CardTypes {
+    	public static final boolean loaded[] = {false}; 
+    	public static final Constant_StringArrayList cardTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList superTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList basicTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList landTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList creatureTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList instantTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList sorceryTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList enchantmentTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList artifactTypes[] = new Constant_StringArrayList[1];
+    	public static final Constant_StringArrayList walkerTypes[] = new Constant_StringArrayList[1];
+    }
+    
+    public interface Keywords {
+    	public static final boolean loaded[] = {false};
+    	public static final Constant_StringArrayList NonStackingList[] = new Constant_StringArrayList[1];
+    }
 }//Constant
-
 
 
