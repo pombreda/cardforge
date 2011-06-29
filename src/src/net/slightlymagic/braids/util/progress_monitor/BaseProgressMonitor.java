@@ -7,6 +7,10 @@ import com.esotericsoftware.minlog.Log;
 /**
  * This base class also acts as a "null" progress monitor; it doesn't display
  * anything when updated.
+ * 
+ * Absolute times are measured in seconds, in congruence with ProgressMonitor.
+ * 
+ * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor
  */
 public class BaseProgressMonitor implements ProgressMonitor {
     private int numPhases;
@@ -17,7 +21,7 @@ public class BaseProgressMonitor implements ProgressMonitor {
 	private long lastUIUpdateTime;
 	private long phaseOneStartTime;
 	private long currentPhaseStartTime;
-	private int currentPhaseExponent;
+	private float currentPhaseExponent;
 	private long[] phaseDurationHistorySecList;
 	private float[] phaseWeights;
 
@@ -27,14 +31,21 @@ public class BaseProgressMonitor implements ProgressMonitor {
 	
 
 	/**
-     * @see #AbstractProgressMonitor(int,long,float,float[])
+	 * Convenience for 
+	 * BaseProgressMonitor(numPhases, totalUnitsFirstPhase, 2.0f, null).
+	 * 
+     * @see #BaseProgressMonitor(int,long,float,float[])
      */
     public BaseProgressMonitor(int numPhases, long totalUnitsFirstPhase) {
     	this(numPhases, totalUnitsFirstPhase, 2.0f, null);
     }
 
     /**
-     * @see #AbstractProgressMonitor(int,long,float,float[])
+	 * Convenience for 
+	 * BaseProgressMonitor(numPhases, totalUnitsFirstPhase, 
+	 * minUIUpdateIntervalSec, null).
+	 * 
+     * @see #BaseProgressMonitor(int,long,float,float[])
      */
     public BaseProgressMonitor(int numPhases, long totalUnitsFirstPhase, 
             float minUIUpdateIntervalSec) 
@@ -44,13 +55,30 @@ public class BaseProgressMonitor implements ProgressMonitor {
 
     /**
      * Initializes fields and starts the timers.
+     * 
+     * @param numPhases  the total number of phases we will monitor
+     * 
+     * @param totalUnitsFirstPhase  how many units to expect in phase 1
+     * 
+     * @param minUIUpdateIntervalSec  the approximate interval at which we
+     * update the user interface, in seconds
+     * 
+     * @param phaseWeights  may be null; if not null, this indicates the 
+     * relative weight of each phase in terms of time to complete all phases.  
+     * Index 0 of this array indicates phase 1's weight, index 1 indicates
+     * the weight of phase 2, and so on.  If null, all phases are considered to
+     * take an equal amount of time to complete, which is equivalent to setting
+     * all phase weights to 1.0f.  For example, if there are two phases, and
+     * the phase weights are set to {2.0f, 1.0f}, then the methods that compute
+     * the final ETA (Estimated Time of Arrival or completion) will assume that
+     * phase 2 takes half as long as phase 1. In other words, the operation
+     * will spend 67% of its time in phase 1, and 33% of its time in phase 2.
      */
     public BaseProgressMonitor(int numPhases, long totalUnitsFirstPhase, 
 	                 float minUIUpdateIntervalSec, float[] phaseWeights) 
     {
     	this.numPhases = numPhases;
     	this.currentPhase = 1;
-    	this.totalUnitsThisPhase = totalUnitsFirstPhase;
     	this.unitsCompletedSoFarThisPhase = 0L;
     	this.minUIUpdateIntervalSec = minUIUpdateIntervalSec;
     	this.lastUIUpdateTime = 0L;
@@ -68,6 +96,9 @@ public class BaseProgressMonitor implements ProgressMonitor {
     	else {
     		this.phaseWeights = phaseWeights;
     	}
+    	
+    	setTotalUnitsThisPhase(totalUnitsFirstPhase);
+
     }
 
     /**
@@ -174,7 +205,10 @@ public class BaseProgressMonitor implements ProgressMonitor {
     
     
     /**
-	 * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor#getRelativeETAAsString()
+	 * Convenience for getRelativeETAAsString(false), meaning to compute the
+	 * value for the end of the last phase.
+	 * 
+	 * @see #getRelativeETAAsString(boolean)
 	 */
     public String getRelativeETAAsString() {
     	return getRelativeETAAsString(false);
@@ -215,7 +249,10 @@ public class BaseProgressMonitor implements ProgressMonitor {
     }    
 
     /**
-	 * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor#getAbsoluteETAAsLocalTimeString()
+	 * Convenience for getAbsoluteETAAsLocalTimeString(false), meaning to 
+	 * compute the value for the end of the last phase.
+	 * 
+	 * @see #getAbsoluteETAAsLocalTimeString(boolean)
 	 */
     public String getAbsoluteETAAsLocalTimeString() {
     	return getAbsoluteETAAsLocalTimeString(false);
@@ -288,7 +325,7 @@ public class BaseProgressMonitor implements ProgressMonitor {
         
         this.currentPhase += 1;
         this.unitsCompletedSoFarThisPhase = 0;
-        this.totalUnitsThisPhase = totalUnitsNextPhase;
+        setTotalUnitsThisPhase(totalUnitsNextPhase);
         this.currentPhaseExponent = 1;
 
         long nowTime = (new Date().getTime()/1000);
@@ -308,7 +345,7 @@ public class BaseProgressMonitor implements ProgressMonitor {
         		message += phaseDurationHistorySecList[ix] + ", ";
         	}
 
-        	Log.info(message);
+        	Log.info(message + ']');
         }
     }
 
@@ -322,9 +359,9 @@ public class BaseProgressMonitor implements ProgressMonitor {
 
 
     /**
-	 * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor#setCurrentPhaseAsExponential(int)
+	 * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor#setCurrentPhaseAsExponential(float)
 	 */
-    public void setCurrentPhaseAsExponential(int value) {
+    public void setCurrentPhaseAsExponential(float value) {
         this.currentPhaseExponent = value;
     }
 
@@ -332,7 +369,7 @@ public class BaseProgressMonitor implements ProgressMonitor {
     /**
 	 * @see net.slightlymagic.braids.util.progress_monitor.ProgressMonitor#getCurrentPhaseExponent()
 	 */
-    public int getCurrentPhaseExponent() {
+    public float getCurrentPhaseExponent() {
         return this.currentPhaseExponent;
     }
     
@@ -390,10 +427,10 @@ public class BaseProgressMonitor implements ProgressMonitor {
 
 
     /**
-     * Get the relative ETA for when all phases will complete.
-     * 	
-     * @return estimated seconds until completion for 
-     * the entire operation.  May return null if unknown.
+     * Convenience for getRelativeETASec(false), meaning to compute the value
+     * for the end of the last phase. 
+     * 
+     * @see #getRelativeETASec(boolean)
      */
     protected Integer getRelativeETASec() {
     	return getRelativeETASec(false);
@@ -414,7 +451,9 @@ public class BaseProgressMonitor implements ProgressMonitor {
     
 
     /**
-     * Fetch value for entire operation, not just this phase.
+     * Convenience for getAbsoluteETATime(false), meaning to compute the value
+     * for the end of all phases. 
+     * 
      * @see #getAbsoluteETATime(boolean)
      */
     protected Long getAbsoluteETATime() {
@@ -422,7 +461,7 @@ public class BaseProgressMonitor implements ProgressMonitor {
     }
     
     /**
-     * Returns estimated time (a la (new Date().getTime()/1000)) at which thisPhaseOnly
+     * @return the estimated time (in absolute seconds) at which thisPhaseOnly
      * or the entire operation will be completed.  May return null if (unknown.
      */
     protected Long getAbsoluteETATime(boolean thisPhaseOnly) {
