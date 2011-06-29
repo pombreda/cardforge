@@ -40,19 +40,6 @@ import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
  * @version $Id: $
  */
 public class ListChooser<T> {
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @param <T> a T object.
-     */
-    public static void main(String[] args) {
-        ListChooser<String> c = new ListChooser<String>("test", "choose a or b", 0, 2, "a", "b");
-        System.out.println(c.show());
-        for (String s : c.getSelectedValues()) {
-            System.out.println(s);
-        }
-    }
 
     //Data and number of choices for the list
     private List<T> list;

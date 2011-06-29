@@ -1,6 +1,7 @@
 package forge;
 
 import forge.error.ErrorViewer;
+import org.testng.annotations.Test;
 
 import javax.swing.*;
 import java.awt.Color;
@@ -8,12 +9,13 @@ import java.awt.*;
 
 
 /**
- * <p>TestPanel class.</p>
+ * <p>PanelTest class.</p>
  *
  * @author Forge
  * @version $Id: $
  */
-public class TestPanel extends JFrame {
+@Test(timeOut = 1000, enabled = false)
+public class PanelTest extends JFrame {
     /**
      *
      */
@@ -22,20 +24,19 @@ public class TestPanel extends JFrame {
     private JLabel jLabel1 = new JLabel();
 
     /**
-     * <p>main.</p>
      *
-     * @param args an array of {@link java.lang.String} objects.
      */
-    public static void main(String[] args) {
-        TestPanel p = new TestPanel();
+    @Test(timeOut = 1000, enabled = false)
+    public void PhaseTest1() {
+        PanelTest p = new PanelTest();
         p.setSize(300, 300);
         p.setVisible(true);
     }
 
     /**
-     * <p>Constructor for TestPanel.</p>
+     * <p>Constructor for PanelTest.</p>
      */
-    public TestPanel() {
+    public PanelTest() {
         try {
             jbInit();
         } catch (Exception ex) {

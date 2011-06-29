@@ -187,20 +187,4 @@ public class GenerateConstructedDeck {
 
         return out;
     }//filterBadCards()
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        GenerateConstructedDeck g = new GenerateConstructedDeck();
-
-        for (int i = 0; i < 50; i++) {
-            CardList c = g.generateDeck();
-            System.out.println(c.getType("Creature").size() + " - " + c.size());
-        }
-        System.exit(1);
-
-    }//main
 }

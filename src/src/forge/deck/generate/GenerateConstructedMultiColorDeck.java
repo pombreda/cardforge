@@ -432,26 +432,4 @@ public class GenerateConstructedMultiColorDeck {
 
         return out;
     }//filterBadCards()
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        GenerateConstructedMultiColorDeck g = new GenerateConstructedMultiColorDeck();
-
-        for (int i = 0; i < 10; i++) {
-            System.out.println("***GENERATING DECK***");
-            CardList c = g.generate3ColorDeck();
-            System.out.println(c.getType("Creature").size() + " - " + c.size());
-            for (int j = 0; j < c.size(); j++) {
-                System.out.println(c.get(j).getName());
-            }
-            System.out.println("***DECK GENERATED***");
-
-        }
-        System.exit(1);
-
-    }//main
 }
