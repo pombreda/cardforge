@@ -3183,6 +3183,153 @@ public class CardFactoryUtil {
         return tot;
     }
 
+    /*
+    public static void doDrawBack(String DB, int nDB, Player cardController, Player Opp, Player TgtP, Card Src, Card TgtC, SpellAbility sa) {
+        // Drawbacks may be any simple additional effect a spell or ability may have
+        // not just the negative ones
+        
+        String d[] = DB.split("/");
+        int X = 0;
+        if(d.length > 1)
+        {
+            if(d[1].contains("dX")) // 2/10
+            {
+                String dX = Src.getSVar(d[1]);
+                if(dX.startsWith("Count$"))
+                {
+                    String dd[] = dX.split("\\$");
+                    if (dd[1].contains("Tgt"))
+                        X = xCount(TgtC, dd[1]);
+                    else
+                        X = xCount(Src, dd[1]);
+                }
+            }
+            else if(d[1].contains("X")) {
+                X = nDB;
+                if(d[1].contains(".")) {
+                    String dd[] = d[1].split("\\.", 2);
+                    String m[] = {"none"};
+                    m[0] = dd[1];
+                    //ArrayList<String> ddd = new ArrayList<String>();
+                    //for(int i = 1; i < dd.length; i++)
+                    //    ddd.add(dd[i]);
+
+                    X = doXMath(X, m, Src);
+                }
+            }
+            else if(d[1].matches("[0-9][0-9]?"))
+                X = Integer.parseInt(d[1]);
+        }
+
+        Player dbPlayer = null;
+        if(d[0].contains("You"))
+            dbPlayer = cardController;
+        else if	(d[0].contains("Opp"))
+            dbPlayer = Opp;
+        else if (d[0].contains("TgtCtrlr"))
+            dbPlayer = TgtC.getController();
+        else if (d[0].contains("TgtOwner"))
+            dbPlayer = TgtC.getOwner();
+        else if (d[0].contains("Tgt"))
+            dbPlayer = TgtP;
+
+
+        // 1/10
+        if (d[0].contains("DamageTgtCard"))
+            TgtC.addDamage(X, Src);
+        else if (d[0].contains("DamageSelf"))
+            Src.addDamage(X, Src); // 2/10
+        else if(d[0].contains("Damage"))
+            dbPlayer.addDamage(X, Src);
+
+
+        if(d[0].contains("GainLife")) {
+            dbPlayer.gainLife(X, Src);
+        }
+        if(d[0].contains("LoseLife"))  {
+            dbPlayer.loseLife(X, Src);
+        }
+
+        if(d[0].contains("HandToLibrary")) dbPlayer.handToLibrary(X, d[2]);
+
+        if(d[0].contains("Draw")) for(int i = 0; i < X; i++)
+            dbPlayer.drawCard();
+
+        if(d[0].contains("UntapTgt")) TgtC.untap();
+
+        if(d[0].contains("UntapAll")) // 6/10
+        {
+            CardList ut = new CardList();
+            if (d[0].contains("YouCtrl"))
+                ut.addAll(AllZoneUtil.getPlayerCardsInPlay(dbPlayer));
+            else if (d[0].contains("OppCtrl"))
+                ut.addAll(AllZoneUtil.getPlayerCardsInPlay(Opp));
+            else
+            {
+                ut.addAll(AllZoneUtil.getPlayerCardsInPlay(dbPlayer));
+                ut.addAll(AllZoneUtil.getPlayerCardsInPlay(Opp));
+            }
+            if (d[0].contains("Type"))
+            {
+                String dd[] = d[0].split("\\.");
+                ut = ut.getValidCards(dd,cardController,Src);
+            }
+
+            for (int i=0; i<ut.size(); i++)
+                ut.get(i).untap();
+        }
+
+        if (d[0].contains("UntapUpTo"))	// 8/10
+        {
+            int n = Integer.parseInt(d[1]);
+            if (dbPlayer.isHuman())
+                AllZone.getInputControl().setInput(CardFactoryUtil.input_UntapUpToNType(n, d[2]));
+            else
+            {
+                CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+                list = list.getType(d[2]);
+                list = list.filter(AllZoneUtil.tapped);
+
+                for(int i = 0; i < n && i < list.size(); i++)
+                {
+                    list.shuffle();
+                    list.get(0).untap();
+                }
+            }
+        }
+
+        if(d[0].contains("TapTgt")) // 2/10
+        TgtC.tap();
+
+        if(d[0].contains("MakeToken")) {
+            final String[] k = d[0].split("<>");
+            final String numString = k[1].equals("X") ? Src.getSVar("X") : k[1];
+            //final String numString = k[1];
+            final boolean xString = k[1].equals("X") ? true : false;
+            final String name = k[2];
+            final String imageName = k[3];
+            final String controllerString = k[4];
+            final String manaCost = k[5];
+            final String[] types = k[6].split(";");
+            final int attack = Integer.valueOf(k[7]);
+            final int defense = Integer.valueOf(k[8]);
+            final String[] keywords = k[9].split(";");
+
+            Player controller = null;
+            if(controllerString.equals("Controller")) controller = cardController;
+            else if(controllerString.equals("Opponent")) controller = Opp;
+            else if(controllerString.equals("TargetController"))controller = TgtC.getController();
+
+            if(keywords[0].equals("None")) keywords[0] = "";
+
+            int num = xString ? CardFactoryUtil.xCount(TgtC, numString) : Integer.valueOf(numString);
+            for(int i = 0; i < num; i ++ ){
+                CardFactoryUtil.makeToken(name, imageName, controller, manaCost, types, attack, defense, keywords);
+            }
+        }//end MakeToken drawback
+
+    }*/
+
     /**
      * <p>getNumberOfMostProminentCreatureType.</p>
      *
@@ -3832,6 +3979,135 @@ public class CardFactoryUtil {
 
         return "";
     }
+    /*
+    //whenever CARDNAME becomes the target of a spell or ability, ... :
+    public static void checkTargetingEffects(SpellAbility sa, final Card c)
+    {
+    	
+    	//if (AllZoneUtil.isCardInPlay(c)) 
+    	//{
+    	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, return CARDNAME to its owner's hand.") ) { // || (c.isCreature() && AllZoneUtil.isCardInPlay("Cowardice"))
+    		SpellAbility ability = new Ability(c, "0")
+    		{
+    			public void resolve()
+    			{
+    				AllZone.getGameAction().moveToHand(c);
+    			}
+    		};
+    		StringBuilder sb = new StringBuilder();
+    		sb.append(c).append(" - return CARDNAME to its owner's hand.");
+    		ability.setStackDescription(sb.toString());
+    		
+    		AllZone.getStack().add(ability);
+    	}
+    	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, destroy CARDNAME.") 
+    			|| AllZoneUtil.isCardInPlay("Horobi, Death's Wail")) {
+    		
+    		SpellAbility ability = new Ability(c, "0")
+    		{
+    			public void resolve()
+    			{
+    				AllZone.getGameAction().destroy(c); 	
+    			}
+    		};
+    		StringBuilder sb = new StringBuilder();
+    		sb.append(c).append(" - destroy CARDNAME.");
+    		ability.setStackDescription(sb.toString());
+    		
+    		AllZone.getStack().add(ability);
+    	}
+    	if (c.hasKeyword("When CARDNAME becomes the target of a spell or ability, sacrifice it.")) {
+    		SpellAbility ability = new Ability(c, "0")
+    		{
+    			public void resolve()
+    			{
+    				AllZone.getGameAction().sacrifice(c);	
+    			}
+    		};
+    		StringBuilder sb = new StringBuilder();
+    		sb.append(c).append(" - sacrifice CARDNAME.");
+    		ability.setStackDescription(sb.toString());
+    		
+    		AllZone.getStack().add(ability);
+    	}
+
+    	//When enchanted creature becomes the target of a spell or ability, <destroy/exile/sacrifice> <that creature/CARDNAME>. (It can't be regenerated.)
+    	ArrayList<Card> auras = c.getEnchantedBy();
+    	for(int a=0;a<auras.size();a++)
+    	{
+    		final Card aura = auras.get(a);
+    		ArrayList<String> keywords = aura.getKeyword();
+    		for(int i=0;i<keywords.size();i++)
+    		{
+    			final String keyword = keywords.get(i);
+    			if(keyword.startsWith("When enchanted creature becomes the target of a spell or ability, "))
+    			{
+    				final String action[] = new String[1];
+    				action[0] = keyword.substring(66);
+    				String stackDesc = action[0];
+    				stackDesc = stackDesc.replace("that", "enchanted");
+    				stackDesc = stackDesc.substring(0,1).toUpperCase().concat(stackDesc.substring(1));
+    				stackDesc = aura.getName().concat(" (").concat(Integer.toString(aura.getUniqueNumber())).concat(") - ").concat(stackDesc);
+    				
+    				Ability saTrigger = new Ability(aura,"0") {
+    					public void resolve()
+    					{
+    						Card target = null;
+    						boolean noRegen = false;
+    						if(action[0].endsWith(" It can't be regenerated."))
+    	    				{
+    	    					noRegen = true;
+    	    					action[0] = action[0].substring(0,action[0].length()-25);
+    	    				}
+    	    				
+    	    				if(action[0].endsWith("CARDNAME."))
+    	    				{
+    	    					target = aura;
+    	    				}
+    	    				else if(action[0].endsWith("that creature."))
+    	    				{
+    	    					target = c;
+    	    				}
+    	    				else
+    	    				{
+    	    					throw new IllegalArgumentException("There is a problem in the keyword " + keyword + "for card \"" + c.getName() + "\"");
+    	    				}
+    	    				
+    	    				if(action[0].startsWith("exile"))
+    	    				{   					
+    	    					AllZone.getGameAction().exile(target);
+    	    				}
+    	    				else if(action[0].startsWith("destroy"))
+    	    				{
+    	    					if(noRegen)
+    	    					{
+    	    						AllZone.getGameAction().destroyNoRegeneration(target);
+    	    					}
+    	    					else
+    	    					{
+    	    						AllZone.getGameAction().destroy(target);
+    	    					}    					
+    	    				}
+    	    				else if(action[0].startsWith("sacrifice"))
+    	    				{
+    	    					AllZone.getGameAction().sacrifice(target);
+    	    				}
+    	    				else
+    	    				{
+    	    					throw new IllegalArgumentException("There is a problem in the keyword " + keyword + "for card \"" + c.getName() + "\"");
+    	    				}
+    					}
+    				};
+    				
+    				saTrigger.setStackDescription(stackDesc);
+    				
+    				AllZone.getStack().add(saTrigger);
+    			}
+    		}
+    	}
+    	//}
+    }*/
+
 
     /**
      * <p>main.</p>
