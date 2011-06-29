@@ -1221,7 +1221,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         }
     }
 
-    public static class DownloadAction extends AbstractAction {
+/*    public static class DownloadAction extends AbstractAction {
 
         private static final long serialVersionUID = 6564425021778307101L;
 
@@ -1234,7 +1234,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             Gui_DownloadPictures.startDownload(null);
         }
     }
-
+*/
     public static class DownloadActionLQ extends AbstractAction {
 
         private static final long serialVersionUID = -6234380664413874813L;
