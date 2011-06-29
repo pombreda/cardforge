@@ -35,15 +35,6 @@ public class Gui_DownloadPictures_LQ extends DefaultBoundedRangeModel implements
     /** Constant <code>serialVersionUID=-7890794857949935256L</code> */
     private static final long serialVersionUID = -7890794857949935256L;
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        startDownload(null);
-    }
-
     /** Constant <code>types</code> */
     public static final Proxy.Type[] types = Proxy.Type.values();
 

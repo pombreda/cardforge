@@ -6,13 +6,13 @@ import org.testng.annotations.Test;
 /**
  * Unit test for simple App.
  */
-@Test(groups = {"UnitTest"})
+@Test(groups = {"UnitTest"}, timeOut = 1000)
 public class BoosterDraft_1Test {
 
     /**
      *
      */
-    @Test
+    @Test(timeOut = 1000)
     public void BoosterDraft_1Test1() throws Exception {
         BoosterDraft_1 draft = new BoosterDraft_1();
         while (draft.hasNextChoice()) {

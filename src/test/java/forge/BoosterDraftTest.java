@@ -1,6 +1,7 @@
 package forge;
 
 import forge.deck.Deck;
+import org.testng.annotations.Test;
 
 /**
  * <p>BoosterDraftTest class.</p>
@@ -8,7 +9,8 @@ import forge.deck.Deck;
  * @author Forge
  * @version $Id: $
  */
-class BoosterDraftTest implements BoosterDraft {
+@Test(timeOut = 10)
+public class BoosterDraftTest implements BoosterDraft {
     int n = 3;
 
     /**
@@ -16,6 +18,7 @@ class BoosterDraftTest implements BoosterDraft {
      *
      * @return an array of {@link forge.deck.Deck} objects.
      */
+    @Test(timeOut = 10)
     public Deck[] getDecks() {
         return null;
     }

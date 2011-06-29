@@ -15,15 +15,15 @@ import java.util.Set;
  * @author Forge
  * @version $Id: $
  */
-@Test
+@Test(timeOut = 1000, enabled = false)
 public class RunTest {
     //@SuppressWarnings("unchecked") // HashSet needs <type>
 
     /**
      * <p>test.</p>
      */
-    @Test
-    static void test() {
+    @Test(timeOut = 1000, enabled = false)
+    void test() {
         {
             Card c;
             CardFactory cf = AllZone.getCardFactory();
@@ -324,9 +324,11 @@ public class RunTest {
      * @param message a {@link java.lang.String} object.
      * @param ok      a boolean.
      */
-    static void check(String message, boolean ok) {
-        if (!ok)
+    void check(String message, boolean ok) {
+        if (!ok) {
             //throw new RuntimeException("RunTest test error : " +message);
             System.out.println("RunTest test error : " + message);
+        }
+
     }
 }

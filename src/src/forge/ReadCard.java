@@ -22,38 +22,9 @@ import java.util.zip.ZipFile;
 public class ReadCard implements Runnable, NewConstants {
     private BufferedReader in;
     private String fileList[];
-    private ArrayList<Card> allCards = new ArrayList<Card>();
+    ArrayList<Card> allCards = new ArrayList<Card>();
     /** Constant <code>zipFile</code> */
     private static File zipFile;
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @throws java.lang.Exception if any.
-     */
-    public static void main(String args[]) throws Exception {
-        try {
-            ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER));
-
-            javax.swing.SwingUtilities.invokeAndWait(read);
-            //    read.run();
-
-            Card c[] = new Card[read.allCards.size()];
-            read.allCards.toArray(c);
-            for (int i = 0; i < c.length; i++) {
-                System.out.println(c[i].getName());
-                System.out.println(c[i].getManaCost());
-                System.out.println(c[i].getType());
-                System.out.println(c[i].getSpellText());
-                System.out.println(c[i].getKeyword());
-                System.out.println(c[i].getBaseAttack() + "/" + c[i].getBaseDefense() + "\n");
-            }
-        } catch (Exception ex) {
-            ErrorViewer.showError(ex);
-            System.out.println("Error reading file " + ex);
-        }
-    }
 
     /**
      * <p>getCards.</p>

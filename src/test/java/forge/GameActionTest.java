@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  *
  */
-@Test(groups = {"UnitTestAction"})
+@Test(groups = {"UnitTestAction"}, timeOut = 10)
 public class GameActionTest {
 
     /**

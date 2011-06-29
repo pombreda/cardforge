@@ -49,15 +49,6 @@ public class Gui_QuestOptions extends JFrame {
     private JPanel jPanel3 = new JPanel();
 
     /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        new Gui_QuestOptions();
-    }
-
-    /**
      * <p>Constructor for Gui_QuestOptions.</p>
      */
     public Gui_QuestOptions() {

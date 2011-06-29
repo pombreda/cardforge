@@ -32,23 +32,6 @@ class Gui_MultipleBlockers3 extends JFrame {
     private BorderLayout borderLayout3 = new BorderLayout();
     private JPanel creaturePanel = new JPanel();
 
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        CardList list = new CardList();
-        list.add(AllZone.getCardFactory().getCard("Elvish Piper", null));
-        list.add(AllZone.getCardFactory().getCard("Lantern Kami", null));
-        list.add(AllZone.getCardFactory().getCard("Frostling", null));
-        list.add(AllZone.getCardFactory().getCard("Frostling", null));
-
-        for (int i = 0; i < 2; i++)
-            new Gui_MultipleBlockers3(null, list, i + 1, null);
-    }
-
     /**
      * <p>Constructor for Gui_MultipleBlockers3.</p>
      *

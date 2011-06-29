@@ -18,22 +18,6 @@ public class Gui_ProgressBarWindow extends JDialog {
      */
     private static final long serialVersionUID = 5832740611050396643L;
     private final JPanel contentPanel = new JPanel();
-
-    /**
-     * Launch the application.
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        try {
-            Gui_ProgressBarWindow dialog = new Gui_ProgressBarWindow();
-            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-            dialog.setVisible(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     private JProgressBar progressBar = new JProgressBar();
 
     /**

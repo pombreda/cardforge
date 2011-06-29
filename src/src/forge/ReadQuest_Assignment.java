@@ -1,7 +1,6 @@
 package forge;
 
 import forge.error.ErrorViewer;
-import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
 import java.io.BufferedReader;
@@ -19,39 +18,10 @@ import java.util.List;
  */
 public class ReadQuest_Assignment implements Runnable, NewConstants {
     private BufferedReader in;
-    private ArrayList<Quest_Assignment> allQuests = new ArrayList<Quest_Assignment>();
+    ArrayList<Quest_Assignment> allQuests = new ArrayList<Quest_Assignment>();
 
     private int totalWins;
     private List<Integer> completedQuests = new ArrayList<Integer>();
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     * @throws java.lang.Exception if any.
-     */
-    public static void main(String args[]) throws Exception {
-        try {
-            ReadQuest_Assignment read = new ReadQuest_Assignment(ForgeProps.getFile(QUEST.QUESTS), null);
-
-            javax.swing.SwingUtilities.invokeAndWait(read);
-            //    read.run();
-
-            Quest_Assignment qa[] = new Quest_Assignment[read.allQuests.size()];
-            read.allQuests.toArray(qa);
-            for (int i = 0; i < qa.length; i++) {
-                System.out.println(qa[i].getId());
-                System.out.println(qa[i].getName());
-                System.out.println(qa[i].getDesc());
-                System.out.println(qa[i].getDifficulty());
-                System.out.println(qa[i].isRepeatable());
-                System.out.println(qa[i].getRequiredNumberWins());
-            }
-        } catch (Exception ex) {
-            ErrorViewer.showError(ex);
-            System.out.println("Error reading file " + ex);
-        }
-    }
 
     /**
      * <p>getQuests.</p>

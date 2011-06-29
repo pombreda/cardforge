@@ -208,7 +208,7 @@ public class Phase extends MyObservable implements java.io.Serializable {
         bRepeat = true;
     }
 
-    private String phaseOrder[] = {
+    String phaseOrder[] = {
             Constant.Phase.Untap,
             Constant.Phase.Upkeep,
             Constant.Phase.Draw,
@@ -789,19 +789,6 @@ public class Phase extends MyObservable implements java.io.Serializable {
         }
 
         return sb.toString();
-    }
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String args[]) {
-        Phase phase = new Phase();
-        for (int i = 0; i < phase.phaseOrder.length; i++) {
-            System.out.println(phase.getPlayerTurn() + " " + phase.getPhase());
-            phase.nextPhase();
-        }
     }
 
     /**

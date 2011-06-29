@@ -27,23 +27,6 @@ public class ReadBoosterPack implements NewConstants {
     private CardList uncommonList = new CardList();
     private CardList rareList = new CardList();
 
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-        //testing
-        ReadBoosterPack r = new ReadBoosterPack();
-
-
-        for (int i = 0; i < 1000; i++) {
-            r.getBoosterPack5();
-        }
-
-        System.exit(0);
-    }//main()
-
     /*
     //average creature versus noncreature
 
