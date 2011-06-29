@@ -4,7 +4,7 @@ Types:Creature Human Knight
 Text:no text
 PT:2/2
 K:First Strike
-A:AB$ Protection | Cost$ W W | Defined$ Self | Colors$ Any | SpellDescription$ CARDNAME gains protection from the color of your choice until end of turn.
+A:AB$ Protection | Cost$ W W | Defined$ Self | Gains$ Choice | Choices$ AnyColor | SpellDescription$ CARDNAME gains protection from the color of your choice until end of turn.
 #Computer isn't very good at picking a color to get protection from yet
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon

@@ -8,6 +8,7 @@ import forge.gui.GuiUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
@@ -161,7 +162,7 @@ public class AbilityFactory_Protection {
      */
     private static CardList getProtectCreatures(AbilityFactory af, SpellAbility sa) {
     	final Card hostCard = af.getHostCard();
-    	final ArrayList<String> colors = getProtectionColors(hostCard, af.getMapParams().get("Colors"));
+    	final ArrayList<String> gains = getProtectionList(hostCard, af.getMapParams());
 
         CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
         list = list.filter(new CardListFilter() {
@@ -170,7 +171,7 @@ public class AbilityFactory_Protection {
                     return false;
 
                 //Don't add duplicate protections
-                if(hasProtectionFromAll(c, colors)) return false;
+                if(hasProtectionFromAll(c, gains)) return false;
 
                 //will the creature attack (only relevant for sorcery speed)?
                 if(CardFactoryUtil.AI_doesCreatureAttack(c) && AllZone.getPhase().isBefore(Constant.Phase.Combat_Declare_Attackers)
@@ -283,6 +284,15 @@ public class AbilityFactory_Protection {
         CardList list = getProtectCreatures(af, sa);
 
         list = list.getValidCards(tgt.getValidTgts(), sa.getActivatingPlayer(), sa.getSourceCard());
+        
+        /*
+         * TODO - What this should probably do is if it's time for instants and abilities after Human
+         * declares attackers, determine desired protection before assigning blockers.
+         * 
+         * The other time we want protection is if I'm targeted by a damage or destroy spell on the stack
+         * 
+         * Or, add protection (to make it unblockable) when Compy is attacking.
+         */
 
         if(AllZone.getStack().size() == 0) {
             // If the cost is tapping, don't activate before declare attack/block
@@ -351,13 +361,13 @@ public class AbilityFactory_Protection {
         CardList pref = list.getController(AllZone.getComputerPlayer());
         pref = pref.filter(new CardListFilter() {
         	public boolean addCard(Card c) {
-        		return !hasProtectionFromAll(c, getProtectionColors(host, params.get("Colors")));
+        		return !hasProtectionFromAll(c, getProtectionList(host, params));
         	}
         });
         CardList pref2 = list.getController(AllZone.getComputerPlayer());
         pref = pref.filter(new CardListFilter() {
         	public boolean addCard(Card c) {
-        		return !hasProtectionFromAny(c, getProtectionColors(host, params.get("Colors")));
+        		return !hasProtectionFromAny(c, getProtectionList(host, params));
         	}
         });
         CardList forced = list.getController(AllZone.getHumanPlayer());
@@ -470,52 +480,64 @@ public class AbilityFactory_Protection {
     private static String protectStackDescription(AbilityFactory af, SpellAbility sa) {
     	HashMap<String,String> params = af.getMapParams();
     	Card host = af.getHostCard();
-    	
-    	final ArrayList<String> colors = new ArrayList<String>();
-        if(params.containsKey("Colors")) colors.addAll(Arrays.asList(params.get("Colors").split(",")));
-    	
-        StringBuilder sb = new StringBuilder();
 
-        ArrayList<Card> tgtCards;
-        Target tgt = af.getAbTgt();
-        if(tgt != null)
-            tgtCards = tgt.getTargetCards();
-        else
-            tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), params.get("Defined"), sa);
+    	final ArrayList<String> gains = getProtectionList(host, params);
+    	boolean choose = (params.containsKey("Choices")) ? true : false;
+    	String joiner = choose ? "or" : "and";
 
-        if(tgtCards.size() > 0) {
+    	StringBuilder sb = new StringBuilder();
 
-            if(sa instanceof Ability_Sub)
-                sb.append(" ");
-            else
-                sb.append(host).append(" - ");
+    	ArrayList<Card> tgtCards;
+    	Target tgt = af.getAbTgt();
+    	if(tgt != null)
+    		tgtCards = tgt.getTargetCards();
+    	else
+    		tgtCards = AbilityFactory.getDefinedCards(sa.getSourceCard(), params.get("Defined"), sa);
 
-            //TODO - add iterator
-            for(Card c : tgtCards)
-                sb.append(c).append(" ");
+    	if(tgtCards.size() > 0) {
 
-            sb.append("gains protection from ");
-            if(colors.contains("Any")) {
-            	sb.append("the color of your choice ");
-            }
-            else {
-            	for(int i = 0; i < colors.size(); i++) {
-            		sb.append(colors.get(i));
-            		if(i < (colors.size() - 1)) sb.append(",");
-            		sb.append(" ");
-            	}
+    		if(sa instanceof Ability_Sub)
+    			sb.append(" ");
+    		else
+    			sb.append(host).append(" - ");
+
+    		//TODO - add iterator
+    		for(Card c : tgtCards)
+    			sb.append(c).append(" ");
+    		
+    		Iterator<Card> it = tgtCards.iterator();
+            while (it.hasNext()) {
+                Card tgtC = it.next();
+                if (tgtC.isFaceDown()) sb.append("Morph");
+                else sb.append(tgtC);
+
+                if (it.hasNext()) sb.append(", ");
             }
 
-            if(!params.containsKey("Permanent"))
-                sb.append("until end of turn.");
-        }
+    		sb.append("gain");
+    		if(tgtCards.size() == 1) sb.append("s");
+    		sb.append(" protection from ");
+    		
+    		if(choose) sb.append("your choice of ");
 
-        Ability_Sub abSub = sa.getSubAbility();
-        if(abSub != null) {
-            sb.append(abSub.getStackDescription());
-        }
+    		for(int i = 0; i < gains.size(); i++) {
+    			sb.append(gains.get(i));
+    			if(i < (gains.size() - 1)) sb.append(joiner);
+    			sb.append(" ");
+    		}
 
-        return sb.toString();
+    		if(!params.containsKey("Permanent"))
+    			sb.append("until end of turn");
+    		
+    		sb.append(".");
+    	}
+
+    	Ability_Sub abSub = sa.getSubAbility();
+    	if(abSub != null) {
+    		sb.append(abSub.getStackDescription());
+    	}
+
+    	return sb.toString();
     }//protectStackDescription()
 
     /**
@@ -528,21 +550,31 @@ public class AbilityFactory_Protection {
     	HashMap<String,String> params = af.getMapParams();
     	final Card host = af.getHostCard();
     	
-    	final ArrayList<String> colors = new ArrayList<String>();
-        if(params.containsKey("Colors")) colors.addAll(Arrays.asList(params.get("Colors").split(",")));
+    	final ArrayList<String> gains = new ArrayList<String>();
+        if(params.containsKey("Gains")) gains.addAll(Arrays.asList(params.get("Gains").split(",")));
         
-        if(colors.contains("Any")) {
-        	colors.clear();
+        if(gains.contains("Choice")) {
+        	gains.clear();
         	if(sa.getActivatingPlayer().isHuman()) {
-                Object o = GuiUtils.getChoice("Choose a color", Constant.Color.onlyColors);
+        		Object o;
+        		if(params.get("Choices").equals("AnyColor")) {
+        			o = GuiUtils.getChoice("Choose a color", Constant.Color.onlyColors);
+        		}
+        		else {
+        			ArrayList<String> choices = new ArrayList<String>();
+        			choices.addAll(Arrays.asList(params.get("Choices").split(",")));
+        			o = GuiUtils.getChoice("Choose a protection", choices.toArray());
+        		}
                 if(null == o) return;
                 String choice = (String) o;
-                colors.add(choice);
+                gains.add(choice);
             }
         	else {
-            	//TODO - needs improvement
-                colors.add(Constant.Color.Black);
-                JOptionPane.showMessageDialog(null, "Computer chooses "+Constant.Color.Black, ""+host, JOptionPane.PLAIN_MESSAGE); 
+        		//TODO - needs improvement
+        		ArrayList<String> choices = new ArrayList<String>();
+    			choices.addAll(Arrays.asList(params.get("Choices").split(",")));
+                gains.add(choices.get(0));
+                JOptionPane.showMessageDialog(null, "Computer chooses "+choices.get(0), ""+host, JOptionPane.PLAIN_MESSAGE); 
             }
         }
     	
@@ -567,8 +599,8 @@ public class AbilityFactory_Protection {
             if(tgt != null && !CardFactoryUtil.canTarget(host, tgtC))
             	continue;
 
-            for(String color : colors) {
-            	tgtC.addExtrinsicKeyword("Protection from "+color);
+            for(String gain : gains) {
+            	tgtC.addExtrinsicKeyword("Protection from "+gain);
             }
 
             if(!params.containsKey("Permanent")) {
@@ -578,8 +610,8 @@ public class AbilityFactory_Protection {
 
             		public void execute() {
             			if(AllZoneUtil.isCardInPlay(tgtC)) {
-            				for (String color : colors) {
-            					tgtC.removeExtrinsicKeyword("Protection from "+color);
+            				for (String gain : gains) {
+            					tgtC.removeExtrinsicKeyword("Protection from "+gain);
             				}
             			}
             		}
@@ -590,16 +622,21 @@ public class AbilityFactory_Protection {
         }
     }//protectResolve()
     
-    private static ArrayList<String> getProtectionColors(Card host, String s) {
-    	final ArrayList<String> colors = new ArrayList<String>();
-        colors.addAll(Arrays.asList(s.split(",")));
-
-        //allow "color of your choice" - overrides anything else specified
-        if(colors.contains("Any")) {
-            colors.clear();
-        }
-        
-        return colors;
+    private static ArrayList<String> getProtectionList(Card host, HashMap<String,String> params) {
+    	final ArrayList<String> gains = new ArrayList<String>();
+    	
+    	if(params.get("Gains").equals("Choice")) {
+    		if(params.get("Choices").equals("AnyColor")) {
+    			gains.addAll(Arrays.asList(Constant.Color.onlyColors));
+    		}
+    		else {
+    			gains.addAll(Arrays.asList(params.get("Choices").split(",")));
+    		}
+    	}
+    	else {
+    		gains.addAll(Arrays.asList(params.get("Gains").split(",")));
+    	}
+        return gains;
     }
     
 }//end class AbilityFactory_Protection
