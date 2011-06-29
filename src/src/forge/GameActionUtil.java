@@ -848,6 +848,7 @@ public class GameActionUtil {
                         }
                     };
                     upkeepAbility.setStackDescription(sb.toString());
+                    upkeepAbility.setDescription(sb.toString());
 
                     AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
                 }//destroy
@@ -886,6 +887,7 @@ public class GameActionUtil {
                         }
                     };
                     upkeepAbility.setStackDescription(sb.toString());
+                    upkeepAbility.setDescription(sb.toString());
 
                     AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
                 }//sacrifice
@@ -954,6 +956,7 @@ public class GameActionUtil {
                 }
             };
             upkeepAbility.setStackDescription(sb.toString());
+            upkeepAbility.setDescription(sb.toString());
 
             AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
 

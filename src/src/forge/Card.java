@@ -4056,12 +4056,12 @@ public class Card extends MyObservable {
      * @return a {@link java.util.ArrayList} object.
      */
     public ArrayList<String> getHiddenExtrinsicKeyword() {
-        ArrayList<String> Keyword = new ArrayList<String>();
+        ArrayList<String> keywords = new ArrayList<String>();
         for (int i = 0; i < HiddenExtrinsicKeyword.size(); i++) {
             String keyword = HiddenExtrinsicKeyword.get(i);
-            Keyword.add(keyword.replace("HIDDEN ", ""));
+            keywords.add(keyword.substring(7));
         }
-        return Keyword;
+        return keywords;
     }
 
     /**
