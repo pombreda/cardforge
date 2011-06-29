@@ -822,7 +822,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
         greenCheckBox.setOpaque(false);
         colorlessCheckBox.setOpaque(false);
 
-        picture.addMouseListener(new CustomListener());
+        //picture.addMouseListener(new CustomListener());
         if (!Gui_NewGame.useLAFFonts.isSelected()) statsLabel.setFont(new java.awt.Font("Dialog", 0, 13));
         statsLabel.setText("Total: 0, Creatures: 0, Land: 0");
         //Do not lower statsLabel any lower, we want this to be visible at 1024 x 768 screen size
@@ -1248,8 +1248,8 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 
     /*CHOPPIC*/
 
-    public class CustomListener extends MouseAdapter {
-//        TODO reenable
+//    public class CustomListener extends MouseAdapter {
+//        reenable
 //        public void mouseEntered(MouseEvent e) {
 //            
 //            if(picturePanel.getComponentCount() != 0) {
@@ -1266,7 +1266,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 //                    try {
 //                        cHeight = GuiDisplayUtil.getPictureHQheight(cCardHQ);
 //                    } catch(IOException e2) {
-//                        // TODO Auto-generated catch block
+//                        //  Auto-generated catch block
 //                        e2.printStackTrace();
 //                    }
 //                    
@@ -1285,6 +1285,6 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 //            }
 //            
 //        }
-    }
+//    }
 
 }
