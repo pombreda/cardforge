@@ -280,7 +280,6 @@ class BoosterDraft_1 implements BoosterDraft {
     /** {@inheritDoc} */
     public void setChoice(Card c) {
         CardList list = pack[getMod()];
-        currentCount++;
 
         if (!list.contains(c))
             throw new RuntimeException("BoosterDraft : setChoice() error - card not found - " + c + " - booster pack = " + list);
@@ -292,9 +291,9 @@ class BoosterDraft_1 implements BoosterDraft {
 
                 float pickValue = 0;
                 if (cc.equals(c))
-                    pickValue = 10;
+                    pickValue = (float)list.size() * (((((float)stopCount - (float)currentCount) * 100) / (float)stopCount) / 50);
                 else
-                    pickValue = 1;
+                    pickValue = 0;
 
                 if (!draftPicks.containsKey(CnBk)) {
                     draftPicks.put(CnBk, pickValue);
@@ -307,5 +306,6 @@ class BoosterDraft_1 implements BoosterDraft {
         }
 
         list.remove(c);
+        currentCount++;
     }//setChoice()
 }
