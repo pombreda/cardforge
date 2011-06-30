@@ -7,4 +7,5 @@ A:SP$ Debuff | Cost$ G | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/canopy_claws.jpg
+SetInfo:JUD|Common|http://magiccards.info/scans/en/ju/108.jpg
 End
