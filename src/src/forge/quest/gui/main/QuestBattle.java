@@ -93,6 +93,7 @@ public class QuestBattle extends QuestSelectablePanel {
 //        addToDeckList("Colossus 2", "medium", "RG Changeling deck");
 //        addToDeckList("Colossus 3", "hard", "UG Standard Constructed deck");
         addToDeckList("Comic Book Guy 3", "hard", "WR deck with Roc and Rukh Eggs, Flamebrake, Earthquake and Auriok Champion");
+        addToDeckList("Cow 1", "easy", "Mono R Minotaur deck");
 //        addToDeckList("Conan 3", "hard", "Red monsters deck");
         addToDeckList("Crocodile Dundee 1", "easy", "Mono R deck with Mudbrawler Cohort and Bloodmark Mentor");
         addToDeckList("Crocodile Dundee 2", "medium", "Mono R deck with Mudbrawler Cohort and Bloodmark Mentor");
