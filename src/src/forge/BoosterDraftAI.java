@@ -607,6 +607,28 @@ public class BoosterDraftAI {
 
             int trgA = a.getTriggers().size() * 10;
             int trgB = b.getTriggers().size() * 10;
+            
+            int rarA = 0;
+            int rarB = 0;
+            
+            if (a.getCurSetRarity().equals("Common"))
+            	rarA = 1;
+            else if (a.getCurSetRarity().equals("Uncommon"))
+            	rarA = 2;
+            else if (a.getCurSetRarity().equals("Rare"))
+            	rarA = 4;
+            else if (a.getCurSetRarity().equals("Mythic"))
+            	rarA = 8;
+            
+            if (b.getCurSetRarity().equals("Common"))
+            	rarB = 1;
+            else if (b.getCurSetRarity().equals("Uncommon"))
+            	rarB = 2;
+            else if (b.getCurSetRarity().equals("Rare"))
+            	rarB = 4;
+            else if (b.getCurSetRarity().equals("Mythic"))
+            	rarB = 8;
+
 /**
  * <p>Constructor for deckColors.</p>
  *
@@ -615,8 +637,8 @@ public class BoosterDraftAI {
  * @param sp a {@link java.lang.String} object.
  */
 
-            int scoreA = ((attA + defA) / cmcA) + keyA + abA + trgA;
-            int scoreB = ((attB + defB) / cmcB) + keyB + abB + trgB;
+            int scoreA = ((attA + defA) / cmcA) + keyA + abA + trgA + rarA;
+            int scoreB = ((attB + defB) / cmcB) + keyB + abB + trgB + rarB;
 
             if (scoreA == scoreB)
                 return 0;
