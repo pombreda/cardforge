@@ -12,6 +12,11 @@ import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import com.google.code.jyield.YieldUtils;
+
+import net.slightlymagic.braids.util.generator.FindNonDirectoriesSkipDotDirectoriesGenerator;
+import net.slightlymagic.braids.util.generator.GeneratorFunctions;
+
 import forge.gui.MultiPhaseProgressMonitorWithETA;
 
 
@@ -23,10 +28,11 @@ import forge.gui.MultiPhaseProgressMonitorWithETA;
  */
 public class ReadCard implements Runnable, NewConstants {
     private BufferedReader in;
-    private String fileList[];
     ArrayList<Card> allCards = new ArrayList<Card>();
+	private File cardsfolder;
+    
     /** Constant <code>zipFile</code> */
-    private static File zipFile;
+    private static File zipFile;  // TODO Why is this static?
 
     /**
      * <p>getCards.</p>
@@ -61,26 +67,16 @@ public class ReadCard implements Runnable, NewConstants {
                     + cardsfolder.getAbsolutePath());
         zipFile = new File(cardsfolder, CARDSFOLDER + ".zip");
 
-        if (!zipFile.exists())
-            fileList = cardsfolder.list();
-        //makes the checked exception, into an unchecked runtime exception
-        //try {
-        //    in = new BufferedReader(new FileReader(file));
-        //} catch(Exception ex) {
-        //    ErrorViewer.showError(ex, "File \"%s\" not found", file.getAbsolutePath());
-        //    throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
-        //            + file.getPath());
-        //}
+        this.cardsfolder = cardsfolder;
     }//ReadCard()
 
-    /**
+	/**
      * <p>run.</p>
      * @since 1.0.15
      */
     public void run() {
         Card c = null;
         ArrayList<String> cardNames = new ArrayList<String>();
-        File fl = null;
 
         if (zipFile.exists()) {
             try {
@@ -90,20 +86,18 @@ public class ReadCard implements Runnable, NewConstants {
                 int zipSize = zip.size();
                 
                 MultiPhaseProgressMonitorWithETA monitor = 
-                	new MultiPhaseProgressMonitorWithETA("Loading card database from ZIP", 
+                	new MultiPhaseProgressMonitorWithETA("Forge - Loading card database from ZIP", 
                 			1, zipSize, 1.0f);
                 
                 Enumeration<? extends ZipEntry> e = zip.entries();
                 while (e.hasMoreElements()) {
-                	monitor.incrementUnitsCompletedThisPhase(1L);
 
                 	entry = (ZipEntry) e.nextElement();
                     
                     if (entry.isDirectory() || !entry.getName().endsWith(".txt")) {
+                    	monitor.incrementUnitsCompletedThisPhase(1L);
                         continue;
                     }
-                    
-                    System.err.println("Loading card file: " + entry.getName());
                     
                     in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
                     c = new Card();
@@ -111,6 +105,7 @@ public class ReadCard implements Runnable, NewConstants {
                     cardNames.add(c.getName());
                     allCards.add(c);
                     in.close();
+                	monitor.incrementUnitsCompletedThisPhase(1L);
                 }
                 
                 monitor.getDialog().dispose();
@@ -120,23 +115,27 @@ public class ReadCard implements Runnable, NewConstants {
             }
 
         } else {
-            MultiPhaseProgressMonitorWithETA monitor = 
-            	new MultiPhaseProgressMonitorWithETA("Loading card database from files", 
-            			1, fileList.length, 1.0f);
-            
-            for (int i = 0; i < fileList.length; i++) {
-            	monitor.incrementUnitsCompletedThisPhase(1L);
 
-            	if (!fileList[i].endsWith(".txt"))
+        	FindNonDirectoriesSkipDotDirectoriesGenerator findNonDirsGen = new FindNonDirectoriesSkipDotDirectoriesGenerator(cardsfolder);
+        	long fileCount = GeneratorFunctions.estimateSize(findNonDirsGen);
+        	
+            MultiPhaseProgressMonitorWithETA monitor = 
+            	new MultiPhaseProgressMonitorWithETA("Forge - Loading card database from files", 
+            			1, fileCount, 1.0f);
+            
+            for (File cardTxtFile : YieldUtils.toIterable(findNonDirsGen)) {
+				if (!cardTxtFile.getName().endsWith(".txt")) {
+	            	monitor.incrementUnitsCompletedThisPhase(1L);
                     continue;
+				}
 
                 try {
-                    fl = new File("res/cardsfolder/" + fileList[i]);
-                    in = new BufferedReader(new FileReader(fl));
+                    in = new BufferedReader(new FileReader(cardTxtFile));
                 } catch (Exception ex) {
-                    ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
+                    ErrorViewer.showError(ex, "File \"%s\" exception", cardTxtFile.getAbsolutePath());
                     throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
-                            + fl.getPath());
+                            + cardTxtFile.getPath(),
+                            ex);
                 }
 
                 c = new Card();
@@ -144,12 +143,15 @@ public class ReadCard implements Runnable, NewConstants {
                 cardNames.add(c.getName());
                 allCards.add(c);
 
+            	monitor.incrementUnitsCompletedThisPhase(1L);
+
                 try {
                     in.close();
                 } catch (IOException ex) {
-                    ErrorViewer.showError(ex, "File \"%s\" exception", fl.getAbsolutePath());
+                    ErrorViewer.showError(ex, "File \"%s\" exception", cardTxtFile.getAbsolutePath());
                     throw new RuntimeException("ReadCard : run error -- file exception -- filename is "
-                            + fl.getPath());
+                            + cardTxtFile.getPath(),
+                            ex);
                 }
 
             } //endfor
@@ -186,7 +188,7 @@ public class ReadCard implements Runnable, NewConstants {
             return s;
         } catch (Exception ex) {
             ErrorViewer.showError(ex);
-            throw new RuntimeException("ReadCard : readLine(Card) error");
+            throw new RuntimeException("ReadCard : readLine(Card) error", ex);
         }
     }//readLine(Card)
 
