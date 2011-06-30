@@ -75,7 +75,7 @@ public class GameActionUtil {
         upkeep_Sleeper_Agent();
         upkeep_Pillory_of_the_Sleepless();
         upkeep_Mirror_Sigil_Sergeant();
-        upkeep_Dragon_Broodmother(); //put this before bitterblossom and mycoloth, so that they will resolve FIRST
+       // upkeep_Dragon_Broodmother(); //put this before bitterblossom and mycoloth, so that they will resolve FIRST
 
         //Win / Lose
         // Checks for can't win or can't lose happen in Player.altWinConditionMet()
@@ -4534,6 +4534,7 @@ public class GameActionUtil {
     /**
      * <p>upkeep_Dragon_Broodmother.</p>
      */
+    /*
     private static void upkeep_Dragon_Broodmother() {
         CardList list = AllZoneUtil.getCardsInPlay("Dragon Broodmother");
 
@@ -4665,7 +4666,7 @@ public class GameActionUtil {
 
         }// for
     }// upkeep_Dragon_Broodmother()
-
+*/
     /**
      * <p>draw_Sylvan_Library.</p>
      *
