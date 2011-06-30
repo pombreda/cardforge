@@ -1,8 +1,6 @@
 
 package forge;
 
-import java.util.Collection;
-
 import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 
 import com.esotericsoftware.minlog.Log;
@@ -76,7 +74,7 @@ public class ComputerAI_Input extends Input {
     }//think
 
 	@Override
-	public Collection<MinimaxMove> getMoves() {
+	public Iterable<MinimaxMove> getMoves() {
 		throw new IllegalStateException("ComputerAI_Input.getMoves must never be called.");
 	}
 }

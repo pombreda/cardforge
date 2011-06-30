@@ -1,13 +1,9 @@
 
 package forge.card.cardFactory;
 
-import java.util.Collection;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -344,11 +340,6 @@ class CardFactory_Lands {
         							else stop();
         						}
         					}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer()).filter(AllZoneUtil.untapped).size() < 2)) {
         					AllZone.getGameAction().sacrifice(card);
@@ -417,11 +408,6 @@ class CardFactory_Lands {
         							stop();
         						}
         					}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				AllZone.getInputControl().setInput(target);
         			}
@@ -505,11 +491,6 @@ class CardFactory_Lands {
         							else stop();
         						}
         					}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				AllZone.getInputControl().setInput(target);
         			}
@@ -595,12 +576,6 @@ class CardFactory_Lands {
                     }
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             addMana.setDescription(desc.toString());
@@ -667,12 +642,6 @@ class CardFactory_Lands {
         					card.tap();
         					stop();
         				}
-
-						@Override
-						public Collection<MinimaxMove> getMoves() {
-							// TODO Auto-generated method stub
-							throw new NotImplementedError();
-						}
         			});
                 }//execute()
                 
@@ -783,12 +752,6 @@ class CardFactory_Lands {
                     }
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             addMana.setDescription(description.toString());
             addMana.setAfterPayMana(runtime);
@@ -843,11 +806,6 @@ class CardFactory_Lands {
         							stop();
         						}
         					}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				AllZone.getInputControl().setInput(target);
         			}
@@ -903,11 +861,6 @@ class CardFactory_Lands {
         							stop();
         						}
         					}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				AllZone.getInputControl().setInput(target);
         			}

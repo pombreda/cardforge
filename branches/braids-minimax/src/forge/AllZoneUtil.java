@@ -798,16 +798,16 @@ public class AllZoneUtil {
         all.addAll(AllZone.getHumanLibrary().getCards());
         all.addAll(AllZone.getHumanBattlefield().getCards());
         all.addAll(AllZone.getHumanExile().getCards());
-        //should this include getHumanCommand() ?
-        //all.addAll(AllZone.getHuman_Sideboard().getCards());
+        //should this include Human_Command ?
+        //all.addAll(AllZone.getHumanSideboard().getCards());
         
         all.addAll(AllZone.getComputerGraveyard().getCards());
         all.addAll(AllZone.getComputerHand().getCards());
         all.addAll(AllZone.getComputerLibrary().getCards());
         all.addAll(AllZone.getComputerBattlefield().getCards());
         all.addAll(AllZone.getComputerExile().getCards());
-        //should this include getComputerCommand() ?
-        //all.addAll(AllZone.getComputer_Sideboard().getCards());
+        //should this include Computer_Command ?
+        //all.addAll(AllZone.getComputerSideboard().getCards());
         
         return all;
     }
@@ -860,4 +860,3 @@ public class AllZoneUtil {
 	}
 
 }//end class AllZoneUtil
-

@@ -3,7 +3,6 @@ package forge.card.cardFactory;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,9 +10,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -1093,12 +1089,6 @@ public class CardFactory implements NewConstants {
 					}
 					stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             necrogen.setDescription("2: Exile target creature card in a graveyard. Put a 1/1 green Saproling creature token onto the battlefield.");
@@ -1191,12 +1181,6 @@ public class CardFactory implements NewConstants {
 					}
 					stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             nightSoil.setDescription("1, Exile two creature cards from a single graveyard: Put a 1/1 green Saproling creature token onto the battlefield.");
@@ -1276,12 +1260,6 @@ public class CardFactory implements NewConstants {
                     if (paid)
                     	AllZone.getStack().add(ability);
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             ability.setBeforePayMana(payLife);
             
@@ -1436,12 +1414,6 @@ public class CardFactory implements NewConstants {
                         stop();
                     }
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             final SpellAbility ability = new Ability(card, "0") {
@@ -1988,12 +1960,6 @@ public class CardFactory implements NewConstants {
                     }
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             addMana.setDescription(desc.toString());
@@ -2238,12 +2204,6 @@ public class CardFactory implements NewConstants {
         						
     							stop();
         					}
-
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				});
         			}
         		}
@@ -2679,11 +2639,6 @@ public class CardFactory implements NewConstants {
             			stopSetNext(new Input_PayManaCost(copy));
             		}
             	}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					throw new NotImplementedError();
-				}
             };
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
             card.clearFirstSpellAbility();

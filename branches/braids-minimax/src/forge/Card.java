@@ -1340,12 +1340,8 @@ public class Card extends MyObservable {
     
     public void addSpellAbility(SpellAbility a) {
         a.setSourceCard(this);
-        if(a instanceof Ability_Mana) {  
-        	manaAbility.add((Ability_Mana) a);
-        }
-        else {
-        	spellAbility.add(a);
-        }
+        if(a instanceof Ability_Mana) manaAbility.add((Ability_Mana) a);
+        else spellAbility.add(a);
     }
     
     public void removeSpellAbility(SpellAbility a) {

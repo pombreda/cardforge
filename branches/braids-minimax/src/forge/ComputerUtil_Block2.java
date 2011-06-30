@@ -251,7 +251,7 @@ public class ComputerUtil_Block2
 					  && !(attacker.getKillDamage() > currentDamage + additionalDamage) //The attacker will be killed
 					  && (absorbedDamage2 + absorbedDamage > attacker.getNetCombatDamage() //only one blocker can be killed
 							  || currentValue + addedValue - 50 <= CardFactoryUtil.evaluateCreature(attacker)) //attacker is worth more
-					  && CombatUtil.canBlock(attacker,blocker,combat)) {//this is needed for Attackers that can't be blocked by more than 1
+					  && CombatUtil.canBlock(attacker,blocker,combat)) {//this is needed for attackers that can't be blocked by more than 1
 				  currentAttackers.remove(attacker);
 				  combat.addBlocker(attacker, blocker);
 				  combat.addBlocker(attacker, leader);
@@ -491,4 +491,3 @@ public class ComputerUtil_Block2
 	 return combat;
    }
 }
-

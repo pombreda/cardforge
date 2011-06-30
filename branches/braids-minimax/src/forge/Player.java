@@ -1183,5 +1183,4 @@ public abstract class Player extends MyObservable
 	public String toString() {
 		return name;
 	}
-
 }
