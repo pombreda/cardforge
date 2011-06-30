@@ -7,8 +7,53 @@
     <packaging>jar</packaging>
     <name>Forge</name>
     <version>1.0.15-SNAPSHOT</version>
-    <description>Forge</description>
-    <url>http://www.slightlymagic.net/</url>
+    <description>
+        Forge lets you play the card game Magic: The Gathering against a computer opponent
+        using all of the rules.
+    </description>
+    <!-- This is very different than playing solitare Magic with Apprentice or Magic Workstation
+        because the AI will attack and play spells. Currently there are over 8400 cards ranging from old power cards
+        like Ancestral Recall and Lightning Bolt to newer cards like planeswalkers. The user interface is basic, but it
+        does let you download all of the cards pictures and view them while playing the game.
+
+        If you don't know Magic, the easiest way to learn is to download the demo and rulebook from
+        http://www.wizards.com/magic/TCG/NewtoMagic.aspx?x=mtg/tcg/newtomagic/learntoplay
+
+        You can also play sealed deck, draft, or the new quest mode. In draft mode the AI drafts for the 7 other
+        opponents and builds the decks from the cards that it chooses. In the quest mode you start out with a few cards
+        and the more games that you play the more that you win. As you get more cards you can update and change your
+        deck.
+
+        There is also a "quest mode" where you start out with a small, random cardpool and you win more cards by playing
+        against opponents. This is a scaled down version of Shandalar that is only menu based. On easy mode your goal is
+        to win 10 matches. Easy mode is well easy because you always win cards after the match whether you win or lose.
+        On some of the harder modes you only win cards if you win. Quest mode is challenging since the computer uses
+        cards that are better than the stinky ones that you have. The computer opponents are divided into three
+        categories so they get progressively harder.
+
+        Forge supports a number of keywords such as exalted, fear, flying, shadow, flanking, protection, wither, flash,
+        defender, reach, and haste. Forge now also has a mana pool and supports creature enchantments.
+
+        The AI is very simple and does the best that it can. It tries to do reasonable actions. Sometimes the computer
+        seems smart and sometimes it doesn't. Truthfully the AI plays random cards from its hand and each card has some
+        AI code programmed into it. The computer can play cards like Counterspell but in all other cases the computer
+        will never respond to a spell or ability on the stack. Also the computer will only play spells during its Main
+        phase.
+
+        Forge runs on Windows, Linux, and Macs. You can download Forge from
+        http://code.google.com/p/cardforge/downloads/list  -->
+    <url>http://cardforge.org</url>
+    <organization>
+        <name>CardForge</name>
+        <url>http://cardforge.org</url>
+    </organization>
+    <inceptionYear>2007</inceptionYear>
+    <!--<url>http://www.slightlymagic.net/</url>
+    <url>http://code.google.com/p/cardforge/</url> -->
+    <issueManagement>
+        <system>GoogleCode</system>
+        <url>http://code.google.com/p/cardforge/issues/list</url>
+    </issueManagement>
     <properties>
         <project.build.sourceEncoding>
             ISO-8859-1
@@ -39,17 +84,95 @@
                 <role>developer</role>
             </roles>
         </developer>
+        <developer>
+            <id>Jendave</id>
+            <name>David Hudson</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>slapshot5</id>
+            <name>dennis.r.friedrichsen</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>BraidsCC</id>
+            <name>Braids</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>FriarSol</id>
+            <name>zenchristo</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Hellfish</id>
+            <name>keybone</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>Sloth</id>
+            <name>deepsloth</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>jeffwadsworth2010</id>
+            <name>jeffwadsworth2010</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>0soulstorm0</id>
+            <name>0soulstorm0</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
     </developers>
+
     <licenses>
         <license>
             <name>GPL 3</name>
             <url>http://www.gnu.org/licenses/gpl-3.0-standalone.html</url>
         </license>
     </licenses>
+
     <scm>
         <connection>scm:svn:https://cardforge.googlecode.com/svn/src</connection>
         <developerConnection>scm:svn:https://cardforge.googlecode.com/svn/src</developerConnection>
     </scm>
+
+    <prerequisites>
+        <maven>2.2.1</maven>
+    </prerequisites>
+
+    <mailingLists>
+        <mailingList>
+            <name>Forge Forum</name>
+            <archive>http://www.slightlymagic.net/forum/viewforum.php?f=26</archive>
+        </mailingList>
+        <mailingList>
+            <name>Forge Decks Forum</name>
+            <archive>http://www.slightlymagic.net/forum/viewforum.php?f=48</archive>
+        </mailingList>
+        <mailingList>
+            <name>Forge Developer's Corner Forum</name>
+            <archive>http://www.slightlymagic.net/forum/viewforum.php?f=52</archive>
+        </mailingList>
+    </mailingLists>
+
     <build>
         <sourceDirectory>src</sourceDirectory>
         <resources>
@@ -168,6 +291,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
                 <version>3.0-beta-3</version>
+                <configuration>
+                    <siteDirectory>${basedir}/site</siteDirectory>
+                    <port>8081</port>
+                </configuration>
                 <dependencies>
                     <dependency>
                         <groupId>com.google.code.maven-svn-wagon</groupId>
@@ -185,7 +312,6 @@
                     <artifactId>maven-gcu-plugin</artifactId>
                     <version>1.1</version>
                 </plugin>
-
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -223,30 +349,6 @@
                         </reports>
                     </reportSet>
                 </reportSets>
-            </plugin>
-
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>taglist-maven-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <tagListOptions>
-                        <tagClasses>
-                            <tagClass>
-                                <tags>
-                                    <tag>
-                                        <matchString>todo</matchString>
-                                        <matchType>ignoreCase</matchType>
-                                    </tag>
-                                    <tag>
-                                        <matchString>FIXME</matchString>
-                                        <matchType>exact</matchType>
-                                    </tag>
-                                </tags>
-                            </tagClass>
-                        </tagClasses>
-                    </tagListOptions>
-                </configuration>
             </plugin>
 
             <plugin>
@@ -316,6 +418,46 @@
                 <version>2.3.1</version>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-changelog-plugin</artifactId>
+                <version>2.2</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>taglist-maven-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <tagListOptions>
+                        <tagClasses>
+                            <tagClass>
+                                <tags>
+                                    <tag>
+                                        <matchString>todo</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>FIXME</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                    <tag>
+                                        <matchString>deprecated</matchString>
+                                        <matchType>ignoreCase</matchType>
+                                    </tag>
+                                </tags>
+                            </tagClass>
+                        </tagClasses>
+                    </tagListOptions>
+                </configuration>
+            </plugin>
+
         </plugins>
     </reporting>
 
@@ -350,6 +492,11 @@
             <artifactId>testng</artifactId>
             <version>6.0.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.jyield</groupId>
+            <artifactId>jyield</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
@@ -459,6 +606,9 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-site-plugin</artifactId>
                         <version>2.3</version>
+                        <configuration>
+                            <port>8081</port>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <artifactId>maven-antrun-plugin</artifactId>
