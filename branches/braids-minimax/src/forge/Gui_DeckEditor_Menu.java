@@ -853,7 +853,6 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentDeckPlayerType = deck.getMetadata("PlayerType");
 
         CardList top = new CardList();
-
         if (deck.countSideboard() > 0) {
 	        for (int i = 0; i < deck.countSideboard(); i++) {
 	            String cardName = deck.getSideboard(i);
@@ -869,7 +868,6 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 	        }
         }
         CardList bottom = new CardList();
-
         if (deck.countMain() > 0) {
 	        for (int i = 0; i < deck.countMain(); i++) {
 	            String cardName = deck.getMain(i);
