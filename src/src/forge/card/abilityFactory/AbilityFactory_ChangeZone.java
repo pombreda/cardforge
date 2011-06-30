@@ -1610,7 +1610,7 @@ public class AbilityFactory_ChangeZone {
         if (subAb != null)
             chance &= subAb.chkAI_Drawback();
 
-        return ((r.nextFloat() < .8) && chance);
+        return ((r.nextFloat() < .8 || sa.isTrigger()) && chance);
     }
 
     /**
