@@ -3,14 +3,10 @@ package forge.card.cardFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 import java.util.Map.Entry;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -467,12 +463,6 @@ public class CardFactoryUtil {
                 }
                  else stopSetNext(new Input_PayManaCost(spell));
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_targetSpell()
@@ -494,12 +484,6 @@ public class CardFactoryUtil {
                     stop();
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_destroyNoRegeneration()
@@ -557,12 +541,6 @@ public class CardFactoryUtil {
                     	showMessage();
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_sacrificePermanents()
@@ -601,12 +579,6 @@ public class CardFactoryUtil {
                     showMessage();
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }
@@ -646,12 +618,6 @@ public class CardFactoryUtil {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         
         return target;
@@ -1766,12 +1732,6 @@ public class CardFactoryUtil {
                     paid.execute();
                 }
             }//selectCard()
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_targetSpecific()
@@ -1814,12 +1774,6 @@ public class CardFactoryUtil {
             		}
             	}
             }//selectCard()
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_targetSpecific()
@@ -1836,12 +1790,6 @@ public class CardFactoryUtil {
 	            stopSetNext(input_targetSpecific(equip, list,
 	                    "Select target creature to equip", true, false));
 	        }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
 	    };//Input
 	    return runtime;
     }
@@ -1874,12 +1822,6 @@ public class CardFactoryUtil {
                     	showMessage();
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_discard()
@@ -1931,12 +1873,6 @@ public class CardFactoryUtil {
             	}
             	stop();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_discardRecall()
@@ -1965,12 +1901,6 @@ public class CardFactoryUtil {
     				stop();                  
     			}
     		}//selectCard()
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
     	};
     	return target;
     }//input_MasteroftheWildHunt_input_targetCreature()
@@ -2002,12 +1932,6 @@ public class CardFactoryUtil {
 	                stop();
 	            }
 	        }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
 	    };
 	    return modularInput;
     }
@@ -3097,12 +3021,6 @@ public class CardFactoryUtil {
                     if(count == stop) stop();
                 }
             }//selectCard()
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
      
         return untap;

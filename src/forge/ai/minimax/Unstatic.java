@@ -1,5 +1,7 @@
 package forge.ai.minimax;
 
+import java.io.File;
+
 import forge.card.cardFactory.CardFactory;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
@@ -46,7 +48,8 @@ public class Unstatic {
 	}
 
 	public static void initCardFactory() {
-		cardFactory = new CardFactory(ForgeProps.getFile(NewConstants.CARDSFOLDER));
+		File cardsFolder = ForgeProps.getFile(NewConstants.CARDSFOLDER);
+		cardFactory = new CardFactory(cardsFolder);
 	}
 	
 	

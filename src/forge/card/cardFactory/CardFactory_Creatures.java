@@ -3,15 +3,11 @@ package forge.card.cardFactory;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -491,12 +487,6 @@ public class CardFactory_Creatures {
                     AllZone.getGameAction().sacrifice(card);
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             final SpellAbility ability = new Ability(card, "0") {
@@ -692,12 +682,6 @@ public class CardFactory_Creatures {
                                 stop();
                             }
                         }
-
-						@Override
-						public Collection<MinimaxMove> getMoves() {
-							// TODO Auto-generated method stub
-							throw new NotImplementedError();
-						}
                     };//Input target
                     
 
@@ -848,12 +832,6 @@ public class CardFactory_Creatures {
                 		stop();
                 	}
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
             
             card.addSpellAbility(ability);
@@ -995,12 +973,6 @@ public class CardFactory_Creatures {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(ability, targets,
                             "Select a creature you control", true, false));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
         }//*************** END ************ END **************************
         
@@ -1193,12 +1165,6 @@ public class CardFactory_Creatures {
                         }
                     }
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             Command comesIntoPlay = new Command() {
@@ -2708,12 +2674,6 @@ public class CardFactory_Creatures {
                                                         }
                                                     }
                                                 }//selectCard()
-
-												@Override
-												public Collection<MinimaxMove> getMoves() {
-													// TODO Auto-generated method stub
-													throw new NotImplementedError();
-												}
                                             });// Input()
                                             
                                         }// if we were able to match the selected aura with our list of criteria
@@ -2846,12 +2806,6 @@ public class CardFactory_Creatures {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(ability, creats, "Select a target Merfolk",
                             true, false));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             ability.setDescription("1 W: Target Merfolk you control gains protection from the color of your choice until end of turn.");
             ability.setBeforePayMana(runtime);
@@ -3630,12 +3584,6 @@ public class CardFactory_Creatures {
 
         					stop();
         				}
-
-						@Override
-						public Collection<MinimaxMove> getMoves() {
-							// TODO Auto-generated method stub
-							throw new NotImplementedError();
-						}
         			});
         		}//resolve()
         	};//SpellAbility
@@ -3708,12 +3656,6 @@ public class CardFactory_Creatures {
             	public void selectButtonCancel() {
             		stop();
             	}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             
@@ -3810,12 +3752,6 @@ public class CardFactory_Creatures {
                 	}
                     showMessage();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             final Input playerInput = new Input() {
@@ -3837,12 +3773,6 @@ public class CardFactory_Creatures {
             	
             	@Override
             	public void selectButtonCancel() { stop(); }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             Command destroy = new Command() {
@@ -3918,12 +3848,6 @@ public class CardFactory_Creatures {
         						toSac.clear();
         						stop();
         					}
-
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
         				};//Input
         				AllZone.getInputControl().setInput(target);
         			}
@@ -4061,12 +3985,6 @@ public class CardFactory_Creatures {
             			stopSetNext(new Input_PayManaCost(copy));
             		}
             	}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
             card.clearFirstSpellAbility();

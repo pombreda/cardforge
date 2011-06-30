@@ -1,9 +1,8 @@
 
 package forge.gui.input;
 
-import java.util.Collection;
-
 import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
+import net.slightlymagic.braids.util.NotImplementedError;
 import forge.AllZone;
 import forge.Card;
 import forge.Player;
@@ -93,5 +92,7 @@ public abstract class Input implements java.io.Serializable {
 	 * @return a collection of MinimaxMove instances (implementors)
 	 * @see forge.ai.minimax.AbstractInputMove 
 	 */
-	public abstract Collection<MinimaxMove> getMoves();
+	public Iterable<MinimaxMove> getMoves() {
+		throw new NotImplementedError();
+	}
 }

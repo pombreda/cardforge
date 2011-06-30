@@ -1,10 +1,6 @@
 
 package forge.gui.input;
 
-import java.util.Collection;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.ButtonUtil;
@@ -94,9 +90,4 @@ public class Input_Attack extends Input {
     public void unselectCard(Card card, PlayerZone zone) {
 
     }
-
-	@Override
-	public Collection<MinimaxMove> getMoves() {
-		throw new NotImplementedError();
-	}
 }

@@ -2,7 +2,6 @@ package forge.ai.minimax.substitutes;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 import net.slightlymagic.braids.util.lambda.Lambda1;
 import net.slightlymagic.braids.util.lambda.Null;
@@ -28,7 +27,7 @@ public class GuiUtilsGetChoiceSubstitute extends Input {
 	}
 	
 	@Override
-	public Collection<MinimaxMove> getMoves() {
+	public Iterable<MinimaxMove> getMoves() {
 		
 		int numChoices = choices.size();
 		

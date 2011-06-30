@@ -2,15 +2,11 @@ package forge.card.cardFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
 import java.util.Map.Entry;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -114,12 +110,6 @@ public class CardFactory_Sorceries {
                         }
                     }
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             Input runtime = new Input() {
@@ -131,12 +121,6 @@ public class CardFactory_Sorceries {
                     index[0] = 0;
                     stopSetNext(input);
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
@@ -144,6 +128,7 @@ public class CardFactory_Sorceries {
             card.addSpellAbility(spell);
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
+        
         
         //*************** START *********** START **************************
         else if(cardName.equals("Do or Die")) {
@@ -498,7 +483,7 @@ public class CardFactory_Sorceries {
         				for(int i = 0; i < Pile2.size(); i++) sb.append(Pile2.get(i).getName() + "\r\n");
         				JOptionPane.showMessageDialog(null, sb, "", JOptionPane.INFORMATION_MESSAGE);
         				if(Pile1CMC >= Pile2CMC) {
-        					JOptionPane.showMessageDialog(null, "Computer chooses Pile 1", "", JOptionPane.INFORMATION_MESSAGE);
+        					JOptionPane.showMessageDialog(null, "Computer chooses the Pile 1", "", JOptionPane.INFORMATION_MESSAGE);
         					for(int i = 0; i < Pile1.size(); i++) {
         						ArrayList<SpellAbility> choices = Pile1.get(i).getBasicSpells();
 
@@ -511,7 +496,7 @@ public class CardFactory_Sorceries {
         						}
         					}
         				} else {
-        					JOptionPane.showMessageDialog(null, "Computer chooses Pile 2", "", JOptionPane.INFORMATION_MESSAGE);
+        					JOptionPane.showMessageDialog(null, "Computer chooses the Pile 2", "", JOptionPane.INFORMATION_MESSAGE);
         					for(int i = 0; i < Pile2.size(); i++) {
         						ArrayList<SpellAbility> choices = Pile2.get(i).getBasicSpells();
 
@@ -749,12 +734,6 @@ public class CardFactory_Sorceries {
                         } else stopSetNext(new Input_PayManaCost(spell));
                     }
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             spell.setBeforePayMana(target);
@@ -1014,12 +993,6 @@ public class CardFactory_Sorceries {
                         stopSetNext(new Input_PayManaCost(spell));
                     }//if
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input targetLand
             
             final Input targetPlayer = new Input() {
@@ -1049,12 +1022,6 @@ public class CardFactory_Sorceries {
                         stopSetNext(new Input_PayManaCost(spell));
                     }
                 }//selectPlayer()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input targetPlayer
             
 
@@ -1127,12 +1094,6 @@ public class CardFactory_Sorceries {
                     card.addSpellChoice((String) o);
                     return out;
                 }//chooseTwo()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input chooseTwoInput
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
@@ -1142,7 +1103,9 @@ public class CardFactory_Sorceries {
             card.setSpellWithChoices(true);
             spell.setBeforePayMana(chooseTwoInput);
         }//*************** END ************ END **************************
-
+        
+        
+        
         //*************** START *********** START **************************
         else if(cardName.equals("Parallel Evolution")) {
             SpellAbility spell = new Spell(card) {
@@ -1316,12 +1279,6 @@ public class CardFactory_Sorceries {
                         
                     }
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             Input runtime = new Input() {
@@ -1351,12 +1308,6 @@ public class CardFactory_Sorceries {
                         stopSetNext(input);
                     }
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
@@ -1450,6 +1401,7 @@ public class CardFactory_Sorceries {
             card.clearFirstSpellAbility();
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
+        
 
         //*************** START *********** START **************************
         else if(cardName.equals("Mind Funeral")) {
@@ -1659,12 +1611,6 @@ public class CardFactory_Sorceries {
                             "Select a permanent you control", true, free));
                     
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             spell.setBeforePayMana(runtime);
@@ -1905,6 +1851,7 @@ public class CardFactory_Sorceries {
 
         	card.setSVar("PlayMain1", "TRUE");
         } //*************** END ************ END **************************
+
         
         //*************** START *********** START **************************
         else if (cardName.equals("Haunting Misery"))
@@ -2261,12 +2208,6 @@ public class CardFactory_Sorceries {
                     targetPlayers.add(player);
                     showMessage();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
         	};//Input
 
         	// Do not remove SpellAbilities created by AbilityFactory or Keywords.
@@ -2445,12 +2386,6 @@ public class CardFactory_Sorceries {
                         stopSetNext(new Input_PayManaCost(spell));
                     } else stop();
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             spell.setBeforePayMana(target);
         }//*************** END ************ END **************************
@@ -2964,12 +2899,6 @@ public class CardFactory_Sorceries {
                     
                     return out;
                 }//chooseTwo()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input chooseTwoInput
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
@@ -3167,12 +3096,6 @@ public class CardFactory_Sorceries {
                 	setStackDescription.execute();
                 	stopSetNext(new Input_PayManaCost(spell));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             
             //for ab[2] target creature gets -X/-X
@@ -3204,12 +3127,6 @@ public class CardFactory_Sorceries {
             			}
                     }//if
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input targetCreature
             
             //for ab[1] - return creature from grave to the battlefield
@@ -3246,12 +3163,6 @@ public class CardFactory_Sorceries {
         				stopSetNext(new Input_PayManaCost(spell));
         			}
     	        }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
     	    };//Input
             
             //for ab[0] - target player loses X life
@@ -3286,12 +3197,6 @@ public class CardFactory_Sorceries {
             			}
             		}
             	}//selectPlayer()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input targetPlayer
             
             final Input chooseX = new Input() {
@@ -3336,12 +3241,6 @@ public class CardFactory_Sorceries {
                 		}
                 	}
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input chooseX
 
             Input chooseTwoInput = new Input() {
@@ -3408,12 +3307,6 @@ public class CardFactory_Sorceries {
                 	card.addSpellChoice((String) o);
                 	return out;
                 }//chooseTwo()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input chooseTwoInput
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.

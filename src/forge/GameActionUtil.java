@@ -1,15 +1,12 @@
+
 package forge;
 
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactory;
@@ -469,12 +466,6 @@ public class GameActionUtil {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(ability, list,
                             "Select target permanent to Exile", true, false));
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
 
 			ability.setBeforePayMana(runtime);
@@ -957,11 +948,6 @@ public class GameActionUtil {
 										stop();
 									}
 								}//selectCard()
-								@Override
-								public Collection<MinimaxMove> getMoves() {
-									// TODO Auto-generated method stub
-									throw new NotImplementedError();
-								}
 							});//Input
 						}
 					}
@@ -1073,11 +1059,6 @@ public class GameActionUtil {
 									stop();
 								}
 							}//selectCard()
-							@Override
-							public Collection<MinimaxMove> getMoves() {
-								// TODO Auto-generated method stub
-								throw new NotImplementedError();
-							}
 						});//Input
 					}
 					else { //computer
@@ -2248,7 +2229,6 @@ public class GameActionUtil {
 		}
 	}
 	
-
 	private static void upkeep_Farmstead() {
 		final String auraName = "Farmstead";
 		final Player player = AllZone.getPhase().getPlayerTurn();
@@ -2294,9 +2274,7 @@ public class GameActionUtil {
 			}
 		}
 	}//upkeep_Farmstead()
-
-
-
+	
     /////////////////////////
     // Start of Kinship cards
     /////////////////////////
@@ -4006,12 +3984,6 @@ public class GameActionUtil {
 								stop();
 							}
 						}
-
-						@Override
-						public Collection<MinimaxMove> getMoves() {
-							// TODO Auto-generated method stub
-							throw new NotImplementedError();
-						}
 					});
 				}
 			};
@@ -4064,11 +4036,6 @@ public class GameActionUtil {
 						                stop();
 						             }
 						          }
-								@Override
-								public Collection<MinimaxMove> getMoves() {
-									// TODO Auto-generated method stub
-									throw new NotImplementedError();
-								}
 							});
 						}
 					}
@@ -4119,7 +4086,7 @@ public class GameActionUtil {
 	}//cursed land
 
 
-
+	
 	private static void upkeep_Masticore() {
 		final Player player = AllZone.getPhase().getPlayerTurn();
 
@@ -4152,12 +4119,6 @@ public class GameActionUtil {
 				public void selectButtonCancel() {
 					AllZone.getGameAction().sacrifice(crd);
 					stop();
-				}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
 				}
 			};//Input
 
@@ -4440,12 +4401,6 @@ public class GameActionUtil {
 						                	////////////////////////////////////
 						                }
 						            }
-
-									@Override
-									public Collection<MinimaxMove> getMoves() {
-										// TODO Auto-generated method stub
-										throw new NotImplementedError();
-									}
 								});//end Input
 							}
 						}
@@ -5025,7 +4980,7 @@ public class GameActionUtil {
 								affectedCard.addSpellAbility(sa);
 							}/*
 							else if (sVar.startsWith("Mode")){ // grant a Trigger
-								affectedCard.addTrigger(getTriggerHandler().parseTrigger(sVar, affectedCard));							
+								affectedCard.addTrigger(TriggerHandler.parseTrigger(sVar, affectedCard));							
 							}*/
 							else { // Copy this SVar
 								affectedCard.setSVar(keyword.split("SVar=")[1], sVar);								
@@ -6800,4 +6755,3 @@ public class GameActionUtil {
 	}
 
 }//end class GameActionUtil
-

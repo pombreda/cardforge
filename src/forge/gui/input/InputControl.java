@@ -1,7 +1,6 @@
 package forge.gui.input;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Stack;
 
@@ -157,7 +156,7 @@ public class InputControl extends MyObservable implements java.io.Serializable {
         }
     }//getInput()
 
-	public Collection<MinimaxMove> getMoves() {
+	public Iterable<MinimaxMove> getMoves() {
 		Input theInput = getInput();
 		if (theInput != null) {
 			return theInput.getMoves();

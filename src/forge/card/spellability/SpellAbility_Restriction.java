@@ -1,3 +1,4 @@
+
 package forge.card.spellability;
 
 

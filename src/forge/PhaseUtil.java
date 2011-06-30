@@ -1,10 +1,6 @@
 package forge;
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.gui.input.Input;
@@ -156,11 +152,6 @@ public class PhaseUtil {
     						stop();
     					}
     				}//selectCard()
-					@Override
-					public Collection<MinimaxMove> getMoves() {
-						// TODO Auto-generated method stub
-						throw new NotImplementedError();
-					}
     			};//Input
     			CardList landList = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
     			landList = landList.filter(AllZoneUtil.tapped);
@@ -193,11 +184,6 @@ public class PhaseUtil {
     						stop();
     					}
     				}//selectCard()
-					@Override
-					public Collection<MinimaxMove> getMoves() {
-						// TODO Auto-generated method stub
-						throw new NotImplementedError();
-					}
     			};//Input
     			CardList artList = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
     			artList = artList.filter(AllZoneUtil.artifacts);
@@ -230,11 +216,6 @@ public class PhaseUtil {
     						stop();
     					}
     				}//selectCard()
-					@Override
-					public Collection<MinimaxMove> getMoves() {
-						// TODO Auto-generated method stub
-						throw new NotImplementedError();
-					}
     			};//Input
     			CardList creatures = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
     			creatures = creatures.filter(AllZoneUtil.tapped);

@@ -1,12 +1,8 @@
 package forge.card.cardFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JOptionPane;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -572,12 +568,6 @@ public class CardFactory_Instants {
                         	stopSetNext(new Input_PayManaCost(spell));
                     }
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             card.setSVar("PlayMain1", "TRUE");
@@ -1176,12 +1166,6 @@ public class CardFactory_Instants {
 					}
 					
 				}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             spell.setStackDescription(cardName+" - exile X attacking creatures.");
             spell.setBeforePayMana(runtime);
@@ -1275,12 +1259,6 @@ public class CardFactory_Instants {
 						stopSetNext(new Input_PayManaCost(spell));
 					}
 					
-				}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
 				}
             };
             spell.setStackDescription(cardName+" - deals X damage to each of X target creatures and/or players.");
@@ -1393,12 +1371,6 @@ public class CardFactory_Instants {
                         stopSetNext(new Input_PayManaCost(spell));
                     }//if
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input targetLand
 
             Input chooseTwoInput = new Input() {
@@ -1464,12 +1436,6 @@ public class CardFactory_Instants {
                     card.addSpellChoice((String) o);
                     return out;
                 }//chooseTwo()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input chooseTwoInput
             
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
