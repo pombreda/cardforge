@@ -8,4 +8,5 @@ T:Mode$ TurnFaceUp | ValidCard$ Card.Self,Permanent | Execute$ TrigScry | Option
 SVar:TrigScry:AB$Scry | Cost$ 0 | ScryNum$ 2
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/unblinking_bleb.jpg
+SetInfo:FUT|Common|http://magiccards.info/scans/en/fut/45.jpg
 End
