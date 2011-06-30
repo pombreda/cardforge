@@ -47,21 +47,43 @@ public class BoosterGenerator {
         numSpecials = 0;
 
 		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
+		 *  Braids: "getAllCards copies the entire array, but that does not
 		 * seem to be needed here. Significant performance improvement is
 		 * possible if this code used getCards instead (along with a for each
 		 * loop instead of using get(i))."
 		 */
-        CardList tList = AllZone.getCardFactory().getAllCards();
-        for (int i = 0; i < tList.size(); i++) {
-            Card c = tList.get(i);
+        //CardList tList = AllZone.getCardFactory().getAllCards();
+        CardList tList = AllZone.getCardFactory().getCards();
+        //for (int i = 0; i < tList.size(); i++) {
+        for (Card c : tList) {
+            //Card c = tList.get(i);
             SetInfo si = SetInfoUtil.getSetInfo_Code(c.getSets(), SetInfoUtil.getMostRecentSet(c.getSets()));
 
             addToRarity(c, si);
         }
 
         shuffleAll();
-
+        
+        //reduce cardpool to approximate the size of a small set (175) for better drafting in full mode
+        tList.clear();
+        for (int i=0; i<100; i++)			// 8 x 11 x 3 commons = 264 cards with each card showing up about once per round
+        	tList.add(commons.get(i));
+        commons.clear();
+        commons.addAll(tList);
+        
+        tList.clear();
+        for (int i=0; i<50; i++)			// 8 x 3 x 3 uncommons = 72 cards with some cards showing up twice
+        	tList.add(uncommons.get(i));
+        uncommons.clear();
+        uncommons.addAll(tList);
+        
+        tList.clear();
+        for (int i=0; i<25; i++)			// 8 x 1 x 3 rares = 24 cards with no cards
+        	tList.add(rares.get(i));
+        rares.clear();
+        rares.addAll(tList);
+        
+        // don't worry about reducing the mythics
     }
 
     /**
