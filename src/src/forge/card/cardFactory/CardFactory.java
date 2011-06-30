@@ -396,6 +396,370 @@ public class CardFactory implements NewConstants {
     }
 
     /**
+     * <p>parseKeywords.</p>
+     * Pulling out the parsing of keywords so it can be used by the token generator
+     * @param card a {@link forge.Card} object.
+     * @param cardName a {@link java.lang.String} object.
+     * 
+     */
+    final static public void parseKeywords(final Card card, final String cardName){
+    	 if (card.hasKeyword("CARDNAME enters the battlefield tapped.")) {
+             card.addComesIntoPlayCommand(new Command() {
+                 private static final long serialVersionUID = 203335252453049234L;
+
+                 public void execute() {
+                     //System.out.println("Executing previous keyword");
+                     card.tap();
+                 }
+             });
+         }//if "Comes into play tapped."
+         if (card.hasKeyword("CARDNAME enters the battlefield tapped unless you control two or fewer other lands.")) {
+             card.addComesIntoPlayCommand(new Command() {
+                 private static final long serialVersionUID = 6436821515525468682L;
+
+                 public void execute() {
+                     CardList lands = AllZoneUtil.getPlayerLandsInPlay(card.getController());
+                     lands.remove(card);
+                     if (!(lands.size() <= 2)) {
+                         card.tap();
+                     }
+                 }
+             });
+         }
+         if (hasKeyword(card, "CARDNAME enters the battlefield tapped unless you control a") != -1) {
+             int n = hasKeyword(card, "CARDNAME enters the battlefield tapped unless you control a");
+             String parse = card.getKeyword().get(n).toString();
+
+             String splitString;
+             if (parse.contains(" or a "))
+                 splitString = " or a ";
+             else
+                 splitString = " or an ";
+
+             final String types[] = parse.substring(60, parse.length() - 1).split(splitString);
+
+             card.addComesIntoPlayCommand(new Command() {
+                 private static final long serialVersionUID = 403635232455049834L;
+
+                 public void execute() {
+                     CardList clICtrl = AllZoneUtil.getPlayerCardsInPlay(card.getOwner());
+
+                     boolean fnd = false;
+
+                     for (int i = 0; i < clICtrl.size(); i++) {
+                         Card c = clICtrl.get(i);
+                         for (int j = 0; j < types.length; j++)
+                             if (c.isType(types[j].trim()))
+                                 fnd = true;
+                     }
+
+                     if (!fnd)
+                         card.tap();
+                 }
+             });
+         }
+         if (hasKeyword(card, "Sunburst") != -1) {
+             Command sunburstCIP = new Command() {
+                 private static final long serialVersionUID = 1489845860231758299L;
+
+                 public void execute() {
+                     if (card.isCreature()) {
+                         card.addCounter(Counters.P1P1, card.getSunburstValue());
+                     } else {
+                         card.addCounter(Counters.CHARGE, card.getSunburstValue());
+                     }
+
+                 }
+             };
+
+             Command sunburstLP = new Command() {
+                 private static final long serialVersionUID = -7564420917490677427L;
+
+                 public void execute() {
+                     card.setSunburstValue(0);
+                 }
+             };
+
+             card.addComesIntoPlayCommand(sunburstCIP);
+             card.addLeavesPlayCommand(sunburstLP);
+         }
+
+         if (card.isType("World")) // Enforce the "World rule"
+         {
+             Command intoPlay = new Command() {
+                 private static final long serialVersionUID = 6536398032388958127L;
+
+                 public void execute() {
+                     CardList CardsinPlay = AllZoneUtil.getTypeInPlay("World");
+                     CardsinPlay.remove(card);
+                     for (int i = 0; i < CardsinPlay.size(); i++)
+                         AllZone.getGameAction().sacrificeDestroy(CardsinPlay.get(i));
+                 }//execute()
+             };//Command
+             card.addComesIntoPlayCommand(intoPlay);
+         }
+
+         if (hasKeyword(card, "Multikicker") != -1) {
+             int n = hasKeyword(card, "Multikicker");
+             if (n != -1) {
+                 String parse = card.getKeyword().get(n).toString();
+                 String k[] = parse.split("kicker ");
+
+                 SpellAbility sa = card.getSpellAbility()[0];
+                 sa.setIsMultiKicker(true);
+                 sa.setMultiKickerManaCost(k[1]);
+             }
+         }
+
+         if (hasKeyword(card, "SearchRebel") != -1) {
+             int n = hasKeyword(card, "SearchRebel");
+             if (n != -1) {
+                 String parse = card.getKeyword().get(n).toString();
+                 card.removeIntrinsicKeyword(parse);
+
+                 String k[] = parse.split(":");
+                 final String manacost = k[1];
+
+                 card.addSpellAbility(CardFactoryUtil.ability_Rebel_Search(card, manacost));
+             }
+         }//Rebel search
+
+         if (hasKeyword(card, "Morph") != -1) {
+             int n = hasKeyword(card, "Morph");
+             if (n != -1) {
+                 card.setPrevIntrinsicKeyword(card.getIntrinsicKeyword());
+                 card.setPrevType(card.getType());
+
+                 String parse = card.getKeyword().get(n).toString();
+                 card.removeIntrinsicKeyword(parse);
+
+                 String k[] = parse.split(":");
+                 final Cost cost = new Cost(k[1], cardName, true);
+
+                 int attack = card.getBaseAttack();
+                 int defense = card.getBaseDefense();
+
+                 String orgManaCost = card.getManaCost();
+
+                 card.addSpellAbility(CardFactoryUtil.ability_Morph_Up(card, cost, orgManaCost, attack, defense));
+                 card.addSpellAbility(CardFactoryUtil.ability_Morph_Down(card));
+             }
+         }//Morph
+
+         if (hasKeyword(card, "Unearth") != -1) {
+             int n = hasKeyword(card, "Unearth");
+             if (n != -1) {
+                 String parse = card.getKeyword().get(n).toString();
+                 //card.removeIntrinsicKeyword(parse);
+
+                 String k[] = parse.split(":");
+
+                 final String manacost = k[1];
+
+                 card.addSpellAbility(CardFactoryUtil.ability_Unearth(card, manacost));
+                 card.setUnearth(true);
+             }
+         }//unearth
+
+         if (hasKeyword(card, "Madness") != -1) {
+             int n = hasKeyword(card, "Madness");
+             if (n != -1) {
+                 String parse = card.getKeyword().get(n).toString();
+                 //card.removeIntrinsicKeyword(parse);
+
+                 String k[] = parse.split(":");
+
+                 card.setMadness(true);
+                 card.setMadnessCost(k[1]);
+             }
+         }//madness
+
+         if (hasKeyword(card, "Devour") != -1) {
+             int n = hasKeyword(card, "Devour");
+             if (n != -1) {
+
+                 String parse = card.getKeyword().get(n).toString();
+                 // card.removeIntrinsicKeyword(parse);
+
+                 String k[] = parse.split(":");
+                 final String magnitude = k[1];
+
+
+                 final int multiplier = Integer.parseInt(magnitude);
+                 //final String player = card.getController();
+                 final int[] numCreatures = new int[1];
+
+                 Command intoPlay = new Command() {
+                     private static final long serialVersionUID = -7530312713496897814L;
+
+                     public void execute() {
+                         CardList creats = AllZoneUtil.getCreaturesInPlay(card.getController());
+                         creats.remove(card);
+                         //System.out.println("Creats size: " + creats.size());
+
+                         if (card.getController().isHuman()) {
+                             if (creats.size() > 0) {
+                                 List<Card> selection = GuiUtils.getChoicesOptional("Select creatures to sacrifice", creats.toArray());
+
+                                 numCreatures[0] = selection.size();
+                                 for (int m = 0; m < selection.size(); m++) {
+                                     AllZone.getGameAction().sacrifice(selection.get(m));
+                                 }
+                             }
+
+                         }//human
+                         else {
+                             int count = 0;
+                             for (int i = 0; i < creats.size(); i++) {
+                                 Card c = creats.get(i);
+                                 if (c.getNetAttack() <= 1 && c.getNetAttack() + c.getNetDefense() <= 3) {
+                                     AllZone.getGameAction().sacrifice(c);
+                                     count++;
+                                 }
+                                 //is this needed?
+                                 AllZone.getComputerBattlefield().updateObservers();
+                             }
+                             numCreatures[0] = count;
+                         }
+                         int totalCounters = numCreatures[0] * multiplier;
+
+                         card.addCounter(Counters.P1P1, totalCounters);
+
+                         if (card.getName().equals("Skullmulcher")) {
+                             for (int i = 0; i < numCreatures[0]; i++) {
+                                 card.getController().drawCard();
+                             }
+                         }
+
+                     }
+                 };
+                 card.addComesIntoPlayCommand(intoPlay);
+             }
+         }//Devour
+
+         if (hasKeyword(card, "Modular") != -1) {
+             int n = hasKeyword(card, "Modular");
+             if (n != -1) {
+                 String parse = card.getKeyword().get(n).toString();
+
+                 final int m = Integer.parseInt(parse.substring(8));
+
+                 card.addComesIntoPlayCommand(new Command() {
+                     private static final long serialVersionUID = 339412525059881775L;
+
+                     public void execute() {
+                         card.addCounter(Counters.P1P1, m);
+                     }
+                 });
+
+                 final SpellAbility ability = new Ability(card, "0") {
+                     @Override
+                     public void resolve() {
+                         Card card2 = this.getTargetCard();
+                         card2.addCounter(Counters.P1P1, getSourceCard().getCounters(Counters.P1P1));
+                     }//resolve()
+                 };
+
+                 card.addDestroyCommand(new Command() {
+                     private static final long serialVersionUID = 304026662487997331L;
+
+                     public void execute() {
+                         // Target as Modular is Destroyed
+                         if (card.getController().isComputer()) {
+                             CardList choices = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+                             choices = choices.filter(new CardListFilter() {
+                                 public boolean addCard(Card c) {
+                                     return c.isCreature() && c.isArtifact();
+                                 }
+                             });
+                             if (choices.size() != 0) {
+                                 ability.setTargetCard(CardFactoryUtil.AI_getBestCreature(choices));
+
+                                 if (ability.getTargetCard() != null) {
+                                     ability.setStackDescription("Put " + card.getCounters(Counters.P1P1)
+                                             + " +1/+1 counter/s from " + card + " on " + ability.getTargetCard());
+                                     AllZone.getStack().addSimultaneousStackEntry(ability);
+
+                                 }
+                             }
+                         } else {
+                             AllZone.getInputControl().setInput(CardFactoryUtil.modularInput(ability, card));
+                         }
+                     }
+                 });
+
+             }
+
+         }//while shouldModular
+
+         int etbCounter = hasKeyword(card, "etbCounter");    // etbCounter:CounterType:CounterAmount:Condition:Description
+         // enters the battlefield with CounterAmount of CounterType
+         if (etbCounter != -1) {
+             String parse = card.getKeyword().get(etbCounter).toString();
+             card.removeIntrinsicKeyword(parse);
+
+             String p[] = parse.split(":");
+             final Counters counter = Counters.valueOf(p[1]);
+             final String numCounters = p[2];
+             final String condition = p.length > 3 ? p[3] : "";
+
+             StringBuilder sb = new StringBuilder(card.getSpellText());
+             if (sb.length() != 0)
+                 sb.append("\n");
+             if (p.length > 4)
+                 sb.append(p[4]);
+             else {
+                 sb.append(card.getName());
+                 sb.append(" enters the battlefield with ");
+                 sb.append(numCounters);
+                 sb.append(" ");
+                 sb.append(counter.getName());
+                 sb.append(" counter");
+                 if ("1" != numCounters) sb.append("s");
+                 sb.append(" on it.");
+             }
+
+             card.setText(sb.toString());
+
+             card.addComesIntoPlayCommand(new Command() {
+                 private static final long serialVersionUID = -2292898970576123040L;
+
+                 public void execute() {
+                     if (GameActionUtil.specialConditionsMet(card, condition)) {
+                         int toAdd = -1;
+                         if (numCounters.equals("X")) {
+                             toAdd = CardFactoryUtil.xCount(card, card.getSVar("X"));
+                         } else {
+                             toAdd = Integer.parseInt(numCounters);
+                         }
+
+                         card.addCounter(counter, toAdd);
+                     }
+
+                 }
+             });//ComesIntoPlayCommand
+         } // if etbCounter
+
+         int bloodthirst = hasKeyword(card, "Bloodthirst");
+         if (bloodthirst != -1) {
+             final int count = Integer.parseInt(card.getKeyword().get(bloodthirst).split(" ")[1]);
+
+             card.addComesIntoPlayCommand(new Command() {
+                 private static final long serialVersionUID = -1849308549161972508L;
+
+                 public void execute() {
+                     if (card.getController().getOpponent().getAssignedDamage() > 0) {
+
+                         card.addCounter(Counters.P1P1, count);
+
+                     }
+                 }
+
+             });
+         }//bloodthirst
+    }
+    
+    /**
      * <p>getCard2.</p>
      *
      * @param cardName a {@link java.lang.String} object.
@@ -414,407 +778,7 @@ public class CardFactory implements NewConstants {
         //this is so permanents like creatures and artifacts have a "default" spell
         if (!card.isLand()) card.addSpellAbility(new Spell_Permanent(card));
 
-        if (card.hasKeyword("CARDNAME enters the battlefield tapped.")) {
-            card.addComesIntoPlayCommand(new Command() {
-                private static final long serialVersionUID = 203335252453049234L;
-
-                public void execute() {
-                    //System.out.println("Executing previous keyword");
-                    card.tap();
-                }
-            });
-        }//if "Comes into play tapped."
-        if (card.hasKeyword("CARDNAME enters the battlefield tapped unless you control two or fewer other lands.")) {
-            card.addComesIntoPlayCommand(new Command() {
-                private static final long serialVersionUID = 6436821515525468682L;
-
-                public void execute() {
-                    CardList lands = AllZoneUtil.getPlayerLandsInPlay(card.getController());
-                    lands.remove(card);
-                    if (!(lands.size() <= 2)) {
-                        card.tap();
-                    }
-                }
-            });
-        }
-        if (hasKeyword(card, "CARDNAME enters the battlefield tapped unless you control a") != -1) {
-            int n = hasKeyword(card, "CARDNAME enters the battlefield tapped unless you control a");
-            String parse = card.getKeyword().get(n).toString();
-
-            String splitString;
-            if (parse.contains(" or a "))
-                splitString = " or a ";
-            else
-                splitString = " or an ";
-
-            final String types[] = parse.substring(60, parse.length() - 1).split(splitString);
-
-            card.addComesIntoPlayCommand(new Command() {
-                private static final long serialVersionUID = 403635232455049834L;
-
-                public void execute() {
-                    CardList clICtrl = AllZoneUtil.getPlayerCardsInPlay(card.getOwner());
-
-                    boolean fnd = false;
-
-                    for (int i = 0; i < clICtrl.size(); i++) {
-                        Card c = clICtrl.get(i);
-                        for (int j = 0; j < types.length; j++)
-                            if (c.isType(types[j].trim()))
-                                fnd = true;
-                    }
-
-                    if (!fnd)
-                        card.tap();
-                }
-            });
-        }
-        if (hasKeyword(card, "Sunburst") != -1) {
-            Command sunburstCIP = new Command() {
-                private static final long serialVersionUID = 1489845860231758299L;
-
-                public void execute() {
-                    if (card.isCreature()) {
-                        card.addCounter(Counters.P1P1, card.getSunburstValue());
-                    } else {
-                        card.addCounter(Counters.CHARGE, card.getSunburstValue());
-                    }
-
-                }
-            };
-
-            Command sunburstLP = new Command() {
-                private static final long serialVersionUID = -7564420917490677427L;
-
-                public void execute() {
-                    card.setSunburstValue(0);
-                }
-            };
-
-            card.addComesIntoPlayCommand(sunburstCIP);
-            card.addLeavesPlayCommand(sunburstLP);
-        }
-
-        // Support for using string variables to define Count$ for X or Y
-        // Or just about any other String that a card object needs at any given time
-        // TODO: To Be Removed 
-        while (hasKeyword(card, "SVar") != -1) {
-            int n = hasKeyword(card, "SVar");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":", 3);
-
-                if (k.length > 2) card.setSVar(k[1], k[2]);
-            }
-        }
-
-
-        if (card.isType("World")) // Enforce the "World rule"
-        {
-            Command intoPlay = new Command() {
-                private static final long serialVersionUID = 6536398032388958127L;
-
-                public void execute() {
-                    CardList CardsinPlay = AllZoneUtil.getTypeInPlay("World");
-                    CardsinPlay.remove(card);
-                    for (int i = 0; i < CardsinPlay.size(); i++)
-                        AllZone.getGameAction().sacrificeDestroy(CardsinPlay.get(i));
-                }//execute()
-            };//Command
-            card.addComesIntoPlayCommand(intoPlay);
-        }
-
-        if (hasKeyword(card, "Multikicker") != -1) {
-            int n = hasKeyword(card, "Multikicker");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                String k[] = parse.split("kicker ");
-
-                SpellAbility sa = card.getSpellAbility()[0];
-                sa.setIsMultiKicker(true);
-                sa.setMultiKickerManaCost(k[1]);
-            }
-        }
-
-        if (hasKeyword(card, "SearchRebel") != -1) {
-            int n = hasKeyword(card, "SearchRebel");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":");
-                final String manacost = k[1];
-
-                card.addSpellAbility(CardFactoryUtil.ability_Rebel_Search(card, manacost));
-            }
-        }//Rebel search
-
-        if (hasKeyword(card, "Morph") != -1) {
-            int n = hasKeyword(card, "Morph");
-            if (n != -1) {
-                card.setPrevIntrinsicKeyword(card.getIntrinsicKeyword());
-                card.setPrevType(card.getType());
-
-                String parse = card.getKeyword().get(n).toString();
-                card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":");
-                final Cost cost = new Cost(k[1], cardName, true);
-
-                int attack = card.getBaseAttack();
-                int defense = card.getBaseDefense();
-
-                String orgManaCost = card.getManaCost();
-
-                card.addSpellAbility(CardFactoryUtil.ability_Morph_Up(card, cost, orgManaCost, attack, defense));
-                card.addSpellAbility(CardFactoryUtil.ability_Morph_Down(card));
-            }
-        }//Morph
-
-        if (hasKeyword(card, "Unearth") != -1) {
-            int n = hasKeyword(card, "Unearth");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                //card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":");
-
-                final String manacost = k[1];
-
-                card.addSpellAbility(CardFactoryUtil.ability_Unearth(card, manacost));
-                card.setUnearth(true);
-            }
-        }//unearth
-
-        if (hasKeyword(card, "Madness") != -1) {
-            int n = hasKeyword(card, "Madness");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-                //card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":");
-
-                card.setMadness(true);
-                card.setMadnessCost(k[1]);
-            }
-        }//madness
-
-        if (hasKeyword(card, "Devour") != -1) {
-            int n = hasKeyword(card, "Devour");
-            if (n != -1) {
-
-                String parse = card.getKeyword().get(n).toString();
-                // card.removeIntrinsicKeyword(parse);
-
-                String k[] = parse.split(":");
-                final String magnitude = k[1];
-
-
-                final int multiplier = Integer.parseInt(magnitude);
-                //final String player = card.getController();
-                final int[] numCreatures = new int[1];
-
-                /*
-                final SpellAbility devour = new Spell(card) {
-                    private static final long serialVersionUID = 4888189840817163900L;
-                    
-                    @Override
-                    public void resolve() {
-                        int totalCounters = numCreatures[0] * multiplier;
-
-                        card.addCounter(Counters.P1P1, totalCounters);
-
-                        if(card.getName().equals("Skullmulcher")) {
-                            for(int i = 0; i < numCreatures[0]; i++) {
-                                card.getController().drawCard();
-                            }
-                        }
-                        
-                    }
-                    
-                    @Override
-                    public boolean canPlay() {
-                        return AllZone.getPhase().getPlayerTurn().equals(card.getController()) && card.isFaceDown()
-                                && AllZoneUtil.isCardInPlay(card);
-                    }
-                    
-                };//devour*/
-
-                Command intoPlay = new Command() {
-                    private static final long serialVersionUID = -7530312713496897814L;
-
-                    public void execute() {
-                        CardList creats = AllZoneUtil.getCreaturesInPlay(card.getController());
-                        creats.remove(card);
-                        //System.out.println("Creats size: " + creats.size());
-
-                        if (card.getController().isHuman()) {
-                            if (creats.size() > 0) {
-                                List<Card> selection = GuiUtils.getChoicesOptional("Select creatures to sacrifice", creats.toArray());
-
-                                numCreatures[0] = selection.size();
-                                for (int m = 0; m < selection.size(); m++) {
-                                    AllZone.getGameAction().sacrifice(selection.get(m));
-                                }
-                            }
-
-                        }//human
-                        else {
-                            int count = 0;
-                            for (int i = 0; i < creats.size(); i++) {
-                                Card c = creats.get(i);
-                                if (c.getNetAttack() <= 1 && c.getNetAttack() + c.getNetDefense() <= 3) {
-                                    AllZone.getGameAction().sacrifice(c);
-                                    count++;
-                                }
-                                //is this needed?
-                                AllZone.getComputerBattlefield().updateObservers();
-                            }
-                            numCreatures[0] = count;
-                        }
-                        int totalCounters = numCreatures[0] * multiplier;
-
-                        card.addCounter(Counters.P1P1, totalCounters);
-
-                        if (card.getName().equals("Skullmulcher")) {
-                            for (int i = 0; i < numCreatures[0]; i++) {
-                                card.getController().drawCard();
-                            }
-                        }
-
-                    }
-                };
-                /*
-                devour.setStackDescription(card.getName() + " - gets " + magnitude
-                        + " +1/+1 counter(s) per devoured creature.");
-                devour.setDescription("Devour " + magnitude);
-                card.addSpellAbility(devour);*/
-                card.addComesIntoPlayCommand(intoPlay);
-            }
-        }//Devour
-
-        if (hasKeyword(card, "Modular") != -1) {
-            int n = hasKeyword(card, "Modular");
-            if (n != -1) {
-                String parse = card.getKeyword().get(n).toString();
-
-                final int m = Integer.parseInt(parse.substring(8));
-
-                card.addComesIntoPlayCommand(new Command() {
-                    private static final long serialVersionUID = 339412525059881775L;
-
-                    public void execute() {
-                        card.addCounter(Counters.P1P1, m);
-                    }
-                });
-
-                final SpellAbility ability = new Ability(card, "0") {
-                    @Override
-                    public void resolve() {
-                        Card card2 = this.getTargetCard();
-                        card2.addCounter(Counters.P1P1, getSourceCard().getCounters(Counters.P1P1));
-                    }//resolve()
-                };
-
-                card.addDestroyCommand(new Command() {
-                    private static final long serialVersionUID = 304026662487997331L;
-
-                    public void execute() {
-                        // Target as Modular is Destroyed
-                        if (card.getController().isComputer()) {
-                            CardList choices = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                            choices = choices.filter(new CardListFilter() {
-                                public boolean addCard(Card c) {
-                                    return c.isCreature() && c.isArtifact();
-                                }
-                            });
-                            if (choices.size() != 0) {
-                                ability.setTargetCard(CardFactoryUtil.AI_getBestCreature(choices));
-
-                                if (ability.getTargetCard() != null) {
-                                    ability.setStackDescription("Put " + card.getCounters(Counters.P1P1)
-                                            + " +1/+1 counter/s from " + card + " on " + ability.getTargetCard());
-                                    AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                                }
-                            }
-                        } else {
-                            AllZone.getInputControl().setInput(CardFactoryUtil.modularInput(ability, card));
-                        }
-                    }
-                });
-
-            }
-
-        }//while shouldModular
-
-        int etbCounter = hasKeyword(card, "etbCounter");    // etbCounter:CounterType:CounterAmount:Condition:Description
-        // enters the battlefield with CounterAmount of CounterType
-        if (etbCounter != -1) {
-            String parse = card.getKeyword().get(etbCounter).toString();
-            card.removeIntrinsicKeyword(parse);
-
-            String p[] = parse.split(":");
-            final Counters counter = Counters.valueOf(p[1]);
-            final String numCounters = p[2];
-            final String condition = p.length > 3 ? p[3] : "";
-
-            StringBuilder sb = new StringBuilder(card.getSpellText());
-            if (sb.length() != 0)
-                sb.append("\n");
-            if (p.length > 4)
-                sb.append(p[4]);
-            else {
-                sb.append(card.getName());
-                sb.append(" enters the battlefield with ");
-                sb.append(numCounters);
-                sb.append(" ");
-                sb.append(counter.getName());
-                sb.append(" counter");
-                if ("1" != numCounters) sb.append("s");
-                sb.append(" on it.");
-            }
-
-            card.setText(sb.toString());
-
-            card.addComesIntoPlayCommand(new Command() {
-                private static final long serialVersionUID = -2292898970576123040L;
-
-                public void execute() {
-                    if (GameActionUtil.specialConditionsMet(card, condition)) {
-                        int toAdd = -1;
-                        if (numCounters.equals("X")) {
-                            toAdd = CardFactoryUtil.xCount(card, card.getSVar("X"));
-                        } else {
-                            toAdd = Integer.parseInt(numCounters);
-                        }
-
-                        card.addCounter(counter, toAdd);
-                    }
-
-                }
-            });//ComesIntoPlayCommand
-        } // if etbCounter
-
-        int bloodthirst = hasKeyword(card, "Bloodthirst");
-        if (bloodthirst != -1) {
-            final int count = Integer.parseInt(card.getKeyword().get(bloodthirst).split(" ")[1]);
-
-            card.addComesIntoPlayCommand(new Command() {
-                private static final long serialVersionUID = -1849308549161972508L;
-
-                public void execute() {
-                    if (card.getController().getOpponent().getAssignedDamage() > 0) {
-
-                        card.addCounter(Counters.P1P1, count);
-
-                    }
-                }
-
-            });
-        }//bloodthirst
+       parseKeywords(card, cardName);
 
 
         //**************************************************
@@ -2681,7 +2645,7 @@ public class CardFactory implements NewConstants {
      * @param card a {@link forge.Card} object.
      * @return a {@link forge.Card} object.
      */
-    public Card postFactoryKeywords(final Card card) {
+    public static Card postFactoryKeywords(final Card card) {
         // this function should handle any keywords that need to be added after a spell goes through the factory
         // Cards with Cycling abilities
         // -1 means keyword "Cycling" not found
