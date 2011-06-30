@@ -274,4 +274,3 @@ public class AbilityFactory_Effect {
         AllZone.getTriggerHandler().clearSuppression("ChangesZone");
 	}
 }
-

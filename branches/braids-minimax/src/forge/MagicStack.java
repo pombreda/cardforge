@@ -1,19 +1,24 @@
 package forge;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Stack;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaCost;
-import forge.card.spellability.*;
+import forge.card.spellability.Ability;
+import forge.card.spellability.Ability_Mana;
+import forge.card.spellability.Ability_Static;
+import forge.card.spellability.Ability_Triggered;
+import forge.card.spellability.SpellAbility;
+import forge.card.spellability.SpellAbility_StackInstance;
+import forge.card.spellability.Spell_Permanent;
+import forge.card.spellability.Target;
+import forge.card.spellability.Target_Choices;
+import forge.card.spellability.Target_Selection;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost_Ability;
@@ -564,12 +569,6 @@ public class MagicStack extends MyObservable implements java.io.Serializable {
 								stop();
 							}
 						}
-
-						@Override
-						public Collection<MinimaxMove> getMoves() {
-							// TODO Auto-generated method stub
-							throw new NotImplementedError();
-						}
 					};
 					SpellAbility_StackInstance prev = peekInstance();
 					if(prev.isSpell() && prev.getSourceCard().getName().equals("Mana Vortex")) {
@@ -936,11 +935,11 @@ public class MagicStack extends MyObservable implements java.io.Serializable {
 		chooseOrderOfSimultaneousStackEntry(AllZone.getPhase().getPlayerTurn().getOpponent());
 	}
 
-	public void chooseOrderOfSimultaneousStackEntryAll(Phase phase)
-	{
-		chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn());
-		chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn().getOpponent());
-	}
+	//public void chooseOrderOfSimultaneousStackEntryAll(Phase phase)
+	//{
+	//	chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn());
+	//	chooseOrderOfSimultaneousStackEntry(phase.getPlayerTurn().getOpponent());
+	//}
 
 	public void chooseOrderOfSimultaneousStackEntry(Player activePlayer)
 	{

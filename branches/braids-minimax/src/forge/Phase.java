@@ -1,4 +1,5 @@
 package forge;
+
 import java.util.HashMap;
 import java.util.Observer;
 import java.util.Stack;
@@ -24,7 +25,6 @@ public class Phase extends MyObservable implements java.io.Serializable
 	
 	private int nCombatsThisTurn;
 	
-    //private Player playerTurn;
     private Player playerTurn = AllZone.getHumanPlayer();
     public boolean isPlayerTurn(Player player) {
         return playerTurn.isPlayer(player);
@@ -40,9 +40,7 @@ public class Phase extends MyObservable implements java.io.Serializable
     
     // priority player
     
-    //private Player pPlayerPriority;
     private Player pPlayerPriority = AllZone.getHumanPlayer();
-
     public Player getPriorityPlayer() {
     	return pPlayerPriority;
     }
@@ -51,9 +49,7 @@ public class Phase extends MyObservable implements java.io.Serializable
     	pPlayerPriority = p;
     }
     
-    //private Player pFirstPriority;
     private Player pFirstPriority = AllZone.getHumanPlayer();
-
     public Player getFirstPriority() {
     	return pFirstPriority;
     }
@@ -72,10 +68,6 @@ public class Phase extends MyObservable implements java.io.Serializable
     
     public void resetPriority() {
     	setPriority(playerTurn);
-    }
-
-    protected void resetPriority(MagicStack stack) {
-    	setPriority(playerTurn, stack);
     }
     
 	private boolean bPhaseEffects = true;
@@ -128,24 +120,11 @@ public class Phase extends MyObservable implements java.io.Serializable
 			Constant.Phase.Cleanup
 	};
     
-
 	public Phase() {
-		this(AllZone.getHumanPlayer(), AllZone.getStack());
+		reset();
 	}
 	
-    public Phase(Player humanPlayer, MagicStack stack) {
-    	pFirstPriority = humanPlayer;
-    	pPlayerPriority = humanPlayer;
-    	playerTurn = humanPlayer;
-    	reset(humanPlayer, stack);
-    }
-    
-    
     public void reset() {
-        reset(AllZone.getHumanPlayer(), AllZone.getStack());
-    }
-    
-    protected void reset(Player playerTurn, MagicStack stack) {
         turn = 1;
         playerTurn = AllZone.getHumanPlayer();
         resetPriority();
@@ -353,7 +332,6 @@ public class Phase extends MyObservable implements java.io.Serializable
             	display.showCombat("");
             }
 			
-            AllZone.getCombat().reset();
             AllZone.getDisplay().showCombat("");
             resetAttackedThisCombat(getPlayerTurn());
             this.bCombat = false;
@@ -752,4 +730,3 @@ public class Phase extends MyObservable implements java.io.Serializable
     	Unstatic.getGlobalGameState().setComputerInstantSpellCount(i);
     }
 }
-

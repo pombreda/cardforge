@@ -1,7 +1,6 @@
 
 package forge;
 
-import forge.ai.minimax.Unstatic;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.Ability;
 import forge.card.spellability.SpellAbility;
@@ -11,9 +10,6 @@ public class PlayerZone_ComesIntoPlay extends DefaultPlayerZone {
     
     private boolean           trigger          = true;
     private boolean           leavesTrigger    = true;
-    
-	// static is overused, and this doesn't seem to be referenced anywhere.
-	//static int SimultaneousEntryCounter = 1; // For Cards with Multiple Token Entry. Only Affects Allies at the moment.
     
     public PlayerZone_ComesIntoPlay(String zone, Player player) {
         super(zone, player);

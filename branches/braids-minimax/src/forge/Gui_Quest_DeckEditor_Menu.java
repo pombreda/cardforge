@@ -1,3 +1,4 @@
+
 package forge;
 
 
@@ -1129,4 +1130,3 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
     }
     
 }
-

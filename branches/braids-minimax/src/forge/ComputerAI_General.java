@@ -10,9 +10,7 @@ import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Spell_Permanent;
 
 
-public class ComputerAI_General 
-	implements Computer 
-{
+public class ComputerAI_General implements Computer {
 
     public ComputerAI_General() {
 
@@ -53,7 +51,6 @@ public class ComputerAI_General
     	if (AllZone.getComputerManaPool().isEmpty())
 	    	hand = hand.filter(new CardListFilter() {
 	    		public boolean addCard(Card c) {
-
 
 	    			if (c.getSVar("PlayMain1").equals("TRUE"))
 	    				return true;

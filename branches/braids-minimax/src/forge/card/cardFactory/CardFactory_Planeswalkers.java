@@ -2,11 +2,7 @@
 package forge.card.cardFactory;
 
 
-import java.util.Collection;
 import java.util.HashMap;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -268,12 +264,6 @@ class CardFactory_Planeswalkers {
                     }
                     stop();
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
             
             //ability3
@@ -318,12 +308,6 @@ class CardFactory_Planeswalkers {
                     }
                     stop();
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
             
             //ability 1: gain 2 life
@@ -370,12 +354,6 @@ class CardFactory_Planeswalkers {
                     }
                     stop();
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
             
             ability1.setDescription("+1: You gain 2 life.");
@@ -478,12 +456,6 @@ class CardFactory_Planeswalkers {
                     AllZone.getStack().add(ability1);
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             ability1.setBeforePayMana(target1);
             ability1.setDescription("+1: Chandra Nalaar deals 1 damage to target player.");
@@ -563,12 +535,6 @@ class CardFactory_Planeswalkers {
                     Integer damage = (Integer) GuiUtils.getChoice("Select X", choice);
                     return damage.intValue();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input target
             ability2.setBeforePayMana(target2);
             ability2.setDescription("-X: Chandra Nalaar deals X damage to target creature.");
@@ -646,12 +612,6 @@ class CardFactory_Planeswalkers {
                     AllZone.getStack().add(ability3);
                     stop();
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input target
             ability3.setBeforePayMana(target3);
             ability3.setDescription("-8: Chandra Nalaar deals 10 damage to target player and each creature he or she controls.");
@@ -767,12 +727,6 @@ class CardFactory_Planeswalkers {
                         stop();
                     }
                 }//selectCard()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             Input runtime1 = new Input() {
@@ -782,12 +736,6 @@ class CardFactory_Planeswalkers {
                 public void showMessage() {
                     stopSetNext(targetArtifact);
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             ability1.setDescription("+1: Untap up to two target artifacts.");
             ability1.setStackDescription("Tezzeret the Seeker - Untap two target artifacts.");
@@ -1444,12 +1392,6 @@ class CardFactory_Planeswalkers {
                     }
                     stop();
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             });
             
             //ability 1: make 4/4 out of moutain
@@ -1547,12 +1489,6 @@ class CardFactory_Planeswalkers {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(ability1, lands, "Select target Mountain",
                             true, false));
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             ability1.setBeforePayMana(runtime);
@@ -1675,12 +1611,6 @@ class CardFactory_Planeswalkers {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(ability1, list,
                             "Select target permanent you own", true, false));
                 }//showMessage()
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };//Input
             
             

@@ -3,10 +3,6 @@ package forge.card.cardFactory;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -309,12 +305,6 @@ class CardFactory_Equipment {
         				stop();
         			}
             	}
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             	
             };
             

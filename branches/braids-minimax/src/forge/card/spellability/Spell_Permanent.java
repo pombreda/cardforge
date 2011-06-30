@@ -2,11 +2,7 @@
 package forge.card.spellability;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
@@ -32,7 +28,6 @@ public class Spell_Permanent extends Spell {
     private String championValidDesc = "";
     
     
-
     final Input championInputComes = new Input() {
 		private static final long serialVersionUID = -7503268232821397107L;
 
@@ -44,12 +39,6 @@ public class Spell_Permanent extends Spell {
                     "Select another "+championValidDesc+" you control to exile", false, false));
             ButtonUtil.disableAll(); //target this card means: sacrifice this card
         }
-
-		@Override
-		public Collection<MinimaxMove> getMoves() {
-			// TODO Auto-generated method stub
-			throw new NotImplementedError();
-		}
     };
     
     private final CommandReturn championGetCreature = new CommandReturn() {

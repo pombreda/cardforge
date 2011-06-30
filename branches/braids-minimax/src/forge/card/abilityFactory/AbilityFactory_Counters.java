@@ -9,7 +9,6 @@ import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
 import net.slightlymagic.braids.util.UtilFunctions;
 import net.slightlymagic.braids.util.lambda.Lambda1;
 import net.slightlymagic.braids.util.lambda.Null;
-
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.ButtonUtil;
@@ -1015,7 +1014,7 @@ public class AbilityFactory_Counters {
 			}
 
 			@Override
-			public Collection<MinimaxMove> getMoves() {
+			public Iterable<MinimaxMove> getMoves() {
 				int resultSize = unchosenPermanents.size();
 				resultSize += unchosenPlayers.size();
 				resultSize += 1;  // for Cancel

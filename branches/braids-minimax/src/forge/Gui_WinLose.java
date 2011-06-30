@@ -1,3 +1,4 @@
+
 package forge;
 
 
@@ -521,4 +522,3 @@ public class Gui_WinLose extends JFrame implements NewConstants {
         quitButton_actionPerformed(null);
     }
 }
-

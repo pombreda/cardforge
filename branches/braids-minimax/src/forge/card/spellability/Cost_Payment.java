@@ -1,23 +1,8 @@
 package forge.card.spellability;
 
-import java.util.Collection;
-
 import javax.swing.JOptionPane;
 
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
-import forge.AllZone;
-import forge.AllZoneUtil;
-import forge.ButtonUtil;
-import forge.Card;
-import forge.CardList;
-import forge.CardListFilter;
-import forge.ComputerUtil;
-import forge.Constant;
-import forge.Counters;
-import forge.Phase;
-import forge.Player;
-import forge.PlayerZone;
+import forge.*;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.ManaCost;
 import forge.gui.GuiUtils;
@@ -815,12 +800,6 @@ public class Cost_Payment {
 		        if(mana.isPaid()) 
 		        	done(); 
 		    }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
 		};
 	    return payMana;
 	}
@@ -874,13 +853,7 @@ public class Cost_Payment {
 		    	stop();
 		    	payment.payCost();
 		    }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
-			
+		    
 		};
 
 		return payX;
@@ -954,12 +927,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -994,12 +961,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         
         return target;
@@ -1061,12 +1022,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1141,12 +1096,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1181,12 +1130,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1221,12 +1164,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_exile()
@@ -1254,12 +1191,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_exile()
@@ -1293,12 +1224,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//input_exile()
@@ -1360,12 +1285,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1428,12 +1347,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//exileFromHandType()
@@ -1481,12 +1394,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//exileFromGraveType()
@@ -1533,12 +1440,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
         return target;
     }//exileFromTopType()
@@ -1594,12 +1495,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1633,12 +1528,6 @@ public class Cost_Payment {
                     }
                 }
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;
@@ -1699,12 +1588,6 @@ public class Cost_Payment {
             	stop();
             	payment.payCost();
             }
-
-			@Override
-			public Collection<MinimaxMove> getMoves() {
-				// TODO Auto-generated method stub
-				throw new NotImplementedError();
-			}
         };
 
         return target;

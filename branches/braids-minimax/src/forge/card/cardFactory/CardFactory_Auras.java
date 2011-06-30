@@ -3,12 +3,8 @@ package forge.card.cardFactory;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.StringTokenizer;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import com.esotericsoftware.minlog.Log;
 
@@ -297,12 +293,6 @@ class CardFactory_Auras {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(spell, land, "Select target land", true,
                             false));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
@@ -1233,12 +1223,6 @@ class CardFactory_Auras {
                     
                     stopSetNext(CardFactoryUtil.input_targetSpecific(spell, creatures, instruction, true, false));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             card.addEnchantCommand(onEnchant);
             card.addUnEnchantCommand(onUnEnchant);
@@ -1370,12 +1354,6 @@ class CardFactory_Auras {
                     stopSetNext(CardFactoryUtil.input_targetSpecific(spell, auraCandidates,
                             sbTitle.toString(), true, false));
                 }
-
-				@Override
-				public Collection<MinimaxMove> getMoves() {
-					// TODO Auto-generated method stub
-					throw new NotImplementedError();
-				}
             };
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
@@ -1681,12 +1659,6 @@ class CardFactory_Auras {
                         
                         stopSetNext(CardFactoryUtil.input_targetSpecific(spell, creatures, "Select target creature", true, false));
                     }
-
-					@Override
-					public Collection<MinimaxMove> getMoves() {
-						// TODO Auto-generated method stub
-						throw new NotImplementedError();
-					}
                 };
                 
                 card.setSVar("PlayMain1", "TRUE");
@@ -1814,12 +1786,6 @@ class CardFactory_Auras {
                         
                         stopSetNext(CardFactoryUtil.input_targetSpecific(spell, perms, "Select target artifact", true, false));
                     }
-
-					@Override
-					public Collection<MinimaxMove> getMoves() {
-						// TODO Auto-generated method stub
-						throw new NotImplementedError();
-					}
                 };
                 
                 card.setSVar("PlayMain1", "TRUE");

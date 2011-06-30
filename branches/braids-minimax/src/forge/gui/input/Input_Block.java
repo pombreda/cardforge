@@ -3,10 +3,6 @@ package forge.gui.input;
 
 
 import java.util.ArrayList;
-import java.util.Collection;
-
-import net.slightlymagic.braids.game.ai.minimax.MinimaxMove;
-import net.slightlymagic.braids.util.NotImplementedError;
 
 import forge.AllZone;
 import forge.ButtonUtil;
@@ -93,9 +89,4 @@ public class Input_Block extends Input {
         }
         showMessage();
     }//selectCard()
-
-	@Override
-	public Collection<MinimaxMove> getMoves() {
-		throw new NotImplementedError();
-	}
 }
