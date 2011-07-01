@@ -27,7 +27,6 @@ public class CardFactory_Sorceries {
      *
      * @param card a {@link forge.Card} object.
      * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
      * @param owner a {@link forge.Player} object.
      * @return a {@link forge.Card} object.
      */
@@ -1917,13 +1916,13 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Explosive Revelation")) {
-            /*
-                * Choose target creature or player. Reveal cards from the top of
-                * your library until you reveal a nonland card. Explosive Revelation
-                * deals damage equal to that card's converted mana cost to that
-                * creature or player. Put the nonland card into your hand and the
-                * rest on the bottom of your library in any order.
-                */
+        	/*
+        	 * Choose target creature or player. Reveal cards from the top of
+        	 * your library until you reveal a nonland card. Explosive Revelation
+        	 * deals damage equal to that card's converted mana cost to that
+        	 * creature or player. Put the nonland card into your hand and the
+        	 * rest on the bottom of your library in any order.
+        	 */
             Cost cost = new Cost(card.getManaCost(), cardName, false);
             Target tgt = new Target(card, "CP");
             final SpellAbility spell = new Spell(card, cost, tgt) {
@@ -1986,10 +1985,10 @@ public class CardFactory_Sorceries {
                 }
 
                 int getDamage() {
-                    /*
-                          * Reveal cards from the top of
-                          * your library until you reveal a nonland card.
-                          */
+                	/*
+                	 * Reveal cards from the top of
+                	 * your library until you reveal a nonland card.
+                	 */
                     CardList lib = AllZoneUtil.getPlayerCardsInLibrary(card.getController());
                     Log.debug("Explosive Revelation", "Library before: " + lib);
                     CardList revealed = new CardList();
@@ -2027,11 +2026,11 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Fireball")) {
-            /*
-                * Fireball deals X damage divided evenly, rounded down, among
-                * any number of target creatures and/or players.
-                * Fireball costs 1 more to cast for each target beyond the first.
-                */
+        	/*
+        	 * Fireball deals X damage divided evenly, rounded down, among
+        	 * any number of target creatures and/or players.
+        	 * Fireball costs 1 more to cast for each target beyond the first.
+        	 */
             final CardList targets = new CardList();
             final ArrayList<Player> targetPlayers = new ArrayList<Player>();
 
@@ -2194,10 +2193,10 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Recall")) {
-            /*
-                * Discard X cards, then return a card from your graveyard to your
-                * hand for each card discarded this way. Exile Recall.
-                */
+        	/*
+        	 * Discard X cards, then return a card from your graveyard to your
+        	 * hand for each card discarded this way. Exile Recall.
+        	 */
             Cost cost = new Cost(card.getManaCost(), cardName, false);
             final SpellAbility spell = new Spell(card, cost, null) {
                 private static final long serialVersionUID = -3935814273439962834L;
@@ -2253,9 +2252,9 @@ public class CardFactory_Sorceries {
 
                 @Override
                 public boolean canPlayAI() {
-                    /*
-                          *  We want compy to have less cards in hand than the human
-                          */
+                	/*
+                	 *  We want compy to have less cards in hand than the human
+                	 */
                     CardList Hhand = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
                     CardList Chand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
                     return Chand.size() < Hhand.size();
@@ -2433,10 +2432,10 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Leeches")) {
-            /*
-                * Target player loses all poison counters.
-                * Leeches deals that much damage to that player.
-                */
+        	/*
+        	 * Target player loses all poison counters.
+        	 * Leeches deals that much damage to that player.
+        	 */
             final Target tgt = new Target(card, "Select target player", "Player");
             Cost cost = new Cost("1 W W", cardName, false);
             SpellAbility spell = new Spell(card, cost, tgt) {
@@ -2477,13 +2476,13 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Cerebral Eruption")) {
-            /*
-                * Target opponent reveals the top card of his or her library.
-                * Cerebral Eruption deals damage equal to the revealed card's
-                * converted mana cost to that player and each creature he or
-                * she controls. If a land card is revealed this way, return
-                * Cerebral Eruption to its owner's hand.
-                */
+        	/*
+        	 * Target opponent reveals the top card of his or her library.
+        	 * Cerebral Eruption deals damage equal to the revealed card's
+        	 * converted mana cost to that player and each creature he or
+        	 * she controls. If a land card is revealed this way, return
+        	 * Cerebral Eruption to its owner's hand.
+        	 */
             SpellAbility spell = new Spell(card) {
                 private static final long serialVersionUID = -1365692178841929046L;
 
@@ -2534,13 +2533,13 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Sanity Grinding")) {
-            /*
-                * Chroma - Reveal the top ten cards of your library. For each blue
-                * mana symbol in the mana costs of the revealed cards, target opponent
-                * puts the top card of his or her library into his or her graveyard.
-                * Then put the cards you revealed this way on the bottom of your
-                * library in any order.
-                */
+        	/*
+        	 * Chroma - Reveal the top ten cards of your library. For each blue
+        	 * mana symbol in the mana costs of the revealed cards, target opponent
+        	 * puts the top card of his or her library into his or her graveyard.
+        	 * Then put the cards you revealed this way on the bottom of your
+        	 * library in any order.
+        	 */
             SpellAbility spell = new Spell(card) {
                 private static final long serialVersionUID = 4475834103787262421L;
 
@@ -2584,10 +2583,10 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Overwhelming Stampede")) {
-            /*
-                * Until end of turn, creatures you control gain trample and get
-                * +X/+X, where X is the greatest power among creatures you control.
-                */
+        	/*
+        	 * Until end of turn, creatures you control gain trample and get
+        	 * +X/+X, where X is the greatest power among creatures you control.
+        	 */
             final int[] x = new int[1];
             final SpellAbility spell = new Spell(card) {
                 private static final long serialVersionUID = -3676506382832498840L;
@@ -2648,10 +2647,10 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Winds of Change")) {
-            /*
-                * Each player shuffles the cards from his or her hand into
-                * his or her library, then draws that many cards.
-                */
+        	/*
+        	 * Each player shuffles the cards from his or her hand into
+        	 * his or her library, then draws that many cards.
+        	 */
             final SpellAbility spell = new Spell(card) {
                 private static final long serialVersionUID = 1137557863607126794L;
 
@@ -2691,13 +2690,13 @@ public class CardFactory_Sorceries {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Molten Psyche")) {
-            /*
-                * Each player shuffles the cards from his or her hand into his
-                * or her library, then draws that many cards.
-                * Metalcraft - If you control three or more artifacts, Molten
-                * Psyche deals damage to each opponent equal to the number of
-                * cards that player has drawn this turn.
-                */
+        	/*
+        	 * Each player shuffles the cards from his or her hand into his
+        	 * or her library, then draws that many cards.
+        	 * Metalcraft - If you control three or more artifacts, Molten
+        	 * Psyche deals damage to each opponent equal to the number of
+        	 * cards that player has drawn this turn.
+        	 */
             final SpellAbility spell = new Spell(card) {
                 private static final long serialVersionUID = -1276674329039279896L;
 
