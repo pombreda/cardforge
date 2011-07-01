@@ -490,7 +490,7 @@
             <layout>default</layout>
             <url>http://arcane.googlecode.com/svn/trunk/repository</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </repository>
     </repositories>
@@ -502,7 +502,7 @@
             <layout>default</layout>
             <url>http://arcane.googlecode.com/svn/trunk/repository</url>
             <snapshots>
-                <enabled>false</enabled>
+                <enabled>true</enabled>
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
