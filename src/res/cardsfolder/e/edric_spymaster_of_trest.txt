@@ -7,4 +7,5 @@ T:Mode$ DamageDone | ValidSource$ Creature | ValidTarget$ Opponent | CombatDamag
 SVar:TrigDraw:AB$Draw | Cost$ 0 | NumCards$ 1
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/edric_spymaster_of_trest.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/196.jpg
 End

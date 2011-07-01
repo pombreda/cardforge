@@ -6,4 +6,6 @@ A:SP$ DealDamage | Cost$ R | ValidTgts$ Creature.withFlying | TgtPrompt$ Select 
 SVar:DBDebuff:DB$ Debuff | Defined$ Targeted | Keywords$ Flying
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/vertigo.jpg
+SetInfo:6ED|Uncommon|http://magiccards.info/scans/en/6e/212.jpg
+SetInfo:ICE|Uncommon|http://magiccards.info/scans/en/ia/222.jpg
 End

@@ -7,4 +7,5 @@ T:Mode$ Phase | Phase$ Upkeep | TriggerZones$ Battlefield | Execute$ TrigGainLif
 SVar:TrigGainLife:AB$GainLife | Cost$ 0 | Defined$ You | LifeAmount$ 3
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/celestial_force.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/10.jpg
 End

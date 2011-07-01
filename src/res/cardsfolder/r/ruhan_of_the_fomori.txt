@@ -6,4 +6,5 @@ PT:7/7
 K:CARDNAME attacks each turn if able.
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/ruhan_of_the_fomori.jpg
+SetInfo:COM|Mythic|http://magiccards.info/scans/en/cmd/221.jpg
 End
