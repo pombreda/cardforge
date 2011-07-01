@@ -6,4 +6,5 @@ A:SP$ Counter | Cost$ 1 U U | TargetType$ Spell | TgtPrompt$ Select target spell
 SVar:DBChange:DB$ChangeZone | Origin$ Stack | Destination$ Library | LibraryPosition$ -1
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/spell_crumple.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/63.jpg
 End
