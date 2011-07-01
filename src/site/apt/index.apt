@@ -39,7 +39,16 @@ Forge
   Forge runs on Windows, Linux, and Macs. You can download Forge from
   {{{http://code.google.com/p/cardforge/downloads/list}here}}.
 
-  <<Related Links>>
+  <<Maven Project Links>>
+
+  * {{{http://cardforge.googlecode.com/svn/site/index.html}Maven Project Site}}
+
+  * {{{http://cardforge.googlecode.com/svn/site/apidocs/index.html}JavaDocs}}
+
+  * {{{http://cardforge.googlecode.com/svn/site/xref/index.html}Browsable Source Code}}
+
+
+ <<Related Links>>
 
   * {{{http://cardforge.org/}Main Website}}
 
@@ -50,3 +59,4 @@ Forge
   * {{{http://www.slightlymagic.net/forum/viewforum.php?f=26}Forums}}
 
   * {{{http://www.slightlymagic.net/wiki/MTG_Forge}Documentation}}
+
