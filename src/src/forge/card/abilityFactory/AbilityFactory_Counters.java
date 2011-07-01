@@ -8,6 +8,7 @@ import forge.gui.input.Input;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 /**
@@ -147,7 +148,7 @@ public class AbilityFactory_Counters {
         sb.append("Put ").append(amount).append(" ").append(cType.getName())
                 .append(" counter");
         if (amount != 1) sb.append("s");
-        sb.append(" on");
+        sb.append(" on ");
 
         ArrayList<Card> tgtCards;
 
@@ -158,8 +159,13 @@ public class AbilityFactory_Counters {
             tgtCards = AbilityFactory.getDefinedCards(card, params.get("Defined"), sa);
         }
 
-        for (Card c : tgtCards) {
-            sb.append(" ").append(c.getName());
+        Iterator<Card> it = tgtCards.iterator();
+        while (it.hasNext()) {
+            Card tgtC = it.next();
+            if (tgtC.isFaceDown()) sb.append("Morph");
+            else sb.append(tgtC);
+            
+            if (it.hasNext()) sb.append(", ");
         }
 
         sb.append(".");
@@ -273,7 +279,7 @@ public class AbilityFactory_Counters {
                 if (af.isCurse()) {
                     choice = chooseCursedTarget(list, type, amount);
                 } else {
-                    choice = chooseBoonTarget(list, type, amount);
+                    choice = chooseBoonTarget(list, type);
                 }
 
                 if (choice == null) {    // can't find anything left
@@ -451,7 +457,7 @@ public class AbilityFactory_Counters {
                 }
             } else {
                 if (preferred)
-                    choice = chooseBoonTarget(list, type, amount);
+                    choice = chooseBoonTarget(list, type);
 
                 else {
                     if (type.equals("P1P1")) {
@@ -461,7 +467,8 @@ public class AbilityFactory_Counters {
                     }
                 }
             }
-
+            
+            //TODO - I think choice can be null here.  Is that ok for addTarget()?
             abTgt.addTarget(choice);
         }
 
@@ -505,14 +512,22 @@ public class AbilityFactory_Counters {
      *
      * @param list a {@link forge.CardList} object.
      * @param type a {@link java.lang.String} object.
-     * @param amount a int.
      * @return a {@link forge.Card} object.
      */
-    private static Card chooseBoonTarget(CardList list, String type, final int amount) {
+    private static Card chooseBoonTarget(CardList list, String type) {
         Card choice;
         if (type.equals("P1P1")) {
             choice = CardFactoryUtil.AI_getBestCreature(list);
-        } else {
+        } 
+        else if(type.equals("DIVINITY")) {
+        	list = list.filter(new CardListFilter() {
+        		public boolean addCard(Card c) {
+        			return c.getCounters(Counters.DIVINITY) == 0;
+        		}
+        	});
+        	choice = CardFactoryUtil.AI_getMostExpensivePermanent(list, null, false);
+        }
+        else {
             // The AI really should put counters on cards that can use it.
             // Charge counters on things with Charge abilities, etc. Expand these above
             choice = CardFactoryUtil.getRandomCard(list);
@@ -892,7 +907,7 @@ public class AbilityFactory_Counters {
 
             @Override
             public boolean canPlayAI() {
-                return shouldProliferateAI(this);
+                return proliferateShouldPlayAI(this);
             }
 
             @Override
@@ -907,7 +922,7 @@ public class AbilityFactory_Counters {
 
             @Override
             public boolean doTrigger(boolean mandatory) {
-                return doTriggerProliferateAI(this, mandatory);
+                return proliferateDoTriggerAI(this, mandatory);
             }
         };
 
@@ -926,7 +941,7 @@ public class AbilityFactory_Counters {
 
             @Override
             public boolean canPlayAI() {
-                return shouldProliferateAI(this);
+                return proliferateShouldPlayAI(this);
             }
 
             @Override
@@ -961,7 +976,7 @@ public class AbilityFactory_Counters {
 
             @Override
             public boolean canPlayAI() {
-                return shouldProliferateAI(this);
+                return proliferateShouldPlayAI(this);
             }
 
             @Override
@@ -976,12 +991,12 @@ public class AbilityFactory_Counters {
 
             @Override
             public boolean chkAI_Drawback() {
-                return shouldProliferateAI(this);
+                return proliferateShouldPlayAI(this);
             }
 
             @Override
             public boolean doTrigger(boolean mandatory) {
-                return doTriggerProliferateAI(this, mandatory);
+                return proliferateDoTriggerAI(this, mandatory);
             }
         };
 
@@ -1013,12 +1028,12 @@ public class AbilityFactory_Counters {
     }
 
     /**
-     * <p>shouldProliferateAI.</p>
+     * <p>proliferateShouldPlayAI.</p>
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @return a boolean.
      */
-    private static boolean shouldProliferateAI(SpellAbility sa) {
+    private static boolean proliferateShouldPlayAI(SpellAbility sa) {
         boolean chance = true;
         Ability_Sub subAb = sa.getSubAbility();
         if (subAb != null)
@@ -1029,13 +1044,13 @@ public class AbilityFactory_Counters {
     }
 
     /**
-     * <p>doTriggerProliferateAI.</p>
+     * <p>proliferateDoTriggerAI.</p>
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @param mandatory a boolean.
      * @return a boolean.
      */
-    private static boolean doTriggerProliferateAI(SpellAbility sa, boolean mandatory) {
+    private static boolean proliferateDoTriggerAI(SpellAbility sa, boolean mandatory) {
         boolean chance = true;
         Ability_Sub subAb = sa.getSubAbility();
         if (subAb != null)
