@@ -23,7 +23,6 @@ public class CardFactory_Instants {
      *
      * @param card a {@link forge.Card} object.
      * @param cardName a {@link java.lang.String} object.
-     * @param cardName a {@link java.lang.String} object.
      * @param owner a {@link forge.Player} object.
      * @return a {@link forge.Card} object.
      */
@@ -128,71 +127,7 @@ public class CardFactory_Instants {
             card.clearFirstSpellAbility();
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
-
-        /*
-        //*************** START *********** START **************************
-        else if(cardName.equals("Wings of Velis Vel")) {
-            final SpellAbility spell = new Spell(card) {
-                private static final long serialVersionUID = -5744842090293912606L;
-                
-                @Override
-                public boolean canPlayAI() {
-                    CardList small = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
-                    
-                    //try to make a good attacker
-                    if(0 < small.size()) {
-                        CardListUtil.sortAttackLowFirst(small);
-                        setTargetCard(small.get(0));
-                        
-                        return true && AllZone.getPhase().getPhase().equals(Constant.Phase.Main1);
-                    }
-                    
-                    return false;
-                }//canPlayAI()
-                
-                @Override
-                public void resolve() {
-                    //in case ability is played twice
-                    final int[] oldAttack = new int[1];
-                    final int[] oldDefense = new int[1];
-                    
-                    final Card card[] = new Card[1];
-                    card[0] = getTargetCard();
-                    
-                    oldAttack[0] = card[0].getBaseAttack();
-                    oldDefense[0] = card[0].getBaseDefense();
-                    
-                    card[0].setBaseAttack(4);
-                    card[0].setBaseDefense(4);
-                    card[0].addExtrinsicKeyword("Flying");
-                    card[0].addExtrinsicKeyword("HIDDEN Changeling");
-                    
-                    //EOT
-                    final Command untilEOT = new Command() {
-                        private static final long serialVersionUID = 7236360479349324099L;
-                        
-                        public void execute() {
-                            card[0].setBaseAttack(oldAttack[0]);
-                            card[0].setBaseDefense(oldDefense[0]);
-                            
-                            card[0].removeExtrinsicKeyword("Flying");
-                            card[0].removeExtrinsicKeyword("HIDDEN Changeling");
-                        }
-                    };
-                    
-                    AllZone.getEndOfTurn().addUntil(untilEOT);
-                }//resolve()
-            };//SpellAbility
-            
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-            
-            card.setSVar("PlayMain1", "TRUE");
-            
-            spell.setBeforePayMana(CardFactoryUtil.input_targetCreature(spell));
-        }//*************** END ************ END **************************
-        */
+        
 
         //*************** START *********** START **************************
         else if (cardName.equals("Sprout Swarm")) {
@@ -802,9 +737,9 @@ public class CardFactory_Instants {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Hurkyl's Recall")) {
-            /*
-                * Return all artifacts target player owns to his or her hand.
-                */
+        	/*
+        	 * Return all artifacts target player owns to his or her hand.
+        	 */
             Target t = new Target(card, "Select target player", "Player");
             Cost cost = new Cost("1 U", cardName, false);
 
@@ -957,7 +892,7 @@ public class CardFactory_Instants {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Siren's Call")) {
-            /**
+            /*
              *  Creatures the active player controls attack this turn if able.
              *
              *  At the beginning of the next end step, destroy all non-Wall creatures
@@ -1464,11 +1399,11 @@ public class CardFactory_Instants {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Burn the Impure")) {
-            /*
-                * Burn the Impure deals 3 damage to target creature. If that
-                * creature has infect, Burn the Impure deals 3 damage to that
-                * creature's controller.
-                */
+        	/*
+        	 * Burn the Impure deals 3 damage to target creature. If that
+        	 * creature has infect, Burn the Impure deals 3 damage to that
+        	 * creature's controller.
+        	 */
             Cost abCost = new Cost("1 R", cardName, false);
             final SpellAbility spell = new Spell(card, abCost, new Target(card, "TgtC")) {
                 private static final long serialVersionUID = -3069135027502686218L;
