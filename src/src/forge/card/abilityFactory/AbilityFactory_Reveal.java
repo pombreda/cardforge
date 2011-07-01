@@ -1130,6 +1130,23 @@ public class AbilityFactory_Reveal {
     private static boolean rearrangeTopOfLibraryTrigger(final AbilityFactory af, final SpellAbility sa, final boolean mandatory) {
         if (!ComputerUtil.canPayCost(sa))
             return false;
+        
+        Card source = sa.getSourceCard();
+        Target tgt = af.getAbTgt();
+        
+        if (tgt != null) {
+            // ability is targeted
+            tgt.resetTargets();
+
+            boolean canTgtHuman = AllZone.getHumanPlayer().canTarget(source);
+
+            if (!canTgtHuman)
+                return false;
+            else
+                tgt.addTarget(AllZone.getHumanPlayer());
+        } else {
+            //if it's just defined, no big deal
+        }
 
         Ability_Sub abSub = sa.getSubAbility();
         if (abSub != null) {
