@@ -5,6 +5,7 @@ import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.*;
+import forge.card.trigger.Trigger;
 import forge.gui.GuiUtils;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCostUtil;
@@ -5338,10 +5339,15 @@ public class GameActionUtil {
                                 sa.setType("Temporary");
 
                                 affectedCard.addSpellAbility(sa);
-                            }/*
+                            }
 							else if (sVar.startsWith("Mode")){ // grant a Trigger
-								affectedCard.addTrigger(TriggerHandler.parseTrigger(sVar, affectedCard));							
-							}*/ else { // Copy this SVar
+								StringBuilder triggerName = new StringBuilder("From ");
+                                triggerName.append(source.getName()).append(" (").append(source.getUniqueNumber()).append("): ").append(keyword.split("SVar=")[1]);
+
+                                Trigger actualTrigger = forge.card.trigger.TriggerHandler.parseTrigger(triggerName.toString(),sVar,affectedCard);
+                                affectedCard.addTrigger(actualTrigger);
+                                AllZone.getTriggerHandler().registerTrigger(actualTrigger);
+							} else { // Copy this SVar
                                 affectedCard.setSVar(keyword.split("SVar=")[1], sVar);
                             }
                         } else if (keyword.startsWith("Types=")) {
@@ -5406,6 +5412,14 @@ public class GameActionUtil {
                                 if (s.getType().equals("Temporary"))
                                     affectedCard.removeSpellAbility(s);
                             }
+                        }
+                        else if (sVar.startsWith("Mode")) { // remove granted triggers
+                            StringBuilder triggerName = new StringBuilder("From ");
+                            triggerName.append(source.getName()).append(" (").append(source.getUniqueNumber()).append("): ").append(keyword.split("SVar=")[1]);
+
+                            Trigger actualTrigger = affectedCard.getNamedTrigger(triggerName.toString());
+                            affectedCard.removeTrigger(actualTrigger);
+                            AllZone.getTriggerHandler().removeRegisteredTrigger(actualTrigger);
                         }
                     } else if (keyword.startsWith("Types=")) {
                         String[] tmptypes = keyword.split("=");
