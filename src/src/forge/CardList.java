@@ -70,9 +70,17 @@ public class CardList implements Iterable<Card> {
         addAll(c);
     }
 
-    // get any cards that exist in the passed in sets list
     /**
-     * <p>getSets.</p>
+     * Create a cardlist with an initialize estimate of its maximum size.
+     * 
+     * @param size an initialize estimate of its maximum size
+     */
+    public CardList(int size) {
+    	list = new ArrayList<Card>(size);
+	}
+
+    /**
+     * <p>Get any cards that exist in the passed in sets list.</p>
      *
      * @param sets a {@link java.util.ArrayList} object.
      * @return a {@link forge.CardList} object.
