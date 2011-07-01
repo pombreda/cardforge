@@ -63,7 +63,7 @@ public class ReadCard implements Runnable, NewConstants {
                     + cardsfolder.getAbsolutePath());
 
         if (!cardsfolder.isDirectory())
-            throw new RuntimeException("ReadCard : constructor error -- not a direcotry -- "
+            throw new RuntimeException("ReadCard : constructor error -- not a directory -- "
                     + cardsfolder.getAbsolutePath());
         zipFile = new File(cardsfolder, CARDSFOLDER + ".zip");
 
