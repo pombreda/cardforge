@@ -229,7 +229,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Kang 1", "easy", "UB deck with Gravelgill Duo and Dire Undercurrents");
         addToDeckList("Kang 2", "medium", "UB deck with Glen Elendra Liege, Gravelgill Duo and Dire Undercurrents");
         addToDeckList("Kang 3", "hard", "UB deck with Glen Elendra Liege and Dire Undercurrents");
-        addToDeckList("King Arthur 1", "easy", "WG Knight deck with Wilt-Leaf Cavaliers, Knight of the Skyward Eye and Leonin Skyhunter");
+        addToDeckList("King Arthur 1", "easy", "WG Knight deck with Wilt-Leaf Cavaliers, Raven's Run Dragoon and Llanowar Knight");
         addToDeckList("King Arthur 2", "medium", "WG Hybrid Knight deck with Knight of New Alara and Knight of the Reliquary");
         addToDeckList("King Arthur 3", "hard", "WG Hybrid Knight deck with Wilt-Leaf Liege, Knight of New Alara and equipments");
         addToDeckList("King Edward 1", "easy", "WUBRG Elementals deck with Tribal Flames");
