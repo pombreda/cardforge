@@ -1614,39 +1614,7 @@ public class CardFactory implements NewConstants {
         }//*************** END ************ END **************************
 
 
-        //*************** START *********** START **************************
-        else if (cardName.equals("Keening Stone")) {
-            /*
-                * 5, Tap: Target player puts the top X cards of his or her
-                * library into his or her graveyard, where X is the number of
-                * cards in that player's graveyard.
-                */
-            Target target = new Target(card, "Select target player", new String[]{"Player"});
-            Cost abCost = new Cost("5 T", cardName, true);
-            Ability_Activated ab1 = new Ability_Activated(card, abCost, target) {
-                private static final long serialVersionUID = -6282104343089446216L;
-
-                @Override
-                public boolean canPlayAI() {
-                    Player player = AllZone.getHumanPlayer();
-                    if (!player.canTarget(card))
-                        return false;
-
-                    setTargetPlayer(AllZone.getHumanPlayer());
-                    CardList libList = AllZoneUtil.getPlayerCardsInLibrary(player);
-                    return libList.size() > 0;
-                }
-
-                @Override
-                public void resolve() {
-                    Player player = getTargetPlayer();
-                    player.mill(AllZone.getZone(Constant.Zone.Graveyard, player).size());
-                }
-            };
-
-            ab1.setDescription(abCost + "Target player puts the top X cards of his or her library into his or her graveyard, where X is the number of cards in that player's graveyard.");
-            card.addSpellAbility(ab1);
-        }//*************** END ************ END **************************       
+               
 
 
         //*************** START *********** START **************************
