@@ -3554,8 +3554,12 @@ public class CardFactoryUtil {
             ArrayList<String> kal = thisToken.getIntrinsicKeyword();
             String tokenKeywords[] = new String[kal.size()];
             kal.toArray(tokenKeywords);
-
-            list.addAll(makeToken(thisToken.getName(), thisToken.getImageName(), thisToken.getController(), thisToken.getManaCost(), tokenTypes, thisToken.getBaseAttack(), thisToken.getBaseDefense(), tokenKeywords));
+            CardList tokens = makeToken(thisToken.getName(), thisToken.getImageName(), thisToken.getController(), thisToken.getManaCost(), tokenTypes, thisToken.getBaseAttack(), thisToken.getBaseDefense(), tokenKeywords);
+            
+            for (Card token : tokens)
+            	token.setColor(thisToken.getColor());
+            
+            list.addAll(tokens);
         }
 
         return list;
