@@ -50,7 +50,7 @@ public class GameActionUtil {
         upkeep_Ceta_Sanctuary();
         upkeep_Tangle_Wire();
         upkeep_Dance_of_the_Dead();
-        upkeep_Farmstead();
+        
 
 
         upkeep_Shapeshifter();
@@ -2469,55 +2469,7 @@ public class GameActionUtil {
         }
     }
 
-    /**
-     * <p>upkeep_Farmstead.</p>
-     */
-    private static void upkeep_Farmstead() {
-        final String auraName = "Farmstead";
-        final Player player = AllZone.getPhase().getPlayerTurn();
-
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-        list = list.filter(new CardListFilter() {
-            public boolean addCard(Card c) {
-                return c.isEnchantedBy(auraName);
-            }
-        });
-
-        for (final Card land : list) {
-            CardList auras = new CardList(land.getEnchantedBy().toArray());
-            auras = auras.getName(auraName);
-            for (int i = 0; i < auras.size(); i++) {
-                Ability ability = new Ability(land, "0") {
-                    @Override
-                    public void resolve() {
-                        if (GameActionUtil.showYesNoDialog(land, "Pay W W, and gain 1 life?")) {
-                            //prompt for pay mana cost
-                            final SpellAbility gain = new Ability(land, "W W") {
-                                @Override
-                                public void resolve() {
-                                    land.getController().gainLife(1, land);
-                                }
-                            };//Ability
-
-                            StringBuilder sb = new StringBuilder();
-                            sb.append(land).append(" - gain 1 life.");
-                            gain.setStackDescription(sb.toString());
-
-                            AllZone.getGameAction().playSpellAbility(gain);
-                        }
-                    }
-                };
-
-                StringBuilder sb = new StringBuilder();
-                sb.append(land.getName()).append(" -  activate Life gain ability?");
-                ability.setStackDescription(sb.toString());
-
-                AllZone.getStack().addSimultaneousStackEntry(ability);
-
-            }
-        }
-    }//upkeep_Farmstead()
-
+    
     /////////////////////////
     // Start of Kinship cards
     /////////////////////////
