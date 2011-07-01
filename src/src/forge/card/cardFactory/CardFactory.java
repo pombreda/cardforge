@@ -1006,55 +1006,7 @@ public class CardFactory implements NewConstants {
             card.addComesIntoPlayCommand(intoPlay);
 
         }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("That Which Was Taken")) {
-            Cost abCost = new Cost("4 T", cardName, true);
-            Target target = new Target(card, "Select target permanent other than " + cardName, new String[]{"Permanent.Other"});
-            final Ability_Activated ability = new Ability_Activated(card, abCost, target) {
-                private static final long serialVersionUID = -8996435083734446340L;
-
-                @Override
-                public void resolve() {
-                    Card c = getTargetCard();
-
-                    if (AllZoneUtil.isCardInPlay(c) && CardFactoryUtil.canTarget(card, c))
-                        c.addCounter(Counters.DIVINITY, 1);
-                }
-
-                @Override
-                public boolean canPlayAI() {
-                    CardList perms = getPerms();
-
-                    return perms.size() > 0;
-                }
-
-                @Override
-                public void chooseTargetAI() {
-                    CardList a = getPerms();
-                    if (a.size() > 0) {
-                        setTargetCard(a.get(0));
-                    }
-                }
-
-                CardList getPerms() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                    list = list.filter(new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.getCounters(Counters.DIVINITY) == 0 && (CardUtil.getConvertedManaCost(c.getManaCost()) > 3 || c.getNetAttack() > 4) &&
-                                    !c.getName().equals("That Which Was Taken");
-                        }
-                    });
-                    return list;
-                }
-            };//SpellAbility
-            ability.setDescription(abCost + "Put a divinity counter on target permanent other than " + cardName + ".");
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-
-
-
+        
 
         //*************** START *********** START **************************
         else if (cardName.equals("Night Soil")) {
