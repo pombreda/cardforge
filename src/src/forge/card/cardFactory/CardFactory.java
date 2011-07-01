@@ -9,6 +9,7 @@ import forge.card.spellability.*;
 import forge.card.trigger.Trigger;
 import forge.error.ErrorViewer;
 import forge.gui.GuiUtils;
+import forge.gui.MultiPhaseProgressMonitorWithETA;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost;
 import forge.gui.input.Input_PayManaCostUtil;
@@ -93,18 +94,34 @@ public class CardFactory implements NewConstants {
     }// constructor
 
     /**
-     * <p>Getter for the field <code>allCards</code>.</p>
+     * Makes a shallow copy of the internal card list, and displays a progress
+     * bar while doing so.
      *
-     * @return a {@link forge.CardList} object.
+     * @return a shallow copy of the internal card list
      */
     public CardList getAllCards() {
-        return new CardList(allCards.toArray());
+    	
+    	MultiPhaseProgressMonitorWithETA monitor = 
+    		new MultiPhaseProgressMonitorWithETA(
+    				"Forge - Duplicating card database", 1, allCards.size(), 
+    				0.5f); 
+    	
+    	CardList result = new CardList(allCards.size());
+    	
+    	for (Card card : allCards) {
+    		result.add(card);
+    		monitor.incrementUnitsCompletedThisPhase(1);
+    	}
+    	
+    	monitor.getDialog().dispose();
+    	
+        return result;
     }// getAllCards()
 
     /**
-     * <p>getCards.</p>
+     * Faster than getAllCards, but callers must not modify this list directly!
      *
-     * @return a {@link forge.CardList} object.
+     * @return the internal {@link forge.CardList} object -- do not modify!
      */
     public CardList getCards() {
         return allCards;
