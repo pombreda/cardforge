@@ -11,37 +11,6 @@
         Forge lets you play the card game Magic: The Gathering against a computer opponent
         using all of the rules.
     </description>
-    <!-- This is very different than playing solitare Magic with Apprentice or Magic Workstation
-        because the AI will attack and play spells. Currently there are over 8400 cards ranging from old power cards
-        like Ancestral Recall and Lightning Bolt to newer cards like planeswalkers. The user interface is basic, but it
-        does let you download all of the cards pictures and view them while playing the game.
-
-        If you don't know Magic, the easiest way to learn is to download the demo and rulebook from
-        http://www.wizards.com/magic/TCG/NewtoMagic.aspx?x=mtg/tcg/newtomagic/learntoplay
-
-        You can also play sealed deck, draft, or the new quest mode. In draft mode the AI drafts for the 7 other
-        opponents and builds the decks from the cards that it chooses. In the quest mode you start out with a few cards
-        and the more games that you play the more that you win. As you get more cards you can update and change your
-        deck.
-
-        There is also a "quest mode" where you start out with a small, random cardpool and you win more cards by playing
-        against opponents. This is a scaled down version of Shandalar that is only menu based. On easy mode your goal is
-        to win 10 matches. Easy mode is well easy because you always win cards after the match whether you win or lose.
-        On some of the harder modes you only win cards if you win. Quest mode is challenging since the computer uses
-        cards that are better than the stinky ones that you have. The computer opponents are divided into three
-        categories so they get progressively harder.
-
-        Forge supports a number of keywords such as exalted, fear, flying, shadow, flanking, protection, wither, flash,
-        defender, reach, and haste. Forge now also has a mana pool and supports creature enchantments.
-
-        The AI is very simple and does the best that it can. It tries to do reasonable actions. Sometimes the computer
-        seems smart and sometimes it doesn't. Truthfully the AI plays random cards from its hand and each card has some
-        AI code programmed into it. The computer can play cards like Counterspell but in all other cases the computer
-        will never respond to a spell or ability on the stack. Also the computer will only play spells during its Main
-        phase.
-
-        Forge runs on Windows, Linux, and Macs. You can download Forge from
-        http://code.google.com/p/cardforge/downloads/list  -->
     <url>http://cardforge.org</url>
     <organization>
         <name>CardForge</name>
@@ -638,11 +607,19 @@
                                             <fileset dir="${basedir}" includes="LICENSE.txt"/>
                                             <fileset dir="${basedir}" includes="README.txt"/>
                                             <fileset dir="${basedir}" includes="CHANGES.txt"/>
-                                            <fileset dir="${basedir}" includes="res/**"/>
+                                            <fileset dir="${basedir}">
+                                                <include name="res/**"/>
+                                                <exclude name="res/cardsfolder/**"/>
+                                                <exclude name="res/lib/**"/>
+                                            </fileset>
                                             <fileset dir="${project.build.directory}" includes="forge.exe"/>
                                             <fileset dir="${project.build.directory}"
                                                      includes="${project.build.finalName}-jar-with-dependencies.jar"/>
                                         </copy>
+                                        <mkdir dir="${project.build.directory}/${project.build.finalName}/res/cardsfolder"/>
+                                        <zip destfile="${project.build.directory}/${project.build.finalName}/res/cardsfolder/cardsfolder.zip"
+                                             basedir="${basedir}/res/cardsfolder"
+                                             level="1"/>
                                         <chmod file="${project.build.directory}/${project.build.finalName}/forge.sh"
                                                perm="a+rx"/>
                                         <chmod file="${project.build.directory}/${project.build.finalName}/forge.exe"
@@ -747,6 +724,10 @@
                                             <fileset dir="${basedir}" includes="README.txt"/>
                                             <fileset dir="${basedir}" includes="CHANGES.txt"/>
                                         </copy>
+                                        <mkdir dir="${project.build.directory}/res/cardsfolder"/>
+                                        <zip destfile="${project.build.directory}/res/cardsfolder/cardsfolder.zip"
+                                             basedir="${basedir}/res/cardsfolder"
+                                             level="1"/>
                                         <taskdef name="jarbundler" classpathref="maven.runtime.classpath"
                                                  classname="net.sourceforge.jarbundler.JarBundler"/>
                                         <jarbundler dir="${project.build.directory}/${project.build.finalName}-osx"
@@ -755,8 +736,15 @@
                                                     jvmversion="1.5+" vmoptions="-Xmx1024m" shortname="${project.name}"
                                                     workingdirectory="$APP_PACKAGE/Contents/Resources/Java"
                                                     jar="${project.build.directory}/${project.build.finalName}-jar-with-dependencies.jar">
-                                            <javafileset dir="${basedir}" includes="*.properties"/>
-                                            <javafileset dir="${basedir}" includes="res/**"/>
+                                            <javafileset dir="${basedir}">
+                                                <include name="*.properties"/>
+                                                <include name="res/**"/>
+                                                <exclude name="res/cardsfolder/**"/>
+                                                <exclude name="res/lib/**"/>
+                                            </javafileset>
+                                            <javafileset dir="${project.build.directory}">
+                                                <include name="res/cardsfolder/cardsfolder.zip"/>
+                                            </javafileset>
                                             <javaproperty name="apple.laf.useScreenMenuBar" value="true"/>
                                         </jarbundler>
                                         <symlink
