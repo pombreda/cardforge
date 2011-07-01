@@ -70,7 +70,7 @@ public class GameActionUtil {
         upkeep_Winnower_Patrol();
         upkeep_Wolf_Skull_Shaman();
 
-        upkeep_Oversold_Cemetery();
+        
         upkeep_Vampire_Lacerator();
         upkeep_Sleeper_Agent();
         upkeep_Pillory_of_the_Sleepless();
@@ -3520,47 +3520,7 @@ public class GameActionUtil {
         }// for
     }// upkeep_Dark_Confidant()
 
-    /**
-     * <p>upkeep_Oversold_Cemetery.</p>
-     */
-    private static void upkeep_Oversold_Cemetery() {
-        final Player player = AllZone.getPhase().getPlayerTurn();
-        CardList cemeteryList = AllZoneUtil.getPlayerCardsInPlay(player, "Oversold Cemetery");
-        if (cemeteryList.isEmpty())
-            return;
-
-        CardList graveyardCreatures = AllZoneUtil.getPlayerTypeInGraveyard(player, "Creature");
-
-        if (graveyardCreatures.size() >= 4) {
-            for (int i = 0; i < cemeteryList.size(); i++) {
-                Ability ability = new Ability(cemeteryList.get(0), "0") {
-                    @Override
-                    public void resolve() {
-                        CardList graveyardCreatures = AllZoneUtil.getPlayerTypeInGraveyard(player, "Creature");
-
-                        if (graveyardCreatures.size() >= 4) {
-                            if (player.isHuman()) {
-                                Object o = GuiUtils.getChoiceOptional("Pick a creature to return to hand",
-                                        graveyardCreatures.toArray());
-                                if (o != null) {
-                                    Card card = (Card) o;
-
-                                    AllZone.getGameAction().moveToHand(card);
-                                }
-                            } else if (player.isComputer()) {
-                                Card card = graveyardCreatures.get(0);
-                                AllZone.getGameAction().moveToHand(card);
-                            }
-                        }
-                    }
-                };// Ability
-                ability.setStackDescription("Oversold Cemetary returns creature from the graveyard to its owner's hand.");
-
-                AllZone.getStack().addSimultaneousStackEntry(ability);
-
-            }
-        }
-    }//Oversold Cemetery
+    
 
 
     /**
