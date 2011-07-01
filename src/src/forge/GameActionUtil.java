@@ -5354,6 +5354,9 @@ public class GameActionUtil {
                         } else if (keyword.startsWith("Keyword=")) {
                             String sVar = source.getSVar(keyword.split("Keyword=")[1]);
                             affectedCard.addExtrinsicKeyword(sVar);
+                        } else if (keyword.startsWith("ForceSVar=")) {
+                            String sVar = source.getSVar(keyword.split("SVar=")[1]);
+                            affectedCard.setSVar(keyword.split("SVar=")[1],sVar);
                         } else affectedCard.addExtrinsicKeyword(keyword);
                     }
                 }
