@@ -64,11 +64,12 @@ nameList = []
 getCardsInSet()
 
 for fileName in nameList:
-    # if file doesn't exist continue
-    filePath = os.path.join(folder, fileName)
+	# Join new folder convention cardsfolder/<char>/<cardName>
+    filePath = os.path.join(folder, fileName[0].lower(), fileName)
     print filePath
 
-    if os.path.isfile(filePath) == False:
+	# if file doesn't exist continue
+    if not os.path.isfile(filePath):
         continue
 
     file = open(filePath)
@@ -101,7 +102,7 @@ for fileName in nameList:
 
         line = file.readline().strip()
 
-    file = open(os.path.join(folder, fileName), 'w')
+    file = open(filePath, 'w')
     file.write(card.lines)
 
     file.write('End')
