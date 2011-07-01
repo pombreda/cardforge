@@ -79,7 +79,7 @@ public class GameActionUtil {
 
         //Win / Lose
         // Checks for can't win or can't lose happen in Player.altWinConditionMet()
-        upkeep_Battle_of_Wits();
+        
         upkeep_Mortal_Combat();
         upkeep_Near_Death_Experience();
         upkeep_Test_of_Endurance();
@@ -3903,35 +3903,7 @@ public class GameActionUtil {
         }// if
     }// upkeep_Felidar_Sovereign
 
-    /**
-     * <p>upkeep_Battle_of_Wits.</p>
-     */
-    private static void upkeep_Battle_of_Wits() {
-        final Player player = AllZone.getPhase().getPlayerTurn();
-        PlayerZone libraryZone = AllZone.getZone(Constant.Zone.Library, player);
-
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Battle of Wits");
-
-        if (0 < list.size() && 200 <= libraryZone.size()) {
-            final Card source = list.get(0);
-            Ability ability = new Ability(source, "0") {
-                @Override
-                public void resolve() {
-                    PlayerZone libraryZone = AllZone.getZone(Constant.Zone.Library, player);
-                    if (libraryZone.size() >= 200)
-                        player.altWinConditionMet(source.getName());
-                }
-            };// Ability
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("Battle of Wits - ").append(player).append(" wins the game");
-            ability.setStackDescription(sb.toString());
-
-            AllZone.getStack().addSimultaneousStackEntry(ability);
-
-        }// if
-    }// upkeep_Battle_of_Wits
-
+    
     /**
      * <p>upkeep_Mortal_Combat.</p>
      */
