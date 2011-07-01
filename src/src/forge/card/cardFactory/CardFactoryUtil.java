@@ -748,9 +748,6 @@ public class CardFactoryUtil {
 
             @Override
             public void resolve() {
-                //PlayerZone hand = AllZone.getZone(Constant.Zone.Hand ,player);
-                //PlayerZone play = AllZone.getZone(Constant.Zone.Play ,player);
-
                 //card.setName("Morph");
                 sourceCard.setIsFaceDown(false);
                 sourceCard.setManaCost(origManaCost);
@@ -2619,7 +2616,6 @@ public class CardFactoryUtil {
      * @param players a {@link java.util.ArrayList} object.
      * @param s a {@link java.lang.String} object.
      * @param source a {@link forge.Card} object.
-     * @param source a {@link forge.Card} object.
      * @return a int.
      */
     public static int playerXCount(ArrayList<Player> players, String s, Card source) {
@@ -3644,14 +3640,6 @@ public class CardFactoryUtil {
 
         return neededDamage;
     }
-    /*
-    public static void checkEquipmentOnControllerChange(PlayerZone from, PlayerZone to, Card c)
-    {
-    	if (c.isEquipped() && !from.equals(to))
-    		c.unEquipAllCards();
-    }
-    */
-
 
     /**
      * getWorstLand(String)
