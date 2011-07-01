@@ -1880,59 +1880,6 @@ public class CardFactory implements NewConstants {
         //*************** END ************ END **************************        
 
 
-        //*************** START *********** START **************************
-        else if (cardName.equals("Time Bomb")) {
-            /*
-                * 1, Tap, Sacrifice Time Bomb: Time Bomb deals damage equal
-                * to the number of time counters on it to each creature and
-                * each player.
-                */
-            Cost abCost = new Cost("1 T Sac<1/CARDNAME>", cardName, true);
-            final Ability_Activated ability = new Ability_Activated(card, abCost, null) {
-                private static final long serialVersionUID = 7550743617522146304L;
-
-                @Override
-                public void resolve() {
-                    int damage = card.getCounters(Counters.TIME);
-                    CardList all = AllZoneUtil.getCreaturesInPlay();
-
-                    for (Card c : all) c.addDamage(damage, card);
-
-                    AllZone.getHumanPlayer().addDamage(damage, card);
-                    AllZone.getComputerPlayer().addDamage(damage, card);
-                }
-
-                @Override
-                public boolean canPlayAI() {
-                    final int damage = card.getCounters(Counters.TIME);
-
-                    if (AllZone.getHumanPlayer().getLife() <= damage) return true;
-
-                    CardListFilter filter = new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.isCreature() && damage >= (c.getNetDefense() + c.getDamage());
-                        }
-                    };
-
-                    CardList human = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
-                    human = human.filter(filter);
-
-                    CardList comp = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                    comp = comp.filter(filter);
-
-                    return human.size() > (comp.size() + 2) && AllZone.getComputerPlayer().getLife() > damage + 3;
-                }
-            };
-
-            StringBuilder sbStack = new StringBuilder();
-            sbStack.append(card).append(" - deals X damage to each creature and each player.");
-            ability.setStackDescription(sbStack.toString());
-
-            ability.setDescription(abCost + cardName + " deals damage equal to the number of time counters on it to each creature and each player.");
-
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-
 
         //*************** START *********** START **************************
         else if (cardName.equals("Pithing Needle")) {
