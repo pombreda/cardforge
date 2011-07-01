@@ -2656,6 +2656,12 @@ public class CardFactoryUtil {
                 return doXMath(AllZoneUtil.getPlayerCardsInLibrary(players.get(0)).size(), m, source);
             }
         }
+        
+        if (sq[0].contains("CardsInGraveyard")) {
+        	if (players.size() > 0) {
+        		return doXMath(AllZoneUtil.getPlayerGraveyard(players.get(0)).size(), m, source);
+        	}
+        }
         if (sq[0].contains("LandsInGraveyard"))
             if (players.size() > 0) {
                 return doXMath(AllZoneUtil.getPlayerTypeInGraveyard(players.get(0), "Land").size(), m, source);
