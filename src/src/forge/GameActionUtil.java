@@ -73,7 +73,7 @@ public class GameActionUtil {
         
         upkeep_Vampire_Lacerator();
         upkeep_Sleeper_Agent();
-        upkeep_Pillory_of_the_Sleepless();
+        
         upkeep_Mirror_Sigil_Sergeant();
        // upkeep_Dragon_Broodmother(); //put this before bitterblossom and mycoloth, so that they will resolve FIRST
 
@@ -4300,46 +4300,7 @@ public class GameActionUtil {
         }//foreach(wire)
     }//upkeep_Tangle_Wire()
 
-    /**
-     * <p>upkeep_Pillory_of_the_Sleepless.</p>
-     */
-    private static void upkeep_Pillory_of_the_Sleepless() {
-        final Player player = AllZone.getPhase().getPlayerTurn();
-
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-        list = list.filter(new CardListFilter() {
-
-            public boolean addCard(Card c) {
-                return c.isCreature() && c.isEnchanted();
-            }
-        });
-
-        if (list.size() > 0) {
-            ArrayList<Card> enchants;
-            Ability ability;
-            for (int i = 0; i < list.size(); i++) {
-                final Card F_card = list.get(i);
-                enchants = list.get(i).getEnchantedBy();
-                for (Card enchant : enchants) {
-                    if (enchant.getName().equals("Pillory of the Sleepless")) {
-                        //final Card c = enchant;
-                        ability = new Ability(enchant, "0") {
-                            @Override
-                            public void resolve() {
-                                player.loseLife(1, F_card);
-                            }
-                        };
-                        ability.setStackDescription("Pillory of the Sleepless  - enchanted creature's controller loses 1 life.");
-
-                        AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                    }
-                }
-            }
-
-        }//list > 0
-    }//cursed land
-
+    
 
     /**
      * <p>upkeep_Masticore.</p>
