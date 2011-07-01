@@ -71,10 +71,10 @@ public class GameActionUtil {
         upkeep_Wolf_Skull_Shaman();
 
         
-        upkeep_Vampire_Lacerator();
+        
         upkeep_Sleeper_Agent();
         
-        upkeep_Mirror_Sigil_Sergeant();
+        
        // upkeep_Dragon_Broodmother(); //put this before bitterblossom and mycoloth, so that they will resolve FIRST
 
         //Win / Lose
@@ -4712,60 +4712,7 @@ public class GameActionUtil {
         }
     } //upkeep_Fallen_Empires_Storage_Lands
 
-    /**
-     * <p>upkeep_Vampire_Lacerator.</p>
-     */
-    private static void upkeep_Vampire_Lacerator() {
-        final Player player = AllZone.getPhase().getPlayerTurn();
-
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(player, "Vampire Lacerator");
-
-        for (int i = 0; i < list.size(); i++) {
-            final Card F_card = list.get(i);
-            if (player.isHuman() && AllZone.getComputerPlayer().getLife() > 10) {
-                player.loseLife(1, F_card);
-            } else {
-                if (player.isComputer() && AllZone.getHumanPlayer().getLife() > 10) {
-                    player.loseLife(1, F_card);
-                }
-            }
-        }
-    }// upkeep_Vampire_Lacerator
-
-    /**
-     * <p>upkeep_Mirror_Sigil_Sergeant.</p>
-     */
-    private static void upkeep_Mirror_Sigil_Sergeant() {
-        final Player player = AllZone.getPhase().getPlayerTurn();
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-
-        list = list.getName("Mirror-Sigil Sergeant");
-
-        Ability ability;
-        for (int i = 0; i < list.size(); i++) {
-            final Card card = list.get(i);
-            ability = new Ability(card, "0") {
-                public void resolve() {
-                    // CardList list = AllZoneUtil.getPlayerCardsInPlay(player);
-                    // CardList blueList = list.getColor(Constant.Color.Blue);
-                    CardList blueList = AllZoneUtil.getPlayerColorInPlay(player, Constant.Color.Blue);
-                    if (!blueList.isEmpty()) {
-                        CardFactoryUtil.makeToken("Mirror-Sigil Sergeant", "W 4 4 Mirror Sigil Sergeant", card.getController(), "5 W",
-                                new String[]{"Creature", "Rhino", "Soldier"}, 4, 4, new String[]{"Trample",
-                                "At the beginning of your upkeep, if you control a blue permanent, you may put a token that's a copy of Mirror-Sigil Sergeant onto the battlefield."});
-                    }
-                }
-
-                ;
-
-            }; // ability
-
-            ability.setStackDescription("Mirror-Sigil Sergeant - put a token onto the battlefield that's a copy of Mirror-Sigil Sergeant.");
-
-            AllZone.getStack().addSimultaneousStackEntry(ability);
-
-        } // for
-    } //upkeep_Mirror_Sigil_Sergeant
+    
 
     /**
      * <p>executeCardStateEffects.</p>
