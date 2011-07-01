@@ -157,7 +157,7 @@ public class AbilityFactory_Regenerate {
                 if (tgtC.isFaceDown()) sb.append("Morph");
                 else sb.append(tgtC);
 
-                if (it.hasNext()) sb.append(" ");
+                if (it.hasNext()) sb.append(", ");
             }
         }
         sb.append(".");
