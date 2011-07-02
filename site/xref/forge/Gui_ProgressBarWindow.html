@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+<title>Gui_ProgressBarWindow xref</title>
+<link type="text/css" rel="stylesheet" href="../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../apidocs/forge/Gui_ProgressBarWindow.html">View Javadoc</a></div><pre>
+
+<a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> forge;
+<a class="jxr_linenumber" name="2" href="#2">2</a>   
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> javax.swing.*;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> javax.swing.border.EmptyBorder;
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> java.awt.*;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   
+<a class="jxr_linenumber" name="7" href="#7">7</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="8" href="#8">8</a>   <em class="jxr_javadoccomment"> * &lt;p&gt;Gui_ProgressBarWindow class.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="9" href="#9">9</a>   <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <em class="jxr_javadoccomment"> * @author Forge</em>
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <em class="jxr_javadoccomment"> * @version $Id: $</em>
+<a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_javadoccomment"> * @since 1.0.15</em>
+<a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> Gui_ProgressBarWindow <strong class="jxr_keyword">extends</strong> JDialog {
+<a class="jxr_linenumber" name="15" href="#15">15</a>  
+<a class="jxr_linenumber" name="16" href="#16">16</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="17" href="#17">17</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="18" href="#18">18</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="19" href="#19">19</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 5832740611050396643L;
+<a class="jxr_linenumber" name="20" href="#20">20</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">final</strong> JPanel contentPanel = <strong class="jxr_keyword">new</strong> JPanel();
+<a class="jxr_linenumber" name="21" href="#21">21</a>      <strong class="jxr_keyword">private</strong> JProgressBar progressBar = <strong class="jxr_keyword">new</strong> JProgressBar();
+<a class="jxr_linenumber" name="22" href="#22">22</a>  
+<a class="jxr_linenumber" name="23" href="#23">23</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="24" href="#24">24</a>  <em class="jxr_javadoccomment">     * Create the dialog.</em>
+<a class="jxr_linenumber" name="25" href="#25">25</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="26" href="#26">26</a>      <strong class="jxr_keyword">public</strong> Gui_ProgressBarWindow() {
+<a class="jxr_linenumber" name="27" href="#27">27</a>          setResizable(false);
+<a class="jxr_linenumber" name="28" href="#28">28</a>          setTitle(<span class="jxr_string">"Some Progress"</span>);
+<a class="jxr_linenumber" name="29" href="#29">29</a>          Dimension screen = <strong class="jxr_keyword">this</strong>.getToolkit().getScreenSize();
+<a class="jxr_linenumber" name="30" href="#30">30</a>          setBounds(screen.width / 3, 100, <em class="jxr_comment">//position</em>
+<a class="jxr_linenumber" name="31" href="#31">31</a>                  450, 84); <em class="jxr_comment">//size</em>
+<a class="jxr_linenumber" name="32" href="#32">32</a>          getContentPane().setLayout(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="33" href="#33">33</a>          contentPanel.setBounds(0, 0, 442, 58);
+<a class="jxr_linenumber" name="34" href="#34">34</a>          contentPanel.setBorder(<strong class="jxr_keyword">new</strong> EmptyBorder(5, 5, 5, 5));
+<a class="jxr_linenumber" name="35" href="#35">35</a>          getContentPane().add(contentPanel);
+<a class="jxr_linenumber" name="36" href="#36">36</a>          contentPanel.setLayout(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="37" href="#37">37</a>          {
+<a class="jxr_linenumber" name="38" href="#38">38</a>              progressBar.setValue(50);
+<a class="jxr_linenumber" name="39" href="#39">39</a>              <em class="jxr_comment">//progressBar.setBackground(Color.GRAY);</em>
+<a class="jxr_linenumber" name="40" href="#40">40</a>              <em class="jxr_comment">//progressBar.setForeground(Color.BLUE);</em>
+<a class="jxr_linenumber" name="41" href="#41">41</a>              progressBar.setBounds(12, 12, 418, 32);
+<a class="jxr_linenumber" name="42" href="#42">42</a>              contentPanel.add(progressBar);
+<a class="jxr_linenumber" name="43" href="#43">43</a>          }
+<a class="jxr_linenumber" name="44" href="#44">44</a>      }
+<a class="jxr_linenumber" name="45" href="#45">45</a>  
+<a class="jxr_linenumber" name="46" href="#46">46</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="47" href="#47">47</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;setProgressRange.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="48" href="#48">48</a>  <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="49" href="#49">49</a>  <em class="jxr_javadoccomment">     * @param min a int.</em>
+<a class="jxr_linenumber" name="50" href="#50">50</a>  <em class="jxr_javadoccomment">     * @param max a int.</em>
+<a class="jxr_linenumber" name="51" href="#51">51</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="52" href="#52">52</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setProgressRange(<strong class="jxr_keyword">int</strong> min, <strong class="jxr_keyword">int</strong> max) {
+<a class="jxr_linenumber" name="53" href="#53">53</a>          progressBar.setMinimum(min);
+<a class="jxr_linenumber" name="54" href="#54">54</a>          progressBar.setMaximum(max);
+<a class="jxr_linenumber" name="55" href="#55">55</a>      }
+<a class="jxr_linenumber" name="56" href="#56">56</a>  
+<a class="jxr_linenumber" name="57" href="#57">57</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="58" href="#58">58</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;increment.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="59" href="#59">59</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="60" href="#60">60</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> increment() {
+<a class="jxr_linenumber" name="61" href="#61">61</a>          progressBar.setValue(progressBar.getValue() + 1);
+<a class="jxr_linenumber" name="62" href="#62">62</a>  
+<a class="jxr_linenumber" name="63" href="#63">63</a>          <strong class="jxr_keyword">if</strong> (progressBar.getValue() % 10 == 0)
+<a class="jxr_linenumber" name="64" href="#64">64</a>              contentPanel.paintImmediately(progressBar.getBounds());
+<a class="jxr_linenumber" name="65" href="#65">65</a>      }
+<a class="jxr_linenumber" name="66" href="#66">66</a>  
+<a class="jxr_linenumber" name="67" href="#67">67</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="68" href="#68">68</a>  <em class="jxr_javadoccomment">	 * Get the progressBar for fine tuning (e.g., adding text).</em>
+<a class="jxr_linenumber" name="69" href="#69">69</a>  <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="70" href="#70">70</a>  <em class="jxr_javadoccomment">	 * @return the progressBar</em>
+<a class="jxr_linenumber" name="71" href="#71">71</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="72" href="#72">72</a>  	<strong class="jxr_keyword">public</strong> JProgressBar getProgressBar() {
+<a class="jxr_linenumber" name="73" href="#73">73</a>  		<strong class="jxr_keyword">return</strong> progressBar;
+<a class="jxr_linenumber" name="74" href="#74">74</a>  	}
+<a class="jxr_linenumber" name="75" href="#75">75</a>  	
+<a class="jxr_linenumber" name="76" href="#76">76</a>  	<em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="77" href="#77">77</a>  <em class="jxr_javadoccomment">	 * Set the progress back to zero units completed.</em>
+<a class="jxr_linenumber" name="78" href="#78">78</a>  <em class="jxr_javadoccomment">	 * </em>
+<a class="jxr_linenumber" name="79" href="#79">79</a>  <em class="jxr_javadoccomment">	 * It is not certain whether this method actually works the way it was</em>
+<a class="jxr_linenumber" name="80" href="#80">80</a>  <em class="jxr_javadoccomment">	 * intended.</em>
+<a class="jxr_linenumber" name="81" href="#81">81</a>  <em class="jxr_javadoccomment">	 */</em>
+<a class="jxr_linenumber" name="82" href="#82">82</a>  	<strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> reset() {
+<a class="jxr_linenumber" name="83" href="#83">83</a>  		getProgressBar().setValue(0);
+<a class="jxr_linenumber" name="84" href="#84">84</a>          contentPanel.paintImmediately(getProgressBar().getBounds());
+<a class="jxr_linenumber" name="85" href="#85">85</a>  	}
+<a class="jxr_linenumber" name="86" href="#86">86</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
