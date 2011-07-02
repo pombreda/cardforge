@@ -167,12 +167,21 @@ public class AbilityFactory_Copy {
      * @return a boolean.
      */
     private static boolean copyPermanentCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
+    	Card source = sa.getSourceCard();
         //TODO - I'm sure someone can do this AI better
 
         HashMap<String, String> params = af.getMapParams();
         if (params.containsKey("AtEOT") && !AllZone.getPhase().is(Constant.Phase.Main1)) {
             return false;
-        } else return copyPermanentTriggerAI(af, sa, false);
+        } else {
+            double chance = .4;    // 40 percent chance with instant speed stuff
+            if (AbilityFactory.isSorcerySpeed(sa))
+                chance = .667;    // 66.7% chance for sorcery speed (since it will never activate EOT)
+            Random r = MyRandom.random;
+            if (r.nextFloat() <= Math.pow(chance, source.getAbilityUsed() + 1))
+            	return copyPermanentTriggerAI(af, sa, false);
+            else return false;
+        }
     }
 
     /**
@@ -189,12 +198,6 @@ public class AbilityFactory_Copy {
 
         if (!ComputerUtil.canPayCost(sa) && !mandatory)
             return false;
-
-        double chance = .4;    // 40 percent chance with instant speed stuff
-        if (AbilityFactory.isSorcerySpeed(sa))
-            chance = .667;    // 66.7% chance for sorcery speed (since it will never activate EOT)
-        Random r = MyRandom.random;
-        boolean randomReturn = r.nextFloat() <= Math.pow(chance, source.getAbilityUsed() + 1);
 
         //////
         // Targeting
@@ -245,10 +248,10 @@ public class AbilityFactory_Copy {
         if (af.hasSubAbility()) {
             Ability_Sub abSub = sa.getSubAbility();
             if (abSub != null) {
-                return randomReturn && abSub.chkAI_Drawback();
+                return abSub.chkAI_Drawback();
             }
         }
-        return randomReturn;
+        return true;
     }
 
     /**
