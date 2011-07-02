@@ -1901,40 +1901,6 @@ public class GameActionUtil {
 
         CardList playerPerms = AllZoneUtil.getPlayerCardsInPlay(player);
 
-        /*
-		 * Backfire - Whenever enchanted creature deals damage to you, Backfire
-		 * deals that much damage to that creature's controller.
-		 */
-        if (c.isEnchanted()) {
-            final String auraName = "Backfire";
-
-            CardList auras = new CardList(c.getEnchantedBy().toArray());
-            auras = auras.getName(auraName);
-
-            if (auras.size() > 0) {
-                for (Card aura : auras) {
-                    final Card source = aura;
-                    Ability ability = new Ability(source, "0") {
-                        @Override
-                        public void resolve() {
-                            c.getController().addDamage(damage, source);
-                        }
-                    };
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(source.getName()).append(" - deals ").append(damage);
-                    sb.append(" damage to ").append(c.getController());
-                    ability.setStackDescription(sb.toString());
-
-                    //Backfire triggers only if its controller is damaged
-                    if (aura.getController().isPlayer(player))
-                        AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                }
-            }//auras > 0
-        }//end c.isEnchanted()
-
-
         if (playerPerms.getName("Farsight Mask").size() > 0) {
             final Card c1 = c;
             CardList l = playerPerms.filter(new CardListFilter() {
