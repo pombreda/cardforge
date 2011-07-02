@@ -1,0 +1,25 @@
+-classpath
+'/Users/dhudson/mtg/cardforge/target/classes:/Users/dhudson/.m2/repository/de/huxhorn/sulky/de.huxhorn.sulky.3rdparty.jlayer/1.0/de.huxhorn.sulky.3rdparty.jlayer-1.0.jar:/Users/dhudson/.m2/repository/com/miglayout/miglayout/3.7.3/miglayout-3.7.3.jar:/Users/dhudson/.m2/repository/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar:/Users/dhudson/.m2/repository/com/google/collections/google-collections/1.0/google-collections-1.0.jar:/Users/dhudson/.m2/repository/com/google/code/jyield/jyield/1.0-SNAPSHOT/jyield-1.0-SNAPSHOT.jar:/Users/dhudson/.m2/repository/com/jhlabs/filters/2.0.235/filters-2.0.235.jar:/Users/dhudson/.m2/repository/com/mortennobel/java-image-scaling/0.8.5/java-image-scaling-0.8.5.jar:/Users/dhudson/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar'
+-encoding
+'ISO-8859-1'
+-package
+-quiet
+-sourcepath
+'/Users/dhudson/mtg/cardforge/src'
+-author
+-bottom
+'Copyright &#169; 2007-2011 <a href="http://cardforge.org">CardForge</a>. All Rights Reserved.'
+-charset
+'ISO-8859-1'
+-d
+'/Users/dhudson/mtg/cardforge/target/site/apidocs'
+-docencoding
+'ISO-8859-1'
+-doctitle
+'Forge 1.0.15-SNAPSHOT API'
+-linkoffline
+'http://download.oracle.com/javase/1.5.0/docs/api' '/Users/dhudson/mtg/cardforge/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'Forge 1.0.15-SNAPSHOT API'
