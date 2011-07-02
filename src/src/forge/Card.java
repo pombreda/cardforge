@@ -373,7 +373,7 @@ public class Card extends MyObservable {
     }
 
     /**
-     * <p>Setter for the field <code>sunburstValue</code>.</p>
+     * <p>Setter for the field <code>colorsPaid</code>.</p>
      *
      * @param s a String
      */
@@ -382,9 +382,9 @@ public class Card extends MyObservable {
     }
     
     /**
-     * <p>Getter for the field <code>sunburstValue</code>.</p>
+     * <p>Getter for the field <code>colorsPaid</code>.</p>
      *
-     * @return a int.
+     * @return a String.
      */
     public String getColorsPaid() {
         return colorsPaid;
