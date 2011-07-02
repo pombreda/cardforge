@@ -147,14 +147,20 @@ public class AbilityFactory_ZoneAffecting {
             tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
 
         if (tgtPlayers.size() > 0) {
-            for (Player p : tgtPlayers)
-                sb.append(p.toString()).append(" ");
+            Iterator<Player> it = tgtPlayers.iterator();
+            while(it.hasNext()) {
+            	sb.append(it.next().toString());
+            	if(it.hasNext()) sb.append(" and ");
+            }
 
             int numCards = 1;
             if (params.containsKey("NumCards"))
                 numCards = AbilityFactory.calculateAmount(sa.getSourceCard(), params.get("NumCards"), sa);
-
-            sb.append("draws (").append(numCards).append(")");
+            
+            if(tgtPlayers.size() > 1) sb.append(" each");
+            sb.append(" draw");
+            if(tgtPlayers.size() == 1) sb.append("s");
+            sb.append(" (").append(numCards).append(")");
 
             if (params.containsKey("NextUpkeep"))
                 sb.append(" at the beginning of the next upkeep");
