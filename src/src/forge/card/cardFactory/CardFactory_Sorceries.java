@@ -116,8 +116,8 @@ public class CardFactory_Sorceries {
                 }
             };//Input
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
@@ -150,8 +150,8 @@ public class CardFactory_Sorceries {
 
             card.setSVar("PlayMain1", "TRUE");
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -217,8 +217,8 @@ public class CardFactory_Sorceries {
 
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             card.setSVar("PlayMain1", "TRUE");
         }//*************** END ************ END **************************
@@ -250,8 +250,8 @@ public class CardFactory_Sorceries {
             };
             spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END ************************** 
 
@@ -411,8 +411,8 @@ public class CardFactory_Sorceries {
 
             card.addComesIntoPlayCommand(intoPlay);
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             card.addSpellAbility(freeCast);
             spell.setDescription("");
@@ -569,8 +569,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -640,8 +640,8 @@ public class CardFactory_Sorceries {
 
             spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -701,8 +701,8 @@ public class CardFactory_Sorceries {
                 }//resolve()
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             Input target = new Input() {
@@ -810,8 +810,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
 
             card.addSpellAbility(spell);
 
@@ -854,8 +854,8 @@ public class CardFactory_Sorceries {
                 }
             };// SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }// *************** END ************ END **************************
 
@@ -1095,8 +1095,8 @@ public class CardFactory_Sorceries {
                 }//chooseTwo()
             };//Input chooseTwoInput
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             card.setSpellWithChoices(true);
@@ -1135,8 +1135,8 @@ public class CardFactory_Sorceries {
 
             card.setFlashback(true);
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             card.addSpellAbility(CardFactoryUtil.ability_Flashback(card, "4 G G G"));
         }//*************** END ************ END **************************
@@ -1306,8 +1306,8 @@ public class CardFactory_Sorceries {
                 }
             };//Input
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             spell.setBeforePayMana(runtime);
         }//*************** END ************ END **************************
@@ -1393,8 +1393,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -1440,8 +1440,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -1490,8 +1490,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -1548,8 +1548,8 @@ public class CardFactory_Sorceries {
 
             spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************          
 
@@ -1610,8 +1610,8 @@ public class CardFactory_Sorceries {
 
             spell.setBeforePayMana(runtime);
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -1672,8 +1672,8 @@ public class CardFactory_Sorceries {
               }//resolve
            };//spellability
            
-           // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-           card.clearFirstSpellAbility();
+           
+           
            card.addSpellAbility(spell);
         }//*********************END**********END***********************
         */
@@ -1743,8 +1743,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }
         //*************** END ************ END **************************
@@ -1780,8 +1780,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             card.setSVar("PlayMain1", "TRUE");
@@ -1823,8 +1823,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             card.setSVar("PlayMain1", "TRUE");
@@ -1879,8 +1879,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -1908,8 +1908,8 @@ public class CardFactory_Sorceries {
             sb.append(" puts one or three 0/1 Eldrazi Spawn creature tokens onto the battlefield.");
             spell.setStackDescription(sb.toString());
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2018,8 +2018,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2184,8 +2184,8 @@ public class CardFactory_Sorceries {
                 }
             };//Input
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             spell.setBeforePayMana(input);
         }//*************** END ************ END **************************
@@ -2239,8 +2239,8 @@ public class CardFactory_Sorceries {
             sb.append(card.getName()).append(" - discard X cards and return X cards to your hand.");
             spell.setStackDescription(sb.toString());
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2277,8 +2277,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2342,8 +2342,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             Input target = new Input() {
@@ -2420,8 +2420,8 @@ public class CardFactory_Sorceries {
                 }//resolve()
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             StringBuilder sb = new StringBuilder();
@@ -2468,8 +2468,8 @@ public class CardFactory_Sorceries {
                 }
             };// SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }// *************** END ************ END **************************
 
@@ -2525,8 +2525,8 @@ public class CardFactory_Sorceries {
 
             };// SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }// *************** END ************ END **************************
 
@@ -2575,8 +2575,8 @@ public class CardFactory_Sorceries {
 
             };// SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }// *************** END ************ END **************************
 
@@ -2638,8 +2638,8 @@ public class CardFactory_Sorceries {
                 }
             };
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             card.setSVar("PlayMain1", "TRUE");
         }//*************** END ************ END **************************
@@ -2682,8 +2682,8 @@ public class CardFactory_Sorceries {
 
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2739,8 +2739,8 @@ public class CardFactory_Sorceries {
 
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -2862,8 +2862,8 @@ public class CardFactory_Sorceries {
                 }//chooseTwo()
             };//Input chooseTwoInput
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
             spell.setBeforePayMana(chooseTwoInput);
         }//*************** END ************ END **************************
@@ -2892,8 +2892,8 @@ public class CardFactory_Sorceries {
                 }
             };//SpellAbility
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -3280,8 +3280,8 @@ public class CardFactory_Sorceries {
                 }//chooseTwo()
             };//Input chooseTwoInput
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             card.setSpellWithChoices(true);
@@ -3314,8 +3314,8 @@ public class CardFactory_Sorceries {
 
             spell.setDescription(cardName + " deals 5 damage to target creature. Destroy all Equipment attached to that creature.");
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
