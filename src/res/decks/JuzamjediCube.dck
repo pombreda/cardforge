@@ -1,11 +1,11 @@
 [metadata]
-Name=JuzamjediCube
 Deck Type=constructed
+Name=JuzamjediCube
 [main]
 1 Akroma's Vengeance|ONS
 1 Fulminator Mage|SHM
-1 White Knight|M11
 1 Genesis|JUD
+1 White Knight|M11
 1 Pithing Needle|M10
 1 Pilgrim's Eye|WWK
 1 Tundra|3ED
@@ -37,18 +37,18 @@ Deck Type=constructed
 1 Rite of Replication|ZEN
 1 Cloudgoat Ranger|LRW
 1 Vines of Vastwood|ZEN
-1 Chainer's Edict|TOR
 1 Volcanic Island|3ED
+1 Chainer's Edict|TOR
 1 Hypnotic Specter|M10
-1 Kargan Dragonlord|ROE
 1 Jackal Pup|TMP
+1 Kargan Dragonlord|ROE
 1 Kiki-Jiki, Mirror Breaker|CHK
 1 Batterskull|NPH
 1 City of Brass|ARN
 1 Wolfbriar Elemental|WWK
 1 Student of Warfare|ROE
-1 Skirk Marauder|LGN
 1 Nucklavee|EVE
+1 Skirk Marauder|LGN
 1 Polluted Delta|ONS
 1 Blade of the Sixth Pride|FUT
 1 Great Sable Stag|M10
@@ -100,8 +100,8 @@ Deck Type=constructed
 1 Spell Pierce|ZEN
 1 Compulsive Research|RAV
 1 Time Walk|2ED
-1 Seaside Citadel|ALA
 1 Sword of Feast and Famine|MBS
+1 Seaside Citadel|ALA
 1 Explore|WWK
 1 Keldon Champion|UDS
 1 Swans of Bryn Argoll|SHM
@@ -111,40 +111,40 @@ Deck Type=constructed
 1 Sphinx of the Steel Wind|ARB
 1 Sarkhan the Mad|ROE
 1 Ghitu Slinger|ULG
-1 Treetop Village|10E
 1 Blightning|ALA
+1 Treetop Village|10E
 1 Wei Ambush Force|PTK
-1 Imperious Perfect|LRW
 1 Viridian Zealot|DST
-1 Zo-Zu the Punisher|CHK
+1 Imperious Perfect|LRW
 1 Chameleon Colossus|MOR
+1 Zo-Zu the Punisher|CHK
 1 Bloodstained Mire|ONS
-1 Lashwrithe|NPH
 1 Iwamori of the Open Fist|BOK
+1 Lashwrithe|NPH
 1 Silent Specter|ONS
-1 Albino Troll|USG
 1 River Boa|ZEN
+1 Albino Troll|USG
 1 Bone Shredder|ULG
 1 Kor Sanctifiers|ZEN
 1 Karmic Guide|ULG
-1 Jungle Lion|POR
 1 Ajani Vengeant|ALA
+1 Jungle Lion|POR
 1 Liliana's Specter|M11
 1 Sword of Body and Mind|SOM
 1 Intuition|TMP
 1 Wild Nacatl|ALA
 1 Keldon Marauders|PLC
-1 Wretched Anurid|ONS
-1 Perilous Myr|SOM
 1 Obstinate Baloth|M11
-1 Nantuko Shade|M11
+1 Perilous Myr|SOM
+1 Wretched Anurid|ONS
 1 Graveborn Muse|10E
+1 Nantuko Shade|M11
 1 Exalted Angel|ONS
 1 Knight of Stromgald|5ED
 1 Wall of Omens|ROE
-1 Razorverge Thicket|SOM
-1 Oracle of Mul Daya|ZEN
 1 Cold-Eyed Selkie|EVE
+1 Oracle of Mul Daya|ZEN
+1 Razorverge Thicket|SOM
 1 Celestial Crusader|TSP
 1 Solemn Simulacrum|MRD
 1 Vengevine|ROE
@@ -161,39 +161,39 @@ Deck Type=constructed
 1 Grave Titan|M11
 1 Brainstorm|MMQ
 1 Urza's Rage|INV
-1 Thoughtseize|LRW
 1 Vampire Hexmage|ZEN
+1 Thoughtseize|LRW
 1 Animate Dead|5ED
-1 Serendib Efreet|3ED
 1 Squall Line|TSP
-1 Phyrexian Obliterator|NPH
+1 Serendib Efreet|3ED
 1 Savannah|3ED
+1 Phyrexian Obliterator|NPH
 1 Repulse|INV
 1 Sinkhole|2ED
-1 Isamaru, Hound of Konda|CHK
-1 Deep Analysis|TOR
 1 Relic of Progenitus|ALA
-1 Juzam Djinn|ARN
+1 Deep Analysis|TOR
+1 Isamaru, Hound of Konda|CHK
 1 Control Magic|4ED
+1 Juzam Djinn|ARN
 1 Blastoderm|NMS
 1 Tangle Wire|NMS
 1 Damnation|PLC
-1 Enlightened Tutor|6ED
 1 Arc Lightning|USG
+1 Enlightened Tutor|6ED
 1 Ember Hauler|M11
 1 Dauthi Marauder|TMP
 1 Spitting Image|EVE
 1 Blood Knight|PLC
 1 Rampant Growth|M10
-1 Rolling Earthquake|PTK
 1 Bituminous Blast|ARB
+1 Rolling Earthquake|PTK
 1 Nimble Mongoose|ODY
 1 Ohran Viper|CSP
 1 Gatekeeper of Malakir|ZEN
 1 Lu Xun, Scholar General|PTK
 1 Blood Crypt|DIS
-1 Goblin Patrol|USG
 1 Coralhelm Commander|ROE
+1 Goblin Patrol|USG
 1 Vampire Nighthawk|ZEN
 1 Dwarven Blastminer|ONS
 1 Pristine Angel|DST
@@ -392,56 +392,56 @@ Deck Type=constructed
 1 Nekrataal|10E
 1 Dauthi Slayer|TSB
 1 Skinrender|SOM
-1 Mogg Fanatic|10E
-1 Mox Ruby|2ED
 1 Tinker|ULG
+1 Mox Ruby|2ED
+1 Mogg Fanatic|10E
 1 Welkin Tern|ZEN
 1 Exclude|INV
 1 Bayou|3ED
-1 Lightning Greaves|MRD
 1 Counterspell|7ED
+1 Lightning Greaves|MRD
 1 Elspeth, Knight-Errant|ALA
-1 Temporal Isolation|TSP
 1 Lotus Petal|TMP
+1 Temporal Isolation|TSP
 1 Arc Trail|SOM
 1 Path to Exile|CFX
-1 Krosan Tusker|ONS
 1 Mitotic Slime|M11
+1 Krosan Tusker|ONS
 1 Life's Finale|NPH
-1 Stupor|TSB
 1 Fact or Fiction|INV
+1 Stupor|TSB
 1 Shrine of Burning Rage|NPH
 1 Plumeveil|SHM
 1 Juggernaut|M11
-1 Mox Jet|2ED
 1 Ankh of Mishra|6ED
+1 Mox Jet|2ED
 1 Corrupt|M11
 1 Lodestone Golem|WWK
 1 Winter Orb|5ED
-1 Moat|LEG
 1 Hellspark Elemental|CFX
-1 Thirst for Knowledge|MRD
+1 Moat|LEG
 1 Prophetic Bolt|APC
+1 Thirst for Knowledge|MRD
 1 Jungle Shrine|ALA
 1 Sacred Foundry|RAV
-1 Sword of Fire and Ice|DST
 1 Cloudthresher|LRW
+1 Sword of Fire and Ice|DST
 1 Land Tax|4ED
-1 Pillage|7ED
-1 Tattermunge Maniac|SHM
 1 Earthquake|M10
+1 Tattermunge Maniac|SHM
+1 Pillage|7ED
 1 Dust Bowl|MMQ
 1 Smokestack|USG
 1 Nicol Bolas, Planeswalker|CFX
-1 Plow Under|8ED
 1 Wall of Blossoms|STH
+1 Plow Under|8ED
 1 Frost Titan|M11
 1 Centaur Glade|ONS
 1 Steam Vents|GPT
 1 Elephant Guide|JUD
 1 Dauthi Mercenary|TMP
-1 Keiga, the Tide Star|CHK
 1 Terminate|ARB
+1 Keiga, the Tide Star|CHK
 1 Red Sun's Zenith|MBS
 1 Forked Bolt|ROE
 1 Koth of the Hammer|SOM
@@ -449,58 +449,58 @@ Deck Type=constructed
 1 Trygon Predator|DIS
 1 Bonesplitter|MRD
 1 Chandra Nalaar|M11
-1 Reanimate|TMP
 1 Force Spike|7ED
+1 Reanimate|TMP
 1 Celestial Colonnade|WWK
-1 Mox Emerald|2ED
-1 Arcane Sanctum|ALA
 1 Sarcomancy|TMP
+1 Arcane Sanctum|ALA
+1 Mox Emerald|2ED
 1 Icequake|ICE
 1 Fathom Seer|TSP
-1 Hero of Oxid Ridge|MBS
 1 Unmake|EVE
+1 Hero of Oxid Ridge|MBS
 1 Scalding Tarn|ZEN
 1 Mox Sapphire|2ED
-1 Soltari Trooper|TMP
-1 Mana Tithe|PLC
 1 Vindicate|APC
-1 AEther Adept|M11
+1 Mana Tithe|PLC
+1 Soltari Trooper|TMP
 1 Master of the Wild Hunt|M10
+1 AEther Adept|M11
 1 Accorder Paladin|MBS
-1 Stone Rain|9ED
 1 Avenger of Zendikar|WWK
-1 Volition Reins|SOM
+1 Stone Rain|9ED
 1 Moldervine Cloak|RAV
+1 Volition Reins|SOM
 1 Mirran Crusader|MBS
 1 Windswept Heath|ONS
-1 Incinerate|10E
 1 Deranged Hermit|ULG
-1 Soltari Monk|TMP
+1 Incinerate|10E
 1 Godless Shrine|GPT
-1 Flame Javelin|SHM
+1 Soltari Monk|TMP
 1 Lavaclaw Reaches|WWK
+1 Flame Javelin|SHM
 1 Hero of Bladehold|MBS
 1 Azorius Guildmage|DIS
-1 Revoke Existence|SOM
 1 Kodama of the North Tree|CHK
+1 Revoke Existence|SOM
 1 Sun Titan|M11
 1 Stillmoon Cavalier|EVE
-1 Looter il-Kor|TSP
 1 Stomping Ground|GPT
-1 Tropical Island|3ED
+1 Looter il-Kor|TSP
 1 Wasteland|TMP
-1 Hallowed Fountain|DIS
+1 Tropical Island|3ED
 1 Phantom Centaur|JUD
+1 Hallowed Fountain|DIS
 1 Doom Blade|M11
 1 Badlands|3ED
 1 Jace, the Mind Sculptor|WWK
 1 Acidic Slime|M11
 1 Nevinyrral's Disk|5ED
 1 Pernicious Deed|APC
-1 Faerie Trickery|LRW
 1 Verdant Catacombs|ZEN
-1 Go for the Throat|MBS
+1 Faerie Trickery|LRW
 1 Duress|M11
+1 Go for the Throat|MBS
 1 Magus of the Disk|TSP
 1 Strip Mine|4ED
 1 Enclave Cryptologist|ROE
