@@ -94,6 +94,10 @@ public class SpellAbility_Condition extends SpellAbility_Variables {
                 lifeAmount = params.get("ConditionLifeAmount");
             }
         }
+        
+        if(params.containsKey("ConditionManaSpent")) {
+        	setManaSpent(params.get("ConditionManaSpent"));
+        }
     }//setConditions
 
     /**
@@ -227,6 +231,12 @@ public class SpellAbility_Condition extends SpellAbility_Variables {
             if (!AllZoneUtil.compare(life, lifeAmount, right)) {
                 return false;
             }
+        }
+        
+        if(null != manaSpent) {
+        	if(!sa.getSourceCard().getColorsPaid().contains(manaSpent)) {
+        		return false;
+        	}
         }
 
         return true;

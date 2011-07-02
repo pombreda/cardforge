@@ -136,6 +136,7 @@ public class Card extends MyObservable {
     private int replicateMagnitude = 0;
 
     private int sunburstValue = 0;
+    private String colorsPaid = "";
 
     private Player owner = null;
     private Player controller = null;
@@ -371,6 +372,24 @@ public class Card extends MyObservable {
      */
     public int getSunburstValue() {
         return sunburstValue;
+    }
+
+    /**
+     * <p>Setter for the field <code>sunburstValue</code>.</p>
+     *
+     * @param value a int.
+     */
+    public void setColorsPaid(String s) {
+        colorsPaid = s;
+    }
+    
+    /**
+     * <p>Getter for the field <code>sunburstValue</code>.</p>
+     *
+     * @return a int.
+     */
+    public String getColorsPaid() {
+        return colorsPaid;
     }
 
     /**

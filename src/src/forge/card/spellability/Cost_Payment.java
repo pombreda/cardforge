@@ -918,6 +918,7 @@ public class Cost_Payment {
             private void done() {
                 if (phyLifeToLose > 0)
                     AllZone.getHumanPlayer().payLife(phyLifeToLose, sa.getSourceCard());
+                sa.getSourceCard().setColorsPaid(mana.getColorsPaid());
                 sa.getSourceCard().setSunburstValue(mana.getSunburst());
                 resetManaCost();
                 payment.setPayMana(true);
