@@ -818,7 +818,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Gigantomancer")) {
             final Ability ability = new Ability(card, "1") {
@@ -890,7 +890,7 @@ public class CardFactory_Creatures {
                 }
             });
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Hermit Druid")) {
