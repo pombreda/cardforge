@@ -163,7 +163,6 @@ class CardFactory_Auras {
                     CardList list = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
                     list = list.getNotType(NewType[0]); // Don't enchant lands that already have the type
                     if (list.isEmpty()) return false;
-
                     setTargetCard(list.get(0));
                     return true;
                 }//canPlayAI()
@@ -192,8 +191,8 @@ class CardFactory_Auras {
 
                 }//resolve()
             };//SpellAbility
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             spell.setDescription("");
             card.addSpellAbility(spell);
 
@@ -359,8 +358,7 @@ class CardFactory_Auras {
                     }
                 }//resolve()
             };//SpellAbility
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
             card.addSpellAbility(spell);
 
             final boolean[] badTarget = {true};
@@ -462,8 +460,7 @@ class CardFactory_Auras {
                             && CardFactoryUtil.canTarget(card, c)) card.enchantCard(c);
                 }//resolve()
             };//SpellAbility
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
             card.addSpellAbility(spell);
         }//*************** END ************ END **************************
 
@@ -596,9 +593,7 @@ class CardFactory_Auras {
 
                 }
             };
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();    // clear out base abilities since we're overriding
-
+            
             card.addSpellAbility(animate);
 
             attach.setStackDescription("Attaching " + cardName + " to creature in graveyard.");
@@ -682,7 +677,6 @@ class CardFactory_Auras {
                 }
             };//Command
 
-            card.clearFirstSpellAbility();
             card.addSpellAbility(spell);
 
             card.addUnEnchantCommand(onUnEnchant);
@@ -755,8 +749,7 @@ class CardFactory_Auras {
                     }
                 }//resolve()
             };//SpellAbility
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
             spell.setDescription("");
             card.addSpellAbility(spell);
 
@@ -920,7 +913,6 @@ class CardFactory_Auras {
                     }
                 }//resolve()
             };//SpellAbility
-            card.clearFirstSpellAbility();
             spell.setDescription("");
             card.addSpellAbility(spell);
             card.addLeavesPlayCommand(standardUnenchant);
@@ -1049,8 +1041,6 @@ class CardFactory_Auras {
                     stDesc[0] = k[3].trim();
                 }    // with the keyword if they are present.
 
-                card.clearFirstSpellAbility();
-
                 if (!curse[0]) {
                     card.addFirstSpellAbility(CardFactoryUtil.enPump_Enchant(card, Power, Tough, extrinsicKeywords, spDesc, stDesc));
                 } else {
@@ -1176,8 +1166,7 @@ class CardFactory_Auras {
 
                     }//resolve()
                 };//SpellAbility
-                // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-                card.clearFirstSpellAbility();
+                
                 spell.setDescription("");
                 card.addSpellAbility(spell);
 
@@ -1313,8 +1302,7 @@ class CardFactory_Auras {
 
                     }//resolve()
                 };//SpellAbility
-                // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-                card.clearFirstSpellAbility();
+                
                 spell.setDescription("");
                 card.addSpellAbility(spell);
 

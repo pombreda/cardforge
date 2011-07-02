@@ -516,18 +516,6 @@ public class CardFactory implements NewConstants {
              card.addComesIntoPlayCommand(intoPlay);
          }
 
-         if (hasKeyword(card, "Multikicker") != -1) {
-             int n = hasKeyword(card, "Multikicker");
-             if (n != -1) {
-                 String parse = card.getKeyword().get(n).toString();
-                 String k[] = parse.split("kicker ");
-
-                 SpellAbility sa = card.getSpellAbility()[0];
-                 sa.setIsMultiKicker(true);
-                 sa.setMultiKickerManaCost(k[1]);
-             }
-         }
-
          if (hasKeyword(card, "SearchRebel") != -1) {
              int n = hasKeyword(card, "SearchRebel");
              if (n != -1) {
@@ -792,21 +780,17 @@ public class CardFactory implements NewConstants {
         card.setOwner(owner);
         card.setController(owner);
         //may have to change the spell
+        
         //this is so permanents like creatures and artifacts have a "default" spell
-        if (!card.isLand()) card.addSpellAbility(new Spell_Permanent(card));
+        if (card.isPermanent() && !card.isLand() && !card.isAura()) 
+        	card.addSpellAbility(new Spell_Permanent(card));
 
        parseKeywords(card, cardName);
-
 
         //**************************************************
         // AbilityFactory cards
         ArrayList<String> IA = card.getIntrinsicAbilities();
         if (IA.size() > 0) {
-            if (card.isInstant() || card.isSorcery())
-
-                // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-                card.clearFirstSpellAbility();
-
             for (int i = 0; i < IA.size(); i++) {
                 AbilityFactory AF = new AbilityFactory();
                 SpellAbility sa = AF.getAbility(IA.get(i), card);
@@ -2442,6 +2426,18 @@ public class CardFactory implements NewConstants {
             card.addSpellAbility(kickedSpell);
         }
 
+        if (hasKeyword(card, "Multikicker") != -1) {
+            int n = hasKeyword(card, "Multikicker");
+            if (n != -1) {
+                String parse = card.getKeyword().get(n).toString();
+                String k[] = parse.split("kicker ");
+
+                SpellAbility sa = card.getSpellAbility()[0];
+                sa.setIsMultiKicker(true);
+                sa.setMultiKickerManaCost(k[1]);
+            }
+        }
+        
         if (hasKeyword(card, "Replicate") != -1) {
             int n = hasKeyword(card, "Replicate");
             if (n != -1) {
