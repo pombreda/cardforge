@@ -143,7 +143,7 @@ public class Card extends MyObservable {
     private String rarity = "";
     private String text = "";
     private String manaCost = "";
-    private String upkeepCost = "";
+    //private String upkeepCost = "";
     private String echoCost = "";
     private String madnessCost = "";
     private String chosenType = "";
@@ -1305,33 +1305,6 @@ public class Card extends MyObservable {
      */
     public int getCMC() {
         return CardUtil.getConvertedManaCost(manaCost);
-    }
-
-    /**
-     * <p>Setter for the field <code>upkeepCost</code>.</p>
-     *
-     * @param s a {@link java.lang.String} object.
-     */
-    public void setUpkeepCost(String s) {
-        upkeepCost = s;
-    }
-
-    /**
-     * <p>Getter for the field <code>upkeepCost</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getUpkeepCost() {
-        return upkeepCost;
-    }
-
-    /**
-     * <p>hasUpkeepCost.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean hasUpkeepCost() {
-        return upkeepCost.length() > 0 && !upkeepCost.equals("0");
     }
 
     //used for cards like Belbe's Portal, Conspiracy, Cover of Darkness, etc.
@@ -3431,6 +3404,11 @@ public class Card extends MyObservable {
         return randomPicture;
     }
 
+    /**
+     * <p>addMultiKickerMagnitude.</p>
+     *
+     * @param n a int.
+     */
     public void addMultiKickerMagnitude(int n) {
         multiKickerMagnitude += n;
     }
