@@ -4159,6 +4159,7 @@ public class GameActionUtil {
                     });
                 }
             };
+            ability.setDescription("At the beginning of your upkeep, you may have this creature become a copy of target creature except it doesn't copy that creature's color. If you do, this creature gains this ability.");
             ability.setStackDescription(c.getName() + " - you may have this creature become a copy of target creature.");
 
             AllZone.getStack().addSimultaneousStackEntry(ability);
