@@ -33,8 +33,6 @@ public class GameActionUtil {
 
         upkeep_Slowtrips();  // for "Draw a card at the beginning of the next turn's upkeep."
         upkeep_UpkeepCost(); //sacrifice unless upkeep cost is paid
-        //upkeep_DamageUpkeepCost(); //deal damage unless upkeep cost is paid
-        upkeep_CumulativeUpkeepCost(); //sacrifice unless cumulative upkeep cost is paid
         upkeep_Echo();
 
         upkeep_The_Abyss();
@@ -609,7 +607,7 @@ public class GameActionUtil {
 
             final StringBuilder sb = new StringBuilder();
             sb.append("Cumulative Upkeep for ").append(c).append("\n");
-            final Ability upkeepAbility = new Ability(c, c.getUpkeepCost()) {
+            final Ability upkeepAbility = new Ability(c, "0") {
                 @Override
                 public void resolve() {
                     c.addCounter(Counters.AGE, 1);
@@ -633,65 +631,6 @@ public class GameActionUtil {
 
         }
     } //upkeep_Braid_of_Fire
-
-    /**
-     * <p>upkeep_CumulativeUpkeepCost.</p>
-     */
-    public static void upkeep_CumulativeUpkeepCost() {
-        CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn());
-        list = list.filter(new CardListFilter() {
-            public boolean addCard(Card c) {
-                ArrayList<String> a = c.getKeyword();
-                for (int i = 0; i < a.size(); i++) {
-                    if (a.get(i).toString().startsWith("Cumulative upkeep")) {
-                        String k[] = a.get(i).toString().split(":");
-                        c.addCounter(Counters.AGE, 1);
-                        String upkeepCost = CardFactoryUtil.multiplyManaCost(k[1], c.getCounters(Counters.AGE));
-                        c.setUpkeepCost(upkeepCost);
-                        System.out.println("Multiplied cost: " + upkeepCost);
-                        //c.setUpkeepCost(k[1]);
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
-
-        for (int i = 0; i < list.size(); i++) {
-            final Card c = list.get(i);
-
-            final Command unpaidCommand = new Command() {
-
-                private static final long serialVersionUID = -8737736216222268696L;
-
-                public void execute() {
-                    AllZone.getGameAction().sacrifice(c);
-                }
-            };
-
-            final Command paidCommand = Command.Blank;
-
-            final Ability aiPaid = upkeepAIPayment(c, c.getUpkeepCost());
-
-            final StringBuilder sb = new StringBuilder();
-            sb.append("Upkeep for ").append(c).append("\n");
-            final Ability upkeepAbility = new Ability(c, "0") {
-                @Override
-                public void resolve() {
-                    if (c.getController().isHuman()) {
-                        payManaDuringAbilityResolve(sb.toString(), c.getUpkeepCost(), paidCommand, unpaidCommand);
-                    } else if (ComputerUtil.canPayCost(aiPaid))
-                        ComputerUtil.playNoStack(aiPaid);
-                    else
-                        AllZone.getGameAction().sacrifice(c);
-                }
-            };
-            upkeepAbility.setStackDescription(sb.toString());
-
-            AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
-
-        }
-    }//upkeepCost
 
     /**
      * <p>upkeep_Echo.</p>
@@ -852,12 +791,26 @@ public class GameActionUtil {
 
                     AllZone.getStack().addSimultaneousStackEntry(upkeepAbility);
                 }//destroy
-
+                
                 //sacrifice
-                if (ability.startsWith("At the beginning of your upkeep, sacrifice")) {
-                    String k[] = ability.split(" pay ");
-                    final String upkeepCost = k[1].toString();
-
+                if (ability.startsWith("At the beginning of your upkeep, sacrifice") || ability.startsWith("Cumulative upkeep")) {
+                	String cost = "0";
+                    final StringBuilder sb = new StringBuilder();
+                	
+                	if (ability.startsWith("At the beginning of your upkeep, sacrifice")) {
+	                    String k[] = ability.split(" pay ");
+	                    cost = k[1].toString();
+	                    sb.append("Sacrifice upkeep for ").append(c).append("\n");
+                	}
+                	
+                	if (ability.startsWith("Cumulative upkeep")) {
+	                    String k[] = ability.split(":");
+	                    c.addCounter(Counters.AGE, 1);
+	                    cost = CardFactoryUtil.multiplyManaCost(k[1], c.getCounters(Counters.AGE));
+	                    sb.append("Cumulative upkeep for ").append(c).append("\n");
+                	}
+                	
+                	final String upkeepCost = cost;
 
                     final Command unpaidCommand = new Command() {
                         private static final long serialVersionUID = 5612348769167529102L;
@@ -871,8 +824,6 @@ public class GameActionUtil {
 
                     final Ability aiPaid = upkeepAIPayment(c, upkeepCost);
 
-                    final StringBuilder sb = new StringBuilder();
-                    sb.append("Upkeep for ").append(c).append("\n");
                     final Ability upkeepAbility = new Ability(c, "0") {
                         @Override
                         public void resolve() {
@@ -913,7 +864,7 @@ public class GameActionUtil {
                     final Ability aiPaid = upkeepAIPayment(c, upkeepCost);
 
                     final StringBuilder sb = new StringBuilder();
-                    sb.append("Damage Upkeep for ").append(c).append("\n");
+                    sb.append("Damage upkeep for ").append(c).append("\n");
                     final Ability upkeepAbility = new Ability(c, "0") {
                         @Override
                         public void resolve() {
