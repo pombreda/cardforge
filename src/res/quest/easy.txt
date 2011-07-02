@@ -10,6 +10,7 @@ Cow 1
 Crocodile Dundee 1
 Da Vinci 1
 Darrin Stephens 1
+Dino 1
 Doc Holiday 1
 Elrond 1
 Fat Albert 1

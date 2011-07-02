@@ -117,8 +117,10 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Demon 3", "hard", "Mono B Demon deck");
 //        addToDeckList("Dick Grayson 3", "hard", "WU Constructed");
         addToDeckList("Dilbert 3", "hard", "BRG Ball Lightning deck with Smoke, Mighty Emergence and Kavu Lair");
+        addToDeckList("Dino 1", "easy", "Mono brown artifact deck with Affinity for artifacts, Metalcraft and Modular cards");
         addToDeckList("Dino 2", "medium", "Mono brown affinity deck with Affinity for artifacts and Modular cards");
         addToDeckList("Dino 3", "hard", "Mono brown affinity deck with Affinity for artifacts and Modular cards");
+        addToDeckList("Dino 4", "very hard", "Mono brown affinity deck with Affinity for artifacts, Metalcraft and Modular cards");
 //        addToDeckList("Dinosaur 1", "easy", "GR Large Creatures");
 //        addToDeckList("Dinosaur 2", "medium", "WGR Naya");
         addToDeckList("Doc Holiday 1", "easy", "WUG Morph deck");
