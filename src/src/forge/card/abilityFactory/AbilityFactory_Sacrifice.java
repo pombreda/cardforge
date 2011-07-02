@@ -22,15 +22,14 @@ public class AbilityFactory_Sacrifice {
     /**
      * <p>createAbilitySacrifice.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      */
-    public static SpellAbility createAbilitySacrifice(final AbilityFactory AF) {
-        final SpellAbility abSacrifice = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+    public static SpellAbility createAbilitySacrifice(final AbilityFactory af) {
+        final SpellAbility abSacrifice = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -1933592438783630254L;
 
-            final AbilityFactory af = AF;
-
+            @Override
             public boolean canPlayAI() {
                 return sacrificeCanPlayAI(af, this);
             }
@@ -40,6 +39,7 @@ public class AbilityFactory_Sacrifice {
                 sacrificeResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeDescription(af, this);
             }
@@ -55,15 +55,14 @@ public class AbilityFactory_Sacrifice {
     /**
      * <p>createSpellSacrifice.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      */
-    public static SpellAbility createSpellSacrifice(final AbilityFactory AF) {
-        final SpellAbility spSacrifice = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+    public static SpellAbility createSpellSacrifice(final AbilityFactory af) {
+        final SpellAbility spSacrifice = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
 
-            final AbilityFactory af = AF;
-
+            @Override
             public boolean canPlayAI() {
                 return sacrificeCanPlayAI(af, this);
             }
@@ -73,6 +72,7 @@ public class AbilityFactory_Sacrifice {
                 sacrificeResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeDescription(af, this);
             }
@@ -83,14 +83,12 @@ public class AbilityFactory_Sacrifice {
     /**
      * <p>createDrawbackSacrifice.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      */
-    public static SpellAbility createDrawbackSacrifice(final AbilityFactory AF) {
-        final SpellAbility dbSacrifice = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
+    public static SpellAbility createDrawbackSacrifice(final AbilityFactory af) {
+        final SpellAbility dbSacrifice = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
-
-            final AbilityFactory af = AF;
 
             @Override
             public void resolve() {
@@ -102,6 +100,7 @@ public class AbilityFactory_Sacrifice {
                 return sacrificePlayDrawbackAI(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeDescription(af, this);
             }
@@ -410,22 +409,21 @@ public class AbilityFactory_Sacrifice {
 
 
     //**************************************************************
-    // *************************** SacrificeAll ***********************
+    //*********************** SacrificeAll *************************
     //**************************************************************
 
     /**
      * <p>createAbilitySacrificeAll.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      * @since 1.0.15
      */
-    public static SpellAbility createAbilitySacrificeAll(final AbilityFactory AF) {
-        final SpellAbility abSacrifice = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+    public static SpellAbility createAbilitySacrificeAll(final AbilityFactory af) {
+        final SpellAbility abSacrifice = new Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -1933592438783630254L;
 
-            final AbilityFactory af = AF;
-
+            @Override
             public boolean canPlayAI() {
                 return sacrificeAllCanPlayAI(af, this);
             }
@@ -435,6 +433,7 @@ public class AbilityFactory_Sacrifice {
                 sacrificeAllResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeAllStackDescription(af, this);
             }
@@ -450,16 +449,15 @@ public class AbilityFactory_Sacrifice {
     /**
      * <p>createSpellSacrificeAll.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      * @since 1.0.15
      */
-    public static SpellAbility createSpellSacrificeAll(final AbilityFactory AF) {
-        final SpellAbility spSacrifice = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
+    public static SpellAbility createSpellSacrificeAll(final AbilityFactory af) {
+        final SpellAbility spSacrifice = new Spell(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
 
-            final AbilityFactory af = AF;
-
+            @Override
             public boolean canPlayAI() {
                 return sacrificeAllCanPlayAI(af, this);
             }
@@ -469,6 +467,7 @@ public class AbilityFactory_Sacrifice {
                 sacrificeAllResolve(af, this);
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeAllStackDescription(af, this);
             }
@@ -479,15 +478,13 @@ public class AbilityFactory_Sacrifice {
     /**
      * <p>createDrawbackSacrificeAll.</p>
      *
-     * @param AF a {@link forge.card.abilityFactory.AbilityFactory} object.
+     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
      * @return a {@link forge.card.spellability.SpellAbility} object.
      * @since 1.0.15
      */
-    public static SpellAbility createDrawbackSacrificeAll(final AbilityFactory AF) {
-        final SpellAbility dbSacrifice = new Ability_Sub(AF.getHostCard(), AF.getAbTgt()) {
+    public static SpellAbility createDrawbackSacrificeAll(final AbilityFactory af) {
+        final SpellAbility dbSacrifice = new Ability_Sub(af.getHostCard(), af.getAbTgt()) {
             private static final long serialVersionUID = -5141246507533353605L;
-
-            final AbilityFactory af = AF;
 
             @Override
             public void resolve() {
@@ -499,6 +496,7 @@ public class AbilityFactory_Sacrifice {
                 return true;
             }
 
+            @Override
             public String getStackDescription() {
                 return sacrificeAllStackDescription(af, this);
             }
@@ -523,24 +521,29 @@ public class AbilityFactory_Sacrifice {
         // when getStackDesc is called, just build exactly what is happening
 
         StringBuilder sb = new StringBuilder();
-        String name = af.getHostCard().getName();
+        Card host = af.getHostCard();
         HashMap<String, String> params = af.getMapParams();
+        
+        if (sa instanceof Ability_Sub)
+            sb.append(" ");
+        else
+            sb.append(host).append(" - ");
 
         String conditionDesc = params.get("ConditionDescription");
         if (conditionDesc != null)
             sb.append(conditionDesc).append(" ");
 
-        ArrayList<Card> tgtCards;
+        /* This is not currently targeted
+        ArrayList<Player> tgtPlayers;
 
         Target tgt = af.getAbTgt();
         if (tgt != null)
-            tgtCards = tgt.getTargetCards();
-        else {
-            tgtCards = new ArrayList<Card>();
-            tgtCards.add(sa.getSourceCard());
-        }
-
-        sb.append(name).append(" - Sacrifice permanents");
+            tgtPlayers = tgt.getTargetPlayers();
+        else
+            tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+        */
+        
+        sb.append("Sacrifice permanents.");
 
         Ability_Sub abSub = sa.getSubAbility();
         if (abSub != null) {
@@ -658,4 +661,4 @@ public class AbilityFactory_Sacrifice {
                 card.addRemembered(list.get(i));
     }
 
-}
+}//end class AbilityFactory_Sacrifice

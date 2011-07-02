@@ -596,7 +596,6 @@ public class AbilityFactory_PermanentState {
      * @return a {@link java.lang.String} object.
      */
     private static String tapStackDescription(AbilityFactory af, SpellAbility sa) {
-        // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
         final HashMap<String, String> params = af.getMapParams();
         Card hostCard = sa.getSourceCard();
@@ -1053,9 +1052,9 @@ public class AbilityFactory_PermanentState {
      * @return a boolean.
      */
     private static boolean untapAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
-        /*
-           * All cards using this currently have SVar:RemAIDeck:True
-           */
+    	/*
+    	 * All cards using this currently have SVar:RemAIDeck:True
+    	 */
         return false;
     }
 
@@ -1087,7 +1086,6 @@ public class AbilityFactory_PermanentState {
      */
     private static String untapAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
-        // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
 
         if (sa instanceof Ability_Sub) {
@@ -1328,7 +1326,6 @@ public class AbilityFactory_PermanentState {
      */
     private static String tapAllStackDescription(AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
-        // when getStackDesc is called, just build exactly what is happening
         StringBuilder sb = new StringBuilder();
 
         if (sa instanceof Ability_Sub) {

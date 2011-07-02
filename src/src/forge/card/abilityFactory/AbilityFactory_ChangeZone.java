@@ -31,6 +31,7 @@ public class AbilityFactory_ChangeZone {
         final SpellAbility abChangeZone = new Ability_Activated(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 3728332812890211671L;
 
+            @Override
             public boolean canPlayAI() {
                 return changeZoneCanPlayAI(AF, this);
             }
@@ -65,6 +66,7 @@ public class AbilityFactory_ChangeZone {
         final SpellAbility spChangeZone = new Spell(AF.getHostCard(), AF.getAbCost(), AF.getAbTgt()) {
             private static final long serialVersionUID = 3270484211099902059L;
 
+            @Override
             public boolean canPlayAI() {
                 return changeZoneCanPlayAI(AF, this);
             }
