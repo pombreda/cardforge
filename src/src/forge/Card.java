@@ -124,8 +124,6 @@ public class Card extends MyObservable {
 
     private int randomPicture = 0;
 
-    private int upkeepDamage = 0;
-
     private int X = 0;
 
     private int xManaCostPaid = 0;
@@ -3433,29 +3431,6 @@ public class Card extends MyObservable {
         return randomPicture;
     }
 
-    /**
-     * <p>Setter for the field <code>upkeepDamage</code>.</p>
-     *
-     * @param n a int.
-     */
-    public void setUpkeepDamage(int n) {
-        upkeepDamage = n;
-    }
-
-    /**
-     * <p>Getter for the field <code>upkeepDamage</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getUpkeepDamage() {
-        return upkeepDamage;
-    }
-
-    /**
-     * <p>addMultiKickerMagnitude.</p>
-     *
-     * @param n a int.
-     */
     public void addMultiKickerMagnitude(int n) {
         multiKickerMagnitude += n;
     }
