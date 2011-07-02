@@ -99,9 +99,9 @@ public class MultiLineLabelUI extends BasicLabelUI implements ComponentListener 
     protected static int defaultSize = 4;
 
     /**
-     * {@inheritDoc}
-     *
      * Get the shared UI instance.
+     * @param c
+     * @return a ComponentUI
      */
     public static ComponentUI createUI(JComponent c) {
         return labelUI;

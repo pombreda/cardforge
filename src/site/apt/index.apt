@@ -30,12 +30,6 @@ Forge
   Forge supports a number of keywords such as exalted, fear, flying, shadow, flanking, protection, wither, flash,
   defender, reach, and haste. Forge now also has a mana pool and supports creature enchantments.
 
-  The AI is very simple and does the best that it can. It tries to do reasonable actions. Sometimes the computer
-  seems smart and sometimes it doesn't. Truthfully the AI plays random cards from its hand and each card has some
-  AI code programmed into it. The computer can play cards like Counterspell but in all other cases the computer
-  will never respond to a spell or ability on the stack. Also the computer will only play spells during its Main
-  phase.
-
   Forge runs on Windows, Linux, and Macs. You can download Forge from
   {{{http://code.google.com/p/cardforge/downloads/list}here}}.
 
