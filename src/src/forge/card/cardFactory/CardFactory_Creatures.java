@@ -3604,28 +3604,17 @@ public class CardFactory_Creatures {
             final Card[] copyTarget = new Card[1];
             final Card[] cloned = new Card[1];
 
-            final SpellAbility copyBack = new Ability(card, "0") {
-                @Override
-                public void resolve() {
-                    Card orig = cfact.getCard(card.getName(), card.getController());
-                    PlayerZone dest = AllZone.getZone(card.getCurrentlyCloningCard());
-                    AllZone.getGameAction().moveTo(dest, orig);
-                    dest.remove(card.getCurrentlyCloningCard());
-                }
-            };//SpellAbility
-
             final Command leaves = new Command() {
                 private static final long serialVersionUID = 8590474793502538215L;
 
                 public void execute() {
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(card.getName()).append(" - reverting self to " + card.getName() + ".");
-                    copyBack.setStackDescription(sb.toString());
-
                     //Slight hack if the cloner copies a card with triggers
                     AllZone.getTriggerHandler().removeAllFromCard(cloned[0]);
 
-                    AllZone.getStack().addSimultaneousStackEntry(copyBack);
+                    Card orig = cfact.getCard(card.getName(), card.getController());
+                    PlayerZone dest = AllZone.getZone(card.getCurrentlyCloningCard());
+                    AllZone.getGameAction().moveTo(dest, orig);
+                    dest.remove(card.getCurrentlyCloningCard());
 
                 }
             };
