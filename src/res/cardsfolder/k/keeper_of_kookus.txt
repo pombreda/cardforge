@@ -3,7 +3,7 @@ ManaCost:R
 Types:Creature Goblin
 Text:no text
 PT:1/1
-A:AB$ Protection | Cost$ R | | Defined$ Self | Gains$ red | SpellDescription$ CARDNMAE gains protection from red until end of turn.
+A:AB$ Protection | Cost$ R | Defined$ Self | Gains$ red | SpellDescription$ CARDNAME gains protection from red until end of turn.
 SVar:RemRandomDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/keeper_of_kookus.jpg
