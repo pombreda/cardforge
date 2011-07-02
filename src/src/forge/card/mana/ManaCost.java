@@ -54,6 +54,23 @@ public class ManaCost {
         sunburstMap.clear();
         return ret;
     }
+    
+    /**
+     * <p>getColorsPaid.</p>
+     *
+     * @return a String.
+     */
+    public String getColorsPaid() {
+    	String s = "";
+    	for (String key: sunburstMap.keySet()) {
+    	    if(key.equals("black")) s+= "B";
+    	    if(key.equals("blue")) s+= "U";
+    	    if(key.equals("green")) s+= "G";
+    	    if(key.equals("red")) s+= "R";
+    	    if(key.equals("white")) s+= "W";
+    	}
+        return s;
+    }
 
     /**
      * <p>getUnpaidPhyrexianMana.</p>

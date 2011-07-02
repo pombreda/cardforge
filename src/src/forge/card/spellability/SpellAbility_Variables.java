@@ -51,8 +51,18 @@ public class SpellAbility_Variables {
 
     protected String lifeTotal = null;
     protected String lifeAmount = "GE1";
+    
+    protected String manaSpent = "";
 
     protected boolean pwAbility = false;
+    
+    public void setManaSpent(String s) {
+    	manaSpent = s;
+    }
+    
+    public String getManaSpent() {
+    	return manaSpent;
+    }
 
     /**
      * <p>Setter for the field <code>zone</code>.</p>

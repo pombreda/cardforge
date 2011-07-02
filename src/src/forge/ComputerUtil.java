@@ -701,6 +701,7 @@ public class ComputerUtil {
                     }
                     if (cost.isPaid()) {
                         //if (sa instanceof Spell_Permanent) // should probably add this
+                    	sa.getSourceCard().setColorsPaid(cost.getColorsPaid());
                         sa.getSourceCard().setSunburstValue(cost.getSunburst());
                         manapool.clearPay(sa, test);
                         return true;
