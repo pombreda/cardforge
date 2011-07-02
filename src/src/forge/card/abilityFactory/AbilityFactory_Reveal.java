@@ -195,8 +195,11 @@ public class AbilityFactory_Reveal {
 
         if (sa.getTarget() != null) {
             tgt.resetTargets();
-            sa.getTarget().addTarget(AllZone.getHumanPlayer());
-            libraryOwner = AllZone.getHumanPlayer();
+            if (!AllZone.getHumanPlayer().canTarget(source))
+                return false;
+            else
+	            sa.getTarget().addTarget(AllZone.getHumanPlayer());
+	            libraryOwner = AllZone.getHumanPlayer();
         }
 
         //return false if nothing to dig into
