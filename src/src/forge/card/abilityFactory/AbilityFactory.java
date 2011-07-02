@@ -947,6 +947,10 @@ public class AbilityFactory {
     public static boolean playReusable(SpellAbility sa) {
         // TODO probably also consider if winter orb or similar are out
 
+    	if (sa.getPayCosts() == null)
+    		// This is only true for Drawbacks and triggers
+    		return true;
+    	
         return (sa.getPayCosts().isReusuableResource() && AllZone.getPhase().is(Constant.Phase.End_Of_Turn)
                 && AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer()));
     }
