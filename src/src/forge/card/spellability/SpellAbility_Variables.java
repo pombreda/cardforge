@@ -56,10 +56,20 @@ public class SpellAbility_Variables {
 
     protected boolean pwAbility = false;
     
+    /**
+     * <p>Setter for the field <code>manaSpent</code>.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
     public void setManaSpent(String s) {
     	manaSpent = s;
     }
     
+    /**
+     * <p>Getter for the field <code>manaSpent</code>.</p>
+     *
+     * @return a {@link java.lang.String} object.
+     */
     public String getManaSpent() {
     	return manaSpent;
     }
