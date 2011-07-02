@@ -375,7 +375,7 @@ public class Card extends MyObservable {
     /**
      * <p>Setter for the field <code>sunburstValue</code>.</p>
      *
-     * @param value a int.
+     * @param s a String
      */
     public void setColorsPaid(String s) {
         colorsPaid = s;

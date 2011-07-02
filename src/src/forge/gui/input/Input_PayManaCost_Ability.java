@@ -55,7 +55,6 @@ public class Input_PayManaCost_Ability extends Input {
      *
      * @param m               a {@link java.lang.String} object.
      * @param manaCost_2      a {@link java.lang.String} object.
-     * @param manaCost_2      a {@link java.lang.String} object.
      * @param paidCommand_2   a {@link forge.Command} object.
      * @param unpaidCommand_2 a {@link forge.Command} object.
      */
@@ -67,7 +66,6 @@ public class Input_PayManaCost_Ability extends Input {
      * <p>Constructor for Input_PayManaCost_Ability.</p>
      *
      * @param m               a {@link java.lang.String} object.
-     * @param manaCost_2      a {@link java.lang.String} object.
      * @param manaCost_2      a {@link java.lang.String} object.
      * @param paidCommand_2   a {@link forge.Command} object.
      * @param unpaidCommand_2 a {@link forge.Command} object.

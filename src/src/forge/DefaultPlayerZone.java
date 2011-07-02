@@ -34,7 +34,11 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     }
 
     //************ BEGIN - these methods fire updateObservers() *************
-    /** {@inheritDoc} */
+
+    /**
+     *
+     * @param o a {@link java.lang.Object} object.
+     */
     public void add(Object o) {
         Card c = (Card) o;
 
@@ -99,7 +103,11 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     }
 
     //hack... use for adding Dread / Serra Avenger to grave
-    /** {@inheritDoc} */
+
+    /**
+     *
+     * @param o a {@link java.lang.Object} object.
+     */
     public void addOnce(Object o) {
         Card c = (Card) o;
 
@@ -119,12 +127,20 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         update();
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param ob
+     * @param object
+     */
     public void update(Observable ob, Object object) {
         this.update();
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param c a {@link forge.Card} object.
+     * @param index a int.
+     */
     public void add(Card c, int index) {
         if (!c.isImmutable()) //Immutable cards are usually emblems,effects and the mana pool and we don't want to log those.
         {
@@ -141,7 +157,10 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         update();
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param c
+     */
     public void remove(Object c) {
         cards.remove((Card) c);
         update();
@@ -169,12 +188,21 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
     }
     //************ END - these methods fire updateObservers() *************
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @return a boolean
+     */
     public boolean is(String zone) {
         return zone.equals(zoneName);
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param zone a {@link java.lang.String} object.
+     * @param player a {@link forge.Player} object.
+     * @return a boolean
+     */
     public boolean is(String zone, Player player) {
         return (zone.equals(zoneName) && player.isPlayer(player));
     }
@@ -206,7 +234,11 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
         return cards.size();
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param index a int.
+     * @return  a int
+     */
     public Card get(int index) {
         return (Card) cards.get(index);
     }
@@ -230,7 +262,10 @@ public class DefaultPlayerZone extends PlayerZone implements java.io.Serializabl
             updateObservers();
     }
 
-    /** {@inheritDoc} */
+    /**
+     *
+     * @param b a boolean.
+     */
     public void setUpdate(boolean b) {
         update = b;
     }

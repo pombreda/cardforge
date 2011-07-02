@@ -87,7 +87,6 @@ public class QuestBoosterPack implements NewConstants {
      * @param rarity a {@link java.lang.String} object.
      * @param color a {@link java.lang.String} object.
      * @param colorOrder a {@link java.util.ArrayList} object.
-     * @param colorOrder a {@link java.util.ArrayList} object.
      * @return a {@link java.util.ArrayList} object.
      */
     public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color, ArrayList<String> colorOrder) {
