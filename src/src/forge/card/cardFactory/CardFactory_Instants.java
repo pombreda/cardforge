@@ -929,11 +929,10 @@ public class CardFactory_Instants {
                             //System.out.println("Siren's Call - setting flag for "+creature.getName());
                         }
                     }
-                    Command atEOT = new Command() {
-                        private static final long serialVersionUID = 5369528776959445848L;
-
-                        public void execute() {
-                            Player player = card.getController();
+                    final SpellAbility destroy = new Ability(card, "0") {
+                    	@Override
+                    	public void resolve() {
+                    		Player player = card.getController();
                             Player opponent = player.getOpponent();
                             CardList creatures = AllZoneUtil.getCreaturesInPlay(opponent);
 
@@ -949,6 +948,19 @@ public class CardFactory_Instants {
                                 }
                                 creature.setSirenAttackOrDestroy(false);
                             }
+                    	}
+                    };
+                    Command atEOT = new Command() {
+                        private static final long serialVersionUID = 5369528776959445848L;
+
+                        public void execute() {
+                        	StringBuilder sb = new StringBuilder();
+                        	sb.append(card).append(" - At the beginning of the next end step, destroy all non-Wall creatures that player controls that didn't attack this turn. ");
+                        	sb.append("Ignore this effect for each creature the player didn't control continuously since the beginning of the turn.");
+                            destroy.setDescription(sb.toString());
+                        	destroy.setStackDescription(sb.toString());
+                        	
+                        	AllZone.getStack().addSimultaneousStackEntry(destroy);
                         }//execute
                     };//Command
                     AllZone.getEndOfTurn().addAt(atEOT);
