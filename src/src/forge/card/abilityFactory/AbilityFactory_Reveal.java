@@ -392,20 +392,26 @@ public class AbilityFactory_Reveal {
                         if (rest.contains(dummy)) rest.remove(dummy);
 
                         //now, move the rest to destZone2
-                        if (destZone2.equals("Library") && player.isHuman()) {
-                            //put them in any order
-                            while (rest.size() > 0) {
-                                Card chosen;
-                                if (rest.size() > 1) {
-                                    String prompt = "Put the rest on top of the library in any order";
-                                    if (libraryPosition2 == -1)
-                                        prompt = "Put the rest on the bottom of the library in any order";
-                                    chosen = GuiUtils.getChoice(prompt, rest.toArray());
-                                } else {
-                                    chosen = rest.get(0);
-                                }
-                                AllZone.getGameAction().moveToLibrary(chosen, libraryPosition2);
-                                rest.remove(chosen);
+                        if (destZone2.equals("Library")) {
+                        	if(player.isHuman()) {
+	                            //put them in any order
+	                            while (rest.size() > 0) {
+	                                Card chosen;
+	                                if (rest.size() > 1) {
+	                                    String prompt = "Put the rest on top of the library in any order";
+	                                    if (libraryPosition2 == -1)
+	                                        prompt = "Put the rest on the bottom of the library in any order";
+	                                    chosen = GuiUtils.getChoice(prompt, rest.toArray());
+	                                } else {
+	                                    chosen = rest.get(0);
+	                                }
+	                                AllZone.getGameAction().moveToLibrary(chosen, libraryPosition2);
+	                                rest.remove(chosen);
+	                            } 
+                            } else { //Computer
+                            	for (int i = 0; i < rest.size(); i++) {
+                            		AllZone.getGameAction().moveToLibrary(rest.get(i), libraryPosition2);
+                            	}
                             }
                         } else {
                             //just move them randomly
