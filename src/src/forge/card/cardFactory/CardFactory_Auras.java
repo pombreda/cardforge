@@ -63,22 +63,6 @@ class CardFactory_Auras {
     }
 
     /**
-     * <p>shouldControlArtifact.</p>
-     *
-     * @param c a {@link forge.Card} object.
-     * @return a int.
-     */
-    private static int shouldControlArtifact(Card c) {
-        ArrayList<String> a = c.getKeyword();
-        for (int i = 0; i < a.size(); i++) {
-            if (a.get(i).toString().startsWith("enControlArtifact")) return i;
-            //if(a.get(i).toString().startsWith("enControlLand")) return i;
-        }
-
-        return -1;
-    }
-
-    /**
      * <p>getCard.</p>
      *
      * @param card a {@link forge.Card} object.
@@ -410,8 +394,6 @@ class CardFactory_Auras {
         }//*************** END ************ END **************************
 
         
-
-
         //*************** START *********** START **************************
         else if (cardName.equals("Guilty Conscience")) {
             Cost cost = new Cost(card.getManaCost(), cardName, false);
@@ -603,6 +585,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(detachCmd);
         }//*************** END ************ END **************************
 
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Entangling Vines") || cardName.equals("Glimmerdust Nap") ||
                 cardName.equals("Melancholy") || cardName.equals("Mystic Restraints") ||
@@ -873,9 +856,9 @@ class CardFactory_Auras {
 
 
         /*
-        *   This section is for cards which add a P/T boost
-        *   and/or keywords to the enchanted creature
-        */
+         *   This section is for cards which add a P/T boost
+         *   and/or keywords to the enchanted creature
+         */
         if (shouldEnchant(card) != -1) {
             int n = shouldEnchant(card);
             if (n != -1) {
@@ -994,7 +977,7 @@ class CardFactory_Auras {
         return false;
     }
 
-    //gets the type of aura based on Enchant <type> in cards.txt
+    //gets the type of aura based on Enchant <type> in card.txt
     /**
      * <p>getAuraType.</p>
      *
