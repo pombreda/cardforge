@@ -1869,7 +1869,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Gilt-Leaf Archdruid")) {
             Cost abCost = new Cost("tapXType<7/Druid>", cardName, true);
@@ -1928,7 +1928,7 @@ public class CardFactory_Creatures {
             stealLands.setDescription("Tap seven untapped Druids you control: Gain control of all lands target player controls.");
         }//*************** END ************ END **************************
 
-
+*/
         //*************** START *********** START **************************
         else if (cardName.equals("Figure of Destiny")) {
             Ability ability1 = new Ability(card, "RW") {
