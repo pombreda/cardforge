@@ -133,6 +133,8 @@ public class Target {
      * @return a boolean.
      */
     public boolean isMinTargetsChosen(Card c, SpellAbility sa) {
+    	if (getMinTargets(c, sa) == 0)
+    		return true;
         return choice != null && getMinTargets(c, sa) <= choice.getNumTargeted();
     }
 
