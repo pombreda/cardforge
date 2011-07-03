@@ -226,8 +226,6 @@ public class AbilityFactory_DealDamage {
      * @return a boolean.
      */
     private boolean doCanPlayAI(SpellAbility saMe) {
-        if (!ComputerUtil.canPayCost(saMe))
-            return false;
 
         Cost abCost = AF.getAbCost();
         Card source = saMe.getSourceCard();
@@ -291,7 +289,6 @@ public class AbilityFactory_DealDamage {
                     if (adjDamage > actualPay && adjDamage <= dmg)
                         actualPay = adjDamage;
                 }
-
                 source.setSVar("PayX", Integer.toString(actualPay));
             }
         }
