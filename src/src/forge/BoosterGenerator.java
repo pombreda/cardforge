@@ -64,7 +64,7 @@ public class BoosterGenerator {
 
         shuffleAll();
         
-        //reduce cardpool to approximate the size of a small set (175) for better drafting in full mode
+/*        //reduce cardpool to approximate the size of a small set (175) for better drafting in full mode
         tList.clear();
         for (int i=0; i<100; i++)			// 8 x 11 x 3 commons = 264 cards with each card showing up about once per round
         	tList.add(commons.get(i));
@@ -84,7 +84,7 @@ public class BoosterGenerator {
         rares.addAll(tList);
         
         // don't worry about reducing the mythics
-    }
+*/    }
 
     /**
      * <p>Constructor for BoosterGenerator.</p>
