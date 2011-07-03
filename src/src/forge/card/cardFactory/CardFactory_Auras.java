@@ -603,89 +603,6 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(detachCmd);
         }//*************** END ************ END **************************
 
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Take Possession") || cardName.equals("Volition Reins") || cardName.equals("Confiscate")) {
-            final Player[] prevController = new Player[1];
-            prevController[0] = null;
-            String costString = "0";
-            if (cardName.equals("Volition Reins"))
-                costString = "3 U U U";
-            else if (cardName.equals("Take Possession"))
-                costString = "5 U U";
-            else if (cardName.equals("Confiscate"))
-                costString = "4 U U";
-
-            Cost cost = new Cost(costString, cardName, false);
-            Target tgt = new Target(card, "Select target Permanent", "Permanent".split(","));
-
-            final SpellAbility spell = new Spell_Permanent(card, cost, tgt) {
-                private static final long serialVersionUID = -7359291736123492910L;
-
-                @Override
-                public boolean canPlayAI() {
-                    Card best = CardFactoryUtil.AI_getBestCreature(CardFactoryUtil.AI_getHumanCreature(card, true));
-                    setTargetCard(best);
-                    return best != null;
-                }
-
-                @Override
-                public void resolve() {
-                    Card c = getTargetCard();
-                    if (!AllZoneUtil.isCardInPlay(c))
-                        return;
-
-                    prevController[0] = c.getController();
-                    AllZone.getGameAction().moveToPlay(card);
-                    card.enchantCard(c);
-                    //c.attachCard(card);
-                    AllZone.getGameAction().changeController(new CardList(c), c.getController(), card.getController());
-                    if (cardName.equals("Volition Reins")) {
-                        if (c.isTapped()) c.untap();
-                    }
-                }//resolve()
-            };
-
-            Command onUnEnchant = new Command() {
-                private static final long serialVersionUID = 3426441132121179288L;
-
-                public void execute() {
-                    if (card.isEnchanting()) {
-                        Card crd = card.getEnchanting().get(0);
-                        if (AllZoneUtil.isCardInPlay(crd)) {
-                            if (crd.hasKeyword("Haste")) {
-                                crd.setSickness(false);
-                            } else {
-                                crd.setSickness(true);
-                            }
-
-                            AllZone.getGameAction().changeController(new CardList(crd), crd.getController(), prevController[0]);
-                        }
-                    }
-
-                }//execute()
-            };//Command
-
-            Command onLeavesPlay = new Command() {
-                private static final long serialVersionUID = -639204333673364477L;
-
-                public void execute() {
-                    if (card.isEnchanting()) {
-                        Card crd = card.getEnchanting().get(0);
-                        card.unEnchantCard(crd);
-                    }
-                }
-            };//Command
-
-            card.addSpellAbility(spell);
-
-            card.addUnEnchantCommand(onUnEnchant);
-            card.addLeavesPlayCommand(onLeavesPlay);
-
-            card.setSVar("PlayMain1", "TRUE");
-        }//*************** END ************ END **************************
-
-
         //*************** START *********** START **************************
         else if (cardName.equals("Entangling Vines") || cardName.equals("Glimmerdust Nap") ||
                 cardName.equals("Melancholy") || cardName.equals("Mystic Restraints") ||
@@ -1041,6 +958,7 @@ class CardFactory_Auras {
                     stDesc[0] = k[3].trim();
                 }    // with the keyword if they are present.
 
+                card.clearFirstSpellAbility();	// A "generic" Ability is added before this
                 if (!curse[0]) {
                     card.addFirstSpellAbility(CardFactoryUtil.enPump_Enchant(card, Power, Tough, extrinsicKeywords, spDesc, stDesc));
                 } else {
