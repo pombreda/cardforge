@@ -1338,7 +1338,7 @@ public class CardFactory_Creatures {
             card.addLeavesPlayCommand(leavesBattlefield);
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Memnarch")) {
             //has 2 non-tap abilities that affect itself
@@ -1386,7 +1386,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability1);
             ability1.setDescription("1 U U: Target permanent becomes an artifact in addition to its other types. (This effect doesn't end at end of turn.)");
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Stangg")) {
