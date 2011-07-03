@@ -945,7 +945,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Sorceress Queen") || cardName.equals("Serendib Sorcerer")) {
             Cost abCost = new Cost("T", cardName, true);
@@ -1011,7 +1011,7 @@ public class CardFactory_Creatures {
             ability.setDescription(sb.toString());
         }//*************** END ************ END **************************
 
-
+*/
         //*************** START *********** START **************************
         else if (cardName.equals("Vedalken Plotter")) {
             final Card[] target = new Card[2];
