@@ -1222,7 +1222,7 @@ public class CardFactory_Creatures {
             ability.setDescription(sb.toString());
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Helldozer")) {
             Cost abCost = new Cost("B B B T", cardName, true);
@@ -1282,7 +1282,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
             ability.setDescription(abCost + "Destroy target land. If that land was nonbasic, untap Helldozer.");
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Painter's Servant")) {
