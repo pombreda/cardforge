@@ -832,6 +832,16 @@ public class AbilityFactory {
                 SA = AbilityFactory_Protection.createDrawbackProtection(this);
         }
 
+        if (API.equals("Attach")) {
+            if (isAb)
+                SA = AbilityFactory_Attach.createAbilityAttach(this);
+            else if (isSp)
+                SA = AbilityFactory_Attach.createSpellAttach(this);
+            else if (isDb)
+                SA = AbilityFactory_Attach.createDrawbackAttach(this);
+        }
+        
+        
         if (SA == null)
             throw new RuntimeException("AbilityFactory : SpellAbility was not created for " + hostCard.getName() + ". Looking for API: " + API);
 
@@ -843,9 +853,10 @@ public class AbilityFactory {
         if (hasSubAbility())
             SA.setSubAbility(getSubAbility());
 
-        if (hasSpDesc) {
+        if (SA instanceof Spell_Permanent)
+        	SA.setDescription(SA.getSourceCard().getName());
+        else if (hasSpDesc) {
             StringBuilder sb = new StringBuilder();
-
 
             if (!isDb) {    // SubAbilities don't have Costs or Cost descriptors
                 if (mapParams.containsKey("PrecostDesc"))

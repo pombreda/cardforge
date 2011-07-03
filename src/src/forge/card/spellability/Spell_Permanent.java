@@ -140,6 +140,10 @@ public class Spell_Permanent extends Spell {
      * @param tgt a {@link forge.card.spellability.Target} object.
      */
     public Spell_Permanent(Card sourceCard, Cost cost, Target tgt) {
+    	this(sourceCard, cost, tgt, true);
+    }//Spell_Permanent()
+    
+    public Spell_Permanent(Card sourceCard, Cost cost, Target tgt, boolean setDesc) {
         super(sourceCard, cost, tgt);
 
         if (CardFactory.hasKeyword(sourceCard, "Champion") != -1) {
@@ -162,7 +166,9 @@ public class Spell_Permanent extends Spell {
             setStackDescription(sb.toString());
         } else setStackDescription(sourceCard.getName());
 
-        setDescription(getStackDescription());
+        if (setDesc)
+        	setDescription(getStackDescription());
+        
         if (willChampion) {
             sourceCard.addComesIntoPlayCommand(championCommandComes);
             sourceCard.addLeavesPlayCommand(championCommandLeavesPlay);

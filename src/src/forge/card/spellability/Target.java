@@ -444,6 +444,15 @@ public class Target {
      *
      * @return a boolean.
      */
+    
+    public boolean canTgtPermanent() {
+        for (String s : ValidTgts) {
+            if (s.contains("Permanent"))
+                return true;
+        }
+        return false;
+    }
+    
     public boolean canTgtCreature() {
         for (String s : ValidTgts) {
             if (s.contains("Creature") && !s.contains("nonCreature"))

@@ -4,7 +4,8 @@ Types:Enchantment Aura
 Text:You control enchanted creature.
 K:Enchant red or green creature
 K:Cumulative upkeep:1
-K:enControlCreature::Option=red or green
+A:SP$ Attach | Cost$ U | ValidTgts$ Creature.Red,Creature.Green | TgtPrompt$ Select target Red or Green Creature | AILogic$ GainControl
+SVar:PlayMain1:TRUE
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mind_harness.jpg
 SetInfo:MIR|Uncommon|http://magiccards.info/scans/en/mr/78.jpg
