@@ -52,6 +52,7 @@ public class Card extends MyObservable {
     private ArrayList<Object> rememberedObjects = new ArrayList<Object>();
     private ArrayList<Card> imprintedCards = new ArrayList<Card>();
     private Card championedCard = null;
+    private CardList devouredCards = new CardList();
 
     private HashMap<Card, Integer> receivedDamageFromThisTurn = new HashMap<Card, Integer>();
     private HashMap<Card, Integer> dealtDamageToThisTurn = new HashMap<Card, Integer>();
@@ -186,6 +187,21 @@ public class Card extends MyObservable {
     //CardFactory.SSP_canPlay(Card) uses these variables
 
     private int abilityUsed;                                                           //How many times has this ability been used?
+
+    public void addDevoured(Card c)
+    {
+        devouredCards.add(c);
+    }
+
+    public void clearDevoured()
+    {
+        devouredCards.clear();
+    }
+
+    public CardList getDevoured()
+    {
+        return devouredCards;
+    }
 
     /**
      * <p>addRemembered.</p>
@@ -4824,6 +4840,10 @@ public class Card extends MyObservable {
             if (isKicked()) return false;
         } else if (Property.startsWith("evoked")) {
             if (!isEvoked()) return false;
+        } else if (Property.equals("HasDevoured")) {
+            if(devouredCards.size() == 0) return false;
+        } else if (Property.equals("HasNotDevoured")) {
+            if(devouredCards.size() != 0) return false;
         } else if (Property.startsWith("non")) // ... Other Card types
         {
             if (isType(Property.substring(3))) return false;
