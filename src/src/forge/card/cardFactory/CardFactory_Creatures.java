@@ -2480,67 +2480,6 @@ public class CardFactory_Creatures {
 
 
         //*************** START *********** START **************************
-        else if (cardName.equals("Sygg, River Guide")) {
-            final HashMap<Card, String[]> creatureMap = new HashMap<Card, String[]>();
-
-            final Ability ability = new Ability(card, "1 W") {
-                @Override
-                public void resolve() {
-                    Card c = getTargetCard();
-                    String color = "";
-                    if (AllZoneUtil.isCardInPlay(c) && CardFactoryUtil.canTarget(card, c)) {
-
-                        Object o = GuiUtils.getChoice("Choose mana color", Constant.Color.onlyColors);
-                        color = (String) o;
-                        c.addExtrinsicKeyword("Protection from " + color);
-                        if (creatureMap.containsKey(c)) {
-                            int size = creatureMap.get(c).length;
-                            String[] newString = new String[size + 1];
-
-                            for (int i = 0; i < size; i++) {
-                                newString[i] = creatureMap.get(c)[i];
-                            }
-                            newString[size] = color;
-                            creatureMap.put(c, newString);
-                        } else creatureMap.put(c, new String[]{color});
-
-                        final Card crd = c;
-                        final Command atEOT = new Command() {
-                            private static final long serialVersionUID = 8630868536866681014L;
-
-                            public void execute() {
-                                //if(AllZoneUtil.isCardInPlay(c))
-                                //  c.removeExtrinsicKeyword("Protection from "+color);
-                                if (AllZoneUtil.isCardInPlay(crd)) {
-                                    String[] colors = creatureMap.get(crd);
-                                    for (String col : colors) {
-                                        crd.removeExtrinsicKeyword("Protection from " + col);
-                                    }
-                                }
-                            }
-                        };//Command
-                        AllZone.getEndOfTurn().addUntil(atEOT);
-                    }
-                }
-            };
-            Input runtime = new Input() {
-                private static final long serialVersionUID = -2171146532836387392L;
-
-                @Override
-                public void showMessage() {
-                    CardList creats = AllZoneUtil.getPlayerTypeInPlay(card.getController(), "Merfolk");
-
-                    stopSetNext(CardFactoryUtil.input_targetSpecific(ability, creats, "Select a target Merfolk",
-                            true, false));
-                }
-            };
-            ability.setDescription("1 W: Target Merfolk you control gains protection from the color of your choice until end of turn.");
-            ability.setBeforePayMana(runtime);
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
         else if (cardName.equals("Meddling Mage")) {
             final String[] input = new String[1];
             final Ability ability = new Ability(card, "0") {
