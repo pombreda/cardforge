@@ -577,13 +577,12 @@ public class ComputerUtil {
         payManaCost(sa, AllZone.getComputerPlayer(), false, 0);
     }
 
-    //the test flag is for canPayCost and should not change the game state
     /**
      * <p>payManaCost.</p>
      *
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      * @param player a {@link forge.Player} object.
-     * @param test a boolean.
+     * @param test (is for canPayCost, if true does not change the game state)
      * @param extraMana a int.
      * @return a boolean.
      * @since 1.0.15

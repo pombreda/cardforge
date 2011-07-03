@@ -1593,7 +1593,7 @@ public class GameAction {
 
     int CostCutting_GetMultiMickerManaCostPaid = 0;
     String CostCutting_GetMultiMickerManaCostPaid_Colored = "";
-
+    
     /**
      * <p>getSpellCostChange.</p>
      *
@@ -1604,8 +1604,14 @@ public class GameAction {
     public ManaCost getSpellCostChange(SpellAbility sa, ManaCost originalCost) {
         // Beached
         Card originalCard = sa.getSourceCard();
+        Player controller = originalCard.getController();
         SpellAbility spell = sa;
-        ManaCost manaCost = new ManaCost(originalCost.toString());
+        String mana = originalCost.toString();
+        ManaCost manaCost = new ManaCost(mana);
+        if (sa.isXCost() && !originalCard.isCopiedSpell()) originalCard.setXManaCostPaid(0);
+        
+        if (Phase.getGameBegins() != 1)
+        	return manaCost;
 
         if (spell.isSpell() == true) {
             if (originalCard.getName().equals("Avatar of Woe")) {
@@ -1642,23 +1648,160 @@ public class GameAction {
         } // isSpell
 
         // Get Cost Reduction
-        if (Phase.getGameBegins() == 1) { // Remove GameBegins from Phase and into The starting game code
-            CardList Cards_In_Play = AllZoneUtil.getCardsInPlay();
-            Cards_In_Play = Cards_In_Play.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    if (c.getKeyword().toString().contains("CostChange")) return true;
-                    return false;
+        CardList Cards_In_Play = AllZoneUtil.getCardsInPlay();
+        Cards_In_Play = Cards_In_Play.filter(new CardListFilter() {
+            public boolean addCard(Card c) {
+                if (c.getKeyword().toString().contains("CostChange")) return true;
+                return false;
+            }
+        });
+        Cards_In_Play.add(originalCard);
+        CardList Player_Play = AllZoneUtil.getPlayerCardsInPlay(controller);
+        CardList Player_Hand = AllZoneUtil.getPlayerHand(controller);
+        int XBonus = 0;
+        int Max = 25;
+        if (sa.isMultiKicker()) CostCutting_GetMultiMickerManaCostPaid_Colored = "";
+        
+        if (mana.toString().length() == 0) mana = "0";
+        for (int i = 0; i < Cards_In_Play.size(); i++) {
+            Card card = Cards_In_Play.get(i);
+            ArrayList<String> a = card.getKeyword();
+            int CostKeywords = 0;
+            int CostKeyword_Number[] = new int[a.size()];
+            for (int x = 0; x < a.size(); x++)
+                if (a.get(x).toString().startsWith("CostChange")) {
+                    CostKeyword_Number[CostKeywords] = x;
+                    CostKeywords = CostKeywords + 1;
                 }
-            });
-            Cards_In_Play.add(originalCard);
-            String Mana = manaCost.toString();
-            CardList Player_Play = AllZoneUtil.getPlayerCardsInPlay(sa.getSourceCard().getController());
-            CardList Player_Hand = AllZoneUtil.getPlayerHand(sa.getSourceCard().getController());
-            int XBonus = 0;
-            int Max = 25;
-            if (sa.isXCost() && !sa.getSourceCard().isCopiedSpell()) sa.getSourceCard().setXManaCostPaid(0);
-            if (sa.isMultiKicker()) CostCutting_GetMultiMickerManaCostPaid_Colored = "";
-            if (Mana.toString().length() == 0) Mana = "0";
+            for (int CKeywords = 0; CKeywords < CostKeywords; CKeywords++) {
+                String parse = card.getKeyword().get(CostKeyword_Number[CKeywords]).toString();
+                String k[] = parse.split(":");
+                if (card.equals(originalCard)) {
+                    if (!k[4].equals("Self")) k[2] = "Owned";
+                }
+                if (k[2].equals("More")) {
+                    if (k[7].equals("OnlyOneBonus")) {  // Only Works for Color and Type
+                        for (int string_no = 5; string_no < 7; string_no++) {
+                            String spilt = k[string_no];
+                            String color_spilt[] = spilt.split("/");
+
+                            for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
+                                k[string_no] = color_spilt[cs_num];
+                                if (string_no == 5 && CardUtil.getColors(originalCard).contains(k[5])) break;
+                                if (string_no == 6 && (originalCard.isType(k[6]))) break;
+                            }
+                        }
+                    }
+                    if (k[7].contains("All Conditions")) { // Only Works for Color and Type
+                        for (int string_no = 5; string_no < 7; string_no++) {
+                            String spilt = k[string_no];
+                            String color_spilt[] = spilt.split("/");
+                            for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
+                                k[string_no] = color_spilt[cs_num];
+                                if (string_no == 5) {
+                                    if (CardUtil.getColors(originalCard).contains(k[5]) || k[5].equals("All")) {
+                                    } else {
+                                        k[5] = "Nullified";
+                                        break;
+                                    }
+                                }
+                                if (string_no == 6) {
+                                    if (originalCard.isType(k[6]) || k[6].equals("All")) {
+                                    } else {
+                                        k[6] = "Nullified";
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (!k[5].equals("Nullified")) k[5] = "All";
+                        if (!k[6].equals("Nullified")) k[6] = "All";
+                    }
+                    if ((k[1].equals("Player") && card.getController().equals(controller)
+                            || (k[1].equals("Opponent") && card.getController().equals(controller.getOpponent())) || k[1].equals("All"))
+                            && ((k[4].equals("Spell") && sa.isSpell() == true) || (k[4].equals("Ability") && sa.isAbility() == true)
+                            || (k[4].startsWith("Ability_Cycling") && sa.isCycling()) || (k[4].equals("Self") && originalCard.equals(card))
+                            || (k[4].equals("Enchanted") && originalCard.getEnchantedBy().contains(card)) || k[4].equals("All"))
+                            && ((CardUtil.getColors(originalCard).contains(k[5])) || k[5].equals("All"))
+                            && ((originalCard.isType(k[6]))
+                            || (!(originalCard.isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
+                        if (k[7].contains("CardIsTapped")) {
+                            if (card.isTapped() == false) k[3] = "0";
+                        }
+                        if (k[7].contains("TargetInPlay")) {
+                            if (!Player_Play.contains(originalCard)) k[3] = "0";
+                        }
+                        if (k[7].contains("TargetInHand")) {
+                            if (!Player_Hand.contains(originalCard)) k[3] = "0";
+                        }
+                        if (k[7].contains("NonType")) {
+                            if (originalCard.isType(k[6])) k[3] = "0";
+                        }
+                        if (k[7].contains("OpponentTurn")) {
+                            if (AllZone.getPhase().isPlayerTurn(controller)) k[3] = "0";
+                        }
+                        if (k[7].contains("Affinity")) {
+                            String spilt = k[7];
+                            String color_spilt[] = spilt.split("/");
+                            k[7] = color_spilt[1];
+                            CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(controller);
+                            PlayerList = PlayerList.getType(k[7]);
+                            k[3] = String.valueOf(PlayerList.size());
+                        }
+                        String[] Numbers = new String[Max];
+                        if ("X".equals(k[3])) {
+                            for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
+                            String Number_ManaCost = " ";
+                            if (mana.toString().length() == 1) {
+                                Number_ManaCost = mana.toString().substring(0, 1);
+                            } else if (mana.toString().length() == 0) {
+                                Number_ManaCost = "0"; // Should Never Occur
+                            } else {
+                                Number_ManaCost = mana.toString().substring(0, 2);
+                            }
+                            Number_ManaCost = Number_ManaCost.trim();
+                            for (int check = 0; check < Max; check++) {
+                                if (Number_ManaCost.equals(Numbers[check])) {
+                                    int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
+                                    //if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
+                                    mana = mana.replaceFirst(String.valueOf(check), String.valueOf(check + xValue));
+                                }
+                                if (mana.equals("")) mana = "0";
+                                manaCost = new ManaCost(mana);
+                            }
+                        } else if (!"WUGRB".contains(k[3])) {
+                            for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
+                            String Number_ManaCost = " ";
+                            if (mana.toString().length() == 1) Number_ManaCost = mana.toString().substring(0, 1);
+                            else if (mana.toString().length() == 0) Number_ManaCost = "0"; // Should Never Occur
+                            else Number_ManaCost = mana.toString().substring(0, 2);
+                            Number_ManaCost = Number_ManaCost.trim();
+
+                            for (int check = 0; check < Max; check++) {
+                                if (Number_ManaCost.equals(Numbers[check])) {
+                                    mana = mana.replaceFirst(String.valueOf(check), String.valueOf(check + Integer.valueOf(k[3])));
+                                }
+                                if (mana.equals("")) mana = "0";
+                                manaCost = new ManaCost(mana);
+                            }
+                            if (!manaCost.toString().contains("0") && !manaCost.toString().contains("1") && !manaCost.toString().contains("2")
+                                    && !manaCost.toString().contains("3") && !manaCost.toString().contains("4") && !manaCost.toString().contains("5")
+                                    && !manaCost.toString().contains("6") && !manaCost.toString().contains("7") && !manaCost.toString().contains("8")
+                                    && !manaCost.toString().contains("9")) {
+                                mana = k[3] + " " + mana;
+                                manaCost = new ManaCost(mana);
+                            }
+                        } else {
+                            mana = mana + " " + k[3];
+                            manaCost = new ManaCost(mana);
+                        }
+                    }
+                }
+            }
+        }
+
+        if (mana.equals("0") && spell.isAbility()) {
+        } else {
             for (int i = 0; i < Cards_In_Play.size(); i++) {
                 Card card = Cards_In_Play.get(i);
                 ArrayList<String> a = card.getKeyword();
@@ -1675,16 +1818,17 @@ public class GameAction {
                     if (card.equals(originalCard)) {
                         if (!k[4].equals("Self")) k[2] = "Owned";
                     }
-                    if (k[2].equals("More")) {
-                        if (k[7].equals("OnlyOneBonus")) {  // Only Works for Color and Type
+                    if (k[2].equals("Less")) {
+                        if (k[7].equals("OnlyOneBonus")) { // Only Works for Color and Type
                             for (int string_no = 5; string_no < 7; string_no++) {
                                 String spilt = k[string_no];
                                 String color_spilt[] = spilt.split("/");
 
                                 for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
                                     k[string_no] = color_spilt[cs_num];
-                                    if (string_no == 5 && CardUtil.getColors(sa.getSourceCard()).contains(k[5])) break;
-                                    if (string_no == 6 && (sa.getSourceCard().isType(k[6]))) break;
+                                    if (string_no == 5 && CardUtil.getColors(originalCard).contains(k[5]))
+                                        break;
+                                    if (string_no == 6 && (originalCard.isType(k[6]))) break;
                                 }
                             }
                         }
@@ -1695,14 +1839,14 @@ public class GameAction {
                                 for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
                                     k[string_no] = color_spilt[cs_num];
                                     if (string_no == 5) {
-                                        if (CardUtil.getColors(sa.getSourceCard()).contains(k[5]) || k[5].equals("All")) {
+                                        if (CardUtil.getColors(originalCard).contains(k[5]) || k[5].equals("All")) {
                                         } else {
                                             k[5] = "Nullified";
                                             break;
                                         }
                                     }
                                     if (string_no == 6) {
-                                        if (sa.getSourceCard().isType(k[6]) || k[6].equals("All")) {
+                                        if (originalCard.isType(k[6]) || k[6].equals("All")) {
                                         } else {
                                             k[6] = "Nullified";
                                             break;
@@ -1713,284 +1857,114 @@ public class GameAction {
                             if (!k[5].equals("Nullified")) k[5] = "All";
                             if (!k[6].equals("Nullified")) k[6] = "All";
                         }
-                        if ((k[1].equals("Player") && card.getController().equals(sa.getSourceCard().getController())
-                                || (k[1].equals("Opponent") && card.getController().equals(sa.getSourceCard().getController().getOpponent())) || k[1].equals("All"))
+                        if ((k[1].equals("Player") && card.getController().equals(controller)
+                                || (k[1].equals("Opponent") && card.getController().equals(controller.getOpponent())) || k[1].equals("All"))
                                 && ((k[4].equals("Spell") && sa.isSpell() == true) || (k[4].equals("Ability") && sa.isAbility() == true)
                                 || (k[4].startsWith("Ability_Cycling") && sa.isCycling()) || (k[4].equals("Self") && originalCard.equals(card))
                                 || (k[4].equals("Enchanted") && originalCard.getEnchantedBy().contains(card)) || k[4].equals("All"))
-                                && ((CardUtil.getColors(sa.getSourceCard()).contains(k[5])) || k[5].equals("All"))
-                                && ((sa.getSourceCard().isType(k[6]))
-                                || (!(sa.getSourceCard().isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
+                                && ((CardUtil.getColors(originalCard).contains(k[5])) || k[5].equals("All"))
+                                && ((originalCard.isType(k[6]))
+                                || (!(originalCard.isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
                             if (k[7].contains("CardIsTapped")) {
                                 if (card.isTapped() == false) k[3] = "0";
                             }
                             if (k[7].contains("TargetInPlay")) {
-                                if (!Player_Play.contains(sa.getSourceCard())) k[3] = "0";
+                                if (!Player_Play.contains(originalCard)) k[3] = "0";
                             }
                             if (k[7].contains("TargetInHand")) {
-                                if (!Player_Hand.contains(sa.getSourceCard())) k[3] = "0";
+                                if (!Player_Hand.contains(originalCard)) k[3] = "0";
                             }
                             if (k[7].contains("NonType")) {
                                 if (originalCard.isType(k[6])) k[3] = "0";
                             }
                             if (k[7].contains("OpponentTurn")) {
-                                if (AllZone.getPhase().isPlayerTurn(originalCard.getController())) k[3] = "0";
+                                if (AllZone.getPhase().isPlayerTurn(controller)) k[3] = "0";
                             }
                             if (k[7].contains("Affinity")) {
                                 String spilt = k[7];
                                 String color_spilt[] = spilt.split("/");
                                 k[7] = color_spilt[1];
-                                CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(originalCard.getController());
+                                CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(controller);
                                 PlayerList = PlayerList.getType(k[7]);
                                 k[3] = String.valueOf(PlayerList.size());
                             }
+
                             String[] Numbers = new String[Max];
-                            if ("X".equals(k[3])) {
+                            if (!"WUGRB".contains(k[3])) {
+
+                                int value = 0;
+                                if ("X".equals(k[3]))
+                                    value = CardFactoryUtil.xCount(card, card.getSVar("X"));
+                                else
+                                    value = Integer.valueOf(k[3]);
+
                                 for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
                                 String Number_ManaCost = " ";
-                                if (Mana.toString().length() == 1) {
-                                    Number_ManaCost = Mana.toString().substring(0, 1);
-                                } else if (Mana.toString().length() == 0) {
-                                    Number_ManaCost = "0"; // Should Never Occur
-                                } else {
-                                    Number_ManaCost = Mana.toString().substring(0, 2);
-                                }
-                                Number_ManaCost = Number_ManaCost.trim();
-                                for (int check = 0; check < Max; check++) {
-                                    if (Number_ManaCost.equals(Numbers[check])) {
-                                        int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
-                                        //if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
-                                        Mana = Mana.replaceFirst(String.valueOf(check), String.valueOf(check + xValue));
-                                    }
-                                    if (Mana.equals("")) Mana = "0";
-                                    manaCost = new ManaCost(Mana);
-                                }
-                            } else if (!"WUGRB".contains(k[3])) {
-                                for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
-                                String Number_ManaCost = " ";
-                                if (Mana.toString().length() == 1) Number_ManaCost = Mana.toString().substring(0, 1);
-                                else if (Mana.toString().length() == 0) Number_ManaCost = "0"; // Should Never Occur
-                                else Number_ManaCost = Mana.toString().substring(0, 2);
+                                if (mana.toString().length() == 1)
+                                    Number_ManaCost = mana.toString().substring(0, 1);
+                                else if (mana.toString().length() == 0)
+                                    Number_ManaCost = "0";  // Should Never Occur
+                                else Number_ManaCost = mana.toString().substring(0, 2);
                                 Number_ManaCost = Number_ManaCost.trim();
 
                                 for (int check = 0; check < Max; check++) {
                                     if (Number_ManaCost.equals(Numbers[check])) {
-                                        Mana = Mana.replaceFirst(String.valueOf(check), String.valueOf(check + Integer.valueOf(k[3])));
+                                        if ((spell.isXCost()) || (spell.isMultiKicker()) && (check - value) < 0)
+                                            XBonus = XBonus - check + value;
+                                        if (check - value < 0) value = check;
+                                        mana = mana.replaceFirst(String.valueOf(check), String.valueOf(check - value));
                                     }
-                                    if (Mana.equals("")) Mana = "0";
-                                    manaCost = new ManaCost(Mana);
-                                }
-                                if (!manaCost.toString().contains("0") && !manaCost.toString().contains("1") && !manaCost.toString().contains("2")
-                                        && !manaCost.toString().contains("3") && !manaCost.toString().contains("4") && !manaCost.toString().contains("5")
-                                        && !manaCost.toString().contains("6") && !manaCost.toString().contains("7") && !manaCost.toString().contains("8")
-                                        && !manaCost.toString().contains("9")) {
-                                    Mana = k[3] + " " + Mana;
-                                    manaCost = new ManaCost(Mana);
+                                    if (mana.equals("")) mana = "0";
+                                    manaCost = new ManaCost(mana);
                                 }
                             } else {
-                                Mana = Mana + " " + k[3];
-                                manaCost = new ManaCost(Mana);
-                            }
-                        }
-                    }
-                }
-            }
-
-            if (Mana.equals("0") && spell.isAbility()) {
-            } else {
-                for (int i = 0; i < Cards_In_Play.size(); i++) {
-                    Card card = Cards_In_Play.get(i);
-                    ArrayList<String> a = card.getKeyword();
-                    int CostKeywords = 0;
-                    int CostKeyword_Number[] = new int[a.size()];
-                    for (int x = 0; x < a.size(); x++)
-                        if (a.get(x).toString().startsWith("CostChange")) {
-                            CostKeyword_Number[CostKeywords] = x;
-                            CostKeywords = CostKeywords + 1;
-                        }
-                    for (int CKeywords = 0; CKeywords < CostKeywords; CKeywords++) {
-                        String parse = card.getKeyword().get(CostKeyword_Number[CKeywords]).toString();
-                        String k[] = parse.split(":");
-                        if (card.equals(originalCard)) {
-                            if (!k[4].equals("Self")) k[2] = "Owned";
-                        }
-                        if (k[2].equals("Less")) {
-                            if (k[7].equals("OnlyOneBonus")) { // Only Works for Color and Type
-                                for (int string_no = 5; string_no < 7; string_no++) {
-                                    String spilt = k[string_no];
-                                    String color_spilt[] = spilt.split("/");
-
-                                    for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
-                                        k[string_no] = color_spilt[cs_num];
-                                        if (string_no == 5 && CardUtil.getColors(sa.getSourceCard()).contains(k[5]))
-                                            break;
-                                        if (string_no == 6 && (sa.getSourceCard().isType(k[6]))) break;
-                                    }
-                                }
-                            }
-                            if (k[7].contains("All Conditions")) { // Only Works for Color and Type
-                                for (int string_no = 5; string_no < 7; string_no++) {
-                                    String spilt = k[string_no];
-                                    String color_spilt[] = spilt.split("/");
-                                    for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
-                                        k[string_no] = color_spilt[cs_num];
-                                        if (string_no == 5) {
-                                            if (CardUtil.getColors(sa.getSourceCard()).contains(k[5]) || k[5].equals("All")) {
-                                            } else {
-                                                k[5] = "Nullified";
-                                                break;
-                                            }
-                                        }
-                                        if (string_no == 6) {
-                                            if (sa.getSourceCard().isType(k[6]) || k[6].equals("All")) {
-                                            } else {
-                                                k[6] = "Nullified";
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                if (!k[5].equals("Nullified")) k[5] = "All";
-                                if (!k[6].equals("Nullified")) k[6] = "All";
-                            }
-                            if ((k[1].equals("Player") && card.getController().equals(sa.getSourceCard().getController())
-                                    || (k[1].equals("Opponent") && card.getController().equals(sa.getSourceCard().getController().getOpponent())) || k[1].equals("All"))
-                                    && ((k[4].equals("Spell") && sa.isSpell() == true) || (k[4].equals("Ability") && sa.isAbility() == true)
-                                    || (k[4].startsWith("Ability_Cycling") && sa.isCycling()) || (k[4].equals("Self") && originalCard.equals(card))
-                                    || (k[4].equals("Enchanted") && originalCard.getEnchantedBy().contains(card)) || k[4].equals("All"))
-                                    && ((CardUtil.getColors(sa.getSourceCard()).contains(k[5])) || k[5].equals("All"))
-                                    /**
-                                     *  Chris added a test for Changeling.
-                                     *  This appears to reduce the cost correctly.
-                                     *  Works for both the computer and the human.
-                                     */
-                                    && ((sa.getSourceCard().isType(k[6]))
-
-                                    || (!(sa.getSourceCard().isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
-                                if (k[7].contains("CardIsTapped")) {
-                                    if (card.isTapped() == false) k[3] = "0";
-                                }
-                                if (k[7].contains("TargetInPlay")) {
-                                    if (!Player_Play.contains(sa.getSourceCard())) k[3] = "0";
-                                }
-                                if (k[7].contains("TargetInHand")) {
-                                    if (!Player_Hand.contains(sa.getSourceCard())) k[3] = "0";
-                                }
-                                if (k[7].contains("NonType")) {
-                                    if (originalCard.isType(k[6])) k[3] = "0";
-                                }
-                                if (k[7].contains("OpponentTurn")) {
-                                    if (AllZone.getPhase().isPlayerTurn(originalCard.getController())) k[3] = "0";
-                                }
-                                if (k[7].contains("Affinity")) {
-                                    String spilt = k[7];
-                                    String color_spilt[] = spilt.split("/");
-                                    k[7] = color_spilt[1];
-                                    CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(originalCard.getController());
-                                    PlayerList = PlayerList.getType(k[7]);
-                                    k[3] = String.valueOf(PlayerList.size());
-                                }
-
-                                String[] Numbers = new String[Max];
-                                /*if("X".equals(k[3])) {
-                                            for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
-                                            String Number_ManaCost = " ";
-                                            if(Mana.toString().length() == 1) {
-                                                Number_ManaCost = Mana.toString().substring(0, 1);
-                                            }
-                                            else if(Mana.toString().length() == 0) {
-                                                Number_ManaCost = "0"; // Should Never Occur
-                                            }
-                                            else {
-                                                Number_ManaCost = Mana.toString().substring(0, 2);
-                                            }
-                                            Number_ManaCost = Number_ManaCost.trim();
-                                            for(int check = 0; check < Max; check ++) {
-                                                if(Number_ManaCost.equals(Numbers[check])) {
-                                                    int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
-                                                    //if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
-                                                    Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - xValue));
-                                                }
-                                                if(Mana.equals("")) Mana = "0";
-                                                manaCost = new ManaCost(Mana);
-                                            }
-                                        }*/
-                                if (!"WUGRB".contains(k[3])) {
-
-                                    int value = 0;
-                                    if ("X".equals(k[3]))
-                                        value = CardFactoryUtil.xCount(card, card.getSVar("X"));
-                                    else
-                                        value = Integer.valueOf(k[3]);
-
-                                    for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
-                                    String Number_ManaCost = " ";
-                                    if (Mana.toString().length() == 1)
-                                        Number_ManaCost = Mana.toString().substring(0, 1);
-                                    else if (Mana.toString().length() == 0)
-                                        Number_ManaCost = "0";  // Should Never Occur
-                                    else Number_ManaCost = Mana.toString().substring(0, 2);
-                                    Number_ManaCost = Number_ManaCost.trim();
-
-                                    for (int check = 0; check < Max; check++) {
-                                        if (Number_ManaCost.equals(Numbers[check])) {
-                                            if ((spell.isXCost()) || (spell.isMultiKicker()) && (check - value) < 0)
-                                                XBonus = XBonus - check + value;
-                                            if (check - value < 0) value = check;
-                                            Mana = Mana.replaceFirst(String.valueOf(check), String.valueOf(check - value));
-                                        }
-                                        if (Mana.equals("")) Mana = "0";
-                                        manaCost = new ManaCost(Mana);
-                                    }
+                                //   	 JOptionPane.showMessageDialog(null, Mana + " " + Mana.replaceFirst(k[3],""), "", JOptionPane.INFORMATION_MESSAGE);
+                                if (mana.equals(mana.replaceFirst(k[3], ""))) {
+                                    // if(sa.isXCost()) sa.getSourceCard().addXManaCostPaid(1); Not Included as X Costs are not in Colored Mana
+                                    if (sa.isMultiKicker())
+                                        CostCutting_GetMultiMickerManaCostPaid_Colored = CostCutting_GetMultiMickerManaCostPaid_Colored + k[3];
+                                    //		 JOptionPane.showMessageDialog(null, CostCutting_GetMultiMickerManaCostPaid_Colored, "", JOptionPane.INFORMATION_MESSAGE);
                                 } else {
-                                    //   	 JOptionPane.showMessageDialog(null, Mana + " " + Mana.replaceFirst(k[3],""), "", JOptionPane.INFORMATION_MESSAGE);
-                                    if (Mana.equals(Mana.replaceFirst(k[3], ""))) {
-                                        // if(sa.isXCost()) sa.getSourceCard().addXManaCostPaid(1); Not Included as X Costs are not in Colored Mana
-                                        if (sa.isMultiKicker())
-                                            CostCutting_GetMultiMickerManaCostPaid_Colored = CostCutting_GetMultiMickerManaCostPaid_Colored + k[3];
-                                        //		 JOptionPane.showMessageDialog(null, CostCutting_GetMultiMickerManaCostPaid_Colored, "", JOptionPane.INFORMATION_MESSAGE);
-                                    } else {
-                                        Mana = Mana.replaceFirst(k[3], "");
-                                        Mana = Mana.trim();
-                                        if (Mana.equals("")) Mana = "0";
-                                        manaCost = new ManaCost(Mana);
-                                    }
-                                }
-                            }
-                            Mana = Mana.trim();
-                            if (Mana.length() == 0 || Mana.equals("0")) {
-                                if (sa.isSpell() || sa.isCycling()) Mana = "0";
-                                else {
-                                    Mana = "1";
+                                    mana = mana.replaceFirst(k[3], "");
+                                    mana = mana.trim();
+                                    if (mana.equals("")) mana = "0";
+                                    manaCost = new ManaCost(mana);
                                 }
                             }
                         }
-                        manaCost = new ManaCost(Mana);
+                        mana = mana.trim();
+                        if (mana.length() == 0 || mana.equals("0")) {
+                            if (sa.isSpell() || sa.isCycling()) mana = "0";
+                            else {
+                                mana = "1";
+                            }
+                        }
                     }
+                    manaCost = new ManaCost(mana);
                 }
-            }
-            if (sa.isXCost()) {
-
-                for (int XPaid = 0; XPaid < XBonus; XPaid++) sa.getSourceCard().addXManaCostPaid(1);
-            }
-            if (sa.isMultiKicker()) {
-                CostCutting_GetMultiMickerManaCostPaid = 0;
-                for (int XPaid = 0; XPaid < XBonus; XPaid++)
-                    CostCutting_GetMultiMickerManaCostPaid = CostCutting_GetMultiMickerManaCostPaid + 1;
             }
         }
+        if (sa.isXCost()) {
+            for (int XPaid = 0; XPaid < XBonus; XPaid++) originalCard.addXManaCostPaid(1);
+        }
+        if (sa.isMultiKicker()) {
+            CostCutting_GetMultiMickerManaCostPaid = 0;
+            for (int XPaid = 0; XPaid < XBonus; XPaid++)
+                CostCutting_GetMultiMickerManaCostPaid = CostCutting_GetMultiMickerManaCostPaid + 1;
+        }
+            
         if (originalCard.getName().equals("Khalni Hydra") && spell.isSpell() == true) {
             Player player = AllZone.getPhase().getPlayerTurn();
             CardList playerCreature = AllZoneUtil.getCreaturesInPlay(player);
             playerCreature = playerCreature.filter(AllZoneUtil.green);
-            String mana = manaCost + " ";
+            String manaC = manaCost + " ";
             if (playerCreature.size() > 0) {
                 for (int i = 0; i < playerCreature.size(); i++) {
-                    mana = mana.replaceFirst("G ", "");
+                    manaC = manaC.replaceFirst("G ", "");
                 }
-                mana = mana.trim();
-                if (mana.equals("")) mana = "0";
-                manaCost = new ManaCost(mana);
+                manaC = manaC.trim();
+                if (manaC.equals("")) manaC = "0";
+                manaCost = new ManaCost(manaC);
             }
         } // Khalni Hydra
         return manaCost;

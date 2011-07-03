@@ -34,11 +34,11 @@ public class ManaCost {
         if (manaCost.equals(""))
             manaCost = "0";
 
-        while (manaCost.startsWith("X")) {
+        while (manaCost.contains("X")) {
             if (manaCost.length() < 2)
                 manaCost = "0";
             else
-                manaCost = manaCost.substring(2);
+                manaCost = manaCost.replaceFirst("X ", "");
             setXcounter(getXcounter() + 1);
         }
         manaPart = split(manaCost);
