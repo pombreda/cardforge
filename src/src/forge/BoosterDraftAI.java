@@ -72,6 +72,16 @@ public class BoosterDraftAI {
                     System.out.println("Player[" + player + "] Color1: " + playerColors.get(player).Color1);
 
                 playerColors.get(player).Mana1 = playerColors.get(player).ColorToMana(playerColors.get(player).Color1);
+                
+                //if the first pick has more than one color add the second as second color to draft
+                if (pickedCard.getColor().get(0).toStringArray().size() > 1) {
+                    playerColors.get(player).Color2 = pickedCard.getColor().get(0).toStringArray().get(1);
+                    if (Constant.Runtime.DevMode[0])
+                        System.out.println("Player[" + player + "] Color2: " + playerColors.get(player).Color2);
+
+                    playerColors.get(player).Mana2 = playerColors.get(player).ColorToMana(playerColors.get(player).Color2);
+                }	
+                	
                 hasPicked = true;
             }
         } else if (!playerColors.get(player).Color1.equals("none") && playerColors.get(player).Color2.equals("none")) {
