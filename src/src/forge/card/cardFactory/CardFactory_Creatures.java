@@ -1428,7 +1428,7 @@ public class CardFactory_Creatures {
             });
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Goldmeadow Lookout")) {
             final Cost lookCost = new Cost("W T Discard<1/Card>", card.getName(), true);
@@ -1513,7 +1513,7 @@ public class CardFactory_Creatures {
             ability.setStackDescription(cardName + " - Put a 1/1 token onto the battlefield");
         }//*************** END ************ END **************************
 
-
+*/
         //*************** START *********** START **************************
         else if (cardName.equals("Horde of Notions")) {
             final Ability ability = new Ability(card, "W U B R G") {
