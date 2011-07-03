@@ -602,12 +602,14 @@ public class CardFactory implements NewConstants {
                          creats.remove(card);
                          //System.out.println("Creats size: " + creats.size());
 
+                         card.clearDevoured();
                          if (card.getController().isHuman()) {
                              if (creats.size() > 0) {
                                  List<Card> selection = GuiUtils.getChoicesOptional("Select creatures to sacrifice", creats.toArray());
 
                                  numCreatures[0] = selection.size();
                                  for (int m = 0; m < selection.size(); m++) {
+                                     card.addDevoured(selection.get(m));
                                      AllZone.getGameAction().sacrifice(selection.get(m));
                                  }
                              }
@@ -618,6 +620,7 @@ public class CardFactory implements NewConstants {
                              for (int i = 0; i < creats.size(); i++) {
                                  Card c = creats.get(i);
                                  if (c.getNetAttack() <= 1 && c.getNetAttack() + c.getNetDefense() <= 3) {
+                                     card.addDevoured(c);
                                      AllZone.getGameAction().sacrifice(c);
                                      count++;
                                  }
@@ -629,12 +632,6 @@ public class CardFactory implements NewConstants {
                          int totalCounters = numCreatures[0] * multiplier;
 
                          card.addCounter(Counters.P1P1, totalCounters);
-
-                         if (card.getName().equals("Skullmulcher")) {
-                             for (int i = 0; i < numCreatures[0]; i++) {
-                                 card.getController().drawCard();
-                             }
-                         }
 
                      }
                  };

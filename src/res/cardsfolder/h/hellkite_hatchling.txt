@@ -1,0 +1,10 @@
+Name:Hellkite Hatchling
+ManaCost:2 R G
+Types:Creature Dragon
+Text:no text
+PT:2/2
+K:Devour:1
+K:stPumpSelf:Creature.HasDevoured:0/0/Flying & Trample:no Condition:CARDNAME has flying and trample if it devoured a creature.
+SVar:Rarity:Uncommon
+SVar:Picture:http://www.wizards.com/global/images/magic/general/hellkite_hatchling.jpg
+End

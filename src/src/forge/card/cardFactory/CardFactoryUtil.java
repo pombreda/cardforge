@@ -2870,6 +2870,21 @@ public class CardFactoryUtil {
                 return doXMath(Integer.parseInt(sq[2]), m, c); // not Landfall
         }
 
+        if (sq[0].startsWith("Devoured")) {
+            final String validDevoured = l[0].split(" ")[1];
+            final Card csource = c;
+            CardList cl = c.getDevoured();
+
+            cl = cl.filter(new CardListFilter() {
+                public boolean addCard(Card cdev)
+                {
+                    return cdev.isValidCard(validDevoured.split(","),csource.getController(),csource);
+                }
+            });
+
+            return doXMath(cl.size(),m,c);
+        }
+
         // Count$CardPower
         if (sq[0].contains("CardPower")) return doXMath(c.getNetAttack(), m, c);
         // Count$CardToughness
