@@ -131,7 +131,12 @@ public class BoosterDraftAI {
                 typeList = colorList.getType("Planeswalker");
                 if (typeList.size() > 0)
                     list.add(typeList.get(0));
-
+                
+                typeList = colorList.getType("Artifact");
+                if (typeList.size() > 0) {
+                    CardListUtil.sortCMC(typeList);
+                    list.add(typeList.get(0));
+                }
 
             } else {
 /*    		if (!playerColors.get(player).Splash.equals("none")) {
@@ -164,12 +169,6 @@ public class BoosterDraftAI {
     			}
     		}
 */
-                typeList = AIPlayables.getType("Artifact");
-                if (typeList.size() > 0) {
-                    CardListUtil.sortCMC(typeList);
-                    list.add(typeList.get(0));
-                }
-
                 typeList = AIPlayables.getType("Land");
                 if (typeList.size() > 0) {
                     for (int i = 0; i < typeList.size(); i++) {
