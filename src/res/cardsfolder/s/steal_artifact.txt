@@ -3,7 +3,7 @@ ManaCost:2 U U
 Types:Enchantment Aura
 Text:You control enchanted artifact.
 K:Enchant artifact
-K:enControlArtifact
+A:SP$ Attach | Cost$ 2 U U | ValidTgts$ Artifact | AILogic$ GainControl
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/steal_artifact.jpg
 SetInfo:8ED|Uncommon|http://magiccards.info/scans/en/8e/103.jpg

@@ -38,30 +38,32 @@ public class CardFactoryUtil {
                 }
             });
         }
-        if (all.size() == 0) return null;
+        
+       return AI_getMostExpensivePermanent(all);
+    }
+        
+     public static Card AI_getMostExpensivePermanent(CardList all){ 
+    	 if (all.size() == 0) return null;
+    	 Card biggest = null;
+    	 biggest = all.get(0);
 
-        //get biggest Permanent
-        Card biggest = null;
-        biggest = all.get(0);
+    	 int bigCMC = 0;
+    	 for (int i = 0; i < all.size(); i++) {
+    		 Card card = all.get(i);
+    		 int curCMC = card.getCMC();
 
-        int bigCMC = 0;
-        for (int i = 0; i < all.size(); i++) {
-            Card card = all.get(i);
-            int curCMC = card.getCMC();
+    		 //Add all cost of all auras with the same controller
+    		 CardList auras = new CardList(card.getEnchantedBy().toArray());
+    		 auras.getController(card.getController());
+    		 curCMC += auras.getTotalConvertedManaCost() + auras.size();
 
-            //Add all cost of all auras with the same controller
-            CardList auras = new CardList(card.getEnchantedBy().toArray());
-            auras.getController(card.getController());
-            curCMC += auras.getTotalConvertedManaCost() + auras.size();
+    		 if (curCMC >= bigCMC) {
+    			 bigCMC = curCMC;
+    			 biggest = all.get(i);
+    		 }
+    	 }
 
-            if (curCMC >= bigCMC) {
-                bigCMC = curCMC;
-                biggest = all.get(i);
-            }
-        }
-
-        return biggest;
-
+    	 return biggest;
     }
 
     //for Sarkhan the Mad
@@ -406,6 +408,19 @@ public class CardFactoryUtil {
      * @param list a {@link forge.CardList} object.
      * @return a {@link forge.Card} object.
      */
+    
+    public static Card AI_getBest(CardList list) {
+    	// Get Best will filter by appropriate getBest list if ALL of the list is of that type
+    	if (list.getNotType("Creature").size() == 0)
+    		return AI_getBestCreature(list);
+    	
+    	if (list.getNotType("Land").size() == 0)
+    		return AI_getBestLand(list);
+    
+    	// TODO: Once we get an EvaluatePermanent this should call getBestPermanent()
+    	return AI_getMostExpensivePermanent(list);
+    }
+    
     public static Card AI_getBestCreature(CardList list) {
         CardList all = list;
         all = all.getType("Creature");

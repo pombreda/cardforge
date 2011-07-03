@@ -46,6 +46,7 @@ public class AbilityFactory_Token extends AbilityFactory {
         String[] keywords;
 
         if (mapParams.containsKey("TokenKeywords")) {
+        	// TODO: Change this Split to a semicolon or something else
             keywords = mapParams.get("TokenKeywords").split("<>");
         } else {
             keywords = new String[0];

@@ -627,31 +627,41 @@ public class GameAction {
                 }//if isEquipping()
 
                 if (c.isAura()) {
+                	// Check if Card Aura is attached to is a legal target
                     for (int i = 0; i < c.getEnchanting().size(); i++) {
                         Card perm = c.getEnchanting().get(i);
+                        
+                        SpellAbility sa = c.getSpellPermanent();
+                        Target tgt = null;
+                        if (sa != null)
+                        	tgt = sa.getTarget();
+                        
+                        // I think the Keyword checks might be superfluous with the isValidCard check
                         if (!AllZoneUtil.isCardInPlay(perm)
                                 || CardFactoryUtil.hasProtectionFrom(c, perm)
                                 || ((c.hasKeyword("Enchant creature") || c.hasKeyword("Enchant tapped creature"))
                                 && !perm.isCreature())
-                                || (c.hasKeyword("Enchant tapped creature") && perm.isUntapped())) {
+                                || (c.hasKeyword("Enchant tapped creature") && perm.isUntapped())
+                                || (tgt != null && !perm.isValidCard(tgt.getValidTgts(), c.getController(), c)) ) {
+       
                             c.unEnchantCard(perm);
-                            //changed from destroy (and rules-wise, I don't think it's a sacrifice)
                             moveToGraveyard(c);
                             checkAgain = true;
                         }
                     }
                 }//if isAura
 
-                if (c.isCreature()
-                        && c.getNetDefense() <= c.getDamage()
-                        && !c.hasKeyword("Indestructible")) {
-                    destroy(c);
-                    AllZone.getCombat().removeFromCombat(c); //this is untested with instants and abilities but required for First Strike combat phase
-                    checkAgain = true;
-                } else if (c.isCreature() && c.getNetDefense() <= 0) {
-                    destroy(c);
-                    AllZone.getCombat().removeFromCombat(c);
-                    checkAgain = true;
+                if (c.isCreature()){
+                	if (c.getNetDefense() <= c.getDamage() && !c.hasKeyword("Indestructible")) {
+	                    destroy(c);
+	                    AllZone.getCombat().removeFromCombat(c); //this is untested with instants and abilities but required for First Strike combat phase
+	                    checkAgain = true;
+	                } else if (c.getNetDefense() <= 0) {
+	                	// TODO: This shouldn't be a destroy, and should happen before the damage check probably
+	                    destroy(c);
+	                    AllZone.getCombat().removeFromCombat(c);
+	                    checkAgain = true;
+	                }
                 }
 
             }//while it.hasNext()
