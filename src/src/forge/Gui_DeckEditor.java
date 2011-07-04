@@ -108,7 +108,7 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
 
 
     /*CHOPPIC*/
-    private JButton filterButton = new JButton();
+    public JButton filterButton = new JButton();
     private JTextField searchTextField = new JTextField();
     /*CHOPPIC*/
 
