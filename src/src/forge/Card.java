@@ -4809,6 +4809,8 @@ public class Card extends MyObservable {
             int number = 0;
             if (Property.substring(10, 11).equals("X"))
                 number = CardFactoryUtil.xCount(source, getSVar("X"));
+            else if (Property.substring(10, 11).equals("Y"))
+                number = CardFactoryUtil.xCount(source, getSVar("Y"));
             else
                 number = Integer.parseInt(Property.substring(10, 11));
 
