@@ -2,7 +2,7 @@ Name:Pillory of the Sleepless
 ManaCost:1 W B
 Types:Enchantment Aura
 Text:no text
-K:Enchant Creature Curse
+K:Enchant creature Curse
 K:enPump:0/0
 K:stPumpEnchanted:Creature:0/0/CARDNAME can't attack or block. & SVar=TriggerLoseLife & ForceSVar=TrigLoseLife:No condition:Enchanted creature can't attack or block and enchanged creature has "At the beginning of your upkeep, you lose 1 life."
 SVar:TriggerLoseLife:Mode$ Phase | Phase$ Upkeep | ValidPlayer$ You | Execute$ TrigLoseLife | TriggerZones$ Battlefield | TriggerDescription$ Enchanted creature has "At the beginning of your upkeep, you lose 1 life."
