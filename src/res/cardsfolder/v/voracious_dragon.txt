@@ -9,4 +9,5 @@ SVar:TrigDamage:AB$DealDamage | Cost$ 0 | Tgt$ TgtCP | NumDmg$ X
 SVar:X:Count$Devoured Card.Goblin/Twice
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/voracious_dragon.jpg
+SetInfo:CFX|Rare|http://magiccards.info/scans/en/cfx/75.jpg
 End

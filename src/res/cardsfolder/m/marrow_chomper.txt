@@ -9,4 +9,5 @@ SVar:TrigGainLife:AB$GainLife | Cost$ 0 | Defined$ You | NumLife$ X
 SVar:X:Count$Devoured Card
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/marrow_chomper.jpg
+SetInfo:ARB|Uncommon|http://magiccards.info/scans/en/arb/93.jpg
 End
