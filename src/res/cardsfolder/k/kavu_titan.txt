@@ -1,12 +1,8 @@
 Name:Kavu Titan
 ManaCost:1 G
 Types:Creature Kavu
-Text:no text
+Text:Kavu Titan enters the battlefield with 3 +1/+1 counters and gains trample if it is kicked.
 PT:2/2
-K:Kicker:2 G
-T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.Self+kicked | Execute$ TrigKicker | TriggerDescription$ If CARDNAME was kicked, it enters the battlefield with three +1/+1 counters on it and with trample.
-SVar:TrigKicker:AB$PutCounter | Cost$ 0 | CounterType$ P1P1 | CounterNum$ 3 | SubAbility$ DBPump
-SVar:DBPump:DB$Pump | KW$ Trample | Permanent$ True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/kavu_titan.jpg
 SetInfo:INV|Rare|http://magiccards.info/scans/en/in/194.jpg
