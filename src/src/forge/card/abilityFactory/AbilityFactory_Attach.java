@@ -374,7 +374,8 @@ public class AbilityFactory_Attach {
 		Target tgt = sa.getTarget();
 		if (tgt != null){
 			tgt.resetTargets();
-			attachPreference(af, sa, params, tgt, false);
+			if (!attachPreference(af, sa, params, tgt, false))
+				return false;
 		}
 		
 		if (abCost.getMana().contains("X") && source.getSVar("X").equals("Count$xPaid")){
