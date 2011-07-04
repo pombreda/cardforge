@@ -2,7 +2,7 @@ Name:Bloodfire Infusion
 ManaCost:2 R
 Types:Enchantment Aura
 Text:no text
-K:Enchant Creature you control
+K:Enchant creature you control
 A:AB$ DamageAll | Cost$ R Sac<1/Card.AttachedBy> | ActivationZone$ Battlefield | ValidCards$ Creature | NumDmg$ X | CostDesc$ R, Sacrifice enchanted creature: | ValidDescription$ each creature | SpellDescription$ CARDNAME deals damage equal to the sacrificed creature's power to each creature.
 SVar:X:Sacrificed$CardPower
 SVar:RemAIDeck:True

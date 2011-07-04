@@ -2,7 +2,7 @@ Name:Binding Agony
 ManaCost:1 B
 Types:Enchantment Aura
 Text:no text
-K:Enchant Creature Curse
+K:Enchant creature Curse
 T:Mode$ DamageDone | ValidTarget$ Card.AttachedBy | TriggerZones$ Battlefield | Execute$ TrigDealDamage | TriggerDescription$ Whenever enchanted creature is dealt damage, CARDNAME deals that much damage to that creature's controller.
 SVar:TrigDealDamage:AB$ DealDamage | Cost$ 0 | Defined$ TriggeredTargetController | NumDmg$ X
 SVar:X:TriggerCount$DamageAmount
