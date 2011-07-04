@@ -2823,72 +2823,7 @@ public class CardFactory_Creatures {
         }//*************** END ************ END **************************
 
 
-        //*************** START *********** START **************************
-        else if (cardName.equals("Tribal Forcemage")) {
-            /*
-                * Morph: 1G
-                * When Tribal Forcemage is turned face up, creatures of the creature
-                * type of your choice get +2/+2 and gain trample until end of turn.
-                */
-            final Command turnsFaceUp = new Command() {
-                private static final long serialVersionUID = 2826741404979610245L;
-
-                public void execute() {
-                    final int pump = 2;
-                    final Command eot = new Command() {
-                        private static final long serialVersionUID = -3638246921594162776L;
-
-                        public void execute() {
-                            CardList type = AllZoneUtil.getCardsInPlay();
-                            type = type.getType(card.getChosenType());
-
-                            for (int i = 0; i < type.size(); i++) {
-                                Card c = type.get(i);
-                                c.addTempAttackBoost(-pump);
-                                c.addTempDefenseBoost(-pump);
-                                c.removeExtrinsicKeyword("Trample");
-                            }
-                            card.setChosenType(null);
-                        }
-                    };
-                    final SpellAbility ability = new Ability(card, "0") {
-                        @Override
-                        public void resolve() {
-                            String chosenType = "";
-                            if (card.getController().isHuman()) {
-                                chosenType = JOptionPane.showInputDialog(null, "Select a card type:", card.getName(),
-                                        JOptionPane.QUESTION_MESSAGE);
-                            } else {
-                                //TODO - this could probably be updated to get the most prominent type in play
-                                //wait until creature types are defined somewhere in Forge
-                                chosenType = "Elf";
-                            }
-                            card.setChosenType(chosenType);
-                            CardList type = AllZoneUtil.getCardsInPlay();
-                            type = type.getType(chosenType);
-                            for (int i = 0; i < type.size(); i++) {
-                                Card c = type.get(i);
-                                c.addTempAttackBoost(pump);
-                                c.addTempDefenseBoost(pump);
-                                c.addExtrinsicKeyword("Trample");
-                            }
-                            AllZone.getEndOfTurn().addUntil(eot);
-                        }
-                    };//SpellAbility
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(card.getName()).append(" - chosen type gets +2/+2 and Trample until EOT");
-                    ability.setStackDescription(sb.toString());
-
-                    AllZone.getStack().addSimultaneousStackEntry(ability);
-
-                }//execute
-            };//command
-
-            card.addTurnFaceUpCommand(turnsFaceUp);
-        }//*************** END ************ END **************************
-
-
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Storm Entity")) {
             final SpellAbility intoPlay = new Ability(card, "0") {
