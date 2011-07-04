@@ -8,5 +8,6 @@ T:Mode$ DamageDone | ValidSource$ Card.Self | ValidTarget$ Player | CombatDamage
 SVar:TrigDamageAll:AB$DamageAll | Cost$ 2 W | ValidCards$ Creature.nonWhite | NumDmg$ 3
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/oros_the_avenger.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/216.jpg
 SetInfo:PLC|Rare|http://magiccards.info/scans/en/pc/161.jpg
 End

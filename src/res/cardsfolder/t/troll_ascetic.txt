@@ -8,5 +8,6 @@ K:Hexproof
 SVar:Rarity:Rare
 SVar:Picture:http://resources.wizards.com/magic/cards/mrd/en-us/card49828.jpg
 SetInfo:MRD|Rare|http://magiccards.info/scans/en/mi/135.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/176.jpg
 SetInfo:10E|Rare|http://magiccards.info/scans/en/10e/305.jpg
 End

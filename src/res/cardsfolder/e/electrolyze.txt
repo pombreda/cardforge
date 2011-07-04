@@ -9,4 +9,5 @@ SVar:RemRandomDeck:True
 SVar:Picture:http://www.wizards.com/global/images/magic/general/electrolyze.jpg
 SVar:Rarity:Uncommon
 SetInfo:GPT|Uncommon|http://magiccards.info/scans/en/gp/111.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/197.jpg
 End

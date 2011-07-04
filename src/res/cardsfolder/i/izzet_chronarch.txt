@@ -8,4 +8,5 @@ SVar:TrigChangeZone:AB$ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ H
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/izzet_chronarch.jpg
 SetInfo:GPT|Common|http://magiccards.info/scans/en/gp/119.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/205.jpg
 End

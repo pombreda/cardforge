@@ -6,4 +6,5 @@ A:SP$ ChangeZone | Cost$ 3 G | Origin$ Library | Destination$ Battlefield | Tapp
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/explosive_vegetation.jpg
 SetInfo:ONS|Uncommon|http://magiccards.info/scans/en/on/263.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/153.jpg
 End

@@ -6,5 +6,6 @@ A:SP$ DamageAll | Cost$ 2 R R | NumDmg$ X | ValidCards$ Creature | ValidPlayers$
 SVar:X:Count$IfMainPhase.3.2
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sulfurous_blast.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/137.jpg
 SetInfo:TSP|Uncommon|http://magiccards.info/scans/en/ts/180.jpg
 End

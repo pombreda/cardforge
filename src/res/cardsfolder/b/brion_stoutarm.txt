@@ -8,5 +8,6 @@ A:AB$ DealDamage | Cost$ R T Sac<1/Creature.Other> | Tgt$ TgtP | NumDmg$ X | Cos
 SVar:X:Sacrificed$CardPower
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/brion_stoutarm.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/187.jpg
 SetInfo:LRW|Rare|http://magiccards.info/scans/en/lw/246.jpg
 End

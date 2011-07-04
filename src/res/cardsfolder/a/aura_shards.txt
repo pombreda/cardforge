@@ -8,4 +8,5 @@ SVar:BuffedBy:Creature
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/aura_shards.jpg
 SetInfo:INV|Uncommon|http://magiccards.info/scans/en/in/233.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/182.jpg
 End

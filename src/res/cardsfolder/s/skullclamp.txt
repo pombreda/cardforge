@@ -8,4 +8,5 @@ SVar:TrigDraw:AB$Draw | Cost$ 0 | NumCards$ 2
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/skullclamp.jpg
 SetInfo:DST|Uncommon|http://magiccards.info/scans/en/ds/140.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/260.jpg
 End

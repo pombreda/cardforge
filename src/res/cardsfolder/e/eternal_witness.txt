@@ -8,4 +8,5 @@ SVar:TrigChangeZone:AB$ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ H
 SVar:Rarity:Uncommon
 SVar:Picture:http://resources.wizards.com/magic/cards/5dn/en-us/card51628.jpg
 SetInfo:5DN|Uncommon|http://magiccards.info/scans/en/5dn/86.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/152.jpg
 End

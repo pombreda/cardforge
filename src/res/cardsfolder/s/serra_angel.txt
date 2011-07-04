@@ -17,5 +17,6 @@ SetInfo:10E|Rare|http://magiccards.info/scans/en/10e/39.jpg
 SetInfo:M11|Uncommon|http://magiccards.info/scans/en/m11/27.jpg
 SetInfo:M10|Uncommon|http://magiccards.info/scans/en/m10/29.jpg
 SetInfo:3ED|Uncommon|http://magiccards.info/scans/en/rv/224.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/30.jpg
 SetInfo:2ED|Uncommon|http://magiccards.info/scans/en/un/224.jpg
 End

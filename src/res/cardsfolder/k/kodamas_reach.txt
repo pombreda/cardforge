@@ -7,4 +7,5 @@ SVar:DBChangeZone:DB$ChangeZone | Origin$ Library | Destination$ Hand | ChangeTy
 SVar:Rarity:Common
 SVar:Picture:http://resources.wizards.com/magic/cards/chk/en-us/card50299.jpg
 SetInfo:CHK|Common|http://magiccards.info/scans/en/chk/225.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/163.jpg
 End

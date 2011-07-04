@@ -9,5 +9,6 @@ SVar:Picture:http://www.wizards.com/global/images/magic/general/sol_ring.jpg
 SetInfo:LEA|Uncommon|http://magiccards.info/scans/en/al/269.jpg
 SetInfo:LEB|Uncommon|http://magiccards.info/scans/en/be/271.jpg
 SetInfo:3ED|Uncommon|http://magiccards.info/scans/en/rv/274.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/261.jpg
 SetInfo:2ED|Uncommon|http://magiccards.info/scans/en/un/270.jpg
 End

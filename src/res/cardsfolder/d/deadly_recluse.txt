@@ -8,4 +8,5 @@ K:Deathtouch
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/deadly_recluse.jpg
 SetInfo:M10|Common|http://magiccards.info/scans/en/m10/175.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/149.jpg
 End

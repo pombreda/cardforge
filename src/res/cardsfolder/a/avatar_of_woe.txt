@@ -7,6 +7,7 @@ K:Fear
 A:AB$ Destroy | Cost$ T | ValidTgts$ Creature | TgtPrompt$ Select target creature | NoRegen$ True | SpellDescription$ Destroy target creature. It can't be regenerated.
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/avatar_of_woe.jpg
-SetInfo:PCY|Rare|http://magiccards.info/scans/en/pr/56.jpg
 SetInfo:TSB|Special|http://magiccards.info/scans/en/tsts/37.jpg
+SetInfo:PCY|Rare|http://magiccards.info/scans/en/pr/56.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/73.jpg
 End

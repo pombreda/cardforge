@@ -7,4 +7,5 @@ SVar:X:Count$TypeOnBattlefield.Creature/Times.2
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/congregate.jpg
 SetInfo:USG|Common|http://magiccards.info/scans/en/us/8.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/11.jpg
 End

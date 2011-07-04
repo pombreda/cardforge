@@ -8,5 +8,6 @@ K:Flying
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/windborn_muse.jpg
 SetInfo:LGN|Rare|http://magiccards.info/scans/en/le/28.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/38.jpg
 SetInfo:10E|Rare|http://magiccards.info/scans/en/10e/60.jpg
 End

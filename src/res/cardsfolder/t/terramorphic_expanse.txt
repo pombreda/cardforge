@@ -7,6 +7,7 @@ SVar:Rarity:Common
 SVar:Picture:http://resources.wizards.com/magic/cards/tsp/en-us/card118874.jpg
 SetInfo:M11|Common|http://magiccards.info/scans/en/m11/229.jpg
 SetInfo:M10|Common|http://magiccards.info/scans/en/m10/229.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/291.jpg
 SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/279.jpg
 SetInfo:10E|Common|http://magiccards.info/scans/en/10e/360.jpg
 End

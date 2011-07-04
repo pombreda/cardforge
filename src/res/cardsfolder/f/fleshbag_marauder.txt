@@ -8,5 +8,6 @@ SVar:TrigSac:AB$ Sacrifice | Cost$ 0 | Defined$ Each | SacValid$ Creature
 SVar:RemRandomDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/fleshbag_marauder.jpg
-SetInfo:ALA|Common|http://magiccards.info/scans/en/ala/76.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/83.jpg
+SetInfo:ALA|Uncommon|http://magiccards.info/scans/en/ala/76.jpg
 End

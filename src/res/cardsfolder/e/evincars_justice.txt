@@ -7,4 +7,5 @@ SVar:Buyback:3
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/evincars_justice.jpg
 SetInfo:TMP|Common|http://magiccards.info/scans/en/tp/28.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/80.jpg
 End

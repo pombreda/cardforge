@@ -7,5 +7,6 @@ SVar:DBClash:DB$Clash | WinSubAbility$ DBPumpAll
 SVar:DBPumpAll:DB$PumpAll | ValidCards$ Creature.YouDontCtrl | KW$ HIDDEN This card doesn't untap during your next untap step.
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/pollen_lullaby.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/26.jpg
 SetInfo:LRW|Uncommon|http://magiccards.info/scans/en/lw/36.jpg
 End

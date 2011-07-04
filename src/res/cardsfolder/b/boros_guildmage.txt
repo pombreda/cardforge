@@ -8,4 +8,5 @@ A:AB$ Pump | Cost$ 1 W | ValidTgts$ Creature | TgtPrompt$ Select target creature
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/boros_guildmage.jpg
 SetInfo:RAV|Uncommon|http://magiccards.info/scans/en/rav/242.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/186.jpg
 End

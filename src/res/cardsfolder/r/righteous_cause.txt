@@ -7,4 +7,5 @@ SVar:TrigGainLife:AB$GainLife | Cost$ 0 | LifeAmount$ 1 | SpellDescription$ You 
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/righteous_cause.jpg
 SetInfo:ONS|Uncommon|http://magiccards.info/scans/en/on/51.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/29.jpg
 End

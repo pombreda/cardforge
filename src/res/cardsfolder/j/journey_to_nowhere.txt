@@ -10,4 +10,5 @@ SVar:PlayMain1:TRUE
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/journey_to_nowhere.jpg
 SetInfo:ZEN|Common|http://magiccards.info/scans/en/zen/14.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/17.jpg
 End

@@ -7,4 +7,5 @@ SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/boros_signet.jpg
 SetInfo:RAV|Common|http://magiccards.info/scans/en/rav/255.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/243.jpg
 End

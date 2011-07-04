@@ -6,5 +6,6 @@ A:SP$ DamageAll | Cost$ 2 R R | NumDmg$ X | ValidCards$ Creature | ValidDescript
 SVar:X:Count$TypeOnBattlefield.Creature
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/chain_reaction.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/113.jpg
 SetInfo:WWK|Rare|http://magiccards.info/scans/en/wwk/74.jpg
 End
