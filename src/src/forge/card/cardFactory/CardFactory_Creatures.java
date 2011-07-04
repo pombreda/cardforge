@@ -1928,7 +1928,8 @@ public class CardFactory_Creatures {
             stealLands.setDescription("Tap seven untapped Druids you control: Gain control of all lands target player controls.");
         }//*************** END ************ END **************************
 
-*/
+
+ 
         //*************** START *********** START **************************
         else if (cardName.equals("Figure of Destiny")) {
             Ability ability1 = new Ability(card, "RW") {
@@ -2049,7 +2050,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability3);
         }//*************** END ************ END **************************
 
-
+*/
         //*************** START *********** START **************************
         else if (cardName.equals("Covetous Dragon")) {
             SpellAbility spell = new Spell_Permanent(card) {
