@@ -244,6 +244,8 @@ public class AbilityFactory_Attach {
 		// Try not to over Aura-tize cards
 		// 
 		
+		c = CardFactoryUtil.AI_getMostExpensivePermanent(list);
+		
 		if (c == null)
 			return null;
 		
