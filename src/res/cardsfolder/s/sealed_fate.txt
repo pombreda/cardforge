@@ -6,6 +6,6 @@ A:SP$ Dig | Cost$ X U B | ValidTgts$ Opponent | DigNum$ X | ChangeNum$ 1 | Desti
 SVar:X:Count$xPaid
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
-SVar:Picture:http://serv3.tcgimages.eu/img/cards/Portal/sealed_fate.jpg
+SVar:Picture:http://www.wizards.com/global/images/magic/general/sealed_fate.jpg
 SetInfo:MIR|Uncommon|http://magiccards.info/scans/en/mr/342.jpg
 End
