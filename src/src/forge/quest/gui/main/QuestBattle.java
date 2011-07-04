@@ -301,7 +301,7 @@ public class QuestBattle extends QuestSelectablePanel {
 
         addToDeckList("R2-D2 3", "hard", "Mono U Black Vise deck with bounce (Boomerang) spells and Howling Mine");
         addToDeckList("Radagast 2", "medium", "Mono G Muraganda Petroglyphs deck with vanilla creatures and a few tokens");
-        addToDeckList("Radiant 3", "hard", "WUB flying creature deck with Radiant, Archangel, Gravitational Shift and Moat");
+        addToDeckList("Radiant 3", "hard", "WU flying creature deck with Radiant, Archangel, Gravitational Shift and Moat");
         addToDeckList("Ratbert 2", "medium", "Mono B Fear deck with Thran Lens");
 //        addToDeckList("Ras Al Ghul 2", "medium", "RG Biorhythm deck");
 //        addToDeckList("Ras Al Ghul 3", "hard", "WG Eldrazi Monument deck");
