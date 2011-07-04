@@ -81,3 +81,4 @@ Index:72|Code2:M11|Code3:M11|Name:Magic The Gathering 2011
 Index:73|Code2:SOM|Code3:SOM|Name:Scars of Mirrodin
 Index:74|Code2:MBS|Code3:MBS|Name:Mirrodin Besieged
 Index:75|Code2:NPH|Code3:NPH|Name:New Phyrexia
+Index:76|Code2:COM|Code3:COM|Name:Commander
