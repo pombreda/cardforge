@@ -11,6 +11,7 @@ SetInfo:ZEN|Land|http://magiccards.info/scans/en/zen/234.jpg|4
 SetInfo:4ED|Land|http://magiccards.info/scans/en/4e/178.jpg|3
 SetInfo:3ED|Land|http://magiccards.info/scans/en/rv/287.jpg|3
 SetInfo:SOM|Land|http://magiccards.info/scans/en/som/234.jpg|4
+SetInfo:COM|Land|http://magiccards.info/scans/en/cmd/303.jpg|4
 SetInfo:TSP|Land|http://magiccards.info/scans/en/ts/286.jpg|4
 SetInfo:ODY|Land|http://magiccards.info/scans/en/od/335.jpg|4
 SetInfo:MIR|Land|http://magiccards.info/scans/en/mr/297.jpg|4
@@ -34,6 +35,7 @@ SetInfo:MRD|Land|http://magiccards.info/scans/en/mi/291.jpg|4
 SetInfo:SHM|Land|http://magiccards.info/scans/en/shm/286.jpg|4
 SetInfo:LEA|Land|http://magiccards.info/scans/en/al/281.jpg|2
 SetInfo:LEB|Land|http://magiccards.info/scans/en/be/283.jpg|3
+SetInfo:NPH|Land|http://magiccards.info/scans/en/nph/168.jpg|2
 SetInfo:INV|Land|http://magiccards.info/scans/en/in/335.jpg|4
 SetInfo:MMQ|Land|http://magiccards.info/scans/en/mm/335.jpg|4
 SetInfo:ALA|Land|http://magiccards.info/scans/en/ala/234.jpg|4

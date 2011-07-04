@@ -8,4 +8,5 @@ SVar:TrigPutCounter:AB$PutCounter | Cost$ 0 | Defined$ TriggeredCard | CounterTy
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sigil_captain.jpg
 SVar:Rarity:Uncommon
 SetInfo:ARB|Uncommon|http://magiccards.info/scans/en/arb/77.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/225.jpg
 End

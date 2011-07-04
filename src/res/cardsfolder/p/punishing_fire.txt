@@ -8,4 +8,5 @@ SVar:TrigChange:AB$ChangeZone | Cost$ R | Origin$ Graveyard | Destination$ Hand
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/punishing_fire.jpg
 SetInfo:ZEN|Uncommon|http://magiccards.info/scans/en/zen/142.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/131.jpg
 End

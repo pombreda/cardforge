@@ -7,4 +7,5 @@ A:AB$ ChangeZone | Cost$ Sac<1/CARDNAME> | Origin$ Library | Destination$ Battle
 SVar:Rarity:Common
 SVar:Picture:http://resources.wizards.com/magic/cards/chk/en-us/card50510.jpg
 SetInfo:CHK|Common|http://magiccards.info/scans/en/chk/239.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/169.jpg
 End

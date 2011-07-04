@@ -7,4 +7,5 @@ SVar:DBChangeZone:DB$ChangeZone | Origin$ Library | Destination$ Hand | ChangeTy
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/cultivate.jpg
 SetInfo:M11|Common|http://magiccards.info/scans/en/m11/168.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/148.jpg
 End

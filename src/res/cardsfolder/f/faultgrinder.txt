@@ -11,5 +11,6 @@ T:Mode$ ChangesZone | Origin$ Any | Destination$ Battlefield | ValidCard$ Card.S
 SVar:TrigSac:AB$Sacrifice | Cost$ 0
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/faultgrinder.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/122.jpg
 SetInfo:LRW|Common|http://magiccards.info/scans/en/lw/163.jpg
 End

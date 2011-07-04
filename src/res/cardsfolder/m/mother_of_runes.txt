@@ -8,5 +8,6 @@ A:AB$ Protection | Cost$ T | ValidTgts$ Creature | TgtPrompt$ Select target crea
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mother_of_runes.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/21.jpg
 SetInfo:ULG|Uncommon|http://magiccards.info/scans/en/ul/14.jpg
 End

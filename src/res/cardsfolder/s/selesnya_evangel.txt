@@ -7,4 +7,5 @@ A:AB$ Token | Cost$ 1 T tapXType<1/Creature> | TokenAmount$ 1 | TokenName$ Sapro
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/selesnya_evangel.jpg
 SetInfo:RAV|Common|http://magiccards.info/scans/en/rav/228.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/223.jpg
 End

@@ -7,5 +7,6 @@ A:AB$ DamageAll | Cost$ 2 | NumDmg$ 1 | ValidCards$ Creature.withFlying | ValidP
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/squallmonger.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/173.jpg
 SetInfo:MMQ|Uncommon|http://magiccards.info/scans/en/mm/276.jpg
 End

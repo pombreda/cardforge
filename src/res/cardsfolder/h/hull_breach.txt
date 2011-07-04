@@ -9,5 +9,6 @@ SVar:DestroyEnch:DB$ Destroy | Cost$ 0 | ValidTgts$ Enchantment | TgtPrompt$ Sel
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/hull_breach.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/203.jpg
 SetInfo:PLS|Common|http://magiccards.info/scans/en/ps/111.jpg
 End

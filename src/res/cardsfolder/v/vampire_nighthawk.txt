@@ -9,4 +9,5 @@ K:Lifelink
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/vampire_nighthawk.jpg
 SetInfo:ZEN|Uncommon|http://magiccards.info/scans/en/zen/116.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/106.jpg
 End

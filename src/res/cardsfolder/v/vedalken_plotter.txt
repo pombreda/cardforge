@@ -7,4 +7,5 @@ SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/vedalken_plotter.jpg
 SetInfo:GPT|Uncommon|http://magiccards.info/scans/en/gp/41.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/66.jpg
 End

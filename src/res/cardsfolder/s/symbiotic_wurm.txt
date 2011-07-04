@@ -8,4 +8,5 @@ SVar:TrigToken:AB$Token | Cost$ 0 | TokenAmount$ 7 | TokenName$ Insect | TokenTy
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/symbiotic_wurm.jpg
 SetInfo:ONS|Rare|http://magiccards.info/scans/en/on/289.jpg
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/174.jpg
 End

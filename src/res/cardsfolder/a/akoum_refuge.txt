@@ -10,4 +10,5 @@ K:CARDNAME enters the battlefield tapped.
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/akoum_refuge.jpg
 SetInfo:ZEN|Uncommon|http://magiccards.info/scans/en/zen/210.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/264.jpg
 End

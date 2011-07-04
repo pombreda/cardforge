@@ -5,4 +5,5 @@ Text:Each player discards his or her hand, then draws cards equal to the greates
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/windfall.jpg
 SetInfo:USG|Uncommon|http://magiccards.info/scans/en/us/111.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/70.jpg
 End

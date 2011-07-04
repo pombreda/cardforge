@@ -8,5 +8,6 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ 
 SVar:TrigToken:AB$Token | Cost$ 0 | TokenAmount$ 1 | TokenName$ Spider | TokenTypes$ Creature,Spider | TokenOwner$ TriggeredCardController | TokenColors$ Black | TokenPower$ 2 | TokenToughness$ 4 | TokenKeywords$ Reach
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/penumbra_spider.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/167.jpg
 SetInfo:TSP|Common|http://magiccards.info/scans/en/ts/210.jpg
 End

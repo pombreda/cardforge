@@ -6,5 +6,6 @@ A:AB$ Mana | Cost$ 1 T | Produced$ B R | SpellDescription$ Add B R to your mana 
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/rakdos_signet.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/257.jpg
 SetInfo:DIS|Common|http://magiccards.info/scans/en/di/165.jpg
 End

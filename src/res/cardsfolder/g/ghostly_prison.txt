@@ -6,4 +6,5 @@ K:Creatures can't attack unless their controller pays:Creature.YouDontCtrl:2:Cre
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/ghostly_prison.jpg
 SetInfo:CHK|Uncommon|http://magiccards.info/scans/en/chk/10.jpg
+SetInfo:COM|Uncommon|http://magiccards.info/scans/en/cmd/14.jpg
 End

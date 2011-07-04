@@ -10,4 +10,5 @@ SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/boros_garrison.jpg
 SetInfo:RAV|Common|http://magiccards.info/scans/en/rav/275.jpg
+SetInfo:COM|Common|http://magiccards.info/scans/en/cmd/268.jpg
 End

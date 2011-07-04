@@ -9,5 +9,6 @@ T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Any | ValidCard$ Creatu
 SVar:TrigMill:AB$Mill | Cost$ 0 | NumCards$ 2 | ValidTgts$ Player | TgtPrompt$ Choose a player
 SVar:Picture:http://www.wizards.com/global/images/magic/general/extractor_demon.jpg
 SVar:Rarity:Rare
+SetInfo:COM|Rare|http://magiccards.info/scans/en/cmd/81.jpg
 SetInfo:CFX|Rare|http://magiccards.info/scans/en/cfx/44.jpg
 End

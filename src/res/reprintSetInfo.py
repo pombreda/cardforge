@@ -2,7 +2,10 @@
 
 # This script grabs the list of all cards in a set and clears out the setInfo
 # After running this script, re-run setInfoScript to fill in the slots
-# MAKE SURE THE setAbbr VARIABLE IS UPDATED TO THE SET YOU WANT TO CLEAR OUT
+# Run this Script with a command line argument, as below
+
+# $ python reprintSetInfo.py <SetAbbr>
+# $ python reprintSetInfo.py M12
 
 from httplib import HTTP
 from urlparse import urlparse
