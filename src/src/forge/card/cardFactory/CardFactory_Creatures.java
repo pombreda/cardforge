@@ -2600,7 +2600,7 @@ public class CardFactory_Creatures {
             card.addComesIntoPlayCommand(intoPlay);
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Chronatog")) {
 
@@ -2646,7 +2646,7 @@ public class CardFactory_Creatures {
 
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Kinsbaile Borderguard")) {
