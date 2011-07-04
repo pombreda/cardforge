@@ -299,7 +299,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Professor X 2", "medium", "WUB Esper Artifacts deck with Master of Etherium and Esper Stormblade");
         addToDeckList("Professor X 3", "hard", "WUB Esper Artifacts deck with Master of Etherium and Esper Stormblade");
 
-        addToDeckList("R2-D2 3", "hard", "Mono U Black Vise deck with bounce (Boomerang) spells and Howling Mine");
+        addToDeckList("R2-D2 3", "hard", "Mono U Black Vise deck with bounce spells and Howling Mine");
         addToDeckList("Radagast 2", "medium", "Mono G Muraganda Petroglyphs deck with vanilla creatures and a few tokens");
         addToDeckList("Radiant 3", "hard", "WU flying creature deck with Radiant, Archangel, Gravitational Shift and Moat");
         addToDeckList("Ratbert 2", "medium", "Mono B Fear deck with Thran Lens");
@@ -329,7 +329,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Samwise Gamgee 3", "hard", "Mono W Kithkin deck");
         addToDeckList("Saruman 2", "medium", "UBR discard deck with Megrim, Liliana's Caress and Burning Inquiry ");
         addToDeckList("Saruman 3", "hard", "UBR discard deck with Megrim, Liliana's Caress and Burning Inquiry ");
-        addToDeckList("Sauron 2", "medium", "UB Black Vise deck with Underworld Dreams, lots of card draw for both players");
+        addToDeckList("Sauron 2", "medium", "UB Underworld Dreams deck with Black Vise and lots of card draw for both players");
         addToDeckList("Scooby Doo 3", "hard", "WR Giants Aggro deck with a few changelings");
         addToDeckList("Scotty 2", "medium", "WBG protection from black Famine deck with Phantom Centaur and Nightwind Glider");
         addToDeckList("Scotty 3", "hard", "WBG protection from black Famine deck with Chameleon Colossus and Oversoul of Dusk");
