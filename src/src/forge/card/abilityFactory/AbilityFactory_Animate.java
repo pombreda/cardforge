@@ -428,7 +428,7 @@ public class AbilityFactory_Animate {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
                 }
             };
 
@@ -502,8 +502,10 @@ public class AbilityFactory_Animate {
      * @param addedTriggers a {@link java.util.ArrayList} object.
      * @param timestamp a long.
      */
-    private static void doUnanimate(Card c, int originalPower, int originalToughness, ArrayList<String> originalTypes, String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, long timestamp) {
-        c.setBaseAttack(originalPower);
+    private static void doUnanimate(Card c, AbilityFactory af, int originalPower, int originalToughness, ArrayList<String> originalTypes, String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, long timestamp) {
+    	HashMap<String, String> params = af.getMapParams();
+    	
+    	c.setBaseAttack(originalPower);
         c.setBaseDefense(originalToughness);
 
         c.clearAllTypes();
@@ -512,7 +514,7 @@ public class AbilityFactory_Animate {
         }
 
         //TODO - this will have to handle adding back original colors
-        c.removeColor(colorDesc, c, false, timestamp);
+        c.removeColor(colorDesc, c, !params.containsKey("OverwriteColors"), timestamp);
 
         for (String k : originalKeywords) {
             if (k.startsWith("HIDDEN"))
@@ -822,7 +824,7 @@ public class AbilityFactory_Animate {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
                 }
             };
 
