@@ -1,6 +1,6 @@
 Name:Squadron Hawk
 ManaCost:1 W
-Types:Creature Hawk
+Types:Creature Bird
 Text:no text
 PT:1/1
 K:Flying
