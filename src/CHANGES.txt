@@ -17,8 +17,7 @@ Several of the set pics had somehow become corrupted on the server. The original
 
 Marc continues to work on a new and original set of pet pics for quest mode. He also recently made a set of overlays that can turn any of the existing card pics to a foil like type of image. This might provide an interesting type of reward for quest mode. This is a work in progress.
 
-Added draft pick data collection. Added UI option and preference to allow user to disable (default is to collect if network available). Added HttpUtil to house methods to help deal with cardforge.org website
-interaction, which will become more useful. Right now, the AI makes some simple evaluations that compare p/t to the mana cost, with bonuses for keywords and abilities.
+Added draft pick data collection. Added UI option and preference to allow user to disable (default is to collect if network available). Added HttpUtil to house methods to help deal with cardforge.org website interaction, which will become more useful. Right now, the AI makes some simple evaluations that compare p/t to the mana cost, with bonuses for keywords and abilities.
 
 Rob recently implemented a method to track what the human chooses, then uploads the pick data to cardforge.org, where it's averaged in a database. While the data collection period is going on, Rob will be modifying the draft AI to use the generated data for sorting the cards presented.
 
