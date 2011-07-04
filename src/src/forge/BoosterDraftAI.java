@@ -54,7 +54,9 @@ public class BoosterDraftAI {
 
         CardList AIPlayables = in_choose.filter(new CardListFilter() {
             public boolean addCard(Card c) {
-                return !(c.getSVar("RemAIDeck").equals("True"));
+            	if (c.getSVar("RemAIDeck").equals("True") || c.getSVar("RemRandomDeck").equals("True"))
+            		return false;
+                return true;
             }
         });
 
