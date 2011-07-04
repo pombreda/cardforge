@@ -662,7 +662,13 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         //refresh decks:
         allDecks = getDecks();
 
+        //TODO (TO have DOne) - this seems hacky.  If someone knows how to do this for real, feel free.
+        //This make it so the second time you open the Deck Editor, typing a card name and pressing enter will filter
+        javax.swing.JRootPane rootPane = editor.getRootPane();
+        rootPane.setDefaultButton(editor.filterButton);
+        
         editor.setVisible(true);
+        
         dispose();
     }
 
