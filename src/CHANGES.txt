@@ -351,6 +351,40 @@ Fixes/Features:
 - Fixed Phyrexian Reclamation casting cost.
 - Converted Memnarch to script.
 - Converted Goldmeadow Lookout to script.
+- Updated the changes.txt file in preparation for a beta release on this upcoming tuesday.
+- Commented out the Full draft cardpool reduction.
+- Converted Gilt-Leaf Archdruid to script.
+- Converted Figure of Destiny to script.
+- Fix for AI casting Control Auras without a Target.
+- Little fix.
+- Updated some defined parameters of triggered abilities on auras.
+- Counters will now be removed from permanents changing zone after triggers get called (fixes Necroskitter).
+- Ran set info script.
+- Fixed the LQ pic URL for Sealed Fate.
+- Hack so that when you open the Deck Editor a second time, the default action is set (typing a card name and pressing <enter> will filter).  Previously, there was no default action when opening the Deck Editor a second time. i.e. typing a card name and pressing <enter> did nothing.
+- Changed the keyword of some auras from "Enchant Creature" to "Enchant creature".
+- attachAIPumpPreference was always returning null. Resulted in some dead code. Have it return AI_getMostExpensivePermanent(list) until such time where better AI logic is in place.
+- Changed rarity of Imperiosaur to none, so it won't appear in quest/drafts.
+- Fixed AF_Animate for when you add a color in the animation, but aren't using OverwriteColors$ True.
+- Card.hasProperty will now accept Y also when checking for counters.
+- Commander Reprint SetInfo.
+- NPH reprints.
+- Added Commander set data to the res/blockdata/setdata.txt file.
+- Reverted the bad changes of r10361.
+- Updated some SVars.
+- AI drafting improvement: The AI will no longer pick cards with RemRandomDeck.
+- Converted Chronatog to script.
+- Converted Kavu Titan to script.
+- Fixed the type for Squadron Hawk.
+- Converted Tribal Forcemage to script.
+- Revert Kavu Titan.
+- Updated the Abraham Lincoln 3 deck.
+- Updated the Radiant 3 deck.
+- Updated Sauron 2 deck.
+- Updated the Sherlock Holmes decks.
+- Updated some SVars.
+- Cleanup in CF_Creatures.
+- Updated the changes.txt file.
 
 
 Many people helped with this version. A special thank you goes out to them:
