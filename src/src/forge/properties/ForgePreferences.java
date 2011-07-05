@@ -16,6 +16,7 @@ public class ForgePreferences extends Preferences {
     public boolean millingLossCondition;
     public boolean developerMode;
     public boolean uploadDraftAI;
+    public boolean randCFoil;
     
     public String laf;
     public boolean lafFonts;
@@ -68,6 +69,8 @@ public class ForgePreferences extends Preferences {
         developerMode = getBoolean("developer.mode", false);
         
         uploadDraftAI = getBoolean("upload.Draft.AI", true);
+        
+        randCFoil = getBoolean("rand.C.Foil", true);
 
         laf = get("gui.laf", "");
         lafFonts = getBoolean("gui.laf.fonts", false);
@@ -104,6 +107,8 @@ public class ForgePreferences extends Preferences {
         set("loss.condition.milling", millingLossCondition);
         set("developer.mode", developerMode);
         set("upload.Draft.AI", uploadDraftAI);
+        
+        set("rand.C.Foil", randCFoil);
 
         set("gui.laf", laf);
         set("gui.laf.fonts", lafFonts);

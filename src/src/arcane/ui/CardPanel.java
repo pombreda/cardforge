@@ -269,7 +269,7 @@ public class CardPanel extends JPanel implements CardContainer {
     /** {@inheritDoc} */
     protected void paintChildren(Graphics g) {
         super.paintChildren(g);
-
+        
         if (showCastingCost && !isAnimationPanel && cardWidth < 200) {
             int width = ManaSymbols.getWidth(gameCard.getManaCost());
             ManaSymbols.draw(g, gameCard.getManaCost(), cardXOffset + cardWidth / 2 - width / 2, cardYOffset + cardHeight / 2);
@@ -286,6 +286,12 @@ public class CardPanel extends JPanel implements CardContainer {
             ManaSymbols.drawSymbol("summonsick", g, cardXOffset + cardWidth / 2 - 16, cardYOffset + cardHeight - (cardHeight / 8) - 16);
 
         if (beenHere && getCard() != null) {
+            if (this.gameCard.getFoil() > 0) {
+            	String fl = String.format("foil%02d", getCard().getFoil());
+            	int z = Math.round(cardWidth * BLACK_BORDER_SIZE);
+            	ManaSymbols.draw(g, fl, cardXOffset + z, cardYOffset + z, cardWidth - (2*z), cardHeight - (2*z));
+            }
+        	
             if (getCard().getName().equals("Mana Pool") && !isAnimationPanel) {
 
                 if (AllZone.getManaPool() != null) {

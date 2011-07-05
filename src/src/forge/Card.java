@@ -5791,4 +5791,16 @@ public class Card extends MyObservable {
         return evoked;
     }
 
+    //private int foil = 0;
+    
+    public int getFoil() {
+    	if (SVars.containsKey("Foil")) {
+    		return Integer.parseInt(SVars.get("Foil"));
+    	}
+    	return 0;
+    }
+    
+    public void setFoil(int f) {
+    	SVars.put("Foil", Integer.toString(f));
+    }
 }//end Card class

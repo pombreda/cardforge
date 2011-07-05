@@ -17,6 +17,7 @@ import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.MENU;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.OPTIONS;
+import forge.Constant;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -80,6 +81,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     private static JCheckBox devModeCheckBox = new JCheckBox("", true);
     
     private static JCheckBox upldDrftCheckBox = new JCheckBox("", true);
+    private static JCheckBox foilRandomCheckBox = new JCheckBox("", true);
 
     // GenerateConstructedDeck.get2Colors() and GenerateSealedDeck.get2Colors()
     // use these two variables
@@ -147,6 +149,8 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             CardSizesAction.set(preferences.cardSize);
             Constant.Runtime.UpldDrft[0] = preferences.uploadDraftAI;
             upldDrftCheckBox.setSelected(preferences.uploadDraftAI);
+            Constant.Runtime.RndCFoil[0] = preferences.randCFoil;
+            foilRandomCheckBox.setSelected(preferences.randCFoil);
             
             HttpUtil pinger = new HttpUtil();
             if (pinger.getURL("http://cardforge.org/draftAI/ping.php").equals("pong"))
@@ -159,6 +163,8 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             Log.error("Error loading preferences");
         }
 
+        loadDynamicGamedata();
+        
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 try {
@@ -183,13 +189,15 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         } catch (Exception ex) {
             ErrorViewer.showError(ex);
         }
+        
+        
     }
 
     /**
      * <p>Constructor for Gui_NewGame.</p>
      */
     public Gui_NewGame() {
-
+    	
         AllZone.setQuestData(null);
         allDecks = getDecks();
         Constant.Runtime.matchState.reset();
@@ -201,7 +209,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         if (Constant.Runtime.stackSize[0] == 0) Constant.Runtime.stackSize[0] = 4;
 
         if (Constant.Runtime.stackOffset[0] == 0) Constant.Runtime.stackOffset[0] = 10;
-
+        
         try {
             jbInit();
         } catch (Exception ex) {
@@ -530,6 +538,14 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         		preferences.uploadDraftAI = Constant.Runtime.UpldDrft[0];
         	}
         });
+        
+        foilRandomCheckBox.setText("Random Constructed Foiling");
+        foilRandomCheckBox.addActionListener(new java.awt.event.ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		Constant.Runtime.RndCFoil[0] = foilRandomCheckBox.isSelected();
+        		preferences.randCFoil = Constant.Runtime.RndCFoil[0];
+        	}
+        });
 
         /*
         *  Buttons
@@ -579,6 +595,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         jPanel3.add(smoothLandCheckBox, "wrap");
         jPanel3.add(devModeCheckBox, "wrap");
         jPanel3.add(upldDrftCheckBox, "wrap");
+        jPanel3.add(foilRandomCheckBox, "wrap");
         updatePanelDisplay(jPanel3);
 
         this.getContentPane().add(startButton, "sg buttons, align 50% 50%, split 2, flowy");
@@ -1501,7 +1518,113 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         }
 
     }
-
-    /*CHOPPIC*/
+	
+    public static void loadDynamicGamedata() {
+    	if (!Constant.CardTypes.loaded[0]) {
+	    	ArrayList<String> typeListFile = FileUtil.readFile("res/gamedata/TypeLists.txt");
+	
+	    	ArrayList<String> tList = null;
+	    	
+	    	Constant.CardTypes.cardTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.superTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.basicTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.landTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.creatureTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.instantTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.sorceryTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.enchantmentTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.artifactTypes[0] = new Constant_StringArrayList();
+	    	Constant.CardTypes.walkerTypes[0] = new Constant_StringArrayList();
+	    	
+	    	if (typeListFile.size() > 0) {
+	    		for (int i=0; i<typeListFile.size(); i++) {
+	    			String s = typeListFile.get(i);
+	    			
+	    			if (s.equals("[CardTypes]"))
+	    				tList = Constant.CardTypes.cardTypes[0].list;
+	    			
+	    			else if (s.equals("[SuperTypes]"))
+	    				tList = Constant.CardTypes.superTypes[0].list;
+	    			
+	    			else if (s.equals("[BasicTypes]"))
+	    				tList = Constant.CardTypes.basicTypes[0].list;
+	    			
+	    			else if (s.equals("[LandTypes]"))
+	    				tList = Constant.CardTypes.landTypes[0].list;
+	    			
+	    			else if (s.equals("[CreatureTypes]"))
+	    				tList = Constant.CardTypes.creatureTypes[0].list;
+	    			
+	    			else if (s.equals("[InstantTypes]"))
+	    				tList = Constant.CardTypes.instantTypes[0].list;
+	    			
+	    			else if (s.equals("[SorceryTypes]"))
+	    				tList = Constant.CardTypes.sorceryTypes[0].list;
+	    			
+	    			else if (s.equals("[EnchantmentTypes]"))
+	    				tList = Constant.CardTypes.enchantmentTypes[0].list;
+	    			
+	    			else if (s.equals("[ArtifactTypes]"))
+	    				tList = Constant.CardTypes.artifactTypes[0].list;
+	    			
+	    			else if (s.equals("[WalkerTypes]"))
+	    				tList = Constant.CardTypes.walkerTypes[0].list;
+	    			
+	    			else if (s.length() > 1)
+	    				tList.add(s);
+	    		}
+	    	}
+	    	Constant.CardTypes.loaded[0] = true;
+	    	if (Constant.Runtime.DevMode[0]) {
+		    	System.out.println(Constant.CardTypes.cardTypes[0].list);
+		    	System.out.println(Constant.CardTypes.superTypes[0].list);
+		    	System.out.println(Constant.CardTypes.basicTypes[0].list);
+		    	System.out.println(Constant.CardTypes.landTypes[0].list);
+		    	System.out.println(Constant.CardTypes.creatureTypes[0].list);
+		    	System.out.println(Constant.CardTypes.instantTypes[0].list);
+		    	System.out.println(Constant.CardTypes.sorceryTypes[0].list);
+		    	System.out.println(Constant.CardTypes.enchantmentTypes[0].list);
+		    	System.out.println(Constant.CardTypes.artifactTypes[0].list);
+		    	System.out.println(Constant.CardTypes.walkerTypes[0].list);
+	    	}
+    	}
+    	
+    	if (!Constant.Keywords.loaded[0]) {
+    		ArrayList<String> nskwListFile = FileUtil.readFile("res/gamedata/NonStackingKWList.txt");
+    		
+    		Constant.Keywords.NonStackingList[0] = new Constant_StringArrayList();
+    		
+    		if (nskwListFile.size() > 1) {
+    			for (int i=0; i<nskwListFile.size(); i++) {
+    				String s = nskwListFile.get(i);
+    				if (s.length() > 1)
+    					Constant.Keywords.NonStackingList[0].list.add(s);
+    			}
+    		}
+    		Constant.Keywords.loaded[0] = true;
+    		if (Constant.Runtime.DevMode[0]) {
+    			System.out.println(Constant.Keywords.NonStackingList[0].list);
+    		}
+    	}
+    	
+/*    	if (!Constant.Color.loaded[0]) {
+    		ArrayList<String> lcListFile = FileUtil.readFile("res/gamedata/LandColorList");
+    		
+    		if (lcListFile.size() > 1) {
+    			for (int i=0; i<lcListFile.size(); i++) {
+    				String s = lcListFile.get(i);
+    				if (s.length() > 1)
+    					Constant.Color.LandColor[0].map.add(s);
+    			}
+    		}
+    		Constant.Keywords.loaded[0] = true;
+    		if (Constant.Runtime.DevMode[0]) {
+    			System.out.println(Constant.Keywords.NonStackingList[0].list);
+    		}
+    	}
+*/    }
 
 }
+
+
+

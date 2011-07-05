@@ -31,6 +31,8 @@ public interface Constant {
         
         public static final boolean[] NetConn = new boolean[1];
         public static final boolean[] UpldDrft = new boolean[1];
+        
+        public static final boolean[] RndCFoil = new boolean[1];
 
         public static final int[] width = new int[1];
         public static final int[] height = new int[1];

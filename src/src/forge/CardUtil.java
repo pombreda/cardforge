@@ -335,7 +335,8 @@ public class CardUtil {
     public static ArrayList<String> getAllCardTypes() {
         ArrayList<String> types = new ArrayList<String>();
 
-        types.addAll(getCardTypes());
+    	//types.addAll(getCardTypes());
+    	types.addAll(Constant.CardTypes.cardTypes[0].list);
 
         //not currently used by Forge
         types.add("Plane");
@@ -353,17 +354,21 @@ public class CardUtil {
     public static ArrayList<String> getCardTypes() {
         ArrayList<String> types = new ArrayList<String>();
 
-        types.add("Artifact");
-        types.add("Creature");
-        types.add("Enchantment");
-        types.add("Instant");
-        types.add("Land");
-        types.add("Planeswalker");
-        types.add("Sorcery");
-        types.add("Tribal");
+//        types.add("Artifact");
+//        types.add("Creature");
+//        types.add("Enchantment");
+//        types.add("Instant");
+//        types.add("Land");
+//        types.add("Planeswalker");
+//        types.add("Sorcery");
+//        types.add("Tribal");
 
+        types.addAll(Constant.CardTypes.cardTypes[0].list);
+        
         return types;
     }
+
+    
 
     /**
      * <p>isASuperType.</p>
@@ -371,9 +376,11 @@ public class CardUtil {
      * @param cardType a {@link java.lang.String} object.
      * @return a boolean.
      */
+
     public static boolean isASuperType(String cardType) {
-        return (cardType.equals("Basic") || cardType.equals("Legendary")
-                || cardType.equals("Snow") || cardType.equals("World"));
+//    	return (   cardType.equals("Basic") || cardType.equals("Legendary")
+//    			|| cardType.equals("Snow") || cardType.equals("World"));
+    	return (Constant.CardTypes.superTypes[0].list.contains(cardType));
     }
 
     /**
@@ -394,10 +401,12 @@ public class CardUtil {
      * @return a boolean.
      */
     public static boolean isACreatureType(String cardType) {
-        return (!isACardType(cardType) && !isASuperType(cardType) && !isALandType(cardType)
-                && !cardType.equals("Arcane") && !cardType.equals("Trap")
-                && !cardType.equals("Aura") && !cardType.equals("Shrine")
-                && !cardType.equals("Equipment") && !cardType.equals("Fortification"));
+
+//    	return (!isACardType(cardType) && !isASuperType(cardType) && !isALandType(cardType)
+//                && !cardType.equals("Arcane") && !cardType.equals("Trap")
+//                && !cardType.equals("Aura") && !cardType.equals("Shrine") 
+//                && !cardType.equals("Equipment") && !cardType.equals("Fortification"));
+    	return (Constant.CardTypes.creatureTypes[0].list.contains(cardType));
     }
 
     /**
@@ -407,11 +416,12 @@ public class CardUtil {
      * @return a boolean.
      */
     public static boolean isALandType(String cardType) {
-        return (isABasicLandType(cardType)
-                || cardType.equals("Locus") || cardType.equals("Lair")
-                || cardType.equals("Mine") || cardType.equals("Power-Plant")
-                || cardType.equals("Tower") || cardType.equals("Urza's")
-                || cardType.equals("Desert"));
+//    	return (isABasicLandType(cardType)
+//    			|| cardType.equals("Locus") || cardType.equals("Lair")
+//    			|| cardType.equals("Mine") || cardType.equals("Power-Plant")
+//    			|| cardType.equals("Tower") || cardType.equals("Urza's")
+//    			|| cardType.equals("Desert"));
+    	return (Constant.CardTypes.landTypes[0].list.contains(cardType));
     }
 
     /**
@@ -421,9 +431,10 @@ public class CardUtil {
      * @return a boolean.
      */
     public static boolean isABasicLandType(String cardType) {
-        return (cardType.equals("Plains")
-                || cardType.equals("Island") || cardType.equals("Swamp")
-                || cardType.equals("Mountain") || cardType.equals("Forest"));
+//    	return (cardType.equals("Plains")
+//    			|| cardType.equals("Island") || cardType.equals("Swamp")
+//    			|| cardType.equals("Mountain") || cardType.equals("Forest"));
+    	return (Constant.CardTypes.basicTypes[0].list.contains(cardType));
     }
 
     //this function checks, if duplicates of a keyword are not necessary (like flying, trample, etc.)
@@ -434,16 +445,17 @@ public class CardUtil {
      * @return a boolean.
      */
     public static boolean isNonStackingKeyword(String keyword) {
-        return (
-                keyword.equals("Deathtouch") || keyword.equals("Defender")
-                        || keyword.equals("Double Strike") || keyword.equals("First Strike")
-                        || keyword.equals("Flash") || keyword.equals("Flying")
-                        || keyword.equals("Haste") || keyword.equals("Intimidate")
-                        || keyword.equals("Lifelink") || keyword.equals("Reach")
-                        || keyword.equals("Shroud") || keyword.equals("Trample")
-                        || keyword.equals("Vigilance") || keyword.equals("Horsemanship")
-                        || keyword.equals("Fear") || keyword.equals("Changeling")
-                        || keyword.equals("Wither") || keyword.equals("Infect"));
+/*    	return (
+    			keyword.equals("Deathtouch") || keyword.equals("Defender")
+    			|| keyword.equals("Double Strike") || keyword.equals("First Strike")
+    			|| keyword.equals("Flash") || keyword.equals("Flying")
+    			|| keyword.equals("Haste") || keyword.equals("Intimidate")
+    			|| keyword.equals("Lifelink") || keyword.equals("Reach")
+    			|| keyword.equals("Shroud") || keyword.equals("Trample")
+    			|| keyword.equals("Vigilance") || keyword.equals("Horsemanship")
+    			|| keyword.equals("Fear") || keyword.equals("Changeling")
+    			|| keyword.equals("Wither") || keyword.equals("Infect"));*/
+    	return Constant.Keywords.NonStackingList[0].list.contains(keyword);
     }
 
     /**
