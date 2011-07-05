@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pmd-cpd>
 <duplication lines="330" tokens="1783">
-<file line="419" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="433" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Quest_Filter.java"/>
+<file line="419" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="433" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
             jPanel2.setLayout(new AnchorLayout());
@@ -339,8 +339,8 @@
 </codefragment>
 </duplication>
 <duplication lines="274" tokens="1488">
-<file line="804" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="792" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="804" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="792" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
                     + " (LEAF weight=0.2 name=humanHand)) "//
@@ -621,8 +621,8 @@
 </codefragment>
 </duplication>
 <duplication lines="235" tokens="1318">
-<file line="182" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="197" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Quest_Filter.java"/>
+<file line="182" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="197" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
             jPanel1.setLayout(new AnchorLayout());
@@ -864,8 +864,8 @@
 </codefragment>
 </duplication>
 <duplication lines="152" tokens="894">
-<file line="518" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="511" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="518" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="511" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
                     inputControl.selectCard(c, AllZone.getComputerBattlefield());
@@ -1023,119 +1023,90 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="102" tokens="869">
-<file line="1668" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="1807" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
+<duplication lines="73" tokens="809">
+<file line="1682" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1821" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
-                        if (k[2].equals("Less")) {
-                            if (k[7].equals("OnlyOneBonus")) { // Only Works for Color and Type
-                                for (int string_no = 5; string_no < 7; string_no++) {
-                                    String spilt = k[string_no];
-                                    String color_spilt[] = spilt.split("/");
+                    if (k[2].equals("Less")) {
+                        if (k[7].equals("OnlyOneBonus")) { // Only Works for Color and Type
+                            for (int string_no = 5; string_no < 7; string_no++) {
+                                String spilt = k[string_no];
+                                String color_spilt[] = spilt.split("/");
 
-                                    for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
-                                        k[string_no] = color_spilt[cs_num];
-                                        if (string_no == 5 && CardUtil.getColors(sa.getSourceCard()).contains(k[5]))
+                                for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
+                                    k[string_no] = color_spilt[cs_num];
+                                    if (string_no == 5 && CardUtil.getColors(originalCard).contains(k[5]))
+                                        break;
+                                    if (string_no == 6 && (originalCard.isType(k[6]))) break;
+                                }
+                            }
+                        }
+                        if (k[7].contains("All Conditions")) { // Only Works for Color and Type
+                            for (int string_no = 5; string_no < 7; string_no++) {
+                                String spilt = k[string_no];
+                                String color_spilt[] = spilt.split("/");
+                                for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
+                                    k[string_no] = color_spilt[cs_num];
+                                    if (string_no == 5) {
+                                        if (CardUtil.getColors(originalCard).contains(k[5]) || k[5].equals("All")) {
+                                        } else {
+                                            k[5] = "Nullified";
                                             break;
-                                        if (string_no == 6 && (sa.getSourceCard().isType(k[6]))) break;
-                                    }
-                                }
-                            }
-                            if (k[7].contains("All Conditions")) { // Only Works for Color and Type
-                                for (int string_no = 5; string_no < 7; string_no++) {
-                                    String spilt = k[string_no];
-                                    String color_spilt[] = spilt.split("/");
-                                    for (int cs_num = 0; cs_num < color_spilt.length; cs_num++) {
-                                        k[string_no] = color_spilt[cs_num];
-                                        if (string_no == 5) {
-                                            if (CardUtil.getColors(sa.getSourceCard()).contains(k[5]) || k[5].equals("All")) {
-                                            } else {
-                                                k[5] = "Nullified";
-                                                break;
-                                            }
                                         }
-                                        if (string_no == 6) {
-                                            if (sa.getSourceCard().isType(k[6]) || k[6].equals("All")) {
-                                            } else {
-                                                k[6] = "Nullified";
-                                                break;
-                                            }
+                                    }
+                                    if (string_no == 6) {
+                                        if (originalCard.isType(k[6]) || k[6].equals("All")) {
+                                        } else {
+                                            k[6] = "Nullified";
+                                            break;
                                         }
                                     }
                                 }
-                                if (!k[5].equals("Nullified")) k[5] = "All";
-                                if (!k[6].equals("Nullified")) k[6] = "All";
                             }
-                            if ((k[1].equals("Player") && card.getController().equals(sa.getSourceCard().getController())
-                                    || (k[1].equals("Opponent") && card.getController().equals(sa.getSourceCard().getController().getOpponent())) || k[1].equals("All"))
-                                    && ((k[4].equals("Spell") && sa.isSpell() == true) || (k[4].equals("Ability") && sa.isAbility() == true)
-                                    || (k[4].startsWith("Ability_Cycling") && sa.isCycling()) || (k[4].equals("Self") && originalCard.equals(card))
-                                    || (k[4].equals("Enchanted") && originalCard.getEnchantedBy().contains(card)) || k[4].equals("All"))
-                                    && ((CardUtil.getColors(sa.getSourceCard()).contains(k[5])) || k[5].equals("All"))
-                                    /**
-                                     *  Chris added a test for Changeling.
-                                     *  This appears to reduce the cost correctly.
-                                     *  Works for both the computer and the human.
-                                     */
-                                    && ((sa.getSourceCard().isType(k[6]))
+                            if (!k[5].equals("Nullified")) k[5] = "All";
+                            if (!k[6].equals("Nullified")) k[6] = "All";
+                        }
+                        if ((k[1].equals("Player") && card.getController().equals(controller)
+                                || (k[1].equals("Opponent") && card.getController().equals(controller.getOpponent())) || k[1].equals("All"))
+                                && ((k[4].equals("Spell") && sa.isSpell() == true) || (k[4].equals("Ability") && sa.isAbility() == true)
+                                || (k[4].startsWith("Ability_Cycling") && sa.isCycling()) || (k[4].equals("Self") && originalCard.equals(card))
+                                || (k[4].equals("Enchanted") && originalCard.getEnchantedBy().contains(card)) || k[4].equals("All"))
+                                && ((CardUtil.getColors(originalCard).contains(k[5])) || k[5].equals("All"))
+                                && ((originalCard.isType(k[6]))
+                                || (!(originalCard.isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
+                            if (k[7].contains("CardIsTapped")) {
+                                if (card.isTapped() == false) k[3] = "0";
+                            }
+                            if (k[7].contains("TargetInPlay")) {
+                                if (!Player_Play.contains(originalCard)) k[3] = "0";
+                            }
+                            if (k[7].contains("TargetInHand")) {
+                                if (!Player_Hand.contains(originalCard)) k[3] = "0";
+                            }
+                            if (k[7].contains("NonType")) {
+                                if (originalCard.isType(k[6])) k[3] = "0";
+                            }
+                            if (k[7].contains("OpponentTurn")) {
+                                if (AllZone.getPhase().isPlayerTurn(controller)) k[3] = "0";
+                            }
+                            if (k[7].contains("Affinity")) {
+                                String spilt = k[7];
+                                String color_spilt[] = spilt.split("/");
+                                k[7] = color_spilt[1];
+                                CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(controller);
+                                PlayerList = PlayerList.getType(k[7]);
+                                k[3] = String.valueOf(PlayerList.size());
+                            }
 
-                                    || (!(sa.getSourceCard().isType(k[6])) && k[7].contains("NonType")) || k[6].equals("All"))) {
-                                if (k[7].contains("CardIsTapped")) {
-                                    if (card.isTapped() == false) k[3] = "0";
-                                }
-                                if (k[7].contains("TargetInPlay")) {
-                                    if (!Player_Play.contains(sa.getSourceCard())) k[3] = "0";
-                                }
-                                if (k[7].contains("TargetInHand")) {
-                                    if (!Player_Hand.contains(sa.getSourceCard())) k[3] = "0";
-                                }
-                                if (k[7].contains("NonType")) {
-                                    if (originalCard.isType(k[6])) k[3] = "0";
-                                }
-                                if (k[7].contains("OpponentTurn")) {
-                                    if (AllZone.getPhase().isPlayerTurn(originalCard.getController())) k[3] = "0";
-                                }
-                                if (k[7].contains("Affinity")) {
-                                    String spilt = k[7];
-                                    String color_spilt[] = spilt.split("/");
-                                    k[7] = color_spilt[1];
-                                    CardList PlayerList = AllZoneUtil.getPlayerCardsInPlay(originalCard.getController());
-                                    PlayerList = PlayerList.getType(k[7]);
-                                    k[3] = String.valueOf(PlayerList.size());
-                                }
-
-                                String[] Numbers = new String[Max];
-                                /*if("X".equals(k[3])) {
-                                            for(int no = 0; no < Max; no ++) Numbers[no] = String.valueOf(no);
-                                            String Number_ManaCost = " ";
-                                            if(Mana.toString().length() == 1) {
-                                                Number_ManaCost = Mana.toString().substring(0, 1);
-                                            }
-                                            else if(Mana.toString().length() == 0) {
-                                                Number_ManaCost = "0"; // Should Never Occur
-                                            }
-                                            else {
-                                                Number_ManaCost = Mana.toString().substring(0, 2);
-                                            }
-                                            Number_ManaCost = Number_ManaCost.trim();
-                                            for(int check = 0; check < Max; check ++) {
-                                                if(Number_ManaCost.equals(Numbers[check])) {
-                                                    int xValue = CardFactoryUtil.xCount(card, card.getSVar("X"));
-                                                    //if((spell.isXCost()) || (spell.isMultiKicker()) && (check - Integer.valueOf(k[3])) < 0) XBonus = XBonus - check + Integer.valueOf(k[3]);
-                                                    Mana = Mana.replaceFirst(String.valueOf(check),String.valueOf(check - xValue));
-                                                }
-                                                if(Mana.equals("")) Mana = "0";
-                                                manaCost = new ManaCost(Mana);
-                                            }
-                                        }*/
-                                if (!"WUGRB".contains(k[3])) {
+                            String[] Numbers = new String[Max];
+                            if (!"WUGRB".contains(k[3])) {
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="109" tokens="634">
-<file line="102" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="104" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="102" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="104" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         new Gui_MultipleBlockers4(attacker, blockers, damage, this);
@@ -1251,8 +1222,8 @@
 </codefragment>
 </duplication>
 <duplication lines="89" tokens="551">
-<file line="56" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
-<file line="35" path="/Users/dhudson/mtg/cardforge/src/forge/ReadDraftBoosterPack.java"/>
+<file line="56" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
+<file line="35" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadDraftBoosterPack.java"/>
 <codefragment>
 <![CDATA[
     public ReadDraftBoosterPack() {
@@ -1348,8 +1319,8 @@
 </codefragment>
 </duplication>
 <duplication lines="79" tokens="523">
-<file line="275" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="300" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- DL");
@@ -1435,8 +1406,8 @@
 </codefragment>
 </duplication>
 <duplication lines="80" tokens="519">
-<file line="825" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="810" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Quest_Filter.java"/>
+<file line="825" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="810" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
                         deckDisplay.updateDisplay(g.stCardList, deckDisplay.getBottom());
@@ -1523,8 +1494,8 @@
 </codefragment>
 </duplication>
 <duplication lines="122" tokens="516">
-<file line="1022" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="877" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="1022" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="877" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             Gui_Quest_DeckEditor g = Gui_Quest_DeckEditor.this;
@@ -1653,8 +1624,8 @@
 </codefragment>
 </duplication>
 <duplication lines="136" tokens="513">
-<file line="132" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="134" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="132" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="134" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
                 new Thread(Gui_MigrateLocalMWSSetPictures_HQ.this).start();
@@ -1797,8 +1768,8 @@
 </codefragment>
 </duplication>
 <duplication lines="92" tokens="486">
-<file line="1099" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="1093" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="1099" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="1093" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         picturePanel.setCardPanel(picture);
@@ -1897,8 +1868,8 @@
 </codefragment>
 </duplication>
 <duplication lines="108" tokens="486">
-<file line="275" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="276" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         return canLoseByDecking.isSelected();
@@ -2013,8 +1984,8 @@
 </codefragment>
 </duplication>
 <duplication lines="52" tokens="450">
-<file line="336" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="730" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="336" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="731" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
 <codefragment>
 <![CDATA[
         HashMap<String, String> params = af.getMapParams();
@@ -2073,8 +2044,8 @@
 </codefragment>
 </duplication>
 <duplication lines="62" tokens="444">
-<file line="84" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="81" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Quest_Filter.java"/>
+<file line="84" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="81" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
             getContentPane().setLayout(new AnchorLayout());
@@ -2143,8 +2114,8 @@
 </codefragment>
 </duplication>
 <duplication lines="129" tokens="434">
-<file line="382" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="231" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="382" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="231" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     }
@@ -2280,8 +2251,8 @@
 </codefragment>
 </duplication>
 <duplication lines="54" tokens="428">
-<file line="92" path="/Users/dhudson/mtg/cardforge/src/forge/QuestData_Prefs.java"/>
-<file line="114" path="/Users/dhudson/mtg/cardforge/src/forge/quest/data/QuestPreferences.java"/>
+<file line="92" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData_Prefs.java"/>
+<file line="114" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/quest/data/QuestPreferences.java"/>
 <codefragment>
 <![CDATA[
                 else if (split[0].equals("winsForHardAI"))
@@ -2342,8 +2313,8 @@
 </codefragment>
 </duplication>
 <duplication lines="50" tokens="419">
-<file line="34" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="36" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="34" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="36" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
     public Generate3ColorDeck(String Clr1, String Clr2, String Clr3) {
@@ -2400,8 +2371,8 @@
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="361">
-<file line="1232" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<file line="1289" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
+<file line="1232" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<file line="1289" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
 <codefragment>
 <![CDATA[
         ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
@@ -2437,8 +2408,8 @@
 </codefragment>
 </duplication>
 <duplication lines="72" tokens="334">
-<file line="162" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="229" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="162" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="229" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
                 System.out.println(card + "/" + cards.length + " - " + a);
@@ -2517,8 +2488,8 @@
 </codefragment>
 </duplication>
 <duplication lines="73" tokens="316">
-<file line="72" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="76" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers4.java"/>
+<file line="72" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
+<file line="76" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
 <codefragment>
 <![CDATA[
     public Gui_MultipleBlockers4() {
@@ -2598,8 +2569,8 @@
 </codefragment>
 </duplication>
 <duplication lines="119" tokens="299">
-<file line="95" path="/Users/dhudson/mtg/cardforge/src/forge/CardShopTableModel.java"/>
-<file line="107" path="/Users/dhudson/mtg/cardforge/src/forge/TableModel.java"/>
+<file line="95" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardShopTableModel.java"/>
+<file line="107" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/TableModel.java"/>
 <codefragment>
 <![CDATA[
                 column.setMinWidth(30);
@@ -2725,8 +2696,8 @@
 </codefragment>
 </duplication>
 <duplication lines="40" tokens="295">
-<file line="182" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_ImportPicture.java"/>
-<file line="278" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_ImportPicture.java"/>
+<file line="182" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
+<file line="278" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
 <codefragment>
 <![CDATA[
                         if (jCheckBox.isSelected()) {
@@ -2772,9 +2743,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="44" tokens="286">
-<file line="396" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="791" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<duplication lines="44" tokens="288">
+<file line="396" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="792" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
 <codefragment>
 <![CDATA[
         for (final Card c : list) {
@@ -2811,7 +2782,7 @@
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
                 }
             };
 
@@ -2825,8 +2796,8 @@
 </codefragment>
 </duplication>
 <duplication lines="65" tokens="282">
-<file line="459" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplayUtil.java"/>
-<file line="643" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplayUtil.java"/>
+<file line="459" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="643" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
                 if (startANewStack) {
@@ -2898,8 +2869,8 @@
 </codefragment>
 </duplication>
 <duplication lines="68" tokens="275">
-<file line="352" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="548" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="548" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         gPBW.dispose();
@@ -2974,8 +2945,8 @@
 </codefragment>
 </duplication>
 <duplication lines="90" tokens="275">
-<file line="278" path="/Users/dhudson/mtg/cardforge/src/forge/CardShopTableModel.java"/>
-<file line="323" path="/Users/dhudson/mtg/cardforge/src/forge/TableModel.java"/>
+<file line="278" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardShopTableModel.java"/>
+<file line="323" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/TableModel.java"/>
 <codefragment>
 <![CDATA[
             default:
@@ -3072,8 +3043,8 @@
 </codefragment>
 </duplication>
 <duplication lines="61" tokens="266">
-<file line="351" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="421" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="351" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="421" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         topModel.sort(3, true);//then sort by color
@@ -3141,8 +3112,8 @@
 </codefragment>
 </duplication>
 <duplication lines="57" tokens="263">
-<file line="141" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="161" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="141" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="161" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             c.setRarity(c.getSVar("Rarity"));
@@ -3206,8 +3177,8 @@
 </codefragment>
 </duplication>
 <duplication lines="42" tokens="260">
-<file line="609" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
-<file line="583" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Sacrifice.java"/>
+<file line="609" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
+<file line="586" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Sacrifice.java"/>
 <codefragment>
 <![CDATA[
         computerlist = computerlist.getValidCards(Valid.split(","), source.getController(), source);
@@ -3256,8 +3227,8 @@
 </codefragment>
 </duplication>
 <duplication lines="36" tokens="259">
-<file line="391" path="/Users/dhudson/mtg/cardforge/src/forge/BoosterDraftAI.java"/>
-<file line="332" path="/Users/dhudson/mtg/cardforge/src/forge/SealedDeck.java"/>
+<file line="402" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/BoosterDraftAI.java"/>
+<file line="332" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SealedDeck.java"/>
 <codefragment>
 <![CDATA[
                     String mc = deck.get(i).getManaCost();
@@ -3300,8 +3271,8 @@
 </codefragment>
 </duplication>
 <duplication lines="59" tokens="256">
-<file line="548" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="423" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="548" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="423" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         bottomModel.sort(1, true);
@@ -3367,8 +3338,8 @@
 </codefragment>
 </duplication>
 <duplication lines="39" tokens="254">
-<file line="285" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="178" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateThemeDeck.java"/>
+<file line="285" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="178" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateThemeDeck.java"/>
 <codefragment>
 <![CDATA[
         if (numBLands > 0)    // attempt to optimize basic land counts according to color representation
@@ -3414,8 +3385,8 @@
 </codefragment>
 </duplication>
 <duplication lines="24" tokens="249">
-<file line="1118" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<file line="1171" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
+<file line="1118" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<file line="1171" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
 <codefragment>
 <![CDATA[
         toughness += defender.getKeywordMagnitude("Bushido");
@@ -3446,8 +3417,8 @@
 </codefragment>
 </duplication>
 <duplication lines="57" tokens="248">
-<file line="68" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers.java"/>
-<file line="76" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers3.java"/>
+<file line="68" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers.java"/>
+<file line="76" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
 <codefragment>
 <![CDATA[
             ErrorViewer.showError(ex);
@@ -3511,8 +3482,8 @@
 </codefragment>
 </duplication>
 <duplication lines="82" tokens="244">
-<file line="135" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay2.java"/>
-<file line="273" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
+<file line="135" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
+<file line="273" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
 <codefragment>
 <![CDATA[
         menuBar.add(devMenu);
@@ -3601,8 +3572,8 @@
 </codefragment>
 </duplication>
 <duplication lines="32" tokens="242">
-<file line="94" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
-<file line="163" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="94" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="163" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
         clearfilter.addActionListener(new ActionListener() {
@@ -3641,8 +3612,8 @@
 </codefragment>
 </duplication>
 <duplication lines="43" tokens="231">
-<file line="746" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
-<file line="1931" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="746" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="1931" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                 int damage = 3;
@@ -3692,8 +3663,8 @@
 </codefragment>
 </duplication>
 <duplication lines="80" tokens="229">
-<file line="137" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay2.java"/>
-<file line="276" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="137" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
+<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         return canLoseByDecking.isSelected();
@@ -3780,8 +3751,8 @@
 </codefragment>
 </duplication>
 <duplication lines="33" tokens="225">
-<file line="308" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="654" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="308" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="654" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                 @Override
@@ -3821,8 +3792,8 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="221">
-<file line="204" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="271" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="204" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="271" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
 <codefragment>
 <![CDATA[
         Proxy p = null;
@@ -3855,8 +3826,8 @@
 </codefragment>
 </duplication>
 <duplication lines="50" tokens="220">
-<file line="386" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="849" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="386" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="848" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
         for (Card c : tgt.getTargetCards())
@@ -3913,8 +3884,8 @@
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="218">
-<file line="240" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_WinLose.java"/>
-<file line="274" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_WinLose.java"/>
+<file line="240" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_WinLose.java"/>
+<file line="274" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_WinLose.java"/>
 <codefragment>
 <![CDATA[
         if (!Constant.Quest.fantasyQuest[0])
@@ -3948,8 +3919,8 @@
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="216">
-<file line="786" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="117" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor_Menu.java"/>
+<file line="786" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="117" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                 deckDisplay.updateDisplay(deckDisplay.getTop(), deckDisplay.getBottom());
@@ -3984,8 +3955,8 @@
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="214">
-<file line="167" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
-<file line="195" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="167" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="195" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                 } else {
@@ -4019,9 +3990,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="28" tokens="211">
-<file line="97" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
-<file line="195" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<duplication lines="27" tokens="211">
+<file line="129" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="195" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                 } else {
@@ -4051,13 +4022,12 @@
                     g.planeswalkerCheckBox.setEnabled(true);
                     g.sorceryCheckBox.setSelected(true);
                     g.sorceryCheckBox.setEnabled(true);
-                    g.filterUsed = false;
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="210">
-<file line="788" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="98" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="788" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="98" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                     g.blackCheckBox.setSelected(true);
@@ -4091,8 +4061,8 @@
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="209">
-<file line="97" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
-<file line="129" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="97" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="129" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                 } else {
@@ -4126,8 +4096,8 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="208">
-<file line="788" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_Filter.java"/>
-<file line="130" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<file line="788" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="130" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                     g.blackCheckBox.setSelected(true);
@@ -4160,8 +4130,8 @@
 </codefragment>
 </duplication>
 <duplication lines="40" tokens="207">
-<file line="59" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="93" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="59" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="93" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
 <codefragment>
 <![CDATA[
     private Gui_DownloadSetPictures_LQ(mCard[] c) {
@@ -4208,8 +4178,8 @@
 </codefragment>
 </duplication>
 <duplication lines="61" tokens="206">
-<file line="194" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
-<file line="159" path="/Users/dhudson/mtg/cardforge/src/forge/ReadDraftBoosterPack.java"/>
+<file line="194" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
+<file line="159" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadDraftBoosterPack.java"/>
 <codefragment>
 <![CDATA[
         return list;
@@ -4277,8 +4247,8 @@
 </codefragment>
 </duplication>
 <duplication lines="55" tokens="205">
-<file line="1285" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="1284" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="1285" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="1284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
     JLayeredPane layeredPane = SwingUtilities.getRootPane(this).getLayeredPane();
@@ -4340,8 +4310,8 @@
 </codefragment>
 </duplication>
 <duplication lines="51" tokens="203">
-<file line="387" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="756" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="387" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="755" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
         tapList = tapList.getTargetableCards(source);
@@ -4399,8 +4369,8 @@
 </codefragment>
 </duplication>
 <duplication lines="60" tokens="198">
-<file line="276" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay2.java"/>
-<file line="489" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
+<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
+<file line="489" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
 <codefragment>
 <![CDATA[
                     okButton.requestFocusInWindow();
@@ -4467,8 +4437,8 @@
 </codefragment>
 </duplication>
 <duplication lines="47" tokens="196">
-<file line="1214" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="1212" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="1214" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="1212" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         fp.millingLossCondition = canLoseByDecking.isSelected();
@@ -4522,8 +4492,8 @@
 </codefragment>
 </duplication>
 <duplication lines="60" tokens="195">
-<file line="34" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="36" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="34" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="36" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
 public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel implements Runnable, NewConstants, NewConstants.LANG.Gui_DownloadPictures {
@@ -4590,8 +4560,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="48" tokens="194">
-<file line="370" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="519" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
+<file line="519" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         while (tgt.getNumTargeted() < tgt.getMaxTargets(source, sa)) {
@@ -4646,8 +4616,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="53" tokens="190">
-<file line="144" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="149" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers4.java"/>
+<file line="144" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
+<file line="149" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
 <codefragment>
 <![CDATA[
                         && (!att.hasKeyword("Deathtouch") || crd.getTotalAssignedDamage() < 1))
@@ -4707,8 +4677,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="188">
-<file line="584" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
-<file line="561" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Sacrifice.java"/>
+<file line="584" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
+<file line="564" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Sacrifice.java"/>
 <codefragment>
 <![CDATA[
     public static boolean sacrificeAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
@@ -4738,8 +4708,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="186">
-<file line="331" path="/Users/dhudson/mtg/cardforge/src/forge/card/trigger/Trigger.java"/>
-<file line="370" path="/Users/dhudson/mtg/cardforge/src/forge/card/trigger/Trigger.java"/>
+<file line="331" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
+<file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
 <codefragment>
 <![CDATA[
                 presentPlayer = mapParams.get("PresentPlayer2");
@@ -4772,8 +4742,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="41" tokens="186">
-<file line="1268" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1364" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1266" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1361" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -4821,33 +4791,33 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="185">
-<file line="1652" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="1791" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
+<file line="1666" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1805" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
-                for (int i = 0; i < Cards_In_Play.size(); i++) {
-                    Card card = Cards_In_Play.get(i);
-                    ArrayList<String> a = card.getKeyword();
-                    int CostKeywords = 0;
-                    int CostKeyword_Number[] = new int[a.size()];
-                    for (int x = 0; x < a.size(); x++)
-                        if (a.get(x).toString().startsWith("CostChange")) {
-                            CostKeyword_Number[CostKeywords] = x;
-                            CostKeywords = CostKeywords + 1;
-                        }
-                    for (int CKeywords = 0; CKeywords < CostKeywords; CKeywords++) {
-                        String parse = card.getKeyword().get(CostKeyword_Number[CKeywords]).toString();
-                        String k[] = parse.split(":");
-                        if (card.equals(originalCard)) {
-                            if (!k[4].equals("Self")) k[2] = "Owned";
-                        }
-                        if (k[2].equals("Less")) {
+            for (int i = 0; i < Cards_In_Play.size(); i++) {
+                Card card = Cards_In_Play.get(i);
+                ArrayList<String> a = card.getKeyword();
+                int CostKeywords = 0;
+                int CostKeyword_Number[] = new int[a.size()];
+                for (int x = 0; x < a.size(); x++)
+                    if (a.get(x).toString().startsWith("CostChange")) {
+                        CostKeyword_Number[CostKeywords] = x;
+                        CostKeywords = CostKeywords + 1;
+                    }
+                for (int CKeywords = 0; CKeywords < CostKeywords; CKeywords++) {
+                    String parse = card.getKeyword().get(CostKeyword_Number[CKeywords]).toString();
+                    String k[] = parse.split(":");
+                    if (card.equals(originalCard)) {
+                        if (!k[4].equals("Self")) k[2] = "Owned";
+                    }
+                    if (k[2].equals("Less")) {
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="45" tokens="184">
-<file line="641" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1560" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="640" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1557" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
     private static boolean tapOrUntapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
@@ -4899,8 +4869,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="33" tokens="183">
-<file line="204" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/SpellAbility_Condition.java"/>
-<file line="190" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/SpellAbility_Restriction.java"/>
+<file line="204" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/SpellAbility_Condition.java"/>
+<file line="190" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/SpellAbility_Restriction.java"/>
 <codefragment>
 <![CDATA[
                 right = CardFactoryUtil.xCount(c, c.getSVar("X"));
@@ -4939,37 +4909,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="20" tokens="183">
-<file line="73" path="/Users/dhudson/mtg/cardforge/src/forge/QuestData_Prefs.java"/>
-<file line="97" path="/Users/dhudson/mtg/cardforge/src/forge/quest/data/QuestPreferences.java"/>
-<codefragment>
-<![CDATA[
-    public static void grabPrefsFromFile() {
-        try {
-            BufferedReader input = new BufferedReader(new FileReader(ForgeProps.getFile(QUEST.PREFS)));
-            String line = null;
-            while ((line = input.readLine()) != null) {
-                if (line.startsWith("#") || line.length() == 0)
-                    continue;
-                String[] split = line.split("=");
-
-                if (split[0].equals("difficultyString"))
-                    setDifficulty(split[1]);
-                else if (split[0].equals("winsForBooster"))
-                    setWinsForBooster(split[1]);
-                else if (split[0].equals("winsForRankIncrease"))
-                    setWinsForRank(split[1]);
-                else if (split[0].equals("winsForMediumAI"))
-                    setWinsForMediumAI(split[1]);
-                else if (split[0].equals("winsForHardAI"))
-                    setWinsForHardAI(split[1]);
-                else if (split[0].equals("startingBasicLand"))
-]]>
-</codefragment>
-</duplication>
 <duplication lines="25" tokens="181">
-<file line="149" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="467" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="149" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="467" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
 <codefragment>
 <![CDATA[
     static String loseLifeStackDescription(AbilityFactory af, SpellAbility sa) {
@@ -5001,8 +4943,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="180">
-<file line="353" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="378" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="353" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="378" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                     throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- undersize");
@@ -5032,8 +4974,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="178">
-<file line="1049" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
-<file line="70" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="1048" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
+<file line="70" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                 @Override
@@ -5068,8 +5010,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="178">
-<file line="128" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="1365" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="128" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1365" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
     private static String shuffleStackDescription(AbilityFactory af, SpellAbility sa) {
@@ -5101,8 +5043,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="36" tokens="178">
-<file line="59" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="95" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="59" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="95" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
     private Gui_MigrateLocalMWSSetPictures_HQ(mCard[] c) {
@@ -5145,8 +5087,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="38" tokens="174">
-<file line="243" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="188" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="243" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="188" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         bottomModel.resort();
@@ -5191,8 +5133,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="173">
-<file line="180" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
-<file line="548" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
+<file line="180" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
+<file line="548" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
 <codefragment>
 <![CDATA[
     private static boolean regenerateAllCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
@@ -5221,9 +5163,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="37" tokens="172">
-<file line="1328" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="1072" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<duplication lines="37" tokens="167">
+<file line="1340" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="1072" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                         else if (userChoice.contains(cardChoice[2])) stopSetNext(targetLand);
@@ -5252,8 +5194,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
                 }//chooseTwo()
             };//Input chooseTwoInput
 
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            
+            
             card.addSpellAbility(spell);
 
             card.setSpellWithChoices(true);
@@ -5267,8 +5209,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="41" tokens="166">
-<file line="215" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay2.java"/>
-<file line="374" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
+<file line="215" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
+<file line="374" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
 <codefragment>
 <![CDATA[
         messageArea.setBorder(border);
@@ -5316,8 +5258,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="166">
-<file line="1359" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<file line="1454" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
+<file line="1359" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<file line="1454" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
 <codefragment>
 <![CDATA[
         int defenderDamage = defender.getNetAttack() + predictPowerBonusOfBlocker(attacker, defender);
@@ -5345,52 +5287,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="35" tokens="165">
-<file line="649" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<file line="1338" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<codefragment>
-<![CDATA[
-                            AllZone.getGameAction().changeController(new CardList(crd), prevController[0], card.getController());
-                        }
-                    }//execute()
-                };//Command
-
-                Command onUnEnchant = new Command() {
-                    private static final long serialVersionUID = 3426441132121179288L;
-
-                    public void execute() {
-                        if (card.isEnchanting()) {
-                            Card crd = card.getEnchanting().get(0);
-                            if (AllZoneUtil.isCardInPlay(crd)) {
-                                if (crd.hasKeyword("Haste")) {
-                                    crd.setSickness(false);
-                                } else {
-                                    crd.setSickness(true);
-                                }
-
-                                AllZone.getGameAction().changeController(new CardList(crd), crd.getController(), prevController[0]);
-                            }
-                        }
-
-                    }//execute()
-                };//Command
-
-                Command onLeavesPlay = new Command() {
-                    private static final long serialVersionUID = -639204333673364477L;
-
-                    public void execute() {
-                        if (card.isEnchanting()) {
-                            Card crd = card.getEnchanting().get(0);
-                            card.unEnchantCard(crd);
-                        }
-                    }
-                };//Command
-]]>
-</codefragment>
-</duplication>
 <duplication lines="15" tokens="162">
-<file line="64" path="/Users/dhudson/mtg/cardforge/src/forge/card/mana/ManaPool.java"/>
-<file line="108" path="/Users/dhudson/mtg/cardforge/src/forge/card/mana/ManaPool.java"/>
+<file line="64" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/mana/ManaPool.java"/>
+<file line="108" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/mana/ManaPool.java"/>
 <codefragment>
 <![CDATA[
     public String getText() {
@@ -5412,8 +5311,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="52" tokens="159">
-<file line="110" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="144" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="110" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="144" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
 <codefragment>
 <![CDATA[
         bar.setString(card + "/" + cards.length);
@@ -5472,8 +5371,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="158">
-<file line="284" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
-<file line="430" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
+<file line="430" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
             list = getPumpCreatures(defense, attack);
@@ -5496,8 +5395,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="156">
-<file line="405" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="410" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="405" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="410" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
             ArrayList<SetInfo> cSetInfo = c.getSets();
@@ -5521,8 +5420,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="155">
-<file line="288" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PreventDamage.java"/>
-<file line="312" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
+<file line="288" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PreventDamage.java"/>
+<file line="312" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Regenerate.java"/>
 <codefragment>
 <![CDATA[
     private static boolean regenMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
@@ -5549,45 +5448,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="28" tokens="153">
-<file line="1336" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="3266" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
-<codefragment>
-<![CDATA[
-                private ArrayList<String> chooseTwo(ArrayList<String> choices) {
-                    ArrayList<String> out = new ArrayList<String>();
-                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());
-                    if (o == null) return null;
-
-                    out.add((String) o);
-                    card.addSpellChoice((String) o);
-                    choices.remove(out.get(0));
-                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());
-                    if (o == null) return null;
-
-                    out.add((String) o);
-                    card.addSpellChoice((String) o);
-                    return out;
-                }//chooseTwo()
-            };//Input chooseTwoInput
-
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
-            card.addSpellAbility(spell);
-
-            card.setSpellWithChoices(true);
-            spell.setBeforePayMana(chooseTwoInput);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Turn to Slag")) {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="33" tokens="153">
-<file line="782" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerUtil.java"/>
-<file line="822" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerUtil.java"/>
+<file line="781" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerUtil.java"/>
+<file line="821" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerUtil.java"/>
 <codefragment>
 <![CDATA[
         for (int number = 1; number < 6; number++)
@@ -5627,8 +5490,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="42" tokens="152">
-<file line="242" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="234" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="242" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="234" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
 				public void actionPerformed(ActionEvent arg0) {
@@ -5677,8 +5540,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="151">
-<file line="142" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="488" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
+<file line="142" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
+<file line="488" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
 <codefragment>
 <![CDATA[
     	StringBuilder sb = new StringBuilder();
@@ -5708,8 +5571,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="151">
-<file line="832" path="/Users/dhudson/mtg/cardforge/src/forge/Card.java"/>
-<file line="898" path="/Users/dhudson/mtg/cardforge/src/forge/Card.java"/>
+<file line="848" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
+<file line="914" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
 <codefragment>
 <![CDATA[
             AllZone.getTriggerHandler().runTrigger("CounterAdded", runParams);
@@ -5743,8 +5606,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="33" tokens="150">
-<file line="148" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_BoosterDraft.java"/>
-<file line="530" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="148" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_BoosterDraft.java"/>
+<file line="530" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         setBounds(bounds);
@@ -5784,8 +5647,44 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="148">
-<file line="186" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="1107" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1348" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="3266" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<codefragment>
+<![CDATA[
+                private ArrayList<String> chooseTwo(ArrayList<String> choices) {
+                    ArrayList<String> out = new ArrayList<String>();
+                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());
+                    if (o == null) return null;
+
+                    out.add((String) o);
+                    card.addSpellChoice((String) o);
+                    choices.remove(out.get(0));
+                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());
+                    if (o == null) return null;
+
+                    out.add((String) o);
+                    card.addSpellChoice((String) o);
+                    return out;
+                }//chooseTwo()
+            };//Input chooseTwoInput
+
+            
+            
+            card.addSpellAbility(spell);
+
+            card.setSpellWithChoices(true);
+            spell.setBeforePayMana(chooseTwoInput);
+        }//*************** END ************ END **************************
+
+
+        //*************** START *********** START **************************
+        else if (cardName.equals("Turn to Slag")) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="148">
+<file line="186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1107" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
     private static boolean discardCanPlayAI(final AbilityFactory af, SpellAbility sa) {
@@ -5820,8 +5719,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="148">
-<file line="233" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="310" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="233" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="310" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
 <codefragment>
 <![CDATA[
                     try {
@@ -5857,8 +5756,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="148">
-<file line="698" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="565" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="698" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="565" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             jbInit();
@@ -5899,8 +5798,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="30" tokens="148">
-<file line="166" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="243" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="166" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="243" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         bottomTable.repaint();
@@ -5937,8 +5836,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="43" tokens="147">
-<file line="870" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost.java"/>
-<file line="1007" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost.java"/>
+<file line="870" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost.java"/>
+<file line="1007" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost.java"/>
 <codefragment>
 <![CDATA[
                 cost.append(", Pay ");
@@ -5988,8 +5887,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="30" tokens="147">
-<file line="43" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="47" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MultipleBlockers4.java"/>
+<file line="43" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
+<file line="47" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
 <codefragment>
 <![CDATA[
     Gui_MultipleBlockers4(Card attacker, CardList creatureList, int damage, CardContainer display) {
@@ -6026,8 +5925,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="146">
-<file line="356" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
-<file line="570" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="356" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="570" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -6060,8 +5959,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="146">
-<file line="137" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="208" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="137" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="208" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             c = bottom.get(i);
@@ -6097,8 +5996,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="145">
-<file line="202" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="448" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="202" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="448" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                     CardList Pile1 = new CardList();
@@ -6127,8 +6026,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="145">
-<file line="224" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
-<file line="748" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="224" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="748" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
 <codefragment>
 <![CDATA[
             if (abCost.getSacCost() && !abCost.getSacThis()) {
@@ -6158,8 +6057,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="142">
-<file line="127" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="336" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="127" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="336" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -6181,8 +6080,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="138">
-<file line="90" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="175" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
+<file line="90" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="175" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
 <codefragment>
 <![CDATA[
         topModel.clear();
@@ -6210,8 +6109,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="53" tokens="137">
-<file line="217" path="/Users/dhudson/mtg/cardforge/src/forge/CardShopTableModel.java"/>
-<file line="232" path="/Users/dhudson/mtg/cardforge/src/forge/TableModel.java"/>
+<file line="217" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardShopTableModel.java"/>
+<file line="232" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/TableModel.java"/>
 <codefragment>
 <![CDATA[
         return count;
@@ -6271,8 +6170,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="12" tokens="136">
-<file line="225" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="471" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="225" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="471" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                                 Pile2CMC = Pile2CMC + CardUtil.getConvertedManaCost(exiled.get(i));
@@ -6291,8 +6190,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="135">
-<file line="1448" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
-<file line="1635" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="1448" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="1635" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
 <codefragment>
 <![CDATA[
     private static void removeCounterAllResolve(final AbilityFactory af, final SpellAbility sa) {
@@ -6316,8 +6215,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="134">
-<file line="203" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
-<file line="267" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
+<file line="203" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
+<file line="267" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
 <codefragment>
 <![CDATA[
             if (unlessCost != null) {
@@ -6347,8 +6246,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="133">
-<file line="282" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
-<file line="923" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
+<file line="284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
+<file line="925" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
 <codefragment>
 <![CDATA[
         if (abCost != null) {
@@ -6372,8 +6271,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="39" tokens="132">
-<file line="300" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
-<file line="352" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
 <codefragment>
 <![CDATA[
         out.addAll(CardListUtil.getGoldCards(in));
@@ -6419,8 +6318,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="132">
-<file line="247" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="272" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="247" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="272" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- Sp123");
@@ -6446,8 +6345,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="132">
-<file line="299" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="323" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
+<file line="299" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="323" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
 <codefragment>
 <![CDATA[
             Card c = AllZone.getCardFactory().getCard(aList, null);
@@ -6470,8 +6369,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="132">
-<file line="1265" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="1262" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="1265" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="1262" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
     JPanel cdPanel = new JPanel();
@@ -6498,8 +6397,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="132">
-<file line="744" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="888" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
+<file line="754" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="898" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
         if (c.isEnchanted()) {
@@ -6526,8 +6425,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="130">
-<file line="113" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="133" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="113" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="133" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             Random r = MyRandom.random;
@@ -6561,8 +6460,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="130">
-<file line="2435" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
-<file line="3189" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
+<file line="2401" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="3155" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Waterspout Weavers");
@@ -6592,8 +6491,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="129">
-<file line="176" path="/Users/dhudson/mtg/cardforge/src/forge/CardUtil.java"/>
-<file line="309" path="/Users/dhudson/mtg/cardforge/src/forge/QuestData_BoosterPack.java"/>
+<file line="176" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardUtil.java"/>
+<file line="309" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData_BoosterPack.java"/>
 <codefragment>
 <![CDATA[
     private String getColor(Card c) {
@@ -6625,8 +6524,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="9" tokens="128">
-<file line="263" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="522" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="263" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="522" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                         for (int i = 0; i < Count; i++) if (!Pile1.contains(exiled.get(i))) Pile2.add(exiled.get(i));
@@ -6642,8 +6541,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="127">
-<file line="1484" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost_Payment.java"/>
-<file line="1554" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost_Payment.java"/>
+<file line="1484" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost_Payment.java"/>
+<file line="1554" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost_Payment.java"/>
 <codefragment>
 <![CDATA[
                 typeList = typeList.getValidCards(type.split(";"), spell.getActivatingPlayer(), spell.getSourceCard());
@@ -6679,9 +6578,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="127">
-<file line="1167" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost_Payment.java"/>
-<file line="1477" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost_Payment.java"/>
-<file line="1829" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/Cost_Payment.java"/>
+<file line="1167" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost_Payment.java"/>
+<file line="1477" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost_Payment.java"/>
+<file line="1829" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/Cost_Payment.java"/>
 <codefragment>
 <![CDATA[
                 msg.append(nLeft).append(" ");
@@ -6708,8 +6607,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="127">
-<file line="322" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="1228" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="322" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="1228" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
 <codefragment>
 <![CDATA[
     private static void setLifeResolve(final AbilityFactory af, final SpellAbility sa) {
@@ -6731,8 +6630,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="127">
-<file line="668" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
-<file line="1026" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplayUtil.java"/>
+<file line="668" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
+<file line="1026" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
         List<Card> tmp, diff;
@@ -6754,8 +6653,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="125">
-<file line="1020" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
-<file line="40" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="1019" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
+<file line="40" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
             final SpellAbility spell = new Spell(card) {
@@ -6791,8 +6690,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="125">
-<file line="598" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="874" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
+<file line="874" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         final int defense = getNumDefense(sa);
@@ -6816,8 +6715,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="124">
-<file line="133" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedDeck.java"/>
-<file line="300" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="133" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedDeck.java"/>
+<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
 <codefragment>
 <![CDATA[
         out.addAll(CardListUtil.getColor(in, color3));
@@ -6851,8 +6750,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="123">
-<file line="40" path="/Users/dhudson/mtg/cardforge/src/forge/gui/input/Input_PayManaCost.java"/>
-<file line="66" path="/Users/dhudson/mtg/cardforge/src/forge/gui/input/Input_PayManaCost.java"/>
+<file line="40" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/gui/input/Input_PayManaCost.java"/>
+<file line="66" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/gui/input/Input_PayManaCost.java"/>
 <codefragment>
 <![CDATA[
         originalManaCost = sa.getManaCost(); // Change
@@ -6878,8 +6777,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="14" tokens="123">
-<file line="5459" path="/Users/dhudson/mtg/cardforge/src/forge/Card.java"/>
-<file line="482" path="/Users/dhudson/mtg/cardforge/src/forge/Player.java"/>
+<file line="5482" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
+<file line="482" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Player.java"/>
 <codefragment>
 <![CDATA[
         if (AllZoneUtil.isCardInPlay("Gratuitous Violence", source.getController())) {
@@ -6900,8 +6799,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="122">
-<file line="177" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
-<file line="419" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
+<file line="177" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
+<file line="419" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
 <codefragment>
 <![CDATA[
     private static boolean chooseColorTriggerAI(final AbilityFactory af, final SpellAbility sa, boolean mandatory) {
@@ -6933,8 +6832,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="13" tokens="121">
-<file line="20" path="/Users/dhudson/mtg/cardforge/src/forge/SetInfoUtil.java"/>
-<file line="270" path="/Users/dhudson/mtg/cardforge/src/forge/SetInfoUtil.java"/>
+<file line="20" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SetInfoUtil.java"/>
+<file line="270" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SetInfoUtil.java"/>
 <codefragment>
 <![CDATA[
         ArrayList<String> fData = FileUtil.readFile("res/blockdata/blocks.txt");
@@ -6954,27 +6853,27 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="11" tokens="121">
-<file line="1759" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="1916" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
+<file line="1773" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1901" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
-                                    for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
-                                    String Number_ManaCost = " ";
-                                    if (Mana.toString().length() == 1)
-                                        Number_ManaCost = Mana.toString().substring(0, 1);
-                                    else if (Mana.toString().length() == 0)
-                                        Number_ManaCost = "0";  // Should Never Occur
-                                    else Number_ManaCost = Mana.toString().substring(0, 2);
-                                    Number_ManaCost = Number_ManaCost.trim();
+                                for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
+                                String Number_ManaCost = " ";
+                                if (mana.toString().length() == 1)
+                                    Number_ManaCost = mana.toString().substring(0, 1);
+                                else if (mana.toString().length() == 0)
+                                    Number_ManaCost = "0";  // Should Never Occur
+                                else Number_ManaCost = mana.toString().substring(0, 2);
+                                Number_ManaCost = Number_ManaCost.trim();
 
-                                    for (int check = 0; check < Max; check++) {
-                                        if (Number_ManaCost.equals(Numbers[check])) {
+                                for (int check = 0; check < Max; check++) {
+                                    if (Number_ManaCost.equals(Numbers[check])) {
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="120">
-<file line="847" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="133" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="847" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="133" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
             sb.append(sa.getSourceCard().getName()).append(" - ");
@@ -7000,8 +6899,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="120">
-<file line="1190" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="1186" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="1190" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="1186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
         canLoseByDecking.setSelected(fp.millingLossCondition);
@@ -7033,8 +6932,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="119">
-<file line="1055" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="1096" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
+<file line="1065" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1106" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
                 card = c.getCard(cardName, AllZone.getComputerPlayer());
@@ -7068,8 +6967,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="119">
-<file line="150" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerAI_General.java"/>
-<file line="193" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerAI_General.java"/>
+<file line="150" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerAI_General.java"/>
+<file line="193" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerAI_General.java"/>
 <codefragment>
 <![CDATA[
     private CardList getAvailableSpellAbilities() {
@@ -7091,8 +6990,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="117">
-<file line="599" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
-<file line="595" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="605" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
+<file line="595" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         if (!ComputerUtil.canPayCost(sa))
@@ -7120,39 +7019,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="22" tokens="117">
-<file line="544" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
-<file line="522" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Sacrifice.java"/>
-<codefragment>
-<![CDATA[
-    public static String sacrificeAllStackDescription(final AbilityFactory af, SpellAbility sa) {
-        // when getStackDesc is called, just build exactly what is happening
-
-        StringBuilder sb = new StringBuilder();
-        String name = af.getHostCard().getName();
-        HashMap<String, String> params = af.getMapParams();
-
-        String conditionDesc = params.get("ConditionDescription");
-        if (conditionDesc != null)
-            sb.append(conditionDesc).append(" ");
-
-        ArrayList<Card> tgtCards;
-
-        Target tgt = af.getAbTgt();
-        if (tgt != null)
-            tgtCards = tgt.getTargetCards();
-        else {
-            tgtCards = new ArrayList<Card>();
-            tgtCards.add(sa.getSourceCard());
-        }
-
-        sb.append(name).append(" - Sacrifice permanents");
-]]>
-</codefragment>
-</duplication>
 <duplication lines="23" tokens="116">
-<file line="236" path="/Users/dhudson/mtg/cardforge/src/forge/card/mana/ManaCost.java"/>
-<file line="273" path="/Users/dhudson/mtg/cardforge/src/forge/card/mana/ManaCost.java"/>
+<file line="236" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/mana/ManaCost.java"/>
+<file line="273" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/mana/ManaCost.java"/>
 <codefragment>
 <![CDATA[
     public boolean addMana(Mana mana) {
@@ -7182,8 +7051,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="67" tokens="116">
-<file line="432" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="446" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="432" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="446" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
                             CList.add(new mCard(SC3 + "\\" + newFileName, URLBase + SC2 + "\\" + fn, SC3));
@@ -7257,8 +7126,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="116">
-<file line="2952" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
-<file line="3036" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
+<file line="2918" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="3002" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Squeaking Pie Grubfellows");
@@ -7284,8 +7153,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="17" tokens="115">
-<file line="544" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
-<file line="863" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="544" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="863" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
 <codefragment>
 <![CDATA[
     private static void removeResolve(final AbilityFactory af, final SpellAbility sa) {
@@ -7309,8 +7178,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="14" tokens="115">
-<file line="282" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
-<file line="172" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
+<file line="284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ChangeZone.java"/>
+<file line="172" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_CounterMagic.java"/>
 <codefragment>
 <![CDATA[
         if (abCost != null) {
@@ -7330,30 +7199,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="13" tokens="115">
-<file line="1118" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<file line="1287" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<codefragment>
-<![CDATA[
-        toughness += attacker.getKeywordMagnitude("Bushido");
-
-        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
-        for (Trigger trigger : registeredTriggers) {
-            HashMap<String, String> trigParams = trigger.getMapParams();
-            Card source = trigger.getHostCard();
-
-            if (!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
-                continue;
-            String ability = source.getSVar(trigParams.get("Execute"));
-            AbilityFactory AF = new AbilityFactory();
-            HashMap<String, String> abilityParams = AF.getMapParams(ability, source);
-            if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
-]]>
-</codefragment>
-</duplication>
 <duplication lines="11" tokens="114">
-<file line="132" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
-<file line="168" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="132" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="168" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
 <codefragment>
 <![CDATA[
             Card land;
@@ -7371,8 +7219,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="114">
-<file line="291" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<file line="1374" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="291" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="1374" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
 <codefragment>
 <![CDATA[
                 int check = -1;
@@ -7398,8 +7246,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="114">
-<file line="60" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Mana.java"/>
-<file line="321" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Mana.java"/>
+<file line="60" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Mana.java"/>
+<file line="321" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Mana.java"/>
 <codefragment>
 <![CDATA[
     public static SpellAbility createSpellManaReflected(final AbilityFactory AF, final String produced) {
@@ -7429,8 +7277,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="114">
-<file line="519" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="902" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="519" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="902" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
 <codefragment>
 <![CDATA[
         String amountStr = params.get("Num");
@@ -7457,8 +7305,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="114">
-<file line="400" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplayUtil.java"/>
-<file line="594" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplayUtil.java"/>
+<file line="400" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="594" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
             for (int i = 0; i < list.size(); i++) {
@@ -7494,8 +7342,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="14" tokens="113">
-<file line="898" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1666" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="897" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1663" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
     private static void tapOrUntapResolve(final AbilityFactory af, final SpellAbility sa) {
@@ -7516,8 +7364,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="113">
-<file line="78" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="132" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="78" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="132" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     @Override
@@ -7545,8 +7393,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="112">
-<file line="1043" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="1127" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="1055" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="1139" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
 <codefragment>
 <![CDATA[
                     sb.append(card.getName()).append(" - Select target creatures, players, and/or planeswalkers.  Currently, (");
@@ -7571,8 +7419,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="112">
-<file line="259" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
-<file line="178" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
+<file line="259" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="178" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Destroy.java"/>
 <codefragment>
 <![CDATA[
         if (!ComputerUtil.canPayCost(sa))
@@ -7599,8 +7447,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="112">
-<file line="332" path="/Users/dhudson/mtg/cardforge/src/forge/SealedDeck.java"/>
-<file line="296" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="332" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SealedDeck.java"/>
+<file line="296" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 String mc = tDeck.get(i).getManaCost();
@@ -7629,8 +7477,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="12" tokens="112">
-<file line="934" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_NewGame.java"/>
-<file line="984" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_NewGame.java"/>
+<file line="940" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
+<file line="990" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
 <codefragment>
 <![CDATA[
         if (p.equals("H")) {
@@ -7649,8 +7497,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="112">
-<file line="348" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay2.java"/>
-<file line="569" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
+<file line="348" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
+<file line="569" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
 <codefragment>
 <![CDATA[
                     oppRemovedValue.setText("" + AllZone.getComputerExile().size());
@@ -7675,8 +7523,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="112">
-<file line="391" path="/Users/dhudson/mtg/cardforge/src/forge/BoosterDraftAI.java"/>
-<file line="296" path="/Users/dhudson/mtg/cardforge/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="402" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/BoosterDraftAI.java"/>
+<file line="296" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 String mc = tDeck.get(i).getManaCost();
@@ -7705,8 +7553,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="110">
-<file line="466" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<file line="770" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="466" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="770" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
 <codefragment>
 <![CDATA[
                 }//resolve()
@@ -7731,8 +7579,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="110">
-<file line="546" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="1034" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="546" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1034" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         StringBuilder sb = new StringBuilder();
@@ -7757,8 +7605,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="110">
-<file line="152" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="130" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="152" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="130" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         StringBuilder sb = new StringBuilder();
@@ -7783,8 +7631,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="110">
-<file line="128" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="93" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="128" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="93" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     private CardPicturePanel picture = new CardPicturePanel(null);
@@ -7816,8 +7664,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="11" tokens="110">
-<file line="5057" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
-<file line="5132" path="/Users/dhudson/mtg/cardforge/src/forge/GameActionUtil.java"/>
+<file line="5024" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="5099" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
             String[] Keyword = Keyword_Details[2].split("/", 3);
@@ -7835,8 +7683,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="11" tokens="110">
-<file line="1120" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
-<file line="1232" path="/Users/dhudson/mtg/cardforge/src/forge/CombatUtil.java"/>
+<file line="1120" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<file line="1232" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
 <codefragment>
 <![CDATA[
         ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
@@ -7854,8 +7702,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="7" tokens="109">
-<file line="99" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
-<file line="178" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
+<file line="99" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
+<file line="178" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
 <codefragment>
 <![CDATA[
         for (int i = 0; i < 10; i++) {
@@ -7869,8 +7717,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="109">
-<file line="44" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="48" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="44" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="48" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
 public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewConstants, NewConstants.GUI.GuiDisplay, NewConstants.LANG.GuiDisplay {
@@ -7905,8 +7753,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="108">
-<file line="602" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
-<file line="193" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="608" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
+<file line="193" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -7934,8 +7782,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="3" tokens="108">
-<file line="56" path="/Users/dhudson/mtg/cardforge/src/forge/SealedDeck.java"/>
-<file line="61" path="/Users/dhudson/mtg/cardforge/src/forge/SealedDeck.java"/>
+<file line="56" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SealedDeck.java"/>
+<file line="61" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SealedDeck.java"/>
 <codefragment>
 <![CDATA[
                 else if (blockSets.size() == 3) {
@@ -7945,59 +7793,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="107">
-<file line="394" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<file line="769" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<codefragment>
-<![CDATA[
-                    }
-                }//resolve()
-
-                @Override
-                public boolean canPlay() {
-                    for (int i = 0; i < AllZone.getStack().size(); i++) {
-                        if (AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
-                    }
-
-                    return AllZone.getZone(card).is(Constant.Zone.Battlefield)
-                            && turn[0] != AllZone.getPhase().getTurn()
-                            && Phase.canCastSorcery(card.getController());
-                }
-
-                @Override
-                public boolean canPlayAI() {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="19" tokens="107">
-<file line="657" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<file line="1209" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<codefragment>
-<![CDATA[
-                    public void execute() {
-                        if (card.isEnchanting()) {
-                            Card crd = card.getEnchanting().get(0);
-                            if (AllZoneUtil.isCardInPlay(crd)) {
-                                if (crd.hasKeyword("Haste")) {
-                                    crd.setSickness(false);
-                                } else {
-                                    crd.setSickness(true);
-                                }
-
-                                AllZone.getGameAction().changeController(new CardList(crd), crd.getController(), prevController[0]);
-                            }
-                        }
-
-                    }//execute()
-                };//Command
-
-                Command onLeavesPlay = new Command() {
-                    private static final long serialVersionUID = 7464815269438815827L;
-]]>
-</codefragment>
-</duplication>
-<duplication lines="16" tokens="107">
-<file line="128" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
-<file line="555" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
+<file line="128" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
+<file line="561" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
 <codefragment>
 <![CDATA[
     private static String revealHandStackDescription(AbilityFactory af, SpellAbility sa) {
@@ -8020,8 +7817,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="107">
-<file line="212" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="161" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="212" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="161" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             c.setRarity(c.getSVar("Rarity"));
@@ -8053,8 +7850,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="106">
-<file line="395" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<file line="466" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="395" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="466" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
 <codefragment>
 <![CDATA[
                 }//resolve()
@@ -8076,8 +7873,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="106">
-<file line="602" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
-<file line="1114" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="608" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
+<file line="1114" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -8105,8 +7902,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="6" tokens="106">
-<file line="105" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
-<file line="186" path="/Users/dhudson/mtg/cardforge/src/forge/ReadBoosterPack.java"/>
+<file line="105" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
+<file line="186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
 <codefragment>
 <![CDATA[
                 list.add(AllZone.getCardFactory().getCard("Snow-Covered Forest", AllZone.getHumanPlayer()));
@@ -8119,8 +7916,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="106">
-<file line="588" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="902" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="588" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="902" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         this.getContentPane().add(statsLabel, "cell 0 7");
@@ -8143,8 +7940,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="21" tokens="106">
-<file line="78" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="97" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="78" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="97" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     @Override
@@ -8172,8 +7969,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="105">
-<file line="654" path="/Users/dhudson/mtg/cardforge/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
-<file line="701" path="/Users/dhudson/mtg/cardforge/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
+<file line="654" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
+<file line="701" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
 <codefragment>
 <![CDATA[
             return ((child != null) && child.isVisible()) ? child.getMinimumSize() : new Dimension(0, 0);
@@ -8196,8 +7993,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="22" tokens="105">
-<file line="22" path="/Users/dhudson/mtg/cardforge/src/forge/card/trigger/Trigger_Taps.java"/>
-<file line="22" path="/Users/dhudson/mtg/cardforge/src/forge/card/trigger/Trigger_TapsForMana.java"/>
+<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_Taps.java"/>
+<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_TapsForMana.java"/>
 <codefragment>
 <![CDATA[
     public Trigger_TapsForMana(HashMap<String, String> params, Card host) {
@@ -8226,8 +8023,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="31" tokens="105">
-<file line="276" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
-<file line="41" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Instants.java"/>
+<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
+<file line="41" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
 <codefragment>
 <![CDATA[
                 @Override
@@ -8265,8 +8062,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="105">
-<file line="598" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="1114" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1114" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -8292,8 +8089,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="24" tokens="105">
-<file line="235" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="1179" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="235" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="1179" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         if ((AllZone.getPhase().is(Constant.Phase.End_Of_Turn) && AllZone.getPhase().isNextTurn(AllZone.getComputerPlayer())))
@@ -8324,8 +8121,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="105">
-<file line="193" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
-<file line="598" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="193" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
+<file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_ZoneAffecting.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -8351,8 +8148,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="104">
-<file line="136" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/SpellAbility_Condition.java"/>
-<file line="145" path="/Users/dhudson/mtg/cardforge/src/forge/card/spellability/SpellAbility_Restriction.java"/>
+<file line="136" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/SpellAbility_Condition.java"/>
+<file line="145" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/spellability/SpellAbility_Restriction.java"/>
 <codefragment>
 <![CDATA[
         if (!bAnyPlayer && !activator.equals(c.getController()))
@@ -8384,8 +8181,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="104">
-<file line="155" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
-<file line="1069" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="155" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
+<file line="1069" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_AlterLife.java"/>
 <codefragment>
 <![CDATA[
             sb.append(sa.getSourceCard()).append(" -");
@@ -8412,8 +8209,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="13" tokens="103">
-<file line="119" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
-<file line="1353" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="119" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="1353" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
 <codefragment>
 <![CDATA[
                     return 5 <= card.getCounters(Counters.LOYALTY)
@@ -8433,8 +8230,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="103">
-<file line="266" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
-<file line="354" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="266" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
+<file line="354" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Counters.java"/>
 <codefragment>
 <![CDATA[
             abTgt.resetTargets();
@@ -8456,8 +8253,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="41" tokens="103">
-<file line="162" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadPictures_LQ.java"/>
-<file line="227" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="162" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadPictures_LQ.java"/>
+<file line="227" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
 <codefragment>
 <![CDATA[
                 System.out.println(card + "/" + cards.length + " - " + a);
@@ -8505,8 +8302,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="103">
-<file line="745" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay3.java"/>
-<file line="735" path="/Users/dhudson/mtg/cardforge/src/forge/GuiDisplay4.java"/>
+<file line="745" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
+<file line="735" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
 <codefragment>
 <![CDATA[
                 GuiDisplayUtil.setupPlayZone(oppPlayPanel, c);
@@ -8538,8 +8335,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="43" tokens="102">
-<file line="498" path="/Users/dhudson/mtg/cardforge/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
-<file line="598" path="/Users/dhudson/mtg/cardforge/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
+<file line="498" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
+<file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
 <codefragment>
 <![CDATA[
             } while (width != newWidth || height != newHeight);
@@ -8589,8 +8386,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="18" tokens="102">
-<file line="721" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
-<file line="945" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="721" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="945" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
             if (!AllZoneUtil.isCardInPlay(tgtC))
@@ -8615,8 +8412,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="32" tokens="101">
-<file line="385" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="406" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
+<file line="385" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
+<file line="406" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
 <codefragment>
 <![CDATA[
         while(tgt.getNumTargeted() < tgt.getMinTargets(source, sa)) {
@@ -8655,8 +8452,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="11" tokens="101">
-<file line="1294" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerUtil.java"/>
-<file line="1333" path="/Users/dhudson/mtg/cardforge/src/forge/ComputerUtil.java"/>
+<file line="1293" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerUtil.java"/>
+<file line="1332" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerUtil.java"/>
 <codefragment>
 <![CDATA[
         Player controller = card.getController();
@@ -8673,40 +8470,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="23" tokens="100">
-<file line="1166" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<file line="1303" path="/Users/dhudson/mtg/cardforge/src/forge/card/cardFactory/CardFactory_Auras.java"/>
-<codefragment>
-<![CDATA[
-                    }//canPlayAI()
-
-                    @Override
-                    public void resolve() {
-                        AllZone.getGameAction().moveToPlay(card);
-
-                        Card c = getTargetCard();
-
-                        if (AllZoneUtil.isCardInPlay(c)
-                                && CardFactoryUtil.canTarget(card, c)) card.enchantCard(c);
-
-                    }//resolve()
-                };//SpellAbility
-                // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-                card.clearFirstSpellAbility();
-                spell.setDescription("");
-                card.addSpellAbility(spell);
-
-                final Player[] prevController = new Player[1];
-                prevController[0] = null;
-
-                Command onEnchant = new Command() {
-                    private static final long serialVersionUID = -2519887209491512000L;
-]]>
-</codefragment>
-</duplication>
 <duplication lines="15" tokens="100">
-<file line="352" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="493" path="/Users/dhudson/mtg/cardforge/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
+<file line="493" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
     private boolean pumpMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
@@ -8728,8 +8494,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="100">
-<file line="48" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
-<file line="48" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="48" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="48" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     public TableModel bottomModel;
@@ -8755,8 +8521,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="100">
-<file line="109" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_CardShop.java"/>
-<file line="174" path="/Users/dhudson/mtg/cardforge/src/forge/Gui_DeckEditor.java"/>
+<file line="109" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="174" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
                 filteredOut = filterByType(c);
@@ -8785,33 +8551,9 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="16" tokens="100">
-<file line="1917" path="/Users/dhudson/mtg/cardforge/src/forge/GameAction.java"/>
-<file line="209" path="/Users/dhudson/mtg/cardforge/src/forge/MagicStack.java"/>
-<codefragment>
-<![CDATA[
-        String Number_ManaCost = " ";
-
-        if (Mana.toString().length() == 1)
-            Number_ManaCost = Mana.toString().substring(0, 1);
-
-        else if (Mana.toString().length() == 0)
-            Number_ManaCost = "0"; // Should Never Occur
-
-        else
-            Number_ManaCost = Mana.toString().substring(0, 2);
-        Number_ManaCost = Number_ManaCost.trim();
-
-        for (int check = 0; check < Max; check++) {
-            if (Number_ManaCost.equals(Numbers[check])) {
-
-                if (check - MultiKickerPaid < 0) {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="11" tokens="100">
-<file line="686" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_DeckAnalysis.java"/>
-<file line="704" path="/Users/dhudson/mtg/cardforge/src/forge/GUI_DeckAnalysis.java"/>
+<file line="686" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_DeckAnalysis.java"/>
+<file line="704" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_DeckAnalysis.java"/>
 <codefragment>
 <![CDATA[
         } else {
