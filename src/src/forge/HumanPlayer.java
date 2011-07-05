@@ -134,6 +134,10 @@ public class HumanPlayer extends Player {
     public void discardUnless(int num, String uType, SpellAbility sa) {
         AllZone.getInputControl().setInput(PlayerUtil.input_discardNumUnless(num, uType, sa));
     }
+    
+    protected void discard_Chains_of_Mephistopheles() {
+    	AllZone.getInputControl().setInput(PlayerUtil.input_chainsDiscard(), true);
+    }
 
     /** {@inheritDoc} */
     public void handToLibrary(final int numToLibrary, String libPos) {

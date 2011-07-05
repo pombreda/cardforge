@@ -282,4 +282,10 @@ public class AIPlayer extends Player {
         AllZone.getGameAction().moveToLibrary(c);
     }
 
+	@Override
+	protected void discard_Chains_of_Mephistopheles() {
+		discard(null);
+		drawCard();
+	}
+
 }//end AIPlayer class

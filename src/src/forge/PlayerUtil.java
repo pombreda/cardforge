@@ -120,6 +120,41 @@ public class PlayerUtil {
     }//input_discard()
     
     /**
+     * <p>input_chainsDiscard.</p>
+     *
+     * @return a {@link forge.gui.input.Input} object.
+     * @since 
+     */
+    public static Input input_chainsDiscard() {
+        Input target = new Input() {
+			private static final long serialVersionUID = 2856894846224546303L;
+
+			@Override
+            public void showMessage() {
+                if (AllZone.getHumanHand().size() == 0) stop();
+
+                AllZone.getDisplay().showMessage("Chains of Mephistopheles:\n"+"Select a card to discard");
+                ButtonUtil.disableAll();
+            }
+
+            @Override
+            public void selectCard(Card card, PlayerZone zone) {
+                if (zone.is(Constant.Zone.Hand)) {
+                    card.getController().discard(card, null);
+                    done();
+                }
+            }
+            
+            private void done() {
+            	stop();
+            	//hack to not trigger Chains of Mephistopheles recursively
+            	AllZone.getHumanPlayer().drawCards(1, true);
+            }
+        };
+        return target;
+    }//input_chainsDiscard()
+    
+    /**
      * <p>input_sacrificePermanent.</p>
      *
      * @param choices a {@link forge.CardList} object.
