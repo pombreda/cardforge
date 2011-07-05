@@ -811,29 +811,52 @@ public abstract class Player extends MyObservable {
      * @return a boolean.
      */
     public abstract boolean dredge();
-
+    
     /**
      * <p>drawCards.</p>
      *
      * @param n a int.
      */
     public void drawCards(int n) {
-        PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
+    	drawCards(n, false);
+    }
 
+    /**
+     * <p>drawCards.</p>
+     *
+     * @param n a int.
+     * @params firstFromDraw true if this is the card drawn from that player's draw step each turn
+     */
+    public void drawCards(int n, boolean firstFromDraw) {
         for (int i = 0; i < n; i++) {
-            // TODO: any draw replacements would go here, not just Dredge
-            if (getDredge().size() == 0 || !dredge()) {
-                doDraw(library);
+            // TODO: multiple replacements need to be selected by the controller
+            if (getDredge().size() != 0) {
+                dredge();
+            }
+            if(!firstFromDraw && AllZoneUtil.isCardInPlay("Chains of Mephistopheles")) {
+            	if(AllZoneUtil.getPlayerHand(this).size() > 0) {
+            		if(isHuman()) discard_Chains_of_Mephistopheles();
+            		else { //Computer
+            			discard(1, null, false);
+            			//true causes this code not to be run again
+            			drawCards(1, true);
+            		}
+            	}
+            	else {
+            		mill(1);
+            	}
+            }
+            else {
+            	doDraw();
             }
         }
     }
 
     /**
      * <p>doDraw.</p>
-     *
-     * @param library a {@link forge.PlayerZone} object.
      */
-    private void doDraw(PlayerZone library) {
+    private void doDraw() {
+    	PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
         if (library.size() != 0) {
             Card c = library.get(0);
             AllZone.getGameAction().moveToHand(c);
@@ -914,6 +937,8 @@ public abstract class Player extends MyObservable {
     /// replaces AllZone.getGameAction().discard* methods
     ///
     ////////////////////////////////
+    
+    protected abstract void discard_Chains_of_Mephistopheles();
 
     /**
      * <p>discard.</p>
@@ -951,7 +976,7 @@ public abstract class Player extends MyObservable {
      * @param c a {@link forge.Card} object.
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
-    public void doDiscard(final Card c, final SpellAbility sa) {
+    protected void doDiscard(final Card c, final SpellAbility sa) {
         // TODO: This line should be moved inside CostPayment somehow
         if (sa != null) {
             sa.addCostToHashList(c, "Discarded");
