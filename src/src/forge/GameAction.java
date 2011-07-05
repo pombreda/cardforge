@@ -1082,6 +1082,12 @@ public class GameAction {
 
                     card.setImageFilename(CardUtil.buildFilename(card));
                 }
+                
+                // Assign random foiling on approximately 1:6 cards
+                if (Constant.Runtime.RndCFoil[0]) {
+                	if (MyRandom.percentTrue(18))
+                		card.setFoil(MyRandom.random.nextInt(9) + 1);
+                }
 
                 //System.out.println("human random number:" + card.getRandomPicture());
                 //}
@@ -1129,6 +1135,12 @@ public class GameAction {
                     card.setImageFilename(CardUtil.buildFilename(card));
                 }
 
+                // Assign random foiling on approximately 1:6 cards
+                if (Constant.Runtime.RndCFoil[0]) {
+                	if (MyRandom.percentTrue(18))
+                		card.setFoil(MyRandom.random.nextInt(9) + 1);
+                }
+                
                 AllZone.getComputerLibrary().add(card);
 
                 for (Trigger trig : card.getTriggers()) {
