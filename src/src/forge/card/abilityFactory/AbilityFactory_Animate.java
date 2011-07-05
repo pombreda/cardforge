@@ -513,7 +513,6 @@ public class AbilityFactory_Animate {
             c.addType(type);
         }
 
-        //TODO - this will have to handle adding back original colors
         c.removeColor(colorDesc, c, !params.containsKey("OverwriteColors"), timestamp);
 
         for (String k : originalKeywords) {
