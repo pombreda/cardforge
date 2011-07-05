@@ -69,18 +69,6 @@ public class QuestData implements NewConstants {
     private ArrayList<Integer> availableQuests = new ArrayList<Integer>();
     private ArrayList<Integer> completedQuests = new ArrayList<Integer>();
 
-    private QuestData_BoosterPack boosterPack = new QuestData_BoosterPack();
-
-    //used by shouldAddAdditionalCards()
-    private Random random = MyRandom.random;
-
-    //feel free to change this to something funnier
-    private String[] rankArray = {
-            "Level 0 - Confused Wizard", "Level 1 - Mana Mage", "Level 2 - Death by Megrim",
-            "Level 3 - Shattered the Competition", "Level 4 - Black Knighted", "Level 5 - Shockingly Good",
-            "Level 6 - Regressed into Timmy", "Level 7 - Loves Blue Control", "Level 8 - Immobilized by Fear",
-            "Level 9 - Lands = Friends", "Saltblasted for your talent", "Serra Angel is your girlfriend",};
-
 
     /** Constant <code>FANTASY="Fantasy"</code> */
     public static final String FANTASY = "Fantasy";
