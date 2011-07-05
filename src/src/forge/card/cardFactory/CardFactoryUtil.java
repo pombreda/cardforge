@@ -3991,36 +3991,4 @@ public class CardFactoryUtil {
     	}
     	//}
     }*/
-
-
-    /**
-     * <p>main.</p>
-     *
-     * @param args an array of {@link java.lang.String} objects.
-     */
-    public static void main(String[] args) {
-
-        CardList in = AllZone.getCardFactory().getAllCards();
-
-        CardList list = new CardList();
-        list.addAll(CardListUtil.getColor(in, "black"));
-        list = list.getType("Creature");
-
-        System.out.println("Most prominent creature type: " + getMostProminentCreatureType(list));
-
-
-        String manacost = "3 GW W W R B S";
-        String multipliedTwice = multiplyManaCost(manacost, 2);
-        String multipliedThrice = multiplyManaCost(manacost, 3);
-
-        System.out.println(manacost + " times 2 = " + multipliedTwice);
-        System.out.println(manacost + " times 3 = " + multipliedThrice);
-
-        if (isNegativeCounter(Counters.M1M1)) {
-            System.out.println("M1M1 is a bad counter!");
-        } else
-            System.out.println("M1M1 is a good counter!");
-
-    }
-
 }
