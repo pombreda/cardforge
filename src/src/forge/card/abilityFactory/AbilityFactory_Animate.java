@@ -196,6 +196,7 @@ public class AbilityFactory_Animate {
         //sb.append(triggers)
         if (!permanent) {
             if (params.containsKey("UntilEndOfCombat")) sb.append(" until end of combat.");
+            else if(params.containsKey("UntilHostLeavesPlay")) sb.append(" until ").append(host).append(" leaves the battlefield.");
             else sb.append(" until end of turn.");
         } else sb.append(".");
 
@@ -434,6 +435,9 @@ public class AbilityFactory_Animate {
 
             if (!permanent) {
                 if (params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(unanimate);
+                else if(params.containsKey("UntilHostLeavesPlay")) {
+                	host.addLeavesPlayCommand(unanimate);
+                }
                 else AllZone.getEndOfTurn().addUntil(unanimate);
             }
         }
