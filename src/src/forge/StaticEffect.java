@@ -2,7 +2,6 @@ package forge;
 
 
 import forge.card.spellability.SpellAbility;
-import forge.card.staticAbility.StaticAbility;
 
 import java.util.ArrayList;
 import java.util.HashMap;

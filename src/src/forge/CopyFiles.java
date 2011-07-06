@@ -3,8 +3,6 @@ package forge;
 
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
-import org.jdesktop.swingworker.SwingWorker;
-
 import javax.swing.*;
 import java.io.File;
 import java.io.FileInputStream;
