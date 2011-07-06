@@ -1340,9 +1340,12 @@ public class AbilityFactory {
             SpellAbility parent = findParentsTargetedSpellAbility(sa);
             sas.addAll(parent.getTarget().getTargetSAs());
         } else if (defined.startsWith("Triggered")) {
+        	SpellAbility root = sa.getRootSpellAbility();
+        	
             String triggeringType = defined.substring(9);
-            if (sa.getTriggeringObject(triggeringType) instanceof SpellAbility)
-                s = (SpellAbility) sa.getTriggeringObject(triggeringType);
+            Object o = root.getTriggeringObject(triggeringType); 
+            if (o instanceof SpellAbility)
+                s = (SpellAbility) o;
         } else if (defined.startsWith("Imprinted")) {
             for (Card imp : card.getImprinted())
                 sas.addAll(imp.getSpellAbilities());
