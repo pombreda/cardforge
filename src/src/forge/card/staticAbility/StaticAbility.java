@@ -1,6 +1,7 @@
 package forge.card.staticAbility;
 
 import forge.*;
+import forge.card.abilityFactory.AbilityFactory;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -105,10 +106,51 @@ public class StaticAbility {
     	if (!mapParams.get("Mode").equals(mode))
     		return;
     	
-    	//TODO: Check requirements here
+    	if (!checkConditions())
+    		return;
     	
     	if (mode.equals("Continuous"))
     		StaticAbility_Continuous.applyContinuousAbility(this);
     }
+    
+    public boolean checkConditions() {
+    	Player controller = hostCard.getController();
+    	
+    	if(mapParams.containsKey("Threshold") && !controller.hasThreshold())
+    		return false;
+    	
+    	if(mapParams.containsKey("Hellbent") && !controller.hasHellbent())
+    		return false;
+    	
+    	if(mapParams.containsKey("Metalcraft") && !controller.hasMetalcraft())
+    		return false;
+    	
+    	if (mapParams.containsKey("PlayerTurn") && !AllZone.getPhase().isPlayerTurn(controller))
+    		return false;
+    	
+    	/*if(mapParams.containsKey("isPresent")) {
+    		String isPresent = mapParams.get("isPresent");
+            CardList list = AllZoneUtil.getCardsInPlay();
+
+            list = list.getValidCards(isPresent.split(","), controller, hostCard);
+            
+    	}*/
+    	
+        if (mapParams.containsKey("CheckSVar")) {
+            int sVar = AbilityFactory.calculateAmount(hostCard, mapParams.get("CheckSVar"), null);
+            String comparator = "GE1";
+            if (mapParams.containsKey("SVarCompare")) 
+            	comparator = mapParams.get("SVarCompare");
+            String svarOperator = comparator.substring(0, 2);
+            String svarOperand = comparator.substring(2);
+            int operandValue = AbilityFactory.calculateAmount(hostCard, svarOperand, null);
+            if (!AllZoneUtil.compare(sVar, svarOperator, operandValue))
+            	return false;
+        }
+    		
+    	
+    	return true;
+    }
+    
 
 }//end class StaticEffectFactory
