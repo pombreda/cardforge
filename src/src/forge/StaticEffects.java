@@ -39,6 +39,7 @@ public class StaticEffects {
 
         int powerBonus = 0;
         int toughnessBonus = 0;
+		String addKeywords[] = null;
         
 		if (params.containsKey("AddPower")) {
 			powerBonus = Integer.valueOf(params.get("AddPower"));
@@ -46,11 +47,17 @@ public class StaticEffects {
 		
 		if (params.containsKey("AddToughness"))
 			toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+		
+		if (params.containsKey("AddKeyword"))
+			addKeywords = params.get("AddKeyword").split(" & ");
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
             affectedCard.addSemiPermanentAttackBoost(powerBonus * -1);
             affectedCard.addSemiPermanentDefenseBoost(toughnessBonus * -1);
+            if (addKeywords != null)
+            	for (String keyword : addKeywords)
+            		affectedCard.removeExtrinsicKeyword(keyword);
 		}
     }
 
