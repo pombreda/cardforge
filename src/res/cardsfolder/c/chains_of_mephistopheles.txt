@@ -5,4 +5,5 @@ Text:If a player would draw a card except the first one he or she draws in his o
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/chains_of_mephistopheles.jpg
+SetInfo:LEG|Rare|http://magiccards.info/scans/en/lg/5.jpg
 End

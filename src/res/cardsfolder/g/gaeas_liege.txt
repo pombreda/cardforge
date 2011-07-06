@@ -4,8 +4,14 @@ Types:Creature Avatar
 Text:no text
 PT:*/*
 K:stSetPT:Count$TypeYouCtrl.Forest:Count$TypeYouCtrl.Forest:isAttacking:Count$TypeOppCtrl.Forest:Count$TypeOppCtrl.Forest:As long as CARDNAME isn't attacking, its power and toughness are each equal to the number of Forests you control. As long as CARDNAME is attacking, its power and toughness are each equal to the number of Forests defending player controls.
-A:AB$Animate | Cost$ T | ValidTgts$ Land | TgtPrompt$ Select target land | Types$ Forest | OverwriteTypes$ True | KeepSupertypes$ True | KeepCardTypes$ True | UntilHostLeavesPlay$ True | SpellDescription$ Target land becomes a Forest until CARDNAME leaves the battlefield.  
+A:AB$Animate | Cost$ T | ValidTgts$ Land | TgtPrompt$ Select target land | Types$ Forest | OverwriteTypes$ True | KeepSupertypes$ True | KeepCardTypes$ True | UntilHostLeavesPlay$ True | SpellDescription$ Target land becomes a Forest until CARDNAME leaves the battlefield.
 SVar:BuffedBy:Forest
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/gaeas_liege.jpg
+SetInfo:LEA|Rare|http://magiccards.info/scans/en/al/105.jpg
+SetInfo:LEB|Rare|http://magiccards.info/scans/en/be/105.jpg
+SetInfo:4ED|Rare|http://magiccards.info/scans/en/4e/131.jpg
+SetInfo:TSB|Special|http://magiccards.info/scans/en/tsts/78.jpg
+SetInfo:3ED|Rare|http://magiccards.info/scans/en/rv/105.jpg
+SetInfo:2ED|Rare|http://magiccards.info/scans/en/un/105.jpg
 End

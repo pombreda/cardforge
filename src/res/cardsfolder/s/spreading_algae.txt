@@ -11,4 +11,6 @@ SVar:TrigChangeZone:AB$ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ H
 SVar:SacMe:2
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/spreading_algae.jpg
+SetInfo:8ED|Uncommon|http://magiccards.info/scans/en/8e/281.jpg
+SetInfo:USG|Uncommon|http://magiccards.info/scans/en/us/274.jpg
 End

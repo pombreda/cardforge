@@ -7,4 +7,5 @@ A:AB$Animate | Cost$ T Sac<1/Creature.Green> | ValidTgts$ Land | TgtPrompt$ Sele
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/thelonite_monk.jpg
+SetInfo:FEM|Rare|http://magiccards.info/scans/en/fe/93.jpg
 End
