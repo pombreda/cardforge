@@ -2,6 +2,7 @@ package forge;
 
 import com.esotericsoftware.minlog.Log;
 import forge.card.cardFactory.CardFactoryUtil;
+import forge.card.spellability.SpellAbility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,11 +54,23 @@ public class StaticEffects {
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
+            
+            //remove P/T bonus
             affectedCard.addSemiPermanentAttackBoost(powerBonus * -1);
             affectedCard.addSemiPermanentDefenseBoost(toughnessBonus * -1);
+            
+            //remove keywords
             if (addKeywords != null)
             	for (String keyword : addKeywords)
             		affectedCard.removeExtrinsicKeyword(keyword);
+            
+            //remove abilities
+            if (params.containsKey("AddAbility")) {
+            	SpellAbility[] spellAbility = affectedCard.getSpellAbility();
+                for (SpellAbility s : spellAbility)
+                    if (s.getType().equals("Temporary"))
+                        affectedCard.removeSpellAbility(s);
+            }
 		}
     }
 
