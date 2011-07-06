@@ -478,7 +478,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             }
         });
 
-        sealedRadioButton.setToolTipText("");
+        //sealedRadioButton.setToolTipText("");
         sealedRadioButton.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.SEALED_TEXT));
         sealedRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -486,7 +486,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             }
         });
 
-        draftRadioButton.setToolTipText("");
+        //draftRadioButton.setToolTipText("");
         draftRadioButton.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.BOOSTER_TEXT));
         draftRadioButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -532,6 +532,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         });
         
         upldDrftCheckBox.setText("Upload Draft Picks");
+        upldDrftCheckBox.setToolTipText("Your picks and all other participants' picks will help the Forge AI make better draft picks.");
         upldDrftCheckBox.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Constant.Runtime.UpldDrft[0] = upldDrftCheckBox.isSelected();
@@ -539,7 +540,8 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         	}
         });
         
-        foilRandomCheckBox.setText("Random Constructed Foiling");
+        foilRandomCheckBox.setText("Random Foiling");
+        foilRandomCheckBox.setToolTipText("Approximately 1:6 cards will appear with foiling effects applied.");
         foilRandomCheckBox.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Constant.Runtime.RndCFoil[0] = foilRandomCheckBox.isSelected();
