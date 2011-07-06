@@ -8,4 +8,5 @@ T:Mode$ Taps | ValidCard$ Card.AttachedBy | Execute$ TrigDestroy | TriggerDescri
 SVar:TrigDestroy:AB$Destroy | Cost$ 0 | Defined$ TriggeredCard
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/brink_of_disaster.jpg
+SetInfo:WWK|Common|http://magiccards.info/scans/en/wwk/52.jpg
 End
