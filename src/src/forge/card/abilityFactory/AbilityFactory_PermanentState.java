@@ -1674,13 +1674,19 @@ public class AbilityFactory_PermanentState {
 
         for (Card tgtC : tgtCards) {
             if (AllZoneUtil.isCardInPlay(tgtC) && (tgt == null || CardFactoryUtil.canTarget(af.getHostCard(), tgtC))) {
-                String[] tapOrUntap = new String[]{"Tap", "Untap"};
-                Object z = GuiUtils.getChoiceOptional("Tap or Untap " + tgtC + "?", tapOrUntap);
-                if (null == z) continue;
-                boolean tap = (z.equals("Tap")) ? true : false;
+            	if(sa.getActivatingPlayer().isHuman()) {
+            		String[] tapOrUntap = new String[]{"Tap", "Untap"};
+            		Object z = GuiUtils.getChoiceOptional("Tap or Untap " + tgtC + "?", tapOrUntap);
+            		if (null == z) continue;
+            		boolean tap = (z.equals("Tap")) ? true : false;
 
-                if (tap) tgtC.tap();
-                else tgtC.untap();
+            		if (tap) tgtC.tap();
+            		else tgtC.untap();
+            	}
+            	else {
+            		//computer
+            		tgtC.tap();
+            	}
             }
         }
     }
