@@ -3,8 +3,11 @@ ManaCost:1 B B
 Types:Creature Zombie
 Text:no text
 PT:2/2
-K:stPumpAll:Zombie.Creature+Other:0/0/Swampwalk:no Condition:Other Zombie creatures have swampwalk.
-K:stPumpAll:Zombie.Other:0/0/SVar=Pump:no Condition:Other Zombies have "B: Regenerate this permanent."
+S:Mode$ Continuous | Affected$ Creature.Zombie+Other | AddKeyword$ Swampwalk | Description$ Other Zombie creatures have swampwalk.
+S:Mode$ Continuous | Affected$ Creature.Zombie+Other | AddAbility$ Regenerate | Description$ Other Zombies have "B: Regenerate this permanent."
+S:Mode$ Continuous | Affected$ Zombie | AddAbility$ Damage | Description$ All Zombies have "2, Sacrifice this permanent: This permanent deals 2 damage to target creature or player."
+SVar:Regenerate:AB$Regenerate | Cost$ B | SpellDescription$ Regenerate this permanent
+SVar:Damage:AB$DealDamage | Cost$ 2 Sac<1/CARDNAME> | Tgt$ TgtCP | TgtPrompt$ Select target creature or player | NumDmg$ 2 | SpellDescription$ This permanent deals 2 damage to target creature or player.
 SVar:Pump:AB$Regenerate | Cost$ B | SpellDescription$ Regenerate CARDNAME.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
