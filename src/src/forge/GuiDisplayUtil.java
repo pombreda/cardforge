@@ -1356,7 +1356,7 @@ public class GuiDisplayUtil implements NewConstants {
             if (null == counter) return;
             else {
             	Integer integers[] = new Integer[99];
-            	for(int j = 0; j < 99; j++) integers[j] = new Integer(j);
+            	for(int j = 0; j < 99; j++) integers[j] = Integer.valueOf(j);
             	Integer i = GuiUtils.getChoiceOptional("How many counters?", integers);
                 if (null == i) return;
                 else {
