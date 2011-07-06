@@ -231,7 +231,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
         addListeners();
 
-        this.setSize(550, 553);
+        this.setSize(550, 565);
         GuiUtils.centerFrame(this);
 
         setTitle(ForgeProps.getLocalized(LANG.PROGRAM_NAME));
