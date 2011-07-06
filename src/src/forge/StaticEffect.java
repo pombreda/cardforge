@@ -2,6 +2,7 @@ package forge;
 
 
 import forge.card.spellability.SpellAbility;
+import forge.card.staticAbility.StaticAbility;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class StaticEffect {
     private CardList affectedCards = new CardList();
     private int xValue = 0;
     private int yValue = 0;
+    private HashMap<String, String> mapParams = new HashMap<String, String>();
 
     //for P/T
     private HashMap<Card, String> originalPT = new HashMap<Card, String>();
@@ -602,5 +604,14 @@ public class StaticEffect {
     public int getYValue() {
         return yValue;
     }
+    
+    public void setParams(HashMap<String, String> params) {
+    	mapParams = params;
+    }
+    
+    public HashMap<String, String> getParams() {
+    	return mapParams;
+    }
+    
 
 }//end class StaticEffect

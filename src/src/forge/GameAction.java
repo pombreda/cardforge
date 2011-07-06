@@ -7,6 +7,7 @@ import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.mana.ManaCost;
 import forge.card.mana.ManaPool;
 import forge.card.spellability.*;
+import forge.card.staticAbility.StaticAbility;
 import forge.card.trigger.Trigger;
 import forge.deck.Deck;
 import forge.gui.GuiUtils;
@@ -580,8 +581,22 @@ public class GameAction {
 
         //do this twice, sometimes creatures/permanents will survive when they shouldn't
         for (int q = 0; q < 9; q++) {
-
+        	
             boolean checkAgain = false;
+        	
+        	//remove old effects
+        	AllZone.getStaticEffects().clearStaticEffects();
+        	
+        	//apply new effects continuous 
+        	CardList allCards = AllZoneUtil.getCardsInPlay();
+            if (Constant.Runtime.DevMode[0])
+                System.out.println("staticAbility ");
+        	for (Card card : allCards) {
+        		ArrayList<StaticAbility> staticAbilities = card.getStaticAbilities();
+        		for (StaticAbility stAb : staticAbilities)
+        			stAb.applyAbility("Continuous");
+        	}
+
 
             //card state effects like Glorious Anthem
             for (String effect : AllZone.getStaticEffects().getStateBasedMap().keySet()) {
