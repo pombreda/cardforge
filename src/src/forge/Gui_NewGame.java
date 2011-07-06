@@ -1575,7 +1575,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 	    		}
 	    	}
 	    	Constant.CardTypes.loaded[0] = true;
-	    	if (Constant.Runtime.DevMode[0]) {
+	    	/*if (Constant.Runtime.DevMode[0]) {
 		    	System.out.println(Constant.CardTypes.cardTypes[0].list);
 		    	System.out.println(Constant.CardTypes.superTypes[0].list);
 		    	System.out.println(Constant.CardTypes.basicTypes[0].list);
@@ -1586,7 +1586,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 		    	System.out.println(Constant.CardTypes.enchantmentTypes[0].list);
 		    	System.out.println(Constant.CardTypes.artifactTypes[0].list);
 		    	System.out.println(Constant.CardTypes.walkerTypes[0].list);
-	    	}
+	    	}*/
     	}
     	
     	if (!Constant.Keywords.loaded[0]) {

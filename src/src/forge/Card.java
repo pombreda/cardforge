@@ -9,6 +9,7 @@ import forge.card.spellability.Ability_Mana;
 import forge.card.spellability.Ability_Triggered;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Spell_Permanent;
+import forge.card.staticAbility.StaticAbility;
 import forge.card.trigger.Trigger;
 
 import java.util.*;
@@ -29,6 +30,7 @@ public class Card extends MyObservable {
     private HashMap<String, Object> triggeringObjects = new HashMap<String, Object>();
     private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
     private ArrayList<String> intrinsicAbility = new ArrayList<String>();
+    private ArrayList<String> staticAbilityStrings = new ArrayList<String>();
     private ArrayList<String> intrinsicKeyword = new ArrayList<String>();
     private ArrayList<String> extrinsicKeyword = new ArrayList<String>();
     private ArrayList<String> otherExtrinsicKeyword = new ArrayList<String>();
@@ -48,6 +50,7 @@ public class Card extends MyObservable {
     private ArrayList<SpellAbility> spellAbility = new ArrayList<SpellAbility>();
     private ArrayList<Ability_Mana> manaAbility = new ArrayList<Ability_Mana>();
     private ArrayList<Card_Color> cardColor = new ArrayList<Card_Color>();
+    private ArrayList<StaticAbility> staticAbilities = new ArrayList<StaticAbility>();
 
     private ArrayList<Object> rememberedObjects = new ArrayList<Object>();
     private ArrayList<Card> imprintedCards = new ArrayList<Card>();
@@ -144,7 +147,6 @@ public class Card extends MyObservable {
     private String rarity = "";
     private String text = "";
     private String manaCost = "";
-    //private String upkeepCost = "";
     private String echoCost = "";
     private String madnessCost = "";
     private String chosenType = "";
@@ -1687,6 +1689,11 @@ public class Card extends MyObservable {
                     sb.append(trig.toString() + "\r\n");
                 }
             }
+            
+            // static abilities
+            for (StaticAbility stAb : staticAbilities) {
+            	sb.append(stAb.toString() + "\r\n");
+            }
 
             // Ripple + Dredge + Madness + CARDNAME is {color} + Recover.
             for (int i = 0; i < kw.size(); i++) {
@@ -1765,6 +1772,11 @@ public class Card extends MyObservable {
             if (!trig.isSecondary()) {
                 sb.append(trig.toString() + "\r\n");
             }
+        }
+        
+        // static abilities
+        for (StaticAbility stAb : staticAbilities) {
+        	sb.append(stAb.toString() + "\r\n");
         }
 
         ArrayList<String> addedManaStrings = new ArrayList<String>();
@@ -4070,6 +4082,45 @@ public class Card extends MyObservable {
     public void removeHiddenExtrinsicKeyword(String s) {
         HiddenExtrinsicKeyword.remove(s);
         //this.updateObservers();
+    }
+    
+    /**
+     * <p>setStaticAbilityStrings.</p>
+     *
+     * @param a a {@link java.util.ArrayList} object.
+     */
+    public void setStaticAbilityStrings(ArrayList<String> a) {
+    	staticAbilityStrings = new ArrayList<String>(a);
+    }
+    
+    public ArrayList<String> getStaticAbilityStrings() {
+    	return staticAbilityStrings;
+    }
+
+    /**
+     * <p>addStaticAbilityStrings.</p>
+     *
+     * @param s a {@link java.lang.String} object.
+     */
+    public void addStaticAbilityString(String s) {
+        if (s.trim().length() != 0)
+        	staticAbilityStrings.add(s);
+    }
+    
+    public void setStaticAbilities(ArrayList<StaticAbility> a) {
+    	staticAbilities = new ArrayList<StaticAbility>(a);
+    }
+    
+    public ArrayList<StaticAbility> getStaticAbilities() {
+        return new ArrayList<StaticAbility>(staticAbilities);
+    }
+    
+    public void addStaticAbility(String s) {
+    	
+        if (s.trim().length() != 0) {
+        	StaticAbility stAb = new StaticAbility(s,this);
+        	staticAbilities.add(stAb);
+        }
     }
 
     /**

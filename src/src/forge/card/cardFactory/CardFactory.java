@@ -811,6 +811,13 @@ public class CardFactory implements NewConstants {
             }
 
         }
+        
+        //register static abilities
+        ArrayList<String> stAbs = card.getStaticAbilityStrings();
+        if (stAbs.size() > 0)
+            for (int i = 0; i < stAbs.size(); i++) {
+            	card.addStaticAbility(stAbs.get(i));
+            }
 
 
         //******************************************************************
@@ -2772,6 +2779,7 @@ public class CardFactory implements NewConstants {
         c.setCurSetCode(sim.getCurSetCode());
         c.setImageFilename(sim.getImageFilename());
         c.setTriggers(sim.getTriggers());
+        c.setStaticAbilityStrings(sim.getStaticAbilityStrings());
 
         return c;
     }// copyStats()

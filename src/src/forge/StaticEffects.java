@@ -3,6 +3,7 @@ package forge;
 import com.esotericsoftware.minlog.Log;
 import forge.card.cardFactory.CardFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -13,6 +14,53 @@ import java.util.HashMap;
  * @version $Id: $
  */
 public class StaticEffects {
+	
+	//**************** StaticAbility system **************************
+	public ArrayList<StaticEffect> staticEffects;
+	
+	public void clearStaticEffects() {
+        // remove all static effects
+        for (int i = 0; i < staticEffects.size(); i++) {
+            removeStaticEffect(staticEffects.get(i));
+        }
+		staticEffects = new ArrayList<StaticEffect>();
+	}
+	
+	public void addStaticEffect(StaticEffect staticEffect) {
+		staticEffects.add(staticEffect);
+	}
+	
+	void removeStaticEffect(StaticEffect se) {
+        //Card source = se.getSource();
+        CardList affectedCards = se.getAffectedCards();
+        //int xValue = se.getXValue();         // the old xValue has to be removed, not the actual one!
+        //int yValue = se.getYValue();         // the old xValue has to be removed, not the actual one!
+        HashMap<String, String> params = se.getParams();
+
+        int powerBonus = 0;
+        int toughnessBonus = 0;
+        
+		if (params.containsKey("AddPower")) {
+			powerBonus = Integer.valueOf(params.get("AddPower"));
+		}
+		
+		if (params.containsKey("AddToughness"))
+			toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+			
+		for (int i = 0; i < affectedCards.size(); i++) {
+            Card affectedCard = affectedCards.get(i);
+            affectedCard.addSemiPermanentAttackBoost(powerBonus * -1);
+            affectedCard.addSemiPermanentDefenseBoost(toughnessBonus * -1);
+		}
+    }
+
+    void removeStaticEffect(Card source, Card affectedCard, HashMap<String, String> params, int xValue, int yValue) {
+
+
+    }
+	
+	//**************** End StaticAbility system **************************
+	
     //this is used to keep track of all state-based effects in play:
     private HashMap<String, Integer> stateBasedMap = new HashMap<String, Integer>();
 
@@ -25,6 +73,7 @@ public class StaticEffects {
      */
     public StaticEffects() {
         initStateBasedEffectsList();
+        staticEffects = new ArrayList<StaticEffect>();
     }
 
     /**
