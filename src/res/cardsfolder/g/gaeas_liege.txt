@@ -1,0 +1,11 @@
+Name:Gaea's Liege
+ManaCost:3 G G G
+Types:Creature Avatar
+Text:no text
+PT:*/*
+K:stSetPT:Count$TypeYouCtrl.Forest:Count$TypeYouCtrl.Forest:isAttacking:Count$TypeOppCtrl.Forest:Count$TypeOppCtrl.Forest:As long as CARDNAME isn't attacking, its power and toughness are each equal to the number of Forests you control. As long as CARDNAME is attacking, its power and toughness are each equal to the number of Forests defending player controls.
+A:AB$Animate | Cost$ T | ValidTgts$ Land | TgtPrompt$ Select target land | Types$ Forest | OverwriteTypes$ True | KeepSupertypes$ True | KeepCardTypes$ True | UntilHostLeavesPlay$ True | SpellDescription$ Target land becomes a Forest until CARDNAME leaves the battlefield.  
+SVar:BuffedBy:Forest
+SVar:Rarity:Rare
+SVar:Picture:http://www.wizards.com/global/images/magic/general/gaeas_liege.jpg
+End
