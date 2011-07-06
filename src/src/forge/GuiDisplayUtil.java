@@ -1395,5 +1395,14 @@ public class GuiDisplayUtil implements NewConstants {
             c.untap();
         }
     }
+    
+    /**
+     * <p>devModeUnlimitedLand.</p>
+     *
+     * @since 1.0.16
+     */
+    public static void devModeUnlimitedLand() {
+    	AllZone.getHumanPlayer().addMaxLandsToPlay(100);
+    }
 
 }//end class GuiDisplayUtil

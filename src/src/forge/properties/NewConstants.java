@@ -345,6 +345,13 @@ public interface NewConstants {
                 public static final String BUTTON = "%s/Display/untapperm/button";
                 public static final String MENU = "%s/Display/untapperm/menu";
             }
+            
+            public static final String NOLANDLIMIT = "%s/Display/nolandlimit";
+
+            public static interface NOLANDLIMIT {
+                public static final String BUTTON = "%s/Display/nolandlimit/button";
+                public static final String MENU = "%s/Display/nolandlimit/menu";
+            }
         }
 
         public static interface Gui_DownloadPictures {
