@@ -41,6 +41,7 @@ public class AllZone implements NewConstants {
     private static EndOfTurn EndOfTurn = new EndOfTurn();
     /** Constant <code>EndOfCombat</code> */
     private static EndOfCombat EndOfCombat = new EndOfCombat();
+    private static Upkeep Upkeep = new Upkeep();
 
     /** Constant <code>Phase</code> */
     private static final Phase Phase = new Phase();
@@ -221,6 +222,16 @@ public class AllZone implements NewConstants {
      */
     public static forge.EndOfCombat getEndOfCombat() {
         return EndOfCombat;
+    }
+    
+    /**
+     * <p>getUpkeep.</p>
+     *
+     * @return a {@link forge.EndOfCombat} object.
+     * @since 1.0.16
+     */
+    public static forge.Upkeep getUpkeep() {
+        return Upkeep;
     }
 
     /**

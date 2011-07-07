@@ -702,6 +702,7 @@ public class AbilityFactory_Pump {
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
     private void pumpResolve(SpellAbility sa) {
+    	Player activator = sa.getActivatingPlayer();
         ArrayList<Card> tgtCards;
         Target tgt = AF.getAbTgt();
         if (tgt != null)
@@ -753,6 +754,7 @@ public class AbilityFactory_Pump {
                     }
                 };
                 if (params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(untilEOT);
+                else if(params.containsKey("UntilYourNextUpkeep")) AllZone.getUpkeep().addUntil(activator, untilEOT);
                 else AllZone.getEndOfTurn().addUntil(untilEOT);
             }
         }
