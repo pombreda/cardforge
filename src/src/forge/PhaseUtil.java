@@ -332,15 +332,16 @@ public class PhaseUtil {
      * <p>handleUpkeep.</p>
      */
     public static void handleUpkeep() {
+    	Player turn = AllZone.getPhase().getPlayerTurn();
         if (skipUpkeep()) {
             // Slowtrips all say "on the next turn's upkeep" if there is no upkeep next turn, the trigger will never occur.
-            Player turn = AllZone.getPhase().getPlayerTurn();
             turn.clearSlowtripList();
             turn.getOpponent().clearSlowtripList();
             AllZone.getPhase().setNeedToNextPhase(true);
             return;
         }
 
+        AllZone.getUpkeep().executeUntil(turn);
         GameActionUtil.executeUpkeepEffects();
     }
 

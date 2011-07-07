@@ -14,6 +14,14 @@ public class CommandList implements java.io.Serializable, Command, Iterable<Comm
     private static final long serialVersionUID = -1532687201812613302L;
 
     private ArrayList<Command> a = new ArrayList<Command>();
+    
+    public CommandList() {
+    	;
+    }
+    
+    public CommandList(Command c) {
+    	a.add(c);
+    }
 
     /**
      * <p>iterator.</p>
