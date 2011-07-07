@@ -1,6 +1,7 @@
 package forge.card.trigger;
 
 import forge.*;
+import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
 
@@ -389,6 +390,33 @@ public abstract class Trigger {
             int left = list.size();
 
             if (!AllZoneUtil.compare(left, presentCompare, right)) {
+                return false;
+            }
+
+        }
+
+        if(mapParams.containsKey("CheckSVar")) {
+            String SVarName = mapParams.get("CheckSVar");
+            String operator = "GE";
+            String operand = "1";
+
+            if(mapParams.containsKey("SVarCompare"))
+            {
+                operator =  mapParams.get("SVarCompare").substring(0,2);
+                operand = mapParams.get("SVarCompare").substring(2);
+            }
+
+            int sVarResult = CardFactoryUtil.xCount(hostCard, hostCard.getSVar(SVarName));
+            int operandResult = 0;
+            try {
+                operandResult = Integer.parseInt(operand);
+            }
+            catch ( Exception e) {
+                operandResult = CardFactoryUtil.xCount(hostCard, hostCard.getSVar(operand));
+            }
+
+            if(!AllZoneUtil.compare(sVarResult,operator,operandResult))
+            {
                 return false;
             }
 
