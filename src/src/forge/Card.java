@@ -1850,6 +1850,10 @@ public class Card extends MyObservable {
             }
         }
 
+        //Note who controls and owns the card.
+        sb.append("\r\n\r\nOwner: ").append(owner);
+        sb.append("\r\nController: ").append(controller);
+
         return sb.toString().replaceAll("CARDNAME", getName()).trim();
     }//getText()
 
@@ -2824,11 +2828,12 @@ public class Card extends MyObservable {
      * @param player a {@link forge.Player} object.
      */
     public void setController(Player player) {
-        if (null != controller && !controller.isPlayer(player)) {
+        boolean sameController = controller == null ? false : controller.isPlayer(player);
+        controller = player;
+        if (null != controller && !sameController) {
             for (Command var : changeControllerCommandList)
                 var.execute();
         }
-        controller = player;
         this.updateObservers();
     }
 
