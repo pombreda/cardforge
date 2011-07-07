@@ -4,7 +4,7 @@ Types:Creature Zombie
 Text:Zombie spells you cast cost 1 less to cast.
 PT:1/1
 K:CostChange:Player:Less:1:Spell:All:Zombie:NoSpecial
-K:stPumpAll:Creature.Zombie+YouCtrl:2/1:No Condition:Zombie creatures you control get +2/+1.
+S:Mode$ Continuous | Affected$ Creature.Zombie+YouCtrl | AddPower$ 2 | AddToughness$ 1 | Description$ Zombie creatures you control get +2/+1.
 SVar:PlayMain1:TRUE
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
