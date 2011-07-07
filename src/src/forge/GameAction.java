@@ -589,6 +589,7 @@ public class GameAction {
         	
         	//apply new effects continuous 
         	CardList allCards = AllZoneUtil.getCardsInPlay();
+        	allCards.addAll(AllZoneUtil.getCardsInGraveyard());
             if (Constant.Runtime.DevMode[0])
                 System.out.println("staticAbility ");
         	for (Card card : allCards) {
