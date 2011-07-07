@@ -637,7 +637,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are tapped
      */
-    public static CardListFilter tapped = new CardListFilter() {
+    public static final CardListFilter tapped = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isTapped();
         }
@@ -646,7 +646,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are untapped
      */
-    public static CardListFilter untapped = new CardListFilter() {
+    public static final CardListFilter untapped = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isUntapped();
         }
@@ -655,7 +655,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all creatures
      */
-    public static CardListFilter creatures = new CardListFilter() {
+    public static final CardListFilter creatures = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isCreature();
         }
@@ -664,7 +664,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all enchantments
      */
-    public static CardListFilter enchantments = new CardListFilter() {
+    public static final CardListFilter enchantments = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isEnchantment();
         }
@@ -673,7 +673,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all equipment
      */
-    public static CardListFilter equipment = new CardListFilter() {
+    public static final CardListFilter equipment = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isEquipment();
         }
@@ -682,7 +682,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all unenchanted cards in a list
      */
-    public static CardListFilter unenchanted = new CardListFilter() {
+    public static final CardListFilter unenchanted = new CardListFilter() {
         public boolean addCard(Card c) {
             return !c.isEnchanted();
         }
@@ -691,7 +691,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all enchanted cards in a list
      */
-    public static CardListFilter enchanted = new CardListFilter() {
+    public static final CardListFilter enchanted = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isEnchanted();
         }
@@ -700,7 +700,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all nontoken cards
      */
-    public static CardListFilter nonToken = new CardListFilter() {
+    public static final CardListFilter nonToken = new CardListFilter() {
         public boolean addCard(Card c) {
             return !c.isToken();
         }
@@ -709,7 +709,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all token cards
      */
-    public static CardListFilter token = new CardListFilter() {
+    public static final CardListFilter token = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isToken();
         }
@@ -718,7 +718,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all nonbasic lands
      */
-    public static CardListFilter nonBasicLand = new CardListFilter() {
+    public static final CardListFilter nonBasicLand = new CardListFilter() {
         public boolean addCard(Card c) {
             return !c.isBasicLand();
         }
@@ -727,7 +727,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all basicLands
      */
-    public static CardListFilter basicLands = new CardListFilter() {
+    public static final CardListFilter basicLands = new CardListFilter() {
         public boolean addCard(Card c) {
             //the isBasicLand() check here may be sufficient...
             return c.isLand() && c.isBasicLand();
@@ -737,7 +737,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all artifacts
      */
-    public static CardListFilter artifacts = new CardListFilter() {
+    public static final CardListFilter artifacts = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isArtifact();
         }
@@ -746,7 +746,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all nonartifacts
      */
-    public static CardListFilter nonartifacts = new CardListFilter() {
+    public static final CardListFilter nonartifacts = new CardListFilter() {
         public boolean addCard(Card c) {
             return !c.isArtifact();
         }
@@ -755,7 +755,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all lands
      */
-    public static CardListFilter lands = new CardListFilter() {
+    public static final CardListFilter lands = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isLand();
         }
@@ -764,7 +764,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all nonlands
      */
-    public static CardListFilter nonlands = new CardListFilter() {
+    public static final CardListFilter nonlands = new CardListFilter() {
         public boolean addCard(Card c) {
             return !c.isLand();
         }
@@ -818,7 +818,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are black
      */
-    public static CardListFilter black = new CardListFilter() {
+    public static final CardListFilter black = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isBlack();
         }
@@ -827,7 +827,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are blue
      */
-    public static CardListFilter blue = new CardListFilter() {
+    public static final CardListFilter blue = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isBlue();
         }
@@ -836,7 +836,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are green
      */
-    public static CardListFilter green = new CardListFilter() {
+    public static final CardListFilter green = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isGreen();
         }
@@ -845,7 +845,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are red
      */
-    public static CardListFilter red = new CardListFilter() {
+    public static final CardListFilter red = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isRed();
         }
@@ -854,7 +854,7 @@ public class AllZoneUtil {
     /**
      * a CardListFilter to get all cards that are white
      */
-    public static CardListFilter white = new CardListFilter() {
+    public static final CardListFilter white = new CardListFilter() {
         public boolean addCard(Card c) {
             return c.isWhite();
         }
