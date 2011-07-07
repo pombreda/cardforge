@@ -43,11 +43,21 @@ public class StaticEffects {
 		String addKeywords[] = null;
         
 		if (params.containsKey("AddPower")) {
-			powerBonus = Integer.valueOf(params.get("AddPower"));
+			if (params.get("AddPower").equals("X")) {
+				powerBonus = se.getXValue();
+			} else if (params.get("AddPower").equals("Y")) {
+				powerBonus = se.getYValue();
+			} else 
+				powerBonus = Integer.valueOf(params.get("AddPower"));
 		}
 		
-		if (params.containsKey("AddToughness"))
-			toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+		if (params.containsKey("AddToughness")) {
+			if (params.get("AddToughness").equals("X"))
+				toughnessBonus = se.getXValue();
+			else if (params.get("AddToughness").equals("Y"))
+				toughnessBonus = se.getYValue();
+			else toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+		}
 		
 		if (params.containsKey("AddKeyword"))
 			addKeywords = params.get("AddKeyword").split(" & ");
@@ -72,11 +82,6 @@ public class StaticEffects {
                         affectedCard.removeSpellAbility(s);
             }
 		}
-    }
-
-    void removeStaticEffect(Card source, Card affectedCard, HashMap<String, String> params, int xValue, int yValue) {
-
-
     }
 	
 	//**************** End StaticAbility system **************************
