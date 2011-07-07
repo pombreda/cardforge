@@ -24,6 +24,9 @@ public class StaticAbility_Continuous {
 		
 		CardList affectedCards = AllZoneUtil.getCardsInPlay();
 		
+		if (params.containsKey("AffectedZone"))
+			affectedCards = AllZoneUtil.getCardsInZone(params.get("AffectedZone"));
+		
 		if (params.containsKey("Affected"))
 			affectedCards = affectedCards.getValidCards(params.get("Affected").split(","), controller, hostCard);
 		
