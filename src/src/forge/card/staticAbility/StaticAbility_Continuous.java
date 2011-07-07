@@ -9,6 +9,7 @@ import forge.CardList;
 import forge.Player;
 import forge.StaticEffect;
 import forge.card.abilityFactory.AbilityFactory;
+import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
 
 public class StaticAbility_Continuous {
@@ -37,14 +38,31 @@ public class StaticAbility_Continuous {
 		int powerBonus = 0;
 		int toughnessBonus = 0;
 		String addKeywords[] = null;
-		String addAbilities[] = null; 
+		String addAbilities[] = null;
 		
 		if (params.containsKey("AddPower")) {
-			powerBonus = Integer.valueOf(params.get("AddPower"));
+			if (params.get("AddPower").equals("X")) {
+				powerBonus = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("X").split("\\$")[1]);
+				se.setXValue(powerBonus);
+			}
+			else if (params.get("AddPower").equals("Y")) {
+				powerBonus = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("Y").split("\\$")[1]);
+				se.setYValue(powerBonus);
+			}
+			else powerBonus = Integer.valueOf(params.get("AddPower"));
 		}
 		
-		if (params.containsKey("AddToughness"))
-			toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+		if (params.containsKey("AddToughness")) {
+			if (params.get("AddToughness").equals("X")) {
+				toughnessBonus = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("X").split("\\$")[1]);
+				se.setXValue(toughnessBonus);
+			}
+			else if (params.get("AddToughness").equals("Y")) {
+				toughnessBonus = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("Y").split("\\$")[1]);
+				se.setYValue(toughnessBonus);
+			}
+			else toughnessBonus = Integer.valueOf(params.get("AddToughness"));
+		}
 		
 		if (params.containsKey("AddKeyword"))
 			addKeywords = params.get("AddKeyword").split(" & ");
