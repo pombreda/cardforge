@@ -134,6 +134,13 @@ public class StaticAbility {
     	if (mapParams.containsKey("OpponentTurn") && !AllZone.getPhase().isPlayerTurn(controller.getOpponent()))
     		return false;
     	
+    	if (mapParams.containsKey("TopCardOfLibraryIs")) {
+    		Card topCard = AllZoneUtil.getPlayerCardsInLibrary(controller).get(0);
+    		if (!topCard.isValidCard(mapParams.get("TopCardOfLibraryIs").split(","), controller, hostCard))
+    			return false;
+    	}
+    		
+    	
     	/*if(mapParams.containsKey("isPresent")) {
     		String isPresent = mapParams.get("isPresent");
             CardList list = AllZoneUtil.getCardsInPlay();
