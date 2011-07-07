@@ -497,6 +497,16 @@ public class AbilityFactory_Attach {
 	                
 	            }//execute()
 	        };//Command
+
+            Command onChangesControl = new Command() {
+                public void execute() {
+                    if(card.isEnchanting()) {
+                        Card crd = card.getEnchanting().get(0);
+
+                        AllZone.getGameAction().changeController(new CardList(crd), crd.getController(),card.getController());
+                    }
+                }//execute()
+            };//Command
 	        
 	        Command onLeavesPlay = new Command() {
 				private static final long serialVersionUID = -639204333673364477L;
@@ -513,6 +523,7 @@ public class AbilityFactory_Attach {
 	        card.addEnchantCommand(onEnchant);
 	        card.addUnEnchantCommand(onUnEnchant);
 	        card.addLeavesPlayCommand(onLeavesPlay);
+            card.addChangeControllerCommand(onChangesControl);
 		}
 		card.enchantCard(tgt);
 	}
