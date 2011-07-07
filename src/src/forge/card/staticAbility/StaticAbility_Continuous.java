@@ -39,6 +39,7 @@ public class StaticAbility_Continuous {
 		int toughnessBonus = 0;
 		String addKeywords[] = null;
 		String addAbilities[] = null;
+		String addSVars[] = null;
 		
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -73,6 +74,9 @@ public class StaticAbility_Continuous {
 				sVars[i] = hostCard.getSVar(sVars[i]);
 			addAbilities = sVars;
 		}
+		
+		if (params.containsKey("AddSVar"))
+			addSVars = params.get("AddSVar").split(" & ");
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
@@ -95,6 +99,11 @@ public class StaticAbility_Continuous {
                         sa.setType("Temporary");
                         affectedCard.addSpellAbility(sa);
                     }
+            
+            //add SVars
+            if (addSVars != null)
+            	for (String sVar : addSVars)
+            		affectedCard.setSVar(sVar, hostCard.getSVar(sVar));
 		}
 	}
 
