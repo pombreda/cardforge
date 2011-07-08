@@ -224,8 +224,10 @@ public class TriggerHandler {
     
     public void removeTemporaryTriggers() {
     	for (int i = 0; i < registeredTriggers.size(); i++) {
-            if (registeredTriggers.get(i).isTemporary())
+            if (registeredTriggers.get(i).isTemporary()) {
+            	registeredTriggers.get(i).hostCard.removeTrigger(registeredTriggers.get(i));
                 registeredTriggers.remove(i);
+            }
         }
     }
 
