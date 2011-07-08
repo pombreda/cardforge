@@ -41,6 +41,7 @@ public class StaticEffects {
         int powerBonus = 0;
         int toughnessBonus = 0;
 		String addKeywords[] = null;
+		String addTypes[] = null;
         
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -61,6 +62,9 @@ public class StaticEffects {
 		
 		if (params.containsKey("AddKeyword"))
 			addKeywords = params.get("AddKeyword").split(" & ");
+		
+		if (params.containsKey("AddType"))
+			addTypes = params.get("AddType").split(" & ");
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
@@ -81,6 +85,11 @@ public class StaticEffects {
                     if (s.getType().equals("Temporary"))
                         affectedCard.removeSpellAbility(s);
             }
+            
+            //remove Types
+            if (addTypes != null)
+            	for (String type : addTypes)
+            		affectedCard.removeType(type);
 		}
     }
 	
