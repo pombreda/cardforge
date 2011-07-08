@@ -11,6 +11,8 @@ import forge.StaticEffect;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
+import forge.card.trigger.Trigger;
+import forge.card.trigger.TriggerHandler;
 
 public class StaticAbility_Continuous {
 	
@@ -41,6 +43,7 @@ public class StaticAbility_Continuous {
 		String addAbilities[] = null;
 		String addSVars[] = null;
 		String addTypes[] = null;
+		String addTriggers[] = null;
 		
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -81,6 +84,13 @@ public class StaticAbility_Continuous {
 		
 		if (params.containsKey("AddType"))
 			addTypes = params.get("AddType").split(" & ");
+		
+		if (params.containsKey("AddTrigger")) {
+			String sVars[] = params.get("AddTrigger").split(" & ");
+			for(int i = 0 ; i < sVars.length ; i++)
+				sVars[i] = hostCard.getSVar(sVars[i]);
+			addTriggers = sVars;
+		}
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
@@ -109,10 +119,19 @@ public class StaticAbility_Continuous {
             	for (String sVar : addSVars)
             		affectedCard.setSVar(sVar, hostCard.getSVar(sVar));
             
-          //add Types
+            //add Types
             if (addTypes != null)
             	for (String type : addTypes)
             		affectedCard.addType(type);
+            
+	        //add triggers
+	        if (addTriggers != null)
+	        	for (String trigger : addTriggers) {
+	                Trigger actualTrigger = TriggerHandler.parseTrigger(trigger,affectedCard);
+	                actualTrigger.setTemporary(true);
+            		affectedCard.addTrigger(actualTrigger);
+            		AllZone.getTriggerHandler().registerTrigger(actualTrigger);
+	        	}
 		}
 	}
 

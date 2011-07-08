@@ -3,6 +3,7 @@ package forge;
 import com.esotericsoftware.minlog.Log;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
+import forge.card.trigger.TriggerHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,8 @@ public class StaticEffects {
             removeStaticEffect(staticEffects.get(i));
         }
 		staticEffects = new ArrayList<StaticEffect>();
+		
+    	AllZone.getTriggerHandler().removeTemporaryTriggers();
 	}
 	
 	public void addStaticEffect(StaticEffect staticEffect) {
