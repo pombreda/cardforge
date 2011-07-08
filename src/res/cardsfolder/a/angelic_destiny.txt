@@ -1,0 +1,13 @@
+Name:Angelic Destiny
+ManaCost:2 W W
+Types:Enchantment Aura
+Text:no text
+K:Enchant Creature
+K:enPump:+4/+4/Flying & First strike:Enchanted creature gets +4/+4, has flying and first strike, and is an Angel in addition to its other types.
+K:stAnimateEnchanted:Creature:no change/no change:Angel:no colors:No Abilities:isPresent Card.AttachedBy:
+T:Mode$ ChangesZone | Origin$ Battlefield | Destination$ Graveyard | ValidCard$ Card.AttachedBy | Execute$ TrigChangeZone | TriggerDescription$ When enchanted creature dies, return CARDNAME to its owner's hand.
+SVar:TrigChangeZone:AB$ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ Hand
+SVar:Rarity:Mythic
+SVar:Picture:http://www.wizards.com/global/images/magic/general/angelic_destiny.jpg
+SetInfo:M12|Mythic|http://magiccards.info/scans/en/m12/3.jpg
+End
