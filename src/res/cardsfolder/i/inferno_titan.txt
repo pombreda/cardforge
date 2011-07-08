@@ -12,4 +12,5 @@ SVar:Dmg3:DB$DealDamage | Tgt$ TgtCP | TgtPrompt$ Select target creature or play
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/inferno_titan.jpg
 SetInfo:M11|Mythic|http://magiccards.info/scans/en/m11/146.jpg
+SetInfo:M12|Mythic|http://magiccards.info/scans/en/m12/147.jpg
 End

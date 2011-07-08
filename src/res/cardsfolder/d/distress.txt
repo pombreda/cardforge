@@ -6,5 +6,6 @@ A:SP$ Discard | Cost$ B B | ValidTgts$ Player | Mode$ RevealYouChoose | DiscardV
 SVar:Rarity:Common
 SVar:Picture:http://resources.wizards.com/magic/cards/10e/en/card135219.jpg
 SetInfo:CHK|Common|http://magiccards.info/scans/en/chk/111.jpg
+SetInfo:M12|Common|http://magiccards.info/scans/en/m12/94.jpg
 SetInfo:10E|Common|http://magiccards.info/scans/en/10e/136.jpg
 End

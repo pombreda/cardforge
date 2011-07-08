@@ -39,7 +39,7 @@ def initSets():
 	allSets['Tenth Edition'] = '10E'
 	allSets['Magic 2010'] = 'M10'
 	allSets['Magic 2011'] = 'M11'
-	#allSets['Magic 2012'] = 'M12'
+	allSets['Magic 2012'] = 'M12'
 	
 	# Multiplayer Sets
 	allSets['Commander'] = 'COM'

@@ -13,4 +13,5 @@ SVar:TrigCounter:AB$Counter | Cost$ 0 | Defined$ TriggeredSourceSA | UnlessCost$
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/frost_titan.jpg
 SetInfo:M11|Mythic|http://magiccards.info/scans/en/m11/55.jpg
+SetInfo:M12|Mythic|http://magiccards.info/scans/en/m12/55.jpg
 End
