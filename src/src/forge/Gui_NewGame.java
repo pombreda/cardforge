@@ -17,7 +17,6 @@ import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.MENU;
 import forge.properties.NewConstants.LANG.Gui_NewGame.MENU_BAR.OPTIONS;
-import forge.Constant;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
@@ -74,7 +73,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     // @SuppressWarnings("unused")
     // titledBorder2
     /** Constant <code>newGuiCheckBox</code> */
-    private static JCheckBox newGuiCheckBox = new JCheckBox("", true);
+    //private static JCheckBox newGuiCheckBox = new JCheckBox("", true);
     /** Constant <code>smoothLandCheckBox</code> */
     private static JCheckBox smoothLandCheckBox = new JCheckBox("", false);
     /** Constant <code>devModeCheckBox</code> */
@@ -136,7 +135,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         try {
             preferences = new ForgePreferences("forge.preferences");
             useLAFFonts.setSelected(preferences.lafFonts);
-            newGuiCheckBox.setSelected(preferences.newGui);
+            //newGuiCheckBox.setSelected(preferences.newGui);
             smoothLandCheckBox.setSelected(preferences.stackAiLand);
             Constant.Runtime.Mill[0] = preferences.millingLossCondition;
             Constant.Runtime.DevMode[0] = preferences.developerMode;
@@ -520,7 +519,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         setCustomBorder(jPanel3, ForgeProps.getLocalized(NEW_GAME_TEXT.SETTINGS));
         jPanel3.setLayout(new MigLayout("align center"));
 
-        newGuiCheckBox.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.NEW_GUI));
+        //newGuiCheckBox.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.NEW_GUI));
         smoothLandCheckBox.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.AI_LAND));
 
         devModeCheckBox.setText(ForgeProps.getLocalized(NEW_GAME_TEXT.DEV_MODE));
@@ -593,7 +592,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
 
         this.getContentPane().add(jPanel3, "span 2, grow");
 
-        jPanel3.add(newGuiCheckBox, "wrap");
+        //jPanel3.add(newGuiCheckBox, "wrap");
         jPanel3.add(smoothLandCheckBox, "wrap");
         jPanel3.add(devModeCheckBox, "wrap");
         jPanel3.add(upldDrftCheckBox, "wrap");
@@ -800,8 +799,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         //DO NOT CHANGE THIS ORDER, GuiDisplay needs to be created before cards are added
         //Constant.Runtime.DevMode[0] = devModeCheckBox.isSelected();
 
-        if (newGuiCheckBox.isSelected()) AllZone.setDisplay(new GuiDisplay4());
-        else AllZone.setDisplay(new GuiDisplay3());
+        //if (newGuiCheckBox.isSelected())
+            AllZone.setDisplay(new GuiDisplay4());
+        //else AllZone.setDisplay(new GuiDisplay3());
 
         Constant.Runtime.Smooth[0] = smoothLandCheckBox.isSelected();
 
@@ -1473,7 +1473,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         try {
             preferences.laf = UIManager.getLookAndFeel().getClass().getName();
             preferences.lafFonts = useLAFFonts.isSelected();
-            preferences.newGui = newGuiCheckBox.isSelected();
+            //preferences.newGui = newGuiCheckBox.isSelected();
             preferences.stackAiLand = smoothLandCheckBox.isSelected();
             preferences.millingLossCondition = Constant.Runtime.Mill[0];
             preferences.developerMode = Constant.Runtime.DevMode[0];

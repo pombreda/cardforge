@@ -1,8 +1,6 @@
 package forge;
 
-
-import com.cloudgarden.layout.AnchorConstraint;
-import com.cloudgarden.layout.AnchorLayout;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -12,38 +10,29 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI Builder, which is free for
- * non-commercial use. If Jigloo is being used commercially (ie, by a corporation, company or business for any
- * purpose whatever) then you should purchase a license for each developer using Jigloo. Please visit
- * www.cloudgarden.com for details. Use of Jigloo implies acceptance of these licensing terms. A COMMERCIAL LICENSE
- * HAS NOT BEEN PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR ANY CORPORATE OR
- * COMMERCIAL PURPOSE.
- *
  * @author Forge
  * @version $Id: $
  */
 public class GUI_Filter extends javax.swing.JDialog {
 
-    /** Constant <code>serialVersionUID=-8475271235196182185L</code> */
+    /**
+     * Constant <code>serialVersionUID=-8475271235196182185L</code>
+     */
     private static final long serialVersionUID = -8475271235196182185L;
-    private JLabel jLabel1;
-    private JTextField NameText;
-    private JLabel jLabel5;
-    private JTextField cardText;
-    @SuppressWarnings("unused")
-    private JTextField cardType;
-    private JPanel jPanel1;
+    private JLabel nameLabel;
+    private JTextField nameTextField;
+    private JLabel cardTextLabel;
+    private JTextField cardTextField;
+    private JPanel colorPanel;
+    private JPanel bottomPanel;
     private JCheckBox jCheckBoxColorless;
     private JCheckBox jCheckBoxWhite;
     private JCheckBox jCheckBoxRed;
     private JCheckBox jCheckBoxGreen;
     private JCheckBox jCheckBoxBlue;
-    private JSeparator jSeparator1;
-    private JLabel jLabel2;
-    private JLabel jLabel3;
-    private JLabel jLabel4;
+    private JLabel colorLabel;
+    private JLabel typeLabel;
     private JCheckBox jCheckBoxPlaneswalker;
     private JCheckBox jCheckBoxArtifact;
     private JCheckBox jCheckBoxCreature;
@@ -51,20 +40,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox jCheckBoxInstant;
     private JCheckBox jCheckBoxLand;
     private JCheckBox jCheckBoxSorcery;
-    private JSeparator jSeparator2;
-    private JPanel jPanel2;
+    private JPanel typePanel;
     private JCheckBox jCheckBoxBlack;
     private JButton jButtonOk;
-    //private ButtonGroup buttonGroup1;
+    private JPanel topPanel;
     private DeckDisplay deckDisplay;
-    public CardList filterCardList;
-    int kCode;
-
 
     /**
      * <p>Constructor for GUI_Filter.</p>
      *
-     * @param g a {@link javax.swing.JFrame} object.
+     * @param g       a {@link javax.swing.JFrame} object.
      * @param display a {@link forge.DeckDisplay} object.
      */
     public GUI_Filter(JFrame g, DeckDisplay display) {
@@ -78,151 +63,100 @@ public class GUI_Filter extends javax.swing.JDialog {
      */
     private void initGUI() {
         try {
+            this.isResizable();
 
-            AnchorLayout thisLayout = new AnchorLayout();
-            getContentPane().setLayout(thisLayout);
-            {
-                NameText = new JTextField();
-                getContentPane().add(
-                        getJPanel2(),
-                        new AnchorConstraint(293, 972, 837, 534, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJButtonOk(),
-                        new AnchorConstraint(873, 638, 965, 384, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJPanel1(),
-                        new AnchorConstraint(293, 483, 837, 45, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        NameText,
-                        new AnchorConstraint(38, 969, 126, 362, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                NameText.setPreferredSize(new java.awt.Dimension(148, 24));
-                NameText.addKeyListener(new java.awt.event.KeyAdapter() {
-                    @Override
-                    public void keyPressed(java.awt.event.KeyEvent e) {
-
-                        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                            FilterCardTable();
-                        }
-                    }
-                });
-            }
-            {
-                jLabel1 = new JLabel();
-                getContentPane().add(
-                        jLabel1,
-                        new AnchorConstraint(4, 313, 153, 41, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJTextField1(),
-                        new AnchorConstraint(159, 969, 248, 360, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJLabel5(),
-                        new AnchorConstraint(126, 313, 275, 41, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                jLabel1.setText("Name:");
-                jLabel1.setPreferredSize(new java.awt.Dimension(75, 50));
-                jLabel1.setLayout(null);
-                jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16));
-                jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-            }
+            getContentPane().setLayout(new MigLayout("fill"));
+            getContentPane().add(getTopPanel(), "span 3, wrap");
+            getContentPane().add(getColorPanel(), "aligny top, growy");
+            getContentPane().add(getTypePanel(), "aligny top, wrap");
+            getContentPane().add(getBottomPanel(), "align center, span 3");
             setVisible(true);
-            this.setPreferredSize(new java.awt.Dimension(280, 300));
-
             Dimension screen = getToolkit().getScreenSize();
-            // int x = (screen.width - 280) / 2;
-            // int y = (screen.height - 300) / 2;
-            // this.setBounds(x, y, 280, 300);
-            // this.setResizable(false);
             int x = (screen.width - 340) / 2;
-            int y = (screen.height - 360) / 2;
-            this.setBounds(x, y, 340, 360);
+            int y = (screen.height - 500) / 2;
+            this.setBounds(x, y, 340, 500);
             this.setResizable(true);
             this.setTitle("Filter");
 
             setIconImage(null);
             this.addWindowListener(new WListener());
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private JTextField getNameTextField() {
+        if (nameTextField == null) {
+            nameTextField = new JTextField(30);
+            nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return nameTextField;
+    }
+
+    private JLabel getNameLabel() {
+        if (nameLabel == null) {
+            nameLabel = new JLabel();
+            nameLabel.setText("Name:");
+            nameLabel.setFont(new Font("Segoe UI", 0, 16));
+        }
+        return nameLabel;
+    }
+
+    private JPanel getTopPanel() {
+        if (topPanel == null) {
+            topPanel = new JPanel();
+            topPanel.setLayout(new MigLayout());
+            topPanel.add(
+                    getNameLabel(), "gap");
+            topPanel.add(
+                    getNameTextField(), "span 3, wrap");
+            topPanel.add(
+                    getCardTextLabel(), "gap");
+            topPanel.add(
+                    getCardTextField(), "span 3, wrap");
+        }
+
+        return topPanel;
+    }
+
     /**
-     * <p>Getter for the field <code>jPanel1</code>.</p>
+     * <p>Getter for the field <code>colorPanel</code>.</p>
      *
      * @return a {@link javax.swing.JPanel} object.
      */
-    private JPanel getJPanel1() {
-        if (jPanel1 == null) {
-            jPanel1 = new JPanel();
-            AnchorLayout jPanel1Layout = new AnchorLayout();
-            jPanel1.setPreferredSize(new java.awt.Dimension(121, 183));
-            jPanel1.setLayout(jPanel1Layout);
-            jPanel1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-            jPanel1.setBackground(new java.awt.Color(192, 192, 192));
-            jPanel1.add(getJCheckBoxBlack(), new AnchorConstraint(134, 985, 240, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxColorless(), new AnchorConstraint(878, 983, 950, 84,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxWhite(), new AnchorConstraint(726, 987, 798, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxRed(), new AnchorConstraint(577, 987, 654, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxGreen(), new AnchorConstraint(428, 987, 494, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxBlue(), new AnchorConstraint(279, 987, 356, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJSeparator1(), new AnchorConstraint(107, 987, 139, 12, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJLabel2(), new AnchorConstraint(-20, 990, 123, 16, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+    private JPanel getColorPanel() {
+        if (colorPanel == null) {
+            colorPanel = new JPanel();
+            colorPanel.setLayout(new MigLayout());
+            colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            colorPanel.setBackground(new java.awt.Color(192, 192, 192));
+            colorPanel.add(getColorLabel(), "align, wrap");
+            colorPanel.add(getJCheckBoxBlack(), "wrap");
+            colorPanel.add(getJCheckBoxColorless(), "wrap");
+            colorPanel.add(getJCheckBoxWhite(), "wrap");
+            colorPanel.add(getJCheckBoxRed(), "wrap");
+            colorPanel.add(getJCheckBoxGreen(), "wrap");
+            colorPanel.add(getJCheckBoxBlue(), "wrap");
         }
-        return jPanel1;
+        return colorPanel;
     }
 
-    /**
-     * <p>Getter for the field <code>jLabel2</code>.</p>
-     *
-     * @return a {@link javax.swing.JLabel} object.
-     */
-    private JLabel getJLabel2() {
-        if (jLabel2 == null) {
-            jLabel2 = new JLabel();
-            jLabel2.setText("Color");
-            jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel2.setPreferredSize(new java.awt.Dimension(152, 39));
-            jLabel2.setLayout(null);
+    private JPanel getBottomPanel() {
+        if (bottomPanel == null) {
+            bottomPanel = new JPanel();
+            bottomPanel.setLayout(new MigLayout());
+            bottomPanel.add(getJButtonOk(), "align, span 3, grow");
         }
-        return jLabel2;
-    }
-
-    /**
-     * <p>Getter for the field <code>jSeparator1</code>.</p>
-     *
-     * @return a {@link javax.swing.JSeparator} object.
-     */
-    private JSeparator getJSeparator1() {
-        if (jSeparator1 == null) {
-            jSeparator1 = new JSeparator();
-            jSeparator1.setPreferredSize(new java.awt.Dimension(117, 6));
-            jSeparator1.setLayout(null);
-        }
-        return jSeparator1;
+        return bottomPanel;
     }
 
     /**
@@ -233,9 +167,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxBlue() {
         if (jCheckBoxBlue == null) {
             jCheckBoxBlue = new JCheckBox();
-            jCheckBoxBlue.setLayout(null);
             jCheckBoxBlue.setText("Blue");
-            jCheckBoxBlue.setPreferredSize(new java.awt.Dimension(109, 14));
             jCheckBoxBlue.setSelected(true);
             jCheckBoxBlue.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxBlue.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -259,9 +191,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxGreen() {
         if (jCheckBoxGreen == null) {
             jCheckBoxGreen = new JCheckBox();
-            jCheckBoxGreen.setLayout(null);
             jCheckBoxGreen.setText("Green");
-            jCheckBoxGreen.setPreferredSize(new java.awt.Dimension(109, 12));
             jCheckBoxGreen.setSelected(true);
             jCheckBoxGreen.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxGreen.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -285,9 +215,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxRed() {
         if (jCheckBoxRed == null) {
             jCheckBoxRed = new JCheckBox();
-            jCheckBoxRed.setLayout(null);
             jCheckBoxRed.setText("Red");
-            jCheckBoxRed.setPreferredSize(new java.awt.Dimension(109, 14));
             jCheckBoxRed.setSelected(true);
             jCheckBoxRed.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxRed.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -311,9 +239,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxWhite() {
         if (jCheckBoxWhite == null) {
             jCheckBoxWhite = new JCheckBox();
-            jCheckBoxWhite.setLayout(null);
             jCheckBoxWhite.setText("White");
-            jCheckBoxWhite.setPreferredSize(new java.awt.Dimension(109, 13));
             jCheckBoxWhite.setSelected(true);
             jCheckBoxWhite.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxWhite.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -337,9 +263,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxColorless() {
         if (jCheckBoxColorless == null) {
             jCheckBoxColorless = new JCheckBox();
-            jCheckBoxColorless.setLayout(null);
             jCheckBoxColorless.setText("Colorless");
-            jCheckBoxColorless.setPreferredSize(new java.awt.Dimension(80, 15));
             jCheckBoxColorless.setSelected(true);
             jCheckBoxColorless.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxColorless.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -363,9 +287,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JButton getJButtonOk() {
         if (jButtonOk == null) {
             jButtonOk = new JButton();
-            jButtonOk.setLayout(null);
             jButtonOk.setText("OK");
-            jButtonOk.setPreferredSize(new java.awt.Dimension(100, 25));
             jButtonOk.addMouseListener(new CustomListener());
         }
         return jButtonOk;
@@ -379,9 +301,7 @@ public class GUI_Filter extends javax.swing.JDialog {
     private JCheckBox getJCheckBoxBlack() {
         if (jCheckBoxBlack == null) {
             jCheckBoxBlack = new JCheckBox();
-            jCheckBoxBlack.setLayout(null);
             jCheckBoxBlack.setText("Black");
-            jCheckBoxBlack.setPreferredSize(new java.awt.Dimension(97, 20));
             jCheckBoxBlack.setBackground(new java.awt.Color(192, 192, 192));
             jCheckBoxBlack.setSelected(true);
             jCheckBoxBlack.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -398,103 +318,67 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>Getter for the field <code>jPanel2</code>.</p>
+     * <p>Getter for the field <code>typePanel</code>.</p>
      *
      * @return a {@link javax.swing.JPanel} object.
      */
-    private JPanel getJPanel2() {
-        if (jPanel2 == null) {
-            jPanel2 = new JPanel();
-            AnchorLayout jPanel2Layout = new AnchorLayout();
-            jPanel2.setPreferredSize(new java.awt.Dimension(121, 183));
-            jPanel2.setLayout(jPanel2Layout);
-            jPanel2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-            jPanel2.setBackground(new java.awt.Color(192, 192, 192));
-            jPanel2.add(getJSeparator2(), new AnchorConstraint(112, 987, 166, 20, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJLabel3(), new AnchorConstraint(-200, 951, -61, -166, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJLabel4(), new AnchorConstraint(-19, 985, 128, 4, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox1(), new AnchorConstraint(877, 948, 948, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox2(), new AnchorConstraint(751, 948, 827, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox3(), new AnchorConstraint(625, 948, 702, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox4(), new AnchorConstraint(505, 948, 581, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox5(), new AnchorConstraint(379, 948, 450, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox6(), new AnchorConstraint(254, 948, 325, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox7(), new AnchorConstraint(133, 948, 232, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
+    private JPanel getTypePanel() {
+        if (typePanel == null) {
+            typePanel = new JPanel();
+            typePanel.setLayout(new MigLayout());
+            typePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            typePanel.setBackground(new java.awt.Color(192, 192, 192));
+            typePanel.add(getTypeLabel(), "align, wrap");
+            typePanel.add(getJCheckBoxSorcery(), "wrap");
+            typePanel.add(getJCheckBoxPlaneswalker(), "wrap");
+            typePanel.add(getJCheckBoxLand(), "wrap");
+            typePanel.add(getJCheckBoxInstant(), "wrap");
+            typePanel.add(getJCheckBoxEnchant(), "wrap");
+            typePanel.add(getJCheckBoxCreature(), "wrap");
+            typePanel.add(getJCheckBoxArtifact(), "wrap");
         }
-        return jPanel2;
+        return typePanel;
     }
 
     /**
-     * <p>Getter for the field <code>jLabel3</code>.</p>
+     * <p>Getter for the field <code>colorLabel</code>.</p>
      *
      * @return a {@link javax.swing.JLabel} object.
      */
-    private JLabel getJLabel3() {
-        if (jLabel3 == null) {
-            jLabel3 = new JLabel();
-            jLabel3.setText("Color");
-            jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel3.setPreferredSize(new java.awt.Dimension(152, 39));
-            jLabel3.setLayout(null);
+    private JLabel getColorLabel() {
+        if (colorLabel == null) {
+            colorLabel = new JLabel();
+            colorLabel.setText("Color");
+            colorLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         }
-        return jLabel3;
+        return colorLabel;
     }
 
     /**
-     * <p>Getter for the field <code>jLabel4</code>.</p>
+     * <p>Getter for the field <code>typeLabel</code>.</p>
      *
      * @return a {@link javax.swing.JLabel} object.
      */
-    private JLabel getJLabel4() {
-        if (jLabel4 == null) {
-            jLabel4 = new JLabel();
-            jLabel4.setText("Type");
-            jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel4.setPreferredSize(new java.awt.Dimension(105, 27));
-            jLabel4.setLayout(null);
+    private JLabel getTypeLabel() {
+        if (typeLabel == null) {
+            typeLabel = new JLabel();
+            typeLabel.setText("Type");
+            typeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         }
-        return jLabel4;
+        return typeLabel;
     }
 
     /**
-     * <p>Getter for the field <code>jSeparator2</code>.</p>
-     *
-     * @return a {@link javax.swing.JSeparator} object.
-     */
-    private JSeparator getJSeparator2() {
-        if (jSeparator2 == null) {
-            jSeparator2 = new JSeparator();
-            jSeparator2.setPreferredSize(new java.awt.Dimension(116, 10));
-            jSeparator2.setLayout(null);
-        }
-        return jSeparator2;
-    }
-
-    /**
-     * <p>getJCheckBox1.</p>
+     * <p>getJCheckBoxSorcery.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox1() {
+    private JCheckBox getJCheckBoxSorcery() {
         if (jCheckBoxSorcery == null) {
             jCheckBoxSorcery = new JCheckBox();
-            jCheckBoxSorcery.setLayout(null);
             jCheckBoxSorcery.setText("Sorcery");
             jCheckBoxSorcery.setSelected(true);
             jCheckBoxSorcery.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxSorcery.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxSorcery.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -509,18 +393,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox2.</p>
+     * <p>getJCheckBoxPlaneswalker.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox2() {
+    private JCheckBox getJCheckBoxPlaneswalker() {
         if (jCheckBoxPlaneswalker == null) {
             jCheckBoxPlaneswalker = new JCheckBox();
-            jCheckBoxPlaneswalker.setLayout(null);
             jCheckBoxPlaneswalker.setText("Planeswalker");
             jCheckBoxPlaneswalker.setSelected(true);
             jCheckBoxPlaneswalker.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxPlaneswalker.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxPlaneswalker.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -535,18 +417,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox3.</p>
+     * <p>getJCheckBoxLand.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox3() {
+    private JCheckBox getJCheckBoxLand() {
         if (jCheckBoxLand == null) {
             jCheckBoxLand = new JCheckBox();
-            jCheckBoxLand.setLayout(null);
             jCheckBoxLand.setText("Land");
             jCheckBoxLand.setSelected(true);
             jCheckBoxLand.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxLand.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxLand.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -561,18 +441,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox4.</p>
+     * <p>getJCheckBoxInstant.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox4() {
+    private JCheckBox getJCheckBoxInstant() {
         if (jCheckBoxInstant == null) {
             jCheckBoxInstant = new JCheckBox();
-            jCheckBoxInstant.setLayout(null);
             jCheckBoxInstant.setText("Instant");
             jCheckBoxInstant.setSelected(true);
             jCheckBoxInstant.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxInstant.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxInstant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -587,18 +465,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox5.</p>
+     * <p>getJCheckBoxEnchant.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox5() {
+    private JCheckBox getJCheckBoxEnchant() {
         if (jCheckBoxEnchant == null) {
             jCheckBoxEnchant = new JCheckBox();
-            jCheckBoxEnchant.setLayout(null);
             jCheckBoxEnchant.setText("Enchant");
             jCheckBoxEnchant.setSelected(true);
             jCheckBoxEnchant.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxEnchant.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxEnchant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -613,18 +489,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox6.</p>
+     * <p>getJCheckBoxCreature.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox6() {
+    private JCheckBox getJCheckBoxCreature() {
         if (jCheckBoxCreature == null) {
             jCheckBoxCreature = new JCheckBox();
-            jCheckBoxCreature.setLayout(null);
             jCheckBoxCreature.setText("Creature");
             jCheckBoxCreature.setSelected(true);
             jCheckBoxCreature.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxCreature.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxCreature.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -639,18 +513,16 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJCheckBox7.</p>
+     * <p>getJCheckBoxArtifact.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox7() {
+    private JCheckBox getJCheckBoxArtifact() {
         if (jCheckBoxArtifact == null) {
             jCheckBoxArtifact = new JCheckBox();
-            jCheckBoxArtifact.setLayout(null);
             jCheckBoxArtifact.setText("Artifact");
             jCheckBoxArtifact.setSelected(true);
             jCheckBoxArtifact.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxArtifact.setPreferredSize(new java.awt.Dimension(93, 18));
             jCheckBoxArtifact.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -665,15 +537,14 @@ public class GUI_Filter extends javax.swing.JDialog {
     }
 
     /**
-     * <p>getJTextField1.</p>
+     * <p>getCardTextField.</p>
      *
      * @return a {@link javax.swing.JTextField} object.
      */
-    private JTextField getJTextField1() {
-        if (cardText == null) {
-            cardText = new JTextField();
-            cardText.setPreferredSize(new java.awt.Dimension(168, 30));
-            cardText.addKeyListener(new java.awt.event.KeyAdapter() {
+    private JTextField getCardTextField() {
+        if (cardTextField == null) {
+            cardTextField = new JTextField(30);
+            cardTextField.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
 
@@ -683,27 +554,26 @@ public class GUI_Filter extends javax.swing.JDialog {
                 }
             });
         }
-        return cardText;
+        return cardTextField;
     }
 
     /**
-     * <p>Getter for the field <code>jLabel5</code>.</p>
+     * <p>Getter for the field <code>cardTextLabel</code>.</p>
      *
      * @return a {@link javax.swing.JLabel} object.
      */
-    private JLabel getJLabel5() {
-        if (jLabel5 == null) {
-            jLabel5 = new JLabel();
-            jLabel5.setText("Card Text:");
-            jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16));
-            jLabel5.setPreferredSize(new java.awt.Dimension(75, 50));
-            jLabel5.setLayout(null);
+    private JLabel getCardTextLabel() {
+        if (cardTextLabel == null) {
+            cardTextLabel = new JLabel();
+            cardTextLabel.setText("Card Text:");
+            cardTextLabel.setFont(new java.awt.Font("Segoe UI", 0, 16));
         }
-        return jLabel5;
+        return cardTextLabel;
     }
 
-
+    /**
+     *
+     */
     public class CustomListener implements MouseListener {
 
         public void mouseClicked(MouseEvent e) {
@@ -764,15 +634,15 @@ public class GUI_Filter extends javax.swing.JDialog {
      */
     private void FilterCardTable() {
 
-        String name = NameText.getText();
-        String cText = cardText.getText();
+        String name = nameTextField.getText();
+        String cText = cardTextField.getText();
 
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
+        /*
+           * TODO Braids: "getAllCards copies the entire array, but that does not
+           * seem to be needed here. Significant performance improvement is
+           * possible if this code used getCards instead (along with a for each
+           * loop instead of using get(i), if applicable)."
+           */
         CardList filterCardList = AllZone.getCardFactory().getAllCards();
         CardFilter filter = new CardFilter();
         Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
@@ -886,9 +756,6 @@ public class GUI_Filter extends javax.swing.JDialog {
             }
 
         }
-
         dispose();
-
     }
-
 }
