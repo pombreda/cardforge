@@ -907,7 +907,21 @@ public class TriggerHandler {
             //Card src = (Card)(sa[0].getSourceCard().getTriggeringObject("Card"));
             //System.out.println("Trigger going on stack for "+mode+".  Card = "+src);
 
-            AllZone.getStack().addSimultaneousStackEntry(wrapperAbility);
+            if(regtrig.getMapParams().containsKey("Static"))
+            {
+                if(regtrig.getMapParams().get("Static").equals("True"))
+                {
+                    AllZone.getGameAction().playSpellAbility_NoStack(wrapperAbility,false);
+                }
+                else
+                {
+                    AllZone.getStack().addSimultaneousStackEntry(wrapperAbility);
+                }
+            }
+            else
+            {
+                AllZone.getStack().addSimultaneousStackEntry(wrapperAbility);
+            }
             return true;
         }
 
