@@ -3,7 +3,8 @@ ManaCost:2 W W
 Types:Creature Spirit
 Text:no text
 PT:2/3
-K:stPumpAll:Artifact.nonCreature:0/0/Shroud:isUntapped:As long as Spectral Guardian is untapped, noncreature artifacts have shroud. (They can't be the targets of spells or abilities.)
+S:Mode$ Continuous | Affected$ Artifact.nonCreature | AddKeyword$ Shroud | CheckSVar$ X | SVarCompare$ EQ1 | Description$ As long as CARDNAME is untapped, noncreature artifacts have shroud. (They can't be the targets of spells or abilities.)
+SVar:X:Count$Valid Card.Self+untapped
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/spectral_guardian.jpg
