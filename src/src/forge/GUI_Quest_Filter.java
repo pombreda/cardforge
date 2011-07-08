@@ -11,8 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 
 /**
@@ -146,26 +144,7 @@ public class GUI_Quest_Filter extends javax.swing.JDialog {
             this.setTitle("Filter");
             pack();
 
-            Exception exception = null;
-            try {
-                // Call Java 6 method without making the Java 5 compiler 
-                // unhappy:
-                Method method = this.getClass().getMethod("setIconImage");
-                method.invoke(this, new Object[]{null});
-            } catch (NoSuchMethodException err) {
-                exception = err;
-            } catch (IllegalArgumentException err) {
-                exception = err;
-            } catch (IllegalAccessException err) {
-                exception = err;
-            } catch (InvocationTargetException err) {
-                exception = err;
-            } finally {
-                if (exception != null) {
-                    System.err.print("Exception thrown: " + exception);
-                    exception.printStackTrace();
-                }
-            }
+            setIconImage(null);
 
             this.addWindowListener(new WListener());
 

@@ -11,7 +11,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.lang.reflect.Method;
 
 
 /**
@@ -151,16 +150,8 @@ public class GUI_Filter extends javax.swing.JDialog {
             this.setBounds(x, y, 340, 360);
             this.setResizable(true);
             this.setTitle("Filter");
-            // pack();
-            try {
-                // Call Java 6 method without making the Java 5 compiler 
-                // unhappy:
-                Method method = this.getClass().getMethod("setIconImage");
-                method.invoke(this, new Object[]{null});
-            } catch (NoSuchMethodError err) {
-                // setIconImage is @since 1.6
-                err.printStackTrace();
-            }
+
+            setIconImage(null);
             this.addWindowListener(new WListener());
 
 
