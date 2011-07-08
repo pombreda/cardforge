@@ -39,3 +39,8 @@ How to file a bug report via google code:
 4) Post your issue by clicking on "new issue". You will receive a template that you can fill out. Under "version", write the release date of the beta (e.g. "BETA 06/12/2011") or the revision you used to compile your Forge version if you use the SVN (e.g. "Revision 9875"; command: "./svn.exe info forge-svn").
 
 5) If there are news regarding your issue, you will automatically be notified via your Googlemail address.
+
+
+Our Lawyers Made Us Do This:
+
+This product includes software developed by the Indiana University Extreme! Lab (http://www.extreme.indiana.edu/).
