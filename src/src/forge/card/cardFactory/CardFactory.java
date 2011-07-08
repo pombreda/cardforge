@@ -17,6 +17,9 @@ import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 
 import javax.swing.*;
+
+import net.slightlymagic.braids.util.ImmutableIterableFrom;
+
 import java.io.File;
 import java.util.*;
 
@@ -26,13 +29,13 @@ import java.util.*;
  * @author Forge
  * @version $Id: $
  */
-public class CardFactory implements NewConstants {
+public class CardFactory implements NewConstants, Iterable<Card> {
     // String cardname is the key, Card is the value
-    private Map<String, Card> map = new HashMap<String, Card>();
+    private Map<String, Card> map = new TreeMap<String, Card>();
 
     private CardList allCards = new CardList();
 
-    private HashSet<String> removedCardList;
+    private TreeSet<String> removedCardList;
     private Card blankCard = new Card();                 //new code
 
     /**
@@ -73,7 +76,7 @@ public class CardFactory implements NewConstants {
         blankCard.setOwner(AllZone.getHumanPlayer());
         blankCard.setController(AllZone.getHumanPlayer());
 
-        removedCardList = new HashSet<String>(FileUtil.readFile(ForgeProps.getFile(REMOVED)));
+        removedCardList = new TreeSet<String>(FileUtil.readFile(ForgeProps.getFile(REMOVED)));
 
 
         try {
@@ -96,6 +99,10 @@ public class CardFactory implements NewConstants {
     /**
      * Makes a shallow copy of the internal card list, and displays a progress
      * bar while doing so.
+     * 
+     * It's better to use iterator if you can.
+     * 
+     * @see #iterator
      *
      * @return a shallow copy of the internal card list
      */
@@ -121,6 +128,10 @@ public class CardFactory implements NewConstants {
     /**
      * Faster than getAllCards, but callers must not modify this list directly!
      *
+     * @deprecated use iterator 
+     * 
+     * @see #iterator
+     *
      * @return the internal {@link forge.CardList} object -- do not modify!
      */
     public CardList getCards() {
@@ -128,6 +139,12 @@ public class CardFactory implements NewConstants {
     }// getAllCards()
 
 
+	public Iterator<Card> iterator() {
+		return new ImmutableIterableFrom<Card>(map.values());
+	}
+
+    
+    
     /**
      * <p>readCards.</p>
      *
