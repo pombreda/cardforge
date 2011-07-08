@@ -597,7 +597,9 @@ public class GameAction {
         		for (StaticAbility stAb : staticAbilities)
         			stAb.applyAbility("Continuous");
         	}
-
+        	
+        	HashMap<String, Object> runParams = new HashMap<String, Object>();
+        	AllZone.getTriggerHandler().runTrigger("Always", runParams);
 
             //card state effects like Glorious Anthem
             for (String effect : AllZone.getStaticEffects().getStateBasedMap().keySet()) {

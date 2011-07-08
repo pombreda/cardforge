@@ -79,6 +79,8 @@ public class TriggerHandler {
         String mode = mapParams.get("Mode");
         if (mode.equals("AbilityCast")) {
             ret = new Trigger_SpellAbilityCast(mapParams, host);
+        } else if (mode.equals("Always")) {
+            ret = new Trigger_Always(mapParams, host);
         } else if (mode.equals("AttackerBlocked")) {
             ret = new Trigger_AttackerBlocked(mapParams, host);
         } else if (mode.equals("AttackerUnblocked")) {
