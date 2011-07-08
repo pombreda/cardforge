@@ -3,8 +3,9 @@ ManaCost:4
 Types:Artifact Creature Construct
 Text:no text
 PT:4/4
-T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Artifact.Other+YouCtrl | PresentCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When you control no other artifacts, sacrifice Synod Centurion.
+T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Artifact.Other+YouCtrl | PresentCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When you control no other artifacts, sacrifice CARDNAME.
 SVar:TrigSac:AB$Sacrifice | Cost$ 0 | Defined$ Self
+SVar:NeedsToPlay:Artifact.YouCtrl
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/synod_centurion.jpg
 End

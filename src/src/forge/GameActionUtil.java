@@ -4616,7 +4616,6 @@ public class GameActionUtil {
         Sacrifice_NoEnchantments.execute();
         Sacrifice_NoLands.execute();
         Sacrifice_NoCreatures.execute();
-        Sacrifice_NoOtherCreatures.execute();
 
         topCardReveal_Update.execute();
     }// executeCardStateEffects()
@@ -5903,28 +5902,6 @@ public class GameActionUtil {
 
         }//execute()
     };//Sacrifice_NoCreatures
-
-    /** Constant <code>Sacrifice_NoOtherCreatures</code> */
-    private static Command Sacrifice_NoOtherCreatures = new Command() {
-        private static final long serialVersionUID = 6941452572773927921L;
-
-        public void execute() {
-            CardList cards = AllZoneUtil.getCardsInPlay();
-
-            cards = cards.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.hasKeyword("When you control no other creatures, sacrifice CARDNAME.");
-                }
-            });
-
-            for (Card c : cards) {
-                if (AllZoneUtil.getCreaturesInPlay(c.getController()).size() == 1) {
-                    AllZone.getGameAction().sacrifice(c);
-                }
-            }
-
-        }//execute()
-    }; //Sacrifice_NoOtherCreatures
 
     /** Constant <code>Sound_the_Call_Wolf</code> */
     public static Command Sound_the_Call_Wolf = new Command() {
