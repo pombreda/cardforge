@@ -3,7 +3,7 @@ ManaCost:W
 Types:Creature Sliver
 Text:no text
 PT:1/1
-K:stPumpAll:Creature.Sliver:0/0/Flanking:no Condition:All Sliver creatures have flanking.
+S:Mode$ Continuous | Affected$ Creature.Sliver | AddKeyword$ Flanking | Description$ All Sliver creatures have flanking.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sidewinder_sliver.jpg

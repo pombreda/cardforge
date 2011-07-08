@@ -4,7 +4,7 @@ Types:Creature Faerie
 Text:no text
 PT:2/2
 K:Flying
-K:stPumpAll:Creature.withFlying+YouCtrl:0/1:No Condition:Other creatures you control with flying get +0/+1.
+S:Mode$ Continuous | Affected$ Creature.withFlying+YouCtrl+Other | AddToughness$ 1 | Description$ Other creatures you control with flying get +0/+1.
 A:AB$ PumpAll | Cost$ T | ValidCards$ Creature.withFlying+Other+YouCtrl | NumAtt$ +1 | SpellDescription$ Other creatures you control with flying get +1/+0 until end of turn.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
