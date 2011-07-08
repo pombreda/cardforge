@@ -425,11 +425,6 @@ public class GuiDisplay3 extends JFrame implements CardContainer, Display, NewCo
                 if (o instanceof CardPanel) {
                     CardPanel cardPanel = (CardPanel) o;
 
-                    if (cardPanel.getCard().isUntapped()) {
-                        MP3Player mp3 = new MP3Player("tap.mp3");
-                        mp3.play();
-                    }
-
                     if (cardPanel.getCard().isTapped()
                             && (inputControl.input instanceof Input_PayManaCost || inputControl.input instanceof Input_PayManaCost_Ability)) {
 

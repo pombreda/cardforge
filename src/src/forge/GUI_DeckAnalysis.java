@@ -1,6 +1,6 @@
 package forge;
 
-import com.cloudgarden.layout.AnchorLayout;
+import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -751,7 +751,7 @@ public class GUI_DeckAnalysis extends javax.swing.JDialog {
             jPanel4.add(getJButton1());
         } else {
             jPanel4.removeAll();
-            AnchorLayout jPanel4Layout = new AnchorLayout();
+            MigLayout jPanel4Layout = new MigLayout();
             jPanel4.setBackground(new java.awt.Color(192, 192, 192));
             jPanel4.setPreferredSize(new java.awt.Dimension(139, 201));
             jPanel4.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
