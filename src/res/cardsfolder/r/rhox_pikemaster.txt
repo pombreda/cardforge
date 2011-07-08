@@ -4,7 +4,7 @@ Types:Creature Rhino Soldier
 Text:no text
 PT:3/3
 K:First Strike
-K:stPumpAll:Creature.Soldier+Other+YouCtrl:0/0/First Strike:No Condition:Other Soldier creatures you control have first strike.
+S:Mode$ Continuous | Affected$ Creature.Soldier+Other+YouCtrl | AddKeyword$ First Strike | Description$ Other Soldier creatures you control have first strike.
 SVar:PlayMain1:TRUE
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
