@@ -18,6 +18,7 @@ public class StaticEffect {
     private CardList affectedCards = new CardList();
     private int xValue = 0;
     private int yValue = 0;
+    private String chosenType;
     private HashMap<String, String> mapParams = new HashMap<String, String>();
 
     //for P/T
@@ -610,6 +611,14 @@ public class StaticEffect {
     
     public HashMap<String, String> getParams() {
     	return mapParams;
+    }
+    
+    public void setChosenType(String type) {
+    	chosenType = type;
+    }
+    
+    public String getChosenType() {
+    	return chosenType;
     }
     
 

@@ -66,8 +66,13 @@ public class StaticEffects {
 		if (params.containsKey("AddKeyword"))
 			addKeywords = params.get("AddKeyword").split(" & ");
 		
-		if (params.containsKey("AddType"))
+		if (params.containsKey("AddType")) {
 			addTypes = params.get("AddType").split(" & ");
+    		if(addTypes[0].equals("ChosenType")) {
+    			String chosenType = se.getChosenType(); 
+    			addTypes[0] = chosenType;
+    		}
+		}
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
