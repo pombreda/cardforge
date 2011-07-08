@@ -32,7 +32,7 @@ public class Trigger_Always extends Trigger {
     /** {@inheritDoc} */
     @Override
     public Trigger getCopy() {
-        Trigger copy = new Trigger_AttackerUnblocked(mapParams, hostCard);
+        Trigger copy = new Trigger_Always(mapParams, hostCard);
         if (overridingAbility != null) {
             copy.setOverridingAbility(overridingAbility);
         }
