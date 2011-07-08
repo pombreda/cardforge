@@ -273,8 +273,6 @@ public class PhaseUtil {
             }
         } // end of Permanents don't untap during their controllers' untap steps
 
-        if (isAnZerrinRuinsType(getAnZerrinRuinsTypes(), c)) return false;
-
         return true;
     }
 
@@ -295,35 +293,6 @@ public class PhaseUtil {
         if (AllZoneUtil.getPlayerCardsInPlay(AllZone.getPhase().getPlayerTurn(), "Mungha Wurm").size() > 0)
             return true;
 
-        return false;
-    }
-
-    /**
-     * <p>getAnZerrinRuinsTypes.</p>
-     *
-     * @return a {@link java.util.ArrayList} object.
-     */
-    private static ArrayList<String> getAnZerrinRuinsTypes() {
-        ArrayList<String> types = new ArrayList<String>();
-        CardList ruins = AllZoneUtil.getCardsInPlay("An-Zerrin Ruins");
-        for (Card ruin : ruins) {
-            types.add(ruin.getChosenType());
-        }
-        return types;
-    }
-
-    /**
-     * <p>isAnZerrinRuinsType.</p>
-     *
-     * @param types a {@link java.util.ArrayList} object.
-     * @param card a {@link forge.Card} object.
-     * @return a boolean.
-     */
-    private static boolean isAnZerrinRuinsType(ArrayList<String> types, Card card) {
-        ArrayList<String> cardTypes = card.getType();
-        for (String type : cardTypes) {
-            if (types.contains(type)) return true;
-        }
         return false;
     }
 

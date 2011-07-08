@@ -1661,43 +1661,7 @@ public class CardFactory implements NewConstants {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("An-Zerrin Ruins")) {
-
-            final Ability_Static comesIntoPlayAbility = new Ability_Static(card, "0") {
-                @Override
-                public void resolve() {
-                    String chosenType = "";
-                    if (card.getController().isHuman()) {
-                        chosenType = JOptionPane.showInputDialog(null, "Enter a creature type:", card.getName(),
-                                JOptionPane.QUESTION_MESSAGE);
-                    } else {
-                        //not implemented for AI
-                    }
-                    if (!CardUtil.isACreatureType(chosenType)) chosenType = "";
-                    card.setChosenType(chosenType);
-                }//resolve()
-            }; //comesIntoPlayAbility
-
-            Command intoPlay = new Command() {
-                private static final long serialVersionUID = 2985015252466920757L;
-
-                public void execute() {
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(card.getName()).append(" - choose a creature type. Creatures of that type do not untap during their controller's untap step.");
-                    comesIntoPlayAbility.setStackDescription(sb.toString());
-
-                    AllZone.getStack().addSimultaneousStackEntry(comesIntoPlayAbility);
-
-                }
-            };
-
-            card.addComesIntoPlayCommand(intoPlay);
-        }//*************** END ************ END **************************
-
-
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Barl's Cage")) {
             final String Tgts[] = {"Creature"};
