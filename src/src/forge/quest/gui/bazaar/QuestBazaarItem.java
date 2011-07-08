@@ -2,7 +2,6 @@ package forge.quest.gui.bazaar;
 
 
 import forge.AllZone;
-import forge.gui.ForgeFontConstants;
 import forge.gui.GuiUtils;
 import forge.gui.MultiLineLabel;
 import forge.quest.data.bazaar.QuestStallPurchasable;
@@ -64,13 +63,13 @@ public class QuestBazaarItem {
         iconPanel.add(iconLabel, BorderLayout.NORTH);
 
         JLabel nameLabel = new JLabel(item.getPurchaseName());
-        nameLabel.setFont(new Font(ForgeFontConstants.SANS_SERIF, Font.BOLD, 14));
+        nameLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 14));
 
         JLabel descriptionLabel = new MultiLineLabel("<html>" + item.getPurchaseDescription() + "</html>");
-        descriptionLabel.setFont(new Font(ForgeFontConstants.SANS_SERIF, Font.PLAIN, 12));
+        descriptionLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 
         JLabel priceLabel = new JLabel("<html><b>Cost:</b> " + item.getPrice() + " credits</html>");
-        priceLabel.setFont(new Font(ForgeFontConstants.SANS_SERIF, Font.PLAIN, 12));
+        priceLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 12));
 
 
         JButton purchaseButton = new JButton("Buy");
