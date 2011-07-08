@@ -4952,9 +4952,6 @@ public class GameActionUtil {
             //Gather Cards on the Battlefield with the stPump Keyword
             CardList cards_WithKeyword = AllZoneUtil.getCardsInPlay();
             cards_WithKeyword = cards_WithKeyword.getKeywordsContain("stPump");
-            CardList cardsInGrave = AllZoneUtil.getCardsInGraveyard();
-            cardsInGrave = cardsInGrave.getKeywordsContain("stGravePump");
-            cards_WithKeyword.addAll(cardsInGrave);
 
             // check each card
             for (int i = 0; i < cards_WithKeyword.size(); i++) {
@@ -4965,7 +4962,7 @@ public class GameActionUtil {
                 for (int j = 0; j < keywords.size(); j++) {
                     String keyword = keywords.get(j);
 
-                    if (keyword.startsWith("stPump") || keyword.startsWith("stGravePump")) {
+                    if (keyword.startsWith("stPump")) {
                     	
                         StaticEffect se = new StaticEffect();     //create a new StaticEffect
                         se.setSource(cardWithKeyword);
