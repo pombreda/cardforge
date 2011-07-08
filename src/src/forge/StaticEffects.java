@@ -3,7 +3,6 @@ package forge;
 import com.esotericsoftware.minlog.Log;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
-import forge.card.trigger.TriggerHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;

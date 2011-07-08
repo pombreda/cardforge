@@ -1,7 +1,6 @@
 package forge.card.trigger;
 
 import forge.*;
-import forge.card.abilityFactory.AbilityFactory;
 import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
 
