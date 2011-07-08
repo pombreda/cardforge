@@ -505,4 +505,14 @@ public abstract class Trigger {
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
     public abstract void setTriggeringObjects(SpellAbility sa);
+    
+    protected boolean temporary = false;
+    
+    public void setTemporary(boolean temp) {
+    	temporary = temp;
+    }
+    
+    public boolean isTemporary() {
+    	return temporary;
+    }
 }

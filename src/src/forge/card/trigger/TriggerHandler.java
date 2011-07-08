@@ -219,6 +219,13 @@ public class TriggerHandler {
                 registeredTriggers.remove(i);
         }
     }
+    
+    public void removeTemporaryTriggers() {
+    	for (int i = 0; i < registeredTriggers.size(); i++) {
+            if (registeredTriggers.get(i).isTemporary())
+                registeredTriggers.remove(i);
+        }
+    }
 
     /**
      * <p>Getter for the field <code>registeredTriggers</code>.</p>

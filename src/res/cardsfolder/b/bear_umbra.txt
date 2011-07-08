@@ -5,7 +5,7 @@ Text:no text
 K:Enchant creature
 K:Totem armor
 K:enPump:+0/+0
-K:stPumpEnchanted:Creature:+2/+2/SVar=TriggerUntap & ForceSVar=TriggeredUntap:No Condition:Enchanted creature gets +2/+2 and has "Whenever this creature attacks, untap all lands you control."
+S:Mode$ Continuous | Affected$ Card.AttachedBy | AddPower$ 2 | AddToughness$ 2 | AddTrigger$ TrigUntap | AddSVar$ TriggeredUntap | Description$ Enchanted creature gets +2/+2 and has "Whenever this creature attacks, untap all lands you control."
 SVar:TrigUntap:Mode$ Attacks | ValidCard$ Card.Self | Execute$ TriggeredUntap | TriggerDescription$ Whenever this creature attacks, untap all lands you control.
 SVar:TriggeredUntap:AB$UntapAll | Cost$ 0 | ValidCards$ Land.YouCtrl
 SVar:Rarity:Rare
