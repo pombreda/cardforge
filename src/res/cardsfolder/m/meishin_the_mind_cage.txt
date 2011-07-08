@@ -1,8 +1,8 @@
 Name:Meishin, the Mind Cage
 ManaCost:4 U U U
 Types:Legendary Enchantment
-Text:All creatures get -X/-0, where X is the number of cards in your hand.
-K:stPumpAll:Creature:X/0:no Condition:no text
+Text:no text
+S:Mode$ Continuous | Affected$ Creature | AddPower$ X | Description$ All creatures get -X/-0, where X is the number of cards in your hand.
 SVar:X:Count$InYourHand/Negative
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
