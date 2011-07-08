@@ -82,8 +82,14 @@ public class StaticAbility_Continuous {
 		if (params.containsKey("AddSVar"))
 			addSVars = params.get("AddSVar").split(" & ");
 		
-		if (params.containsKey("AddType"))
+		if (params.containsKey("AddType")) {
 			addTypes = params.get("AddType").split(" & ");
+    		if(addTypes[0].equals("ChosenType")) {
+    			String chosenType = hostCard.getChosenType(); 
+    			addTypes[0] = chosenType;
+    			se.setChosenType(chosenType);
+    		}
+        }
 		
 		if (params.containsKey("AddTrigger")) {
 			String sVars[] = params.get("AddTrigger").split(" & ");
