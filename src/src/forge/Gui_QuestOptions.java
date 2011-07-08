@@ -143,6 +143,7 @@ public class Gui_QuestOptions extends JFrame {
         realisticRadio.setText("Realistic");
         fantasyRadio.setText("Fantasy");
 
+        easyRadio.setSelected(true);
         realisticRadio.setSelected(true);
 
         cbStandardStart.setText("Standard (Type 2) Starting Pool");
@@ -246,7 +247,7 @@ public class Gui_QuestOptions extends JFrame {
             Object[] possibleValues = {"Yes", "No"};
             Object choice = JOptionPane.showOptionDialog(null, "Starting a new quest will overwrite your current quest. Continue?",
                     "Start New Quest?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-                    null, possibleValues, possibleValues[0]);
+                    null, possibleValues, possibleValues[1]);
 
             if (!choice.equals(0))
                 return;
