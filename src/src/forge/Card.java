@@ -1850,10 +1850,6 @@ public class Card extends MyObservable {
             }
         }
 
-        //Note who controls and owns the card.
-        sb.append("\r\n\r\nOwner: ").append(owner);
-        sb.append("\r\nController: ").append(controller);
-
         return sb.toString().replaceAll("CARDNAME", getName()).trim();
     }//getText()
 
