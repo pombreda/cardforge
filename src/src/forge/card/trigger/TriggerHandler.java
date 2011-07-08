@@ -372,8 +372,15 @@ public class TriggerHandler {
                 decider[0] = AbilityFactory.getDefinedPlayers(host, trigParams.get("OptionalDecider"), sa[0]).get(0);
             } else {
                 mand = true;
-                if (sa[0].getTarget() != null) {
-                    sa[0].getTarget().setMandatory(true);
+                
+                SpellAbility ability = sa[0];
+                while(ability != null){
+	                Target tgt = ability.getTarget();
+	                
+	                if (tgt != null) {
+	                	tgt.setMandatory(true);
+	                }
+	                ability = ability.getSubAbility();
                 }
             }
             final boolean isMandatory = mand;

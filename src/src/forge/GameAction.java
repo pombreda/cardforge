@@ -2006,7 +2006,17 @@ public class GameAction {
     public void playSpellAbility(SpellAbility sa) {
         sa.setActivatingPlayer(AllZone.getHumanPlayer());
 
-        if (sa.getPayCosts() != null || sa.getTarget() != null) {
+		// Need to check PayCosts, and Ability + All SubAbilities for Target
+        boolean newAbility = sa.getPayCosts() != null;
+        SpellAbility ability = sa;
+        while(ability != null && !newAbility){
+            Target tgt = ability.getTarget();
+            
+            newAbility |= tgt != null;
+            ability = ability.getSubAbility();
+        }
+        
+        if (newAbility) {
             Target_Selection ts = new Target_Selection(sa.getTarget(), sa);
             Cost_Payment payment = null;
             if (sa.getPayCosts() == null) {

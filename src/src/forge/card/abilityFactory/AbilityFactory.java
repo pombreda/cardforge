@@ -283,7 +283,7 @@ public class AbilityFactory {
                 SA = dd.getDrawback();
         }
 
-        if (API.equals("DamageAll")) {
+        else if (API.equals("DamageAll")) {
             AbilityFactory_DealDamage dd = new AbilityFactory_DealDamage(this);
             if (isAb)
                 SA = dd.getAbilityDamageAll();
@@ -293,7 +293,7 @@ public class AbilityFactory {
                 SA = dd.getDrawbackDamageAll();
         }
 
-        if (API.equals("PutCounter")) {
+        else if (API.equals("PutCounter")) {
             if (isAb)
                 SA = AbilityFactory_Counters.createAbilityPutCounters(this);
             else if (isSp)
@@ -302,7 +302,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Counters.createDrawbackPutCounters(this);
         }
 
-        if (API.equals("PutCounterAll")) {
+        else if (API.equals("PutCounterAll")) {
             if (isAb)
                 SA = AbilityFactory_Counters.createAbilityPutCounterAll(this);
             else if (isSp)
@@ -311,7 +311,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Counters.createDrawbackPutCounterAll(this);
         }
 
-        if (API.equals("RemoveCounter")) {
+        else if (API.equals("RemoveCounter")) {
             if (isAb)
                 SA = AbilityFactory_Counters.createAbilityRemoveCounters(this);
             else if (isSp)
@@ -320,7 +320,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Counters.createDrawbackRemoveCounters(this);
         }
 
-        if (API.equals("RemoveCounterAll")) {
+        else if (API.equals("RemoveCounterAll")) {
             if (isAb)
                 SA = AbilityFactory_Counters.createAbilityRemoveCounterAll(this);
             else if (isSp)
@@ -329,7 +329,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Counters.createDrawbackRemoveCounterAll(this);
         }
 
-        if (API.equals("Proliferate")) {
+        else if (API.equals("Proliferate")) {
             if (isAb)
                 SA = AbilityFactory_Counters.createAbilityProliferate(this);
             else if (isSp)
@@ -338,7 +338,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Counters.createDrawbackProliferate(this);
         }
 
-        if (API.equals("ChangeZone")) {
+        else if (API.equals("ChangeZone")) {
             if (isAb)
                 SA = AbilityFactory_ChangeZone.createAbilityChangeZone(this);
             else if (isSp)
@@ -347,7 +347,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ChangeZone.createDrawbackChangeZone(this);
         }
 
-        if (API.equals("ChangeZoneAll")) {
+        else if (API.equals("ChangeZoneAll")) {
             if (isAb)
                 SA = AbilityFactory_ChangeZone.createAbilityChangeZoneAll(this);
             else if (isSp)
@@ -356,7 +356,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ChangeZone.createDrawbackChangeZoneAll(this);
         }
 
-        if (API.equals("Pump")) {
+        else if (API.equals("Pump")) {
             AbilityFactory_Pump afPump = new AbilityFactory_Pump(this);
 
             if (isAb)
@@ -370,7 +370,7 @@ public class AbilityFactory {
                 hostCard.setSVar("PlayMain1", "TRUE");
         }
 
-        if (API.equals("PumpAll")) {
+        else if (API.equals("PumpAll")) {
             AbilityFactory_Pump afPump = new AbilityFactory_Pump(this);
 
             if (isAb)
@@ -384,7 +384,7 @@ public class AbilityFactory {
                 hostCard.setSVar("PlayMain1", "TRUE");
         }
 
-        if (API.equals("GainLife")) {
+        else if (API.equals("GainLife")) {
             if (isAb)
                 SA = AbilityFactory_AlterLife.createAbilityGainLife(this);
             else if (isSp)
@@ -393,7 +393,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_AlterLife.createDrawbackGainLife(this);
         }
 
-        if (API.equals("LoseLife")) {
+        else if (API.equals("LoseLife")) {
             if (isAb)
                 SA = AbilityFactory_AlterLife.createAbilityLoseLife(this);
             else if (isSp)
@@ -402,7 +402,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_AlterLife.createDrawbackLoseLife(this);
         }
 
-        if (API.equals("SetLife")) {
+        else if (API.equals("SetLife")) {
             if (isAb)
                 SA = AbilityFactory_AlterLife.createAbilitySetLife(this);
             else if (isSp)
@@ -411,7 +411,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_AlterLife.createDrawbackSetLife(this);
         }
 
-        if (API.equals("Poison")) {
+        else if (API.equals("Poison")) {
             if (isAb)
                 SA = AbilityFactory_AlterLife.createAbilityPoison(this);
             else if (isSp)
@@ -420,7 +420,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_AlterLife.createDrawbackPoison(this);
         }
 
-        if (API.equals("Fog")) {
+        else if (API.equals("Fog")) {
             if (isAb)
                 SA = AbilityFactory_Combat.createAbilityFog(this);
             else if (isSp)
@@ -429,7 +429,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Combat.createDrawbackFog(this);
         }
 
-        if (API.equals("Untap")) {
+        else if (API.equals("Untap")) {
             if (isAb)
                 SA = AbilityFactory_PermanentState.createAbilityUntap(this);
             else if (isSp)
@@ -438,7 +438,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_PermanentState.createDrawbackUntap(this);
         }
 
-        if (API.equals("UntapAll")) {
+        else if (API.equals("UntapAll")) {
             if (isAb)
                 SA = AbilityFactory_PermanentState.createAbilityUntapAll(this);
             else if (isSp)
@@ -447,7 +447,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_PermanentState.createDrawbackUntapAll(this);
         }
 
-        if (API.equals("Tap")) {
+        else if (API.equals("Tap")) {
             if (isAb)
                 SA = AbilityFactory_PermanentState.createAbilityTap(this);
             else if (isSp)
@@ -456,7 +456,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_PermanentState.createDrawbackTap(this);
         }
 
-        if (API.equals("TapAll")) {
+        else if (API.equals("TapAll")) {
             if (isAb)
                 SA = AbilityFactory_PermanentState.createAbilityTapAll(this);
             else if (isSp)
@@ -465,7 +465,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_PermanentState.createDrawbackTapAll(this);
         }
 
-        if (API.equals("TapOrUntap")) {
+        else if (API.equals("TapOrUntap")) {
             if (isAb)
                 SA = AbilityFactory_PermanentState.createAbilityTapOrUntap(this);
             else if (isSp)
@@ -474,7 +474,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_PermanentState.createDrawbackTapOrUntap(this);
         }
 
-        if (API.equals("PreventDamage")) {
+        else if (API.equals("PreventDamage")) {
             if (isAb)
                 SA = AbilityFactory_PreventDamage.getAbilityPreventDamage(this);
             else if (isSp)
@@ -484,7 +484,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("Regenerate")) {
+        else if (API.equals("Regenerate")) {
             if (isAb)
                 SA = AbilityFactory_Regenerate.getAbilityRegenerate(this);
             else if (isSp)
@@ -494,7 +494,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("Draw")) {
+        else if (API.equals("Draw")) {
             if (isAb)
                 SA = AbilityFactory_ZoneAffecting.createAbilityDraw(this);
             else if (isSp)
@@ -503,7 +503,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ZoneAffecting.createDrawbackDraw(this);
         }
 
-        if (API.equals("Mill")) {
+        else if (API.equals("Mill")) {
             if (isAb)
                 SA = AbilityFactory_ZoneAffecting.createAbilityMill(this);
             else if (isSp)
@@ -512,7 +512,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ZoneAffecting.createDrawbackMill(this);
         }
 
-        if (API.equals("Scry")) {
+        else if (API.equals("Scry")) {
             if (isAb)
                 SA = AbilityFactory_Reveal.createAbilityScry(this);
             else if (isSp)
@@ -521,7 +521,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Reveal.createDrawbackScry(this);
         }
 
-        if (API.equals("RearrangeTopOfLibrary")) {
+        else if (API.equals("RearrangeTopOfLibrary")) {
             if (isAb)
                 SA = AbilityFactory_Reveal.createRearrangeTopOfLibraryAbility(this);
             else if (isSp)
@@ -530,7 +530,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Reveal.createRearrangeTopOfLibraryDrawback(this);
         }
 
-        if (API.equals("Sacrifice")) {
+        else if (API.equals("Sacrifice")) {
             if (isAb)
                 SA = AbilityFactory_Sacrifice.createAbilitySacrifice(this);
             else if (isSp)
@@ -539,7 +539,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Sacrifice.createDrawbackSacrifice(this);
         }
 
-        if (API.equals("SacrificeAll")) {
+        else if (API.equals("SacrificeAll")) {
             if (isAb)
                 SA = AbilityFactory_Sacrifice.createAbilitySacrificeAll(this);
             else if (isSp)
@@ -548,7 +548,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Sacrifice.createDrawbackSacrificeAll(this);
         }
 
-        if (API.equals("Destroy")) {
+        else if (API.equals("Destroy")) {
             if (isAb)
                 SA = AbilityFactory_Destroy.createAbilityDestroy(this);
             else if (isSp)
@@ -558,7 +558,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("DestroyAll")) {
+        else if (API.equals("DestroyAll")) {
             if (isAb)
                 SA = AbilityFactory_Destroy.createAbilityDestroyAll(this);
             else if (isSp)
@@ -567,7 +567,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Destroy.createDrawbackDestroyAll(this);
         }
 
-        if (API.equals("Mana")) {
+        else if (API.equals("Mana")) {
             String produced = mapParams.get("Produced");
             if (isAb)
                 SA = AbilityFactory_Mana.createAbilityMana(this, produced);
@@ -577,7 +577,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Mana.createDrawbackMana(this, produced);
         }
 
-        if (API.equals("ManaReflected")) {
+        else if (API.equals("ManaReflected")) {
             // Reflected mana will have a filler for produced of "1"
             if (isAb)
                 SA = AbilityFactory_Mana.createAbilityManaReflected(this, "1");
@@ -586,7 +586,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("Token")) {
+        else if (API.equals("Token")) {
             AbilityFactory_Token AFT = new AbilityFactory_Token(this);
 
             if (isAb)
@@ -597,7 +597,7 @@ public class AbilityFactory {
                 SA = AFT.getDrawback();
         }
 
-        if (API.equals("GainControl")) {
+        else if (API.equals("GainControl")) {
             AbilityFactory_GainControl afControl = new AbilityFactory_GainControl(this);
 
             if (isAb)
@@ -609,7 +609,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("Discard")) {
+        else if (API.equals("Discard")) {
             if (isAb)
                 SA = AbilityFactory_ZoneAffecting.createAbilityDiscard(this);
             else if (isSp)
@@ -618,7 +618,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ZoneAffecting.createDrawbackDiscard(this);
         }
 
-        if (API.equals("Counter")) {
+        else if (API.equals("Counter")) {
             AbilityFactory_CounterMagic c = new AbilityFactory_CounterMagic(this);
 
             if (isTargeted)    // Since all "Counter" ABs Counter things on the Stack no need for it to be everywhere
@@ -632,7 +632,7 @@ public class AbilityFactory {
                 SA = c.getDrawbackCounter(this);
         }
 
-        if (API.equals("AddTurn")) {
+        else if (API.equals("AddTurn")) {
             if (isAb)
                 SA = AbilityFactory_Turns.createAbilityAddTurn(this);
             else if (isSp)
@@ -641,7 +641,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Turns.createDrawbackAddTurn(this);
         }
 
-        if (API.equals("Clash")) {
+        else if (API.equals("Clash")) {
             if (isAb)
                 SA = AbilityFactory_Clash.getAbilityClash(this);
             else if (isSp)
@@ -650,7 +650,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Clash.getDrawbackClash(this);
         }
 
-        if (API.equals("Animate")) {
+        else if (API.equals("Animate")) {
             if (isAb)
                 SA = AbilityFactory_Animate.createAbilityAnimate(this);
             else if (isSp)
@@ -659,7 +659,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Animate.createDrawbackAnimate(this);
         }
 
-        if (API.equals("Effect")) {
+        else if (API.equals("Effect")) {
             if (isAb)
                 SA = AbilityFactory_Effect.createAbilityEffect(this);
             else if (isSp)
@@ -668,7 +668,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Effect.createDrawbackEffect(this);
         }
 
-        if (API.equals("WinsGame")) {
+        else if (API.equals("WinsGame")) {
             if (isAb)
                 SA = AbilityFactory_EndGameCondition.createAbilityWinsGame(this);
             else if (isSp)
@@ -677,7 +677,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_EndGameCondition.createDrawbackWinsGame(this);
         }
 
-        if (API.equals("LosesGame")) {
+        else if (API.equals("LosesGame")) {
             if (isAb)
                 SA = AbilityFactory_EndGameCondition.createAbilityLosesGame(this);
             else if (isSp)
@@ -686,7 +686,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_EndGameCondition.createDrawbackLosesGame(this);
         }
 
-        if (API.equals("RevealHand")) {
+        else if (API.equals("RevealHand")) {
             if (isAb)
                 SA = AbilityFactory_Reveal.createAbilityRevealHand(this);
             else if (isSp)
@@ -695,7 +695,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Reveal.createDrawbackRevealHand(this);
         }
 
-        if (API.equals("Dig")) {
+        else if (API.equals("Dig")) {
             if (isAb)
                 SA = AbilityFactory_Reveal.createAbilityDig(this);
             else if (isSp)
@@ -704,7 +704,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Reveal.createDrawbackDig(this);
         }
 
-        if (API.equals("Shuffle")) {
+        else if (API.equals("Shuffle")) {
             if (isAb)
                 SA = AbilityFactory_ZoneAffecting.createAbilityShuffle(this);
             else if (isSp)
@@ -713,7 +713,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_ZoneAffecting.createDrawbackShuffle(this);
         }
 
-        if (API.equals("ChooseType")) {
+        else if (API.equals("ChooseType")) {
             if (isAb)
                 SA = AbilityFactory_Choose.createAbilityChooseType(this);
             else if (isSp)
@@ -722,7 +722,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Choose.createDrawbackChooseType(this);
         }
 
-        if (API.equals("ChooseColor")) {
+        else if (API.equals("ChooseColor")) {
             if (isAb)
                 SA = AbilityFactory_Choose.createAbilityChooseColor(this);
             else if (isSp)
@@ -731,7 +731,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Choose.createDrawbackChooseColor(this);
         }
 
-        if (API.equals("CopyPermanent")) {
+        else if (API.equals("CopyPermanent")) {
             if (isAb)
                 SA = AbilityFactory_Copy.createAbilityCopyPermanent(this);
             else if (isSp)
@@ -740,7 +740,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Copy.createDrawbackCopyPermanent(this);
         }
 
-        if (API.equals("CopySpell")) {
+        else if (API.equals("CopySpell")) {
             if (isTargeted)    // Since all "CopySpell" ABs copy things on the Stack no need for it to be everywhere
                 abTgt.setZone("Stack");
 
@@ -754,7 +754,7 @@ public class AbilityFactory {
             hostCard.setCopiesSpells(true);
         }
 
-        if (API.equals("FlipACoin")) {
+        else if (API.equals("FlipACoin")) {
             if (isAb)
                 SA = AbilityFactory_Clash.createAbilityFlip(this);
             else if (isSp)
@@ -763,7 +763,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Clash.createDrawbackFlip(this);
         }
 
-        if (API.equals("DelayedTrigger")) {
+        else if (API.equals("DelayedTrigger")) {
         	if (isAb)
                 SA = AbilityFactory_DelayedTrigger.getAbility(this);
             else if (isSp)
@@ -772,12 +772,12 @@ public class AbilityFactory {
                 SA = AbilityFactory_DelayedTrigger.getDrawback(this);
         }
 
-        if (API.equals("Cleanup")) {
+        else if (API.equals("Cleanup")) {
             if (isDb)
                 SA = AbilityFactory_Cleanup.getDrawback(this);
         }
 
-        if (API.equals("RegenerateAll")) {
+        else if (API.equals("RegenerateAll")) {
             if (isAb)
                 SA = AbilityFactory_Regenerate.getAbilityRegenerateAll(this);
             else if (isSp)
@@ -787,7 +787,7 @@ public class AbilityFactory {
             }
         }
 
-        if (API.equals("AnimateAll")) {
+        else if (API.equals("AnimateAll")) {
             if (isAb)
                 SA = AbilityFactory_Animate.createAbilityAnimateAll(this);
             else if (isSp)
@@ -796,7 +796,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Animate.createDrawbackAnimateAll(this);
         }
 
-        if (API.equals("Debuff")) {
+        else if (API.equals("Debuff")) {
             if (isAb)
                 SA = AbilityFactory_Debuff.createAbilityDebuff(this);
             else if (isSp)
@@ -805,7 +805,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Debuff.createDrawbackDebuff(this);
         }
 
-        if (API.equals("DebuffAll")) {
+        else if (API.equals("DebuffAll")) {
             if (isAb)
                 SA = AbilityFactory_Debuff.createAbilityDebuffAll(this);
             else if (isSp)
@@ -814,7 +814,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Debuff.createDrawbackDebuffAll(this);
         }
 
-        if (API.equals("DrainMana")) {
+        else if (API.equals("DrainMana")) {
             if (isAb)
                 SA = AbilityFactory_Mana.createAbilityDrainMana(this);
             else if (isSp)
@@ -823,7 +823,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Mana.createDrawbackDrainMana(this);
         }
         
-        if (API.equals("Protection")) {
+        else if (API.equals("Protection")) {
             if (isAb)
                 SA = AbilityFactory_Protection.createAbilityProtection(this);
             else if (isSp)
@@ -832,7 +832,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Protection.createDrawbackProtection(this);
         }
 
-        if (API.equals("Attach")) {
+        else if (API.equals("Attach")) {
             if (isAb)
                 SA = AbilityFactory_Attach.createAbilityAttach(this);
             else if (isSp)
@@ -841,7 +841,7 @@ public class AbilityFactory {
                 SA = AbilityFactory_Attach.createDrawbackAttach(this);
         }
         
-        if (API.equals("ProtectionAll")) {
+        else if (API.equals("ProtectionAll")) {
             if (isAb)
                 SA = AbilityFactory_Protection.createAbilityProtectionAll(this);
             else if (isSp)
