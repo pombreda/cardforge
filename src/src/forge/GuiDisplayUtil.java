@@ -13,7 +13,6 @@ import forge.properties.NewConstants;
 
 import javax.swing.*;
 import javax.swing.border.Border;
-import javax.swing.event.MouseInputAdapter;
 import java.awt.Color;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -49,37 +48,6 @@ public class GuiDisplayUtil implements NewConstants {
                     visual.setCard(cardPanel.getCard());
                 }
             }//mouseMoved
-        };
-    }
-
-    /**
-     * Returns the listener that updates the card preview panel
-     *
-     * @param visual a {@link forge.GuiDisplay2} object.
-     * @return a {@link java.awt.event.MouseMotionListener} object.
-     */
-    public static MouseMotionListener getCardDetailMouse(final GuiDisplay2 visual) {
-        return new MouseInputAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent me) {
-                JPanel panel = (JPanel) me.getSource();
-                Object o = panel.getComponentAt(me.getPoint());
-
-                if ((o != null) && (o instanceof CardPanel)) {
-                    CardContainer cardPanel = (CardContainer) o;
-                    visual.setCard(cardPanel.getCard());
-                }
-            }//mouseMoved
-
-            /**
-             * Could be added to the card panels for the same effect
-             */
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                if (!(e.getSource() instanceof CardPanel)) return;
-                CardContainer panel = (CardContainer) e.getSource();
-                visual.setCard(panel.getCard());
-            }
         };
     }
 

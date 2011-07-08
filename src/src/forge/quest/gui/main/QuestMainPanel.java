@@ -55,7 +55,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
     boolean isShowingQuests = false;
     private JCheckBox devModeCheckBox = new JCheckBox("Developer Mode");
-    private JCheckBox newGUICheckbox = new JCheckBox("Use new UI", true);
+    //private JCheckBox newGUICheckbox = new JCheckBox("Use new UI", true);
     private JCheckBox smoothLandCheckBox = new JCheckBox("Adjust AI Land");
     private JCheckBox petCheckBox = new JCheckBox("Summon Pet");
 
@@ -259,7 +259,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
         optionsPanel = new JPanel();
         optionsPanel.setLayout(new BoxLayout(optionsPanel, BoxLayout.Y_AXIS));
 
-        optionsPanel.add(this.newGUICheckbox);
+        //optionsPanel.add(this.newGUICheckbox);
         optionsPanel.add(Box.createVerticalStrut(5));
         optionsPanel.add(this.smoothLandCheckBox);
         optionsPanel.add(Box.createVerticalStrut(5));
@@ -433,7 +433,7 @@ public class QuestMainPanel extends QuestAbstractPanel {
 
         devModeCheckBox.setSelected(Constant.Runtime.DevMode[0]);
         smoothLandCheckBox.setSelected(Constant.Runtime.Smooth[0]);
-        newGUICheckbox.setSelected(Gui_NewGame.preferences.newGui);
+        //newGUICheckbox.setSelected(Gui_NewGame.preferences.newGui);
 
         creditsLabel.setText(" " + questData.getCredits());
         statsLabel.setText(questData.getWin() + " wins / " + questData.getLost() + " losses");
@@ -648,13 +648,13 @@ public class QuestMainPanel extends QuestAbstractPanel {
         Constant.Runtime.DevMode[0] = devModeCheckBox.isSelected();
 
         //DO NOT CHANGE THIS ORDER, GuiDisplay needs to be created before cards are added
-        if (newGUICheckbox.isSelected()) {
+        //if (newGUICheckbox.isSelected()) {
             AllZone.setDisplay(new GuiDisplay4());
-        } else {
-            AllZone.setDisplay(new GuiDisplay3());
-        }
+        //} else {
+        //    AllZone.setDisplay(new GuiDisplay3());
+        //}
 
-        Gui_NewGame.preferences.newGui = newGUICheckbox.isSelected();
+        //Gui_NewGame.preferences.newGui = newGUICheckbox.isSelected();
 
         Constant.Runtime.Smooth[0] = smoothLandCheckBox.isSelected();
 
