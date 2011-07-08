@@ -3,7 +3,7 @@ ManaCost:1 B R G
 Types:Creature Cyclops Warrior
 Text:no text
 PT:3/4
-K:stPumpAll:Creature.YouCtrl:0/0/Haste:No Condition:Creatures you control have haste.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl | AddKeyword$ Haste | Description$ Creatures you control have haste.
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Creature
 SVar:Rarity:Rare
