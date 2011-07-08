@@ -1,0 +1,8 @@
+Name:Amphin Cutthroat
+ManaCost:3 U
+Types:Creature Salamander Rogue
+Text:no text
+PT:2/4
+SVar:Rarity:Common
+SVar:Picture:http://www.wizards.com/global/images/magic/general/amphin_cutthroat.jpg
+End
