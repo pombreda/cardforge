@@ -1,121 +1,32 @@
 package forge.gui;
 
+import java.awt.Font;
+
 
 /**
- * A replacement FontConstants to allow backward-compatibility with JRE 1.5
+ * A replacement FontConstants to allow backward-compatibility with JRE 1.5;
+ * this is no longer needed, because we now directly support Java 6.
  *
+ * @deprecated use fields of same name at java.awt.Font
+ * 
+ * @see java.awt.Font
+ * 
  * @author Forge
  * @version $Id: $
  */
 public class ForgeFontConstants {
     /** Constant <code>DIALOG</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    /** Constant <code>DIALOG_INPUT</code> */
-    /** Constant <code>MONOSPACED</code> */
-    /** Constant <code>SANS_SERIF</code> */
-    /** Constant <code>SERIF</code> */
-    public static final String DIALOG, DIALOG_INPUT, MONOSPACED, SANS_SERIF, SERIF;
+    public static final String DIALOG = Font.DIALOG;
 
-    static {
-        String dialog = "Dialog";
-        String dialogInput = "DialogInput";
-        String monospaced = "Monospaced";
-        String sansSerif = "SansSerif";
-        String serif = "Serif";
+    /** Constant <code>DIALOG_INPUT</code> */
+    public static final String DIALOG_INPUT = Font.DIALOG_INPUT;
 
-        Exception exception = null;
-        try {
-            // Fetch Java 6 values (if present) without making the Java 5
-            // compiler unhappy:
-            @SuppressWarnings("rawtypes")
-            Class fontClass = Class.forName("java.awt.Font");
+    /** Constant <code>MONOSPACED</code> */
+    public static final String MONOSPACED = Font.MONOSPACED;
 
-            dialog = (String) fontClass.getField("DIALOG").get(null);
-            dialogInput = (String) fontClass.getField("DIALOG_INPUT").get(null);
-            monospaced = (String) fontClass.getField("MONOSPACED").get(null);
-            sansSerif = (String) fontClass.getField("SANS_SERIF").get(null);
-            serif = (String) fontClass.getField("SERIF").get(null);
+    /** Constant <code>SANS_SERIF</code> */
+    public static final String SANS_SERIF = Font.SANS_SERIF;
 
-        } catch (ClassNotFoundException err) {
-            exception = err;
-        } catch (IllegalAccessException err) {
-            exception = err;
-        } catch (NoSuchFieldException err) {
-            exception = err;
-        } finally {
-            if (exception != null) {
-                System.err.print("Exception thrown: " + exception);
-                exception.printStackTrace();
-            }
-        }
-
-        DIALOG = dialog;
-        DIALOG_INPUT = dialogInput;
-        MONOSPACED = monospaced;
-        SANS_SERIF = sansSerif;
-        SERIF = serif;
-    }
+    /** Constant <code>SERIF</code> */
+    public static final String SERIF = Font.SERIF;
 }
