@@ -8,4 +8,5 @@ SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/child_of_night.jpg
 SetInfo:M11|Common|http://magiccards.info/scans/en/m11/88.jpg
 SetInfo:M10|Common|http://magiccards.info/scans/en/m10/88.jpg
+SetInfo:M12|Common|http://magiccards.info/scans/en/m12/87.jpg
 End

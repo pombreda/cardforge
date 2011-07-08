@@ -7,5 +7,7 @@ SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/reclaim.jpg
 SetInfo:EXO|Common|http://magiccards.info/scans/en/ex/120.jpg
+SetInfo:M12|Common|http://magiccards.info/scans/en/m12/191.jpg
+SetInfo:9ED|Common|http://magiccards.info/scans/en/9e/264.jpg
 SetInfo:7ED|Common|http://magiccards.info/scans/en/7e/263.jpg
 End

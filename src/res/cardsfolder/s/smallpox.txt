@@ -8,5 +8,6 @@ SVar:DBSacLand:DB$Sacrifice | SacValid$ Land | Defined$ Each
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/smallpox.jpg
+SetInfo:M12|Uncommon|http://magiccards.info/scans/en/m12/108.jpg
 SetInfo:TSP|Uncommon|http://magiccards.info/scans/en/ts/131.jpg
 End

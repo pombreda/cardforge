@@ -41,7 +41,8 @@ SetInfo:MMQ|Land|http://magiccards.info/scans/en/mm/343.jpg|4
 SetInfo:ALA|Land|http://magiccards.info/scans/en/ala/242.jpg|4
 SetInfo:M11|Land|http://magiccards.info/scans/en/m11/242.jpg|4
 SetInfo:M10|Land|http://magiccards.info/scans/en/m10/242.jpg|4
+SetInfo:M12|Land|http://magiccards.info/scans/en/m12/242.jpg|4
 SetInfo:ARN|Uncommon|http://magiccards.info/scans/en/an/91.jpg
-SetInfo:LRW|Land|http://magiccards.info/scans/en/lw/294.jpg|4
-SetInfo:2ED|Land|http://magiccards.info/scans/en/un/286.jpg|3
+SetInfo:LRW|Land|http://magiccards.info/scans/en/lw/294.jpg
+SetInfo:2ED|Land|http://magiccards.info/scans/en/un/286.jpg
 End

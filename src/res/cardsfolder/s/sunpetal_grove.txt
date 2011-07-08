@@ -9,4 +9,5 @@ SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sunpetal_grove.jpg
 SetInfo:M11|Rare|http://magiccards.info/scans/en/m11/228.jpg
 SetInfo:M10|Rare|http://magiccards.info/scans/en/m10/228.jpg
+SetInfo:M12|Rare|http://magiccards.info/scans/en/m12/229.jpg
 End

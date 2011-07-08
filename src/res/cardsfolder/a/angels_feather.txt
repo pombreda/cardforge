@@ -7,9 +7,10 @@ SVar:TrigGainLife:AB$GainLife | Cost$ 0 | LifeAmount$ 1
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/angels_feather.jpg
-SetInfo:M11|Uncommon|http://magiccards.info/scans/en/m11/201.jpg
-SetInfo:M10|Uncommon|http://magiccards.info/scans/en/m10/206.jpg
 SetInfo:DST|Uncommon|http://magiccards.info/scans/en/ds/92.jpg
 SetInfo:9ED|Uncommon|http://magiccards.info/scans/en/9e/287.jpg
 SetInfo:10E|Uncommon|http://magiccards.info/scans/en/10e/311.jpg
+SetInfo:M11|Uncommon|http://magiccards.info/scans/en/m11/201.jpg
+SetInfo:M10|Uncommon|http://magiccards.info/scans/en/m10/206.jpg
+SetInfo:M12|Uncommon|http://magiccards.info/scans/en/m12/202.jpg
 End

@@ -9,4 +9,5 @@ A:AB$ Mill | Cost$ 0 | ValidTgts$ Player | TgtPrompt$ Select target player | Num
 A:AB$ Draw | Cost$ SubCounter<7/LOYALTY> | ValidTgts$ Player | TgtPrompt$ Select target player | TargetMin$ 0 | TargetMax$ 2 | NumCards$ 20 | Planeswalker$ True | SpellDescription$ Any number of target players each draw 20 cards.
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/jace_memory_adept.jpg
+SetInfo:M12|Mythic|http://magiccards.info/scans/en/m12/58.jpg
 End

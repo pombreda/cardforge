@@ -8,4 +8,5 @@ SVar:TrigChangeZone:AB$ChangeZone | Cost$ 0 | Origin$ Graveyard | Destination$ H
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/auramancer.jpg
 SetInfo:ODY|Common|http://magiccards.info/scans/en/od/5.jpg
+SetInfo:M12|Common|http://magiccards.info/scans/en/m12/9.jpg
 End

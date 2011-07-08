@@ -8,4 +8,5 @@ SVar:TrigDestroy:AB$Destroy | Cost$ 0 | ValidTgts$ Artifact | TgtPrompt$ Select 
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/manic_vandal.jpg
 SetInfo:M11|Common|http://magiccards.info/scans/en/m11/151.jpg
+SetInfo:M12|Common|http://magiccards.info/scans/en/m12/151.jpg
 End
