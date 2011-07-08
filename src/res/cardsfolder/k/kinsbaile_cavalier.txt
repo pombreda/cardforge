@@ -3,7 +3,7 @@ ManaCost:3 W
 Types:Creature Kithkin Knight
 Text:no text
 PT:2/2
-K:stPumpAll:Creature.Knight+YouCtrl:0/0/Double Strike:No Condition:Knight creatures you control have double strike.
+S:Mode$ Continuous | Affected$ Creature.Knight+YouCtrl | AddKeyword$ Double Strike | Description$ Knight creatures you control have double strike.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/kinsbaile_cavalier.jpg
