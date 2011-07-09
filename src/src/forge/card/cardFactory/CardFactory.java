@@ -159,7 +159,20 @@ public class CardFactory implements NewConstants, Iterable<Card> {
 	}
 
 
-    /**
+	/**
+	 * Typical size method. 
+	 * 
+	 * @return an estimate of the number of items encountered by this object's 
+	 * iterator
+	 * 
+	 * @see #iterator
+	 */
+	public int size() {
+		return allCards.size();
+	}
+
+	
+	/**
      * <p>readCards.</p>
      *
      * @param file a {@link java.io.File} object.
