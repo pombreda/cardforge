@@ -6,7 +6,6 @@ import forge.error.ErrorViewer;
 import forge.properties.NewConstants;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.StringTokenizer;
