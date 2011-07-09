@@ -8,6 +8,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.Yieldable;
+
 
 /**
  * <p>CardList class.</p>
@@ -71,7 +74,31 @@ public class CardList implements Iterable<Card> {
     }
 
     /**
-     * Create a cardlist with an initialize estimate of its maximum size.
+     * Create a CardList from a finite generator of Card instances.
+     * 
+     * We ignore null values produced by the generator.
+     * 
+     * @param generator  a non-infinite generator of Card instances.
+     */
+    public CardList(Generator<Card> generator) {
+    	// Generators yield their contents to a Yieldable.  Here,
+    	// we create a quick Yieldable that adds the information it
+    	// receives to this CardList's list field.
+    	
+    	Yieldable<Card> valueReceiver = new Yieldable<Card>() {
+			@Override
+			public void yield(Card card) {
+				if (card != null) {
+					list.add(card);
+				}
+			}
+    	};
+    	
+    	generator.generate(valueReceiver);
+    }
+
+    /**
+     * Create a cardlist with an initial estimate of its maximum size.
      * 
      * @param size an initialize estimate of its maximum size
      */
