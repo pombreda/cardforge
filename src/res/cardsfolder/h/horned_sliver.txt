@@ -3,7 +3,7 @@ ManaCost:2 G
 Types:Creature Sliver
 Text:no text
 PT:2/2
-K:stPumpAll:Creature.Sliver:0/0/Trample:no Condition:All Sliver creatures have trample.
+S:Mode$ Continuous | Affected$ Creature.Sliver | AddKeyword$ Trample | Description$ All Sliver creatures have trample.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/horned_sliver.jpg
