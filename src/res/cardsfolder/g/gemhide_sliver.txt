@@ -3,7 +3,7 @@ ManaCost:1 G
 Types:Creature Sliver
 Text:no text
 PT:1/1
-S:Mode$ Continuous | Affected$ Creature.Sliver | AddAbility$ WMana & UMana & BMana & RMana & GMana | Description$ All Slivers have "Tap: Add one mana of any color to your mana pool."
+S:Mode$ Continuous | Affected$ Card.Sliver | AddAbility$ WMana & UMana & BMana & RMana & GMana | Description$ All Slivers have "Tap: Add one mana of any color to your mana pool."
 SVar:WMana:AB$Mana | Cost$ T | Produced$ W | Amount$ 1 | SpellDescription$ Add W to your mana pool.
 SVar:UMana:AB$Mana | Cost$ T | Produced$ U | Amount$ 1 | SpellDescription$ Add U to your mana pool.
 SVar:BMana:AB$Mana | Cost$ T | Produced$ B | Amount$ 1 | SpellDescription$ Add B to your mana pool.

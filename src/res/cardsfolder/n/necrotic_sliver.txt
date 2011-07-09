@@ -3,7 +3,7 @@ ManaCost:1 W B
 Types:Creature Sliver
 Text:no text
 PT:2/2
-S:Mode$ Continuous | Affected$ Creature.Sliver | AddAbility$ Destroy | Description$ All Slivers have "3, Sacrifice this permanent: Destroy target permanent."
+S:Mode$ Continuous | Affected$ Card.Sliver | AddAbility$ Destroy | Description$ All Slivers have "3, Sacrifice this permanent: Destroy target permanent."
 SVar:Destroy:AB$Destroy | Cost$ 3 Sac<1/CARDNAME> | ValidTgts$ Permanent | TgtPrompt$ Select target permanent | SpellDescription$ Destroy target permanent.
 SVar:PlayMain1:TRUE
 SVar:BuffedBy:Sliver
