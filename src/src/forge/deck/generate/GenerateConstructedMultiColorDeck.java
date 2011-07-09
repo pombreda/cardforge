@@ -222,19 +222,17 @@ public class GenerateConstructedMultiColorDeck {
     }//addLand()
 
     /**
-     * <p>getCards.</p>
+     * Filters out cards by color and their suitability for being placed in
+     * a randomly created deck.
      *
-     * @param colors a int.
-     * @return a {@link forge.CardList} object.
+     * @param colors  the number of different colors the deck should have;
+     * if this is a number other than 3 or 5, we return an empty list.
+     * 
+     * @return a subset of all cards in the CardFactory database 
+     * which might be empty, but never null
      */
     private CardList getCards(int colors) {
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        return filterBadCards(AllZone.getCardFactory().getAllCards(), colors);
+        return filterBadCards(AllZone.getCardFactory(), colors);
     }//getCards()
 
     /**
@@ -381,13 +379,18 @@ public class GenerateConstructedMultiColorDeck {
 
 
     /**
-     * <p>filterBadCards.</p>
+     * Filters out cards by color and their suitability for being placed in
+     * a randomly created deck.
      *
-     * @param list a {@link forge.CardList} object.
-     * @param colors a int.
-     * @return a {@link forge.CardList} object.
+     * @param sequence  an Iterable of Card instances
+     * 
+     * @param colors  the number of different colors the deck should have;
+     * if this is a number other than 3 or 5, we return an empty list.
+     * 
+     * @return a subset of sequence <= sequence which might be empty, but
+     * never null
      */
-    private CardList filterBadCards(CardList list, int colors) {
+    private CardList filterBadCards(Iterable<Card> sequence, int colors) {
         final ArrayList<Card> goodLand = new ArrayList<Card>();
         //goodLand.add("Faerie Conclave");
         //goodLand.add("Forbidding Watchtower");
@@ -396,7 +399,7 @@ public class GenerateConstructedMultiColorDeck {
         CardList out = new CardList();
         if (colors == 3) {
 
-            out = list.filter(new CardListFilter() {
+            out = CardList.filter(sequence, new CardListFilter() {
                 public boolean addCard(Card c) {
                     ArrayList<String> list = CardUtil.getColors(c);
 
@@ -418,7 +421,7 @@ public class GenerateConstructedMultiColorDeck {
                 }
             });
         } else if (colors == 5) {
-            out = list.filter(new CardListFilter() {
+            out = CardList.filter(sequence, new CardListFilter() {
                 public boolean addCard(Card c) {
                     return CardUtil.getColors(c).size() >= 2 && //only get multicolored cards
                             !c.isLand() && //no land
