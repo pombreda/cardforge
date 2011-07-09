@@ -2705,6 +2705,21 @@ public class CardFactoryUtil {
         return doXMath(n, m, source);
     }
 
+    public static int parseSVar(Card hostCard, String amount){
+    	int num = 0;
+    	if (amount == null)
+    		return num;
+    	
+    	try{
+    		num = Integer.valueOf(amount);
+    	}
+    	catch(NumberFormatException e){
+    		num = xCount(hostCard, hostCard.getSVar(amount).split("\\$")[1]);
+    	}
+
+    	return num;
+    }
+    
     //parser for non-mana X variables
     /**
      * <p>xCount.</p>

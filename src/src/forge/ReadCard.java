@@ -219,8 +219,8 @@ public class ReadCard implements Runnable, NewConstants {
             } else if (s.startsWith("Name:")) {
                 String t = s.substring(5);
 
-                if (Constant.Runtime.DevMode[0])
-                	System.out.println("ReadCard: " + s);
+                //if (Constant.Runtime.DevMode[0])
+                //	System.out.println("ReadCard: " + s);
 
                 if (mapToFill.containsKey(t)) {
                     System.out.println("ReadCard:run() error - duplicate card name: " + t);
