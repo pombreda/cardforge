@@ -7,10 +7,16 @@ import forge.properties.NewConstants;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.StringTokenizer;
+import java.util.TreeMap;
+
+import net.slightlymagic.braids.util.generator.GeneratorFunctions;
+import net.slightlymagic.braids.util.lambda.Lambda1;
+
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.YieldUtils;
 
 
 /**
@@ -20,8 +26,8 @@ import java.util.StringTokenizer;
  * @version $Id: $
  */
 public class NameChanger implements NewConstants {
-    private Map<String, String> mutatedMap = new HashMap<String, String>();
-    private Map<String, String> originalMap = new HashMap<String, String>();
+    private Map<String, String> mutatedMap = new TreeMap<String, String>();
+    private Map<String, String> originalMap = new TreeMap<String, String>();
 
     private boolean changeCardName;
 
@@ -52,18 +58,28 @@ public class NameChanger implements NewConstants {
         changeCardName = b;
     }
 
-    //returns an array of copies
     /**
-     * <p>changeCard.</p>
-     *
-     * @param c an array of {@link forge.Card} objects.
-     * @return an array of {@link forge.Card} objects.
+     * This change's the inputGenerator's Card instances in place,
+     * and returns a generator of those same changed instances.
+     * 
+     * TODO: Should this method return void, because it side effects
+     * the contents of its inputGenerator?
+     * 
+     * @param inputGenerator a Generator of Card objects
+     * @return a Generator of side-effected Card objects
      */
-    public Card[] changeCard(Card c[]) {
-        for (int i = 0; i < c.length; i++)
-            changeCard(c[i]);
-
-        return c;
+    public Generator<Card> changeCard(Generator<Card> inputGenerator) {
+    	
+    	// Create a new Generator by applying a transform to the
+    	// inputGenerator.
+    	
+    	Lambda1<Card,Card> transform = new Lambda1<Card,Card>() {
+    		public Card apply(Card toChange) {
+    			return changeCard(toChange);
+    		};
+    	};
+    	
+    	return GeneratorFunctions.transformGenerator(transform, inputGenerator);
     }
 
     //changes card name, getText(), and all SpellAbility getStackDescription() and toString()
@@ -109,6 +125,28 @@ public class NameChanger implements NewConstants {
 
         return in;
     }
+
+	/**
+	 * Changes a list of cards if shouldChangeCardName() is true.
+	 * 
+	 * If not, we just return list.
+	 * 
+	 * TODO: Should this method return void, because it side effects the
+	 * contents of its input list?
+	 * 
+	 * @param list
+	 *            the list of cards to possibly change; while this list is not
+	 *            affected, its contents might be
+	 * 
+	 * @return either list itself or a new list (possibly wasteful) containing
+	 *         the side effected cards
+	 */
+	public CardList changeCardsIfNeeded(CardList list) {
+		if (shouldChangeCardName()) {
+            list = new CardList(changeCard(YieldUtils.toGenerator(list)));
+        }
+		return list;
+	}
 
     //always returns mutated (alias) for the card name
     //if argument is a mutated name, it returns the same mutated name

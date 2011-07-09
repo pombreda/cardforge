@@ -8,10 +8,14 @@ import forge.properties.NewConstants;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import net.slightlymagic.braids.util.UtilFunctions;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -133,20 +137,52 @@ public class GuiUtils {
         return new ImageIcon(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
     }
 
-    //returned Object could be null
     /**
-     * <p>getChoiceOptional.</p>
+     * Convenience for getChoices(message, 0, 1, choices).
+     * 
+     * @see #getChoices(String, int, int, Object...)
      *
      * @param message a {@link java.lang.String} object.
      * @param choices a T object.
-     * @param <T> a T object.
-     * @return a T object.
+     * @param <T> is automatically inferred.
+     * 
+     * @return null if choices is missing, empty, or if the users'
+     * choices are empty; otherwise, returns the first item in 
+     * the List returned by getChoices.
      */
     public static <T> T getChoiceOptional(String message, T... choices) {
         if (choices == null || choices.length == 0) return null;
         List<T> choice = getChoices(message, 0, 1, choices);
         return choice.isEmpty() ? null : choice.get(0);
-    }//getChoiceOptional()
+    }//getChoiceOptional(String,T...)
+
+    /**
+     * Like getChoiceOptional, but this takes an Iterator instead of a 
+     * variable number of arguments.
+     * 
+     * @see #getChoiceOptional(String, T...)
+     * @see #getChoices(String, int, int, Object...)
+     *
+     * @param message a {@link java.lang.String} object.
+     * @param choices an Iterator over T objects.
+     * @param <T> is automatically inferred.
+     * 
+     * @return null if choices is missing, empty, or if the users'
+     * choices are empty; otherwise, returns the first item in 
+     * the List returned by getChoices.
+     */
+    public static <T> T getChoiceOptional(String message, Iterator<T> choices) {
+    	if (choices == null | !choices.hasNext()) {
+    		return null;
+    	}
+
+    	// TODO: this is an expensive operation; it would be better to
+    	// update getChoices to accept an Iterator.
+    	T[] choicesArray = UtilFunctions.iteratorToArray(choices);
+    	
+    	List<T> choice = getChoices(message, 0, 1, choicesArray);
+        return choice.isEmpty() ? null : choice.get(0);
+    }//getChoiceOptional(String,Iterator<T>)
 
     // returned Object will never be null
     /**
