@@ -301,19 +301,7 @@ public class Gui_DownloadPictures_LQ extends DefaultBoundedRangeModel implements
 
         ArrayList<mCard> CList = new ArrayList<mCard>();
 
-		/*
-		 *  Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        //CardList AllCards = AllZone.getCardFactory().getAllCards();
-        //Log.error("AllCards.size: " + AllCards.size());
-        CardList AllCards = AllZone.getCardFactory().getCards();
-
-        //for (int i = 0; i < AllCards.size(); i++) {
-        for (Card c : AllCards) {
-            //Card c = AllCards.get(i);
+        for (Card c : AllZone.getCardFactory()) {
             String url = c.getSVar("Picture");
             String[] URLs = url.split("\\\\");
 

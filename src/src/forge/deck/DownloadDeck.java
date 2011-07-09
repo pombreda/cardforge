@@ -2,7 +2,6 @@ package forge.deck;
 
 import forge.AllZone;
 import forge.Card;
-import forge.CardList;
 
 /**
  * <p>DownloadDeck class.</p>
@@ -143,11 +142,9 @@ public class DownloadDeck {
      * @return a boolean.
      */
     public boolean isCardSupport(String CardName) {
-        CardList all = AllZone.getCardFactory().getAllCards();
-
-        Card gCard;
-        for (int i = 0; i < all.size(); i++) {
-            gCard = all.getCard(i);
+    	// TODO: using AllZone.getCardFactory().getCard() would probably be much faster.
+    	
+        for (Card gCard : AllZone.getCardFactory()) {
             if (CardName.equalsIgnoreCase(gCard.getName())) {
                 return true;
             }
@@ -163,19 +160,15 @@ public class DownloadDeck {
      * @return a {@link forge.Card} object.
      */
     public Card getCardDownload(Card c, String CardName) {
-        CardList all = AllZone.getCardFactory().getAllCards();
-
-        Card newCard = null;
-
-        for (int i = 0; i < all.size(); i++) {
-            newCard = all.getCard(i);
-
+    	// TODO: using AllZone.getCardFactory().getCard() would probably be much faster.
+    	
+        for (Card newCard : AllZone.getCardFactory()) {
             if (CardName.equalsIgnoreCase(newCard.getName())) {
                 return newCard;
             }
         }
 
-        return newCard;
+        return null;
 
     }
 
