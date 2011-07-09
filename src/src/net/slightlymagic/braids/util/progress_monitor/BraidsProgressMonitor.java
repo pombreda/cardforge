@@ -7,8 +7,14 @@ package net.slightlymagic.braids.util.progress_monitor;
  * All times must be in seconds; absolute times are measured in seconds since
  * 01 Jan 1970 00:00:00 UTC (GMT) a la (new Date().getTime()/1000).
  */
-public interface ProgressMonitor {
+public interface BraidsProgressMonitor {
 
+	/**
+	 * Destroy this progress monitor, making it no longer usable and/or 
+	 * visible.
+	 */
+	public void dispose();
+	
 	/** 
 	 * @return the total number of phases monitored by this object.
 	 */

@@ -198,6 +198,12 @@ public class MultiPhaseProgressMonitorWithETA extends BaseProgressMonitor {
         justUpdatedUI();
     }
 
+    
+    @Override
+    public void dispose() {
+    	getDialog().dispose();
+    }
+    
 
     /**
      * @return the JDialog for the current phase; use this judiciously to
