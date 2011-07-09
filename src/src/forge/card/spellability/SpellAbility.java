@@ -1,6 +1,5 @@
 package forge.card.spellability;
 
-import com.sun.deploy.panel.ITreeNode;
 import forge.*;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.Mana;
