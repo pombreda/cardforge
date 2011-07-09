@@ -588,10 +588,7 @@ public class GameAction {
         	AllZone.getStaticEffects().clearStaticEffects();
         	
         	//apply new effects continuous 
-        	CardList allCards = AllZoneUtil.getCardsInPlay();
-        	allCards.addAll(AllZoneUtil.getCardsInGraveyard());
-            if (Constant.Runtime.DevMode[0])
-                System.out.println("staticAbility ");
+        	CardList allCards = AllZoneUtil.getCardsInGame();
         	for (Card card : allCards) {
         		ArrayList<StaticAbility> staticAbilities = card.getStaticAbilities();
         		for (StaticAbility stAb : staticAbilities)

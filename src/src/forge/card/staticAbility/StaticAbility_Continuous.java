@@ -21,17 +21,22 @@ public class StaticAbility_Continuous {
 		Card hostCard = stAb.getHostCard();
 		Player controller = hostCard.getController();
 		
-    	//AllZone.getGameAction().destroy(hostCard);
-		
 		StaticEffect se = new StaticEffect();
+		CardList affectedCards;
 		
-		CardList affectedCards = AllZoneUtil.getCardsInPlay();
-		
-		if (params.containsKey("AffectedZone"))
-			affectedCards = AllZoneUtil.getCardsInZone(params.get("AffectedZone"));
-		
-		if (params.containsKey("Affected"))
-			affectedCards = affectedCards.getValidCards(params.get("Affected").split(","), controller, hostCard);
+		if(params.containsKey("CharacteristicDefining"))
+			affectedCards = new CardList(hostCard); // will always be the card itself
+		else { // non - CharacteristicDefining
+			String affectedZone = "Battlefield"; // default
+			
+			if (params.containsKey("AffectedZone"))
+				affectedZone = params.get("AffectedZone");
+			
+			affectedCards = AllZoneUtil.getCardsInZone(affectedZone);
+			
+			if (params.containsKey("Affected"))
+				affectedCards = affectedCards.getValidCards(params.get("Affected").split(","), controller, hostCard);
+		}
 		
 		se.setAffectedCards(affectedCards);
 		se.setParams(params);
@@ -39,11 +44,23 @@ public class StaticAbility_Continuous {
 		
 		int powerBonus = 0;
 		int toughnessBonus = 0;
+		int setPower = -1;
+		int setToughness = -1;
 		String addKeywords[] = null;
 		String addAbilities[] = null;
 		String addSVars[] = null;
 		String addTypes[] = null;
 		String addTriggers[] = null;
+		
+		if (params.containsKey("SetPower")) {
+			String setP = params.get("SetPower");
+			setPower = setP.matches("[0-9][0-9]?") ? Integer.parseInt(setP) : CardFactoryUtil.xCount(hostCard, hostCard.getSVar(setP).split("\\$")[1]);
+		}
+		
+		if (params.containsKey("SetToughness")) {
+			String setT = params.get("SetToughness");
+			setToughness = setT.matches("[0-9][0-9]?") ? Integer.parseInt(setT) : CardFactoryUtil.xCount(hostCard, hostCard.getSVar(setT).split("\\$")[1]);
+		}
 		
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -101,16 +118,22 @@ public class StaticAbility_Continuous {
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
             
-            //add P/T bonus
+            // set P/T
+            if (setPower != -1)
+            	affectedCard.setBaseAttack(setPower);
+            if (setToughness != -1)
+            	affectedCard.setBaseDefense(setToughness);
+            
+            // add P/T bonus
             affectedCard.addSemiPermanentAttackBoost(powerBonus);
             affectedCard.addSemiPermanentDefenseBoost(toughnessBonus);
             
-            //add keywords
+            // add keywords
             if (addKeywords != null)
             	for (String keyword : addKeywords)
             		affectedCard.addExtrinsicKeyword(keyword);
             
-            //add abilities
+            // add abilities
             if (addAbilities != null)
             	for (String abilty : addAbilities)
                     if (abilty.startsWith("AB")) { // grant the ability
@@ -120,17 +143,17 @@ public class StaticAbility_Continuous {
                         affectedCard.addSpellAbility(sa);
                     }
             
-            //add SVars
+            // add SVars
             if (addSVars != null)
             	for (String sVar : addSVars)
             		affectedCard.setSVar(sVar, hostCard.getSVar(sVar));
             
-            //add Types
+            // add Types
             if (addTypes != null)
             	for (String type : addTypes)
             		affectedCard.addType(type);
             
-	        //add triggers
+	        // add triggers
 	        if (addTriggers != null)
 	        	for (String trigger : addTriggers) {
 	                Trigger actualTrigger = TriggerHandler.parseTrigger(trigger,affectedCard);
