@@ -579,7 +579,10 @@ public class AbilityFactory_Attach {
 	        };//Command
 
             Command onChangesControl = new Command() {
-                public void execute() {
+                /** automatically generated serialVersionUID. */
+				private static final long serialVersionUID = -65903786170234039L;
+
+				public void execute() {
                     if(card.isEnchanting()) {
                         Card crd = card.getEnchanting().get(0);
 
