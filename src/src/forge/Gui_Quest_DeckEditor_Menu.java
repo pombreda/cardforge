@@ -648,7 +648,8 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
 
                     deck.add(AllZone.getCardFactory().getCard(cardName, null));
                 }
-                CardList cardpool = AllZone.getCardFactory().getAllCards();
+                // This is an expensive heap operation.
+                CardList cardpool = new CardList(AllZone.getCardFactory());
 
                 deckDisplay.updateDisplay(cardpool, deck);
 
@@ -658,7 +659,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         //AI
         new2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), new CardList());
+            	// This is an expensive heap operation.
+                CardList allCards = new CardList(AllZone.getCardFactory());
+                deckDisplay.updateDisplay(allCards, new CardList());
 
                 setComputerPlayer("");
             }
@@ -741,7 +744,9 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
                 QuestBattleManager.removeAIDeck(currentDeck.getName());
 
                 //show card pool
-                CardList cardpool = AllZone.getCardFactory().getAllCards();
+                
+            	// This is an expensive heap operation.
+                CardList cardpool = new CardList(AllZone.getCardFactory());
                 deckDisplay.updateDisplay(cardpool, new CardList());
 
                 setComputerPlayer("");
@@ -837,7 +842,8 @@ public class Gui_Quest_DeckEditor_Menu extends JMenuBar {
         addCard.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 //sort cards by card name
-                CardList cardList = AllZone.getCardFactory().getAllCards();
+            	// This is an expensive heap operation.
+                CardList cardList = new CardList(AllZone.getCardFactory());
                 TableSorter sorter = new TableSorter(cardList, 1, true);
                 cardList.sort(sorter);
 

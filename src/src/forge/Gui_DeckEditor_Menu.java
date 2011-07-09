@@ -295,7 +295,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentGameType = Constant.GameType.Constructed;
         setDeckData("", false);
 
-        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), new CardList());
+        // This is an expensive heap operation.
+        CardList allCards = new CardList(AllZone.getCardFactory());
+        deckDisplay.updateDisplay(allCards, new CardList());
     }//new constructed
 
     /**
@@ -312,6 +314,14 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentGameType = Constant.GameType.Constructed;
         setDeckData("", false);
 
+        // TODO: Braids: "we can reduce a lot of heap use here by providing
+        // randomization in CardFactory. this is what we want to call 
+        // instead of the Yucky Code below it:"
+        //
+        // CardList random = new CardList(AllZone.getCardFactory().getRandomCombinationWithoutRepetition(15 * 5));
+
+        // TODO: Braids: Begin yucky code
+        
         CardList all = AllZone.getCardFactory().getAllCards();
         all.shuffle();
         CardList random = new CardList();
@@ -320,6 +330,8 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
             random.add(all.remove(0));
         }
 
+        // TODO: Braids: End yucky code
+        
         random.add(AllZone.getCardFactory().getCard("Forest", AllZone.getHumanPlayer()));
         random.add(AllZone.getCardFactory().getCard("Island", AllZone.getHumanPlayer()));
         random.add(AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()));
@@ -349,7 +361,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
         GenerateConstructedDeck gen = new GenerateConstructedDeck();
 
-        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), gen.generateDeck());
+        // This is an expensive heap operation.
+        CardList allCards = new CardList(AllZone.getCardFactory());
+        deckDisplay.updateDisplay(allCards, gen.generateDeck());
     }//new sealed
 
 
@@ -881,7 +895,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
 
             main.add(c);
         }
-        deckDisplay.updateDisplay(AllZone.getCardFactory().getAllCards(), main);
+        // This is an expensive heap operation.
+        CardList allCards = new CardList(AllZone.getCardFactory());
+        deckDisplay.updateDisplay(allCards, main);
     }//showConstructedDeck()
 
     /**
