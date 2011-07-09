@@ -4,7 +4,8 @@ Types:Creature Giant Cleric
 Text:no text
 PT:3/3
 K:Protection from red
-K:stPumpAll:Creature.namedIvory Guardians:1/1:isPresent Permanent.Red+nonToken+YouDontCtrl:Creatures named Ivory Guardians get +1/+1 as long as an opponent controls a nontoken red permanent.
+S:Mode$ Continuous | Affected$ Creature.namedIvory Guardians | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ X | SVarCompare$ EQ1 | Description$ Creatures named CARDNAME get +1/+1 as long as an opponent controls a nontoken red permanent.
+SVar:X:Count$Valid Permanent.Red+nonToken+YouDontCtrl
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/ivory_guardians.jpg
