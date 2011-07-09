@@ -640,7 +640,7 @@ public class GUI_Quest_Filter extends javax.swing.JDialog {
         CardList filterCardList = g.stCardList;
         if (name != "") {
             if (cText != "") {
-                filterCardList = filter.CardListNameFilter(filterCardList, name);
+                filterCardList = filter.cardListNameFilter(filterCardList, name);
                 if (filterCardList.size() == 0) {
                     JOptionPane.showMessageDialog(null, "Sorry, cards with name: " + name + " not found.",
                             "Filter", JOptionPane.INFORMATION_MESSAGE);
