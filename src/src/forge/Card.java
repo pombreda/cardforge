@@ -4773,6 +4773,14 @@ public class Card extends MyObservable {
             if (!equippedBy.contains(source) && !enchantedBy.contains(source)) return false;
         } else if (Property.startsWith("Attached")) {
             if (!equipping.contains(source) && !enchanting.contains(source)) return false;
+        } else if (Property.startsWith("EnchantedBy")) {
+            if (!enchantedBy.contains(source)) return false;
+        } else if (Property.startsWith("Enchanted")) {
+            if (!enchanting.contains(source)) return false;
+        } else if (Property.startsWith("EquippedBy")) {
+            if (!equippedBy.contains(source)) return false;
+        } else if (Property.startsWith("Equipped")) {
+            if (!equipping.contains(source)) return false;
         } else if (Property.startsWith("Cloned")) {
             if (cloneOrigin == null || !cloneOrigin.equals(source)) return false;
         } else if (Property.startsWith("DamagedBy")) {
