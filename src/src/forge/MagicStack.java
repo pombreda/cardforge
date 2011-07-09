@@ -1092,4 +1092,16 @@ public class MagicStack extends MyObservable {
         }
     }
 
+    public boolean hasStateTrigger(int triggerID) {
+        for(SpellAbility_StackInstance SI : stack)
+        {
+            if(SI.isStateTrigger(triggerID))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

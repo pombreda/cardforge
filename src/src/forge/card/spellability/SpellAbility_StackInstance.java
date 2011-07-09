@@ -158,4 +158,14 @@ public class SpellAbility_StackInstance {
     public boolean isTrigger() {
         return ability.isTrigger();
     }
+
+    /**
+     * <p>isStateTrigger.</p>
+     *
+     * @param ID a int.
+     * @return a boolean.
+     */
+    public boolean isStateTrigger(int ID) {
+        return ability.getSourceTrigger() == ID;
+    }
 }
