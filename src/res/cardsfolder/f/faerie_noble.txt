@@ -4,7 +4,7 @@ Types:Creature Faerie
 Text:no text
 PT:1/2
 K:Flying
-K:stPumpAll:Creature.Faerie+Other+YouCtrl:0/1:No Condition:Other Faerie creatures you control get +0/+1.
+S:Mode$ Continuous | Affected$ Creature.Faerie+Other+YouCtrl | AddToughness$ 1 | Description$ Other Faerie creatures you control get +0/+1.
 A:AB$ PumpAll | Cost$ T | ValidCards$ Creature.Faerie+Other+YouCtrl | NumAtt$ +1 | SpellDescription$ Other Faerie creatures you control get +1/+0 until end of turn.
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
