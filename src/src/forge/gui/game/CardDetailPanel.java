@@ -28,13 +28,12 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
     private Card card;
 
-    private JLabel cdLabel1;
-    private JLabel cdLabel2;
-    private JLabel cdLabel3;
-    private JLabel cdLabel4;
-    private JLabel cdLabel5;
-    private JLabel cdLabel6;
-    private JLabel cdLabel7;
+    private JLabel nameCostLabel;
+    private JLabel typeLabel;
+    private JLabel powerToughnessLabel;
+    private JLabel damageLabel;
+    private JLabel idLabel;
+    private JLabel setInfoLabel;
     private JTextArea cdArea;
 
     /**
@@ -47,11 +46,10 @@ public class CardDetailPanel extends JPanel implements CardContainer {
         setBorder(new EtchedBorder());
 
         JPanel cdLabels = new JPanel(new GridLayout(0, 1, 0, 5));
-        cdLabels.add(cdLabel1 = new JLabel());
-        cdLabels.add(cdLabel2 = new JLabel());
-        cdLabels.add(cdLabel3 = new JLabel());
-        cdLabels.add(cdLabel4 = new JLabel());
-        cdLabels.add(cdLabel6 = new JLabel());
+        cdLabels.add(nameCostLabel = new JLabel());
+        cdLabels.add(typeLabel = new JLabel());
+        cdLabels.add(powerToughnessLabel = new JLabel());
+        cdLabels.add(damageLabel = new JLabel());
 
         JPanel IDR = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -60,38 +58,37 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
         c.gridwidth = 2;
         c.weightx = 1.0;
-        IDR.add(cdLabel5 = new JLabel(), c);
+        IDR.add(idLabel = new JLabel(), c);
 
         c.gridwidth = 1;
         c.weightx = 0.3;
-        IDR.add(cdLabel7 = new JLabel(), c);
+        IDR.add(setInfoLabel = new JLabel(), c);
 
         cdLabels.add(IDR);
 
         add(cdLabels);
-        cdLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-        cdLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-        cdLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+        nameCostLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        typeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        powerToughnessLabel.setHorizontalAlignment(SwingConstants.CENTER);
         //cdLabel7.setSize(100, cdLabel7.getHeight());
 
-        cdLabel7.setHorizontalAlignment(SwingConstants.CENTER);
+        setInfoLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         add(new JScrollPane(cdArea = new JTextArea(4, 12)));
         cdArea.setLineWrap(true);
         cdArea.setWrapStyleWord(true);
 
         if (!Gui_NewGame.useLAFFonts.isSelected()) {
-            cdLabel1.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel2.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel3.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel4.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel5.setFont(new java.awt.Font("Dialog", 0, 14));
-            cdLabel6.setFont(new java.awt.Font("Dialog", 0, 14));
+        	nameCostLabel.setFont(new java.awt.Font("Dialog", 0, 14));
+        	typeLabel.setFont(new java.awt.Font("Dialog", 0, 14));
+            powerToughnessLabel.setFont(new java.awt.Font("Dialog", 0, 14));
+            damageLabel.setFont(new java.awt.Font("Dialog", 0, 14));
+            idLabel.setFont(new java.awt.Font("Dialog", 0, 14));
 
 
             java.awt.Font f = new java.awt.Font("Dialog", 0, 14);
 		    f = f.deriveFont(java.awt.Font.BOLD);
-		    cdLabel7.setFont(f);
+		    setInfoLabel.setFont(f);
 
 		    cdArea.setFont(new java.awt.Font("Dialog", 0, 14));
         }
@@ -101,15 +98,14 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
     /** {@inheritDoc} */
     public void setCard(Card card) {
-        cdLabel1.setText("");
-        cdLabel2.setText("");
-        cdLabel3.setText("");
-        cdLabel4.setText("");
-        cdLabel5.setText("");
-        cdLabel6.setText("");
-        cdLabel7.setText("");
-        cdLabel7.setOpaque(false);
-        cdLabel7.setBorder(null);
+    	nameCostLabel.setText("");
+    	typeLabel.setText("");
+        powerToughnessLabel.setText("");
+        damageLabel.setText("");
+        idLabel.setText("");
+        setInfoLabel.setText("");
+        setInfoLabel.setOpaque(false);
+        setInfoLabel.setBorder(null);
         cdArea.setText("");
         setBorder(GuiDisplayUtil.getBorder(card));
 
@@ -118,43 +114,43 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
         boolean faceDown = card.isFaceDown() && card.getController() != AllZone.getHumanPlayer();
         if (!faceDown) {
-            if (card.isLand()) cdLabel1.setText(card.getName());
-            else cdLabel1.setText(card.getName() + "  - " + card.getManaCost());
-        } else cdLabel1.setText("Morph");
+            if (card.isLand()) nameCostLabel.setText(card.getName());
+            else nameCostLabel.setText(card.getName() + "  - " + card.getManaCost());
+        } else nameCostLabel.setText("Morph");
 
-        if (!faceDown) cdLabel2.setText(GuiDisplayUtil.formatCardType(card));
-        else cdLabel2.setText("Creature");
+        if (!faceDown) typeLabel.setText(GuiDisplayUtil.formatCardType(card));
+        else typeLabel.setText("Creature");
 
         if (card.isCreature()) {
-            cdLabel3.setText(card.getNetAttack() + " / " + card.getNetDefense());
-            cdLabel4.setText("Damage: " + card.getDamage() + " Assigned Damage: " + card.getTotalAssignedDamage());
+            powerToughnessLabel.setText(card.getNetAttack() + " / " + card.getNetDefense());
+            damageLabel.setText("Damage: " + card.getDamage() + " Assigned Damage: " + card.getTotalAssignedDamage());
         }
-        if (card.isPlaneswalker()) cdLabel4.setText("Assigned Damage: " + card.getTotalAssignedDamage());
+        if (card.isPlaneswalker()) damageLabel.setText("Assigned Damage: " + card.getTotalAssignedDamage());
 
-        cdLabel5.setText("Card ID  " + card.getUniqueNumber());
+        idLabel.setText("Card ID  " + card.getUniqueNumber());
 
         //rarity and set of a face down card should not be visible to the opponent
-        if (!card.isFaceDown() || card.getController().isHuman()) cdLabel7.setText(card.getCurSetCode());
+        if (!card.isFaceDown() || card.getController().isHuman()) setInfoLabel.setText(card.getCurSetCode());
 
-        if (!cdLabel7.getText().equals("")) {
-            cdLabel7.setOpaque(true);
+        if (!setInfoLabel.getText().equals("")) {
+        	setInfoLabel.setOpaque(true);
             String csr = card.getCurSetRarity();
             if (csr.equals("Common") || csr.equals("Land")) {
-                cdLabel7.setBackground(Color.BLACK);
-                cdLabel7.setForeground(Color.WHITE);
-                cdLabel7.setBorder(BorderFactory.createLineBorder(Color.WHITE));
+            	setInfoLabel.setBackground(Color.BLACK);
+            	setInfoLabel.setForeground(Color.WHITE);
+            	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.WHITE));
             } else if (csr.equals("Uncommon")) {
-                cdLabel7.setBackground(Color.LIGHT_GRAY);
-                cdLabel7.setForeground(Color.BLACK);
-                cdLabel7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	setInfoLabel.setBackground(Color.LIGHT_GRAY);
+            	setInfoLabel.setForeground(Color.BLACK);
+            	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             } else if (csr.equals("Rare")) {
-                cdLabel7.setBackground(Color.YELLOW);
-                cdLabel7.setForeground(Color.BLACK);
-                cdLabel7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	setInfoLabel.setBackground(Color.YELLOW);
+            	setInfoLabel.setForeground(Color.BLACK);
+            	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             } else if (csr.equals("Mythic")) {
-                cdLabel7.setBackground(Color.RED);
-                cdLabel7.setForeground(Color.BLACK);
-                cdLabel7.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            	setInfoLabel.setBackground(Color.RED);
+            	setInfoLabel.setForeground(Color.BLACK);
+            	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
             //cdLabel7.setText(card.getCurSetCode());
         }
