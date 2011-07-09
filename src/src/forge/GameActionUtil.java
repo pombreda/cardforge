@@ -4683,80 +4683,6 @@ public class GameActionUtil {
         }// execute()
     }; //Conspiracy
 
-    /** Constant <code>Mul_Daya_Channelers</code> */
-    public static Command Mul_Daya_Channelers = new Command() {
-        private static final long serialVersionUID = -2543659953307485051L;
-
-        CardList landList = new CardList();
-        CardList creatList = new CardList();
-
-        String[] keyword = {"B", "W", "G", "U", "R"};
-
-        final void addMana(Card c) {
-            for (int i = 0; i < keyword.length; i++) {
-                //don't add an extrinsic mana ability if the land can already has the same intrinsic mana ability
-                //eg. "tap: add G"
-                if (!c.getIntrinsicManaAbilitiesDescriptions().contains(
-                        keyword[i])) {
-                    //c.addExtrinsicKeyword(keyword[i]);
-                    SpellAbility mana = new Ability_Mana(c, "T", keyword[i], 2) {
-                        private static final long serialVersionUID = 2384540533244132975L;
-                    };
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("T: Add ").append(keyword[i]).append(" ").append(keyword[i]).append(" to your mana pool.");
-
-                    mana.setType("Extrinsic");
-                    mana.setDescription(sb.toString());
-                    c.addSpellAbility(mana);
-                }
-            }
-        }
-
-        final void removeMana(Card c) {
-            c.removeAllExtrinsicManaAbilities();
-        }
-
-        public void execute() {
-            CardList list1 = landList;
-            CardList list2 = creatList;
-
-            Card c;
-            // reset all cards in list - aka "old" cards
-            for (int i = 0; i < list1.size(); i++) {
-                c = list1.get(i);
-                removeMana(c);
-            }
-
-            for (int i = 0; i < list2.size(); i++) {
-                c = list2.get(i);
-                c.addSemiPermanentAttackBoost(-3);
-                c.addSemiPermanentDefenseBoost(-3);
-            }
-
-
-            list1.clear();
-            list2.clear();
-            CardList cl = AllZoneUtil.getCardsInPlay();
-            cl = cl.getName("Mul Daya Channelers");
-
-            for (Card crd : cl) {
-                if (CardFactoryUtil.getTopCard(crd) != null) {
-                    Card topCard = CardFactoryUtil.getTopCard(crd);
-                    if (topCard.isLand()) {
-                        addMana(crd);
-                        landList.add(crd);
-                    } else if (topCard.isCreature()) {
-                        crd.addSemiPermanentAttackBoost(3);
-                        crd.addSemiPermanentDefenseBoost(3);
-                        creatList.add(crd);
-                    }
-
-
-                }
-            }// for outer
-        }// execute()
-    }; // Mul Daya
-
 
     /** Constant <code>Elspeth_Emblem</code> */
     public static Command Elspeth_Emblem = new Command() {
@@ -6232,7 +6158,6 @@ public class GameActionUtil {
         commands.put("Liu_Bei", Liu_Bei);
 
         commands.put("Meddling_Mage", Meddling_Mage);
-        commands.put("Mul_Daya_Channelers", Mul_Daya_Channelers);
         commands.put("Muraganda_Petroglyphs", Muraganda_Petroglyphs);
 
         commands.put("Old_Man_of_the_Sea", Old_Man_of_the_Sea);
