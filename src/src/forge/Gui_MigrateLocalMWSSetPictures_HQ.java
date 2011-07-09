@@ -389,21 +389,11 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
         ArrayList<mCard> CList = new ArrayList<mCard>();
 
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        CardList AllCards = AllZone.getCardFactory().getAllCards();
-        //Log.error("AllCards.size: " + AllCards.size());
-
         //File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);
         String URLBase = "C:\\MTGForge\\HQPICS\\";
         String imgFN = "";
 
-        for (int i = 0; i < AllCards.size(); i++) {
-            Card c = AllCards.get(i);
+        for (Card c : AllZone.getCardFactory()) {
             //String url = c.getSVar("Picture");
             //String[] URLs = url.split("\\\\");
 

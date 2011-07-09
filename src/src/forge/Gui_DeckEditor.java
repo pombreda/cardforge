@@ -1200,16 +1200,9 @@ public class Gui_DeckEditor extends JFrame implements CardContainer, DeckDisplay
                 topModel.addCard(c);
             }
         } else {
-    		/*
-    		 * TODO Braids: "getAllCards copies the entire array, but that does not
-    		 * seem to be needed here. Significant performance improvement is
-    		 * possible if this code used getCards instead (along with a for each
-    		 * loop instead of using get(i), if applicable)."
-    		 */
-            CardList all = AllZone.getCardFactory().getAllCards();
-            for (int i = 0; i < all.size(); i++) {
-                c = all.get(i);
-                topModel.addCard(c);
+            for (Card loopCard : AllZone.getCardFactory()) {
+                topModel.addCard(loopCard);
+                c = loopCard;  // this might not be necessary
             }
         }
 

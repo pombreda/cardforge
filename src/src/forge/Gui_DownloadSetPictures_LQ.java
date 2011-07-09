@@ -384,24 +384,11 @@ public class Gui_DownloadSetPictures_LQ extends DefaultBoundedRangeModel impleme
 
         ArrayList<mCard> CList = new ArrayList<mCard>();
 
-		/*
-		 *  Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        //CardList AllCards = AllZone.getCardFactory().getAllCards();
-        CardList AllCards = AllZone.getCardFactory().getCards();
-        //Log.error("AllCards.size: " + AllCards.size());
-
         //File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);
         String URLBase = "http://cardforge.org/fpics/";
         String imgFN = "";
 
-        //for (int i = 0; i < AllCards.size(); i++) {
-        for (Card c : AllCards) {
-            //Card c = AllCards.get(i);
-
+        for (Card c : AllZone.getCardFactory()) {
             ArrayList<SetInfo> cSetInfo = c.getSets();
             if (cSetInfo.size() > 0) {
                 for (int j = 0; j < cSetInfo.size(); j++) {
