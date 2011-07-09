@@ -8,4 +8,5 @@ SVar:DBDraw:DB$ Draw | Defined$ You | NumCards$ X
 SVar:X:Count$CardCounters.LORE
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mind_unbound.jpg
+SetInfo:M12|Rare|http://magiccards.info/scans/en/m12/68.jpg
 End
