@@ -5,7 +5,8 @@ Text:no text
 PT:1/1
 K:Flash
 K:Flying
-S:Mode$ Continuous | Affected$ Creature.Faerie.Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Shroud | Description$ Other Faerie creatures you control get +1/+1. Other Faeries you control have shroud.
+S:Mode$ Continuous | Affected$ Creature.Faerie.Other+YouCtrl | AddPower$ 1 | AddToughness$ 1 | Description$ Other Faerie creatures you control get +1/+1.
+S:Mode$ Continuous | Affected$ Card.Faerie.Other+YouCtrl | AddKeyword$ Shroud | Description$ Other Faeries you control have shroud.
 SVar:PlayMain1:TRUE
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
