@@ -8,6 +8,7 @@ import forge.properties.NewConstants;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -28,36 +29,49 @@ import forge.gui.MultiPhaseProgressMonitorWithETA;
  */
 public class ReadCard implements Runnable, NewConstants {
     private BufferedReader in;
-    ArrayList<Card> allCards = new ArrayList<Card>();
+    Map<String,Card> mapToFill;
 	private File cardsfolder;
     
-    /** Constant <code>zipFile</code> */
-    private static File zipFile;  // TODO Why is this static?
+    private File zipFile;
 
     /**
      * <p>getCards.</p>
      *
+     * @deprected This isn't being used by anything, so it has been commented out; 
+     * future revisions may delete this method.
+     * 
      * @return a {@link java.util.ArrayList} object.
      */
-    public ArrayList<Card> getCards() {
-        return new ArrayList<Card>(allCards);
-    }
+    //public ArrayList<Card> getCards() {
+    //    return new ArrayList<Card>(allCards);
+    //}
 
     /**
      * <p>Constructor for ReadCard.</p>
+     * 
+     * @deprected This isn't being used by anything, so it has been commented out; 
+     * future revisions may delete this method.
      *
      * @param filename a {@link java.lang.String} object.
      */
-    public ReadCard(String filename) {
-        this(new File(filename));
-    }
+    //public ReadCard(String filename) {
+    //    this(new File(filename));
+    //}
 
     /**
      * <p>Constructor for ReadCard.</p>
      *
      * @param cardsfolder a {@link java.io.File} object.
+     * 
+     * @param mapToFill maps card names to Card instances; this is where we place the cards once read
+     * 
      */
-    public ReadCard(File cardsfolder) {
+    public ReadCard(File cardsfolder, Map<String, Card> mapToFill) {
+    	if (mapToFill == null) {
+    		throw new NullPointerException("mapToFill must not be null.");
+    	}
+    	this.mapToFill = mapToFill;
+    	
         if (!cardsfolder.exists())
             throw new RuntimeException("ReadCard : constructor error -- file not found -- filename is "
                     + cardsfolder.getAbsolutePath());
@@ -76,7 +90,6 @@ public class ReadCard implements Runnable, NewConstants {
      */
     public void run() {
         Card c = null;
-        ArrayList<String> cardNames = new ArrayList<String>();
 
         if (zipFile.exists()) {
             try {
@@ -101,9 +114,10 @@ public class ReadCard implements Runnable, NewConstants {
                     
                     in = new BufferedReader(new InputStreamReader(zip.getInputStream(entry)));
                     c = new Card();
-                    loadCard(c, cardNames);
-                    cardNames.add(c.getName());
-                    allCards.add(c);
+                    loadCard(c);
+                    
+                    mapToFill.put(c.getName(), c);
+                    
                     in.close();
                 	monitor.incrementUnitsCompletedThisPhase(1L);
                 }
@@ -139,9 +153,9 @@ public class ReadCard implements Runnable, NewConstants {
                 }
 
                 c = new Card();
-                loadCard(c, cardNames);
-                cardNames.add(c.getName());
-                allCards.add(c);
+                loadCard(c);
+
+                mapToFill.put(c.getName(), c);
 
             	monitor.incrementUnitsCompletedThisPhase(1L);
 
@@ -197,9 +211,8 @@ public class ReadCard implements Runnable, NewConstants {
      * <p>loadCard.</p>
      *
      * @param c a {@link forge.Card} object.
-     * @param cardNames a {@link java.util.ArrayList} object.
      */
-    private void loadCard(Card c, ArrayList<String> cardNames) {
+    private void loadCard(Card c) {
         String s = readLine();
         while (!s.equals("End")) {
             if (s.startsWith("#")) {
@@ -210,7 +223,7 @@ public class ReadCard implements Runnable, NewConstants {
                 if (Constant.Runtime.DevMode[0])
                 	System.out.println("ReadCard: " + s);
 
-                if (cardNames.contains(t)) {
+                if (mapToFill.containsKey(t)) {
                     System.out.println("ReadCard:run() error - duplicate card name: " + t);
                     throw new RuntimeException("ReadCard:run() error - duplicate card name: " + t);
                 } else
