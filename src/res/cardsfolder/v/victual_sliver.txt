@@ -3,7 +3,7 @@ ManaCost:W G
 Types:Creature Sliver
 Text:no text
 PT:2/2
-S:Mode$ Continuous | Affected$ Sliver | AddAbility$ GainLife | Description$ All Slivers have "2, Sacrifice this permanent: You gain 4 life."
+S:Mode$ Continuous | Affected$ Card.Sliver | AddAbility$ GainLife | Description$ All Slivers have "2, Sacrifice this permanent: You gain 4 life."
 SVar:GainLife:AB$GainLife | Cost$ 2 Sac<1/CARDNAME> | LifeAmount$ 4 | Defined$ You | SpellDescription$ You gain 4 life.
 SVar:BuffedBy:Sliver
 SVar:Rarity:Uncommon
