@@ -127,16 +127,8 @@ public class Generate3ColorDeck {
         int SpellPercentage = 22;
 
         // start with all cards
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        CardList AllCards = AllZone.getCardFactory().getAllCards();
-
         // remove cards that generated decks don't like
-        AllCards = AllCards.filter(new CardListFilter() {
+        CardList AllCards = CardList.filter(AllZone.getCardFactory(), new CardListFilter() {
             public boolean addCard(Card c) {
                 return !(c.getSVar("RemAIDeck").equals("True") || c.getSVar("RemRandomDeck").equals("True"));
             }
