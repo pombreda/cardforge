@@ -153,6 +153,8 @@ public class AbilityFactory_Attach {
 		
 		CardList list = AllZoneUtil.getCardsInZone(tgt.getZone());
 		list = list.getValidCards(tgt.getValidTgts(), sa.getActivatingPlayer(), sa.getSourceCard());
+		if (tgt.getZone().equals("Battlefield"))
+			list = list.getTargetableCards(sa.getSourceCard());
 		
 		if (list.size() == 0)
 			return null;
