@@ -56,12 +56,16 @@ public class CardList implements Iterable<Card> {
     }
 
     /**
-     * <p>Constructor for CardList.</p>
+     * Make a shallow copy of an Iterable's contents; this could be another
+     * CardList.
      *
-     * @param al a {@link forge.CardList} object.
+     * @param iterable  we traverse this and copy its contents into a local
+     * field.
      */
-    public CardList(CardList al) {
-        addAll(al.toArray());
+    public CardList(Iterable<Card> iterable) {
+        for (Card card : iterable) {
+        	add(card);
+        }
     }
 
     /**
