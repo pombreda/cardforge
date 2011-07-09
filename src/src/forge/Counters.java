@@ -51,6 +51,7 @@ public enum Counters {
     JAVELIN(),
     KI(),
     LEVEL(),
+    LORE(),
     LOYALTY(),
     LUCK(),
     M0M1("-0/-1"),
