@@ -9,7 +9,6 @@ import forge.card.spellability.*;
 import forge.card.trigger.Trigger;
 import forge.error.ErrorViewer;
 import forge.gui.GuiUtils;
-import forge.gui.MultiPhaseProgressMonitorWithETA;
 import forge.gui.input.Input;
 import forge.gui.input.Input_PayManaCost;
 import forge.gui.input.Input_PayManaCostUtil;
@@ -26,16 +25,33 @@ import java.util.*;
 /**
  * <p>CardFactory class.</p>
  *
+ * TODO: The map field contains Card instances that have not gone through 
+ * getCard2, and thus lack abilities.  However, when a new 
+ * Card is requested via getCard, it is this map's values that serve as
+ * the templates for the values it returns.  This class has another field,
+ * allCards, which is another copy of the card database.  These cards have
+ * abilities attached to them, and are owned by the human player by 
+ * default.  <b>It would be better memory-wise if we had only one or the
+ * other.</b>  We may experiment in the future with using allCard-type
+ * values for the map instead of the less complete ones that exist there
+ * today.
+ *
  * @author Forge
  * @version $Id: $
  */
 public class CardFactory implements NewConstants, Iterable<Card> {
-    // String cardname is the key, Card is the value
+    /** 
+     * This maps card name Strings to Card instances. The Card instances have
+     * no owner, and lack abilities.
+     * 
+     * To get a full-fledged card, see allCards.
+     */
     private Map<String, Card> map = new TreeMap<String, Card>();
 
+    /** This is a special list of cards, with all abilities attached. */
     private CardList allCards = new CardList();
 
-    private TreeSet<String> removedCardList;
+    private Set<String> removedCardList;
     private Card blankCard = new Card();                 //new code
 
     /**
@@ -88,19 +104,19 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             while (it.hasNext()) {
                 c = getCard(it.next().toString(), AllZone.getHumanPlayer());
                 allCards.add(c);
-                //System.out.println("cardName: " + c.getName());
-
             }
         } catch (Exception ex) {
             ErrorViewer.showError(ex);
         }
     }// constructor
 
+
     /**
-     * Makes a shallow copy of the internal card list, and displays a progress
-     * bar while doing so.
+     * Makes a shallow copy of the internal card list (allCards).
      * 
-     * It's better to use iterator if you can.
+     * @deprecated  Use iterator and make your own copy, if you absolutely 
+     * need one.  Keep in mind that there are thousands of cards, so
+     * it is a very heap-intensive operation.
      * 
      * @see #iterator
      *
@@ -108,23 +124,16 @@ public class CardFactory implements NewConstants, Iterable<Card> {
      */
     public CardList getAllCards() {
     	
-    	MultiPhaseProgressMonitorWithETA monitor = 
-    		new MultiPhaseProgressMonitorWithETA(
-    				"Forge - Duplicating card database", 1, allCards.size(), 
-    				0.5f); 
-    	
     	CardList result = new CardList(allCards.size());
     	
     	for (Card card : allCards) {
     		result.add(card);
-    		monitor.incrementUnitsCompletedThisPhase(1);
     	}
-    	
-    	monitor.getDialog().dispose();
     	
         return result;
     }// getAllCards()
 
+    
     /**
      * Faster than getAllCards, but callers must not modify this list directly!
      *
@@ -139,12 +148,17 @@ public class CardFactory implements NewConstants, Iterable<Card> {
     }// getAllCards()
 
 
+    /**
+     * Iterate over all full-fledged cards in the database; these cards are 
+     * owned by the human player by default.
+     * 
+     * @return an Iterator that does NOT support the remove method 
+     */
 	public Iterator<Card> iterator() {
-		return new ImmutableIterableFrom<Card>(map.values());
+		return new ImmutableIterableFrom<Card>(allCards);
 	}
 
-    
-    
+
     /**
      * <p>readCards.</p>
      *
@@ -153,64 +167,11 @@ public class CardFactory implements NewConstants, Iterable<Card> {
     private void readCards(File file) {
         map.clear();
 
-        ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER));
-        try {
-            read.run();
-            // javax.swing.SwingUtilities.invokeAndWait(read);
-        } catch (Exception ex) {
-            ErrorViewer.showError(ex);
-            throw new RuntimeException("CardFactory : readCards() thread error - " + ex.getMessage());
-        }
+        ReadCard read = new ReadCard(ForgeProps.getFile(CARDSFOLDER), map);
 
-        ArrayList<Card> simpleList = read.getCards();
-        Card s;
-        Iterator<Card> it = simpleList.iterator();
-        while (it.hasNext()) {
-            s = it.next();
-            map.put(s.getName(), s);
-            //System.out.println("cardName: " + s.getName());
-        }
+        // this fills in our map of card names to Card instances.
+        read.run();
     }// readCard()
-
-/*    // - this can probably be deleted.  I don't think it's used.
-    *//**
-     * <p>dynamicCopyCard.</p>
-     *
-     * @param in a {@link forge.Card} object.
-     * @return a {@link forge.Card} object.
-     *//*
-    final public Card dynamicCopyCard(Card in) {
-        if (in.isCreature()) {
-            Card card2 = new Card();
-            card2 = CardFactory_Creatures.getCard(in, in.getName(), in.getOwner(), this);
-
-            return card2;
-        } else if (in.isAura()) {
-            Card card2 = new Card();
-            card2 = CardFactory_Auras.getCard(in, in.getName(), in.getOwner());
-
-            return card2;
-        } else if (in.isEquipment()) {
-            Card card2 = new Card();
-            card2 = CardFactory_Equipment.getCard(in, in.getName(), in.getOwner());
-
-            return card2;
-        } else if (in.isPlaneswalker()) {
-            Card card2 = new Card();
-            card2 = CardFactory_Planeswalkers.getCard(in, in.getName(), in.getOwner());
-
-            return card2;
-        } else if (in.isLand()) {
-            Card card2 = new Card();
-            card2 = CardFactory_Lands.getCard(in, in.getName(), in.getOwner(), this);
-
-            return card2;
-        } else {
-            Card out = getCard(in.getName(), in.getOwner());
-            out.setUniqueNumber(in.getUniqueNumber());
-            return out;
-        }
-    }*/
 
     /**
      * <p>copyCard.</p>
@@ -382,14 +343,16 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             ComputerUtil.playStackFree(copySA);
     }
 
-    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    //this is the new getCard() method, you have to remove the old getCard()
+
     /**
      * <p>getCard.</p>
      *
      * @param cardName a {@link java.lang.String} object.
+     * 
      * @param owner a {@link forge.Player} object.
-     * @return a {@link forge.Card} object.
+     * 
+     * @return a {@link forge.Card} instance, owned by owner; or the special 
+     * blankCard
      */
     final public Card getCard(String cardName, Player owner) {
         if (removedCardList.contains(cardName) || cardName.equals(blankCard.getName())) return blankCard;
