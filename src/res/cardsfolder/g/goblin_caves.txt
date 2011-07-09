@@ -3,7 +3,8 @@ ManaCost:1 R R
 Types:Enchantment Aura
 Text:no text
 K:Enchant Land
-K:stPumpAll:Creature.Goblin:0/2:isPresent Land.AttachedBy+Basic+Mountain:If enchanted land is a basic Mountain, Goblin creatures get +0/+2.
+S:Mode$ Continuous | Affected$ Creature.Goblin | AddToughness$ 2 | CheckSVar$ X | SVarCompare$ EQ1 | Description$ If enchanted land is a basic Mountain, Goblin creatures get +0/+2.
+SVar:X:Count$Valid Land.AttachedBy+Basic+Mountain
 SVar:RemAIDeck:True
 SVar:RemRandomDeck:True
 SVar:Rarity:Common
