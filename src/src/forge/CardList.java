@@ -489,17 +489,36 @@ public class CardList implements Iterable<Card> {
     }
 
     /**
-     * <p>filter.</p>
-     *
-     * @param f a {@link forge.CardListFilter} object.
-     * @return a {@link forge.CardList} object.
+     * Create a new list of cards by applying a filter to this one.
+     * 
+     * @param filt  determines which cards are present in the resulting list
+     * 
+     * @return a subset of this CardList whose items  meet the filtering 
+     * criteria; may be empty, but never null.
      */
-    public CardList filter(CardListFilter f) {
-        CardList c = new CardList();
-        for (int i = 0; i < size(); i++)
-            if (f.addCard(getCard(i))) c.add(getCard(i));
+    public CardList filter(CardListFilter filt) {
+    	return CardList.filter(this, filt);
+    }
 
-        return c;
+    /**
+     * Filter an iterable sequence of Cards; note this is a static method
+     * that is very similar to the non-static one.
+     * 
+     * @param iterable  the sequence of cards to examine
+     * 
+     * @param filt  determines which cards are present in the resulting list
+     * 
+     * @return a list of Cards that meet the filtering criteria; may be empty,
+     * but never null
+     */
+    public static CardList filter(Iterable<Card> iterable, CardListFilter filt) {
+        CardList result = new CardList();
+        for (Card card : iterable)
+            if (filt.addCard(card)) {
+            	result.add(card);
+            }
+
+        return result;
     }
 
     /**
