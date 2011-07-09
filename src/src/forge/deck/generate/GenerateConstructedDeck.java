@@ -78,18 +78,17 @@ public class GenerateConstructedDeck {
     }//addLand()
 
     /**
-     * <p>getCards.</p>
+     * Creates a CardList from the set of all cards that meets the criteria
+     * for color(s), type, whether the card is suitable for 
+     * placement in random decks and in AI decks, etc. 
      *
-     * @return a {@link forge.CardList} object.
+     * @see #filterBadCards(Iterable)
+     *
+     * @return a subset of carsd <= the set of all cards; might be empty, but 
+     * never null
      */
     private CardList getCards() {
-		/*
-		 * TODO Braids: "getAllCards copies the entire array, but that does not
-		 * seem to be needed here. Significant performance improvement is
-		 * possible if this code used getCards instead (along with a for each
-		 * loop instead of using get(i), if applicable)."
-		 */
-        return filterBadCards(AllZone.getCardFactory().getAllCards());
+        return filterBadCards(AllZone.getCardFactory());
     }//getCards()
 
     /**
@@ -161,16 +160,20 @@ public class GenerateConstructedDeck {
     }
 
     /**
-     * <p>filterBadCards.</p>
+     * Creates a CardList from the given sequence that meets the criteria
+     * for color(s), type, whether the card is suitable for 
+     * placement in random decks and in AI decks, etc. 
      *
-     * @param list a {@link forge.CardList} object.
-     * @return a {@link forge.CardList} object.
+     * @param sequence  an iterable over Card instances
+     * 
+     * @return a subset of sequence <= sequence; might be empty, but never
+     * null
      */
-    private CardList filterBadCards(CardList list) {
+    private CardList filterBadCards(Iterable<Card> sequence) {
 
         final ArrayList<Card> goodLand = new ArrayList<Card>();
 
-        CardList out = list.filter(new CardListFilter() {
+        CardList out = CardList.filter(sequence, new CardListFilter() {
             public boolean addCard(Card c) {
                 ArrayList<String> list = CardUtil.getColors(c);
                 if (list.size() == 2) {
