@@ -10,23 +10,25 @@ public class CardFilter {
 
 
     /**
-     * <p>CardListNameFilter.</p>
+     * Filter a sequence (iterable) of cards to a list of equal or smaller size
+     * whose names contain the given substring.
+     * 
+     * We perform the substring search without sensitivity to case.
      *
-     * @param all a {@link forge.CardList} object.
-     * @param name a {@link java.lang.String} object.
+     * @param toBeFiltered an {@link java.lang.Iterable} of Card instances
+     * @param substring a {@link java.lang.String} object.
      * @return a {@link forge.CardList} object.
      */
-    public CardList CardListNameFilter(CardList all, String name) {
-        Card CardName;
+    public CardList cardListNameFilter(Iterable<Card> toBeFiltered, String substring) 
+    {
         String s;
 
         CardList listFilter = new CardList();
-        for (int i = 0; i < all.size(); i++) {
-            CardName = all.getCard(i);
-            s = CardName.getName().toLowerCase();
+        for (Card card : toBeFiltered) {
+            s = card.getName().toLowerCase();
 
-            if (s.indexOf(name.toLowerCase()) >= 0) {
-                listFilter.add(CardName);
+            if (s.indexOf(substring.toLowerCase()) >= 0) {
+                listFilter.add(card);
 
             }
 
@@ -38,6 +40,8 @@ public class CardFilter {
     /**
      * <p>CardListTextFilter.</p>
      *
+	 * TODO: style: rename this method so it starts with a lowercase letter
+	 * 
      * @param all a {@link forge.CardList} object.
      * @param name a {@link java.lang.String} object.
      * @return a {@link forge.CardList} object.
@@ -65,6 +69,8 @@ public class CardFilter {
     /**
      * <p>CardListColorFilter.</p>
      *
+	 * TODO: style: rename this method so it starts with a lowercase letter
+	 * 
      * @param all a {@link forge.CardList} object.
      * @param name a {@link java.lang.String} object.
      * @return a {@link forge.CardList} object.
@@ -139,6 +145,8 @@ public class CardFilter {
     /**
      * <p>CardListTypeFilter.</p>
      *
+	 * TODO: style: rename this method so it starts with a lowercase letter
+	 * 
      * @param all a {@link forge.CardList} object.
      * @param name a {@link java.lang.String} object.
      * @return a {@link forge.CardList} object.

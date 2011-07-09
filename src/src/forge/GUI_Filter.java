@@ -637,13 +637,7 @@ public class GUI_Filter extends javax.swing.JDialog {
         String name = nameTextField.getText();
         String cText = cardTextField.getText();
 
-        /*
-           * TODO Braids: "getAllCards copies the entire array, but that does not
-           * seem to be needed here. Significant performance improvement is
-           * possible if this code used getCards instead (along with a for each
-           * loop instead of using get(i), if applicable)."
-           */
-        CardList filterCardList = AllZone.getCardFactory().getAllCards();
+        CardList filterCardList;
         CardFilter filter = new CardFilter();
         Gui_DeckEditor g = (Gui_DeckEditor) deckDisplay;
         g.blackCheckBox.setSelected(true);
@@ -675,7 +669,8 @@ public class GUI_Filter extends javax.swing.JDialog {
         g.setEnabled(true);
         if (name != "") {
             if (cText != "") {
-                filterCardList = filter.CardListNameFilter(filterCardList, name);
+                filterCardList = filter.cardListNameFilter(AllZone.getCardFactory(), name);
+
                 if (filterCardList.size() == 0) {
                     JOptionPane.showMessageDialog(null, "Sorry, cards with name: " + name + " not found.",
                             "Filter", JOptionPane.INFORMATION_MESSAGE);
