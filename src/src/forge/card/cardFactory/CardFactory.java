@@ -848,7 +848,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             };
 
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            card.clearFirstSpell();
             card.addSpellAbility(spell);
         }
         //*************** END ************ END *************************
@@ -1356,7 +1356,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
         else if (cardName.equals("Standstill")) {
 
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            card.clearFirstSpell();
 
             card.addSpellAbility(new Spell_Permanent(card) {
                 private static final long serialVersionUID = 6912683989507840172L;
@@ -2326,7 +2326,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
                 }
             };
             // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpellAbility();
+            card.clearFirstSpell();
             card.addSpellAbility(copy);
             copy.setStackDescription(cardName + " - enters the battlefield as a copy of selected card.");
             copy.setBeforePayMana(runtime);

@@ -1893,9 +1893,13 @@ public class Card extends MyObservable {
     /**
      * <p>clearFirstSpellAbility.</p>
      */
-    public void clearFirstSpellAbility() {
-    	if (!spellAbility.isEmpty())
-    		spellAbility.remove(0);
+    public void clearFirstSpell() {
+    	for(int i = 0; i < spellAbility.size(); i++){
+    		if (spellAbility.get(i).isSpell()){
+    			spellAbility.remove(i);
+    			return;
+    		}
+    	}
     }
 
     /**

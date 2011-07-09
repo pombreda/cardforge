@@ -941,7 +941,7 @@ class CardFactory_Auras {
                     stDesc[0] = k[3].trim();
                 }    // with the keyword if they are present.
 
-                card.clearFirstSpellAbility();	// A "generic" Ability is added before this
+                card.clearFirstSpell();	// A "generic" Spell is added before this
                 if (!curse[0]) {
                     card.addFirstSpellAbility(CardFactoryUtil.enPump_Enchant(card, Power, Tough, extrinsicKeywords, spDesc, stDesc));
                 } else {
