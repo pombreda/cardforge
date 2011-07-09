@@ -317,9 +317,14 @@ public class TriggerHandler {
         if (!regtrig.requirementsCheck()) {
             return false;
         }
-
         if (regtrig.getHostCard().isFaceDown()) {
             return false;
+        }
+        if(regtrig instanceof Trigger_Always) {
+            if(AllZone.getStack().hasStateTrigger(regtrig.ID))
+            {
+                return false; //State triggers that are already on the stack don't trigger again.
+            }
         }
 
         HashMap<String, String> trigParams = regtrig.getMapParams();
@@ -370,6 +375,7 @@ public class TriggerHandler {
                 }
             }
             sa[0].setTrigger(true);
+            sa[0].setSourceTrigger(regtrig.ID);
             regtrig.setTriggeringObjects(sa[0]);
             if (regtrig.getStoredTriggeredObjects() != null)
                 sa[0].setAllTriggeringObjects(regtrig.getStoredTriggeredObjects());
@@ -847,13 +853,26 @@ public class TriggerHandler {
                     return sa[0].wasCancelled();
                 }
 
+                @Override
+                public void setSourceTrigger(int ID) {
+                    sa[0].setSourceTrigger(ID);
+                }
+
+                @Override
+                public int getSourceTrigger() {
+                    return sa[0].getSourceTrigger();
+                }
+
                 ////////////////////////////////////////
                 //THIS ONE IS ALL THAT MATTERS
                 ////////////////////////////////////////
                 @Override
                 public void resolve() {
-                    if (!regtrig.requirementsCheck()) {
-                        return;
+                    if(!(regtrig instanceof Trigger_Always)) //State triggers don't do the whole "Intervening If" thing.
+                    {
+                        if (!regtrig.requirementsCheck()) {
+                            return;
+                        }
                     }
 
                     if (decider[0] != null) {

@@ -1,5 +1,6 @@
 package forge.card.spellability;
 
+import com.sun.deploy.panel.ITreeNode;
 import forge.*;
 import forge.card.abilityFactory.AbilityFactory;
 import forge.card.mana.Mana;
@@ -45,6 +46,7 @@ public abstract class SpellAbility {
 
     private boolean spell;
     private boolean trigger = false;
+    private int sourceTrigger = -1;
     private boolean mandatory = false;
 
     private boolean tapAbility;
@@ -1093,6 +1095,24 @@ public abstract class SpellAbility {
      */
     public boolean isTrigger() {
         return trigger;
+    }
+
+    /**
+     * <p>setSourceTrigger.</p>
+     *
+     * @param ID a int.
+     */
+    public void setSourceTrigger(int ID) {
+        sourceTrigger = ID;
+    }
+
+    /**
+     * <p>getSourceTrigger.</p>
+     *
+     * @return a int.
+     */
+    public int getSourceTrigger() {
+        return sourceTrigger;
     }
 
     /**
