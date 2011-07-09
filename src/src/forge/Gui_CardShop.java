@@ -81,26 +81,24 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
     }
 
     /** {@inheritDoc} */
-    public void updateDisplay(CardList top, CardList bottom) {
+    public void updateDisplay(CardList topParam, CardList bottomParam) {
 
-        this.top = top;
-        this.bottom = bottom;
+        this.top = topParam;
+        this.bottom = bottomParam;
 
         topModel.clear();
         bottomModel.clear();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+        topParam = AllZone.getNameChanger().changeCardsIfNeeded(topParam);
+        bottomParam = AllZone.getNameChanger().changeCardsIfNeeded(bottomParam);
 
         Card c;
         String cardName;
         ReadBoosterPack pack = new ReadBoosterPack();
 
         // update top
-        for (int i = 0; i < top.size(); i++) {
-            c = top.get(i);
+        for (int i = 0; i < topParam.size(); i++) {
+            c = topParam.get(i);
 
             // add rarity to card if this is a sealed card pool
 
@@ -133,8 +131,8 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
         }// for
 
         // update bottom
-        for (int i = 0; i < bottom.size(); i++) {
-            c = bottom.get(i);
+        for (int i = 0; i < bottomParam.size(); i++) {
+            c = bottomParam.get(i);
 
             // add rarity to card if this is a sealed card pool
             if (!customMenu.getGameType().equals(Constant.GameType.Constructed))
@@ -174,10 +172,8 @@ public class Gui_CardShop extends JFrame implements CardContainer, DeckDisplay, 
 
         topModel.clear();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
 
         Card c;
         String cardName;

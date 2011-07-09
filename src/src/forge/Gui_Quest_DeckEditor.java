@@ -108,10 +108,8 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
         topModel.clear();
         bottomModel.clear();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
 
         Card c;
         String cardName;
@@ -196,10 +194,8 @@ public class Gui_Quest_DeckEditor extends JFrame implements CardContainer, DeckD
 
         topModel.clear();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
 
         Card c;
         String cardName;

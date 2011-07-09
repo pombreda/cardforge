@@ -19,8 +19,12 @@ import forge.gui.input.Input_PayManaCost_Ability;
 import forge.properties.ForgePreferences;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
+import net.slightlymagic.braids.util.ImmutableIterableFrom;
 import org.jdesktop.swingx.JXMultiSplitPane;
 import org.jdesktop.swingx.MultiSplitLayout.Node;
+
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.YieldUtils;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -1302,29 +1306,34 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
         }
 
         public void actionPerformed(ActionEvent e) {
-            /**
-             * <p>main.</p>
-             *
-             * @param args an array of {@link java.lang.String} objects.
-             */
-            Card[] c = getCards();
+            Generator<Card> c = YieldUtils.toGenerator(getCardsAsIterable());
 
-            if (AllZone.getNameChanger().shouldChangeCardName()) c = AllZone.getNameChanger().changeCard(c);
+            if (AllZone.getNameChanger().shouldChangeCardName()) {
+            	c = AllZone.getNameChanger().changeCard(c);
+            }
 
-            if (c.length == 0) GuiUtils.getChoiceOptional(title, new String[]{"no cards"});
+            Iterator<Card> iter = YieldUtils.toIterable(c).iterator();
+            
+            if (!iter.hasNext()) {
+            	GuiUtils.getChoiceOptional(title, new String[]{"no cards"});
+            }
             else {
-                Card choice = GuiUtils.getChoiceOptional(title, c);
+                Card choice = GuiUtils.getChoiceOptional(title, iter);
                 if (choice != null) doAction(choice);
             }
         }
 
-        /*
-        protected PlayerZone getZone() {
-            return zone;
-        }
-        */
-        protected Card[] getCards() {
+        /**
+         * @deprecated
+         * @see #getCardsAsIterable()
+         */
+        @SuppressWarnings("unused")
+		protected Card[] getCards() {
             return AllZoneUtil.getCardsInZone(zone).toArray();
+        }
+        
+        protected Iterable<Card> getCardsAsIterable() {
+        	return new ImmutableIterableFrom<Card>(AllZoneUtil.getCardsInZone(zone));
         }
 
         protected void doAction(Card c) {
