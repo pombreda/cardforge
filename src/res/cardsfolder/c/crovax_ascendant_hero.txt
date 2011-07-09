@@ -3,8 +3,8 @@ ManaCost:4 W W
 Types:Legendary Creature Human
 Text:no text
 PT:4/4
-K:stPumpAll:Creature.White+Other:1/1:No Condition:Other white creatures get +1/+1.
-K:stPumpAll:Creature.nonWhite:-1/-1:No Condition:Nonwhite creatures get -1/-1.
+S:Mode$ Continuous | Affected$ Creature.White+Other | AddPower$ 1 | AddToughness$ 1 | Description$ Other white creatures get +1/+1.
+S:Mode$ Continuous | Affected$ Creature.nonWhite | AddPower$ -1 | AddToughness$ -1 | Description$ Nonwhite creatures get -1/-1.
 A:AB$ ChangeZone | Cost$ PayLife<2> | Origin$ Battlefield | Destination$ Hand | SpellDescription$ Return CARDNAME to its owner's hand.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
