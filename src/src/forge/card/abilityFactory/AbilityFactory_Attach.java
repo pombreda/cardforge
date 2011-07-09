@@ -2,12 +2,16 @@ package forge.card.abilityFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Random;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.Card;
 import forge.CardList;
+import forge.CardListFilter;
+import forge.CardUtil;
+import forge.CombatUtil;
 import forge.Command;
 import forge.ComputerUtil;
 import forge.Counters;
@@ -21,6 +25,7 @@ import forge.card.spellability.Spell;
 import forge.card.spellability.SpellAbility;
 import forge.card.spellability.Spell_Permanent;
 import forge.card.spellability.Target;
+import forge.card.staticAbility.StaticAbility;
 
 public class AbilityFactory_Attach {
 	public static SpellAbility createSpellAttach(final AbilityFactory AF){
@@ -179,11 +184,11 @@ public class AbilityFactory_Attach {
 	public static Card attachAIControlPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Gain Control of. 
 
-		// Filter list by Controller (only steal cards I don't already control)
-		list = list.getController(AllZone.getHumanPlayer());
-		
 		if (list.size() == 0)
 			return null;
+		
+		// Filter list by Controller (only steal cards I don't already control)
+		CardList nonMandatoryList = list.getController(AllZone.getHumanPlayer());
 		
 		if (sa.getTarget().canTgtPermanent()){
 			// If can target all Permanents, and Life isn't in eminent danger, grab Planeswalker first, then Creature
@@ -191,11 +196,15 @@ public class AbilityFactory_Attach {
 			
 		}
 		
-		Card c = CardFactoryUtil.AI_getBest(list);
+		Card c = CardFactoryUtil.AI_getBest(nonMandatoryList);
         
-        if (mandatory)
+        if (mandatory){
+        	// If Mandatory (brought directly into play without casting) gotta choose something
+        	if (c == null)
+        		c = CardFactoryUtil.AI_getWorstPermanent(list, false, false, false, false);
         	return c;
-        
+        }
+        	
         // TODO: If Not Mandatory, make sure the card is "good enough"
         if (c.isCreature()){
 	        int eval = CardFactoryUtil.evaluateCreature(c);
@@ -206,48 +215,111 @@ public class AbilityFactory_Attach {
 		return c;
 	}
 	
+	public static Card chooseUnpreferred(boolean mandatory, CardList list, Player preferredController){
+		// Expand this
+		if (!mandatory)
+			return null;
+		
+		CardList prefList =  list.getController(preferredController);
+		if (!prefList.isEmpty())
+			return CardFactoryUtil.AI_getBest(prefList);
+		
+		return CardFactoryUtil.AI_getWorstPermanent(list, true, true, true, false);
+	}
+	
 	public static Card attachAIPumpPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Pump 
+		Player prefPlayer = AllZone.getComputerPlayer();
+		CardList prefList = list.getController(prefPlayer);
 		
-		// Filter list by Controller (only steal cards I don't already control)
-		list = list.getController(AllZone.getComputerPlayer());
-		
-		if (list.size() == 0)
-			return null;
+		if (prefList.size() == 0)
+			return chooseUnpreferred(mandatory, list, prefPlayer);
 		
 		Card c = null;
-		
 		CardList magnetList = null;
 		String stCheck = null;
-		
 		if (attachSource.isAura()){
-			stCheck = "stPumpEnchanted";
-			magnetList = list.getEnchantMagnets();
+			stCheck = "EnchantedBy";
+			magnetList = prefList.getEnchantMagnets();
 		}
 		else if (attachSource.isEquipment()){
-			stCheck = "stPumpEquipped";
-			magnetList = list.getEquipMagnets();
+			stCheck = "EquippedBy";
+			magnetList = prefList.getEquipMagnets();
 		}
 		
-		// TODO: 
-		// determine Power Bonus
-		// determine Toughness Bonus
-		// determine Granted Keywords
-		
-		if (magnetList != null && magnetList.size() > 0){
-			// If negative toughness won't kill it, attach to a Magnet
+		if (magnetList != null && !magnetList.isEmpty()){
+			// Always choose something from the Magnet List.
+			// Probably want to "weight" the list by amount of Enchantments and choose the "lightest"
+
+			magnetList = magnetList.filter(new CardListFilter() {
+				@Override
+				public boolean addCard(Card c) {
+					return CombatUtil.canAttackNextTurn(c);
+				}
+			});
+			
+			return CardFactoryUtil.AI_getBest(magnetList);
 		}
 		
-		// If Aura grants only Keywords, don't Stack unstackable keywords
+		int totToughness = 0;
+		int totPower = 0;
+		ArrayList<String> keywords = new ArrayList<String>();
 		
+		for (StaticAbility stAbility : attachSource.getStaticAbilities()){
+			HashMap<String,String> params = stAbility.getMapParams();
+			
+			if (!params.get("Mode").equals("Continuous"))
+				continue;
+			
+			String affected = params.get("Affected");
+			
+			if (affected == null)
+				continue;
+			if ((affected.contains(stCheck) || affected.contains("AttachedBy")) ){
+				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
+				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
+				
+				String kws = params.get("AddKeyword");
+				if (kws != null){
+					for(String kw : kws.split(" & "))
+					keywords.add(kw);
+				}
+			}
+		}
+		
+		if (totToughness == 0 && totPower == 0){
+			// Just granting Keywords don't assign stacking Keywords
+			Iterator<String> it = keywords.iterator();
+			while(it.hasNext()){
+				String key = it.next();
+				if (CardUtil.isStackingKeyword(key))
+					it.remove();
+			}
+			if (!keywords.isEmpty()){
+				final ArrayList<String> finalKWs = keywords;
+				prefList = prefList.filter(new CardListFilter() {
+					//If Aura grants only Keywords, don't Stack unstackable keywords
+					@Override
+					public boolean addCard(Card c) {
+						for(String kw : finalKWs)
+							if (c.hasKeyword(kw))
+								return false;
+						
+						return true;
+					}
+				});
+			}
+		}
+
 		// Otherwise choose an appropriately "good enough" creature
-		// Try not to over Aura-tize cards
-		// 
-		
-		c = CardFactoryUtil.AI_getMostExpensivePermanent(list);
+		// TODO: Try not to over Aura-tize cards
+		// TODO: Make sure we aren't killing cards
+		// TODO: Probably prefer to Enchant Aggressive creatures
+		 
+		c = CardFactoryUtil.AI_getBest(prefList);
 		
 		if (c == null)
-			return null;
+			return chooseUnpreferred(mandatory, list, prefPlayer);
 		
         if (mandatory)
         	return c;
@@ -292,7 +364,11 @@ public class AbilityFactory_Attach {
 		// AI For Cards like Evil Presence or Spreading Seas
 		Card c = null;
 		
-		// Filter list by Controller (only steal cards I don't already control)
+		// A few of these cards are actually good, most of the Animate to Creature ones
+		// One or two of the give basic land types
+		// Maybe require Curse$ on the specific ones and filter the list that way
+		
+		
 		list = list.getController(AllZone.getHumanPlayer());
 		
 		if (list.size() == 0)
@@ -302,6 +378,8 @@ public class AbilityFactory_Attach {
 		// Filter out Basic Lands that have the same type as the changing type
 		// Ultimately, these spells need to be used to reduce mana base of a color. So it might be better to choose a Basic over a Nonbasic
         
+		
+		
         if (mandatory)
         	return c;
 
