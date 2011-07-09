@@ -116,7 +116,12 @@ public class StaticAbility {
     public boolean checkConditions() {
     	Player controller = hostCard.getController();
     	
-    	if(mapParams.containsKey("EffectZone") && !AllZone.getZone(hostCard).getZoneName().equals(mapParams.get("EffectZone")))
+    	String effectZone = "Battlefield"; //default
+    	
+    	if (mapParams.containsKey("EffectZone"))
+    		effectZone = mapParams.get("EffectZone");
+    	
+    	if(!effectZone.equals("All") && !AllZone.getZone(hostCard).getZoneName().equals(effectZone))
     		return false;
     	
     	if(mapParams.containsKey("Threshold") && !controller.hasThreshold())
