@@ -71,6 +71,31 @@ public class StaticAbility {
         return mapParameters;
     }
     
+    // In which layer should the ability be applied (for continuous effects only)
+    public int getLayer() {
+    	if(mapParams.containsKey("CharacteristicDefining"))
+    		return 7;
+    	
+    	if(mapParams.containsKey("AddPower") || mapParams.containsKey("AddToughness")  
+    			|| mapParams.containsKey("SetPower") || mapParams.containsKey("SetToughness"))
+    		return 8; // This is the collection of 7b and 7c
+    	
+    	if(mapParams.containsKey("AddKeyword") || mapParams.containsKey("AddAbility")
+    			|| mapParams.containsKey("AddTrigger"))
+    		return 6;
+    	
+    	if(mapParams.containsKey("AddColor") || mapParams.containsKey("RemoveColor"))
+    		return 5;
+    	
+    	if(mapParams.containsKey("AddType") || mapParams.containsKey("RemoveCardType")
+    			|| mapParams.containsKey("RemoveSubType") || mapParams.containsKey("RemoveSuperType"))
+    		return 4;
+    	
+    	// Layer 1, 2 & 3 are not supported
+    	
+    	return 0;
+    }
+    
     /**
      * <p>toString.</p>
      *
