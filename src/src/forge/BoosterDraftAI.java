@@ -29,7 +29,7 @@ public class BoosterDraftAI {
     /**
      * Constant <code>colorToLand</code>
      */
-    private static Map<String, String> colorToLand = new HashMap<String, String>();
+    private static Map<String, String> colorToLand = new TreeMap<String, String>();
 
     //picks one Card from in_choose, removes that card, and returns the list
     //returns the cards not picked
@@ -247,7 +247,7 @@ public class BoosterDraftAI {
         if (n.length != nDecks)
             throw new RuntimeException("BoosterDraftAI : testColors error, numbers array length does not equal 7");
 
-        HashSet<Integer> set = new HashSet<Integer>();
+        Set<Integer> set = new TreeSet<Integer>();
         for (int i = 0; i < nDecks; i++)
             set.add(Integer.valueOf(n[i]));
 
