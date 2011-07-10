@@ -769,6 +769,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
         final Card card = copyStats(o);
         card.setOwner(owner);
         card.setController(owner);
+        card.addColor(card.getManaCost());
         //may have to change the spell
         
         //this is so permanents like creatures and artifacts have a "default" spell
@@ -2632,7 +2633,6 @@ public class CardFactory implements NewConstants, Iterable<Card> {
                 sa.setXManaCost("1");
         }//X
 
-        card.addColor(card.getManaCost());
         int cardnameSpot = hasKeyword(card, "CARDNAME is ");
         if (cardnameSpot != -1) {
             String color = "1";
