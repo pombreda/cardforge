@@ -5601,35 +5601,7 @@ public class GameActionUtil {
         }
 
     }; //Liu_Bei
-
-    /** Constant <code>Phylactery_Lich</code> */
-    public static Command Phylactery_Lich = new Command() {
-
-        private static final long serialVersionUID = -1606115081917467754L;
-
-        public void execute() {
-            CardList creature = AllZoneUtil.getCardsInPlay("Phylactery Lich");
-            int size = creature.size();
-
-            for (int i = 0; i < size; i++) {
-                Card c = creature.get(i);
-                if (!phylacteryExists(c) && c.getFinishedEnteringBF()) {
-                    AllZone.getGameAction().sacrifice(c);
-                }
-            }
-
-        }//execute()
-
-        private boolean phylacteryExists(Card c) {
-            CardList play = AllZoneUtil.getPlayerCardsInPlay(c.getController());
-            play = play.filter(new CardListFilter() {
-                public boolean addCard(Card crd) {
-                    return crd.getCounters(Counters.PHYLACTERY) > 0;
-                }
-            });
-            return play.size() > 0;
-        }
-    };//Phylactery_Lich
+    
 
     /** Constant <code>topCardReveal_Update</code> */
     public static Command topCardReveal_Update = new Command() {
