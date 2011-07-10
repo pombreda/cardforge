@@ -3,7 +3,8 @@ ManaCost:1 U
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPump:Islandwalk
+A:SP$ Attach | Cost$ 1 U | ValidTgts$ Creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ Islandwalk | Description$ Enchanted creature has islandwalk. (This creature is unblockable as long as defending player controls an Island.)
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/fishliver_oil.jpg
 SetInfo:9ED|Common|http://magiccards.info/scans/en/9e/77.jpg
