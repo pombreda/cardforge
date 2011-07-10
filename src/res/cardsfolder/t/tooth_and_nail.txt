@@ -8,4 +8,5 @@ A:SP$ ChangeZone | Cost$ 7 G G | Origin$ Library | Destination$ Hand | ChangeTyp
 SVar:ChangeZone:DB$ChangeZone | Origin$ Hand | Destination$ Battlefield | ChangeType$ Creature | ChangeNum$ 2
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/tooth_and_nail.jpg
+SetInfo:MRD|Rare|http://magiccards.info/scans/en/mi/134.jpg
 End
