@@ -134,11 +134,9 @@ public class StaticEffects {
         cardToEffectsList.put("Liu Bei, Lord of Shu", new String[]{"Liu_Bei"});
 
         cardToEffectsList.put("Meddling Mage", new String[]{"Meddling_Mage"});
-        /*cardToEffectsList.put("Mul Daya Channelers", new String[]{"Mul_Daya_Channelers"}); */
         cardToEffectsList.put("Muraganda Petroglyphs", new String[]{"Muraganda_Petroglyphs"});
         cardToEffectsList.put("Old Man of the Sea", new String[]{"Old_Man_of_the_Sea"});
 
-        cardToEffectsList.put("Phylactery Lich", new String[]{"Phylactery_Lich"});
         cardToEffectsList.put("Tarmogoyf", new String[]{"Tarmogoyf"});
 
         cardToEffectsList.put("Umbra Stalker", new String[]{"Umbra_Stalker"});
