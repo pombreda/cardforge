@@ -4602,16 +4602,6 @@ public class GameActionUtil {
         }
     } //upkeep_Fallen_Empires_Storage_Lands
 
-    
-
-    /**
-     * <p>executeCardStateEffects.</p>
-     */
-    public static void executeCardStateEffects() {
-
-        topCardReveal_Update.execute();
-    }// executeCardStateEffects()
-
     /** Constant <code>Conspiracy</code> */
     public static Command Conspiracy = new Command() {
         private static final long serialVersionUID = -752798545956593342L;
@@ -5598,30 +5588,6 @@ public class GameActionUtil {
         }
 
     }; //Liu_Bei
-    
-
-    /** Constant <code>topCardReveal_Update</code> */
-    public static Command topCardReveal_Update = new Command() {
-
-        private static final long serialVersionUID = 8669404698350637963L;
-
-        public void execute() {
-            CardList list = AllZoneUtil.getCardsInPlay();
-
-            list = list.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.hasKeyword("Play with the top card of your library revealed.");
-                }
-            });
-
-            for (int i = 0; i < list.size(); i++) {
-                Card c = list.get(i);
-                if (CardFactoryUtil.getTopCard(c) != null)
-                    c.setTopCardName(CardFactoryUtil.getTopCard(c).getName());
-            }
-
-        }//execute()
-    };//topCardReveal_Update
 
 
     /** Constant <code>Sound_the_Call_Wolf</code> */

@@ -209,9 +209,9 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
         //top revealed
         if (card.hasKeyword("Play with the top card of your library revealed.")
-                && !card.getTopCardName().equals("")) {
+                && !AllZoneUtil.getPlayerCardsInLibrary(card.getController()).isEmpty()) {
             area.append("\r\nTop card: ");
-            area.append(card.getTopCardName());
+            area.append(AllZoneUtil.getPlayerCardsInLibrary(card.getController(), 1));
         }
 
         //chosen type

@@ -1761,7 +1761,6 @@ public class CombatUtil {
                             Command com = GameActionUtil.commands.get(effect);
                             com.execute();
                         }
-                        GameActionUtil.executeCardStateEffects();
 
                     }
                 } else if (c.getController().isComputer()) {
@@ -1774,8 +1773,6 @@ public class CombatUtil {
                         Card card = CardFactoryUtil.AI_getBestEnchantment(enchantments, c, false);
                         AllZone.getGameAction().moveToPlay(card);
                         c.getController().shuffle();
-                        //we have to have cards like glorious anthem take effect immediately:
-                        GameActionUtil.executeCardStateEffects();
                     }
                 }
             } //enchantments.size > 0
