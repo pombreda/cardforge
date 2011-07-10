@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.YieldUtils;
+
 
 //when you create QuestDataOld and AFTER you copy the AI decks over
 //you have to call one of these two methods below
@@ -141,7 +144,7 @@ public class QuestData {
     public void newGame(int difficulty, String m, boolean standardStart) {
         setDifficulty(difficulty);
 
-        CardList allCards = AllZone.getCardFactory().getCards();
+        Generator<Card> allCards = YieldUtils.toGenerator(AllZone.getCardFactory());
 
         ArrayList<String> list = new ArrayList<String>();
 

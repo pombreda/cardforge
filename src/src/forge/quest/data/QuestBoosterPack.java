@@ -1,5 +1,7 @@
 package forge.quest.data;
 
+import forge.Card;
+import forge.CardFilter;
 import forge.CardList;
 import forge.Constant;
 import forge.properties.NewConstants;
@@ -7,6 +9,12 @@ import forge.properties.NewConstants;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.NoSuchElementException;
+
+import net.slightlymagic.braids.util.generator.GeneratorFunctions;
+
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.YieldUtils;
 
 // The BoosterPack generates cards for the Card Pool in Quest Mode
 /**
@@ -31,17 +39,31 @@ public class QuestBoosterPack implements NewConstants {
         }
     }
 
-    /**
-     * <p>getQuestStarterDeck.</p>
-     *
-     * @param cards a {@link forge.CardList} object.
-     * @param numCommon a int.
-     * @param numUncommon a int.
-     * @param numRare a int.
-     * @param standardPool a boolean.
-     * @return a {@link java.util.ArrayList} object.
-     */
-    public ArrayList<String> getQuestStarterDeck(CardList cards, int numCommon, int numUncommon, int numRare, boolean standardPool) {
+	/**
+	 * <p>
+	 * getQuestStarterDeck.
+	 * </p>
+	 * 
+	 * @param allCards
+	 *            the card pool from which we can generate the deck
+	 * 
+	 * @param numCommon
+	 *            a int.
+	 * 
+	 * @param numUncommon
+	 *            a int.
+	 * 
+	 * @param numRare
+	 *            a int.
+	 * 
+	 * @param standardPool
+	 *            whether to restrict the card pool to what is currently
+	 *            considered the Standard block. To update the sets that are
+	 *            considered standard, modify this method.
+	 * 
+	 * @return a {@link java.util.ArrayList} object.
+	 */
+    public ArrayList<String> getQuestStarterDeck(Generator<Card> allCards, int numCommon, int numUncommon, int numRare, boolean standardPool) {
         ArrayList<String> names = new ArrayList<String>();
 
         // Each color should have around the same amount of monocolored cards
@@ -60,7 +82,12 @@ public class QuestBoosterPack implements NewConstants {
         if (standardPool) {
             // filter Cards for cards appearing in Standard Sets
             ArrayList<String> sets = new ArrayList<String>();
+            
             //TODO: It would be handy if the list of any sets can be chosen
+            // ... Huh?
+            // TODO: Braids: "It would also be handy if comments were written 
+            // in clear English."
+            
             sets.add("NPH");
             sets.add("MBS");
             sets.add("SOM");
@@ -69,42 +96,66 @@ public class QuestBoosterPack implements NewConstants {
             sets.add("WWK");
             sets.add("ZEN");
 
-            cards = cards.getSets(sets);
+            allCards = CardFilter.getSets(allCards, sets);
+            
+			/*
+			 * Here we force the generator to evaluate (solidify) into a
+			 * temporary ArrayList. This list only contains cards from 7 sets,
+			 * so it doesn't have nearly as much heap impact as an array of all
+			 * cards. Plus, we need to scan this array 3 times in the code
+			 * below. Braids thinks it's better to have the temporary list than
+			 * to force evaluation of the original generator three times,
+			 * because the original generator examines every card in the
+			 * database.
+			 */
+            allCards = GeneratorFunctions.solidify(allCards);
         }
 
-        names.addAll(generateCards(cards, numCommon, Constant.Rarity.Common, null, started));
-        names.addAll(generateCards(cards, numUncommon, Constant.Rarity.Uncommon, null, started));
-        names.addAll(generateCards(cards, numRare, Constant.Rarity.Rare, null, started));
+        // We don't bother solidifying here, because allCards could be 
+        // equal to the set of ALL cards.
+        
+        names.addAll(generateCards(allCards, numCommon, Constant.Rarity.Common, null, started));
+        names.addAll(generateCards(allCards, numUncommon, Constant.Rarity.Uncommon, null, started));
+        names.addAll(generateCards(allCards, numRare, Constant.Rarity.Rare, null, started));
 
         return names;
     }
 
     /**
-     * <p>generateCards.</p>
+     * Create the list of card names at random from the given pool.
      *
-     * @param cards a {@link forge.CardList} object.
-     * @param num a int.
-     * @param rarity a {@link java.lang.String} object.
-     * @param color a {@link java.lang.String} object.
-     * @param colorOrder a {@link java.util.ArrayList} object.
-     * @return a {@link java.util.ArrayList} object.
+     * @param allCards  the card pool to use
+     * @param num  how many card names to add to the result
+     * @param rarity  only allow cards of this rarity
+     * @param color  may be null; if not null, only cards of this color may be added
+     * @param colorOrder  we shuffle this as a side effect of calling this method
+     * @return a list of card names
      */
-    public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color, ArrayList<String> colorOrder) {
+    public ArrayList<String> generateCards(Generator<Card> allCards, int num, String rarity, String color, ArrayList<String> colorOrder) 
+    {
         // If color is null, use colorOrder progression to grab cards
         ArrayList<String> names = new ArrayList<String>();
 
         int size = colorOrder.size();
         Collections.shuffle(colorOrder);
 
-        cards = cards.getRarity(rarity);
+        allCards = CardFilter.getRarity(allCards, rarity);
         int count = 0, i = 0;
+        
+        if (num > 1) {
+        	// Force evaluation (solidify) the generator because we're about
+        	// to use it more than once.
+        	
+        	allCards = GeneratorFunctions.solidify(allCards);
+        }
+        
         while (count < num) {
             String name;
 
             if (color == null)
-                name = getCardName(cards, colorOrder.get(i % size));
+                name = getCardName(allCards, colorOrder.get(i % size));
             else
-                name = getCardName(cards);
+                name = getCardName(allCards);
 
             if (name != null && !names.contains(name)) {
                 names.add(name);
@@ -117,40 +168,53 @@ public class QuestBoosterPack implements NewConstants {
     }
 
     /**
-     * <p>generateCards.</p>
+     * Convenience for generateCards(YieldUtils.toGenerator(cards), num, rarity, color, this.choices);
      *
-     * @param cards a {@link forge.CardList} object.
-     * @param num a int.
-     * @param rarity a {@link java.lang.String} object.
-     * @param color a {@link java.lang.String} object.
-     * @return a {@link java.util.ArrayList} object.
+     * @see #generateCards(Generator, int, String, String, ArrayList)
+     * 
+     * @param cards this is a CardList, not a Generator (for now)
      */
     public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color) {
-        return generateCards(cards, num, rarity, color, choices);
+        return generateCards(YieldUtils.toGenerator(cards), num, rarity, color, choices);
     }
 
     /**
-     * <p>getCardName.</p>
+     * Retrieve a card name at random from the given pool of cards;
+     * the card must have a specific color.
      *
-     * @param cards a {@link forge.CardList} object.
+     * This forces one evaluation of the allCards Generator.
+     *
+     * @param allCards  the card pool to use
      * @param color a {@link java.lang.String} object.
-     * @return a {@link java.lang.String} object.
+     * @return  a random card name with the given color from allCards
      */
-    public String getCardName(CardList cards, String color) {
-        return getCardName(cards.getColor(color));
+    public String getCardName(Generator<Card> allCards, String color) {
+        return getCardName(CardFilter.getColor(allCards, color));
     }
 
     /**
-     * <p>getCardName.</p>
+     * Fetch a random card name from the given pool.
+     * 
+     * This forces one evaluation of the cards Generator.
      *
-     * @param cards a {@link forge.CardList} object.
-     * @return a {@link java.lang.String} object.
+     * @param cards  the card pool from which to select
+     * @return a card name from cards
      */
-    public String getCardName(CardList cards) {
-        if (cards.isEmpty())    // Only should happen if something is programmed wrong
-            return null;
-        cards.shuffle();
-
-        return cards.get(0).getName();
+    public String getCardName(Generator<Card> cards) {
+    	Card selected = null;
+    	try {
+    		selected = GeneratorFunctions.selectRandom(cards);
+    	} 
+    	catch (NoSuchElementException ignored) {
+    		;
+    	}
+        if (selected == null) {
+        	// Previously, it was thought that this 
+        	// Only should happen if something is programmed wrong
+        	// But empirical evidence contradicts this.
+        	return null;
+        }
+        
+        return selected.getName();
     }
 }
