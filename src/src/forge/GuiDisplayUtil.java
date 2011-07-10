@@ -151,22 +151,12 @@ public class GuiDisplayUtil implements NewConstants {
         for(String type : cardTypes) {
         	sb.append(type).append(" ");
         }
-        if((cardTypes.contains("Creature") || cardTypes.contains("Land")) && !subTypes.isEmpty()) sb.append("- ");
+        if(!subTypes.isEmpty()) sb.append("- ");
         for(String type : subTypes) {
         	sb.append(type).append(" ");
         }
         
         return sb.toString();
-        
-        /*
-        for (int i = 0; i < list.size(); i++) {
-            s = list.get(i).toString();
-            sb.append(s);
-            if (s.equals("Creature") || s.equals("Land")) {
-                sb.append(" - ");
-            } else sb.append(" ");
-        }
-        */
     }
 
     /**
