@@ -153,6 +153,9 @@ public class AbilityFactory_Attach {
 		
 		CardList list = AllZoneUtil.getCardsInZone(tgt.getZone());
 		list = list.getValidCards(tgt.getValidTgts(), sa.getActivatingPlayer(), sa.getSourceCard());
+		
+		// TODO: If Attaching without casting, don't need to actually target. 
+		// I believe this is the only case where mandatory will be true, so just check that when starting that work
 		if (tgt.getZone().equals("Battlefield"))
 			list = list.getTargetableCards(sa.getSourceCard());
 		
@@ -183,14 +186,13 @@ public class AbilityFactory_Attach {
 		return c;
 	}
 	
+	// Should generalize this code a bit since they all have similar structures
 	public static Card attachAIControlPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Gain Control of. 
 
-		if (list.size() == 0)
-			return null;
-		
 		// Filter list by Controller (only steal cards I don't already control)
-		CardList nonMandatoryList = list.getController(AllZone.getHumanPlayer());
+		Player prefPlayer = AllZone.getHumanPlayer();
+		CardList nonMandatoryList = list.getController(prefPlayer);
 		
 		if (sa.getTarget().canTgtPermanent()){
 			// If can target all Permanents, and Life isn't in eminent danger, grab Planeswalker first, then Creature
@@ -340,17 +342,20 @@ public class AbilityFactory_Attach {
 	}
 	
 	public static Card attachAICursePreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
-		// AI For choosing a Card to Curse of. 
-		
-		// Filter list by Controller (only steal cards I don't already control)
-		list = list.getController(AllZone.getHumanPlayer());
-		
+		// AI For choosing a Card to Curse of. 	
 		if (list.size() == 0)
 			return null;
 		
+		// Filter list by Controller (only steal cards I don't already control)
+		Player prefPlayer = AllZone.getHumanPlayer();
+		CardList prefList = list.getController(prefPlayer);
+		
 		// TODO Probably should be more specific then just getBest here
 		
-		Card c = CardFactoryUtil.AI_getBest(list);
+		Card c = CardFactoryUtil.AI_getBest(prefList);
+		
+		if (c == null)
+			return chooseUnpreferred(mandatory, list, prefPlayer);
 		
         if (mandatory)
         	return c;
@@ -367,23 +372,24 @@ public class AbilityFactory_Attach {
 	
 	public static Card attachAIChangeTypePreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For Cards like Evil Presence or Spreading Seas
-		Card c = null;
+		if (list.size() == 0)
+			return null;
 		
 		// A few of these cards are actually good, most of the Animate to Creature ones
 		// One or two of the give basic land types
 		// Maybe require Curse$ on the specific ones and filter the list that way
 		
+		Player prefPlayer = AllZone.getHumanPlayer();
+		CardList prefList = list.getController(prefPlayer);
 		
-		list = list.getController(AllZone.getHumanPlayer());
-		
-		if (list.size() == 0)
-			return null;
+		Card c = CardFactoryUtil.AI_getBest(prefList);
 				
 		// TODO: Port over some of the existing code, but rewrite most of it.
 		// Filter out Basic Lands that have the same type as the changing type
 		// Ultimately, these spells need to be used to reduce mana base of a color. So it might be better to choose a Basic over a Nonbasic
         
-		
+        if (c == null)
+			return chooseUnpreferred(mandatory, list, prefPlayer);
 		
         if (mandatory)
         	return c;
