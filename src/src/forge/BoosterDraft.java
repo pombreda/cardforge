@@ -1,7 +1,8 @@
 package forge;
 
 import forge.deck.Deck;
-import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>BoosterDraft interface.</p>
@@ -45,7 +46,7 @@ public interface BoosterDraft {
     public String draftFormat[] = {""};
     
     /** Constant <code>draftPicks="{}"</code> */
-    public HashMap<String,Float> draftPicks = new HashMap<String,Float>();
+    public Map<String,Float> draftPicks = new TreeMap<String,Float>();
 }
 
 
