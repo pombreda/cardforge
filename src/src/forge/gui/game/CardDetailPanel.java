@@ -114,8 +114,8 @@ public class CardDetailPanel extends JPanel implements CardContainer {
 
         boolean faceDown = card.isFaceDown() && card.getController() != AllZone.getHumanPlayer();
         if (!faceDown) {
-            if (card.isLand()) nameCostLabel.setText(card.getName());
-            else nameCostLabel.setText(card.getName() + "  - " + card.getManaCost());
+            if (card.getManaCost().equals("") || card.isLand()) nameCostLabel.setText(card.getName());
+            else nameCostLabel.setText(card.getName() + " - " + card.getManaCost());
         } else nameCostLabel.setText("Morph");
 
         if (!faceDown) typeLabel.setText(GuiDisplayUtil.formatCardType(card));
