@@ -3,7 +3,8 @@ ManaCost:R
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPump:+2/+0
+A:SP$ Attach | Cost$ R | ValidTgts$ Creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ 2 | Description$ Enchanted creature gets +2/+0.
 K:stPumpEnchanted:Creature:2/0:Hellbent:Hellbent - Enchanted creature gets an additional +2/+0 as long as you have no cards in hand.
 SVar:BuffedBy:Card
 SVar:Rarity:Common
