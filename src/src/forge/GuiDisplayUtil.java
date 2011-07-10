@@ -1073,6 +1073,8 @@ public class GuiDisplayUtil implements NewConstants {
         AllZone.getComputerBattlefield().updateObservers();
         AllZone.getHumanBattlefield().updateObservers();
         AllZone.getHumanHand().updateObservers();
+        AllZone.getComputerPlayer().updateObservers();
+        AllZone.getHumanPlayer().updateObservers();
     }
 
     /**
