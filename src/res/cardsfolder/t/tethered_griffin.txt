@@ -4,7 +4,8 @@ Types:Creature Griffin
 Text:no text
 PT:2/3
 K:Flying
-K:When you control no enchantments, sacrifice CARDNAME.
+T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Enchantment.YouCtrl | PresentCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When you control no enchantments, sacrifice CARDNAME.
+SVar:TrigSac:AB$Sacrifice | Cost$ 0 | Defined$ Self
 SVar:NeedsToPlay:Enchantment.YouCtrl
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare

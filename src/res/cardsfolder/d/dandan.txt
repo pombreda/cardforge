@@ -4,7 +4,8 @@ Types:Creature Fish
 Text:no text
 PT:4/1
 K:CARDNAME can't attack unless defending player controls an Island.
-K:When you control no Islands, sacrifice CARDNAME.
+T:Mode$ Always | TriggerZones$ Battlefield | IsPresent$ Island.YouCtrl | PresentCompare$ EQ0 | Execute$ TrigSac | TriggerDescription$ When you control no Islands, sacrifice CARDNAME.
+SVar:TrigSac:AB$Sacrifice | Cost$ 0 | Defined$ Self
 SVar:NeedsToPlay:Island.YouCtrl
 SVar:Rarity:Common
 SVar:Picture:http://resources.wizards.com/magic/cards/tsb/en-us/card106631.jpg
