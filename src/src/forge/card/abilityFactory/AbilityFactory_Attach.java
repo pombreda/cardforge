@@ -206,6 +206,9 @@ public class AbilityFactory_Attach {
         		c = CardFactoryUtil.AI_getWorstPermanent(list, false, false, false, false);
         	return c;
         }
+        
+        if (c == null)
+        	return c;
         	
         // TODO: If Not Mandatory, make sure the card is "good enough"
         if (c.isCreature()){
