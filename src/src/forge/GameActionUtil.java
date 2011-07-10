@@ -6003,7 +6003,6 @@ public class GameActionUtil {
         commands.put("Muraganda_Petroglyphs", Muraganda_Petroglyphs);
 
         commands.put("Old_Man_of_the_Sea", Old_Man_of_the_Sea);
-        commands.put("Phylactery_Lich", Phylactery_Lich);
 
         commands.put("Sound_the_Call_Wolf", Sound_the_Call_Wolf);
         commands.put("Tarmogoyf", Tarmogoyf);
