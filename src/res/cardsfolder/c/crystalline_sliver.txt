@@ -3,7 +3,7 @@ ManaCost:W U
 Types:Creature Sliver
 Text:no text
 PT:2/2
-S:Mode$ Continuous | Affected$ Card.Sliver | AddKeyword$ Shroud | Description$ All Slivers have shroud.
+S:Mode$ Continuous | Affected$ Sliver | AddKeyword$ Shroud | Description$ All Slivers have shroud.
 SVar:PlayMain1:TRUE
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/crystalline_sliver.jpg
