@@ -4,6 +4,9 @@ import forge.*;
 
 import java.util.ArrayList;
 
+import com.google.code.jyield.Generator;
+import com.google.code.jyield.YieldUtils;
+
 /**
  * <p>QuestUtil class.</p>
  *
@@ -94,7 +97,7 @@ public class QuestUtil {
 
         int id = qa.getId();
 
-        CardList cards = AllZone.getCardFactory().getCards();
+        Generator<Card> cards = YieldUtils.toGenerator(AllZone.getCardFactory());
 
         if (id == 1) //White Dungeon
         {

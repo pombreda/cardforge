@@ -2,7 +2,6 @@ package forge.quest.data;
 
 import forge.Card;
 import forge.CardFilter;
-import forge.CardList;
 import forge.Constant;
 import forge.properties.NewConstants;
 
@@ -14,7 +13,6 @@ import java.util.NoSuchElementException;
 import net.slightlymagic.braids.util.generator.GeneratorFunctions;
 
 import com.google.code.jyield.Generator;
-import com.google.code.jyield.YieldUtils;
 
 // The BoosterPack generates cards for the Card Pool in Quest Mode
 /**
@@ -143,8 +141,8 @@ public class QuestBoosterPack implements NewConstants {
         int count = 0, i = 0;
         
         if (num > 1) {
-        	// Force evaluation (solidify) the generator because we're about
-        	// to use it more than once.
+        	// Force evaluation (solidify) the generator because we've applied
+        	// a filter to it, and we're about to use it more than once.
         	
         	allCards = GeneratorFunctions.solidify(allCards);
         }
@@ -168,14 +166,12 @@ public class QuestBoosterPack implements NewConstants {
     }
 
     /**
-     * Convenience for generateCards(YieldUtils.toGenerator(cards), num, rarity, color, this.choices);
+     * Convenience for generateCards(cards, num, rarity, color, this.choices);
      *
      * @see #generateCards(Generator, int, String, String, ArrayList)
-     * 
-     * @param cards this is a CardList, not a Generator (for now)
      */
-    public ArrayList<String> generateCards(CardList cards, int num, String rarity, String color) {
-        return generateCards(YieldUtils.toGenerator(cards), num, rarity, color, choices);
+    public ArrayList<String> generateCards(Generator<Card> cards, int num, String rarity, String color) {
+        return generateCards(cards, num, rarity, color, choices);
     }
 
     /**

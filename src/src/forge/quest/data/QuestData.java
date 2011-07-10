@@ -371,7 +371,7 @@ public class QuestData {
      * <p>addCards.</p>
      */
     public void addCards() {
-        CardList cards = AllZone.getCardFactory().getCards();
+        Generator<Card> cards = YieldUtils.toGenerator(AllZone.getCardFactory());
         int nCommon = QuestPreferences.getNumCommon();
         int nUncommon = QuestPreferences.getNumUncommon();
         int nRare = QuestPreferences.getNumRare();
@@ -395,8 +395,9 @@ public class QuestData {
      * @return a {@link java.util.ArrayList} object.
      */
     public ArrayList<String> addRandomRare(int n) {
+    	Generator<Card> allCards = YieldUtils.toGenerator(AllZone.getCardFactory());
         ArrayList<String> newCards = new ArrayList<String>();
-        newCards.addAll(boosterPack.generateCards(AllZone.getCardFactory().getCards(), n, Constant.Rarity.Rare, null));
+        newCards.addAll(boosterPack.generateCards(allCards, n, Constant.Rarity.Rare, null));
 
         cardPool.addAll(newCards);
         newCardList.addAll(newCards);
