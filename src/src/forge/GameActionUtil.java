@@ -4609,9 +4609,6 @@ public class GameActionUtil {
      */
     public static void executeCardStateEffects() {
 
-        Sacrifice_NoLands.execute();
-        Sacrifice_NoCreatures.execute();
-
         topCardReveal_Update.execute();
     }// executeCardStateEffects()
 
@@ -5626,50 +5623,6 @@ public class GameActionUtil {
         }//execute()
     };//topCardReveal_Update
 
-
-    /** Constant <code>Sacrifice_NoLands</code> */
-    public static Command Sacrifice_NoLands = new Command() {
-        private static final long serialVersionUID = 2768929064034728027L;
-
-        public void execute() {
-            CardList cards = AllZoneUtil.getCardsInPlay();
-
-            cards = cards.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.hasKeyword("When there are no lands on the battlefield, sacrifice CARDNAME.");
-                }
-            });
-
-            for (Card c : cards) {
-                if (AllZoneUtil.getLandsInPlay().size() == 0) {
-                    AllZone.getGameAction().sacrifice(c);
-                }
-            }
-
-        }//execute()
-    };//Sacrifice_NoLands
-
-    /** Constant <code>Sacrifice_NoCreatures</code> */
-    public static Command Sacrifice_NoCreatures = new Command() {
-        private static final long serialVersionUID = -177976088524215734L;
-
-        public void execute() {
-            CardList cards = AllZoneUtil.getCardsInPlay();
-
-            cards = cards.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.hasKeyword("When there are no creatures on the battlefield, sacrifice CARDNAME.");
-                }
-            });
-
-            for (Card c : cards) {
-                if (AllZoneUtil.getCreaturesInPlay().size() == 0) {
-                    AllZone.getGameAction().sacrifice(c);
-                }
-            }
-
-        }//execute()
-    };//Sacrifice_NoCreatures
 
     /** Constant <code>Sound_the_Call_Wolf</code> */
     public static Command Sound_the_Call_Wolf = new Command() {
