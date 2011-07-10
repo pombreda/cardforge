@@ -2,7 +2,7 @@ Name:Xenograft
 ManaCost:4 U
 Types:Enchantment
 Text:no text
-K:stPumpAll:Creature.YouCtrl:0/0/Types=ChosenType:No Condition:Each creature you control is the chosen type in addition to its other types.
+S:Mode$ Continuous | Affected$ Creature.YouCtrl| AddType$ ChosenType | Description$ Each creature you control is the chosen type in addition to its other types.
 SVar:RemAIDeck:True
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
