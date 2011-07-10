@@ -74,7 +74,6 @@ public class Card extends MyObservable {
     private boolean creatureAttackedThisCombat = false;
     private boolean creatureBlockedThisCombat = false;
     private boolean creatureGotBlockedThisCombat = false;
-    //private boolean                    dealtCombatDmgToOppThisTurn       = false;
     private boolean dealtDmgToHumanThisTurn = false;
     private boolean dealtDmgToComputerThisTurn = false;
     private boolean sirenAttackOrDestroy = false;
@@ -102,8 +101,6 @@ public class Card extends MyObservable {
     //for Vanguard / Manapool / Emblems etc.
     private boolean isImmutable = false;
 
-    private int exaltedMagnitude = 0;
-
     private int baseAttack;
     private int baseDefense;
     private int baseLoyalty = 0;
@@ -112,7 +109,7 @@ public class Card extends MyObservable {
 
     private int damage;
 
-    private int nShield;
+    private int nShield; 	// regeneration
     private int preventNextDamage = 0;
 
     private int turnInZone;
@@ -122,9 +119,6 @@ public class Card extends MyObservable {
 
     private int semiPermanentAttackBoost = 0;
     private int semiPermanentDefenseBoost = 0;
-
-    private int otherAttackBoost = 0;
-    private int otherDefenseBoost = 0;
 
     private int randomPicture = 0;
 
@@ -164,9 +158,6 @@ public class Card extends MyObservable {
 
 
     private ArrayList<Ability_Triggered> zcTriggers = new ArrayList<Ability_Triggered>();
-    /*private ArrayList<Command> comesIntoPlayCommandList = new ArrayList<Command>();
-    private ArrayList<Command> destroyCommandList       = new ArrayList<Command>();
-    private ArrayList<Command> leavesPlayCommandList	  = new ArrayList<Command>();*/
     private ArrayList<Command> turnFaceUpCommandList = new ArrayList<Command>();
     private ArrayList<Command> equipCommandList = new ArrayList<Command>();
     private ArrayList<Command> unEquipCommandList = new ArrayList<Command>();
@@ -2358,24 +2349,6 @@ public class Card extends MyObservable {
     }
 
     /**
-     * <p>Setter for the field <code>exaltedMagnitude</code>.</p>
-     *
-     * @param i a int.
-     */
-    public void setExaltedMagnitude(int i) {
-        exaltedMagnitude = i;
-    }
-
-    /**
-     * <p>Getter for the field <code>exaltedMagnitude</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getExaltedMagnitude() {
-        return exaltedMagnitude;
-    }
-
-    /**
      * <p>setIsFaceDown.</p>
      *
      * @param b a boolean.
@@ -3363,7 +3336,7 @@ public class Card extends MyObservable {
      */
     public int getUnswitchedAttack() {
         int total = getBaseAttack();
-        total += getTempAttackBoost() + getSemiPermanentAttackBoost() + getOtherAttackBoost()
+        total += getTempAttackBoost() + getSemiPermanentAttackBoost()
                 + getCounters(Counters.P1P1) + getCounters(Counters.P1P2)
                 + getCounters(Counters.P1P0) - getCounters(Counters.M1M1)
                 + (2 * getCounters(Counters.P2P2) - (2 * getCounters(Counters.M2M1))
@@ -3389,7 +3362,7 @@ public class Card extends MyObservable {
      */
     public int getUnswitchedDefense() {
         int total = getBaseDefense();
-        total += getTempDefenseBoost() + getSemiPermanentDefenseBoost() + getOtherDefenseBoost()
+        total += getTempDefenseBoost() + getSemiPermanentDefenseBoost()
                 + getCounters(Counters.P1P1) + (2 * getCounters(Counters.P1P2))
                 - getCounters(Counters.M1M1) + getCounters(Counters.P0P1)
                 - (2 * getCounters(Counters.M0M2))
@@ -3604,61 +3577,6 @@ public class Card extends MyObservable {
      */
     public void setSemiPermanentDefenseBoost(int n) {
         semiPermanentDefenseBoost = n;
-    }
-
-    //for cards like Relentless Rats, Master of Etherium, etc.
-    /**
-     * <p>Getter for the field <code>otherAttackBoost</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getOtherAttackBoost() {
-        return otherAttackBoost;
-    }
-
-    /**
-     * <p>Getter for the field <code>otherDefenseBoost</code>.</p>
-     *
-     * @return a int.
-     */
-    public int getOtherDefenseBoost() {
-        return otherDefenseBoost;
-    }
-
-    /**
-     * <p>addOtherAttackBoost.</p>
-     *
-     * @param n a int.
-     */
-    public void addOtherAttackBoost(int n) {
-        otherAttackBoost += n;
-    }
-
-    /**
-     * <p>addOtherDefenseBoost.</p>
-     *
-     * @param n a int.
-     */
-    public void addOtherDefenseBoost(int n) {
-        otherDefenseBoost += n;
-    }
-
-    /**
-     * <p>Setter for the field <code>otherAttackBoost</code>.</p>
-     *
-     * @param n a int.
-     */
-    public void setOtherAttackBoost(int n) {
-        otherAttackBoost = n;
-    }
-
-    /**
-     * <p>Setter for the field <code>otherDefenseBoost</code>.</p>
-     *
-     * @param n a int.
-     */
-    public void setOtherDefenseBoost(int n) {
-        otherDefenseBoost = n;
     }
 
     /**
