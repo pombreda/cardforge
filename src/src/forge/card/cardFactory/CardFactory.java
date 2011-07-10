@@ -374,6 +374,42 @@ public class CardFactory implements NewConstants, Iterable<Card> {
     }
 
     /**
+     * Fetch a random combination of cards without any duplicates.
+     * 
+     * This algorithm is reasonably fast if numCards is small. If it is larger
+     * than, say, size()/10, it starts to get noticeably slow.
+     * 
+     * @param numCards
+     *            the number of cards to return
+     * 
+     * @return a list of fleshed-out card instances
+     * 
+     * @throws IllegalArgumentException if numCards >= size()/4
+     */
+    public CardList getRandomCombinationWithoutRepetition(int numCards) {
+        Set<Integer> intSelections = new TreeSet<Integer>();
+
+        if (numCards >= size()) {
+            throw new IllegalArgumentException("numCards (" + numCards + ") is larger than the size of the card database.");
+        }
+        else if (numCards >= size()/4) {
+            throw new IllegalArgumentException("numCards (" + numCards + ") is too large for this algorithm; it will take too long to complete.");
+        }
+
+        while (intSelections.size() < numCards) {
+            intSelections.add((int) (Math.random() * size()));
+        }
+		
+
+		CardList result = new CardList(numCards);
+		for (Integer index : intSelections) {
+			result.add(allCards.get(index));
+		}
+		
+		return result;
+	}
+
+    /**
      * <p>hasKeyword.</p>
      *
      * @param c a {@link forge.Card} object.
