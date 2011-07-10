@@ -3,8 +3,10 @@ ManaCost:3
 Types:Artifact Creature Scarecrow
 Text:no text
 PT:2/2
-K:stPumpSelf:Creature:0/0/Flying:isPresent Creature.Blue+YouCtrl:CARDNAME has flying as long as you control a blue creature.
-K:stPumpSelf:Creature:0/0/Persist:isPresent Creature.Black+YouCtrl:CARDNAME has persist as long as you control a black creature.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Flying | CheckSVar$ X | SVarCompare$ GE1 | Description$ CARDNAME has flying as long as you control a blue creature.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Persist | CheckSVar$ Y | SVarCompare$ GE1 | Description$ CARDNAME has persist as long as you control a black creature.
+SVar:X:Count$Valid Creature.Blue+YouCtrl
+SVar:Y:Count$Valid Creature.Black+YouCtrl
 SVar:BuffedBy:Creature.Black,Creature.Blue
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/wingrattle_scarecrow.jpg
