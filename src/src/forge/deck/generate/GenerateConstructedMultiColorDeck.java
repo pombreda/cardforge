@@ -399,7 +399,7 @@ public class GenerateConstructedMultiColorDeck {
         CardList out = new CardList();
         if (colors == 3) {
 
-            out = CardList.filter(sequence, new CardListFilter() {
+            out = CardFilter.filter(sequence, new CardListFilter() {
                 public boolean addCard(Card c) {
                     ArrayList<String> list = CardUtil.getColors(c);
 
@@ -421,7 +421,7 @@ public class GenerateConstructedMultiColorDeck {
                 }
             });
         } else if (colors == 5) {
-            out = CardList.filter(sequence, new CardListFilter() {
+            out = CardFilter.filter(sequence, new CardListFilter() {
                 public boolean addCard(Card c) {
                     return CardUtil.getColors(c).size() >= 2 && //only get multicolored cards
                             !c.isLand() && //no land

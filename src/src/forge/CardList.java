@@ -528,28 +528,7 @@ public class CardList implements Iterable<Card> {
      * criteria; may be empty, but never null.
      */
     public CardList filter(CardListFilter filt) {
-    	return CardList.filter(this, filt);
-    }
-
-    /**
-     * Filter an iterable sequence of Cards; note this is a static method
-     * that is very similar to the non-static one.
-     * 
-     * @param iterable  the sequence of cards to examine
-     * 
-     * @param filt  determines which cards are present in the resulting list
-     * 
-     * @return a list of Cards that meet the filtering criteria; may be empty,
-     * but never null
-     */
-    public static CardList filter(Iterable<Card> iterable, CardListFilter filt) {
-        CardList result = new CardList();
-        for (Card card : iterable)
-            if (filt.addCard(card)) {
-            	result.add(card);
-            }
-
-        return result;
+    	return CardFilter.filter(this, filt);
     }
 
     /**

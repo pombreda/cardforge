@@ -128,7 +128,7 @@ public class Generate3ColorDeck {
 
         // start with all cards
         // remove cards that generated decks don't like
-        CardList AllCards = CardList.filter(AllZone.getCardFactory(), new CardListFilter() {
+        CardList AllCards = CardFilter.filter(AllZone.getCardFactory(), new CardListFilter() {
             public boolean addCard(Card c) {
                 return !(c.getSVar("RemAIDeck").equals("True") || c.getSVar("RemRandomDeck").equals("True"));
             }

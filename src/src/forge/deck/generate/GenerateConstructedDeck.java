@@ -173,7 +173,7 @@ public class GenerateConstructedDeck {
 
         final ArrayList<Card> goodLand = new ArrayList<Card>();
 
-        CardList out = CardList.filter(sequence, new CardListFilter() {
+        CardList out = CardFilter.filter(sequence, new CardListFilter() {
             public boolean addCard(Card c) {
                 ArrayList<String> list = CardUtil.getColors(c);
                 if (list.size() == 2) {

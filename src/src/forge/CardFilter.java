@@ -1,5 +1,12 @@
 package forge;
 
+import java.util.ArrayList;
+
+import net.slightlymagic.braids.util.generator.GeneratorFunctions;
+import net.slightlymagic.braids.util.lambda.Lambda1;
+
+import com.google.code.jyield.Generator;
+
 /**
  * <p>CardFilter class.</p>
  *
@@ -227,6 +234,65 @@ public class CardFilter {
 
         return listFilter;
     }
+
+	public static Generator<Card> getRarity(Generator<Card> inputGenerator, final String rarity) {
+		Lambda1<Boolean,Card> predicate = new Lambda1<Boolean,Card>() {
+			public Boolean apply(Card c) {
+	            // TODO spin off Mythic from Rare when the time comes
+	            String r = c.getSVar("Rarity");
+	            return r.equals(rarity) ||
+	                    rarity.equals(Constant.Rarity.Rare) && r.equals(Constant.Rarity.Mythic);
+			}
+		};
+		
+		return GeneratorFunctions.filterGenerator(predicate, inputGenerator);
+	}
+
+	/**
+	 * Filter an iterable sequence of Cards; note this is a static method
+	 * that is very similar to the non-static one.
+	 * 
+	 * @param iterable  the sequence of cards to examine
+	 * 
+	 * @param filt  determines which cards are present in the resulting list
+	 * 
+	 * @return a list of Cards that meet the filtering criteria; may be empty,
+	 * but never null
+	 */
+	public static CardList filter(Iterable<Card> iterable, CardListFilter filt) {
+	    CardList result = new CardList();
+	    for (Card card : iterable)
+	        if (filt.addCard(card)) {
+	        	result.add(card);
+	        }
+	
+	    return result;
+	}
+
+	/**
+	 * <p>Get any cards that exist in the passed in sets list.</p>
+	 *
+	 * @param sets a {@link java.util.ArrayList} object.
+	 * @return a {@link forge.CardList} object.
+	 */
+	public static Generator<Card> getSets(Generator<Card> inputGenerator, 
+			final ArrayList<String> sets) 
+	{
+		Lambda1<Boolean,Card> predicate = new Lambda1<Boolean,Card>() {
+			public Boolean apply(Card c) {
+	            for (SetInfo set : c.getSets()) {
+	                if (sets.contains(set.toString())) {
+	                	return true;
+	                }
+	            }
+	            
+	            return false;
+			}
+		};
+		
+		return GeneratorFunctions.filterGenerator(predicate, inputGenerator);
+		
+	}//getSets(Generator,ArrayList)
 
 
 }
