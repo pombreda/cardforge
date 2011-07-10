@@ -1,6 +1,9 @@
 /** Licensed under both the GPL and the Apache 2.0 License. */
 package net.slightlymagic.braids.util.generator;
 
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
 import net.slightlymagic.braids.util.lambda.Lambda1;
 
 import com.google.code.jyield.Generator;
@@ -123,5 +126,80 @@ public final class GeneratorFunctions {
 		};
 		
 		return result;
+	}
+
+	/**
+	 * Forces a generator to be completely evaluated into a temporary data
+	 * structure, then returns the generator over that same structure.
+	 * 
+	 * This effectively returns the same Generator, but it is a faster one.
+	 * This trades away heap space for reduced CPU intensity.  This is
+	 * particuarly helpful if you know that a Generator is going to be
+	 * totally evaluated more than once in the near future.
+	 * 
+	 * @param <T> inferred automatically
+	 * 
+	 * @param unevaluated  a Generator of T instances
+	 * 
+	 * @return  the equivalent Generator, except that the result's generate
+	 * method can be invoked multiple times for fast results.
+	 */
+	public static <T> Generator<T> solidify(Generator<T> unevaluated) {
+        ArrayList<T> solidTmp = YieldUtils.toArrayList(unevaluated);
+        solidTmp.trimToSize();
+        return YieldUtils.toGenerator(solidTmp);
+	}
+
+	/**
+	 * Select an item at random from a Generator; this causes the entire
+	 * Generator to be evaluated once, but only once.
+	 * 
+	 * @param generator
+	 *            the generator from which to select a random item
+	 * 
+	 * @return an item chosen at random from the generator; this may be null, if
+	 *         the generator contains null items.
+	 * 
+	 * @throws NoSuchElementException
+	 *             if the generator has no contents
+	 */
+	public static <T> T selectRandom(Generator<T> generator) 
+		throws NoSuchElementException
+	{
+		/*
+		 * This algorithm requires some explanation. Each time we encounter a
+		 * new item from the generator, we determine via random chance if the
+		 * item is the one we select. At the end of each iteration, we have a
+		 * candidate, and we have a count of the number of items encountered so
+		 * far. Each iteration has a 1/n chance of replacing the candidate with
+		 * the current item, where n is the number of items encountered so far.
+		 * This allows us to randomly select an item from the generated contents
+		 * with an equal distribution; and we don't have to count the number of
+		 * items first!
+		 */
+
+		int n = 0;
+		T candidate = null;
+		
+		for (T item : YieldUtils.toIterable(generator)) {
+			n++;
+			int rand = (int) (Math.random() * n);
+			// At this point, 0 <= rand < n.
+			rand++;  // Now, 1 <= rand <= n.
+			
+			if (rand == 1) {
+				// We rolled a 1 on an n-sided die. We have a new candidate!
+				// Note that on the first iteration, this always happens,
+				// because n = 1.
+				candidate = item;
+			}
+		}
+
+		if (n == 0) {
+			// There were no items in the generator!
+			throw new NoSuchElementException("generator is empty");
+		}
+
+		return candidate;
 	}
 }
