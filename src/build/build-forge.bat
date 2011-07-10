@@ -38,7 +38,7 @@ echo ---------- 2: Creating jar file ----------------------
 echo.
 REM remove the "2>NUL" to reenable the error output stream of the following command
 
-java -jar build\ecj-3.5.2.jar forge-svn\src -1.5 -classpath forge-svn\src;forge-svn\res\lib\google-collections-1.0.jar;forge-svn\res\lib\java-image-scaling-0.8.4.jar;forge-svn\res\lib\miglayout-3.7.3.1-swing.jar;forge-svn\res\lib\jl1.0.1.jar;forge-svn\res\lib\napkinlaf-1.2.jar;forge-svn\res\lib\nimrodlf.jar;forge-svn\res\lib\substance.jar;forge-svn\res\lib\java-yield-1.0-SNAPSHOT-jar-with-dependencies.jar;forge-svn\res\lib\xstream-1.3.1.jar;forge-svn\res\lib\xpp3_min-1.1.4c.jar;forge-svn\res\lib\minlog-1.2.jar;forge-svn\res\lib\swingx-1.6.1.jar;forge-svn\res\lib\testng-6.0.1.jar -g:none -d output 2>NUL
+java -jar build\ecj-3.5.2.jar forge-svn\src -1.6 -classpath forge-svn\src;forge-svn\res\lib\google-collections-1.0.jar;forge-svn\res\lib\java-image-scaling-0.8.4.jar;forge-svn\res\lib\miglayout-3.7.3.1-swing.jar;forge-svn\res\lib\jl1.0.1.jar;forge-svn\res\lib\napkinlaf-1.2.jar;forge-svn\res\lib\nimrodlf.jar;forge-svn\res\lib\substance.jar;forge-svn\res\lib\java-yield-1.0-SNAPSHOT-jar-with-dependencies.jar;forge-svn\res\lib\xstream-1.3.1.jar;forge-svn\res\lib\xpp3_min-1.1.4c.jar;forge-svn\res\lib\minlog-1.2.jar;forge-svn\res\lib\swingx-1.6.1.jar;forge-svn\res\lib\testng-6.0.1.jar -g:none -d output 2>NUL
 
 mkdir output\META-INF
 copy forge-svn\build\manifest.forge output\META-INF\MANIFEST.MF /Y
