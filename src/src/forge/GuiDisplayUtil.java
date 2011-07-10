@@ -134,8 +134,31 @@ public class GuiDisplayUtil implements NewConstants {
     public static String formatCardType(Card card) {
         ArrayList<String> list = card.getType();
         StringBuilder sb = new StringBuilder();
-        String s = "";
-
+        
+        ArrayList<String> superTypes = new ArrayList<String>();
+        ArrayList<String> cardTypes = new ArrayList<String>();
+        ArrayList<String> subTypes = new ArrayList<String>();
+        for(String t : list) {
+        	if(CardUtil.isASuperType(t)) superTypes.add(t);
+        	if(CardUtil.isACardType(t)) cardTypes.add(t);
+        	if(CardUtil.isASubType(t)) subTypes.add(t);
+        	
+        }
+        
+        for(String type : superTypes) {
+        	sb.append(type).append(" ");
+        }
+        for(String type : cardTypes) {
+        	sb.append(type).append(" ");
+        }
+        if((cardTypes.contains("Creature") || cardTypes.contains("Land")) && !subTypes.isEmpty()) sb.append("- ");
+        for(String type : subTypes) {
+        	sb.append(type).append(" ");
+        }
+        
+        return sb.toString();
+        
+        /*
         for (int i = 0; i < list.size(); i++) {
             s = list.get(i).toString();
             sb.append(s);
@@ -143,7 +166,7 @@ public class GuiDisplayUtil implements NewConstants {
                 sb.append(" - ");
             } else sb.append(" ");
         }
-        return sb.toString();
+        */
     }
 
     /**
