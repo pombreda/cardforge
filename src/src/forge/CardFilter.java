@@ -270,6 +270,37 @@ public class CardFilter {
 	}
 
 	/**
+	 * Filter a Generator of Cards based on their colors; this does not cause
+	 * the generator to be evaluated, but rather defers the filtering to when
+	 * the result's generate method is called (e.g., by YieldUtils.toIterable).
+	 * 
+	 * @param inputGenerator  the sequence to filter
+	 * 
+	 * @param cardColor
+	 *            a {@link java.lang.String} object; "Multicolor" is also
+	 *            accepted.
+	 * 
+	 * @return a new Generator with the filter in place
+	 */
+    public static Generator<Card> getColor(Generator<Card> inputGenerator, final String cardColor) 
+    {
+		Lambda1<Boolean,Card> predicate = new Lambda1<Boolean,Card>() {
+			public Boolean apply(Card c) {
+				if (cardColor.equals("Multicolor") && c.getColor().size() > 1) {
+					return true;
+				}
+				else if (c.isColor(cardColor) && c.getColor().size() == 1) {
+					return true;
+				}
+
+				return false;
+			}
+		};
+		
+		return GeneratorFunctions.filterGenerator(predicate, inputGenerator);
+    }//getColor()
+
+    /**
 	 * <p>Get any cards that exist in the passed in sets list.</p>
 	 *
 	 * @param sets a {@link java.util.ArrayList} object.
