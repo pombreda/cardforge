@@ -314,23 +314,7 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
         currentGameType = Constant.GameType.Constructed;
         setDeckData("", false);
 
-        // TODO: Braids: "we can reduce a lot of heap use here by providing
-        // randomization in CardFactory. this is what we want to call 
-        // instead of the Yucky Code below it:"
-        //
-        // CardList random = new CardList(AllZone.getCardFactory().getRandomCombinationWithoutRepetition(15 * 5));
-
-        // TODO: Braids: Begin yucky code
-        
-        CardList all = AllZone.getCardFactory().getAllCards();
-        all.shuffle();
-        CardList random = new CardList();
-
-        for (int i = 0; i < (15 * 5); i++) {
-            random.add(all.remove(0));
-        }
-
-        // TODO: Braids: End yucky code
+        CardList random = new CardList(AllZone.getCardFactory().getRandomCombinationWithoutRepetition(15 * 5));
         
         random.add(AllZone.getCardFactory().getCard("Forest", AllZone.getHumanPlayer()));
         random.add(AllZone.getCardFactory().getCard("Island", AllZone.getHumanPlayer()));
