@@ -26,6 +26,8 @@ public class CardDetailPanel extends JPanel implements CardContainer {
     /** Constant <code>serialVersionUID=-8461473263764812323L</code> */
     private static final long serialVersionUID = -8461473263764812323L;
 
+    private static Color PURPLE = new Color(14381203);
+    
     private Card card;
 
     private JLabel nameCostLabel;
@@ -149,6 +151,11 @@ public class CardDetailPanel extends JPanel implements CardContainer {
             	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             } else if (csr.equals("Mythic")) {
             	setInfoLabel.setBackground(Color.RED);
+            	setInfoLabel.setForeground(Color.BLACK);
+            	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            } else if (csr.equals("Special")) {
+            	// "Timeshifted" or other Special Rarity Cards
+            	setInfoLabel.setBackground(PURPLE);
             	setInfoLabel.setForeground(Color.BLACK);
             	setInfoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
             }
