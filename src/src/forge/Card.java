@@ -146,7 +146,6 @@ public class Card extends MyObservable {
     private String chosenType = "";
     private String chosenColor = "";
     private String namedCard = "";
-    private String topCardName = "";
     private String reflectableMana = "";
     private Card cloneOrigin = null;
     private ArrayList<Card> clones = new ArrayList<Card>();
@@ -1370,24 +1369,6 @@ public class Card extends MyObservable {
      */
     public void setNamedCard(String s) {
         namedCard = s;
-    }
-
-    /**
-     * <p>Getter for the field <code>topCardName</code>.</p>
-     *
-     * @return a {@link java.lang.String} object.
-     */
-    public String getTopCardName() {
-        return topCardName;
-    }
-
-    /**
-     * <p>Setter for the field <code>topCardName</code>.</p>
-     *
-     * @param s a {@link java.lang.String} object.
-     */
-    public void setTopCardName(String s) {
-        topCardName = s;
     }
 
     /**

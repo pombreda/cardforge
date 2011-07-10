@@ -604,7 +604,6 @@ public class GameAction {
                 com.execute();
             }
 
-            GameActionUtil.executeCardStateEffects();
             GameActionUtil.stAnimate.execute();
             GameActionUtil.stSetPT.execute();
             GameActionUtil.stPump.execute();

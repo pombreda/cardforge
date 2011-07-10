@@ -118,9 +118,16 @@ public class StaticAbility_Continuous {
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
             
-            // set P/T
+            //store old P/T
             if (setPower != -1)
+            
+            
+            // set P/T
+            if (setPower != -1) {
             	affectedCard.setBaseAttack(setPower);
+    			if(!params.containsKey("CharacteristicDefining"))
+    				se.addOriginalPT(hostCard, affectedCard.getBaseAttack(), affectedCard.getBaseDefense());
+            }
             if (setToughness != -1)
             	affectedCard.setBaseDefense(setToughness);
             

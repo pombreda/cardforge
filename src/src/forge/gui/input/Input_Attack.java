@@ -81,7 +81,6 @@ public class Input_Attack extends Input {
                 Command com = GameActionUtil.commands.get(effect);
                 com.execute();
             }
-            GameActionUtil.executeCardStateEffects();
 
             CombatUtil.showCombat();
         }

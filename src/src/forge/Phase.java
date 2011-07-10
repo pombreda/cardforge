@@ -393,8 +393,6 @@ public class Phase extends MyObservable implements java.io.Serializable {
             com.execute();
         }
 
-        GameActionUtil.executeCardStateEffects();
-
         needToNextPhase = false;
 
         // If the Stack isn't empty why is nextPhase being called?

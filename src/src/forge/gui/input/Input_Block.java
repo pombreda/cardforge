@@ -36,7 +36,6 @@ public class Input_Block extends Input {
             Command com = GameActionUtil.commands.get(effect);
             com.execute();
         }
-        GameActionUtil.executeCardStateEffects();
 
         //could add "Reset Blockers" button
         ButtonUtil.enableOnlyOK();
