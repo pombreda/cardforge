@@ -7,7 +7,7 @@ import forge.card.spellability.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.Map;
 
 //AB:GainControl|ValidTgts$Creature|TgtPrompt$Select target legendary creature|LoseControl$Untap,LoseControl|SpellDescription$Gain control of target xxxxxxx
 
@@ -243,7 +243,7 @@ public class AbilityFactory_GainControl {
         //AI won't try to grab cards that are filtered out of AI decks on purpose
         list = list.filter(new CardListFilter() {
             public boolean addCard(Card c) {
-                Hashtable<String, String> vars = c.getSVars();
+                Map<String, String> vars = c.getSVars();
                 return !vars.containsKey("RemAIDeck") && CardFactoryUtil.canTarget(hostCard, c);
             }
         });

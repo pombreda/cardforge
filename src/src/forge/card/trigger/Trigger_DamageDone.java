@@ -26,7 +26,7 @@ public class Trigger_DamageDone extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         Card src = (Card) runParams.get("DamageSource");
         Object tgt = runParams.get("DamageTarget");
 

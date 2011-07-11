@@ -26,7 +26,7 @@ public class Trigger_CounterAdded extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         Card addedTo = (Card) runParams.get("Card");
         Counters addedType = (Counters) runParams.get("CounterType");
 

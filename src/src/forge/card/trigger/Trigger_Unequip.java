@@ -25,7 +25,7 @@ public class Trigger_Unequip extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         Card equipped = (Card) runParams.get("Card");
         Card equipment = (Card) runParams.get("Equipment");
 

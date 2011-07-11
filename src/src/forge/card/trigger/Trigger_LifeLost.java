@@ -25,7 +25,7 @@ public class Trigger_LifeLost extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         if (mapParams.containsKey("ValidPlayer")) {
             if (!matchesValid(runParams.get("Player"), mapParams.get("ValidPlayer").split(","), hostCard)) {
                 return false;

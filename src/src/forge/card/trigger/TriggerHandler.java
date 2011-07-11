@@ -7,6 +7,7 @@ import forge.gui.input.Input;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>TriggerHandler class.</p>
@@ -258,9 +259,9 @@ public class TriggerHandler {
      * <p>runTrigger.</p>
      *
      * @param mode a {@link java.lang.String} object.
-     * @param runParams a {@link java.util.HashMap} object.
+     * @param runParams a {@link java.util.Map} object.
      */
-    public void runTrigger(String mode, HashMap<String, Object> runParams) {
+    public void runTrigger(String mode, Map<String, Object> runParams) {
         if (suppressedModes.contains(mode) || !registeredModes.contains(mode)) {
             return;
         }
@@ -307,7 +308,7 @@ public class TriggerHandler {
      * @param runParams a {@link java.util.HashMap} object.
      * @return a boolean.
      */
-    private boolean runSingleTrigger(final Trigger regtrig, final String mode, final HashMap<String, Object> runParams) {
+    private boolean runSingleTrigger(final Trigger regtrig, final String mode, final Map<String, Object> runParams) {
         if (!regtrig.zonesCheck()) {
             return false;
         }

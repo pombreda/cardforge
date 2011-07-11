@@ -29,7 +29,7 @@ public class Trigger_SpellAbilityCast extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         SpellAbility SA = (SpellAbility) runParams.get("CastSA");
         Card cast = SA.getSourceCard();
         SpellAbility_StackInstance si = AllZone.getStack().getInstanceFromSpellAbility(SA);

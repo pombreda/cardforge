@@ -5,6 +5,7 @@ import forge.CardList;
 import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Trigger_Attacks class.</p>
@@ -26,7 +27,7 @@ public class Trigger_Attacks extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(Map<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {
             if (!matchesValid(runParams.get("Attacker"), mapParams.get("ValidCard").split(","), hostCard)) {
                 return false;

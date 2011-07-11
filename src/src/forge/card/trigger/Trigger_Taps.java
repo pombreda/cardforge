@@ -25,7 +25,7 @@ public class Trigger_Taps extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         Card tapper = (Card) runParams.get("Card");
 
         if (mapParams.containsKey("ValidCard")) {

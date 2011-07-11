@@ -4,6 +4,7 @@ import forge.Card;
 import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Trigger_Always class.</p>
@@ -25,7 +26,7 @@ public class Trigger_Always extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(Map<String, Object> runParams) {
         return true;
     }
 
