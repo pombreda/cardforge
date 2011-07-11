@@ -3,7 +3,8 @@ ManaCost:B
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPumpCurse:HIDDEN When CARDNAME is dealt damage, destroy it.:When enchanted creature is dealt damage, destroy it.
+A:SP$ Attach | Cost$ B | ValidTgts$ Creature | AILogic$ Curse
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ HIDDEN When CARDNAME is dealt damage, destroy it. | Description$ When enchanted creature is dealt damage, destroy it.
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mire_blight.jpg
 SetInfo:ZEN|Common|http://magiccards.info/scans/en/zen/104.jpg
