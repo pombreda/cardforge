@@ -1097,9 +1097,9 @@ public class GameAction {
                     card.setImageFilename(CardUtil.buildFilename(card));
                 }
                 
-                // Assign random foiling on approximately 1:6 cards
-                if (Constant.Runtime.RndCFoil[0]) {
-                	if (MyRandom.percentTrue(18))
+                // Assign random foiling on approximately 1:20 cards
+                if (Constant.Runtime.RndCFoil[0] && Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed)) {
+                	if (MyRandom.percentTrue(5))
                 		card.setFoil(MyRandom.random.nextInt(9) + 1);
                 }
 
@@ -1149,9 +1149,9 @@ public class GameAction {
                     card.setImageFilename(CardUtil.buildFilename(card));
                 }
 
-                // Assign random foiling on approximately 1:6 cards
-                if (Constant.Runtime.RndCFoil[0]) {
-                	if (MyRandom.percentTrue(18))
+                // Assign random foiling on approximately 1:20 cards
+                if (Constant.Runtime.RndCFoil[0] && Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed)) {
+                	if (MyRandom.percentTrue(5))
                 		card.setFoil(MyRandom.random.nextInt(9) + 1);
                 }
                 
