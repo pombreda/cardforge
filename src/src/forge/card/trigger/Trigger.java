@@ -68,23 +68,23 @@ public abstract class Trigger {
         return mapParams;
     }
 
-    protected HashMap<String, Object> runParams;
+    protected Map<String, Object> runParams;
 
     /**
      * <p>Setter for the field <code>runParams</code>.</p>
      *
-     * @param rp a {@link java.util.HashMap} object.
+     * @param runParams2 a {@link java.util.Map} object.
      */
-    public void setRunParams(HashMap<String, Object> rp) {
-        runParams = rp;
+    public void setRunParams(Map<String, Object> runParams2) {
+        runParams = runParams2;
     }
 
     /**
      * <p>Getter for the field <code>runParams</code>.</p>
      *
-     * @return a {@link java.util.HashMap} object.
+     * @return a {@link java.util.Map} object.
      */
-    public HashMap<String, Object> getRunParams() {
+    public Map<String, Object> getRunParams() {
         return runParams;
     }
 
@@ -486,10 +486,10 @@ public abstract class Trigger {
     /**
      * <p>performTest.</p>
      *
-     * @param runParams a {@link java.util.HashMap} object.
+     * @param runParams2 a {@link java.util.HashMap} object.
      * @return a boolean.
      */
-    public abstract boolean performTest(HashMap<String, Object> runParams);
+    public abstract boolean performTest(java.util.Map<String, Object> runParams2);
 
     /**
      * <p>getCopy.</p>

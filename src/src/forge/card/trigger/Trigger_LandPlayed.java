@@ -55,7 +55,7 @@ public class Trigger_LandPlayed extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {
             if (!matchesValid(runParams.get("Card"), mapParams.get("ValidCard").split(","), hostCard)) {
                 return false;

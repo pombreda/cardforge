@@ -4,6 +4,7 @@ import forge.Card;
 import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <p>Trigger_BecomesTarget class.</p>
@@ -27,7 +28,7 @@ public class Trigger_BecomesTarget extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(Map<String, Object> runParams) {
         if (mapParams.containsKey("SourceType")) {
             SpellAbility sa = (SpellAbility) runParams.get("SourceSA");
             if (mapParams.get("SourceType").equalsIgnoreCase("spell")) {

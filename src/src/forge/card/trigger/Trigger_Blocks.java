@@ -4,6 +4,7 @@ import forge.Card;
 import forge.card.spellability.SpellAbility;
 
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -26,7 +27,7 @@ public class Trigger_Blocks extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(Map<String, Object> runParams) {
         if (mapParams.containsKey("ValidCard")) {
             if (!matchesValid(runParams.get("Blocker"), mapParams.get("ValidCard").split(","), hostCard)) {
                 return false;

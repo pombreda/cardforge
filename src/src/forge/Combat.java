@@ -731,7 +731,7 @@ public class Combat {
             if (c.getTotalAssignedDamage() == 0)
                 continue;
 
-            HashMap<Card, Integer> assignedDamageMap = c.getAssignedDamageHashMap();
+            Map<Card, Integer> assignedDamageMap = c.getAssignedDamageMap();
             HashMap<Card, Integer> damageMap = new HashMap<Card, Integer>();
 
             for (Entry<Card, Integer> entry : assignedDamageMap.entrySet()) {

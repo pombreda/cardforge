@@ -25,7 +25,7 @@ public class Trigger_Phase extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         if (mapParams.containsKey("Phase")) {
             if (mapParams.get("Phase").contains(",")) {
                 boolean found = false;

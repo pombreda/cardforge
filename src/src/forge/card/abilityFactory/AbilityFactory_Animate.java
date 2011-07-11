@@ -8,7 +8,8 @@ import forge.card.trigger.TriggerHandler;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Hashtable;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * <p>AbilityFactory_Animate class.</p>
@@ -126,7 +127,7 @@ public class AbilityFactory_Animate {
     private static String animateStackDescription(final AbilityFactory af, SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
-        Hashtable<String, String> svars = host.getSVars();
+        Map<String, String> svars = host.getSVars();
 
         int power = -1;
         if (params.containsKey("Power")) power = AbilityFactory.calculateAmount(host, params.get("Power"), sa);
@@ -336,7 +337,7 @@ public class AbilityFactory_Animate {
         HashMap<String, String> params = af.getMapParams();
         Card source = sa.getSourceCard();
         Card host = af.getHostCard();
-        Hashtable<String, String> svars = host.getSVars();
+        Map<String, String> svars = host.getSVars();
 
         //AF specific params
         int power = -1;
@@ -734,7 +735,7 @@ public class AbilityFactory_Animate {
     private static void animateAllResolve(final AbilityFactory af, final SpellAbility sa) {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
-        Hashtable<String, String> svars = host.getSVars();
+        Map<String, String> svars = host.getSVars();
 
         //AF specific params
         int power = -1;

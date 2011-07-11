@@ -18,16 +18,19 @@ import java.util.Map.Entry;
 /**
  * <p>Card class.</p>
  *
+ * Can now be used as keys in Tree data structures.  The comparison is based 
+ * entirely on getUniqueNumber().
+ *
  * @author Forge
  * @version $Id: $
  */
-public class Card extends MyObservable {
+public class Card extends MyObservable implements Comparable<Card> {
     private static int nextUniqueNumber;
     private int uniqueNumber = nextUniqueNumber++;
 
     private long value;
 
-    private HashMap<String, Object> triggeringObjects = new HashMap<String, Object>();
+    private Map<String, Object> triggeringObjects = new TreeMap<String, Object>();
     private ArrayList<Trigger> triggers = new ArrayList<Trigger>();
     private ArrayList<String> intrinsicAbility = new ArrayList<String>();
     private ArrayList<String> staticAbilityStrings = new ArrayList<String>();
@@ -57,9 +60,9 @@ public class Card extends MyObservable {
     private Card championedCard = null;
     private CardList devouredCards = new CardList();
 
-    private HashMap<Card, Integer> receivedDamageFromThisTurn = new HashMap<Card, Integer>();
-    private HashMap<Card, Integer> dealtDamageToThisTurn = new HashMap<Card, Integer>();
-    private HashMap<Card, Integer> assignedDamageHashMap = new HashMap<Card, Integer>();
+    private Map<Card, Integer> receivedDamageFromThisTurn = new TreeMap<Card, Integer>();
+    private Map<Card, Integer> dealtDamageToThisTurn = new TreeMap<Card, Integer>();
+    private Map<Card, Integer> assignedDamageMap = new TreeMap<Card, Integer>();
 
     private boolean unCastable;
     private boolean drawnThisTurn = false;
@@ -167,8 +170,8 @@ public class Card extends MyObservable {
     private ArrayList<Command> replaceMoveToGraveyardCommandList = new ArrayList<Command>();
     private ArrayList<Command> cycleCommandList = new ArrayList<Command>();
 
-    private Hashtable<Counters, Integer> counters = new Hashtable<Counters, Integer>();
-    private Hashtable<String, String> SVars = new Hashtable<String, String>();
+    private Map<Counters, Integer> counters = new TreeMap<Counters, Integer>();
+    private Map<String, String> SVars = new TreeMap<String, String>();
 
     //hacky code below, used to limit the number of times an ability
     //can be used per turn like Vampire Bats
@@ -899,7 +902,7 @@ public class Card extends MyObservable {
         }
 
         //Run triggers
-        HashMap<String, Object> runParams = new HashMap<String, Object>();
+        Map<String, Object> runParams = new TreeMap<String, Object>();
         runParams.put("Card", this);
         runParams.put("CounterType", counterName);
         for (int i = 0; i < (multiplier * n); i++) {
@@ -988,10 +991,10 @@ public class Card extends MyObservable {
     /**
      * <p>Getter for the field <code>counters</code>.</p>
      *
-     * @return a {@link java.util.Hashtable} object.
+     * @return a Map object.
      * @since 1.0.15
      */
-    public Hashtable<Counters, Integer> getCounters() {
+    public Map<Counters, Integer> getCounters() {
         return counters;
     }
 
@@ -1030,10 +1033,10 @@ public class Card extends MyObservable {
     /**
      * <p>Setter for the field <code>counters</code>.</p>
      *
-     * @param allCounters a {@link java.util.Hashtable} object.
+     * @param allCounters a Map object.
      * @since 1.0.15
      */
-    public void setCounters(Hashtable<Counters, Integer> allCounters) {
+    public void setCounters(Map<Counters, Integer> allCounters) {
         counters = allCounters;
     }
 
@@ -1044,7 +1047,7 @@ public class Card extends MyObservable {
      * @since 1.0.15
      */
     public void clearCounters() {
-        counters = new Hashtable<Counters, Integer>();
+        counters = new TreeMap<Counters, Integer>();
     }
 
     /**
@@ -1091,18 +1094,18 @@ public class Card extends MyObservable {
     /**
      * <p>getSVars.</p>
      *
-     * @return a {@link java.util.Hashtable} object.
+     * @return a Map object.
      */
-    public Hashtable<String, String> getSVars() {
+    public Map<String, String> getSVars() {
         return SVars;
     }
 
     /**
      * <p>setSVars.</p>
      *
-     * @param newSVars a {@link java.util.Hashtable} object.
+     * @param newSVars a Map object.
      */
-    public void setSVars(Hashtable<String, String> newSVars) {
+    public void setSVars(Map<String, String> newSVars) {
         SVars = newSVars;
     }
 
@@ -2435,7 +2438,7 @@ public class Card extends MyObservable {
             var.execute();
 
         //Run triggers
-        HashMap<String, Object> runParams = new HashMap<String, Object>();
+        Map<String, Object> runParams = new TreeMap<String, Object>();
         runParams.put("Card", this);
         AllZone.getTriggerHandler().runTrigger("TurnFaceUp", runParams);
     }
@@ -2917,7 +2920,7 @@ public class Card extends MyObservable {
         c.removeEquippedBy(this);
 
         //Run triggers
-        HashMap<String, Object> runParams = new HashMap<String, Object>();
+        Map<String, Object> runParams = new TreeMap<String, Object>();
         runParams.put("Equipment", this);
         runParams.put("Card", c);
         AllZone.getTriggerHandler().runTrigger("Unequip", runParams);
@@ -3594,7 +3597,7 @@ public class Card extends MyObservable {
     public void tap() {
         if (isUntapped()) {
             //Run triggers
-            HashMap<String, Object> runParams = new HashMap<String, Object>();
+            Map<String, Object> runParams = new TreeMap<String, Object>();
             runParams.put("Card", this);
             AllZone.getTriggerHandler().runTrigger("Taps", runParams);
         }
@@ -3607,7 +3610,7 @@ public class Card extends MyObservable {
     public void untap() {
         if (isTapped()) {
             //Run triggers
-            HashMap<String, Object> runParams = new HashMap<String, Object>();
+            Map<String, Object> runParams = new TreeMap<String, Object>();
             runParams.put("Card", this);
             AllZone.getTriggerHandler().runTrigger("Untaps", runParams);
 
@@ -4228,6 +4231,35 @@ public class Card extends MyObservable {
 
     /** {@inheritDoc} */
     @Override
+    public int compareTo(Card that) {
+        /*
+         * Return a negative integer of this < that,
+         * a positive integer if this > that,
+         * and zero otherwise.
+         */
+
+        if (that == null) {
+            /*
+             * "Here we can arbitrarily decide that all non-null Cards are
+             * `greater than' null Cards. It doesn't really matter what we
+             * return in this case, as long as it is consistent. I rather think
+             * of null as being lowly."  --Braids
+             */
+            return +1;
+        }
+        else if (getUniqueNumber() > that.getUniqueNumber()) {
+            return +1;
+        }
+        else if (getUniqueNumber() < that.getUniqueNumber()) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public boolean equals(Object o) {
         if (o instanceof Card) {
             Card c = (Card) o;
@@ -4243,7 +4275,7 @@ public class Card extends MyObservable {
     public int hashCode() {
         return getUniqueNumber();
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public String toString() {
@@ -4988,18 +5020,18 @@ public class Card extends MyObservable {
     /**
      * <p>Setter for the field <code>receivedDamageFromThisTurn</code>.</p>
      *
-     * @param receivedDamageList a {@link java.util.HashMap} object.
+     * @param receivedDamageList a Map object.
      */
-    public void setReceivedDamageFromThisTurn(HashMap<Card, Integer> receivedDamageList) {
+    public void setReceivedDamageFromThisTurn(Map<Card, Integer> receivedDamageList) {
         receivedDamageFromThisTurn = receivedDamageList;
     }
 
     /**
      * <p>Getter for the field <code>receivedDamageFromThisTurn</code>.</p>
      *
-     * @return a {@link java.util.HashMap} object.
+     * @return a Map object.
      */
-    public HashMap<Card, Integer> getReceivedDamageFromThisTurn() {
+    public Map<Card, Integer> getReceivedDamageFromThisTurn() {
         return receivedDamageFromThisTurn;
     }
 
@@ -5023,18 +5055,18 @@ public class Card extends MyObservable {
     /**
      * <p>Setter for the field <code>dealtDamageToThisTurn</code>.</p>
      *
-     * @param dealtDamageList a {@link java.util.HashMap} object.
+     * @param dealtDamageList a {@link java.util.Map} object.
      */
-    public void setDealtDamageToThisTurn(HashMap<Card, Integer> dealtDamageList) {
+    public void setDealtDamageToThisTurn(Map<Card, Integer> dealtDamageList) {
         dealtDamageToThisTurn = dealtDamageList;
     }
 
     /**
      * <p>Getter for the field <code>dealtDamageToThisTurn</code>.</p>
      *
-     * @return a {@link java.util.HashMap} object.
+     * @return a {@link java.util.Map} object.
      */
-    public HashMap<Card, Integer> getDealtDamageToThisTurn() {
+    public Map<Card, Integer> getDealtDamageToThisTurn() {
         return dealtDamageToThisTurn;
     }
 
@@ -5153,9 +5185,9 @@ public class Card extends MyObservable {
         int assignedDamage = damage;
 
         Log.debug(this + " - was assigned " + assignedDamage + " damage, by " + sourceCard);
-        if (!assignedDamageHashMap.containsKey(sourceCard)) assignedDamageHashMap.put(sourceCard, assignedDamage);
+        if (!assignedDamageMap.containsKey(sourceCard)) assignedDamageMap.put(sourceCard, assignedDamage);
         else {
-            assignedDamageHashMap.put(sourceCard, assignedDamageHashMap.get(sourceCard) + assignedDamage);
+            assignedDamageMap.put(sourceCard, assignedDamageMap.get(sourceCard) + assignedDamage);
         }
 
         Log.debug("***");
@@ -5174,7 +5206,7 @@ public class Card extends MyObservable {
      * <p>clearAssignedDamage.</p>
      */
     public void clearAssignedDamage() {
-        assignedDamageHashMap.clear();
+        assignedDamageMap.clear();
     }
 
     /**
@@ -5185,7 +5217,7 @@ public class Card extends MyObservable {
     public int getTotalAssignedDamage() {
         int total = 0;
 
-        Collection<Integer> c = assignedDamageHashMap.values();
+        Collection<Integer> c = assignedDamageMap.values();
 
         Iterator<Integer> itr = c.iterator();
         while (itr.hasNext())
@@ -5195,20 +5227,20 @@ public class Card extends MyObservable {
     }
 
     /**
-     * <p>Getter for the field <code>assignedDamageHashMap</code>.</p>
+     * <p>Getter for the field <code>assignedDamageMap</code>.</p>
      *
-     * @return a {@link java.util.HashMap} object.
+     * @return a {@link java.util.Map} object.
      */
-    public HashMap<Card, Integer> getAssignedDamageHashMap() {
-        return assignedDamageHashMap;
+    public Map<Card, Integer> getAssignedDamageMap() {
+        return assignedDamageMap;
     }
 
     /**
      * <p>addCombatDamage.</p>
      *
-     * @param map a {@link java.util.HashMap} object.
+     * @param map a {@link java.util.Map} object.
      */
-    public void addCombatDamage(HashMap<Card, Integer> map) {
+    public void addCombatDamage(Map<Card, Integer> map) {
         CardList list = new CardList();
 
         for (Entry<Card, Integer> entry : map.entrySet()) {
@@ -5517,9 +5549,9 @@ public class Card extends MyObservable {
     /**
      * <p>addDamage.</p>
      *
-     * @param sourcesMap a {@link java.util.HashMap} object.
+     * @param sourcesMap a {@link java.util.Map} object.
      */
-    public void addDamage(HashMap<Card, Integer> sourcesMap) {
+    public void addDamage(Map<Card, Integer> sourcesMap) {
         for (Entry<Card, Integer> entry : sourcesMap.entrySet()) {
             addDamageAfterPrevention(entry.getValue(), entry.getKey(), true); // damage prevention is already checked!
         }
@@ -5579,7 +5611,7 @@ public class Card extends MyObservable {
         GameActionUtil.executeDamageDealingEffects(source, damageToAdd);
 
         //Run triggers
-        HashMap<String, Object> runParams = new HashMap<String, Object>();
+        Map<String, Object> runParams = new TreeMap<String, Object>();
         runParams.put("DamageSource", source);
         runParams.put("DamageTarget", this);
         runParams.put("DamageAmount", damageToAdd);

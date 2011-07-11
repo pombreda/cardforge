@@ -25,7 +25,7 @@ public class Trigger_ChangesZone extends Trigger {
 
     /** {@inheritDoc} */
     @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
+    public boolean performTest(java.util.Map<String, Object> runParams) {
         if (mapParams.containsKey("Origin")) {
             if (!mapParams.get("Origin").equals("Any")) {
                 if (mapParams.get("Origin") == null) {
