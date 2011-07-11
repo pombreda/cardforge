@@ -3,7 +3,7 @@ ManaCost:2 W
 Types:Creature Cat Knight
 Text:no text
 PT:2/2
-K:stPumpSelf:Permanent.equipped:1/1/Flying:No Condition:As long as Skyhunter Cub is equipped, it gets +1/+1 and has flying.
+S:Mode$ Continuous | Affected$ Card.Self+equipped | AddPower$ 1 | AddToughness$ 1 | AddKeyword$ Flying | Description$ As long as CARDNAME is equipped, it gets +1/+1 and has flying.
 SVar:EquipMe:Once
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/skyhunter_cub.jpg
