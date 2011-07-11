@@ -208,6 +208,7 @@ public class AbilityFactory_Effect {
         String[] effectTriggers = null;
         String[] effectSVars = null;
         String[] effectKeywords = null;
+        String[] effectStaticAbilities = null;
         String effectRemembered = null;
 
         if (params.containsKey("Abilities"))
@@ -215,6 +216,9 @@ public class AbilityFactory_Effect {
 
         if (params.containsKey("Triggers"))
             effectTriggers = params.get("Triggers").split(",");
+        
+        if (params.containsKey("StaticAbilities"))
+            effectStaticAbilities = params.get("StaticAbilities").split(",");
 
         if (params.containsKey("SVars"))
             effectSVars = params.get("SVars").split(",");
@@ -281,6 +285,12 @@ public class AbilityFactory_Effect {
                 eff.addTrigger(parsedTrigger);
                 AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
             }
+        }
+        
+        //Grant static abilities
+        if (effectStaticAbilities != null) {
+            for (String s : effectStaticAbilities)
+                eff.addStaticAbility(af.getHostCard().getSVar(s));
         }
 
         //Grant SVars
