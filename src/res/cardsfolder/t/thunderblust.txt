@@ -5,7 +5,8 @@ Text:no text
 PT:7/2
 K:Haste
 K:Persist
-K:stPumpSelf:Creature:0/0/Trample:isValid Card.Self+countersGE1M1M1:Thunderblust has trample as long as it has a -1/-1 counter on it.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ Trample | CheckSVar$ X | SVarCompare$ EQ1 | Description$ CARDNAME has trample as long as it has a -1/-1 counter on it.
+SVar:X:Count$Valid Card.Self+countersGE1M1M1
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/thunderblust.jpg
