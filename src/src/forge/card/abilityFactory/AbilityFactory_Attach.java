@@ -156,27 +156,14 @@ public class AbilityFactory_Attach {
 		
 		// TODO: If Attaching without casting, don't need to actually target. 
 		// I believe this is the only case where mandatory will be true, so just check that when starting that work
+		// But we shouldn't attach to things with Protection
 		if (tgt.getZone().equals("Battlefield"))
 			list = list.getTargetableCards(sa.getSourceCard());
 		
 		if (list.size() == 0)
 			return null;
 		
-		Card c = null;
-		String logic = params.get("AILogic");
-		
-		if ("GainControl".equals(logic))
-			c = attachAIControlPreference(sa, list, mandatory, attachSource);
-		
-		// TODO: Pump and ChangeType definitely don't have enough AI yet, Curse might but better wait on converting
-		
-		else if ("Curse".equals(logic))
-			c = attachAICursePreference(sa, list, mandatory, attachSource);
-		else if ("Pump".equals(logic))
-			c = attachAIPumpPreference(sa, list, mandatory, attachSource);
-		else if ("ChangeType".equals(logic))	// Evil Presence, Spreading Seas
-			c = attachAIChangeTypePreference(sa, list, mandatory, attachSource);
-		// Does KeepTapped need it's own list? Might be able to lump with Curse
+		Card c = attachGeneralAI(sa, list, mandatory, attachSource, params.get("AILogic"));
 		
 		if (c == null && mandatory){
 			list.shuffle();
@@ -186,32 +173,48 @@ public class AbilityFactory_Attach {
 		return c;
 	}
 	
-	// Should generalize this code a bit since they all have similar structures
-	public static Card attachAIControlPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
-		// AI For choosing a Card to Gain Control of. 
+	public static Card attachGeneralAI(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource, String logic){
+		Player prefPlayer = "Pump".equals(logic) ? AllZone.getComputerPlayer() : AllZone.getHumanPlayer();
+		// Some ChangeType cards are beneficial, and PrefPlayer should be changed to represent that
+		CardList prefList = list.getController(prefPlayer);
+		
+		// If there are no preferred cards, and not mandatory bail out
+		if (prefList.size() == 0)
+			return chooseUnpreferred(mandatory, list);
 
-		// Filter list by Controller (only steal cards I don't already control)
-		Player prefPlayer = AllZone.getHumanPlayer();
-		CardList nonMandatoryList = list.getController(prefPlayer);
+		// Preferred list has at least one card in it to make to the actual Logic
+		Card c = null;
+		if ("GainControl".equals(logic))
+			c = attachAIControlPreference(sa, prefList, mandatory, attachSource);
+		else if ("Curse".equals(logic))
+			c = attachAICursePreference(sa, prefList, mandatory, attachSource);
+		else if ("Pump".equals(logic))
+			c = attachAIPumpPreference(sa, prefList, mandatory, attachSource);
+		else if ("ChangeType".equals(logic))	// Evil Presence, Spreading Seas
+			c = attachAIChangeTypePreference(sa, prefList, mandatory, attachSource);
+		// TODO: Does KeepTapped need it's own list? Probably more efficient than just Curse
 		
-		if (sa.getTarget().canTgtPermanent()){
-			// If can target all Permanents, and Life isn't in eminent danger, grab Planeswalker first, then Creature
-			// if Life < 5 grab Creature first, then Planeswalker. Lands, Enchantments and Artifacts are probably "not good enough"
-			
-		}
+		return c;
+	}
+	
+	public static Card chooseUnpreferred(boolean mandatory, CardList list){
+		if (!mandatory)
+			return null;
 		
-		Card c = CardFactoryUtil.AI_getBest(nonMandatoryList);
-        
-        if (mandatory){
-        	// If Mandatory (brought directly into play without casting) gotta choose something
-        	if (c == null)
-        		c = CardFactoryUtil.AI_getWorstPermanent(list, false, false, false, false);
+		return CardFactoryUtil.AI_getWorstPermanent(list, true, true, true, false);
+	}
+	
+	public static Card chooseLessPreferred(boolean mandatory, CardList list){
+		if (!mandatory)
+			return null;
+		
+		return CardFactoryUtil.AI_getBest(list);
+	}
+	
+	public static Card acceptableChoice(Card c, boolean mandatory){
+        if (mandatory)
         	return c;
-        }
         
-        if (c == null)
-        	return c;
-        	
         // TODO: If Not Mandatory, make sure the card is "good enough"
         if (c.isCreature()){
 	        int eval = CardFactoryUtil.evaluateCreature(c);
@@ -222,36 +225,38 @@ public class AbilityFactory_Attach {
 		return c;
 	}
 	
-	public static Card chooseUnpreferred(boolean mandatory, CardList list, Player preferredController){
-		// Expand this
-		if (!mandatory)
-			return null;
+	// Should generalize this code a bit since they all have similar structures
+	public static Card attachAIControlPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
+		// AI For choosing a Card to Gain Control of. 
+
+		if (sa.getTarget().canTgtPermanent()){
+			// If can target all Permanents, and Life isn't in eminent danger, grab Planeswalker first, then Creature
+			// if Life < 5 grab Creature first, then Planeswalker. Lands, Enchantments and Artifacts are probably "not good enough"
+			
+		}
 		
-		CardList prefList =  list.getController(preferredController);
-		if (!prefList.isEmpty())
-			return CardFactoryUtil.AI_getBest(prefList);
-		
-		return CardFactoryUtil.AI_getWorstPermanent(list, true, true, true, false);
+		Card c = CardFactoryUtil.AI_getBest(list);
+        
+		// If Mandatory (brought directly into play without casting) gotta choose something
+        if (c == null)
+        	return chooseLessPreferred(mandatory, list);
+        
+        return acceptableChoice(c, mandatory);
 	}
 	
+
 	public static Card attachAIPumpPreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Pump 
-		Player prefPlayer = AllZone.getComputerPlayer();
-		CardList prefList = list.getController(prefPlayer);
-		
-		if (prefList.size() == 0)
-			return chooseUnpreferred(mandatory, list, prefPlayer);
-		
 		Card c = null;
 		CardList magnetList = null;
 		String stCheck = null;
 		if (attachSource.isAura()){
 			stCheck = "EnchantedBy";
-			magnetList = prefList.getEnchantMagnets();
+			magnetList = list.getEnchantMagnets();
 		}
 		else if (attachSource.isEquipment()){
 			stCheck = "EquippedBy";
-			magnetList = prefList.getEquipMagnets();
+			magnetList = list.getEquipMagnets();
 		}
 		
 		if (magnetList != null && !magnetList.isEmpty()){
@@ -261,7 +266,7 @@ public class AbilityFactory_Attach {
 			magnetList = magnetList.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
-					return CombatUtil.canAttackNextTurn(c);
+					return CombatUtil.canAttack(c);
 				}
 			});
 			
@@ -271,6 +276,7 @@ public class AbilityFactory_Attach {
 		int totToughness = 0;
 		int totPower = 0;
 		ArrayList<String> keywords = new ArrayList<String>();
+		boolean grantingAbilities = false;
 		
 		for (StaticAbility stAbility : attachSource.getStaticAbilities()){
 			HashMap<String,String> params = stAbility.getMapParams();
@@ -286,6 +292,8 @@ public class AbilityFactory_Attach {
 				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
 				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
 				
+				grantingAbilities = params.containsKey("AddAbility");
+				
 				String kws = params.get("AddKeyword");
 				if (kws != null){
 					for(String kw : kws.split(" & "))
@@ -294,7 +302,19 @@ public class AbilityFactory_Attach {
 			}
 		}
 		
-		if (totToughness == 0 && totPower == 0){
+		CardList prefList = null;
+		if (totToughness < 0){
+			// Make sure we aren't killed any of my creatures.
+			final int tgh = totToughness;
+			prefList = list.filter(new CardListFilter() {
+				@Override
+				public boolean addCard(Card c) {
+					return c.getLethalDamage() > Math.abs(tgh);
+				}
+			});
+		}
+		
+		else if (totToughness == 0 && totPower == 0){
 			// Just granting Keywords don't assign stacking Keywords
 			Iterator<String> it = keywords.iterator();
 			while(it.hasNext()){
@@ -304,7 +324,7 @@ public class AbilityFactory_Attach {
 			}
 			if (!keywords.isEmpty()){
 				final ArrayList<String> finalKWs = keywords;
-				prefList = prefList.filter(new CardListFilter() {
+				prefList = list.filter(new CardListFilter() {
 					//If Aura grants only Keywords, don't Stack unstackable keywords
 					@Override
 					public boolean addCard(Card c) {
@@ -318,83 +338,59 @@ public class AbilityFactory_Attach {
 			}
 		}
 
-		// Otherwise choose an appropriately "good enough" creature
 		// TODO: Try not to over Aura-tize cards
-		// TODO: Make sure we aren't killing cards
-		// TODO: Probably prefer to Enchant Aggressive creatures
-		 
-		c = CardFactoryUtil.AI_getBest(prefList);
-		
-		if (c == null)
-			return chooseUnpreferred(mandatory, list, prefPlayer);
-		
-        if (mandatory)
-        	return c;
-        
-        // If Not Mandatory, make sure the card is "good enough" (TODO Expand)
-        if (c.isCreature()){
-	        int eval = CardFactoryUtil.evaluateCreature(c);
-	        if (eval < 160 && (eval < 130 || AllZone.getComputerPlayer().getLife() > 5))
-	        	return null;
-        }
 
-		return c;
+		if (!grantingAbilities){
+		// Probably prefer to Enchant Creatures that Can Attack
+		// Filter out creatures that can't Attack or have Defender
+			prefList = prefList.filter(new CardListFilter() {
+				@Override
+				public boolean addCard(Card c) {
+					return !c.isCreature() || CombatUtil.canAttack(c);
+				}
+			});
+			c = CardFactoryUtil.AI_getBest(prefList);
+		}
+		else // If we grant abilities, we may want to put it on something Weak?
+			c = CardFactoryUtil.AI_getWorstPermanent(prefList, false, false, false, false);
+
+		
+        if (c == null)
+        	return chooseLessPreferred(mandatory, list);
+        
+        return acceptableChoice(c, mandatory);
 	}
 	
 	public static Card attachAICursePreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Curse of. 	
-		if (list.size() == 0)
-			return null;
-		
-		// Filter list by Controller (only steal cards I don't already control)
-		Player prefPlayer = AllZone.getHumanPlayer();
-		CardList prefList = list.getController(prefPlayer);
-		
+
 		// TODO Probably should be more specific then just getBest here
 		
-		Card c = CardFactoryUtil.AI_getBest(prefList);
+		Card c = CardFactoryUtil.AI_getBest(list);
 		
-		if (c == null)
-			return chooseUnpreferred(mandatory, list, prefPlayer);
+        if (c == null)
+        	return chooseLessPreferred(mandatory, list);
 		
-        if (mandatory)
-        	return c;
-        
-        // TODO: If Not Mandatory, make sure the card is "good enough"
-        if (c.isCreature()){
-	        int eval = CardFactoryUtil.evaluateCreature(c);
-	        if (eval < 160 && (eval < 130 || AllZone.getComputerPlayer().getLife() > 5))
-	        	return null;
-        }
-
-		return c;
+        return acceptableChoice(c, mandatory);
 	}
 	
 	public static Card attachAIChangeTypePreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For Cards like Evil Presence or Spreading Seas
-		if (list.size() == 0)
-			return null;
 		
 		// A few of these cards are actually good, most of the Animate to Creature ones
 		// One or two of the give basic land types
 		// Maybe require Curse$ on the specific ones and filter the list that way
 		
-		Player prefPlayer = AllZone.getHumanPlayer();
-		CardList prefList = list.getController(prefPlayer);
-		
-		Card c = CardFactoryUtil.AI_getBest(prefList);
+		Card c = CardFactoryUtil.AI_getBest(list);
 				
 		// TODO: Port over some of the existing code, but rewrite most of it.
 		// Filter out Basic Lands that have the same type as the changing type
 		// Ultimately, these spells need to be used to reduce mana base of a color. So it might be better to choose a Basic over a Nonbasic
         
         if (c == null)
-			return chooseUnpreferred(mandatory, list, prefPlayer);
+			return chooseLessPreferred(mandatory, list);
 		
-        if (mandatory)
-        	return c;
-
-		return c;
+        return acceptableChoice(c, mandatory);
 	}
 	
 	// Todo: Does RemainTapped need its own SubAttach AF?
