@@ -2652,6 +2652,7 @@ public class CardFactoryUtil {
 
             return doXMath(n, m, source);
         }
+        
 
         final String[] sq;
         sq = l[0].split("\\.");
@@ -2761,7 +2762,17 @@ public class CardFactoryUtil {
 
             return doXMath(n, m, c);
         }
-
+        
+        if (l[0].contains("ImprintedCardPower")) {
+        	if (c.getImprinted().size() > 0) {
+        		return c.getImprinted().get(0).getNetAttack();	
+        	}
+        }
+        if (l[0].contains("ImprintedCardToughness")) {
+        	if (c.getImprinted().size() > 0) {
+        		return c.getImprinted().get(0).getNetDefense();
+        	}
+        }
         final String[] sq;
         sq = l[0].split("\\.");
 
@@ -2849,6 +2860,7 @@ public class CardFactoryUtil {
             CardList topcard = AllZoneUtil.getPlayerCardsInLibrary(cardController, 1);
             return doXMath(topcard.getTotalConvertedManaCost(), m, c);
         }
+    
 
 
         // Count$Chroma.<mana letter>
