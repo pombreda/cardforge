@@ -956,6 +956,9 @@ public class AbilityFactory_Pump {
             valid = params.get("ValidCards");
 
         list = list.getValidCards(valid.split(","), hostCard.getController(), hostCard);
+        
+        final int a = getNumAttack(sa);
+        final int d = getNumDefense(sa);
 
         for (Card c : list) {
             final Card tgtC = c;
@@ -963,9 +966,6 @@ public class AbilityFactory_Pump {
             // only pump things in play
             if (!AllZoneUtil.isCardInPlay(tgtC))
                 continue;
-
-            final int a = getNumAttack(sa);
-            final int d = getNumDefense(sa);
 
             tgtC.addTempAttackBoost(a);
             tgtC.addTempDefenseBoost(d);
