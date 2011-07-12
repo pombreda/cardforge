@@ -15,7 +15,7 @@ import static forge.card.cardFactory.CardFactoryUtil.*;
  * @author Forge
  * @version $Id: $
  */
-@Test(timeOut = 1000)
+@Test(timeOut = 1000, enabled = false)
 public class CardFactoryUtilTest implements NewConstants {
 
     /**

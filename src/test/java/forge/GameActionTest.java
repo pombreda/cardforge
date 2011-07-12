@@ -6,13 +6,13 @@ import org.testng.annotations.Test;
 /**
  *
  */
-@Test(groups = {"UnitTestAction"}, timeOut = 10)
+@Test(groups = {"UnitTestAction"}, timeOut = 1000)
 public class GameActionTest {
 
     /**
      * <p>main.</p>
      */
-    @Test(groups = {"GameAction"}, timeOut = 10)
+    @Test(groups = {"GameAction"}, timeOut = 1000)
     public void GameActionTest1() throws Exception {
         System.out.println("GameActionTest");
         GameAction gameAction = new GameAction();

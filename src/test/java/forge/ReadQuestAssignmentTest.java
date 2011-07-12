@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  * Created by IntelliJ IDEA.
  * User: dhudson
  */
-@Test(timeOut = 10)
+@Test(timeOut = 1000)
 public class ReadQuestAssignmentTest implements NewConstants {
     /**
      *

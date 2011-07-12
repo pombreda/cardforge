@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author Forge
  * @version $Id: $
  */
-@Test(timeOut = 10)
+@Test(timeOut = 1000)
 public class MoveTest {
 
     class MoveConcrete extends Move {

@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
  * @author Forge
  * @version $Id: $
  */
-@Test(timeOut = 10)
+@Test(timeOut = 1000, enabled = false)
 public class BoosterDraftTest implements BoosterDraft {
     int n = 3;
 
@@ -18,7 +18,7 @@ public class BoosterDraftTest implements BoosterDraft {
      *
      * @return an array of {@link forge.deck.Deck} objects.
      */
-    @Test(timeOut = 10)
+    @Test(timeOut = 1000)
     public Deck[] getDecks() {
         return null;
     }

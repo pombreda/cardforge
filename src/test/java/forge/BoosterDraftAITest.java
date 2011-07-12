@@ -3,13 +3,13 @@ package forge;
 import forge.deck.Deck;
 import org.testng.annotations.Test;
 
-@Test(timeOut = 1000)
+@Test(timeOut = 5000, enabled = false)
 public class BoosterDraftAITest {
 
     /**
      * <p>runTestPrint.</p>
      */
-    @Test(timeOut = 1000)
+    @Test(timeOut = 5000)
     public void runTestPrint() {
         BoosterDraftAI ai = new BoosterDraftAI();
         runTest(ai);
@@ -31,7 +31,7 @@ public class BoosterDraftAITest {
         }//for outer
     }//runTestPrint()
 
-
+    @Test
     public void runTest(BoosterDraftAI ai) {
         ReadDraftBoosterPack booster = new ReadDraftBoosterPack();
         for (int outer = 0; outer < 1; outer++) {
