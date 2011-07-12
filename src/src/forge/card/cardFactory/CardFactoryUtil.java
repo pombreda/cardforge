@@ -2773,6 +2773,16 @@ public class CardFactoryUtil {
         		return c.getImprinted().get(0).getNetDefense();
         	}
         }
+        
+        if(l[0].contains("GreatestPowerYouControl")) {
+        	CardList list = AllZoneUtil.getCreaturesInPlay(c.getController());
+        	int highest = 0;
+            for (Card crd : list) {
+                if (crd.getNetAttack() > highest) highest = crd.getNetAttack();
+            }
+            return highest;
+        }
+        
         final String[] sq;
         sq = l[0].split("\\.");
 
