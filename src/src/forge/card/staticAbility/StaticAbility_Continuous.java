@@ -1,11 +1,14 @@
 package forge.card.staticAbility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import forge.AllZone;
 import forge.AllZoneUtil;
 import forge.Card;
 import forge.CardList;
+import forge.CardUtil;
 import forge.Player;
 import forge.StaticEffect;
 import forge.card.abilityFactory.AbilityFactory;
@@ -50,6 +53,7 @@ public class StaticAbility_Continuous {
 		String addAbilities[] = null;
 		String addSVars[] = null;
 		String addTypes[] = null;
+		String addColors = null;
 		String addTriggers[] = null;
 		
 		if (params.containsKey("SetPower")) {
@@ -108,6 +112,14 @@ public class StaticAbility_Continuous {
     		}
         }
 		
+		if (params.containsKey("AddColor"))
+			addColors = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("AddColor").split(" & "))));
+		
+		if (params.containsKey("SetColor")) {
+			addColors = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("SetColor").split(" & "))));
+			se.setOverwriteColors(true);
+		}
+		
 		if (params.containsKey("AddTrigger")) {
 			String sVars[] = params.get("AddTrigger").split(" & ");
 			for(int i = 0 ; i < sVars.length ; i++)
@@ -159,6 +171,12 @@ public class StaticAbility_Continuous {
             if (addTypes != null)
             	for (String type : addTypes)
             		affectedCard.addType(type);
+            
+            // add colors
+            if (addColors != null) {
+            	long t = affectedCard.addColor(addColors, affectedCard, !se.isOverwriteColors(), true);
+            	se.addTimestamp(affectedCard, t);
+            }
             
 	        // add triggers
 	        if (addTriggers != null)
