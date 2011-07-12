@@ -1,7 +1,7 @@
 package forge.card.abilityFactory;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -14,6 +14,7 @@ import forge.CardUtil;
 import forge.CombatUtil;
 import forge.Command;
 import forge.ComputerUtil;
+import forge.Constant;
 import forge.Counters;
 import forge.MyRandom;
 import forge.Player;
@@ -131,7 +132,7 @@ public class AbilityFactory_Attach {
 		return sb.toString();
 	}
 	
-	public static boolean attachPreference(AbilityFactory af, SpellAbility sa, HashMap<String,String> params, Target tgt, boolean mandatory){
+	public static boolean attachPreference(AbilityFactory af, SpellAbility sa, Map<String,String> params, Target tgt, boolean mandatory){
 		Object o;
 		if (tgt.canTgtPlayer())
 			o = attachToPlayerAIPreferences(af, sa, mandatory);
@@ -146,7 +147,7 @@ public class AbilityFactory_Attach {
 		return true;
 	}
 	
-	public static Card attachToCardAIPreferences(AbilityFactory af, final SpellAbility sa, HashMap<String,String> params, boolean mandatory){
+	public static Card attachToCardAIPreferences(AbilityFactory af, final SpellAbility sa, Map<String,String> params, boolean mandatory){
 		Target tgt = sa.getTarget();
 		Card attachSource = sa.getSourceCard();
 		// TODO AttachSource is currently set for the Source of the Spell, but at some point can support attaching a different card
@@ -279,7 +280,7 @@ public class AbilityFactory_Attach {
 		boolean grantingAbilities = false;
 		
 		for (StaticAbility stAbility : attachSource.getStaticAbilities()){
-			HashMap<String,String> params = stAbility.getMapParams();
+			Map<String,String> params = stAbility.getMapParams();
 			
 			if (!params.get("Mode").equals("Continuous"))
 				continue;
@@ -338,12 +339,21 @@ public class AbilityFactory_Attach {
 			}
 		}
 
-		// TODO: Try not to over Aura-tize cards
-
+		if (attachSource.isAura()){
+			// TODO: For Auras like Rancor, that aren't as likely to lead to card disadvantage, this check should be skipped
+			prefList = prefList.filter(new CardListFilter() {
+				
+				@Override
+				public boolean addCard(Card c) {
+					return !c.isEnchanted();
+				}
+			});
+		}
+		
 		if (!grantingAbilities){
 		// Probably prefer to Enchant Creatures that Can Attack
 		// Filter out creatures that can't Attack or have Defender
-			prefList = list.filter(new CardListFilter() {
+			prefList = prefList.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
 					return !c.isCreature() || CombatUtil.canAttack(c);
@@ -351,8 +361,8 @@ public class AbilityFactory_Attach {
 			});
 			c = CardFactoryUtil.AI_getBest(prefList);
 		}
-		else // If we grant abilities, we may want to put it on something Weak?
-			c = CardFactoryUtil.AI_getWorstPermanent(list, false, false, false, false);
+		else // If we grant abilities, we may want to put it on something Weak? Possibly more defensive?
+			c = CardFactoryUtil.AI_getWorstPermanent(prefList, false, false, false, false);
 
 		
         if (c == null)
@@ -364,9 +374,62 @@ public class AbilityFactory_Attach {
 	public static Card attachAICursePreference(final SpellAbility sa, CardList list, boolean mandatory, Card attachSource){
 		// AI For choosing a Card to Curse of. 	
 
-		// TODO Probably should be more specific then just getBest here
+		// TODO Figure out some way to combine The "gathering of data" from statics used in both Pump and Curse
+		String stCheck = null;
+		if (attachSource.isAura()){
+			stCheck = "EnchantedBy";
+		}
+		else if (attachSource.isEquipment()){
+			stCheck = "EquippedBy";
+		}
 		
-		Card c = CardFactoryUtil.AI_getBest(list);
+		int totToughness = 0;
+		int totPower = 0;
+		ArrayList<String> keywords = new ArrayList<String>();
+		boolean grantingAbilities = false;
+		
+		for (StaticAbility stAbility : attachSource.getStaticAbilities()){
+			Map<String,String> params = stAbility.getMapParams();
+			
+			if (!params.get("Mode").equals("Continuous"))
+				continue;
+			
+			String affected = params.get("Affected");
+			
+			if (affected == null)
+				continue;
+			if ((affected.contains(stCheck) || affected.contains("AttachedBy")) ){
+				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
+				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
+				
+				grantingAbilities = params.containsKey("AddAbility");
+				
+				String kws = params.get("AddKeyword");
+				if (kws != null){
+					for(String kw : kws.split(" & "))
+					keywords.add(kw);
+				}
+			}
+		}
+		
+		CardList prefList = null;
+		if (totToughness < 0){
+			// Kill a creature if we can
+			final int tgh = totToughness;
+			prefList = list.filter(new CardListFilter() {
+				@Override
+				public boolean addCard(Card c) {
+					if (c.hasKeyword("Indestructible") && c.getNetDefense() <= Math.abs(tgh))
+						return true;
+					
+					return c.getLethalDamage() <= Math.abs(tgh);
+				}
+			});
+		}
+		else
+			prefList = new CardList(list);
+		
+		Card c = CardFactoryUtil.AI_getBest(prefList);
 		
         if (c == null)
         	return chooseLessPreferred(mandatory, list);
@@ -427,7 +490,7 @@ public class AbilityFactory_Attach {
 	
 	public static boolean attachCanPlayAI(final AbilityFactory af, final SpellAbility sa){
 		Random r = MyRandom.random;
-		HashMap<String,String> params = af.getMapParams();
+		Map<String,String> params = af.getMapParams();
 		Cost abCost = sa.getPayCosts();
 		final Card source = sa.getSourceCard();
 
@@ -455,7 +518,7 @@ public class AbilityFactory_Attach {
 		}
 
 		// prevent run-away activations - first time will always return true
-		boolean chance = r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed());
+		boolean chance = r.nextFloat() <= .6667;
 		
 		// Attach spells always have a target
 		Target tgt = sa.getTarget();
@@ -475,7 +538,15 @@ public class AbilityFactory_Attach {
 			source.setSVar("PayX", Integer.toString(xPay));
 		}
 		
-		chance &= r.nextFloat() <= .6667;
+		if (AbilityFactory.isSorcerySpeed(sa)){
+			if (AllZone.getPhase().is(Constant.Phase.Main1))
+				chance = r.nextFloat() <= .75;
+			else // Don't Attach Sorcery Speed stuff after Main1
+				return false;
+		}
+		else
+			chance &= r.nextFloat() <= .75;
+		
 		return chance;
 	}
 	
@@ -496,7 +567,7 @@ public class AbilityFactory_Attach {
 	}
 	
 	public static void attachResolve(final AbilityFactory af, final SpellAbility sa){
-		HashMap<String,String> params = af.getMapParams();
+		Map<String,String> params = af.getMapParams();
 		Card card = sa.getSourceCard();
 		
 		ArrayList<Object> targets;
