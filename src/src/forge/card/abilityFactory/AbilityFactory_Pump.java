@@ -936,12 +936,25 @@ public class AbilityFactory_Pump {
      * @param sa a {@link forge.card.spellability.SpellAbility} object.
      */
     private void pumpAllResolve(SpellAbility sa) {
-        String valid = "";
+        AbilityFactory af = sa.getAbilityFactory();
+        CardList list;
+        ArrayList<Player> tgtPlayers = null;
 
+        Target tgt = af.getAbTgt();
+        if (tgt != null)
+            tgtPlayers = tgt.getTargetPlayers();
+        else if (params.containsKey("Defined"))        // Make sure Defined exists to use it
+            tgtPlayers = AbilityFactory.getDefinedPlayers(sa.getSourceCard(), params.get("Defined"), sa);
+
+        if (tgtPlayers == null || tgtPlayers.isEmpty())
+        	list = AllZoneUtil.getCardsInPlay();
+        else
+        	list = AllZoneUtil.getPlayerCardsInPlay(tgtPlayers.get(0));
+        
+        String valid = "";
         if (params.containsKey("ValidCards"))
             valid = params.get("ValidCards");
 
-        CardList list = AllZoneUtil.getCardsInPlay();
         list = list.getValidCards(valid.split(","), hostCard.getController(), hostCard);
 
         for (Card c : list) {
