@@ -104,20 +104,29 @@ public class PhaseUtil {
                 if (c.isTapped()) {
                     if (c.getController().isHuman()) {
                         String prompt = "Untap " + c.getName() + "?";
+                        boolean defaultNo = false;
                         if (c.getGainControlTargets().size() > 0) {
                             ArrayList<Card> targets = c.getGainControlTargets();
-                            prompt += "\r\n" + c.getName() + " is controlling: ";
+                            prompt += "\r\n" + c + " is controlling: ";
                             for (Card target : targets) {
-                                prompt += target.getName();
+                                prompt += target;
+                                if(AllZoneUtil.isCardInPlay(target)) defaultNo |= true;
                             }
                         }
-                        if (GameActionUtil.showYesNoDialog(c, prompt)) {
+                        if (GameActionUtil.showYesNoDialog(c, prompt, defaultNo)) {
                             c.untap();
                         }
                     } else {  //computer
                         //if it is controlling something by staying tapped, leave it tapped
                         //if not, untap it
-                        if (!(c.getGainControlTargets().size() > 0)) c.untap();
+                    	if (c.getGainControlTargets().size() > 0) {
+                            ArrayList<Card> targets = c.getGainControlTargets();
+                            boolean untap = true;
+                            for (Card target : targets) {
+                                if(AllZoneUtil.isCardInPlay(target)) untap |= true;
+                            }
+                            if(untap) c.untap();
+                        }
                     }
                 }
             } else if ((c.getCounters(Counters.WIND) > 0) && AllZoneUtil.isCardInPlay("Freyalise's Winds")) {
