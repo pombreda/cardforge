@@ -9,4 +9,5 @@ SVar:TrigDestroy:AB$Destroy | Cost$ 0 | Defined$ TriggeredAttacker | SubAbility$
 SVar:DBDestroy:DB$Destroy | Defined$ TriggeredBlocker
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/dead_iron_sledge.jpg
+SetInfo:MRD|Uncommon|http://magiccards.info/scans/en/mi/162.jpg
 End
