@@ -57,7 +57,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 
     Font statFont = new Font("Dialog", Font.PLAIN, 12);
     Font lifeFont = new Font("Dialog", Font.PLAIN, 40);
-    Font checkboxFont = new Font("Dialog", Font.PLAIN, 9);
+   // Font checkboxFont = new Font("Dialog", Font.PLAIN, 9);
 
 
     /** Constant <code>greenColor</code> */
@@ -69,7 +69,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
     private Action COMPUTER_GRAVEYARD_ACTION;
     private Action COMPUTER_REMOVED_ACTION;
     private Action CONCEDE_ACTION;
-    public Card cCardHQ;
+    //public Card cCardHQ;
 
     //private CardList multiBlockers = new CardList();
 
@@ -1270,7 +1270,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
     PlayArea oppPlayPanel = null;
     PlayArea playerPlayPanel = null;
     HandArea playerHandPanel = null;
-    JPanel cdPanel = new JPanel();
+    //JPanel cdPanel = new JPanel();
     JLabel oppLifeLabel = new JLabel();
     JLabel oppIconLabel = new JLabel();
     JLabel playerLifeLabel = new JLabel();

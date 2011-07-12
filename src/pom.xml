@@ -470,7 +470,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.0.1</version>
-            <scope>test</scope>
+            <!--<scope>test</scope> -->
         </dependency>
         <dependency>
             <groupId>com.google.code.jyield</groupId>
@@ -488,9 +488,9 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>xpp3</groupId>
-            <artifactId>xpp3_min</artifactId>
-            <version>1.1.4c</version>
+            <groupId>org.java.net.substance</groupId>
+            <artifactId>substance</artifactId>
+            <version>5.3</version>
         </dependency>
     </dependencies>
 
