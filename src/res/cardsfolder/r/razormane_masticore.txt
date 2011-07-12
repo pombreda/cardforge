@@ -1,5 +1,5 @@
 Name:Razormane Masticore
-ManaCost:4
+ManaCost:5
 Types:Artifact Creature Masticore
 Text:At the beginning of your upkeep, sacrifice Razormane Masticore unless you discard a card.
 PT:5/5
