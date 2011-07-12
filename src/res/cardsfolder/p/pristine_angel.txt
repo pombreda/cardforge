@@ -4,7 +4,7 @@ Types:Creature Angel
 Text:no text
 PT:4/4
 K:Flying
-K:stPumpSelf:Creature:0/0/Protection from artifacts & Protection from white & Protection from blue & Protection from black & Protection from red & Protection from green:isUntapped:As long as Pristine Angel is untapped, it has protection from artifacts and from all colors.
+S:Mode$ Continuous | Affected$ Card.Self+untapped | AddKeyword$ Protection from artifacts & Protection from white & Protection from blue & Protection from black & Protection from red & Protection from green | Description$ As long as CARDNAME is untapped, it has protection from artifacts and from all colors.
 T:Mode$ SpellCast | ValidCard$ Card.YouCtrl | TriggerZones$ Battlefield | OptionalDecider$ You | Execute$ TrigUntap | TriggerDescription$ Whenever you cast a spell, you may untap CARDNAME.
 SVar:TrigUntap:AB$Untap | Cost$ 0 | Defined$ Self
 SVar:Rarity:Rare
