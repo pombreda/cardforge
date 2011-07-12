@@ -343,7 +343,7 @@ public class AbilityFactory_Attach {
 		if (!grantingAbilities){
 		// Probably prefer to Enchant Creatures that Can Attack
 		// Filter out creatures that can't Attack or have Defender
-			prefList = prefList.filter(new CardListFilter() {
+			prefList = list.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
 					return !c.isCreature() || CombatUtil.canAttack(c);
@@ -352,7 +352,7 @@ public class AbilityFactory_Attach {
 			c = CardFactoryUtil.AI_getBest(prefList);
 		}
 		else // If we grant abilities, we may want to put it on something Weak?
-			c = CardFactoryUtil.AI_getWorstPermanent(prefList, false, false, false, false);
+			c = CardFactoryUtil.AI_getWorstPermanent(list, false, false, false, false);
 
 		
         if (c == null)
