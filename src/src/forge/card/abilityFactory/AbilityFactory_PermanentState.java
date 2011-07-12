@@ -1266,17 +1266,25 @@ public class AbilityFactory_PermanentState {
         Card source = sa.getSourceCard();
         HashMap<String, String> params = af.getMapParams();
 
-        //TODO - targeting with TapAll
-        //CardList human = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
-        //human = human.filter(AllZoneUtil.tapped);
-        //return human.size() > 0 && AllZone.getPhase().getPhase().equals("Main1");
+        if (AllZone.getPhase().isAfter(Constant.Phase.Combat_Begin))
+            return false;
 
         String valid = "";
         if (params.containsKey("ValidCards"))
             valid = params.get("ValidCards");
 
-
-        CardList validTappables = getTapAllTargets(valid, source);
+        CardList validTappables = AllZoneUtil.getCardsInPlay();
+        
+        Target tgt = sa.getTarget();
+        
+        if (sa.getTarget() != null) {
+            tgt.resetTargets();
+            sa.getTarget().addTarget(AllZone.getHumanPlayer());
+            validTappables = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
+        }
+        
+        validTappables = validTappables.getValidCards(valid, source.getController(), source);
+        validTappables = validTappables.filter(AllZoneUtil.untapped);
 
         Random r = MyRandom.random;
         boolean rr = false;
@@ -1291,7 +1299,7 @@ public class AbilityFactory_PermanentState {
             });
             CardList compy = validTappables.filter(new CardListFilter() {
                 public boolean addCard(Card c) {
-                    return c.getController().isHuman();
+                    return c.getController().isComputer();
                 }
             });
             if (human.size() > compy.size()) {
@@ -1311,7 +1319,6 @@ public class AbilityFactory_PermanentState {
     private static CardList getTapAllTargets(String valid, Card source) {
         CardList tmpList = AllZoneUtil.getCardsInPlay();
         tmpList = tmpList.getValidCards(valid, source.getController(), source);
-        tmpList = tmpList.getTargetableCards(source);
         tmpList = tmpList.filter(AllZoneUtil.untapped);
         return tmpList;
     }
