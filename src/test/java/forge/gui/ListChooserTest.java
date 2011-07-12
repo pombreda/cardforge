@@ -6,13 +6,13 @@ import org.testng.annotations.Test;
  * Created by IntelliJ IDEA.
  * User: dhudson
  */
-@Test(timeOut = 1000)
+@Test(timeOut = 5000, enabled = false)
 public class ListChooserTest {
     /**
      *
      *
      */
-    @Test(timeOut = 1000)
+    @Test(timeOut = 5000)
     public void ListChooserTest1() {
         ListChooser<String> c = new ListChooser<String>("test", "choose a or b", 0, 2, "a", "b");
         System.out.println(c.show());

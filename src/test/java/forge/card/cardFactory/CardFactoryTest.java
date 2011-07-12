@@ -1,19 +1,17 @@
 package forge.card.cardFactory;
 
-import java.util.Set;
-import java.util.TreeSet;
-
 import forge.Card;
 import forge.CardList;
 import forge.Gui_NewGame;
-import forge.card.cardFactory.CardFactory;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 import net.slightlymagic.braids.util.ClumsyRunnable;
 import net.slightlymagic.braids.util.testng.BraidsAssertFunctions;
-
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * <p>Mana_PartTest class.</p>
@@ -21,7 +19,7 @@ import org.testng.annotations.Test;
  * @author Forge
  * @version $Id: $
  */
-@Test(timeOut = 1000)
+@Test(timeOut = 1000, enabled = false)
 public class CardFactoryTest implements NewConstants {
 
 	static CardFactory f;
@@ -35,7 +33,7 @@ public class CardFactoryTest implements NewConstants {
      * Just a quick test to see if Arc-Slogger is in the database, and if it
      * has the correct owner.
      */
-    @Test(timeOut = 1000)
+    @Test(timeOut = 1000, enabled = false)
     public void test_getCard_1() {
         Card c = f.getCard("Arc-Slogger", null);
         Assert.assertNull(c.getOwner());

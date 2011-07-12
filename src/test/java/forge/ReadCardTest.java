@@ -1,7 +1,5 @@
 package forge;
 
-import forge.error.ErrorViewer;
-import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
 import org.testng.annotations.Test;
 
@@ -9,7 +7,7 @@ import org.testng.annotations.Test;
  * Created by IntelliJ IDEA.
  * User: dhudson
  */
-@Test(timeOut = 10)
+@Test(timeOut = 1000)
 public class ReadCardTest implements NewConstants {
     /**
      *

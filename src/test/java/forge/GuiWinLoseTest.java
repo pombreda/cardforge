@@ -13,7 +13,7 @@ public class GuiWinLoseTest {
      *
      *
      */
-    @Test(timeOut = 10, enabled = false)
+    @Test(timeOut = 1000, enabled = false)
     public void GuiWinLoseTest1() {
         Constant.Runtime.GameType[0] = Constant.GameType.Sealed;
 

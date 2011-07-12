@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
  * Created by IntelliJ IDEA.
  * User: dhudson
  */
-@Test(timeOut = 1000)
+@Test(timeOut = 1000, enabled = false)
 public class GenerateConstructedMultiColorDeckTest {
 
 

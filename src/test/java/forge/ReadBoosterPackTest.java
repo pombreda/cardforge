@@ -6,13 +6,13 @@ import org.testng.annotations.Test;
  * Created by IntelliJ IDEA.
  * User: dhudson
  */
-@Test(timeOut = 10)
+@Test(timeOut = 10000, enabled = false)
 public class ReadBoosterPackTest {
     /**
      *
      *
      */
-    @Test(timeOut = 1000)
+    @Test(timeOut = 10000, enabled = false)
     public void ReadBoosterPackTest1() {
         //testing
         ReadBoosterPack r = new ReadBoosterPack();
