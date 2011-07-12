@@ -4,7 +4,7 @@ Types:Creature Spirit
 Text:no text
 PT:0/0
 K:Flying
-K:stPumpSelf:Creature:X/X:No Condition:Revenant's power and toughness are each equal to the number of creature cards in your graveyard.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of creature cards in your graveyard.
 SVar:X:Count$TypeInYourYard.Creature
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
