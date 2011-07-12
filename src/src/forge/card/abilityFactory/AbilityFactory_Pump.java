@@ -244,6 +244,7 @@ public class AbilityFactory_Pump {
 
                 //if the life of the computer is in danger, try to pump potential blockers before declaring blocks
                 if (CombatUtil.lifeInDanger(AllZone.getCombat()) && AllZone.getPhase().isAfter(Constant.Phase.Combat_Declare_Attackers)
+                		&& AllZone.getPhase().isBefore(Constant.Phase.Main2)
                         && CombatUtil.canBlock(c, AllZone.getCombat()) && AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
                     return true;
 
@@ -310,6 +311,9 @@ public class AbilityFactory_Pump {
             if (!AF.isCurse()) return false; //Use life only to kill creatures
             if (AllZone.getComputerPlayer().getLife() - AF.getAbCost().getLifeAmount() < 4)
                 return false;
+        }
+        if (AF.getAbCost().getDiscardCost() && !AF.isCurse()) {
+        	return false;
         }
         if (AF.getAbCost().getSubCounter()) {
             // instead of never removing counters, we will have a random possibility of failure.
