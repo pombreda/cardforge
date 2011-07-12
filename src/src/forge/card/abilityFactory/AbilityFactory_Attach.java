@@ -303,11 +303,11 @@ public class AbilityFactory_Attach {
 			}
 		}
 		
-		CardList prefList = null;
+		CardList prefList = new CardList(list);
 		if (totToughness < 0){
 			// Make sure we aren't killed any of my creatures.
 			final int tgh = totToughness;
-			prefList = list.filter(new CardListFilter() {
+			prefList = prefList.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
 					return c.getLethalDamage() > Math.abs(tgh);
@@ -325,7 +325,7 @@ public class AbilityFactory_Attach {
 			}
 			if (!keywords.isEmpty()){
 				final ArrayList<String> finalKWs = keywords;
-				prefList = list.filter(new CardListFilter() {
+				prefList = prefList.filter(new CardListFilter() {
 					//If Aura grants only Keywords, don't Stack unstackable keywords
 					@Override
 					public boolean addCard(Card c) {
@@ -412,11 +412,11 @@ public class AbilityFactory_Attach {
 			}
 		}
 		
-		CardList prefList = null;
+		CardList prefList = new CardList(list);
 		if (totToughness < 0){
 			// Kill a creature if we can
 			final int tgh = totToughness;
-			prefList = list.filter(new CardListFilter() {
+			prefList = prefList.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
 					if (c.hasKeyword("Indestructible") && c.getNetDefense() <= Math.abs(tgh))
@@ -426,8 +426,8 @@ public class AbilityFactory_Attach {
 				}
 			});
 		}
-		else
-			prefList = new CardList(list);
+		
+		// TODO: Don't give Can't Attack or Defender to cards that can't do these things to begin with
 		
 		Card c = CardFactoryUtil.AI_getBest(prefList);
 		
