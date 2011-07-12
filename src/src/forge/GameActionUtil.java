@@ -1562,6 +1562,18 @@ public class GameActionUtil {
      * @return a boolean.
      */
     public static boolean showYesNoDialog(Card c, String question) {
+        return showYesNoDialog(c, question, false);
+    }
+    
+    /**
+     * <p>showYesNoDialog.</p>
+     *
+     * @param c a {@link forge.Card} object.
+     * @param question a {@link java.lang.String} object.
+     * @param defaultNo true if the default option should be "No", false otherwise
+     * @return a boolean.
+     */
+    public static boolean showYesNoDialog(Card c, String question, boolean defaultNo) {
         AllZone.getDisplay().setCard(c);
         StringBuilder title = new StringBuilder();
         title.append(c.getName()).append(" - Ability");
@@ -1570,7 +1582,15 @@ public class GameActionUtil {
             question = "Activate card's ability?";
         }
 
-        int answer = JOptionPane.showConfirmDialog(null, question, title.toString(), JOptionPane.YES_NO_OPTION);
+        int answer;
+        if(defaultNo) {
+        	Object options[] = {"Yes", "No"};
+        	answer = JOptionPane.showOptionDialog(null, question, title.toString(), JOptionPane.YES_NO_OPTION,
+        				JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+        }
+        else {
+        	answer= JOptionPane.showConfirmDialog(null, question, title.toString(), JOptionPane.YES_NO_OPTION);
+        }
 
         if (answer == JOptionPane.YES_OPTION) return true;
         else return false;
