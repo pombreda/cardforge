@@ -5,6 +5,7 @@ import forge.card.cardFactory.CardFactoryUtil;
 import forge.card.spellability.SpellAbility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 
@@ -44,6 +45,7 @@ public class StaticEffects {
         int toughnessBonus = 0;
 		String addKeywords[] = null;
 		String addTypes[] = null;
+		String addColors = null;
         
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -72,6 +74,12 @@ public class StaticEffects {
     			addTypes[0] = chosenType;
     		}
 		}
+		
+		if (params.containsKey("AddColor"))
+			addColors = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("AddColor").split(" & "))));
+		
+		if (params.containsKey("SetColor"))
+			addColors = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("SetColor").split(" & "))));
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
@@ -97,7 +105,12 @@ public class StaticEffects {
             if (addTypes != null)
             	for (String type : addTypes)
             		affectedCard.removeType(type);
+            
+            //remove colors
+            if (addColors != null)
+            	affectedCard.removeColor(addColors, affectedCard, !se.isOverwriteColors(), se.getTimestamp(affectedCard));
 		}
+		se.clearTimestamps();
     }
 	
 	//**************** End StaticAbility system **************************
