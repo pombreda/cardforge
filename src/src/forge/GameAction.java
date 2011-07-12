@@ -941,35 +941,6 @@ public class GameAction {
     }
 
     /**
-     * prompts Human to see if a target player's library should be shuffled.  This should
-     * only be called when the choice is made by the Human (target can be either), then
-     * shuffles that player's library if appropriate
-     *
-     * @param player the player's library we want to shuffle
-     */
-    public void promptForShuffle(final Player player) {
-        String[] choices = new String[]{"Yes", "No"};
-        Object o = GuiUtils.getChoice("Shuffle " + player + "'s library?", choices);
-        String myChoice = (String) o;
-        if (myChoice.equals("Yes")) {
-            player.shuffle();
-        }
-    }
-
-    //removes all damage from player's creatures
-
-    /**
-     * <p>removeDamage.</p>
-     *
-     * @param player a {@link forge.Player} object.
-     */
-    public void removeDamage(Player player) {
-        CardList list = AllZoneUtil.getCreaturesInPlay(player);
-        for (Card c : list)
-            c.setDamage(0);
-    }
-
-    /**
      * <p>newGame.</p>
      * for Quest fantasy mode
      *
