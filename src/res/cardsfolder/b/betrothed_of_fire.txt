@@ -3,7 +3,7 @@ ManaCost:1 R
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPump:0/0
+A:SP$ Attach | Cost$ 1 R | ValidTgts$ Creature | AILogic$ Pump
 A:AB$ Pump | Cost$ Sac<1/Creature.untapped> | Defined$ Enchanted | NumAtt$ +2 | CostDesc$ Sacrifice an untapped creature: | SpellDescription$ Enchanted creature get +2/+0 until end of turn.
 A:AB$ PumpAll | Cost$ Sac<1/Card.AttachedBy> | ValidCards$ Creature.YouCtrl | NumAtt$ +2 | CostDesc$ Sacrifice enchanted creature: | SpellDescription$ Creatures you control get +2/+0 until end of turn.
 SVar:RemAIDeck:True
