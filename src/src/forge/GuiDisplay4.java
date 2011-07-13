@@ -114,7 +114,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
     private void setupActions() {
         HUMAN_GRAVEYARD_ACTION = new ZoneAction(AllZone.getHumanGraveyard(), HUMAN_GRAVEYARD);
         HUMAN_REMOVED_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_REMOVED);
-        HUMAN_FLASHBACK_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_FLASHBACK) {
+        HUMAN_FLASHBACK_ACTION = new ZoneAction(AllZone.getHumanGraveyard(), HUMAN_FLASHBACK) {
 
             private static final long serialVersionUID = 8120331222693706164L;
 
