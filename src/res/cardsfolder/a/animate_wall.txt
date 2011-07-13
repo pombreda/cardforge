@@ -3,7 +3,8 @@ ManaCost:W
 Types:Enchantment Aura
 Text:no text
 K:Enchant Wall
-K:enPump:HIDDEN CARDNAME can attack as though it didn't have defender.:Enchanted Wall can attack as though it didn't have defender.
+A:SP$ Attach | Cost$  | ValidTgts$ Creature.Wall | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Creature.Wall+EnchantedBy | AddKeyword$ HIDDEN CARDNAME can attack as though it didn't have defender. | Description$ Enchanted Wall can attack as though it didn't have defender.
 SVar:RemAIDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/animate_wall.jpg
