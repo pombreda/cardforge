@@ -29,24 +29,24 @@ public class ComputerAI_General implements Computer {
      * <p>main1.</p>
      */
     public void main1() {
-        if (!ComputerUtil.chooseLandsToPlay()) {
-            if (AllZone.getPhase().getPriorityPlayer().isComputer())
-                stackResponse();
-            return;
-        }
-        playCards(Constant.Phase.Main1);
+    	ComputerUtil.chooseLandsToPlay();
+    	
+    	if (AllZone.getStack().size() == 0)
+    		playCards(Constant.Phase.Main1);
+    	else
+    		stackResponse();
     }//main1()
 
     /**
      * <p>main2.</p>
      */
     public void main2() {
-        if (!ComputerUtil.chooseLandsToPlay()) {    // in case we can play more lands now, or drew cards since first main phase
-            if (AllZone.getPhase().getPriorityPlayer().isComputer())
-                stackResponse();
-            return;
-        }
-        playCards(Constant.Phase.Main2);
+		ComputerUtil.chooseLandsToPlay();
+    	
+    	if (AllZone.getStack().size() == 0)
+    		playCards(Constant.Phase.Main2);
+    	else
+    		stackResponse();
     }
 
     /**
