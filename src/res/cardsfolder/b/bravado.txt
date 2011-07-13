@@ -1,10 +1,10 @@
 Name:Bravado
 ManaCost:1 R
 Types:Enchantment Aura
-Text:Enchanted creature gets +1/+1 for each other creature you control.
+Text:no text
 K:Enchant creature
-K:enPump:+0/+0
-K:stPumpEnchanted:Creature:X/X:no Condition:no text
+A:SP$ Attach | Cost$ 1 R | ValidTgts$ Creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ X | AddToughness$ X | Description$ Enchanted creature gets +1/+1 for each other creature you control.
 SVar:X:Count$Valid Creature.YouCtrl/Minus.1
 SVar:BuffedBy:Creature
 SVar:Rarity:Common
