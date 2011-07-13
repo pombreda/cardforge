@@ -3,7 +3,8 @@ ManaCost:1 W
 Types:Creature Human Knight
 Text:no text
 PT:1/1
-K:stPumpSelf:Creature:3/3/Flying:isPresent Griffin.YouCtrl:As long as you control a Griffin, CARDNAME gets +3/+3 and has flying.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 3 | AddToughness$ 3 | AddKeyword$ Flying | CheckSVar$ X | SVarCompare$ GE1 | Description$ As long as you control a Griffin, CARDNAME gets +3/+3 and has flying.
+SVar:X:Count$Valid Griffin.YouCtrl
 SVar:BuffedBy:Griffin
 SVar:RemRandomDeck:True
 SVar:Rarity:Common
