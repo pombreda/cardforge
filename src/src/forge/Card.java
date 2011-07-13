@@ -1667,7 +1667,9 @@ public class Card extends MyObservable implements Comparable<Card> {
             
             // static abilities
             for (StaticAbility stAb : staticAbilities) {
-            	sb.append(stAb.toString() + "\r\n");
+            	String stAbD = stAb.toString();
+            	if (stAbD != "")
+            		sb.append(stAbD + "\r\n");
             }
 
             // Ripple + Dredge + Madness + CARDNAME is {color} + Recover.
