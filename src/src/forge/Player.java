@@ -829,10 +829,12 @@ public abstract class Player extends MyObservable {
      */
     public void drawCards(int n, boolean firstFromDraw) {
         for (int i = 0; i < n; i++) {
+
             // TODO: multiple replacements need to be selected by the controller
-            if (getDredge().size() != 0) {
-                dredge();
-            }
+            if (getDredge().size() != 0)
+                if(dredge())
+                	continue;
+            
             if(!firstFromDraw && AllZoneUtil.isCardInPlay("Chains of Mephistopheles")) {
             	if(AllZoneUtil.getPlayerHand(this).size() > 0) {
             		if(isHuman()) discard_Chains_of_Mephistopheles();
