@@ -162,7 +162,7 @@ public class ComputerAI_General implements Computer {
             }
         });
         all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
-        all.addAll(CardFactoryUtil.getGraveyardActivationCards(AllZone.getComputerPlayer()));
+        all.addAll(CardFactoryUtil.getExternalZoneActivationCards(AllZone.getComputerPlayer()));
 
         // Prevent the computer from summoning Ball Lightning type creatures during main phase 2
         all = all.getNotKeyword("At the beginning of the end step, sacrifice CARDNAME.");
@@ -204,7 +204,7 @@ public class ComputerAI_General implements Computer {
             }
         });
         all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
-        all.addAll(CardFactoryUtil.getGraveyardActivationCards(AllZone.getComputerPlayer()));
+        all.addAll(CardFactoryUtil.getExternalZoneActivationCards(AllZone.getComputerPlayer()));
 
 
         CardList humanPlayable = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());

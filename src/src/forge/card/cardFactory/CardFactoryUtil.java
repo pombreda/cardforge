@@ -2559,11 +2559,17 @@ public class CardFactoryUtil {
      * @param player a {@link forge.Player} object.
      * @return a {@link forge.CardList} object.
      */
-    public static CardList getGraveyardActivationCards(final Player player) {
-        CardList cl = AllZoneUtil.getPlayerGraveyard(player);
+    public static CardList getExternalZoneActivationCards(final Player player) {
+    	
+    	StringBuilder sb = new StringBuilder();
+    	sb.append(Constant.Zone.Graveyard).append(",");
+    	sb.append(Constant.Zone.Exile).append(",");
+    	sb.append(Constant.Zone.Command).append(",");
+    	sb.append(Constant.Zone.Stack).append(",");
+    	CardList cl = AllZoneUtil.getCardsInZone(sb.toString(), player);
         cl = cl.filter(new CardListFilter() {
             public boolean addCard(Card c) {
-                return activateFromGrave(c, player);
+                return activateFromExternalZones(c, player);
             }
         });
         return cl;
@@ -2576,22 +2582,25 @@ public class CardFactoryUtil {
      * @param player a {@link forge.Player} object.
      * @return a boolean.
      */
-    public static boolean activateFromGrave(Card c, Player player) {
-        if (c.hasFlashback() || c.hasUnearth())
-            return true;
-
-        final CardList crucible = AllZoneUtil.getPlayerCardsInPlay(player, "Crucible of Worlds");
-        if (c.isLand() && crucible.size() > 0)
-            return true;
+    public static boolean activateFromExternalZones(Card c, Player player) {
+    	if (AllZone.getZone(c).is(Constant.Zone.Graveyard)){
+	        if (c.hasFlashback() || c.hasUnearth())
+	            return true;
+	
+	        final CardList crucible = AllZoneUtil.getPlayerCardsInPlay(player, "Crucible of Worlds");
+	        if (c.isLand() && crucible.size() > 0)
+	            return true;
+    	}
 
         for (SpellAbility sa : c.getSpellAbility()) {
-            if (sa.getRestrictions().getZone().equals(Constant.Zone.Graveyard))
+        	// TODO: Add check for Yawgmoth's Will keyword when it happens
+        	if (AllZone.getZone(c).is(sa.getRestrictions().getZone()))
                 return true;
         }
 
         return false;
-    }
-
+    }    
+    
     /**
      * <p>countOccurrences.</p>
      *
