@@ -3,10 +3,10 @@ ManaCost:1 R
 Types:Enchantment Aura
 Text:no text
 K:Enchant creature
-K:enPump:+0/+0
-K:stPumpEnchanted:Creature:0/0/SVar=Damage:No Condition:Enchanted creature has "tap: This creature deals 1 damage to target creature."
-K:stPumpEnchanted:Creature.Wizard:0/0/SVar=Damage2:No Condition:If enchanted creature is a Wizard, it has "tap: This creature deals 2 damage to target creature."
-SVar:Damage:AB$DealDamage | Cost$ T | Tgt$ TgtC | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to target creature.
+A:SP$ Attach | Cost$ 1 R | ValidTgts$ Creature | AILogic$ Pump
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy+nonWizard | AddAbility$ Damage1 | Description$ Enchanted creature has "tap: This creature deals 1 damage to target creature."
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy+Wizard | AddAbility$ Damage2 | Description$ If enchanted creature is a Wizard, it has "tap: This creature deals 2 damage to target creature."
+SVar:Damage1:AB$DealDamage | Cost$ T | Tgt$ TgtC | NumDmg$ 1 | SpellDescription$ CARDNAME deals 1 damage to target creature.
 SVar:Damage2:AB$DealDamage | Cost$ T | Tgt$ TgtC | NumDmg$ 2 | SpellDescription$ CARDNAME deals 2 damage to target creature.
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/lavamancers_skill.jpg
