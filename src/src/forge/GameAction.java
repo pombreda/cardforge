@@ -1474,7 +1474,7 @@ public class GameAction {
         	PlayerZone zone = AllZone.getZone(c);
         	
         	// TODO: Instead of checking for Crucible of Worlds make a "Can be Played" Keyword (or something?)
-        	if (zone.is(Constant.Zone.Battlefield) || 
+        	if (zone.is(Constant.Zone.Hand) || 
         	  (AllZoneUtil.getPlayerCardsInPlay(human, "Crucible of Worlds").size() != 0 && zone.is(Constant.Zone.Graveyard)))
         		choices.add("Play land");
         }
