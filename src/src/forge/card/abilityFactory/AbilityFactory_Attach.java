@@ -293,7 +293,7 @@ public class AbilityFactory_Attach {
 				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
 				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
 				
-				grantingAbilities = params.containsKey("AddAbility");
+				grantingAbilities |= params.containsKey("AddAbility");
 				
 				String kws = params.get("AddKeyword");
 				if (kws != null){
@@ -305,7 +305,7 @@ public class AbilityFactory_Attach {
 		
 		CardList prefList = new CardList(list);
 		if (totToughness < 0){
-			// Make sure we aren't killed any of my creatures.
+			// Don't kill my own stuff with Negative toughness Auras
 			final int tgh = totToughness;
 			prefList = prefList.filter(new CardListFilter() {
 				@Override
@@ -402,21 +402,21 @@ public class AbilityFactory_Attach {
 				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
 				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
 				
-				grantingAbilities = params.containsKey("AddAbility");
+				grantingAbilities |= params.containsKey("AddAbility");
 				
 				String kws = params.get("AddKeyword");
 				if (kws != null){
 					for(String kw : kws.split(" & "))
-					keywords.add(kw);
+						keywords.add(kw);
 				}
 			}
 		}
 		
-		CardList prefList = new CardList(list);
+		CardList prefList = null;
 		if (totToughness < 0){
 			// Kill a creature if we can
 			final int tgh = totToughness;
-			prefList = prefList.filter(new CardListFilter() {
+			prefList = list.filter(new CardListFilter() {
 				@Override
 				public boolean addCard(Card c) {
 					if (c.hasKeyword("Indestructible") && c.getNetDefense() <= Math.abs(tgh))
@@ -426,10 +426,29 @@ public class AbilityFactory_Attach {
 				}
 			});
 		}
+		Card c = null;
+		if (prefList == null || prefList.size() == 0)
+			prefList = new CardList(list);
+		else if (prefList.size() > 0){
+			c = CardFactoryUtil.AI_getBest(prefList);
+			if (c != null)
+				return c;
+		}
 		
-		// TODO: Don't give Can't Attack or Defender to cards that can't do these things to begin with
+		if (!keywords.isEmpty()){
+			// Don't give Can't Attack or Defender to cards that can't do these things to begin with
+			if (keywords.contains("CARDNAME can't attack") || keywords.contains("Defender") || 
+					keywords.contains("CARDNAME attacks each turn if able.")){
+				prefList = prefList.filter(new CardListFilter() {
+					@Override
+					public boolean addCard(Card c) {
+						return !(c.hasKeyword("CARDNAME can't attack") || c.hasKeyword("Defender"));
+					}
+				});
+			}
+		}
 		
-		Card c = CardFactoryUtil.AI_getBest(prefList);
+		c = CardFactoryUtil.AI_getBest(prefList);
 		
         if (c == null)
         	return chooseLessPreferred(mandatory, list);
