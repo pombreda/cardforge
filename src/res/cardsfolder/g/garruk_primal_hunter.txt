@@ -10,4 +10,5 @@ A:AB$ Token | Cost$ SubCounter<6/LOYALTY> | Planeswalker$ True | TokenAmount$ Y 
 SVar:Y:Count$Valid Land.YouCtrl
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/garruk_primal_hunter.jpg
+SetInfo:M12|Mythic|http://magiccards.info/scans/en/m12/174.jpg
 End
