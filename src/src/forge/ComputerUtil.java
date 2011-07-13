@@ -972,11 +972,11 @@ public class ComputerUtil {
             Card land = landList.get(ix);
             landList.remove(ix);
             computer.playLand(land);
-
+            
             if (AllZone.getStack().size() != 0)
-                return false;
+            	return true;
         }
-        return true;
+        return false;
     }
 
     /**
