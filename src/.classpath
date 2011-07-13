@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test/java"/>
 	<classpathentry kind="lib" path="res/lib/java-image-scaling-0.8.4.jar"/>
 	<classpathentry kind="lib" path="res/lib/google-collections-1.0.jar"/>
 	<classpathentry kind="lib" path="res/lib/miglayout-3.7.3.1-swing.jar"/>
@@ -12,5 +13,6 @@
 	<classpathentry kind="lib" path="res/lib/minlog-1.2.jar"/>
 	<classpathentry kind="lib" path="res/lib/xpp3_min-1.1.4c.jar"/>
 	<classpathentry kind="lib" path="res/lib/substance-5.3.jar"/>
+	<classpathentry kind="con" path="org.testng.TESTNG_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
