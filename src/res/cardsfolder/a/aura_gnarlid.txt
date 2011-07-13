@@ -4,7 +4,7 @@ Types:Creature Beast
 Text:no text
 PT:2/2
 K:Creatures with power less than CARDNAME's power can't block it.
-K:stPumpSelf:Creature:X/X:no Condition:CARDNAME gets +1/+1 for each Aura on the battlefield.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +1/+1 for each Aura on the battlefield.
 SVar:X:Count$Valid Aura
 SVar:BuffedBy:Aura
 SVar:Rarity:Common

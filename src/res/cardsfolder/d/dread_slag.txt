@@ -4,7 +4,7 @@ Types:Creature Horror
 Text:no text
 PT:9/9
 K:Trample
-K:stPumpSelf:Creature:X/X:no Condition:Dread Slag gets -4/-4 for each card in your hand.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets -4/-4 for each card in your hand.
 SVar:X:Count$InYourHand/Times.-4
 SVar:RemRandomDeck:True
 SVar:BuffedBy:Card

@@ -4,7 +4,8 @@ Types:Creature Horror
 Text:no text
 PT:5/5
 K:Infect
-K:stPumpSelf:Creature:0/0/CARDNAME can't attack.:OppNotPoisoned:Chained Throatseeker can't attack unless defending player is poisoned.
+S:Mode$ Continuous | Affected$ Card.Self | AddKeyword$ CARDNAME can't attack. | CheckSVar$ X | SVarCompare$ GE1 | Description$ CARDNAME can't attack unless defending player is poisoned.
+SVar:X:Count$OppPoisonCounters
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/chained_throatseeker.jpg
 SetInfo:NPH|Common|http://magiccards.info/scans/en/nph/30.jpg
