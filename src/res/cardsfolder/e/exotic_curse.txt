@@ -1,10 +1,10 @@
 Name:Exotic Curse
 ManaCost:2 B
 Types:Enchantment Aura
-Text:Domain - Enchanted creature gets -1/-1 for each basic land type among lands you control.
+Text:no text
 K:Enchant creature
-K:enPumpCurse:0/0
-K:stPumpEnchanted:Creature:X/X:no Condition:no text
+A:SP$ Attach | Cost$ 2 B | ValidTgts$ Creature | AILogic$ Curse
+S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddPower$ X | AddToughness$ X | Description$ Domain - Enchanted creature gets -1/-1 for each basic land type among lands you control.
 SVar:X:Count$Domain/Negative
 SVar:BuffedBy:Plains,Island,Swamp,Mountain,Forest
 SVar:RemRandomDeck:True
