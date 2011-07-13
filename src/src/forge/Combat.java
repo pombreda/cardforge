@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 public class Combat {
     // key is attacker Card
     // value is CardList of blockers
-    private Map<Card, CardList> map = new HashMap<Card, CardList>();
+    private Map<Card, CardList> map = new TreeMap<Card, CardList>();
     private Set<Card> blocked = new HashSet<Card>();
 
     private HashMap<Card, CardList> unblockedMap = new HashMap<Card, CardList>();
