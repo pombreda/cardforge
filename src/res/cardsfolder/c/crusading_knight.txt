@@ -4,7 +4,7 @@ Types:Creature Human Knight
 Text:no text
 PT:2/2
 K:Protection from black
-K:stPumpSelf:Creature:X/X:no Condition:Crusading Knight gets +1/+1 for each Swamp your opponents control.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +1/+1 for each Swamp your opponents control.
 SVar:X:Count$Valid Swamp.YouDontCtrl
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare

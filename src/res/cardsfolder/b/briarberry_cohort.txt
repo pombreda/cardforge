@@ -4,7 +4,8 @@ Types:Creature Faerie Soldier
 Text:no text
 PT:1/1
 K:Flying
-K:stPumpSelf:Creature:1/1:isPresent Creature.Blue+Other+YouCtrl:CARDNAME gets +1/+1 as long as you control another blue creature.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ X | SVarCompare$ GE1 | Description$ CARDNAME gets +1/+1 as long as you control another blue creature.
+SVar:X:Count$Valid Creature.Blue+YouCtrl
 SVar:BuffedBy:Creature.Blue
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/briarberry_cohort.jpg

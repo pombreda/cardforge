@@ -4,7 +4,7 @@ Types:Creature Giant Warrior
 Text:no text
 PT:4/4
 K:Trample
-K:stPumpSelf:Creature:X/X:no Condition:Borderland Behemoth gets +4/+4 for each other Giant you control.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +4/+4 for each other Giant you control.
 SVar:X:Count$Valid Giant.Other+YouCtrl/Times.4
 SVar:RemRandomDeck:True
 SVar:BuffedBy:Giant
