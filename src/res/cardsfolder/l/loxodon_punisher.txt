@@ -3,7 +3,7 @@ ManaCost:3 W
 Types:Creature Elephant Soldier
 Text:no text
 PT:2/2
-K:stPumpSelf:Permanent:X/X:No Condition:CARDNAME gets +2/+2 for each Equipment attached to it.
+S:Mode$ Continuous | Affected$ Card.Self | AddPower$ X | AddToughness$ X | Description$ CARDNAME gets +2/+2 for each Equipment attached to it.
 SVar:X:Count$Valid Equipment.Attached/Times.2
 SVar:EquipMe:Multiple
 SVar:Rarity:Rare
