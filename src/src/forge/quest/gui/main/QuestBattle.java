@@ -88,12 +88,12 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Catwoman 2", "medium", "WRG Cat deck with Lightning Helix");
         addToDeckList("Cave Troll 2", "medium", "Mono B Quest for the Nihil Stone deck with The Rack and Bottomless Pit");
         addToDeckList("Cave Troll 3", "hard", "Mono B Quest for the Nihil Stone deck with The Rack, Bottomless Pit and Nyxathid");
-
 //        addToDeckList("Colbert 2", "medium", "WG Cats deck");
 //        addToDeckList("Colbert 3", "hard", "WUR Extended deck");
 //        addToDeckList("Colossus 2", "medium", "RG Changeling deck");
 //        addToDeckList("Colossus 3", "hard", "UG Standard Constructed deck");
         addToDeckList("Comic Book Guy 3", "hard", "WR deck with Roc and Rukh Eggs, Flamebrake, Earthquake and Auriok Champion");
+        addToDeckList("Conan the Barbarian 2", "medium", "BRG Barbarian deck with Lovisa Coldeyes, Balthor the Stout and weapons");
         addToDeckList("Cow 1", "easy", "Mono R Minotaur deck");
 //        addToDeckList("Conan 3", "hard", "Red monsters deck");
         addToDeckList("Crocodile Dundee 1", "easy", "Mono R deck with Mudbrawler Cohort and Bloodmark Mentor");
