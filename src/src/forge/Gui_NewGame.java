@@ -540,7 +540,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
         });
         
         foilRandomCheckBox.setText("Random Foiling");
-        foilRandomCheckBox.setToolTipText("Approximately 1:6 cards will appear with foiling effects applied.");
+        foilRandomCheckBox.setToolTipText("Approximately 1:20 cards will appear with foiling effects applied.");
         foilRandomCheckBox.addActionListener(new java.awt.event.ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		Constant.Runtime.RndCFoil[0] = foilRandomCheckBox.isSelected();
