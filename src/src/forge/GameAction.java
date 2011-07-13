@@ -1468,13 +1468,20 @@ public class GameAction {
         HashMap<String, SpellAbility> map = new HashMap<String, SpellAbility>();
         SpellAbility[] abilities = canPlaySpellAbility(c.getSpellAbility());
         ArrayList<String> choices = new ArrayList<String>();
-
-        if (c.isLand() && AllZoneUtil.isCardInZone(AllZone.getHumanHand(), c) && AllZone.getHumanPlayer().canPlayLand())
-            choices.add("Play land");
+        Player human = AllZone.getHumanPlayer();
+        
+        if (c.isLand() && human.canPlayLand()){
+        	PlayerZone zone = AllZone.getZone(c);
+        	
+        	// TODO: Instead of checking for Crucible of Worlds make a "Can be Played" Keyword (or something?)
+        	if (zone.is(Constant.Zone.Battlefield) || 
+        	  (AllZoneUtil.getPlayerCardsInPlay(human, "Crucible of Worlds").size() != 0 && zone.is(Constant.Zone.Graveyard)))
+        		choices.add("Play land");
+        }
 
         for (SpellAbility sa : abilities) {
             // for uncastables like lotus bloom, check if manaCost is blank
-            sa.setActivatingPlayer(AllZone.getHumanPlayer());
+            sa.setActivatingPlayer(human);
             if (sa.canPlay() && (!sa.isSpell() || !sa.getManaCost().equals(""))) {
                 choices.add(sa.toString());
                 map.put(sa.toString(), sa);

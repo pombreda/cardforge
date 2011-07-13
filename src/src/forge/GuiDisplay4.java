@@ -119,18 +119,13 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
             private static final long serialVersionUID = 8120331222693706164L;
 
             @Override
-            protected Card[] getCards() {
-                return CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).toArray();
+            protected Iterable<Card> getCardsAsIterable() {
+            	return new ImmutableIterableFrom<Card>(CardFactoryUtil.getExternalZoneActivationCards(AllZone.getHumanPlayer()));
             }
-
+            
             @Override
             protected void doAction(Card c) {
-                if (!c.isLand()) {
-                    SpellAbility[] sa = c.getSpellAbility();
-                    sa[1].setActivatingPlayer(AllZone.getHumanPlayer());
-                    if (sa[1].canPlay() && !c.isUnCastable()) AllZone.getGameAction().playSpellAbility(sa[1]);
-                } else    // PlayLand checks if the land can be played
-                    AllZone.getHumanPlayer().playLand(c);
+            	AllZone.getGameAction().playCard(c);
             }
         };
         COMPUTER_GRAVEYARD_ACTION = new ZoneAction(AllZone.getComputerGraveyard(), COMPUTER_GRAVEYARD);
@@ -553,7 +548,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
                     playerHandValue.setText("" + AllZone.getHumanHand().size());
                     playerGraveValue.setText("" + AllZone.getHumanGraveyard().size());
                     playerLibraryValue.setText("" + AllZone.getHumanLibrary().size());
-                    playerFBValue.setText("" + CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).size());
+                    playerFBValue.setText("" + CardFactoryUtil.getExternalZoneActivationCards(AllZone.getHumanPlayer()).size());
                     playerRemovedValue.setText("" + AllZone.getHumanExile().size());
 
                 }

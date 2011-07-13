@@ -300,7 +300,7 @@ public class ComputerUtil {
         CardList all = new CardList();
         all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
         all.addAll(AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer()));
-        all.addAll(CardFactoryUtil.getGraveyardActivationCards(AllZone.getComputerPlayer()));
+        all.addAll(CardFactoryUtil.getExternalZoneActivationCards(AllZone.getComputerPlayer()));
 
         CardList humanPlayable = new CardList();
         humanPlayable.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer()));
