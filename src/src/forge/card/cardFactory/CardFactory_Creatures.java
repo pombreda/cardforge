@@ -590,79 +590,6 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Gigantomancer")) {
-            final Ability ability = new Ability(card, "1") {
-                private static final long serialVersionUID = -68531201448677L;
-
-                @Override
-                public boolean canPlayAI() {
-                    Card c = getCreature();
-                    if (c == null) return false;
-                    else {
-                        setTargetCard(c);
-                        return true;
-                    }
-                }//canPlayAI()
-
-                //may return null
-                public Card getCreature() {
-                    CardList untapped = AllZoneUtil.getCreaturesInPlay(card.getController());
-                    untapped = untapped.filter(new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.isUntapped() && 6 > c.getNetAttack();
-                        }
-                    });
-                    if (untapped.isEmpty()) return null;
-                    Card worst = untapped.get(0);
-                    for (int i = 0; i < untapped.size(); i++)
-                        if (worst.getNetAttack() > untapped.get(i).getNetAttack()) worst = untapped.get(i);
-                    return worst;
-                }
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(getTargetCard())
-                            && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        final Card[] creature = new Card[1];
-
-                        creature[0] = getTargetCard();
-                        final int[] originalAttack = {creature[0].getBaseAttack()};
-                        final int[] originalDefense = {creature[0].getBaseDefense()};
-
-                        creature[0].setBaseAttack(7);
-                        creature[0].setBaseDefense(7);
-
-                        final Command EOT = new Command() {
-                            private static final long serialVersionUID = 6437463765161964445L;
-
-                            public void execute() {
-                                if (AllZoneUtil.isCardInPlay(creature[0])) {
-                                    creature[0].setBaseAttack(originalAttack[0]);
-                                    creature[0].setBaseDefense(originalDefense[0]);
-                                }
-                            }
-                        };
-                        AllZone.getEndOfTurn().addUntil(EOT);
-                    }//is card in play?
-                }//resolve()
-            };//SpellAbility
-            card.addSpellAbility(ability);
-            ability.setDescription("1: Target creature you control becomes 7/7 until end of turn.");
-            //this ability can target "this card" when it shouldn't be able to
-            ability.setBeforePayMana(new Input() {
-                private static final long serialVersionUID = -7903295056497483023L;
-
-                @Override
-                public void showMessage() {
-                    CardList targets = AllZoneUtil.getCreaturesInPlay(card.getController());
-                    stopSetNext(CardFactoryUtil.input_targetSpecific(ability, targets,
-                            "Select a creature you control", true, false));
-                }
-            });
-        }//*************** END ************ END **************************
-*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Hermit Druid")) {
@@ -717,73 +644,7 @@ public class CardFactory_Creatures {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Sorceress Queen") || cardName.equals("Serendib Sorcerer")) {
-            Cost abCost = new Cost("T", cardName, true);
-            Target target = new Target(card, "Select target creature other than " + cardName, new String[]{"Creature.Other"});
-            final Ability_Activated ability = new Ability_Activated(card, abCost, target) {
-                private static final long serialVersionUID = -6853184726011448677L;
 
-                @Override
-                public boolean canPlayAI() {
-                    Card c = getCreature();
-                    if (c == null) return false;
-                    else {
-                        setTargetCard(c);
-                        return true;
-                    }
-                }//canPlayAI()
-
-                //may return null
-                public Card getCreature() {
-                    CardList untapped = CardFactoryUtil.AI_getHumanCreature(card, true);
-                    untapped = untapped.filter(new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.isUntapped() && 2 < c.getNetDefense() && c != card;
-                        }
-                    });
-                    if (untapped.isEmpty()) return null;
-
-                    Card big = CardFactoryUtil.AI_getBestCreature(untapped);
-                    return big;
-                }
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(getTargetCard())
-                            && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        final Card[] creature = new Card[1];
-
-                        creature[0] = getTargetCard();
-                        final int[] originalAttack = {creature[0].getBaseAttack()};
-                        final int[] originalDefense = {creature[0].getBaseDefense()};
-
-                        creature[0].setBaseAttack(0);
-                        creature[0].setBaseDefense(2);
-
-                        final Command EOT = new Command() {
-                            private static final long serialVersionUID = 6437463765161964445L;
-
-                            public void execute() {
-                                if (AllZoneUtil.isCardInPlay(creature[0])) {
-                                    creature[0].setBaseAttack(originalAttack[0]);
-                                    creature[0].setBaseDefense(originalDefense[0]);
-                                }
-                            }
-                        };
-                        AllZone.getEndOfTurn().addUntil(EOT);
-                    }//is card in play?
-                }//resolve()
-            };//SpellAbility
-            card.addSpellAbility(ability);
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(abCost).append("Target creature other than ").append(cardName).append(" becomes 0/2 until end of turn.");
-            ability.setDescription(sb.toString());
-        }//*************** END ************ END **************************
-
-*/
         //*************** START *********** START **************************
         else if (cardName.equals("Vedalken Plotter")) {
             final Card[] target = new Card[2];
@@ -994,67 +855,6 @@ public class CardFactory_Creatures {
             ability.setDescription(sb.toString());
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Helldozer")) {
-            Cost abCost = new Cost("B B B T", cardName, true);
-            Target target = new Target(card, "Select target land.", new String[]{"Land"});
-            final Ability_Activated ability = new Ability_Activated(card, abCost, target) {
-                private static final long serialVersionUID = 6426884086364885861L;
-
-                @Override
-                public boolean canPlayAI() {
-                    if (CardFactoryUtil.AI_doesCreatureAttack(card)) return false;
-
-                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
-                    return land.size() != 0;
-                }
-
-                @Override
-                public void chooseTargetAI() {
-                    //target basic land that Human only has 1 or 2 in play
-                    CardList land = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
-
-                    Card target = null;
-
-                    String[] name = {"Forest", "Swamp", "Plains", "Mountain", "Island"};
-                    for (int i = 0; i < name.length; i++)
-                        if (land.getName(name[i]).size() == 1) {
-                            target = land.getName(name[i]).get(0);
-                            break;
-                        }
-
-                    //see if there are only 2 lands of the same type
-                    if (target == null) {
-                        for (int i = 0; i < name.length; i++)
-                            if (land.getName(name[i]).size() == 2) {
-                                target = land.getName(name[i]).get(0);
-                                break;
-                            }
-                    }//if
-                    if (target == null) {
-                        land.shuffle();
-                        target = land.get(0);
-                    }
-                    setTargetCard(target);
-                }//chooseTargetAI()
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(getTargetCard())
-                            && CardFactoryUtil.canTarget(card, getTargetCard())) {
-                        AllZone.getGameAction().destroy(getTargetCard());
-
-                        //if non-basic, untap Helldozer
-                        if (!getTargetCard().isBasicLand()) card.untap();
-                    }
-                }//resolve()
-            };//SpellAbility
-
-            card.addSpellAbility(ability);
-            ability.setDescription(abCost + "Destroy target land. If that land was nonbasic, untap Helldozer.");
-        }//*************** END ************ END **************************
-*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Painter's Servant")) {
@@ -1110,55 +910,6 @@ public class CardFactory_Creatures {
             card.addLeavesPlayCommand(leavesBattlefield);
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Memnarch")) {
-            //has 2 non-tap abilities that affect itself
-            Cost cost = new Cost("1 U U", cardName, true);
-            final Target target = new Target(card, "Select a permanent", "Permanent".split(","));
-
-            final SpellAbility ability1 = new Ability_Activated(card, cost, target) {
-                private static final long serialVersionUID = -887237000483591242L;
-
-                @Override
-                public void resolve() {
-                    Card crd = target.getTargetCards().get(0);
-
-                    ArrayList<String> types = crd.getType();
-                    crd.setType(new ArrayList<String>()); //clear
-                    getTargetCard().addType("Artifact"); //make sure artifact is at the beginning
-                    for (String type : types)
-                        crd.addType(type);
-
-                }//resolve()
-
-                @Override
-                public boolean canPlayAI() {
-                    CardList list = getCreature();
-
-                    if (list.size() == 0)
-                        return false;
-
-                    target.resetTargets();
-                    target.addTarget(CardFactoryUtil.AI_getBestCreature(getCreature()));
-                    return true;
-                }
-
-                CardList getCreature() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getHumanPlayer());
-                    list = list.filter(new CardListFilter() {
-                        public boolean addCard(Card c) {
-                            return c.isCreature() && (!c.isArtifact()) && CardFactoryUtil.canTarget(card, c);
-                        }
-                    });
-                    return list;
-                }//getCreature()
-            };//SpellAbility
-
-            card.addSpellAbility(ability1);
-            ability1.setDescription("1 U U: Target permanent becomes an artifact in addition to its other types. (This effect doesn't end at end of turn.)");
-        }//*************** END ************ END **************************
-*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Stangg")) {
@@ -1200,92 +951,7 @@ public class CardFactory_Creatures {
             });
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Goldmeadow Lookout")) {
-            final Cost lookCost = new Cost("W T Discard<1/Card>", card.getName(), true);
-            final SpellAbility ability = new Ability_Activated(card, lookCost, null) {
-                private static final long serialVersionUID = -8413409735529340094L;
 
-                @Override
-                public void resolve() {
-                    makeToken();
-                }
-
-                void makeToken() {
-                    CardList cl = CardFactoryUtil.makeToken("Goldmeadow Harrier", "W 1 1 Goldmeadow Harrier",
-                            card.getController(), "W", new String[]{"Creature", "Kithkin", "Soldier"}, 1, 1, new String[]{""});
-
-                    for (final Card c : cl) {
-                        final Cost abCost = new Cost("W T", c.getName(), true);
-                        final Target tgt = new Target(card, "TgtC");
-                        final SpellAbility tokenAbility = new Ability_Activated(card, abCost, tgt) {
-                            private static final long serialVersionUID = -7327585136675896817L;
-
-                            @Override
-                            public void resolve() {
-                                Card c = getTargetCard();
-                                c.tap();
-                            }
-
-                            @Override
-                            public boolean canPlayAI() {
-                                CardList human = CardFactoryUtil.AI_getHumanCreature(card, true);
-                                human = human.filter(new CardListFilter() {
-                                    public boolean addCard(Card c) {
-                                        return c.isUntapped() && CardFactoryUtil.canTarget(card, c);
-                                    }
-                                });
-
-                                if (human.size() > 0) {
-                                    CardListUtil.sortAttack(human);
-                                    CardListUtil.sortFlying(human);
-                                    setTargetCard(human.get(0));
-                                }
-
-                                CardList assassins = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                                assassins = assassins.filter(new CardListFilter() {
-                                    public boolean addCard(Card c) {
-                                        return c.isCreature()
-                                                && (!c.hasSickness() || c.hasKeyword("Haste"))
-                                                && c.isUntapped()
-                                                && (c.getName().equals("Rathi Assassin") || c.getName().equals("Royal Assassin")
-                                                || c.getName().equals("Tetsuo Umezawa") || c.getName().equals("Stalking Assassin"));
-                                    }
-                                });
-
-                                Combat attackers = ComputerUtil.getAttackers();
-                                CardList list = new CardList(attackers.getAttackers());
-
-                                return (AllZone.getPhase().getPhase().equals(Constant.Phase.Main1) && AllZone.getPhase().getPlayerTurn().equals(card.getController()) &&
-                                        human.size() > 0 && (assassins.size() > 0 || !list.contains(card)));
-
-                            }//canPlayAI
-                        };//SpellAbility
-                        c.addSpellAbility(new Spell_Permanent(c));
-                        c.addSpellAbility(tokenAbility);
-                        tokenAbility.setDescription("W, tap: Tap target creature.");
-                    }
-
-                }//makeToken()
-
-                @Override
-                public boolean canPlayAI() {
-                    return super.canPlayAI() && AllZone.getPhase().getPhase().equals(Constant.Phase.Main2);
-                }
-            };//SpellAbility
-
-            card.addSpellAbility(ability);
-
-            StringBuilder sb = new StringBuilder();
-            sb.append("W, tap, Discard a card: Put a 1/1 white Kithkin Soldier creature token named ");
-            sb.append("Goldmeadow Harrier onto the battlefield. It has \"W, tap : Tap target creature.\"");
-            ability.setDescription(sb.toString());
-
-            ability.setStackDescription(cardName + " - Put a 1/1 token onto the battlefield");
-        }//*************** END ************ END **************************
-
-*/
         //*************** START *********** START **************************
         else if (cardName.equals("Horde of Notions")) {
             final Ability ability = new Ability(card, "W U B R G") {
@@ -1643,66 +1309,6 @@ public class CardFactory_Creatures {
 
 /*
         //*************** START *********** START **************************
-        else if (cardName.equals("Gilt-Leaf Archdruid")) {
-            Cost abCost = new Cost("tapXType<7/Druid>", cardName, true);
-            Target tgt = new Target(card, "Select a player to gain lands from", "Player".split(","));
-            final SpellAbility stealLands = new Ability_Activated(card, abCost, tgt) {
-                private static final long serialVersionUID = 636594487143500891L;
-
-                @Override
-                public boolean canPlayAI() {
-                    Player p = AllZone.getHumanPlayer();
-
-                    if (!p.canTarget(card))
-                        return false;
-
-                    setTargetPlayer(p);
-
-                    CardList lands = AllZoneUtil.getPlayerCardsInPlay(p);
-                    lands = lands.getType("Land");
-
-                    // Don't steal lands if Human has less than 2
-                    return lands.size() >= 2;
-                }
-
-                @Override
-                public void resolve() {
-                    Player activator = this.getActivatingPlayer();
-
-                    CardList lands = AllZoneUtil.getPlayerCardsInPlay(getTargetPlayer());
-                    lands = lands.getType("Land");
-
-                    for (int i = 0; i < lands.size(); i++) {
-                        Card land = lands.get(i);
-                        if (AllZoneUtil.isCardInPlay(land)) {    // this really shouldn't fail in the middle of resolution
-                            land.setController(activator);
-
-                            // i don't know how the code handles Sum Sickness so I'm leaving this
-                            // but a card changing controllers should always gain this no matter if it has haste or not
-                            if (land.hasKeyword("Haste")) {
-                                land.setSickness(false);
-                            } else {
-                                land.setSickness(true);
-                            }
-
-                            AllZone.getGameAction().changeController(new CardList(land), land.getController(), card.getController());
-                        }//if
-                    }
-                }
-            };
-
-            card.addSpellAbility(stealLands);
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(card.toString()).append(" - Gain control of all lands target player controls.");
-            stealLands.setStackDescription(sb.toString());
-
-            stealLands.setDescription("Tap seven untapped Druids you control: Gain control of all lands target player controls.");
-        }//*************** END ************ END **************************
-
-
- 
-        //*************** START *********** START **************************
         else if (cardName.equals("Figure of Destiny")) {
             Ability ability1 = new Ability(card, "RW") {
                 @Override
@@ -1823,43 +1429,6 @@ public class CardFactory_Creatures {
         }//*************** END ************ END **************************
 
 */
-        //*************** START *********** START **************************
-        else if (cardName.equals("Covetous Dragon")) {
-            SpellAbility spell = new Spell_Permanent(card) {
-
-                private static final long serialVersionUID = -1446713295855849195L;
-
-                @Override
-                public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                    list = list.getType("Artifact");
-                    return super.canPlayAI() && list.size() > 0;
-                }
-            };
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpell();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-
-
-        //*************** START *********** START **************************
-        else if (cardName.equals("Tethered Griffin")) {
-            SpellAbility spell = new Spell_Permanent(card) {
-                private static final long serialVersionUID = -7872917651421012893L;
-
-                @Override
-                public boolean canPlayAI() {
-                    CardList list = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-                    list = list.getType("Enchantment");
-                    return super.canPlayAI() && list.size() > 0;
-                }
-            };
-            // Do not remove SpellAbilities created by AbilityFactory or Keywords.
-            card.clearFirstSpell();
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************
-
-
         //*************** START *********** START **************************
         else if (cardName.equals("Cantivore")) {
             SpellAbility spell = new Spell_Permanent(card) {
@@ -2372,53 +1941,6 @@ public class CardFactory_Creatures {
             card.addComesIntoPlayCommand(intoPlay);
         }//*************** END ************ END **************************
 
-/*
-        //*************** START *********** START **************************
-        else if (cardName.equals("Chronatog")) {
-
-            final Command untilEOT = new Command() {
-                private static final long serialVersionUID = 6926430725410883578L;
-
-                public void execute() {
-                    if (AllZoneUtil.isCardInPlay(card)) {
-                        card.addTempAttackBoost(-3);
-                        card.addTempDefenseBoost(-3);
-                    }
-                }
-            };
-
-            Cost abCost = new Cost("0", cardName, true);
-            final Ability_Activated ability = new Ability_Activated(card, abCost, null) {
-                private static final long serialVersionUID = -8345060615720565828L;
-
-                @Override
-                public void resolve() {
-                    if (AllZoneUtil.isCardInPlay(card)) {
-                        card.addTempAttackBoost(3);
-                        card.addTempDefenseBoost(3);
-                        AllZone.getEndOfTurn().addUntil(untilEOT);
-
-                        AllZone.getPhase().skipTurn(card.getController());
-                    }
-                }
-
-                @Override
-                public boolean canPlayAI() {
-                    return false;
-                }
-            };
-            ability.getRestrictions().setActivationLimit(1);
-
-            StringBuilder sb = new StringBuilder();
-            sb.append(card.getName()).append(" gets +3/+3 until end of turn, ");
-            sb.append(card.getController()).append(" skips his/her next turn.");
-            ability.setStackDescription(sb.toString());
-
-            ability.setDescription("0: Chronatog gets +3/+3 until end of turn. You skip your next turn. Activate this ability only once each turn.");
-
-            card.addSpellAbility(ability);
-        }//*************** END ************ END **************************
-*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Kinsbaile Borderguard")) {
@@ -2593,7 +2115,6 @@ public class CardFactory_Creatures {
             };
             card.addComesIntoPlayCommand(comesIntoPlay);
         }//*************** END ************ END **************************
-
 
         
         //*************** START *********** START **************************
@@ -3406,59 +2927,6 @@ public class CardFactory_Creatures {
             card.addSpellAbility(discard);
         }//*************** END ************ END **************************
 
-        /*
-       //*************** START *********** START **************************
-       else if(cardName.equals("Frost Titan")) {
-           final Trigger targetedTrigger = TriggerHandler.parseTrigger("FrostTitanCounter","Mode$ SpellAbilityCast | TargetsValid$ Card.Self | ValidControllingPlayer$ Opponent | TriggerZones$ Battlefield | Execute$ TrigOverridden | TriggerDescription$ Whenever CARDNAME becomes the target of a spell or ability an opponent controls, counter that spell or ability unless its controller pays 2.", card);
-           final Ability FrostTitanCounterAbility = new Ability(card,"0")
-           {
-
-               @Override
-               public void resolve() {
-                   Trigger trig = card.getNamedTrigger("FrostTitanCounter");
-                   HashMap<String,Object> runParams = trig.getRunParams();
-                   final SpellAbility tgtSA = (SpellAbility)runParams.get("CastSA");
-
-                   Ability ability = new Ability(card, "2") {
-                       @Override
-                       public void resolve() {
-                           ;
-                       }
-                   };
-
-                   final Command unpaidCommand = new Command() {
-                       private static final long serialVersionUID = 8094833091127334678L;
-
-                       public void execute() {
-                           AllZone.getStack().remove(tgtSA);
-                           if(tgtSA.isSpell())
-                               AllZone.getGameAction().moveToGraveyard(tgtSA.getSourceCard());
-                       }
-                   };
-
-                   if(tgtSA.getActivatingPlayer().isHuman())
-                   {
-                       GameActionUtil.payManaDuringAbilityResolve(card + "\r\n", ability.getManaCost(),
-                               Command.Blank, unpaidCommand);
-                   }
-                   else
-                   {
-                       if(ComputerUtil.canPayCost(ability)) ComputerUtil.playNoStack(ability);
-                       else {
-                           AllZone.getStack().remove(tgtSA);
-                           if(tgtSA.isSpell())
-                               AllZone.getGameAction().moveToGraveyard(tgtSA.getSourceCard());
-                       }
-                   }
-               }
-
-           };
-
-           targetedTrigger.setOverridingAbility(FrostTitanCounterAbility);
-
-           card.addTrigger(targetedTrigger);
-       }//*************** END ************ END **************************
-        */
 
         //*************** START *********** START **************************
         else if (cardName.equals("Brass Squire")) {
@@ -3605,7 +3073,7 @@ public class CardFactory_Creatures {
             ability.setDescription(abCost + "Flip a coin. If you win the flip, target Orc creature gets +2/+0 until end of turn. If you lose the flip, it gets -0/-2 until end of turn.");
         }//*************** END ************ END **************************
 
-
+/*
         //*************** START *********** START **************************
         else if (cardName.equals("Orcish Spy")) {
             Target target = new Target(card, "Select target player", new String[]{"Player"});
@@ -3640,7 +3108,7 @@ public class CardFactory_Creatures {
             ability.setDescription(abCost + "Look at the top three cards of target player's library.");
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
-
+*/
 
         //*************** START *********** START **************************
         else if (cardName.equals("Awakener Druid")) {
