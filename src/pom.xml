@@ -449,7 +449,7 @@
         <dependency>
             <groupId>com.miglayout</groupId>
             <artifactId>miglayout</artifactId>
-            <version>3.7.3</version>
+            <version>3.7.4</version>
         </dependency>
         <dependency>
             <groupId>com.mortennobel</groupId>
@@ -457,9 +457,9 @@
             <version>0.8.5</version>
         </dependency>
         <dependency>
-            <groupId>com.google.collections</groupId>
-            <artifactId>google-collections</artifactId>
-            <version>1.0</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>r09</version>
         </dependency>
         <dependency>
             <groupId>com.thoughtworks.xstream</groupId>
