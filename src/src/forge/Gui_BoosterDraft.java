@@ -691,7 +691,8 @@ public class Gui_BoosterDraft extends JFrame implements CardContainer, NewConsta
         Deck[] all = {
                 human, computer[0], computer[1], computer[2], computer[3], computer[4], computer[5], computer[6]};
 
-        DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+        //DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+        DeckManager deckManager = AllZone.getDeckManager();
         deckManager.addDraftDeck(all);
 
         //write file

@@ -4,6 +4,7 @@ package forge;
 import forge.card.cardFactory.CardFactory;
 import forge.card.mana.ManaPool;
 import forge.card.trigger.TriggerHandler;
+import forge.deck.DeckManager;
 import forge.gui.input.InputControl;
 import forge.properties.ForgeProps;
 import forge.properties.NewConstants;
@@ -133,6 +134,9 @@ public class AllZone implements NewConstants {
         map.put(Constant.Zone.Stack + null, Stack_Zone);
 
     }
+    
+    /** Constant <code>DeckManager</code> */
+    private final static DeckManager dMgr = new DeckManager(ForgeProps.getFile(NEW_DECKS));
 
     /**
      * <p>getHumanPlayer.</p>
@@ -582,5 +586,12 @@ public class AllZone implements NewConstants {
         ((DefaultPlayerZone) getComputerHand()).resetCardsAddedThisTurn();
         ((DefaultPlayerZone) getComputerBattlefield()).resetCardsAddedThisTurn();
         ((DefaultPlayerZone) getComputerGraveyard()).resetCardsAddedThisTurn();
+    }
+    
+    /** 
+     *  <p>getDeckManager.</p>
+     */
+    public static DeckManager getDeckManager() {
+    	return dMgr;
     }
 }//AllZone

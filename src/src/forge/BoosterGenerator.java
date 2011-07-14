@@ -94,7 +94,8 @@ public class BoosterGenerator {
         numMythics = nMythics;
         numSpecials = nSpecials;
 
-        DeckManager dio = new DeckManager(ForgeProps.getFile(NewConstants.NEW_DECKS));
+        //DeckManager dio = new DeckManager(ForgeProps.getFile(NewConstants.NEW_DECKS));
+        DeckManager dio = AllZone.getDeckManager();
         Deck dPool = dio.getDeck(DeckFile);
         if (dPool == null)
             throw new RuntimeException("BoosterGenerator : deck not found - " + DeckFile);
