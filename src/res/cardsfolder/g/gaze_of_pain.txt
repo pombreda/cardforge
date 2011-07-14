@@ -9,4 +9,5 @@ SVar:DBPump:DB$Pump | Defined$ TriggeredAttacker | KW$ HIDDEN Prevent all combat
 SVar:X:TriggeredAttacker$CardPower
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/gaze_of_pain.jpg
+SetInfo:ICE|Common|http://magiccards.info/scans/en/ia/16.jpg
 End
