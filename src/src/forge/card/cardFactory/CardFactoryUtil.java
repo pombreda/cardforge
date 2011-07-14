@@ -1337,6 +1337,7 @@ public class CardFactoryUtil {
         return onUnEquip;
     }//eqPump_unEquip ( was vanila_unequip() )
 
+    /*   Auras which used enPump have been converted to AF_Attach
     /**
      * <p>enPump_Enchant.</p>
      *
@@ -1347,7 +1348,7 @@ public class CardFactoryUtil {
      * @param spellDescription an array of {@link java.lang.String} objects.
      * @param stackDescription an array of {@link java.lang.String} objects.
      * @return a {@link forge.card.spellability.SpellAbility} object.
-     */
+     */    /*
     public static SpellAbility enPump_Enchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                               final String[] spellDescription, final String[] stackDescription) {
 
@@ -1379,10 +1380,10 @@ public class CardFactoryUtil {
                     }
                 }
 
-                /*
-                *  else (if aura is keyword only)
-                *  Do not duplicate keyword or enchant card with Defender or enchant card already enchanted
-                */
+                //
+                // else (if aura is keyword only)
+                // Do not duplicate keyword or enchant card with Defender or enchant card already enchanted
+                //
                 if (Power == 0 && Tough == 0) {
                     list = list.filter(new CardListFilter() {
                         public boolean addCard(Card c) {
@@ -1399,11 +1400,11 @@ public class CardFactoryUtil {
                     });
                 }
 
-                /*
-                *  else aura is power/toughness boost and may have keyword(s)
-                *  Do not reduce power to <= zero or kill by reducing toughness to <= zero
-                *  Do not enchant card with Defender or enchant card already enchanted
-                */
+                //
+                // else aura is power/toughness boost and may have keyword(s)
+                // Do not reduce power to <= zero or kill by reducing toughness to <= zero
+                // Do not enchant card with Defender or enchant card already enchanted
+                //
                 CardListUtil.sortAttack(list);
                 CardListUtil.sortFlying(list);
 
@@ -1439,8 +1440,9 @@ public class CardFactoryUtil {
         enchant.setStackDescription(stackDescription[0]);
 
         return enchant;
-    }//enPump_Enchant()
+    }//enPump_Enchant()    */
 
+    /*   Auras which used enPump have been converted to AF_Attach
     /**
      * <p>enPump_onEnchant.</p>
      *
@@ -1451,7 +1453,7 @@ public class CardFactoryUtil {
      * @param spellDescription an array of {@link java.lang.String} objects.
      * @param stackDescription an array of {@link java.lang.String} objects.
      * @return a {@link forge.Command} object.
-     */
+     */    /*
     public static Command enPump_onEnchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                            final String[] spellDescription, final String[] stackDescription) {
 
@@ -1476,8 +1478,9 @@ public class CardFactoryUtil {
         };//Command
 
         return onEnchant;
-    }//enPump_onEnchant
+    }//enPump_onEnchant    */
 
+    /*   Auras which used enPump have been converted to AF_Attach
     /**
      * <p>enPump_unEnchant.</p>
      *
@@ -1488,7 +1491,7 @@ public class CardFactoryUtil {
      * @param spellDescription an array of {@link java.lang.String} objects.
      * @param stackDescription an array of {@link java.lang.String} objects.
      * @return a {@link forge.Command} object.
-     */
+     */    /*
     public static Command enPump_unEnchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                            final String[] spellDescription, final String[] stackDescription) {
 
@@ -1511,8 +1514,9 @@ public class CardFactoryUtil {
         };//Command
 
         return onUnEnchant;
-    }//enPump_unEnchant
+    }//enPump_unEnchant    */
 
+    /*   Auras which used enPump have been converted to AF_Attach
     /**
      * <p>enPump_LeavesPlay.</p>
      *
@@ -1523,7 +1527,7 @@ public class CardFactoryUtil {
      * @param spellDescription an array of {@link java.lang.String} objects.
      * @param stackDescription an array of {@link java.lang.String} objects.
      * @return a {@link forge.Command} object.
-     */
+     */    /*
     public static Command enPump_LeavesPlay(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                             final String[] spellDescription, final String[] stackDescription) {
 
@@ -1540,8 +1544,9 @@ public class CardFactoryUtil {
         };//Command
 
         return onLeavesPlay;
-    }//enPump_LeavesPlay
+    }//enPump_LeavesPlay    */
 
+    /*   Auras which used enPumpCurse have been converted to AF_Attach
     /**
      * <p>enPumpCurse_Enchant.</p>
      *
@@ -1552,7 +1557,7 @@ public class CardFactoryUtil {
      * @param spellDescription an array of {@link java.lang.String} objects.
      * @param stackDescription an array of {@link java.lang.String} objects.
      * @return a {@link forge.card.spellability.SpellAbility} object.
-     */
+     */    /*
     public static SpellAbility enPumpCurse_Enchant(final Card sourceCard, final int Power, final int Tough, final String[] extrinsicKeywords,
                                                    final String[] spellDescription, final String[] stackDescription) {
 
@@ -1575,10 +1580,10 @@ public class CardFactoryUtil {
                     public boolean addCard(Card c) {
                         for (String s : extKeywords) {
 
-                            /* If extrinsicKeywords contains "CARDNAME attacks each turn if able." then remove creatures 
-                            *     with Defender and creatures with the keyword "CARDNAME attacks each turn if able."
-                            *     and creatures with a keyword that starts with "CARDNAME can't attack"
-                            */
+                            // If extrinsicKeywords contains "CARDNAME attacks each turn if able." then remove creatures 
+                            //    with Defender and creatures with the keyword "CARDNAME attacks each turn if able."
+                            //    and creatures with a keyword that starts with "CARDNAME can't attack"
+                            //
                             if (s.contains("CARDNAME attacks each turn if able.")) {
                                 if (c.hasKeyword("Defender")
                                         || c.hasKeyword("CARDNAME attacks each turn if able.")
@@ -1586,10 +1591,10 @@ public class CardFactoryUtil {
                                     return false;
                             }
 
-                            /* If extrinsicKeywords contains "CARDNAME can't attack." or "CARDNAME can't attack or block."
-                            *     then remove creatures with Defender and remove creatures that have one or more of these
-                            *     keywords to start with
-                            */
+                            // If extrinsicKeywords contains "CARDNAME can't attack." or "CARDNAME can't attack or block."
+                            //    then remove creatures with Defender and remove creatures that have one or more of these
+                            //    keywords to start with
+                            //
                             if (s.contains("CARDNAME can't attack.") || s.contains("CARDNAME can't attack or block.")) {
                                 if (c.hasKeyword("Defender")
                                         || c.hasKeyword("CARDNAME can't attack.")
@@ -1597,10 +1602,10 @@ public class CardFactoryUtil {
                                     return false;
                             }
 
-                            /* If extrinsicKeywords contains "CARDNAME doesn't untap during your untap step."
-                             *     then remove creatures with Vigilance that are untapped and remove creatures that have the keyword 
-                             *     "CARDNAME doesn't untap during your untap step."  and remove creatures that are untapped
-                            */
+                            // If extrinsicKeywords contains "CARDNAME doesn't untap during your untap step."
+                            //     then remove creatures with Vigilance that are untapped and remove creatures that have the keyword 
+                            //     "CARDNAME doesn't untap during your untap step."  and remove creatures that are untapped
+                            //
                             if (s.contains("CARDNAME doesn't untap during your untap step.")) {
                                 if ((c.hasKeyword("Vigilance") && c.isUntapped())
                                         || c.hasKeyword("CARDNAME doesn't untap during your untap step.")
@@ -1614,7 +1619,7 @@ public class CardFactoryUtil {
                     }
                 });
 
-                /*
+                //
                 // If extrinsicKeywords contains "CARDNAME can't attack." or "CARDNAME can't attack or block."
                 //     then remove creatures with Defender from the list and remove creatures that have one
                 //     or more of these keywords to start with
@@ -1667,7 +1672,7 @@ public class CardFactoryUtil {
                 }
                 
                 //else aura is power/toughness decrease and may have keyword(s)
-                */
+                //
 
                 CardListUtil.sortAttack(list);
                 CardListUtil.sortFlying(list);
@@ -1698,7 +1703,7 @@ public class CardFactoryUtil {
         enchant.setStackDescription(stackDescription[0]);
 
         return enchant;
-    }//enPumpCurse_Enchant()
+    }//enPumpCurse_Enchant()    */
 
     /**
      * <p>getEldraziSpawnAbility.</p>

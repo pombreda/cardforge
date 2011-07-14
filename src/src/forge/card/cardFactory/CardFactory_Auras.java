@@ -855,10 +855,10 @@ class CardFactory_Auras {
         ////////////////////DRF test generic aura
 
 
-        /*
+        /*   Auras which used enPump have been converted to AF_Attach
          *   This section is for cards which add a P/T boost
          *   and/or keywords to the enchanted creature
-         */
+         */    /*
         if (shouldEnchant(card) != -1) {
             int n = shouldEnchant(card);
             if (n != -1) {
@@ -953,7 +953,7 @@ class CardFactory_Auras {
 
                 card.setSVar("PlayMain1", "TRUE");
             }
-        }// enPump[Curse]
+        }// enPump[Curse]    */
 
 
         return card;
