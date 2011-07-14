@@ -34,33 +34,35 @@ class CardFactory_Auras {
         return -1;
     }
 
+    /*   Auras which used enPump have been converted to AF_Attach
     /**
      * <p>shouldEnchant.</p>
      *
      * @param c a {@link forge.Card} object.
      * @return a int.
-     */
+     */    /*
     public static int shouldEnchant(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
             if (a.get(i).toString().startsWith("enPump")) return i;
 
         return -1;
-    }
+    }    */
 
+    /*   Auras which used enControlCreature have been converted to AF_Attach
     /**
      * <p>shouldControl.</p>
      *
      * @param c a {@link forge.Card} object.
      * @return a int.
-     */
+     */    /*
     public static int shouldControl(Card c) {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++)
             if (a.get(i).toString().startsWith("enControlCreature")) return i;
 
         return -1;
-    }
+    }    */
 
     /**
      * <p>getCard.</p>
