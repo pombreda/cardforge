@@ -1,7 +1,6 @@
 package arcane.util;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -25,17 +24,6 @@ public class Util {
     static public final boolean isMac = System.getProperty("os.name").toLowerCase().indexOf("mac") != -1;
     /** Constant <code>isWindows=System.getProperty("os.name").toLowerCase().indexOf("windows") == -1</code> */
     static public final boolean isWindows = System.getProperty("os.name").toLowerCase().indexOf("windows") == -1;
-
-    /** Constant <code>robot</code> */
-    static public Robot robot;
-
-    static {
-        try {
-            new Robot();
-        } catch (AWTException ex) {
-            throw new RuntimeException("Error creating robot.", ex);
-        }
-    }
 
     /** Constant <code>threadPool</code> */
     static public ThreadPoolExecutor threadPool;
