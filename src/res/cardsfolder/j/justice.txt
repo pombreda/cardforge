@@ -9,4 +9,6 @@ SVar:TrigDamage:AB$DealDamage | Cost$ 0 | Defined$ TriggeredSourceController | N
 SVar:X:TriggerCount$DamageAmount
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/justice.jpg
+SetInfo:5ED|Uncommon|http://magiccards.info/scans/en/5e/317.jpg
+SetInfo:ICE|Uncommon|http://magiccards.info/scans/en/ia/256.jpg
 End
