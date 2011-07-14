@@ -38,6 +38,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Albert Einstein 2", "medium", "WG deck with Garruk Wildspeaker, Needle Storm and Retribution of the Meek");
         addToDeckList("Albert Einstein 3", "hard", "WG deck with Garruk Wildspeaker, Needle Storm and Retribution of the Meek");
         addToDeckList("Alice in Wonderland 2", "medium", "WG Lands deck with manlands, cycle lands and Life from the Loam");
+        addToDeckList("Alice in Wonderland 3", "hard", "WG Lands deck with manlands, cycle lands and Life from the Loam");
         addToDeckList("Apu Nahasapeemapetilon 2", "medium", "WG persist deck with Heartmender and Juniper Order Ranger");
         addToDeckList("Aquaman 1", "easy", "WU Control deck");
         addToDeckList("Aquaman 2", "medium", "WU Caw-Blade deck");
