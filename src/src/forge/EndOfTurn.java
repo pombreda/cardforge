@@ -189,6 +189,25 @@ public class EndOfTurn implements java.io.Serializable {
                 AllZone.getStack().addSimultaneousStackEntry(change);
 
             }
+            if (c.hasKeyword("At the beginning of your end step, destroy this creature if it didn't attack this turn.")
+                    && !c.getCreatureAttackedThisTurn()
+                    && AllZone.getPhase().isPlayerTurn(c.getController())) {
+                final Card source = c;
+                final SpellAbility change = new Ability(source, "0") {
+                    @Override
+                    public void resolve() {
+                        if (AllZoneUtil.isCardInPlay(source)) {
+                            AllZone.getGameAction().destroy(source);
+                        }
+                    }
+                };
+                StringBuilder sb = new StringBuilder();
+                sb.append(source.getName()).append(" - destroy ").append(source.getName()).append(".");
+                change.setStackDescription(sb.toString());
+
+                AllZone.getStack().addSimultaneousStackEntry(change);
+
+            }
             if (c.hasKeyword("At the beginning of your end step, return CARDNAME to its owner's hand.")
                     && AllZone.getPhase().isPlayerTurn(c.getController())) {
                 final Card source = c;
