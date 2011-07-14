@@ -366,6 +366,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Tarzan 2", "medium", "WR Ape tribal deck with Ancient Silverback, Raking Canopy and Treetop Village");
         addToDeckList("Terminator 3", "hard", "Mono B artifact deck with The Abyss");
         addToDeckList("The Great Gazoo 3", "hard", "WR deck with, red damage all spells and pro from red creatures");
+        addToDeckList("The Thing 2", "medium", "Mono W creatureless deck with Urza's Armor, Sphere of Purity, Copper Tablet and Ankh of Mishra");
 //        addToDeckList("Thing 2", "medium", "WG Elves deck");
 //        addToDeckList("Thing 3", "hard", "G Garruk Elves deck");
 //        addToDeckList("Thor 1", "easy", "WR Singleton deck");

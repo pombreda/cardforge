@@ -73,6 +73,7 @@ Spock 2
 Storm 2
 Sun Quan 2
 Tarzan 2
+The Thing 2
 Totoro 2
 Treebeard 2
 Walle 2
