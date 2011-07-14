@@ -3,8 +3,8 @@ package forge.card.cardFactory;
 import forge.Card;
 import forge.CardList;
 import forge.properties.NewConstants;
+import net.slightlymagic.braids.testng.BraidsAssertFunctions;
 import net.slightlymagic.braids.util.ClumsyRunnable;
-import net.slightlymagic.braids.util.testng.BraidsAssertFunctions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -49,12 +49,12 @@ public class CardFactoryTest implements NewConstants {
 		    		}
     			});
 
-		BraidsAssertFunctions.assertThrowsException(IllegalArgumentException.class, 
-				new ClumsyRunnable() {
-		    		public void run() throws Exception {
-		    			f.getRandomCombinationWithoutRepetition(f.size()/4);
-		    		}
-				});
+		BraidsAssertFunctions.assertThrowsException(IllegalArgumentException.class,
+                new ClumsyRunnable() {
+                    public void run() throws Exception {
+                        f.getRandomCombinationWithoutRepetition(f.size() / 4);
+                    }
+                });
     }
     
     /**
