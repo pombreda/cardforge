@@ -470,7 +470,7 @@
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>6.1.1</version>
-            <!--<scope>test</scope> -->
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.google.code.jyield</groupId>
