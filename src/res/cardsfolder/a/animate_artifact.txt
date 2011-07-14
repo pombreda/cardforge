@@ -2,7 +2,8 @@ Name:Animate Artifact
 ManaCost:3 U
 Types:Enchantment Aura
 Text:no text
-K:Enchant Artifact
+K:Enchant artifact
+A:SP$ Attach | Cost$ 3 U | ValidTgts$ Artifact | AILogic$ Pump
 K:stAnimateEnchanted:Artifact:Count$CardManaCost/Count$CardManaCost:Creature:no colors:No Abilities:isPresent Card.AttachedBy+nonCreature:As long as enchanted artifact isn't a creature, it's an artifact creature with power and toughness each equal to its converted mana cost.
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/animate_artifact.jpg
