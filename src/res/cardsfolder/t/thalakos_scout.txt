@@ -1,5 +1,5 @@
 Name:Thalakos Scout
-ManaCost:1 U
+ManaCost:2 U
 Types:Creature Thakalos Soldier Scout
 Text:no text
 PT:2/1
