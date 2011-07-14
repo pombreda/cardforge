@@ -9,7 +9,13 @@ http://raindropmemory.deviantart.com)
 This version is based upon the revision number # which is found on our SVN.
 
 
+This version and future versions will require java 6. There may still be a few people who are unable to install java 6 on the computer that they use to run the forge application. These people will have to use forge version 1.0.15. Forge version 1.1.00 and above will require java 6.
 
+Work on the new card scripting system is ongoing. We have new code to handle auras and cards with static abilities. This is a work in progress and it is not yet finished in this version.
+
+Rob and Marc have worked together to add in a new feature which will overlay a card's image with a foil like film. A few random cards will have a foil like image in constructed mode games and possibly quest mode games. There is a check box on the New Game window that you can use to turn this feature on or off.
+
+This version includes a large number of new cards from Magic 2012. Card images for these new cards are not yet available. We hope that these images will come online in a few weeks. Until then, please be patient.
 
 
 We have changed the archiving format to ".tar.bz2". There are utilities for Windows, Mac OS and the various *nix's that can be used to decompress these archives.
