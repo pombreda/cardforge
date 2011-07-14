@@ -739,6 +739,7 @@ class CardFactory_Auras {
         }
 
 
+        /*    Auras which used the generic aura have been converted to AF_Attach
         ///////////////////////////////////////////////////////////////////
         ////
         //// CAUTION: Keep this last in the if else if block for cardnames
@@ -747,9 +748,9 @@ class CardFactory_Auras {
 
         ////////////////////DRF test generic aura
         //*************** START *********** START **************************
-        else if (isAuraType(card, "Land") || isAuraType(card, "Creature") ||
-                isAuraType(card, "Artifact") || isAuraType(card, "Enchantment") ||
-                isAuraType(card, "Wall")) {
+        else if (isAuraType(card, "Land")     || isAuraType(card, "Creature")    ||
+                 isAuraType(card, "Artifact") || isAuraType(card, "Enchantment") ||
+                 isAuraType(card, "Wall")) {
 
             final String type = getAuraType(card);
             final boolean curse = isCurseAura(card);
@@ -854,7 +855,7 @@ class CardFactory_Auras {
         //// CAUTION: Keep the above code block last in the if else if block
         ////
         ///////////////////////////////////////////////////////////////////
-        ////////////////////DRF test generic aura
+        ////////////////////DRF test generic aura    */
 
 
         /*   Auras which used enPump have been converted to AF_Attach
@@ -956,11 +957,16 @@ class CardFactory_Auras {
                 card.setSVar("PlayMain1", "TRUE");
             }
         }// enPump[Curse]    */
+        
 
-
+        // Need to keep the return card; statement below.
         return card;
     }
 
+    
+    
+    
+    /*    Auras which used the generic aura have been converted to AF_Attach
     //checks if an aura is a given type based on: Enchant <type> in cards.txt
     /**
      * <p>isAuraType.</p>
@@ -968,7 +974,7 @@ class CardFactory_Auras {
      * @param aura a {@link forge.Card} object.
      * @param type a {@link java.lang.String} object.
      * @return a boolean.
-     */
+     */    /*
     private static boolean isAuraType(final Card aura, final String type) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -977,15 +983,16 @@ class CardFactory_Auras {
             }
         }
         return false;
-    }
+    }    */
 
+    /*    Auras which used the generic aura have been converted to AF_Attach
     //gets the type of aura based on Enchant <type> in card.txt
     /**
      * <p>getAuraType.</p>
      *
      * @param aura a {@link forge.Card} object.
      * @return a {@link java.lang.String} object.
-     */
+     */    /*
     private static String getAuraType(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -996,8 +1003,9 @@ class CardFactory_Auras {
             }
         }
         return "";
-    }
+    }    */
 
+    /*    Auras which used the generic aura have been converted to AF_Attach
     //checks if an aura is a curse based on Enchant <type> [Curse] in cards.txt
     //Curse just means computer will target human's stuff with this
     /**
@@ -1005,7 +1013,7 @@ class CardFactory_Auras {
      *
      * @param aura a {@link forge.Card} object.
      * @return a boolean.
-     */
+     */    /*
     private static boolean isCurseAura(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1014,15 +1022,16 @@ class CardFactory_Auras {
             }
         }
         return false;
-    }
+    }    */
 
+    /*    Auras which used the generic aura have been converted to AF_Attach
     //checks if the aura can only target the controller's cards
     /**
      * <p>isTypeYouControl.</p>
      *
      * @param aura a {@link forge.Card} object.
      * @return a boolean.
-     */
+     */    /*
     private static boolean isTypeYouControl(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1031,15 +1040,16 @@ class CardFactory_Auras {
             }
         }
         return false;
-    }
+    }    */
 
+    /*    Auras which used the generic aura have been converted to AF_Attach
     //checks if the aura can only target the opponent's cards
     /**
      * <p>isTypeOppControl.</p>
      *
      * @param aura a {@link forge.Card} object.
      * @return a boolean.
-     */
+     */    /*
     private static boolean isTypeOppControl(final Card aura) {
         ArrayList<String> keywords = aura.getKeyword();
         for (String keyword : keywords) {
@@ -1048,6 +1058,6 @@ class CardFactory_Auras {
             }
         }
         return false;
-    }
+    }    */
 
 }
