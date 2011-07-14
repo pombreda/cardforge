@@ -45,7 +45,9 @@ public class Gui_DeckEditor_Menu extends JMenuBar implements NewConstants {
     /** Constant <code>debugPrint=false</code> */
     private static final boolean debugPrint = false;
 
-    private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+    //private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+    private DeckManager deckManager = AllZone.getDeckManager();
+    
     //with the new IO, there's no reason to use different instances
 
     private boolean isDeckSaved;

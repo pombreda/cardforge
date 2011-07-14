@@ -45,7 +45,8 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
     /** Constant <code>serialVersionUID=-2437047615019135648L</code> */
     private static final long serialVersionUID = -2437047615019135648L;
 
-    private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+    //private final DeckManager deckManager = new DeckManager(ForgeProps.getFile(NEW_DECKS));
+    private final DeckManager deckManager = AllZone.getDeckManager();
     //with the new IO, there's no reason to use different instances
     private List<Deck> allDecks;
     /** Constant <code>editor</code> */
@@ -387,7 +388,9 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
             aiDeck.setName("AI_" + sDeckName);
             aiDeck.addMetaData("PlayerType", "AI");
             deckManager.addDeck(aiDeck);
-            deckManager.close();
+            deckManager.writeAllDecks();
+            deckManager.readAllDecks();
+            updateDeckComboBoxes();
 
             deckEditorButton_actionPerformed(null);
             editor.customMenu.setCurrentGameType(Constant.GameType.Sealed);
@@ -1059,7 +1062,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
      * <p>sealedRadioButton_actionPerformed.</p>
      *
      * @param e a {@link java.awt.event.ActionEvent} object.
-     */
+     */      
     void sealedRadioButton_actionPerformed(ActionEvent e) {
         Constant.Runtime.GameType[0] = Constant.GameType.Sealed;
         updateDeckComboBoxes();
