@@ -21,7 +21,7 @@ public class CardFactoryUtilTest implements NewConstants {
     /**
      *
      */
-    @Test(timeOut = 1000)
+    @Test(timeOut = 1000, enabled = false)
     public void CardFactoryTest1() {
 
         CardList in = AllZone.getCardFactory().getAllCards();
