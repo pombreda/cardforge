@@ -3,13 +3,15 @@ package forge.card.cardFactory;
 import forge.Card;
 import forge.CardList;
 import forge.properties.NewConstants;
-import net.slightlymagic.braids.testng.BraidsAssertFunctions;
 import net.slightlymagic.braids.util.ClumsyRunnable;
+import net.slightlymagic.braids.util.testng.BraidsAssertFunctions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.Set;
 import java.util.TreeSet;
+
+//import net.slightlymagic.braids.testng.BraidsAssertFunctions;
 
 /**
  * <p>Mana_PartTest class.</p>
@@ -42,12 +44,12 @@ public class CardFactoryTest implements NewConstants {
      */
     @Test(enabled = false)
     public void test_getRandomCombinationWithoutRepetition_tooLarge() {
-    	BraidsAssertFunctions.assertThrowsException(IllegalArgumentException.class, 
-    			new ClumsyRunnable() {
-		    		public void run() throws Exception {
-		    			f.getRandomCombinationWithoutRepetition(f.size());
-		    		}
-    			});
+    	BraidsAssertFunctions.assertThrowsException(IllegalArgumentException.class,
+                new ClumsyRunnable() {
+                    public void run() throws Exception {
+                        f.getRandomCombinationWithoutRepetition(f.size());
+                    }
+                });
 
 		BraidsAssertFunctions.assertThrowsException(IllegalArgumentException.class,
                 new ClumsyRunnable() {
