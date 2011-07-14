@@ -2,7 +2,7 @@ Name:Withering Hex
 ManaCost:B
 Types:Enchantment Aura
 Text:no text
-K:Enchant Creature Curse
+K:Enchant creature
 A:SP$ Attach | Cost$ B | ValidTgts$ Creature | AILogic$ Curse
 T:Mode$ Cycled | ValidCard$ Card | Execute$ TrigPutCounter | TriggerZones$ Battlefield | TriggerDescription$ Whenever a player cycles a card, put a plague counter on CARDNAME.
 SVar:TrigPutCounter:AB$PutCounter | Cost$ 0 | Defined$ Self | CounterType$ PLAGUE | CounterNum$ 1

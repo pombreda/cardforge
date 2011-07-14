@@ -2,7 +2,8 @@ Name:Yoke of the Damned
 ManaCost:1 B
 Types:Enchantment Aura
 Text:no text
-K:Enchant Creature Curse
+K:Enchant creature
+A:SP$ Attach | Cost$ 1 B | ValidTgts$ Creature | AILogic$ Curse
 T:Mode$ ChangesZone | Origin$ Battlefield | ValidCard$ Creature | Destination$ Graveyard | TriggerZones$ Battlefield | Execute$ TrigDestroy | TriggerDescription$ When a creature is put into a graveyard from the battlefield, destroy enchanted creature.
 SVar:TrigDestroy:AB$Destroy | Cost$ 0 | Defined$ Enchanted
 SVar:Rarity:Common
