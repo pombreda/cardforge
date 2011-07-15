@@ -218,126 +218,136 @@
 <a class="jxr_linenumber" name="208" href="#208">208</a>         String[] effectTriggers = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="209" href="#209">209</a>         String[] effectSVars = <strong class="jxr_keyword">null</strong>;
 <a class="jxr_linenumber" name="210" href="#210">210</a>         String[] effectKeywords = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="211" href="#211">211</a>         String effectRemembered = <strong class="jxr_keyword">null</strong>;
-<a class="jxr_linenumber" name="212" href="#212">212</a> 
-<a class="jxr_linenumber" name="213" href="#213">213</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>))
-<a class="jxr_linenumber" name="214" href="#214">214</a>             effectAbilities = params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="215" href="#215">215</a> 
-<a class="jxr_linenumber" name="216" href="#216">216</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>))
-<a class="jxr_linenumber" name="217" href="#217">217</a>             effectTriggers = params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="218" href="#218">218</a> 
-<a class="jxr_linenumber" name="219" href="#219">219</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"SVars"</span>))
-<a class="jxr_linenumber" name="220" href="#220">220</a>             effectSVars = params.get(<span class="jxr_string">"SVars"</span>).split(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="221" href="#221">221</a> 
-<a class="jxr_linenumber" name="222" href="#222">222</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>))
-<a class="jxr_linenumber" name="223" href="#223">223</a>             effectKeywords = params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">","</span>);
-<a class="jxr_linenumber" name="224" href="#224">224</a> 
-<a class="jxr_linenumber" name="225" href="#225">225</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"RememberCard"</span>))
-<a class="jxr_linenumber" name="226" href="#226">226</a>             effectRemembered = params.get(<span class="jxr_string">"RememberCard"</span>);
-<a class="jxr_linenumber" name="227" href="#227">227</a> 
-<a class="jxr_linenumber" name="228" href="#228">228</a>         <em class="jxr_comment">//Effect eff = new Effect();</em>
-<a class="jxr_linenumber" name="229" href="#229">229</a>         String name = params.get(<span class="jxr_string">"Name"</span>);
-<a class="jxr_linenumber" name="230" href="#230">230</a>         <strong class="jxr_keyword">if</strong> (name == <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="231" href="#231">231</a>             name = sa.getSourceCard().getName() + <span class="jxr_string">"'s Effect"</span>;
-<a class="jxr_linenumber" name="232" href="#232">232</a> 
-<a class="jxr_linenumber" name="233" href="#233">233</a>         <em class="jxr_comment">//Unique Effects shouldn't be duplicated</em>
-<a class="jxr_linenumber" name="234" href="#234">234</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Unique"</span>) &amp;&amp; AllZoneUtil.isCardInPlay(name))
-<a class="jxr_linenumber" name="235" href="#235">235</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="211" href="#211">211</a>         String[] effectStaticAbilities = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="212" href="#212">212</a>         String effectRemembered = <strong class="jxr_keyword">null</strong>;
+<a class="jxr_linenumber" name="213" href="#213">213</a> 
+<a class="jxr_linenumber" name="214" href="#214">214</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>))
+<a class="jxr_linenumber" name="215" href="#215">215</a>             effectAbilities = params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="216" href="#216">216</a> 
+<a class="jxr_linenumber" name="217" href="#217">217</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>))
+<a class="jxr_linenumber" name="218" href="#218">218</a>             effectTriggers = params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="219" href="#219">219</a>         
+<a class="jxr_linenumber" name="220" href="#220">220</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"StaticAbilities"</span>))
+<a class="jxr_linenumber" name="221" href="#221">221</a>             effectStaticAbilities = params.get(<span class="jxr_string">"StaticAbilities"</span>).split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="222" href="#222">222</a> 
+<a class="jxr_linenumber" name="223" href="#223">223</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"SVars"</span>))
+<a class="jxr_linenumber" name="224" href="#224">224</a>             effectSVars = params.get(<span class="jxr_string">"SVars"</span>).split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="225" href="#225">225</a> 
+<a class="jxr_linenumber" name="226" href="#226">226</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>))
+<a class="jxr_linenumber" name="227" href="#227">227</a>             effectKeywords = params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">","</span>);
+<a class="jxr_linenumber" name="228" href="#228">228</a> 
+<a class="jxr_linenumber" name="229" href="#229">229</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"RememberCard"</span>))
+<a class="jxr_linenumber" name="230" href="#230">230</a>             effectRemembered = params.get(<span class="jxr_string">"RememberCard"</span>);
+<a class="jxr_linenumber" name="231" href="#231">231</a> 
+<a class="jxr_linenumber" name="232" href="#232">232</a>         <em class="jxr_comment">//Effect eff = new Effect();</em>
+<a class="jxr_linenumber" name="233" href="#233">233</a>         String name = params.get(<span class="jxr_string">"Name"</span>);
+<a class="jxr_linenumber" name="234" href="#234">234</a>         <strong class="jxr_keyword">if</strong> (name == <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="235" href="#235">235</a>             name = sa.getSourceCard().getName() + <span class="jxr_string">"'s Effect"</span>;
 <a class="jxr_linenumber" name="236" href="#236">236</a> 
-<a class="jxr_linenumber" name="237" href="#237">237</a>         <a href="../../../forge/Player.html">Player</a> controller = sa.getActivatingPlayer();
-<a class="jxr_linenumber" name="238" href="#238">238</a>         <a href="../../../forge/Card.html">Card</a> eff = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Card.html">Card</a>();
-<a class="jxr_linenumber" name="239" href="#239">239</a>         eff.setName(name);
-<a class="jxr_linenumber" name="240" href="#240">240</a>         eff.addType(<span class="jxr_string">"Effect"</span>);    <em class="jxr_comment">// Or Emblem</em>
-<a class="jxr_linenumber" name="241" href="#241">241</a>         eff.setToken(<strong class="jxr_keyword">true</strong>);    <em class="jxr_comment">// Set token to true, so when leaving play it gets nuked</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a>         eff.setController(controller);
-<a class="jxr_linenumber" name="243" href="#243">243</a>         eff.setOwner(controller);
-<a class="jxr_linenumber" name="244" href="#244">244</a>         eff.setImageName(card.getImageName());
-<a class="jxr_linenumber" name="245" href="#245">245</a>         eff.setColor(card.getColor());
-<a class="jxr_linenumber" name="246" href="#246">246</a>         eff.setImmutable(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="247" href="#247">247</a> 
-<a class="jxr_linenumber" name="248" href="#248">248</a>         <em class="jxr_comment">// Effects should be Orange or something probably</em>
-<a class="jxr_linenumber" name="249" href="#249">249</a> 
-<a class="jxr_linenumber" name="250" href="#250">250</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/Card.html">Card</a> e = eff;
+<a class="jxr_linenumber" name="237" href="#237">237</a>         <em class="jxr_comment">//Unique Effects shouldn't be duplicated</em>
+<a class="jxr_linenumber" name="238" href="#238">238</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Unique"</span>) &amp;&amp; AllZoneUtil.isCardInPlay(name))
+<a class="jxr_linenumber" name="239" href="#239">239</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="240" href="#240">240</a> 
+<a class="jxr_linenumber" name="241" href="#241">241</a>         <a href="../../../forge/Player.html">Player</a> controller = sa.getActivatingPlayer();
+<a class="jxr_linenumber" name="242" href="#242">242</a>         <a href="../../../forge/Card.html">Card</a> eff = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Card.html">Card</a>();
+<a class="jxr_linenumber" name="243" href="#243">243</a>         eff.setName(name);
+<a class="jxr_linenumber" name="244" href="#244">244</a>         eff.addType(<span class="jxr_string">"Effect"</span>);    <em class="jxr_comment">// Or Emblem</em>
+<a class="jxr_linenumber" name="245" href="#245">245</a>         eff.setToken(<strong class="jxr_keyword">true</strong>);    <em class="jxr_comment">// Set token to true, so when leaving play it gets nuked</em>
+<a class="jxr_linenumber" name="246" href="#246">246</a>         eff.setController(controller);
+<a class="jxr_linenumber" name="247" href="#247">247</a>         eff.setOwner(controller);
+<a class="jxr_linenumber" name="248" href="#248">248</a>         eff.setImageName(card.getImageName());
+<a class="jxr_linenumber" name="249" href="#249">249</a>         eff.setColor(card.getColor());
+<a class="jxr_linenumber" name="250" href="#250">250</a>         eff.setImmutable(<strong class="jxr_keyword">true</strong>);
 <a class="jxr_linenumber" name="251" href="#251">251</a> 
-<a class="jxr_linenumber" name="252" href="#252">252</a>         <em class="jxr_comment">// Abilities, triggers and SVars work the same as they do for Token</em>
-<a class="jxr_linenumber" name="253" href="#253">253</a>         <em class="jxr_comment">//Grant abilities</em>
-<a class="jxr_linenumber" name="254" href="#254">254</a>         <strong class="jxr_keyword">if</strong> (effectAbilities != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="255" href="#255">255</a>             <strong class="jxr_keyword">for</strong> (String s : effectAbilities) {
-<a class="jxr_linenumber" name="256" href="#256">256</a>                 <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> abFactory = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
-<a class="jxr_linenumber" name="257" href="#257">257</a>                 String actualAbility = af.getHostCard().getSVar(s);
-<a class="jxr_linenumber" name="258" href="#258">258</a> 
-<a class="jxr_linenumber" name="259" href="#259">259</a>                 <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = abFactory.getAbility(actualAbility, eff);
-<a class="jxr_linenumber" name="260" href="#260">260</a>                 eff.addSpellAbility(grantedAbility);
-<a class="jxr_linenumber" name="261" href="#261">261</a>             }
-<a class="jxr_linenumber" name="262" href="#262">262</a>         }
-<a class="jxr_linenumber" name="263" href="#263">263</a> 
-<a class="jxr_linenumber" name="264" href="#264">264</a>         <em class="jxr_comment">//Grant triggers</em>
-<a class="jxr_linenumber" name="265" href="#265">265</a>         <strong class="jxr_keyword">if</strong> (effectTriggers != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="266" href="#266">266</a>             <strong class="jxr_keyword">for</strong> (String s : effectTriggers) {
-<a class="jxr_linenumber" name="267" href="#267">267</a>                 String actualTrigger = af.getHostCard().getSVar(s);
-<a class="jxr_linenumber" name="268" href="#268">268</a> 
-<a class="jxr_linenumber" name="269" href="#269">269</a>                 <em class="jxr_comment">//Needs to do some voodoo when the effect disappears to remove the triggers at the same time.</em>
-<a class="jxr_linenumber" name="270" href="#270">270</a>                 <a href="../../../forge/Command.html">Command</a> LPCommand = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
-<a class="jxr_linenumber" name="271" href="#271">271</a> 
-<a class="jxr_linenumber" name="272" href="#272">272</a>                     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -9007707442828928732L;
-<a class="jxr_linenumber" name="273" href="#273">273</a> 
-<a class="jxr_linenumber" name="274" href="#274">274</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
-<a class="jxr_linenumber" name="275" href="#275">275</a>                         AllZone.getTriggerHandler().removeAllFromCard(e);
-<a class="jxr_linenumber" name="276" href="#276">276</a>                     }
+<a class="jxr_linenumber" name="252" href="#252">252</a>         <em class="jxr_comment">// Effects should be Orange or something probably</em>
+<a class="jxr_linenumber" name="253" href="#253">253</a> 
+<a class="jxr_linenumber" name="254" href="#254">254</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/Card.html">Card</a> e = eff;
+<a class="jxr_linenumber" name="255" href="#255">255</a> 
+<a class="jxr_linenumber" name="256" href="#256">256</a>         <em class="jxr_comment">// Abilities, triggers and SVars work the same as they do for Token</em>
+<a class="jxr_linenumber" name="257" href="#257">257</a>         <em class="jxr_comment">//Grant abilities</em>
+<a class="jxr_linenumber" name="258" href="#258">258</a>         <strong class="jxr_keyword">if</strong> (effectAbilities != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="259" href="#259">259</a>             <strong class="jxr_keyword">for</strong> (String s : effectAbilities) {
+<a class="jxr_linenumber" name="260" href="#260">260</a>                 <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> abFactory = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
+<a class="jxr_linenumber" name="261" href="#261">261</a>                 String actualAbility = af.getHostCard().getSVar(s);
+<a class="jxr_linenumber" name="262" href="#262">262</a> 
+<a class="jxr_linenumber" name="263" href="#263">263</a>                 <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = abFactory.getAbility(actualAbility, eff);
+<a class="jxr_linenumber" name="264" href="#264">264</a>                 eff.addSpellAbility(grantedAbility);
+<a class="jxr_linenumber" name="265" href="#265">265</a>             }
+<a class="jxr_linenumber" name="266" href="#266">266</a>         }
+<a class="jxr_linenumber" name="267" href="#267">267</a> 
+<a class="jxr_linenumber" name="268" href="#268">268</a>         <em class="jxr_comment">//Grant triggers</em>
+<a class="jxr_linenumber" name="269" href="#269">269</a>         <strong class="jxr_keyword">if</strong> (effectTriggers != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="270" href="#270">270</a>             <strong class="jxr_keyword">for</strong> (String s : effectTriggers) {
+<a class="jxr_linenumber" name="271" href="#271">271</a>                 String actualTrigger = af.getHostCard().getSVar(s);
+<a class="jxr_linenumber" name="272" href="#272">272</a> 
+<a class="jxr_linenumber" name="273" href="#273">273</a>                 <em class="jxr_comment">//Needs to do some voodoo when the effect disappears to remove the triggers at the same time.</em>
+<a class="jxr_linenumber" name="274" href="#274">274</a>                 <a href="../../../forge/Command.html">Command</a> LPCommand = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
+<a class="jxr_linenumber" name="275" href="#275">275</a> 
+<a class="jxr_linenumber" name="276" href="#276">276</a>                     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -9007707442828928732L;
 <a class="jxr_linenumber" name="277" href="#277">277</a> 
-<a class="jxr_linenumber" name="278" href="#278">278</a>                 };
-<a class="jxr_linenumber" name="279" href="#279">279</a>                 eff.addLeavesPlayCommand(LPCommand);
-<a class="jxr_linenumber" name="280" href="#280">280</a>                 <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, eff);
-<a class="jxr_linenumber" name="281" href="#281">281</a>                 eff.addTrigger(parsedTrigger);
-<a class="jxr_linenumber" name="282" href="#282">282</a>                 AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
-<a class="jxr_linenumber" name="283" href="#283">283</a>             }
-<a class="jxr_linenumber" name="284" href="#284">284</a>         }
-<a class="jxr_linenumber" name="285" href="#285">285</a> 
-<a class="jxr_linenumber" name="286" href="#286">286</a>         <em class="jxr_comment">//Grant SVars</em>
-<a class="jxr_linenumber" name="287" href="#287">287</a>         <strong class="jxr_keyword">if</strong> (effectSVars != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="288" href="#288">288</a>             <strong class="jxr_keyword">for</strong> (String s : effectSVars) {
-<a class="jxr_linenumber" name="289" href="#289">289</a>                 String actualSVar = af.getHostCard().getSVar(s);
-<a class="jxr_linenumber" name="290" href="#290">290</a>                 eff.setSVar(s, actualSVar);
-<a class="jxr_linenumber" name="291" href="#291">291</a>             }
-<a class="jxr_linenumber" name="292" href="#292">292</a>         }
-<a class="jxr_linenumber" name="293" href="#293">293</a> 
-<a class="jxr_linenumber" name="294" href="#294">294</a>         <em class="jxr_comment">//Grant Keywords</em>
-<a class="jxr_linenumber" name="295" href="#295">295</a>         <strong class="jxr_keyword">if</strong> (effectKeywords != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="296" href="#296">296</a>             <strong class="jxr_keyword">for</strong> (String s : effectKeywords) {
-<a class="jxr_linenumber" name="297" href="#297">297</a>                 String actualKeyword = af.getHostCard().getSVar(s);
-<a class="jxr_linenumber" name="298" href="#298">298</a>                 eff.addIntrinsicKeyword(actualKeyword);
-<a class="jxr_linenumber" name="299" href="#299">299</a>             }
-<a class="jxr_linenumber" name="300" href="#300">300</a>         }
-<a class="jxr_linenumber" name="301" href="#301">301</a> 
-<a class="jxr_linenumber" name="302" href="#302">302</a>         <em class="jxr_comment">//Set Remembered</em>
-<a class="jxr_linenumber" name="303" href="#303">303</a>         <strong class="jxr_keyword">if</strong>(effectRemembered != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="304" href="#304">304</a>             <strong class="jxr_keyword">for</strong>(<a href="../../../forge/Card.html">Card</a> c : AbilityFactory.getDefinedCards(card,effectRemembered,sa))
-<a class="jxr_linenumber" name="305" href="#305">305</a>             {
-<a class="jxr_linenumber" name="306" href="#306">306</a>                 eff.addRemembered(c);
-<a class="jxr_linenumber" name="307" href="#307">307</a>             }
-<a class="jxr_linenumber" name="308" href="#308">308</a>         }
-<a class="jxr_linenumber" name="309" href="#309">309</a> 
-<a class="jxr_linenumber" name="310" href="#310">310</a>         <em class="jxr_comment">// Duration</em>
-<a class="jxr_linenumber" name="311" href="#311">311</a>         String duration = params.get(<span class="jxr_string">"Duration"</span>);
-<a class="jxr_linenumber" name="312" href="#312">312</a>         <strong class="jxr_keyword">if</strong> (duration == <strong class="jxr_keyword">null</strong> || !duration.equals(<span class="jxr_string">"Permanent"</span>)) {
-<a class="jxr_linenumber" name="313" href="#313">313</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> endEffect = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
-<a class="jxr_linenumber" name="314" href="#314">314</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
-<a class="jxr_linenumber" name="315" href="#315">315</a> 
-<a class="jxr_linenumber" name="316" href="#316">316</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
-<a class="jxr_linenumber" name="317" href="#317">317</a>                     AllZone.getGameAction().exile(e);
-<a class="jxr_linenumber" name="318" href="#318">318</a>                 }
-<a class="jxr_linenumber" name="319" href="#319">319</a>             };
-<a class="jxr_linenumber" name="320" href="#320">320</a> 
-<a class="jxr_linenumber" name="321" href="#321">321</a>             <strong class="jxr_keyword">if</strong> (duration == <strong class="jxr_keyword">null</strong> || duration.equals(<span class="jxr_string">"EndOfTurn"</span>))
-<a class="jxr_linenumber" name="322" href="#322">322</a>                 AllZone.getEndOfTurn().addUntil(endEffect);
-<a class="jxr_linenumber" name="323" href="#323">323</a>         }
-<a class="jxr_linenumber" name="324" href="#324">324</a> 
-<a class="jxr_linenumber" name="325" href="#325">325</a>         <em class="jxr_comment">// TODO: Add targeting to the effect so it knows who it's dealing with</em>
-<a class="jxr_linenumber" name="326" href="#326">326</a>         AllZone.getTriggerHandler().suppressMode(<span class="jxr_string">"ChangesZone"</span>);
-<a class="jxr_linenumber" name="327" href="#327">327</a>         AllZone.getGameAction().moveToPlay(eff);
-<a class="jxr_linenumber" name="328" href="#328">328</a>         AllZone.getTriggerHandler().clearSuppression(<span class="jxr_string">"ChangesZone"</span>);
-<a class="jxr_linenumber" name="329" href="#329">329</a>     }
-<a class="jxr_linenumber" name="330" href="#330">330</a> }
+<a class="jxr_linenumber" name="278" href="#278">278</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
+<a class="jxr_linenumber" name="279" href="#279">279</a>                         AllZone.getTriggerHandler().removeAllFromCard(e);
+<a class="jxr_linenumber" name="280" href="#280">280</a>                     }
+<a class="jxr_linenumber" name="281" href="#281">281</a> 
+<a class="jxr_linenumber" name="282" href="#282">282</a>                 };
+<a class="jxr_linenumber" name="283" href="#283">283</a>                 eff.addLeavesPlayCommand(LPCommand);
+<a class="jxr_linenumber" name="284" href="#284">284</a>                 <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, eff);
+<a class="jxr_linenumber" name="285" href="#285">285</a>                 eff.addTrigger(parsedTrigger);
+<a class="jxr_linenumber" name="286" href="#286">286</a>                 AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
+<a class="jxr_linenumber" name="287" href="#287">287</a>             }
+<a class="jxr_linenumber" name="288" href="#288">288</a>         }
+<a class="jxr_linenumber" name="289" href="#289">289</a>         
+<a class="jxr_linenumber" name="290" href="#290">290</a>         <em class="jxr_comment">//Grant static abilities</em>
+<a class="jxr_linenumber" name="291" href="#291">291</a>         <strong class="jxr_keyword">if</strong> (effectStaticAbilities != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="292" href="#292">292</a>             <strong class="jxr_keyword">for</strong> (String s : effectStaticAbilities)
+<a class="jxr_linenumber" name="293" href="#293">293</a>                 eff.addStaticAbility(af.getHostCard().getSVar(s));
+<a class="jxr_linenumber" name="294" href="#294">294</a>         }
+<a class="jxr_linenumber" name="295" href="#295">295</a> 
+<a class="jxr_linenumber" name="296" href="#296">296</a>         <em class="jxr_comment">//Grant SVars</em>
+<a class="jxr_linenumber" name="297" href="#297">297</a>         <strong class="jxr_keyword">if</strong> (effectSVars != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="298" href="#298">298</a>             <strong class="jxr_keyword">for</strong> (String s : effectSVars) {
+<a class="jxr_linenumber" name="299" href="#299">299</a>                 String actualSVar = af.getHostCard().getSVar(s);
+<a class="jxr_linenumber" name="300" href="#300">300</a>                 eff.setSVar(s, actualSVar);
+<a class="jxr_linenumber" name="301" href="#301">301</a>             }
+<a class="jxr_linenumber" name="302" href="#302">302</a>         }
+<a class="jxr_linenumber" name="303" href="#303">303</a> 
+<a class="jxr_linenumber" name="304" href="#304">304</a>         <em class="jxr_comment">//Grant Keywords</em>
+<a class="jxr_linenumber" name="305" href="#305">305</a>         <strong class="jxr_keyword">if</strong> (effectKeywords != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="306" href="#306">306</a>             <strong class="jxr_keyword">for</strong> (String s : effectKeywords) {
+<a class="jxr_linenumber" name="307" href="#307">307</a>                 String actualKeyword = af.getHostCard().getSVar(s);
+<a class="jxr_linenumber" name="308" href="#308">308</a>                 eff.addIntrinsicKeyword(actualKeyword);
+<a class="jxr_linenumber" name="309" href="#309">309</a>             }
+<a class="jxr_linenumber" name="310" href="#310">310</a>         }
+<a class="jxr_linenumber" name="311" href="#311">311</a> 
+<a class="jxr_linenumber" name="312" href="#312">312</a>         <em class="jxr_comment">//Set Remembered</em>
+<a class="jxr_linenumber" name="313" href="#313">313</a>         <strong class="jxr_keyword">if</strong>(effectRemembered != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="314" href="#314">314</a>             <strong class="jxr_keyword">for</strong>(<a href="../../../forge/Card.html">Card</a> c : AbilityFactory.getDefinedCards(card,effectRemembered,sa))
+<a class="jxr_linenumber" name="315" href="#315">315</a>             {
+<a class="jxr_linenumber" name="316" href="#316">316</a>                 eff.addRemembered(c);
+<a class="jxr_linenumber" name="317" href="#317">317</a>             }
+<a class="jxr_linenumber" name="318" href="#318">318</a>         }
+<a class="jxr_linenumber" name="319" href="#319">319</a> 
+<a class="jxr_linenumber" name="320" href="#320">320</a>         <em class="jxr_comment">// Duration</em>
+<a class="jxr_linenumber" name="321" href="#321">321</a>         String duration = params.get(<span class="jxr_string">"Duration"</span>);
+<a class="jxr_linenumber" name="322" href="#322">322</a>         <strong class="jxr_keyword">if</strong> (duration == <strong class="jxr_keyword">null</strong> || !duration.equals(<span class="jxr_string">"Permanent"</span>)) {
+<a class="jxr_linenumber" name="323" href="#323">323</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> endEffect = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
+<a class="jxr_linenumber" name="324" href="#324">324</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
+<a class="jxr_linenumber" name="325" href="#325">325</a> 
+<a class="jxr_linenumber" name="326" href="#326">326</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
+<a class="jxr_linenumber" name="327" href="#327">327</a>                     AllZone.getGameAction().exile(e);
+<a class="jxr_linenumber" name="328" href="#328">328</a>                 }
+<a class="jxr_linenumber" name="329" href="#329">329</a>             };
+<a class="jxr_linenumber" name="330" href="#330">330</a> 
+<a class="jxr_linenumber" name="331" href="#331">331</a>             <strong class="jxr_keyword">if</strong> (duration == <strong class="jxr_keyword">null</strong> || duration.equals(<span class="jxr_string">"EndOfTurn"</span>))
+<a class="jxr_linenumber" name="332" href="#332">332</a>                 AllZone.getEndOfTurn().addUntil(endEffect);
+<a class="jxr_linenumber" name="333" href="#333">333</a>         }
+<a class="jxr_linenumber" name="334" href="#334">334</a> 
+<a class="jxr_linenumber" name="335" href="#335">335</a>         <em class="jxr_comment">// TODO: Add targeting to the effect so it knows who it's dealing with</em>
+<a class="jxr_linenumber" name="336" href="#336">336</a>         AllZone.getTriggerHandler().suppressMode(<span class="jxr_string">"ChangesZone"</span>);
+<a class="jxr_linenumber" name="337" href="#337">337</a>         AllZone.getGameAction().moveToPlay(eff);
+<a class="jxr_linenumber" name="338" href="#338">338</a>         AllZone.getTriggerHandler().clearSuppression(<span class="jxr_string">"ChangesZone"</span>);
+<a class="jxr_linenumber" name="339" href="#339">339</a>     }
+<a class="jxr_linenumber" name="340" href="#340">340</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

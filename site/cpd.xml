@@ -1,98 +1,337 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <pmd-cpd>
-<duplication lines="330" tokens="1783">
-<file line="419" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
-<file line="433" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
+<duplication lines="553" tokens="2472">
+<file line="55" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="55" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
-            jPanel2.setLayout(new AnchorLayout());
-            jPanel2.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-            jPanel2.setBackground(new java.awt.Color(192, 192, 192));
-            jPanel2.add(getJSeparator2(), new AnchorConstraint(112, 987, 166, 20, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJLabel3(), new AnchorConstraint(-200, 951, -61, -166, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJLabel4(), new AnchorConstraint(-19, 985, 128, 4, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox1(), new AnchorConstraint(877, 948, 948, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox2(), new AnchorConstraint(751, 948, 827, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox3(), new AnchorConstraint(625, 948, 702, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox4(), new AnchorConstraint(505, 948, 581, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox5(), new AnchorConstraint(379, 948, 450, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox6(), new AnchorConstraint(254, 948, 325, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel2.add(getJCheckBox7(), new AnchorConstraint(133, 948, 232, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-        }
-        return jPanel2;
+    public GUI_Quest_Filter(JFrame g, DeckDisplay display) {
+        super(g);
+        deckDisplay = display;
+        initGUI();
     }
 
     /**
-     * <p>Getter for the field <code>jLabel3</code>.</p>
-     *
-     * @return a {@link javax.swing.JLabel} object.
+     * <p>initGUI.</p>
      */
-    private JLabel getJLabel3() {
-        if (jLabel3 == null) {
-            jLabel3 = new JLabel();
-            jLabel3.setText("Color");
-            jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel3.setPreferredSize(new java.awt.Dimension(152, 39));
-            jLabel3.setLayout(null);
+    private void initGUI() {
+        try {
+            this.isResizable();
+            getContentPane().setLayout(new MigLayout("fill"));
+            getContentPane().add(getTopPanel(), "span 3, wrap");
+            getContentPane().add(getColorPanel(), "aligny top, growy");
+            getContentPane().add(getTypePanel(), "aligny top, wrap");
+            getContentPane().add(getBottomPanel(), "align center, span 3");
+            setVisible(true);
+            Dimension screen = getToolkit().getScreenSize();
+            int x = (screen.width - 340) / 2;
+            int y = (screen.height - 500) / 2;
+            this.setBounds(x, y, 340, 500);
+            this.setResizable(true);
+            this.setTitle("Filter");
+
+            setIconImage(null);
+
+            this.addWindowListener(new WListener());
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return jLabel3;
+    }
+
+       private JTextField getNameTextField() {
+        if (nameTextField == null) {
+            nameTextField = new JTextField(30);
+            nameTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return nameTextField;
+    }
+
+    private JLabel getNameLabel() {
+        if (nameLabel == null) {
+            nameLabel = new JLabel();
+            nameLabel.setText("Name:");
+            nameLabel.setFont(new Font("Segoe UI", 0, 16));
+        }
+        return nameLabel;
+    }
+
+    private JPanel getTopPanel() {
+        if (topPanel == null) {
+            topPanel = new JPanel();
+            topPanel.setLayout(new MigLayout());
+            topPanel.add(
+                    getNameLabel(), "gap");
+            topPanel.add(
+                    getNameTextField(), "span 3, wrap");
+            topPanel.add(
+                    getCardTextLabel(), "gap");
+            topPanel.add(
+                    getCardTextField(), "span 3, wrap");
+        }
+
+        return topPanel;
     }
 
     /**
-     * <p>Getter for the field <code>jLabel4</code>.</p>
+     * <p>Getter for the field <code>colorPanel</code>.</p>
      *
-     * @return a {@link javax.swing.JLabel} object.
+     * @return a {@link javax.swing.JPanel} object.
      */
-    private JLabel getJLabel4() {
-        if (jLabel4 == null) {
-            jLabel4 = new JLabel();
-            jLabel4.setText("Type");
-            jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel4.setPreferredSize(new java.awt.Dimension(105, 27));
-            jLabel4.setLayout(null);
+    private JPanel getColorPanel() {
+        if (colorPanel == null) {
+            colorPanel = new JPanel();
+            colorPanel.setLayout(new MigLayout());
+            colorPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            colorPanel.setBackground(new java.awt.Color(192, 192, 192));
+            colorPanel.add(getColorLabel(), "align, wrap");
+            colorPanel.add(getJCheckBoxBlack(), "wrap");
+            colorPanel.add(getJCheckBoxColorless(), "wrap");
+            colorPanel.add(getJCheckBoxWhite(), "wrap");
+            colorPanel.add(getJCheckBoxRed(), "wrap");
+            colorPanel.add(getJCheckBoxGreen(), "wrap");
+            colorPanel.add(getJCheckBoxBlue(), "wrap");
         }
-        return jLabel4;
+        return colorPanel;
+    }
+
+    private JPanel getBottomPanel() {
+        if (bottomPanel == null) {
+            bottomPanel = new JPanel();
+            bottomPanel.setLayout(new MigLayout());
+            bottomPanel.add(getJButtonOk(), "align, span 3, grow");
+        }
+        return bottomPanel;
     }
 
     /**
-     * <p>Getter for the field <code>jSeparator2</code>.</p>
-     *
-     * @return a {@link javax.swing.JSeparator} object.
-     */
-    private JSeparator getJSeparator2() {
-        if (jSeparator2 == null) {
-            jSeparator2 = new JSeparator();
-            jSeparator2.setPreferredSize(new java.awt.Dimension(116, 10));
-            jSeparator2.setLayout(null);
-        }
-        return jSeparator2;
-    }
-
-    /**
-     * <p>getJCheckBox1.</p>
+     * <p>Getter for the field <code>jCheckBoxBlue</code>.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox1() {
+    private JCheckBox getJCheckBoxBlue() {
+        if (jCheckBoxBlue == null) {
+            jCheckBoxBlue = new JCheckBox();
+            jCheckBoxBlue.setText("Blue");
+            jCheckBoxBlue.setSelected(true);
+            jCheckBoxBlue.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxBlue.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxBlue;
+    }
+
+    /**
+     * <p>Getter for the field <code>jCheckBoxGreen</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxGreen() {
+        if (jCheckBoxGreen == null) {
+            jCheckBoxGreen = new JCheckBox();
+            jCheckBoxGreen.setText("Green");
+            jCheckBoxGreen.setSelected(true);
+            jCheckBoxGreen.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxGreen.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxGreen;
+    }
+
+    /**
+     * <p>Getter for the field <code>jCheckBoxRed</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxRed() {
+        if (jCheckBoxRed == null) {
+            jCheckBoxRed = new JCheckBox();
+            jCheckBoxRed.setText("Red");
+            jCheckBoxRed.setSelected(true);
+            jCheckBoxRed.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxRed.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxRed;
+    }
+
+    /**
+     * <p>Getter for the field <code>jCheckBoxWhite</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxWhite() {
+        if (jCheckBoxWhite == null) {
+            jCheckBoxWhite = new JCheckBox();
+            jCheckBoxWhite.setText("White");
+            jCheckBoxWhite.setSelected(true);
+            jCheckBoxWhite.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxWhite.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxWhite;
+    }
+
+    /**
+     * <p>Getter for the field <code>jCheckBoxColorless</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxColorless() {
+        if (jCheckBoxColorless == null) {
+            jCheckBoxColorless = new JCheckBox();
+            jCheckBoxColorless.setText("Colorless");
+            jCheckBoxColorless.setSelected(true);
+            jCheckBoxColorless.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxColorless.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxColorless;
+    }
+
+    /**
+     * <p>Getter for the field <code>jButtonOk</code>.</p>
+     *
+     * @return a {@link javax.swing.JButton} object.
+     */
+    private JButton getJButtonOk() {
+        if (jButtonOk == null) {
+            jButtonOk = new JButton();
+            jButtonOk.setText("OK");
+            jButtonOk.addMouseListener(new CustomListener());
+        }
+        return jButtonOk;
+    }
+
+    /**
+     * <p>Getter for the field <code>jCheckBoxBlack</code>.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxBlack() {
+        if (jCheckBoxBlack == null) {
+            jCheckBoxBlack = new JCheckBox();
+            jCheckBoxBlack.setText("Black");
+            jCheckBoxBlack.setBackground(new java.awt.Color(192, 192, 192));
+            jCheckBoxBlack.setSelected(true);
+            jCheckBoxBlack.addKeyListener(new java.awt.event.KeyAdapter() {
+                @Override
+                public void keyPressed(java.awt.event.KeyEvent e) {
+
+                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
+                        FilterCardTable();
+                    }
+                }
+            });
+        }
+        return jCheckBoxBlack;
+    }
+
+    /**
+     * <p>Getter for the field <code>typePanel</code>.</p>
+     *
+     * @return a {@link javax.swing.JPanel} object.
+     */
+    private JPanel getTypePanel() {
+        if (typePanel == null) {
+            typePanel = new JPanel();
+            typePanel.setLayout(new MigLayout());
+            typePanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
+            typePanel.setBackground(new java.awt.Color(192, 192, 192));
+            typePanel.add(getTypeLabel(), "align, wrap");
+            typePanel.add(getJCheckBoxSorcery(), "wrap");
+            typePanel.add(getJCheckBoxPlaneswalker(), "wrap");
+            typePanel.add(getJCheckBoxLand(), "wrap");
+            typePanel.add(getJCheckBoxInstant(), "wrap");
+            typePanel.add(getJCheckBoxEnchant(), "wrap");
+            typePanel.add(getJCheckBoxCreature(), "wrap");
+            typePanel.add(getJCheckBoxArtifact(), "wrap");
+        }
+        return typePanel;
+    }
+
+    /**
+     * <p>Getter for the field <code>colorLabel</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
+    private JLabel getColorLabel() {
+        if (colorLabel == null) {
+            colorLabel = new JLabel();
+            colorLabel.setText("Color");
+            colorLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        }
+        return colorLabel;
+    }
+
+    /**
+     * <p>Getter for the field <code>typeLabel</code>.</p>
+     *
+     * @return a {@link javax.swing.JLabel} object.
+     */
+    private JLabel getTypeLabel() {
+        if (typeLabel == null) {
+            typeLabel = new JLabel();
+            typeLabel.setText("Type");
+            typeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        }
+        return typeLabel;
+    }
+
+    /**
+     * <p>getJCheckBoxSorcery.</p>
+     *
+     * @return a {@link javax.swing.JCheckBox} object.
+     */
+    private JCheckBox getJCheckBoxSorcery() {
         if (jCheckBoxSorcery == null) {
             jCheckBoxSorcery = new JCheckBox();
-            jCheckBoxSorcery.setLayout(null);
             jCheckBoxSorcery.setText("Sorcery");
             jCheckBoxSorcery.setSelected(true);
             jCheckBoxSorcery.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxSorcery.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxSorcery.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -107,18 +346,16 @@
     }
 
     /**
-     * <p>getJCheckBox2.</p>
+     * <p>getJCheckBoxPlaneswalker.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox2() {
+    private JCheckBox getJCheckBoxPlaneswalker() {
         if (jCheckBoxPlaneswalker == null) {
             jCheckBoxPlaneswalker = new JCheckBox();
-            jCheckBoxPlaneswalker.setLayout(null);
             jCheckBoxPlaneswalker.setText("Planeswalker");
             jCheckBoxPlaneswalker.setSelected(true);
             jCheckBoxPlaneswalker.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxPlaneswalker.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxPlaneswalker.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -133,18 +370,16 @@
     }
 
     /**
-     * <p>getJCheckBox3.</p>
+     * <p>getJCheckBoxLand.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox3() {
+    private JCheckBox getJCheckBoxLand() {
         if (jCheckBoxLand == null) {
             jCheckBoxLand = new JCheckBox();
-            jCheckBoxLand.setLayout(null);
             jCheckBoxLand.setText("Land");
             jCheckBoxLand.setSelected(true);
             jCheckBoxLand.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxLand.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxLand.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -159,18 +394,16 @@
     }
 
     /**
-     * <p>getJCheckBox4.</p>
+     * <p>getJCheckBoxInstant.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox4() {
+    private JCheckBox getJCheckBoxInstant() {
         if (jCheckBoxInstant == null) {
             jCheckBoxInstant = new JCheckBox();
-            jCheckBoxInstant.setLayout(null);
             jCheckBoxInstant.setText("Instant");
             jCheckBoxInstant.setSelected(true);
             jCheckBoxInstant.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxInstant.setPreferredSize(new java.awt.Dimension(93, 14));
             jCheckBoxInstant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -185,18 +418,16 @@
     }
 
     /**
-     * <p>getJCheckBox5.</p>
+     * <p>getJCheckBoxEnchant.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox5() {
+    private JCheckBox getJCheckBoxEnchant() {
         if (jCheckBoxEnchant == null) {
             jCheckBoxEnchant = new JCheckBox();
-            jCheckBoxEnchant.setLayout(null);
             jCheckBoxEnchant.setText("Enchant");
             jCheckBoxEnchant.setSelected(true);
             jCheckBoxEnchant.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxEnchant.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxEnchant.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -211,18 +442,16 @@
     }
 
     /**
-     * <p>getJCheckBox6.</p>
+     * <p>getJCheckBoxCreature.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox6() {
+    private JCheckBox getJCheckBoxCreature() {
         if (jCheckBoxCreature == null) {
             jCheckBoxCreature = new JCheckBox();
-            jCheckBoxCreature.setLayout(null);
             jCheckBoxCreature.setText("Creature");
             jCheckBoxCreature.setSelected(true);
             jCheckBoxCreature.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxCreature.setPreferredSize(new java.awt.Dimension(93, 13));
             jCheckBoxCreature.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -237,18 +466,16 @@
     }
 
     /**
-     * <p>getJCheckBox7.</p>
+     * <p>getJCheckBoxArtifact.</p>
      *
      * @return a {@link javax.swing.JCheckBox} object.
      */
-    private JCheckBox getJCheckBox7() {
+    private JCheckBox getJCheckBoxArtifact() {
         if (jCheckBoxArtifact == null) {
             jCheckBoxArtifact = new JCheckBox();
-            jCheckBoxArtifact.setLayout(null);
             jCheckBoxArtifact.setText("Artifact");
             jCheckBoxArtifact.setSelected(true);
             jCheckBoxArtifact.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxArtifact.setPreferredSize(new java.awt.Dimension(93, 18));
             jCheckBoxArtifact.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
@@ -263,15 +490,14 @@
     }
 
     /**
-     * <p>getJTextField1.</p>
+     * <p>getCardTextField.</p>
      *
      * @return a {@link javax.swing.JTextField} object.
      */
-    private JTextField getJTextField1() {
-        if (cardText == null) {
-            cardText = new JTextField();
-            cardText.setPreferredSize(new java.awt.Dimension(168, 30));
-            cardText.addKeyListener(new java.awt.event.KeyAdapter() {
+    private JTextField getCardTextField() {
+        if (cardTextField == null) {
+            cardTextField = new JTextField(30);
+            cardTextField.addKeyListener(new java.awt.event.KeyAdapter() {
                 @Override
                 public void keyPressed(java.awt.event.KeyEvent e) {
 
@@ -281,24 +507,21 @@
                 }
             });
         }
-        return cardText;
+        return cardTextField;
     }
 
     /**
-     * <p>Getter for the field <code>jLabel5</code>.</p>
+     * <p>Getter for the field <code>cardTextLabel</code>.</p>
      *
      * @return a {@link javax.swing.JLabel} object.
      */
-    private JLabel getJLabel5() {
-        if (jLabel5 == null) {
-            jLabel5 = new JLabel();
-            jLabel5.setText("Card Text:");
-            jLabel5.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16));
-            jLabel5.setPreferredSize(new java.awt.Dimension(75, 50));
-            jLabel5.setLayout(null);
+    private JLabel getCardTextLabel() {
+        if (cardTextLabel == null) {
+            cardTextLabel = new JLabel();
+            cardTextLabel.setText("Card Text:");
+            cardTextLabel.setFont(new java.awt.Font("Segoe UI", 0, 16));
         }
-        return jLabel5;
+        return cardTextLabel;
     }
 
     public class CustomListener implements MouseListener {
@@ -338,694 +561,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="274" tokens="1488">
-<file line="804" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="792" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-                    + " (LEAF weight=0.2 name=humanHand)) "//
-                    + "(COLUMN"//
-                    + " (LEAF weight=0.5 name=detail)"//
-                    + " (LEAF weight=0.5 name=picture)))");
-            pane.setModel(model);
-        }
-        pane.getMultiSplitLayout().setFloatingDividers(false);
-        getContentPane().add(pane);
-
-        //adding the individual parts
-
-        if (!Gui_NewGame.useLAFFonts.isSelected()) initFonts(pane);
-
-        initMsgYesNo(pane);
-        initOpp(pane);
-        initStackCombat(pane);
-        initPlayer(pane);
-        initZones(pane);
-        initCardPicture(pane);
-    }
-
-    /**
-     * <p>initFonts.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initFonts(JPanel pane) {
-        messageArea.setFont(getFont());
-
-        oppLifeLabel.setFont(lifeFont);
-
-        oppPCLabel.setFont(statFont);
-        oppLibraryLabel.setFont(statFont);
-
-        oppHandValue.setFont(statFont);
-        oppLibraryValue.setFont(statFont);
-        oppRemovedValue.setFont(statFont);
-        oppGraveValue.setFont(statFont);
-
-        playerLifeLabel.setFont(lifeFont);
-        playerPCLabel.setFont(statFont);
-
-        playerHandValue.setFont(statFont);
-        playerLibraryValue.setFont(statFont);
-        playerRemovedValue.setFont(statFont);
-        playerGraveValue.setFont(statFont);
-        playerFBValue.setFont(statFont);
-
-        combatArea.setFont(getFont());
-    }
-
-    /**
-     * <p>initMsgYesNo.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initMsgYesNo(JPanel pane) {
-        //messageArea.setBorder(BorderFactory.createEtchedBorder());
-        messageArea.setEditable(false);
-        messageArea.setLineWrap(true);
-        messageArea.setWrapStyleWord(true);
-
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-                okButton.requestFocusInWindow();
-            }
-        });
-        okButton.setText("OK");
-        okButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                okButtonActionPerformed(evt);
-
-                if (AllZone.getPhase().isNeedToNextPhase()) {
-                    // moves to next turn
-                    AllZone.getPhase().setNeedToNextPhase(false);
-                    AllZone.getPhase().nextPhase();
-                }
-                okButton.requestFocusInWindow();
-            }
-        });
-        okButton.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent arg0) {
-                // TODO make triggers on escape
-                int code = arg0.getKeyCode();
-                if (code == KeyEvent.VK_ESCAPE) {
-                    cancelButton.doClick();
-                }
-            }
-        });
-
-        okButton.requestFocusInWindow();
-
-        //if(okButton.isEnabled())
-        //okButton.doClick();
-        JPanel yesNoPanel = new JPanel(new FlowLayout());
-        yesNoPanel.setBorder(new EtchedBorder());
-        yesNoPanel.add(cancelButton);
-        yesNoPanel.add(okButton);
-
-        JPanel panel = new JPanel(new BorderLayout());
-        JScrollPane scroll = new JScrollPane(messageArea);
-        scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        panel.add(scroll);
-        panel.add(yesNoPanel, BorderLayout.SOUTH);
-        pane.add(new ExternalPanel(panel), "info");
-    }
-
-    /**
-     * <p>initOpp.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initOpp(JPanel pane) {
-        //oppLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        //oppPCLabel.setHorizontalAlignment(SwingConstants.TOP);
-        oppPCLabel.setForeground(greenColor);
-
-        JLabel oppHandLabel = new JLabel(ForgeProps.getLocalized(COMPUTER_HAND.BUTTON), SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) oppHandLabel.setFont(statFont);
-
-        JButton oppGraveButton = new JButton(COMPUTER_GRAVEYARD_ACTION);
-        oppGraveButton.setText((String) COMPUTER_GRAVEYARD_ACTION.getValue("buttonText"));
-        oppGraveButton.setMargin(new Insets(0, 0, 0, 0));
-        oppGraveButton.setHorizontalAlignment(SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) oppGraveButton.setFont(statFont);
-
-
-        JPanel gravePanel = new JPanel(new BorderLayout());
-        gravePanel.add(oppGraveButton, BorderLayout.EAST);
-
-        JButton oppRemovedButton = new JButton(COMPUTER_REMOVED_ACTION);
-        oppRemovedButton.setText((String) COMPUTER_REMOVED_ACTION.getValue("buttonText"));
-        oppRemovedButton.setMargin(new Insets(0, 0, 0, 0));
-        //removedButton.setHorizontalAlignment(SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) oppRemovedButton.setFont(statFont);
-
-
-        oppHandValue.setHorizontalAlignment(SwingConstants.LEADING);
-        oppLibraryValue.setHorizontalAlignment(SwingConstants.LEADING);
-        oppGraveValue.setHorizontalAlignment(SwingConstants.LEADING);
-        oppRemovedValue.setHorizontalAlignment(SwingConstants.LEADING);
-
-        JPanel oppNumbersPanel = new JPanel(new GridLayout(0, 2, 3, 1));
-        oppNumbersPanel.add(oppHandLabel);
-        oppNumbersPanel.add(oppHandValue);
-        oppNumbersPanel.add(oppRemovedButton);
-        oppNumbersPanel.add(oppRemovedValue);
-        oppNumbersPanel.add(oppLibraryLabel);
-        oppNumbersPanel.add(oppLibraryValue);
-        oppNumbersPanel.add(gravePanel);
-        oppNumbersPanel.add(oppGraveValue);
-
-        oppLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        JPanel oppIconLifePanel = new JPanel(new GridLayout(0, 1, 0, 0));
-        oppIconLifePanel.add(oppIconLabel);
-        oppIconLifePanel.add(oppLifeLabel);
-
-        JPanel oppPanel = new JPanel();
-        oppPanel.setBorder(new TitledBorder(new EtchedBorder(), ForgeProps.getLocalized(COMPUTER_TITLE)));
-        oppPanel.setLayout(new BorderLayout());
-        oppPanel.add(oppNumbersPanel, BorderLayout.WEST);
-        // oppPanel.add(oppIconLabel, BorderLayout.CENTER);
-        // oppPanel.add(oppLifeLabel, BorderLayout.EAST);
-        oppPanel.add(oppIconLifePanel, BorderLayout.EAST);
-        oppPanel.add(oppPCLabel, BorderLayout.AFTER_LAST_LINE);
-        pane.add(new ExternalPanel(oppPanel), "compy");
-    }
-
-    /**
-     * <p>initStackCombat.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initStackCombat(JPanel pane) {
-        stackPanel.setLayout(new GridLayout(0, 1, 10, 10));
-        JScrollPane stackPane = new JScrollPane(stackPanel);
-        stackPane.setBorder(new EtchedBorder());
-        pane.add(new ExternalPanel(stackPane), "stack");
-
-        combatArea.setEditable(false);
-        combatArea.setLineWrap(true);
-        combatArea.setWrapStyleWord(true);
-
-        JScrollPane combatPane = new JScrollPane(combatArea);
-
-        combatPane.setBorder(new TitledBorder(new EtchedBorder(), ForgeProps.getLocalized(COMBAT)));
-        pane.add(new ExternalPanel(combatPane), "combat");
-    }
-
-    /**
-     * <p>initPlayer.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initPlayer(JPanel pane) {
-        //int fontSize = 12;
-        playerLifeLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
-        playerPCLabel.setForeground(greenColor);
-
-        JLabel playerLibraryLabel = new JLabel(ForgeProps.getLocalized(HUMAN_LIBRARY.BUTTON),
-                SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) playerLibraryLabel.setFont(statFont);
-
-        JLabel playerHandLabel = new JLabel(ForgeProps.getLocalized(HUMAN_HAND.TITLE), SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) playerHandLabel.setFont(statFont);
-
-        //JLabel playerGraveLabel = new JLabel("Grave:", SwingConstants.TRAILING);
-        JButton playerGraveButton = new JButton(HUMAN_GRAVEYARD_ACTION);
-        playerGraveButton.setText((String) HUMAN_GRAVEYARD_ACTION.getValue("buttonText"));
-        playerGraveButton.setMargin(new Insets(0, 0, 0, 0));
-        playerGraveButton.setHorizontalAlignment(SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) playerGraveButton.setFont(statFont);
-
-
-        JButton playerFlashBackButton = new JButton(HUMAN_FLASHBACK_ACTION);
-        playerFlashBackButton.setText((String) HUMAN_FLASHBACK_ACTION.getValue("buttonText"));
-        playerFlashBackButton.setMargin(new Insets(0, 0, 0, 0));
-        playerFlashBackButton.setHorizontalAlignment(SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) playerFlashBackButton.setFont(statFont);
-
-
-        JPanel gravePanel = new JPanel(new BorderLayout());
-        gravePanel.add(playerGraveButton, BorderLayout.EAST);
-
-        JPanel playerFBPanel = new JPanel(new BorderLayout());
-        playerFBPanel.add(playerFlashBackButton, BorderLayout.EAST);
-
-        JButton playerRemovedButton = new JButton(HUMAN_REMOVED_ACTION);
-        playerRemovedButton.setText((String) HUMAN_REMOVED_ACTION.getValue("buttonText"));
-        playerRemovedButton.setMargin(new Insets(0, 0, 0, 0));
-        //removedButton.setHorizontalAlignment(SwingConstants.TRAILING);
-        if (!Gui_NewGame.useLAFFonts.isSelected()) playerRemovedButton.setFont(statFont);
-
-        playerHandValue.setHorizontalAlignment(SwingConstants.LEADING);
-        playerLibraryValue.setHorizontalAlignment(SwingConstants.LEADING);
-        playerGraveValue.setHorizontalAlignment(SwingConstants.LEADING);
-        playerFBValue.setHorizontalAlignment(SwingConstants.LEADING);
-
-        //playerRemovedValue.setFont(new Font("MS Sans Serif", 0, fontSize));
-        playerRemovedValue.setHorizontalAlignment(SwingConstants.LEADING);
-
-        JPanel playerNumbersPanel = new JPanel(new GridLayout(0, 2, 5, 1));
-        playerNumbersPanel.add(playerHandLabel);
-        playerNumbersPanel.add(playerHandValue);
-        playerNumbersPanel.add(playerRemovedButton);
-        playerNumbersPanel.add(playerRemovedValue);
-        playerNumbersPanel.add(playerLibraryLabel);
-        playerNumbersPanel.add(playerLibraryValue);
-        playerNumbersPanel.add(gravePanel);
-        playerNumbersPanel.add(playerGraveValue);
-        playerNumbersPanel.add(playerFBPanel);
-        playerNumbersPanel.add(playerFBValue);
-
-        JPanel playerPanel = new JPanel();
-        playerPanel.setBorder(new TitledBorder(new EtchedBorder(), ForgeProps.getLocalized(HUMAN_TITLE)));
-        playerPanel.setLayout(new BorderLayout());
-        playerPanel.add(playerNumbersPanel, BorderLayout.WEST);
-        playerPanel.add(playerLifeLabel, BorderLayout.EAST);
-        playerPanel.add(playerPCLabel, BorderLayout.AFTER_LAST_LINE);
-        pane.add(new ExternalPanel(playerPanel), "human");
-    }
-
-    /**
-     * <p>initZones.</p>
-     *
-     * @param pane a {@link javax.swing.JPanel} object.
-     */
-    private void initZones(JPanel pane) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="235" tokens="1318">
-<file line="182" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
-<file line="197" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
-<codefragment>
-<![CDATA[
-            jPanel1.setLayout(new AnchorLayout());
-            jPanel1.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-            jPanel1.setBackground(new java.awt.Color(192, 192, 192));
-            jPanel1.add(getJCheckBoxBlack(), new AnchorConstraint(134, 985, 240, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxColorless(), new AnchorConstraint(878, 983, 950, 84,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxWhite(), new AnchorConstraint(726, 987, 798, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxRed(), new AnchorConstraint(577, 987, 654, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxGreen(), new AnchorConstraint(428, 987, 494, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJCheckBoxBlue(), new AnchorConstraint(279, 987, 356, 79, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJSeparator1(), new AnchorConstraint(107, 987, 139, 12, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-            jPanel1.add(getJLabel2(), new AnchorConstraint(-20, 990, 123, 16, AnchorConstraint.ANCHOR_REL,
-                    AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL));
-        }
-        return jPanel1;
-    }
-
-    /**
-     * <p>Getter for the field <code>jLabel2</code>.</p>
-     *
-     * @return a {@link javax.swing.JLabel} object.
-     */
-    private JLabel getJLabel2() {
-        if (jLabel2 == null) {
-            jLabel2 = new JLabel();
-            jLabel2.setText("Color");
-            jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-            jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14));
-            jLabel2.setPreferredSize(new java.awt.Dimension(152, 39));
-            jLabel2.setLayout(null);
-        }
-        return jLabel2;
-    }
-
-    /**
-     * <p>Getter for the field <code>jSeparator1</code>.</p>
-     *
-     * @return a {@link javax.swing.JSeparator} object.
-     */
-    private JSeparator getJSeparator1() {
-        if (jSeparator1 == null) {
-            jSeparator1 = new JSeparator();
-            jSeparator1.setPreferredSize(new java.awt.Dimension(117, 6));
-            jSeparator1.setLayout(null);
-        }
-        return jSeparator1;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxBlue</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxBlue() {
-        if (jCheckBoxBlue == null) {
-            jCheckBoxBlue = new JCheckBox();
-            jCheckBoxBlue.setLayout(null);
-            jCheckBoxBlue.setText("Blue");
-            jCheckBoxBlue.setPreferredSize(new java.awt.Dimension(109, 14));
-            jCheckBoxBlue.setSelected(true);
-            jCheckBoxBlue.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxBlue.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxBlue;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxGreen</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxGreen() {
-        if (jCheckBoxGreen == null) {
-            jCheckBoxGreen = new JCheckBox();
-            jCheckBoxGreen.setLayout(null);
-            jCheckBoxGreen.setText("Green");
-            jCheckBoxGreen.setPreferredSize(new java.awt.Dimension(109, 12));
-            jCheckBoxGreen.setSelected(true);
-            jCheckBoxGreen.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxGreen.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxGreen;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxRed</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxRed() {
-        if (jCheckBoxRed == null) {
-            jCheckBoxRed = new JCheckBox();
-            jCheckBoxRed.setLayout(null);
-            jCheckBoxRed.setText("Red");
-            jCheckBoxRed.setPreferredSize(new java.awt.Dimension(109, 14));
-            jCheckBoxRed.setSelected(true);
-            jCheckBoxRed.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxRed.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxRed;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxWhite</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxWhite() {
-        if (jCheckBoxWhite == null) {
-            jCheckBoxWhite = new JCheckBox();
-            jCheckBoxWhite.setLayout(null);
-            jCheckBoxWhite.setText("White");
-            jCheckBoxWhite.setPreferredSize(new java.awt.Dimension(109, 13));
-            jCheckBoxWhite.setSelected(true);
-            jCheckBoxWhite.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxWhite.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxWhite;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxColorless</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxColorless() {
-        if (jCheckBoxColorless == null) {
-            jCheckBoxColorless = new JCheckBox();
-            jCheckBoxColorless.setLayout(null);
-            jCheckBoxColorless.setText("Colorless");
-            jCheckBoxColorless.setPreferredSize(new java.awt.Dimension(80, 15));
-            jCheckBoxColorless.setSelected(true);
-            jCheckBoxColorless.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxColorless.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxColorless;
-    }
-
-    /**
-     * <p>Getter for the field <code>jButtonOk</code>.</p>
-     *
-     * @return a {@link javax.swing.JButton} object.
-     */
-    private JButton getJButtonOk() {
-        if (jButtonOk == null) {
-            jButtonOk = new JButton();
-            jButtonOk.setLayout(null);
-            jButtonOk.setText("OK");
-            jButtonOk.setPreferredSize(new java.awt.Dimension(100, 25));
-            jButtonOk.addMouseListener(new CustomListener());
-        }
-        return jButtonOk;
-    }
-
-    /**
-     * <p>Getter for the field <code>jCheckBoxBlack</code>.</p>
-     *
-     * @return a {@link javax.swing.JCheckBox} object.
-     */
-    private JCheckBox getJCheckBoxBlack() {
-        if (jCheckBoxBlack == null) {
-            jCheckBoxBlack = new JCheckBox();
-            jCheckBoxBlack.setLayout(null);
-            jCheckBoxBlack.setText("Black");
-            jCheckBoxBlack.setPreferredSize(new java.awt.Dimension(97, 20));
-            jCheckBoxBlack.setBackground(new java.awt.Color(192, 192, 192));
-            jCheckBoxBlack.setSelected(true);
-            jCheckBoxBlack.addKeyListener(new java.awt.event.KeyAdapter() {
-                @Override
-                public void keyPressed(java.awt.event.KeyEvent e) {
-
-                    if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                        FilterCardTable();
-                    }
-                }
-            });
-        }
-        return jCheckBoxBlack;
-    }
-
-    /**
-     * <p>Getter for the field <code>jPanel2</code>.</p>
-     *
-     * @return a {@link javax.swing.JPanel} object.
-     */
-    private JPanel getJPanel2() {
-        if (jPanel2 == null) {
-            jPanel2 = new JPanel();
-]]>
-</codefragment>
-</duplication>
-<duplication lines="152" tokens="894">
-<file line="518" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="511" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-                    inputControl.selectCard(c, AllZone.getComputerBattlefield());
-                }
-            }
-        });
-
-
-    }//addListener()
-
-    /**
-     * <p>getCard.</p>
-     *
-     * @return a {@link forge.Card} object.
-     */
-    public Card getCard() {
-        return detail.getCard();
-    }
-
-    /** {@inheritDoc} */
-    public void setCard(Card card) {
-        detail.setCard(card);
-        picture.setCard(card);
-    }
-
-    /**
-     * <p>addObservers.</p>
-     */
-    private void addObservers() {
-        //Human Hand, Graveyard, and Library totals
-        {//make sure to not interfer with anything below, since this is a very long method
-            Observer o = new Observer() {
-                public void update(Observable a, Object b) {
-                    playerHandValue.setText("" + AllZone.getHumanHand().size());
-                    playerGraveValue.setText("" + AllZone.getHumanGraveyard().size());
-                    playerLibraryValue.setText("" + AllZone.getHumanLibrary().size());
-                    playerFBValue.setText("" + CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).size());
-                    playerRemovedValue.setText("" + AllZone.getHumanExile().size());
-
-                }
-            };
-            AllZone.getHumanHand().addObserver(o);
-            AllZone.getHumanGraveyard().addObserver(o);
-            AllZone.getHumanLibrary().addObserver(o);
-        }
-
-        //opponent Hand, Graveyard, and Library totals
-        {//make sure to not interfer with anything below, since this is a very long method
-            Observer o = new Observer() {
-                public void update(Observable a, Object b) {
-                    oppHandValue.setText("" + AllZone.getComputerHand().size());
-                    oppGraveValue.setText("" + AllZone.getComputerGraveyard().size());
-                    oppLibraryValue.setText("" + AllZone.getComputerLibrary().size());
-                    oppRemovedValue.setText("" + AllZone.getComputerExile().size());
-                }
-            };
-            AllZone.getComputerHand().addObserver(o);
-            AllZone.getComputerGraveyard().addObserver(o);
-            AllZone.getComputerLibrary().addObserver(o);
-        }
-
-
-        //opponent life
-        oppLifeLabel.setText("" + AllZone.getComputerPlayer().getLife());
-        AllZone.getComputerPlayer().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                int life = AllZone.getComputerPlayer().getLife();
-                oppLifeLabel.setText("" + life);
-            }
-        });
-        AllZone.getComputerPlayer().updateObservers();
-
-        if (AllZone.getQuestData() != null) {
-            File base = ForgeProps.getFile(IMAGE_ICON);
-            String iconName = "";
-            if (Constant.Quest.oppIconName[0] != null) {
-                iconName = Constant.Quest.oppIconName[0];
-                File file = new File(base, iconName);
-                ImageIcon icon = new ImageIcon(file.toString());
-                oppIconLabel.setIcon(icon);
-                oppIconLabel.setAlignmentX(100);
-
-            }
-        }
-
-        oppPCLabel.setText("Poison Counters: " + AllZone.getComputerPlayer().getPoisonCounters());
-        AllZone.getComputerPlayer().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                int pcs = AllZone.getComputerPlayer().getPoisonCounters();
-                oppPCLabel.setText("Poison Counters: " + pcs);
-            }
-        });
-        AllZone.getComputerPlayer().updateObservers();
-
-        //player life
-        playerLifeLabel.setText("" + AllZone.getHumanPlayer().getLife());
-        AllZone.getHumanPlayer().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                int life = AllZone.getHumanPlayer().getLife();
-                playerLifeLabel.setText("" + life);
-            }
-        });
-        AllZone.getHumanPlayer().updateObservers();
-
-        playerPCLabel.setText("Poison Counters: " + AllZone.getHumanPlayer().getPoisonCounters());
-        AllZone.getHumanPlayer().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                int pcs = AllZone.getHumanPlayer().getPoisonCounters();
-                playerPCLabel.setText("Poison Counters: " + pcs);
-            }
-        });
-        AllZone.getHumanPlayer().updateObservers();
-
-        //stack
-        AllZone.getStack().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                stackPanel.removeAll();
-                MagicStack stack = AllZone.getStack();
-                int count = 1;
-                JLabel label;
-
-                for (int i = stack.size() - 1; 0 <= i; i--) {
-                    label = new JLabel("" + (count++) + ". " + stack.peekInstance(i).getStackDescription());
-
-                    //update card detail
-                    final CardPanel cardPanel = new CardPanel(stack.peekInstance(i).getSourceCard());
-                    cardPanel.setLayout(new BorderLayout());
-                    cardPanel.add(label);
-                    cardPanel.addMouseMotionListener(new MouseMotionAdapter() {
-
-                        @Override
-                        public void mouseMoved(MouseEvent me) {
-                            setCard(cardPanel.getCard());
-                        }//mouseMoved
-                    });
-
-                    stackPanel.add(cardPanel);
-                }
-
-                stackPanel.revalidate();
-                stackPanel.repaint();
-
-                okButton.requestFocusInWindow();
-
-            }
-        });
-        AllZone.getStack().updateObservers();
-        //END, stack
-
-
-        //self hand
-        AllZone.getHumanHand().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                PlayerZone pZone = (PlayerZone) a;
-]]>
-</codefragment>
-</duplication>
 <duplication lines="73" tokens="809">
-<file line="1682" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<file line="1821" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1686" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1825" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
                     if (k[2].equals("Less")) {
@@ -1101,123 +639,6 @@
 
                             String[] Numbers = new String[Max];
                             if (!"WUGRB".contains(k[3])) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="109" tokens="634">
-<file line="102" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="104" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        new Gui_MultipleBlockers4(attacker, blockers, damage, this);
-    }
-
-    /**
-     * <p>setupActions.</p>
-     */
-    private void setupActions() {
-        HUMAN_GRAVEYARD_ACTION = new ZoneAction(AllZone.getHumanGraveyard(), HUMAN_GRAVEYARD);
-        HUMAN_REMOVED_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_REMOVED);
-        HUMAN_FLASHBACK_ACTION = new ZoneAction(AllZone.getHumanExile(), HUMAN_FLASHBACK) {
-
-            private static final long serialVersionUID = 8120331222693706164L;
-
-            @Override
-            protected Card[] getCards() {
-                return CardFactoryUtil.getGraveyardActivationCards(AllZone.getHumanPlayer()).toArray();
-            }
-
-            @Override
-            protected void doAction(Card c) {
-                if (!c.isLand()) {
-                    SpellAbility[] sa = c.getSpellAbility();
-                    sa[1].setActivatingPlayer(AllZone.getHumanPlayer());
-                    if (sa[1].canPlay() && !c.isUnCastable()) AllZone.getGameAction().playSpellAbility(sa[1]);
-                } else    // PlayLand checks if the land can be played
-                    AllZone.getHumanPlayer().playLand(c);
-            }
-        };
-        COMPUTER_GRAVEYARD_ACTION = new ZoneAction(AllZone.getComputerGraveyard(), COMPUTER_GRAVEYARD);
-        COMPUTER_REMOVED_ACTION = new ZoneAction(AllZone.getComputerExile(), COMPUTER_REMOVED);
-        CONCEDE_ACTION = new ConcedeAction();
-    }
-
-    /**
-     * <p>addMenu.</p>
-     */
-    private void addMenu() {
-        // Game Menu Creation
-        Object[] obj = {
-                HUMAN_GRAVEYARD_ACTION, HUMAN_REMOVED_ACTION, HUMAN_FLASHBACK_ACTION, COMPUTER_GRAVEYARD_ACTION,
-                COMPUTER_REMOVED_ACTION, new JSeparator(),
-                playsoundCheckboxForMenu, new JSeparator(), ErrorViewer.ALL_THREADS_ACTION,
-                CONCEDE_ACTION};
-
-        JMenu gameMenu = new JMenu(ForgeProps.getLocalized(MENU_BAR.MENU.TITLE));
-        for (Object o : obj) {
-            if (o instanceof ForgeAction) gameMenu.add(((ForgeAction) o).setupButton(new JMenuItem()));
-            else if (o instanceof Action) gameMenu.add((Action) o);
-            else if (o instanceof Component) gameMenu.add((Component) o);
-            else throw new AssertionError();
-        }
-
-        // Phase Menu Creation
-        JMenu gamePhases = new JMenu(ForgeProps.getLocalized(MENU_BAR.PHASE.TITLE));
-
-        JMenuItem aiLabel = new JMenuItem("Computer");
-        JMenuItem humanLabel = new JMenuItem("Human");
-
-        Component[] objPhases = {aiLabel, cbAIUpkeep, cbAIDraw, cbAIBeginCombat,
-                cbAIEndCombat, cbAIEndOfTurn, new JSeparator(),
-                humanLabel, cbHumanUpkeep, cbHumanDraw, cbHumanBeginCombat,
-                cbHumanEndCombat, cbHumanEndOfTurn};
-
-        for (Component cmp : objPhases) {
-            gamePhases.add(cmp);
-        }
-
-        // Dev Mode Creation
-        JMenu devMenu = new JMenu(ForgeProps.getLocalized(MENU_BAR.DEV.TITLE));
-
-        devMenu.setEnabled(Constant.Runtime.DevMode[0]);
-
-        if (Constant.Runtime.DevMode[0]) {
-            canLoseByDecking.setSelected(Constant.Runtime.Mill[0]);
-
-            Action viewAIHand = new ZoneAction(AllZone.getComputerHand(), COMPUTER_HAND.BASE);
-            Action viewAILibrary = new ZoneAction(AllZone.getComputerLibrary(), COMPUTER_LIBRARY.BASE);
-            Action viewHumanLibrary = new ZoneAction(AllZone.getHumanLibrary(), HUMAN_LIBRARY.BASE);
-            ForgeAction generateMana = new ForgeAction(MANAGEN) {
-                private static final long serialVersionUID = 7171104690016706405L;
-
-                public void actionPerformed(ActionEvent arg0) {
-                    GuiDisplayUtil.devModeGenerateMana();
-                }
-            };
-
-            // + Battlefield setup +
-            ForgeAction setupBattleField = new ForgeAction(SETUPBATTLEFIELD) {
-                private static final long serialVersionUID = -6660930759092583160L;
-
-                public void actionPerformed(ActionEvent arg0) {
-                    GuiDisplayUtil.devSetupGameState();
-                }
-            };
-            // - Battlefield setup -
-
-            //DevMode Tutor
-            ForgeAction tutor = new ForgeAction(TUTOR) {
-                private static final long serialVersionUID = 2003222642609217705L;
-
-                public void actionPerformed(ActionEvent arg0) {
-                    GuiDisplayUtil.devModeTutor();
-                }
-            };
-            //end DevMode Tutor
-            
-            //DevMode AddCounter
-            ForgeAction addCounter = new ForgeAction(ADDCOUNTER) {
-				private static final long serialVersionUID = 3136264111882855268L;
 ]]>
 </codefragment>
 </duplication>
@@ -1319,8 +740,8 @@
 </codefragment>
 </duplication>
 <duplication lines="79" tokens="523">
-<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="267" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="292" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- DL");
@@ -1405,9 +826,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="80" tokens="519">
-<file line="825" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
-<file line="810" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
+<duplication lines="77" tokens="519">
+<file line="681" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="655" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
 <codefragment>
 <![CDATA[
                         deckDisplay.updateDisplay(g.stCardList, deckDisplay.getBottom());
@@ -1484,18 +905,15 @@
             }
 
         }
-
         dispose();
-
     }
-
 }
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="122" tokens="516">
-<file line="1022" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="877" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="1018" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="873" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             Gui_Quest_DeckEditor g = Gui_Quest_DeckEditor.this;
@@ -1767,230 +1185,14 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="92" tokens="486">
-<file line="1099" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="1093" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        picturePanel.setCardPanel(picture);
-    }
-
-    /**
-     * <p>cancelButtonActionPerformed.</p>
-     *
-     * @param evt a {@link java.awt.event.ActionEvent} object.
-     */
-    private void cancelButtonActionPerformed(ActionEvent evt) {
-        inputControl.selectButtonCancel();
-    }
-
-    /**
-     * <p>okButtonActionPerformed.</p>
-     *
-     * @param evt a {@link java.awt.event.ActionEvent} object.
-     */
-    private void okButtonActionPerformed(ActionEvent evt) {
-        inputControl.selectButtonOK();
-    }
-
-    /**
-     * Exit the Application
-     */
-    private void concede() {
-        savePrefs();
-        dispose();
-        Constant.Runtime.matchState.addLose();
-        if (!Constant.Quest.fantasyQuest[0])
-            new Gui_WinLose();
-        else {
-            //new Gui_WinLose(Constant.Quest.humanList[0], Constant.Quest.computerList[0],Constant.Quest.humanLife[0], Constant.Quest.computerLife[0]);
-            CardList humanList = forge.quest.data.QuestUtil.getHumanPlantAndPet(AllZone.getQuestData(), AllZone.getQuestAssignment());
-            CardList computerList = forge.quest.data.QuestUtil.getComputerCreatures(AllZone.getQuestData(), AllZone.getQuestAssignment());
-
-            int humanLife = AllZone.getQuestData().getLife();
-            int computerLife = 20;
-
-            if (AllZone.getQuestAssignment() != null)
-                computerLife = AllZone.getQuestAssignment().getComputerLife();
-            new Gui_WinLose(humanList, computerList, humanLife, computerLife);
-        }
-    }
-
-    // ********** Phase stuff in Display ******************
-    /** {@inheritDoc} */
-    public boolean stopAtPhase(Player turn, String phase) {
-        if (turn.isComputer()) {
-            if (phase.equals(Constant.Phase.End_Of_Turn))
-                return cbAIEndOfTurn.isSelected();
-            else if (phase.equals(Constant.Phase.Upkeep))
-                return cbAIUpkeep.isSelected();
-            else if (phase.equals(Constant.Phase.Draw))
-                return cbAIDraw.isSelected();
-            else if (phase.equals(Constant.Phase.Combat_Begin))
-                return cbAIBeginCombat.isSelected();
-            else if (phase.equals(Constant.Phase.Combat_End))
-                return cbAIEndCombat.isSelected();
-        } else {
-            if (phase.equals(Constant.Phase.End_Of_Turn))
-                return cbHumanEndOfTurn.isSelected();
-            else if (phase.equals(Constant.Phase.Upkeep))
-                return cbHumanUpkeep.isSelected();
-            else if (phase.equals(Constant.Phase.Draw))
-                return cbHumanDraw.isSelected();
-            else if (phase.equals(Constant.Phase.Combat_Begin))
-                return cbHumanBeginCombat.isSelected();
-            else if (phase.equals(Constant.Phase.Combat_End))
-                return cbHumanEndCombat.isSelected();
-        }
-        return true;
-    }
-
-    /**
-     * <p>loadPrefs.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean loadPrefs() {
-        ForgePreferences fp = Gui_NewGame.preferences;
-
-        cbAIUpkeep.setSelected(fp.bAIUpkeep);
-        cbAIDraw.setSelected(fp.bAIDraw);
-        cbAIEndOfTurn.setSelected(fp.bAIEOT);
-        cbAIBeginCombat.setSelected(fp.bAIBeginCombat);
-        cbAIEndCombat.setSelected(fp.bAIEndCombat);
-
-        cbHumanUpkeep.setSelected(fp.bHumanUpkeep);
-        cbHumanDraw.setSelected(fp.bHumanDraw);
-        cbHumanEndOfTurn.setSelected(fp.bHumanEOT);
-        cbHumanBeginCombat.setSelected(fp.bHumanBeginCombat);
-        cbHumanEndCombat.setSelected(fp.bHumanEndCombat);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="108" tokens="486">
-<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        return canLoseByDecking.isSelected();
-    }
-
-    /**
-     * <p>getButtonOK.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonOK() {
-        MyButton ok = new MyButton() {
-            public void select() {
-                inputControl.selectButtonOK();
-            }
-
-            public boolean isSelectable() {
-                return okButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                okButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return okButton.getText();
-            }
-
-            public void setText(String text) {
-                okButton.setText(text);
-            }
-
-            public void reset() {
-                okButton.setText("OK");
-            }
-        };
-
-        return ok;
-    }//getButtonOK()
-
-    /**
-     * <p>getButtonCancel.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonCancel() {
-        MyButton cancel = new MyButton() {
-            public void select() {
-                inputControl.selectButtonCancel();
-            }
-
-            public boolean isSelectable() {
-                return cancelButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                cancelButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return cancelButton.getText();
-            }
-
-            public void setText(String text) {
-                cancelButton.setText(text);
-            }
-
-            public void reset() {
-                cancelButton.setText("Cancel");
-            }
-        };
-        return cancel;
-    }//getButtonCancel()
-
-    /** {@inheritDoc} */
-    public void showCombat(String message) {
-        combatArea.setText(message);
-    }
-
-    /** {@inheritDoc} */
-    public void showMessage(String s) {
-        messageArea.setText(s);
-
-        Border border = null;
-        int thickness = 3;
-
-        if (AllZone.getStack().size() > 0 && AllZone.getStack().peekInstance().getActivatingPlayer().isComputer())
-            border = BorderFactory.createLineBorder(new Color(0, 255, 255), thickness);
-        else if (s.contains("Main"))
-            border = BorderFactory.createLineBorder(new Color(30, 0, 255), thickness);
-        else if (s.contains("To Block"))
-            border = BorderFactory.createLineBorder(new Color(13, 179, 0), thickness);
-        else if (s.contains("Play Instants and Abilities") || s.contains("Combat") || s.contains("Damage"))
-            border = BorderFactory.createLineBorder(new Color(255, 174, 0), thickness);
-        else if (s.contains("Declare Attackers"))
-            border = BorderFactory.createLineBorder(new Color(255, 0, 0), thickness);
-        else if (s.contains("Upkeep") || s.contains("Draw") || s.contains("End of Turn"))
-            border = BorderFactory.createLineBorder(new Color(200, 0, 170), thickness);
-        else
-            border = new EmptyBorder(1, 1, 1, 1);
-
-        messageArea.setBorder(border);
-    }
-
-    /**
-     * <p>addListeners.</p>
-     */
-    private void addListeners() {
-        //mouse Card Detail
-        playerHandPanel.addMouseMotionListener(new MouseMotionAdapter() {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="52" tokens="450">
-<file line="336" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="731" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="337" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="735" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
 <codefragment>
 <![CDATA[
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
-        Hashtable<String, String> svars = host.getSVars();
+        Map<String, String> svars = host.getSVars();
 
         //AF specific params
         int power = -1;
@@ -2043,79 +1245,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="62" tokens="444">
-<file line="84" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
-<file line="81" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java"/>
-<codefragment>
-<![CDATA[
-            getContentPane().setLayout(new AnchorLayout());
-            {
-                NameText = new JTextField();
-                getContentPane().add(
-                        getJPanel2(),
-                        new AnchorConstraint(293, 972, 837, 534, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJButtonOk(),
-                        new AnchorConstraint(873, 638, 965, 384, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJPanel1(),
-                        new AnchorConstraint(293, 483, 837, 45, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        NameText,
-                        new AnchorConstraint(38, 969, 126, 362, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                NameText.setPreferredSize(new java.awt.Dimension(148, 24));
-                NameText.addKeyListener(new java.awt.event.KeyAdapter() {
-                    @Override
-                    public void keyPressed(java.awt.event.KeyEvent e) {
-
-                        if (e.getKeyCode() == java.awt.event.KeyEvent.VK_ENTER) {
-                            FilterCardTable();
-                        }
-                    }
-                });
-            }
-            {
-                jLabel1 = new JLabel();
-                getContentPane().add(
-                        jLabel1,
-                        new AnchorConstraint(4, 313, 153, 41, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJTextField1(),
-                        new AnchorConstraint(159, 969, 248, 360, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                getContentPane().add(
-                        getJLabel5(),
-                        new AnchorConstraint(126, 313, 275, 41, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL, AnchorConstraint.ANCHOR_REL,
-                                AnchorConstraint.ANCHOR_REL));
-                jLabel1.setText("Name:");
-                jLabel1.setPreferredSize(new java.awt.Dimension(75, 50));
-                jLabel1.setLayout(null);
-                jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16));
-                jLabel1.setHorizontalAlignment(SwingConstants.CENTER);
-            }
-            setVisible(true);
-            this.setPreferredSize(new java.awt.Dimension(280, 300));
-
-            Dimension screen = getToolkit().getScreenSize();
-            int x = (screen.width - 280) / 2;
-]]>
-</codefragment>
-</duplication>
 <duplication lines="129" tokens="434">
-<file line="382" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="231" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="378" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="227" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
     }
@@ -2247,68 +1379,6 @@
     public void show(final Command exitCommand) {
         final Command exit = new Command() {
             private static final long serialVersionUID = -7428793574300520612L;
-]]>
-</codefragment>
-</duplication>
-<duplication lines="54" tokens="428">
-<file line="92" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData_Prefs.java"/>
-<file line="114" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/quest/data/QuestPreferences.java"/>
-<codefragment>
-<![CDATA[
-                else if (split[0].equals("winsForHardAI"))
-                    setWinsForHardAI(split[1]);
-                else if (split[0].equals("startingBasicLand"))
-                    setStartingBasic(split[1]);
-                else if (split[0].equals("startingSnowBasicLand"))
-                    setStartingSnowBasic(split[1]);
-                else if (split[0].equals("startingCommons"))
-                    setStartingCommons(split[1]);
-                else if (split[0].equals("startingUncommons"))
-                    setStartingUncommons(split[1]);
-                else if (split[0].equals("startingRares"))
-                    setStartingRares(split[1]);
-                else if (split[0].equals("startingCredits"))
-                    setStartingCredits(split[1]);
-                else if (split[0].equals("boosterPackCommon"))
-                    setNumCommon(split[1]);
-                else if (split[0].equals("boosterPackUncommon"))
-                    setNumUncommon(split[1]);
-                else if (split[0].equals("boosterPackRare"))
-                    setNumRares(split[1]);
-                else if (split[0].equals("matchRewardBase"))
-                    setMatchRewardBase(split[1]);
-                else if (split[0].equals("matchRewardTotalWins"))
-                    setMatchRewardTotalWins(split[1]);
-                else if (split[0].equals("matchRewardNoLosses"))
-                    setMatchRewardNoLosses(split[1]);
-                else if (split[0].equals("matchRewardMilledWinBonus"))
-                    setMatchRewardMilledWinBonus(split[1]);
-                else if (split[0].equals("matchRewardPoisonWinBonus"))
-                    setMatchRewardPoisonWinBonus(split[1]);
-                else if (split[0].equals("matchRewardAltWinBonus"))
-                    setMatchRewardAltWinBonus(split[1]);
-                else if (split[0].equals("matchRewardWinOnFirstTurn"))
-                    setMatchRewardWinFirst(split[1]);
-                else if (split[0].equals("matchRewardWinByTurnFive"))
-                    setMatchRewardWinByFifth(split[1]);
-                else if (split[0].equals("matchRewardWinByTurnTen"))
-                    setMatchRewardWinByTen(split[1]);
-                else if (split[0].equals("matchRewardWinByTurnFifteen"))
-                    setMatchRewardWinByFifteen(split[1]);
-                else if (split[0].equals("matchRewardMullToZero"))
-                    setMatchMullToZero(split[1]);
-            }
-        } catch (Exception e) {
-            System.out.println("Trouble grabbing quest data preferences. Using default values.");
-        }
-    }
-
-    /**
-     * <p>getDifficulty.</p>
-     *
-     * @return an array of {@link java.lang.String} objects.
-     */
-    public static String[] getDifficulty() {
 ]]>
 </codefragment>
 </duplication>
@@ -2487,87 +1557,6 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="73" tokens="316">
-<file line="72" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="76" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
-<codefragment>
-<![CDATA[
-    public Gui_MultipleBlockers4() {
-        try {
-            jbInit();
-        } catch (Exception ex) {
-            ErrorViewer.showError(ex);
-        }
-        //    setSize(470, 280);
-        //    show();
-    }
-
-    /**
-     * <p>jbInit.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
-    private void jbInit() throws Exception {
-        this.getContentPane().setLayout(borderLayout1);
-        this.setTitle("Multiple Blockers");
-        mainPanel.setLayout(null);
-        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        numberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-        numberLabel.setText("Assign");
-        numberLabel.setBounds(new Rectangle(52, 30, 343, 24));
-        jPanel3.setLayout(borderLayout3);
-        jPanel3.setBounds(new Rectangle(26, 75, 399, 114));
-        creaturePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                creaturePanel_mousePressed(e);
-            }
-        });
-        creaturePanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                creaturePanel_mouseMoved(e);
-            }
-        });
-        mainPanel.add(jPanel3, null);
-        jPanel3.add(jScrollPane1, BorderLayout.CENTER);
-        mainPanel.add(numberLabel, null);
-        jScrollPane1.getViewport().add(creaturePanel, null);
-        this.getContentPane().add(mainPanel, BorderLayout.CENTER);
-    }
-
-    /**
-     * <p>okButton_actionPerformed.</p>
-     *
-     * @param e a {@link java.awt.event.ActionEvent} object.
-     */
-    void okButton_actionPerformed(ActionEvent e) {
-        dispose();
-    }
-
-    /**
-     * <p>creaturePanel_mousePressed.</p>
-     *
-     * @param e a {@link java.awt.event.MouseEvent} object.
-     */
-    void creaturePanel_mousePressed(MouseEvent e) {
-        Object o = creaturePanel.getComponentAt(e.getPoint());
-        if (o instanceof CardPanel) {
-
-            boolean assignedDamage = true;
-
-            CardContainer cardPanel = (CardContainer) o;
-            Card c = cardPanel.getCard();
-            //c.setAssignedDamage(c.getAssignedDamage() + 1);
-            CardList cl = new CardList();
-            cl.add(att);
-
-            boolean assignedLethalDamageToAllBlockers = true;
-            for (Card crd : blockers) {
-                if (crd.getLethalDamage() > 0
-]]>
-</codefragment>
-</duplication>
 <duplication lines="119" tokens="299">
 <file line="95" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardShopTableModel.java"/>
 <file line="107" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/TableModel.java"/>
@@ -2696,8 +1685,8 @@
 </codefragment>
 </duplication>
 <duplication lines="40" tokens="295">
-<file line="182" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
-<file line="278" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
+<file line="161" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
+<file line="257" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_ImportPicture.java"/>
 <codefragment>
 <![CDATA[
                         if (jCheckBox.isSelected()) {
@@ -2743,61 +1732,9 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="44" tokens="288">
-<file line="396" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="792" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<codefragment>
-<![CDATA[
-        for (final Card c : list) {
-            final ArrayList<String> originalTypes = c.getType();
-            final int origPower = c.getBaseAttack();
-            final int origToughness = c.getBaseDefense();
-
-            final long timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
-
-            //give abilities
-            final ArrayList<SpellAbility> addedAbilities = new ArrayList<SpellAbility>();
-            if (abilities.size() > 0) {
-                for (String s : abilities) {
-                    AbilityFactory newAF = new AbilityFactory();
-                    String actualAbility = host.getSVar(s);
-                    SpellAbility grantedAbility = newAF.getAbility(actualAbility, c);
-                    addedAbilities.add(grantedAbility);
-                    c.addSpellAbility(grantedAbility);
-                }
-            }
-
-            //Grant triggers
-            final ArrayList<Trigger> addedTriggers = new ArrayList<Trigger>();
-            if (triggers.size() > 0) {
-                for (String s : triggers) {
-                    String actualTrigger = host.getSVar(s);
-                    Trigger parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
-                    addedTriggers.add(c.addTrigger(parsedTrigger));
-                    AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
-                }
-            }
-
-            final Command unanimate = new Command() {
-                private static final long serialVersionUID = -5861759814760561373L;
-
-                public void execute() {
-                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
-                }
-            };
-
-            if (!permanent) {
-                if (params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(unanimate);
-                else AllZone.getEndOfTurn().addUntil(unanimate);
-            }
-        }
-    }//animateAllResolve
-]]>
-</codefragment>
-</duplication>
 <duplication lines="65" tokens="282">
-<file line="459" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
-<file line="643" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="440" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="624" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
                 if (startANewStack) {
@@ -2868,9 +1805,58 @@
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="41" tokens="275">
+<file line="397" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="796" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<codefragment>
+<![CDATA[
+        for (final Card c : list) {
+            final ArrayList<String> originalTypes = c.getType();
+            final int origPower = c.getBaseAttack();
+            final int origToughness = c.getBaseDefense();
+
+            final long timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
+
+            //give abilities
+            final ArrayList<SpellAbility> addedAbilities = new ArrayList<SpellAbility>();
+            if (abilities.size() > 0) {
+                for (String s : abilities) {
+                    AbilityFactory newAF = new AbilityFactory();
+                    String actualAbility = host.getSVar(s);
+                    SpellAbility grantedAbility = newAF.getAbility(actualAbility, c);
+                    addedAbilities.add(grantedAbility);
+                    c.addSpellAbility(grantedAbility);
+                }
+            }
+
+            //Grant triggers
+            final ArrayList<Trigger> addedTriggers = new ArrayList<Trigger>();
+            if (triggers.size() > 0) {
+                for (String s : triggers) {
+                    String actualTrigger = host.getSVar(s);
+                    Trigger parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
+                    addedTriggers.add(c.addTrigger(parsedTrigger));
+                    AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
+                }
+            }
+
+            final Command unanimate = new Command() {
+                private static final long serialVersionUID = -5861759814760561373L;
+
+                public void execute() {
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                }
+            };
+
+            if (!permanent) {
+                if (params.containsKey("UntilEndOfCombat")) AllZone.getEndOfCombat().addUntil(unanimate);
+                else AllZone.getEndOfTurn().addUntil(unanimate);
+]]>
+</codefragment>
+</duplication>
 <duplication lines="68" tokens="275">
-<file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="548" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="348" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="544" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         gPBW.dispose();
@@ -3043,8 +2029,8 @@
 </codefragment>
 </duplication>
 <duplication lines="61" tokens="266">
-<file line="351" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="421" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="347" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="417" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         topModel.sort(3, true);//then sort by color
@@ -3108,71 +2094,6 @@
                 Image i = ImageCache.getOriginalImage(c);
                 if (i == null) return;
                 if (i.getWidth(null) < 200) return;
-]]>
-</codefragment>
-</duplication>
-<duplication lines="57" tokens="263">
-<file line="141" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="161" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-            c.setRarity(c.getSVar("Rarity"));
-
-            //String PC = c.getSVar("PicCount");
-            Random r = MyRandom.random;
-            //int n = 0;
-            //if (!PC.equals("")){
-            //	if (PC.matches("[0-9][0-9]?"))
-            //		n = Integer.parseInt(PC);
-            //	if (n > 1)
-            //		c.setRandomPicture(r.nextInt(n));
-            //}
-
-            if (c.getCurSetCode().equals(""))
-                c.setCurSetCode(c.getMostRecentSet());
-
-            if (!c.getCurSetCode().equals("")) {
-                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
-                if (n > 1)
-                    c.setRandomPicture(r.nextInt(n - 1) + 1);
-
-                c.setImageFilename(CardUtil.buildFilename(c));
-            }
-
-            bottomModel.addCard(c);
-        }//for
-
-        topModel.resort();
-        bottomModel.resort();
-    }//updateDisplay
-
-    /**
-     * <p>updateDisplay.</p>
-     */
-    public void updateDisplay() {
-        //updateDisplay(this.top, this.bottom);
-
-        topModel.clear();
-
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
-
-        Card c;
-        String cardName;
-        ReadBoosterPack pack = new ReadBoosterPack();
-
-        // update top
-        for (int i = 0; i < top.size(); i++) {
-            c = top.get(i);
-
-            // add rarity to card if this is a sealed card pool
-
-            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
-            if (!pack.getRarity(cardName).equals("error")) {
-                c.setRarity(pack.getRarity(cardName));
-            }
 ]]>
 </codefragment>
 </duplication>
@@ -3271,8 +2192,8 @@
 </codefragment>
 </duplication>
 <duplication lines="59" tokens="256">
-<file line="548" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="423" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="544" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="419" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         bottomModel.sort(1, true);
@@ -3338,7 +2259,7 @@
 </codefragment>
 </duplication>
 <duplication lines="39" tokens="254">
-<file line="285" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="277" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
 <file line="178" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateThemeDeck.java"/>
 <codefragment>
 <![CDATA[
@@ -3416,161 +2337,6 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="57" tokens="248">
-<file line="68" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers.java"/>
-<file line="76" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
-<codefragment>
-<![CDATA[
-            ErrorViewer.showError(ex);
-        }
-//    setSize(470, 280);
-//    show();
-    }
-
-    /**
-     * <p>jbInit.</p>
-     *
-     * @throws java.lang.Exception if any.
-     */
-    private void jbInit() throws Exception {
-        this.getContentPane().setLayout(borderLayout1);
-        this.setTitle("Multiple Blockers");
-        mainPanel.setLayout(null);
-        numberLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        numberLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-        numberLabel.setText("Assign");
-        numberLabel.setBounds(new Rectangle(52, 30, 343, 24));
-        jPanel3.setLayout(borderLayout3);
-        jPanel3.setBounds(new Rectangle(26, 75, 399, 114));
-        creaturePanel.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                creaturePanel_mousePressed(e);
-            }
-        });
-        creaturePanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            @Override
-            public void mouseMoved(MouseEvent e) {
-                creaturePanel_mouseMoved(e);
-            }
-        });
-        mainPanel.add(jPanel3, null);
-        jPanel3.add(jScrollPane1, BorderLayout.CENTER);
-        mainPanel.add(numberLabel, null);
-        jScrollPane1.getViewport().add(creaturePanel, null);
-        this.getContentPane().add(mainPanel, BorderLayout.CENTER);
-    }
-
-    /**
-     * <p>okButton_actionPerformed.</p>
-     *
-     * @param e a {@link java.awt.event.ActionEvent} object.
-     */
-    void okButton_actionPerformed(ActionEvent e) {
-        dispose();
-    }
-
-    /**
-     * <p>creaturePanel_mousePressed.</p>
-     *
-     * @param e a {@link java.awt.event.MouseEvent} object.
-     */
-    void creaturePanel_mousePressed(MouseEvent e) {
-        Object o = creaturePanel.getComponentAt(e.getPoint());
-        if (o instanceof CardPanel) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="82" tokens="244">
-<file line="135" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
-<file line="273" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<codefragment>
-<![CDATA[
-        menuBar.add(devMenu);
-        menuBar.add(new MenuItem_HowToPlay());
-        this.setJMenuBar(menuBar);
-    }//addMenu()
-
-    /**
-     * <p>getButtonOK.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonOK() {
-        MyButton ok = new MyButton() {
-            public void select() {
-                inputControl.selectButtonOK();
-            }
-
-            public boolean isSelectable() {
-                return okButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                okButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return okButton.getText();
-            }
-
-            public void setText(String text) {
-                okButton.setText(text);
-            }
-
-            public void reset() {
-                okButton.setText("OK");
-            }
-        };
-
-        return ok;
-    }//getButtonOK()
-
-    /**
-     * <p>getButtonCancel.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonCancel() {
-        MyButton cancel = new MyButton() {
-            public void select() {
-                inputControl.selectButtonCancel();
-            }
-
-            public boolean isSelectable() {
-                return cancelButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                cancelButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return cancelButton.getText();
-            }
-
-            public void setText(String text) {
-                cancelButton.setText(text);
-            }
-
-            public void reset() {
-                cancelButton.setText("Cancel");
-            }
-        };
-        return cancel;
-    }//getButtonCancel()
-
-    /** {@inheritDoc} */
-    public void showCombat(String message) {
-        combatArea.setText(message);
-    }
-
-    /** {@inheritDoc} */
-    public void showMessage(String s) {
-        messageArea.setText(s);
-]]>
-</codefragment>
-</duplication>
 <duplication lines="32" tokens="242">
 <file line="94" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <file line="163" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
@@ -3608,6 +2374,69 @@
                     g.sorceryCheckBox.setSelected(true);
                     g.sorceryCheckBox.setEnabled(true);
                     g.filterUsed = false;
+]]>
+</codefragment>
+</duplication>
+<duplication lines="55" tokens="233">
+<file line="139" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="159" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<codefragment>
+<![CDATA[
+            c.setRarity(c.getSVar("Rarity"));
+
+            //String PC = c.getSVar("PicCount");
+            Random r = MyRandom.random;
+            //int n = 0;
+            //if (!PC.equals("")){
+            //	if (PC.matches("[0-9][0-9]?"))
+            //		n = Integer.parseInt(PC);
+            //	if (n > 1)
+            //		c.setRandomPicture(r.nextInt(n));
+            //}
+
+            if (c.getCurSetCode().equals(""))
+                c.setCurSetCode(c.getMostRecentSet());
+
+            if (!c.getCurSetCode().equals("")) {
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
+
+                c.setImageFilename(CardUtil.buildFilename(c));
+            }
+
+            bottomModel.addCard(c);
+        }//for
+
+        topModel.resort();
+        bottomModel.resort();
+    }//updateDisplay
+
+    /**
+     * <p>updateDisplay.</p>
+     */
+    public void updateDisplay() {
+        //updateDisplay(this.top, this.bottom);
+
+        topModel.clear();
+
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
+
+        Card c;
+        String cardName;
+        ReadBoosterPack pack = new ReadBoosterPack();
+
+        // update top
+        for (int i = 0; i < top.size(); i++) {
+            c = top.get(i);
+
+            // add rarity to card if this is a sealed card pool
+
+            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
+            if (!pack.getRarity(cardName).equals("error")) {
+                c.setRarity(pack.getRarity(cardName));
+            }
 ]]>
 </codefragment>
 </duplication>
@@ -3659,94 +2488,6 @@
                         if (AllZoneUtil.isCardInPlay(getTargetCard())
                                 && CardFactoryUtil.canTarget(card, getTargetCard())) {
                             javax.swing.JOptionPane.showMessageDialog(null, cardName + " causes " + damage
-]]>
-</codefragment>
-</duplication>
-<duplication lines="80" tokens="229">
-<file line="137" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
-<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        return canLoseByDecking.isSelected();
-    }
-
-    /**
-     * <p>getButtonOK.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonOK() {
-        MyButton ok = new MyButton() {
-            public void select() {
-                inputControl.selectButtonOK();
-            }
-
-            public boolean isSelectable() {
-                return okButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                okButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return okButton.getText();
-            }
-
-            public void setText(String text) {
-                okButton.setText(text);
-            }
-
-            public void reset() {
-                okButton.setText("OK");
-            }
-        };
-
-        return ok;
-    }//getButtonOK()
-
-    /**
-     * <p>getButtonCancel.</p>
-     *
-     * @return a {@link forge.MyButton} object.
-     */
-    public MyButton getButtonCancel() {
-        MyButton cancel = new MyButton() {
-            public void select() {
-                inputControl.selectButtonCancel();
-            }
-
-            public boolean isSelectable() {
-                return cancelButton.isEnabled();
-            }
-
-            public void setSelectable(boolean b) {
-                cancelButton.setEnabled(b);
-            }
-
-            public String getText() {
-                return cancelButton.getText();
-            }
-
-            public void setText(String text) {
-                cancelButton.setText(text);
-            }
-
-            public void reset() {
-                cancelButton.setText("Cancel");
-            }
-        };
-        return cancel;
-    }//getButtonCancel()
-
-    /** {@inheritDoc} */
-    public void showCombat(String message) {
-        combatArea.setText(message);
-    }
-
-    /** {@inheritDoc} */
-    public void showMessage(String s) {
-        messageArea.setText(s);
 ]]>
 </codefragment>
 </duplication>
@@ -3919,8 +2660,8 @@
 </codefragment>
 </duplication>
 <duplication lines="28" tokens="216">
-<file line="786" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
-<file line="117" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor_Menu.java"/>
+<file line="641" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="119" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
                 deckDisplay.updateDisplay(deckDisplay.getTop(), deckDisplay.getBottom());
@@ -3990,8 +2731,8 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="27" tokens="211">
-<file line="129" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
+<duplication lines="28" tokens="211">
+<file line="97" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <file line="195" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
@@ -4022,11 +2763,12 @@
                     g.planeswalkerCheckBox.setEnabled(true);
                     g.sorceryCheckBox.setSelected(true);
                     g.sorceryCheckBox.setEnabled(true);
+                    g.filterUsed = false;
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="210">
-<file line="788" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="643" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
 <file line="98" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
@@ -4096,7 +2838,7 @@
 </codefragment>
 </duplication>
 <duplication lines="26" tokens="208">
-<file line="788" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
+<file line="643" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java"/>
 <file line="130" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor_Menu.java"/>
 <codefragment>
 <![CDATA[
@@ -4246,69 +2988,6 @@
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="55" tokens="205">
-<file line="1285" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="1284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-    JLayeredPane layeredPane = SwingUtilities.getRootPane(this).getLayeredPane();
-
-    private class ZoneAction extends ForgeAction {
-        private static final long serialVersionUID = -5822976087772388839L;
-        private PlayerZone zone;
-        private String title;
-
-        public ZoneAction(PlayerZone zone, String property) {
-            super(property);
-            title = ForgeProps.getLocalized(property + "/title");
-            this.zone = zone;
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            /**
-             * <p>main.</p>
-             *
-             * @param args an array of {@link java.lang.String} objects.
-             */
-            Card[] c = getCards();
-
-            if (AllZone.getNameChanger().shouldChangeCardName()) c = AllZone.getNameChanger().changeCard(c);
-
-            if (c.length == 0) GuiUtils.getChoiceOptional(title, new String[]{"no cards"});
-            else {
-                Card choice = GuiUtils.getChoiceOptional(title, c);
-                if (choice != null) doAction(choice);
-            }
-        }
-
-        /*
-        protected PlayerZone getZone() {
-            return zone;
-        }
-        */
-        protected Card[] getCards() {
-            return AllZoneUtil.getCardsInZone(zone).toArray();
-        }
-
-        protected void doAction(Card c) {
-        }
-    }
-
-    private class ConcedeAction extends ForgeAction {
-
-        private static final long serialVersionUID = -6976695235601916762L;
-
-        public ConcedeAction() {
-            super(CONCEDE);
-        }
-
-        public void actionPerformed(ActionEvent e) {
-            concede();
-        }
-    }
-]]>
-</codefragment>
-</duplication>
 <duplication lines="51" tokens="203">
 <file line="387" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <file line="755" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
@@ -4365,129 +3044,6 @@
      * @return a boolean.
      */
     private static boolean tapUnpreferredTargeting(AbilityFactory af, SpellAbility sa, boolean mandatory) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="60" tokens="198">
-<file line="276" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
-<file line="489" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<codefragment>
-<![CDATA[
-                    okButton.requestFocusInWindow();
-                }
-            }
-        });
-
-        //*****************************************************************
-        //computer
-
-        //computer play (land) ---- Mouse
-        oppLandPanel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Object o = oppLandPanel.getComponentAt(e.getPoint());
-                if (o instanceof CardPanel) {
-                    CardContainer cardPanel = (CardContainer) o;
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.getComputerBattlefield());
-                }
-            }
-        });
-
-        //computer play (no land) ---- Mouse
-        oppCreaturePanel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Object o = oppCreaturePanel.getComponentAt(e.getPoint());
-                if (o instanceof CardPanel) {
-                    CardContainer cardPanel = (CardContainer) o;
-                    inputControl.selectCard(cardPanel.getCard(), AllZone.getComputerBattlefield());
-                }
-            }
-        });
-
-
-    }//addListener()
-
-    /**
-     * <p>getCard.</p>
-     *
-     * @return a {@link forge.Card} object.
-     */
-    public Card getCard() {
-        return detail.getCard();
-    }
-
-    /** {@inheritDoc} */
-    public void setCard(Card card) {
-        detail.setCard(card);
-        picture.setCard(card);
-    }
-
-    /**
-     * <p>addObservers.</p>
-     */
-    private void addObservers() {
-        //Human Hand, Graveyard, and Library totals
-        {//make sure to not interfer with anything below, since this is a very long method
-            Observer o = new Observer() {
-                public void update(Observable a, Object b) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="47" tokens="196">
-<file line="1214" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="1212" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        fp.millingLossCondition = canLoseByDecking.isSelected();
-
-        return true;
-    }
-
-    /** Constant <code>playsoundCheckboxForMenu</code> */
-    public static JCheckBoxMenuItem playsoundCheckboxForMenu = new JCheckBoxMenuItem("Play Sound", false);
-
-    // Phases
-    /** Constant <code>cbAIUpkeep</code> */
-    public static JCheckBoxMenuItem cbAIUpkeep = new JCheckBoxMenuItem("Upkeep", true);
-    /** Constant <code>cbAIDraw</code> */
-    public static JCheckBoxMenuItem cbAIDraw = new JCheckBoxMenuItem("Draw", true);
-    /** Constant <code>cbAIEndOfTurn</code> */
-    public static JCheckBoxMenuItem cbAIEndOfTurn = new JCheckBoxMenuItem("End of Turn", true);
-    /** Constant <code>cbAIBeginCombat</code> */
-    public static JCheckBoxMenuItem cbAIBeginCombat = new JCheckBoxMenuItem("Begin Combat", true);
-    /** Constant <code>cbAIEndCombat</code> */
-    public static JCheckBoxMenuItem cbAIEndCombat = new JCheckBoxMenuItem("End Combat", true);
-
-    /** Constant <code>cbHumanUpkeep</code> */
-    public static JCheckBoxMenuItem cbHumanUpkeep = new JCheckBoxMenuItem("Upkeep", true);
-    /** Constant <code>cbHumanDraw</code> */
-    public static JCheckBoxMenuItem cbHumanDraw = new JCheckBoxMenuItem("Draw", true);
-    /** Constant <code>cbHumanEndOfTurn</code> */
-    public static JCheckBoxMenuItem cbHumanEndOfTurn = new JCheckBoxMenuItem("End of Turn", true);
-    /** Constant <code>cbHumanBeginCombat</code> */
-    public static JCheckBoxMenuItem cbHumanBeginCombat = new JCheckBoxMenuItem("Begin Combat", true);
-    /** Constant <code>cbHumanEndCombat</code> */
-    public static JCheckBoxMenuItem cbHumanEndCombat = new JCheckBoxMenuItem("End Combat", true);
-
-    // ********** End of Phase stuff in Display ******************
-
-    // ****** Developer Mode ******* 
-
-    /** Constant <code>canLoseByDecking</code> */
-    public static JCheckBoxMenuItem canLoseByDecking = new JCheckBoxMenuItem("Lose by Decking", true);
-
-    // *****************************
-
-
-    JXMultiSplitPane pane = new JXMultiSplitPane();
-    JButton cancelButton = new JButton();
-    JButton okButton = new JButton();
-    JTextArea messageArea = new JTextArea(1, 10);
-    JTextArea combatArea = new JTextArea();
-    JPanel stackPanel = new JPanel();
 ]]>
 </codefragment>
 </duplication>
@@ -4561,7 +3117,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="48" tokens="194">
 <file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="519" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="523" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         while (tgt.getNumTargeted() < tgt.getMaxTargets(source, sa)) {
@@ -4615,64 +3171,39 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="53" tokens="190">
-<file line="144" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="149" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
+<duplication lines="28" tokens="192">
+<file line="331" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
+<file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
 <codefragment>
 <![CDATA[
-                        && (!att.hasKeyword("Deathtouch") || crd.getTotalAssignedDamage() < 1))
-                    assignedLethalDamageToAllBlockers = false;
+                presentPlayer = mapParams.get("PresentPlayer2");
+            }
+            CardList list = new CardList();
+            if (presentPlayer.equals("You") || presentPlayer.equals("Any")) {
+                list.addAll(AllZoneUtil.getCardsInZone(presentZone, hostCard.getController()));
+            }
+            if (presentPlayer.equals("Opponent") || presentPlayer.equals("Any")) {
+                list.addAll(AllZoneUtil.getCardsInZone(presentZone, hostCard.getController().getOpponent()));
             }
 
+            list = list.getValidCards(sIsPresent.split(","), hostCard.getController(), hostCard);
 
-            if (c.getName().equals("Player")
-                    && att.hasKeyword("Trample")
-                    && assignedLethalDamageToAllBlockers) {
-                AllZone.getCombat().addDefendingDamage(1, att);
-                c.addAssignedDamage(1, att);
-            } else if (!c.getName().equals("Player")) {
-                c.addAssignedDamage(1, att);
-            } else
-                assignedDamage = false;
+            int right = 1;
+            String rightString = presentCompare.substring(2);
+            if (rightString.equals("X")) {
+                right = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("X"));
+            } else {
+                right = Integer.parseInt(presentCompare.substring(2));
+            }
+            int left = list.size();
 
-            if (assignedDamage) {
-                assignDamage--;
-                updateDamageLabel();
-                if (assignDamage == 0) dispose();
+            if (!AllZoneUtil.compare(left, presentCompare, right)) {
+                return false;
             }
 
-            if (guiDisplay != null) {
-                guiDisplay.setCard(c);
-            }
         }
-        //reduce damage, show new user message, exit if necessary
 
-    }//creaturePanel_mousePressed()
-
-    /**
-     * <p>updateDamageLabel.</p>
-     */
-    void updateDamageLabel() {
-        numberLabel.setText("Assign " + assignDamage + " damage - click on card to assign damage");
-    }
-
-    /**
-     * <p>creaturePanel_mouseMoved.</p>
-     *
-     * @param e a {@link java.awt.event.MouseEvent} object.
-     */
-    void creaturePanel_mouseMoved(MouseEvent e) {
-        Object o = creaturePanel.getComponentAt(e.getPoint());
-        if (o instanceof CardPanel) {
-            CardContainer cardPanel = (CardContainer) o;
-            Card c = cardPanel.getCard();
-
-            if (guiDisplay != null) {
-                guiDisplay.setCard(c);
-            }
-        }
-    }
-}
+        if(mapParams.containsKey("CheckSVar")) {
 ]]>
 </codefragment>
 </duplication>
@@ -4707,92 +3238,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="26" tokens="186">
-<file line="331" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
-<file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java"/>
-<codefragment>
-<![CDATA[
-                presentPlayer = mapParams.get("PresentPlayer2");
-            }
-            CardList list = new CardList();
-            if (presentPlayer.equals("You") || presentPlayer.equals("Any")) {
-                list.addAll(AllZoneUtil.getCardsInZone(presentZone, hostCard.getController()));
-            }
-            if (presentPlayer.equals("Opponent") || presentPlayer.equals("Any")) {
-                list.addAll(AllZoneUtil.getCardsInZone(presentZone, hostCard.getController().getOpponent()));
-            }
-
-            list = list.getValidCards(sIsPresent.split(","), hostCard.getController(), hostCard);
-
-            int right = 1;
-            String rightString = presentCompare.substring(2);
-            if (rightString.equals("X")) {
-                right = CardFactoryUtil.xCount(hostCard, hostCard.getSVar("X"));
-            } else {
-                right = Integer.parseInt(presentCompare.substring(2));
-            }
-            int left = list.size();
-
-            if (!AllZoneUtil.compare(left, presentCompare, right)) {
-                return false;
-            }
-
-        }
-]]>
-</codefragment>
-</duplication>
-<duplication lines="41" tokens="186">
-<file line="1266" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1361" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<codefragment>
-<![CDATA[
-        Card source = sa.getSourceCard();
-        HashMap<String, String> params = af.getMapParams();
-
-        String valid = "";
-        if (params.containsKey("ValidCards"))
-            valid = params.get("ValidCards");
-
-        CardList validTappables = getTapAllTargets(valid, source);
-
-        Random r = MyRandom.random;
-        boolean rr = false;
-        if (r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed()))
-            rr = true;
-
-        if (validTappables.size() > 0) {
-            CardList human = validTappables.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.getController().isHuman();
-                }
-            });
-            CardList compy = validTappables.filter(new CardListFilter() {
-                public boolean addCard(Card c) {
-                    return c.getController().isHuman();
-                }
-            });
-            if (human.size() > compy.size()) {
-                return rr;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * <p>tapAllPlayDrawbackAI.</p>
-     *
-     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
-     * @return a boolean.
-     */
-    private static boolean tapAllPlayDrawbackAI(final AbilityFactory af, SpellAbility sa) {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="17" tokens="185">
-<file line="1666" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<file line="1805" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1670" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1809" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
             for (int i = 0; i < Cards_In_Play.size(); i++) {
@@ -4817,7 +3265,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="45" tokens="184">
 <file line="640" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1557" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1564" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
     private static boolean tapOrUntapCanPlayAI(final AbilityFactory af, SpellAbility sa) {
@@ -4943,8 +3391,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="180">
-<file line="353" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="378" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="345" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="370" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                     throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- undersize");
@@ -4973,8 +3421,48 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="32" tokens="180">
+<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Attach.java"/>
+<file line="384" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Attach.java"/>
+<codefragment>
+<![CDATA[
+		}
+		
+		int totToughness = 0;
+		int totPower = 0;
+		ArrayList<String> keywords = new ArrayList<String>();
+		boolean grantingAbilities = false;
+		
+		for (StaticAbility stAbility : attachSource.getStaticAbilities()){
+			Map<String,String> params = stAbility.getMapParams();
+			
+			if (!params.get("Mode").equals("Continuous"))
+				continue;
+			
+			String affected = params.get("Affected");
+			
+			if (affected == null)
+				continue;
+			if ((affected.contains(stCheck) || affected.contains("AttachedBy")) ){
+				totToughness += CardFactoryUtil.parseSVar(attachSource, params.get("AddToughness"));
+				totPower += CardFactoryUtil.parseSVar(attachSource, params.get("AddPower"));
+				
+				grantingAbilities |= params.containsKey("AddAbility");
+				
+				String kws = params.get("AddKeyword");
+				if (kws != null){
+					for(String kw : kws.split(" & "))
+						keywords.add(kw);
+				}
+			}
+		}
+		
+		CardList prefList = null;
+]]>
+</codefragment>
+</duplication>
 <duplication lines="28" tokens="178">
-<file line="1048" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
+<file line="682" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
 <file line="70" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
@@ -5086,49 +3574,44 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="38" tokens="174">
-<file line="243" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="188" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<duplication lines="33" tokens="174">
+<file line="1050" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1097" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
-        bottomModel.resort();
-    }//updateDisplay
+                card = c.getCard(cardName, AllZone.getComputerPlayer());
+                card.setUniqueNumber(nextUniqueNumber++);
 
-    /**
-     * <p>updateDisplay.</p>
-     */
-    public void updateDisplay() {
-        //updateDisplay(this.top, this.bottom);
+                //if(card.isBasicLand()) {
+                //String PC = card.getSVar("PicCount");
+                //int n = 0;
+                //if (PC.matches("[0-9][0-9]?"))
+                //	n = Integer.parseInt(PC);
+                //if (n > 1)
+                //    card.setRandomPicture(generator.nextInt(n));
+                //System.out.println("computer random number:" + card.getRandomPicture());
+                //}
 
-        topModel.clear();
+                if (!setCode.equals(""))
+                    card.setCurSetCode(setCode);
+                else if ((card.getSets().size() > 0)) // && card.getCurSetCode().equals(""))
+                    card.setRandomSetCode();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+                if (!card.getCurSetCode().equals("")) {
+                    int n = SetInfoUtil.getSetInfo_Code(card.getSets(), card.getCurSetCode()).PicCount;
+                    if (n > 1)
+                        card.setRandomPicture(generator.nextInt(n - 1) + 1);
 
-        Card c;
-        String cardName;
-        ReadBoosterPack pack = new ReadBoosterPack();
+                    card.setImageFilename(CardUtil.buildFilename(card));
+                }
 
-        // update top
-        for (int i = 0; i < top.size(); i++) {
-            c = top.get(i);
-
-            // add rarity to card if this is a sealed card pool
-
-            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
-            if (!pack.getRarity(cardName).equals("error")) {
-                c.setRarity(pack.getRarity(cardName));
-            }
-
-            boolean filteredOut = filterByColor(c);
-
-            if (!filteredOut) {
-                filteredOut = filterByType(c);
-            }
-
-            if (!filteredOut) {
+                // Assign random foiling on approximately 1:20 cards
+                if (Constant.Runtime.RndCFoil[0] && Constant.Runtime.GameType[0].equals(Constant.GameType.Constructed)) {
+                	if (MyRandom.percentTrue(5))
+                		card.setFoil(MyRandom.random.nextInt(9) + 1);
+                }
+                
+                AllZone.getComputerLibrary().add(card);
 ]]>
 </codefragment>
 </duplication>
@@ -5160,6 +3643,69 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
         if (!ComputerUtil.canPayCost(sa))
             return false;
+]]>
+</codefragment>
+</duplication>
+<duplication lines="23" tokens="172">
+<file line="389" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="394" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<codefragment>
+<![CDATA[
+        String imgFN = "";
+
+        for (Card c : AllZone.getCardFactory()) {
+            //String url = c.getSVar("Picture");
+            //String[] URLs = url.split("\\\\");
+
+            ArrayList<SetInfo> cSetInfo = c.getSets();
+            if (cSetInfo.size() > 0) {
+                for (int j = 0; j < cSetInfo.size(); j++) {
+                    c.setCurSetCode(cSetInfo.get(j).Code);
+                    String SC3 = c.getCurSetCode();
+                    String SC2 = SetInfoUtil.getSetCode2_SetCode3(c.getCurSetCode());
+
+                    int n = 0;
+                    if (cSetInfo.get(j).PicCount > 0) {
+                        n = cSetInfo.get(j).PicCount;
+
+                        for (int k = 1; k <= n; k++) {
+                            c.setRandomPicture(k);
+
+                            imgFN = CardUtil.buildFilename(c);
+
+                            if (imgFN.equals("none") || (!imgFN.contains(SC3) && !imgFN.contains(SC2))) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="24" tokens="168">
+<file line="549" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
+<file line="866" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
+<codefragment>
+<![CDATA[
+    private static void protectAllResolve(AbilityFactory af, SpellAbility sa) {
+    	HashMap<String,String> params = af.getMapParams();
+    	final Card host = af.getHostCard();
+    	
+    	boolean isChoice = params.get("Gains").contains("Choice");
+    	ArrayList<String> choices = getProtectionList(host, params);
+    	final ArrayList<String> gains = new ArrayList<String>();
+        if(isChoice) {        	
+        	if(sa.getActivatingPlayer().isHuman()) {
+        		Object o = GuiUtils.getChoice("Choose a protection", choices.toArray());
+
+                if(null == o) return;
+                String choice = (String) o;
+                gains.add(choice);
+            }
+        	else {
+        		//TODO - needs improvement
+        		String choice = choices.get(0);
+                gains.add(choice);
+                JOptionPane.showMessageDialog(null, "Computer chooses "+gains, ""+host, JOptionPane.PLAIN_MESSAGE); 
+            }
+        }
+        else
+        	gains.addAll(choices);
 ]]>
 </codefragment>
 </duplication>
@@ -5205,55 +3751,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
         //*************** START *********** START **************************
         else if (cardName.equals("Parallel Evolution")) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="41" tokens="166">
-<file line="215" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
-<file line="374" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<codefragment>
-<![CDATA[
-        messageArea.setBorder(border);
-    }
-
-    /**
-     * <p>addListeners.</p>
-     */
-    private void addListeners() {
-        //mouse Card Detail
-        playerHandPanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
-        playerLandPanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
-        playerCreaturePanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
-
-        oppLandPanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
-        oppCreaturePanel.addMouseMotionListener(GuiDisplayUtil.getCardDetailMouse(this));
-
-
-        //opponent life mouse listener
-        oppLifeLabel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                inputControl.selectPlayer(AllZone.getComputerPlayer());
-            }
-        });
-
-        //self life mouse listener
-        playerLifeLabel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                inputControl.selectPlayer(AllZone.getHumanPlayer());
-            }
-        });
-
-        //self play (land) ---- Mouse
-        playerLandPanel.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                Object o = playerLandPanel.getComponentAt(e.getPoint());
-                if (o instanceof CardPanel) {
 ]]>
 </codefragment>
 </duplication>
@@ -5372,7 +3869,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="16" tokens="158">
 <file line="284" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
-<file line="430" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="434" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
             list = getPumpCreatures(defense, attack);
@@ -5391,31 +3888,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
         if (list.isEmpty())
             return mandatory && pumpMandatoryTarget(AF, sa, mandatory);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="17" tokens="156">
-<file line="405" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="410" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
-<codefragment>
-<![CDATA[
-            ArrayList<SetInfo> cSetInfo = c.getSets();
-            if (cSetInfo.size() > 0) {
-                for (int j = 0; j < cSetInfo.size(); j++) {
-                    c.setCurSetCode(cSetInfo.get(j).Code);
-                    String SC3 = c.getCurSetCode();
-                    String SC2 = SetInfoUtil.getSetCode2_SetCode3(c.getCurSetCode());
-
-                    int n = 0;
-                    if (cSetInfo.get(j).PicCount > 0) {
-                        n = cSetInfo.get(j).PicCount;
-
-                        for (int k = 1; k <= n; k++) {
-                            c.setRandomPicture(k);
-
-                            imgFN = CardUtil.buildFilename(c);
-
-                            if (imgFN.equals("none") || (!imgFN.contains(SC3) && !imgFN.contains(SC2))) {
 ]]>
 </codefragment>
 </duplication>
@@ -5489,56 +3961,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="42" tokens="152">
-<file line="242" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="234" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-				public void actionPerformed(ActionEvent arg0) {
-            		GuiDisplayUtil.devModeUntapPerm();
-            	}
-            };
-            //end DevMode Untap
-
-            Object[] objDev = {
-            		GuiDisplay4.canLoseByDecking,
-            		viewAIHand,
-            		viewAILibrary,
-            		viewHumanLibrary,
-            		generateMana,
-            		setupBattleField,
-            		tutor,
-            		addCounter,
-            		tapPerm,
-            		untapPerm
-            };
-            for (Object o : objDev) {
-                if (o instanceof ForgeAction)
-                    devMenu.add(((ForgeAction) o).setupButton(new JMenuItem()));
-                else if (o instanceof Component)
-                    devMenu.add((Component) o);
-                else if (o instanceof Action)
-                    devMenu.add((Action) o);
-            }
-        }
-
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add(gameMenu);
-        menuBar.add(gamePhases);
-        menuBar.add(devMenu);
-        menuBar.add(new MenuItem_HowToPlay());
-        this.setJMenuBar(menuBar);
-    }//addMenu()
-
-    /**
-     * <p>canLoseByDecking.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean canLoseByDecking() {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="23" tokens="151">
 <file line="142" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
 <file line="488" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
@@ -5571,8 +3993,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="151">
-<file line="848" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
-<file line="914" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
+<file line="843" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
+<file line="909" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
 <codefragment>
 <![CDATA[
             AllZone.getTriggerHandler().runTrigger("CounterAdded", runParams);
@@ -5607,7 +4029,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="33" tokens="150">
 <file line="148" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_BoosterDraft.java"/>
-<file line="530" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="526" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         setBounds(bounds);
@@ -5648,7 +4070,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="28" tokens="148">
 <file line="1348" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<file line="3266" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
+<file line="3202" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
                 private ArrayList<String> chooseTwo(ArrayList<String> choices) {
@@ -5756,8 +4178,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="34" tokens="148">
-<file line="698" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="565" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="694" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="561" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             jbInit();
@@ -5794,44 +4216,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
         border2 = BorderFactory.createEtchedBorder(Color.white, new Color(148, 145, 140));
         titledBorder2 = new TitledBorder(border2, "Deck");
         this.getContentPane().setLayout(null);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="30" tokens="148">
-<file line="166" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="243" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-        bottomTable.repaint();
-    }// updateDisplay
-
-    /**
-     * <p>updateDisplay.</p>
-     */
-    public void updateDisplay() {
-        //updateDisplay(this.top, this.bottom);
-
-        topModel.clear();
-
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
-
-        Card c;
-        String cardName;
-        ReadBoosterPack pack = new ReadBoosterPack();
-
-        // update top
-        for (int i = 0; i < top.size(); i++) {
-            c = top.get(i);
-
-            // add rarity to card if this is a sealed card pool
-
-            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
-            if (!pack.getRarity(cardName).equals("error")) {
-                c.setRarity(pack.getRarity(cardName));
-            }
 ]]>
 </codefragment>
 </duplication>
@@ -5886,47 +4270,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="30" tokens="147">
-<file line="43" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers3.java"/>
-<file line="47" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MultipleBlockers4.java"/>
-<codefragment>
-<![CDATA[
-    Gui_MultipleBlockers4(Card attacker, CardList creatureList, int damage, CardContainer display) {
-        this();
-        assignDamage = damage;
-        updateDamageLabel();//update user message about assigning damage
-        guiDisplay = display;
-        att = attacker;
-        blockers = creatureList;
-
-        for (int i = 0; i < creatureList.size(); i++)
-            creaturePanel.add(new CardPanel(creatureList.get(i)));
-
-        if (att.hasKeyword("Trample")) {
-            Card player = new Card();
-            player.setName("Player");
-            player.addIntrinsicKeyword("Shroud");
-            player.addIntrinsicKeyword("Indestructible");
-            creaturePanel.add(new CardPanel(player));
-        }
-
-        JDialog dialog = new JDialog(this, true);
-        dialog.setTitle("Multiple Blockers");
-        dialog.setContentPane(mainPanel);
-        dialog.setSize(470, 260);
-        dialog.setVisible(true);
-    }
-
-    /**
-     * <p>Constructor for Gui_MultipleBlockers4.</p>
-     */
-    public Gui_MultipleBlockers4() {
-]]>
-</codefragment>
-</duplication>
 <duplication lines="26" tokens="146">
-<file line="356" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
-<file line="570" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="360" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="574" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         Card source = sa.getSourceCard();
@@ -5955,43 +4301,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
             attack = getNumAttack(sa);
 
         if (sa.getTarget() == null) {
-]]>
-</codefragment>
-</duplication>
-<duplication lines="29" tokens="146">
-<file line="137" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="208" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-            c = bottom.get(i);
-
-            // add rarity to card if this is a sealed card pool
-            if (!customMenu.getGameType().equals(Constant.GameType.Constructed))
-                c.setRarity(pack.getRarity(c.getName()));
-
-            //String PC = c.getSVar("PicCount");
-            Random r = MyRandom.random;
-            //int n = 0;
-            //if (!PC.equals("")) {
-            //    if (PC.matches("[0-9][0-9]?"))
-            //    	n = Integer.parseInt(PC);
-            //    if (n > 1)
-            //        c.setRandomPicture(r.nextInt(n));
-            //}
-
-            if (c.getCurSetCode().equals(""))
-                c.setCurSetCode(c.getMostRecentSet());
-
-            if (!c.getCurSetCode().equals("")) {
-                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
-                if (n > 1)
-                    c.setRandomPicture(r.nextInt(n - 1) + 1);
-
-                c.setImageFilename(CardUtil.buildFilename(c));
-            }
-
-            bottomModel.addCard(c);
-        }// for
 ]]>
 </codefragment>
 </duplication>
@@ -6056,40 +4365,24 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="15" tokens="142">
-<file line="127" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
-<file line="336" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<duplication lines="36" tokens="144">
+<file line="241" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
-        Card source = sa.getSourceCard();
-        Card host = af.getHostCard();
-        Hashtable<String, String> svars = host.getSVars();
+        bottomModel.resort();
+    }//updateDisplay
 
-        //AF specific params
-        int power = -1;
-        if (params.containsKey("Power")) power = AbilityFactory.calculateAmount(host, params.get("Power"), sa);
-        int toughness = -1;
-        if (params.containsKey("Toughness"))
-            toughness = AbilityFactory.calculateAmount(host, params.get("Toughness"), sa);
+    /**
+     * <p>updateDisplay.</p>
+     */
+    public void updateDisplay() {
+        //updateDisplay(this.top, this.bottom);
 
-        boolean permanent = params.containsKey("Permanent") ? true : false;
-
-        final ArrayList<String> types = new ArrayList<String>();
-        if (params.containsKey("Types")) types.addAll(Arrays.asList(params.get("Types").split(",")));
-]]>
-</codefragment>
-</duplication>
-<duplication lines="21" tokens="138">
-<file line="90" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="175" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<codefragment>
-<![CDATA[
         topModel.clear();
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
 
         Card c;
         String cardName;
@@ -6105,6 +4398,74 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
             if (!pack.getRarity(cardName).equals("error")) {
                 c.setRarity(pack.getRarity(cardName));
             }
+
+            boolean filteredOut = filterByColor(c);
+
+            if (!filteredOut) {
+                filteredOut = filterByType(c);
+            }
+
+            if (!filteredOut) {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="29" tokens="143">
+<file line="135" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="206" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<codefragment>
+<![CDATA[
+            c = bottom.get(i);
+
+            // add rarity to card if this is a sealed card pool
+            if (!customMenu.getGameType().equals(Constant.GameType.Constructed))
+                c.setRarity(pack.getRarity(c.getName()));
+
+            //String PC = c.getSVar("PicCount");
+            Random r = MyRandom.random;
+            //int n = 0;
+            //if (!PC.equals("")) {
+            //    if (PC.matches("[0-9][0-9]?"))
+            //    	n = Integer.parseInt(PC);
+            //    if (n > 1)
+            //        c.setRandomPicture(r.nextInt(n));
+            //}
+
+            if (c.getCurSetCode().equals(""))
+                c.setCurSetCode(c.getMostRecentSet());
+
+            if (!c.getCurSetCode().equals("")) {
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
+
+                c.setImageFilename(CardUtil.buildFilename(c));
+            }
+
+            bottomModel.addCard(c);
+        }// for
+]]>
+</codefragment>
+</duplication>
+<duplication lines="15" tokens="142">
+<file line="127" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<file line="337" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java"/>
+<codefragment>
+<![CDATA[
+        Card source = sa.getSourceCard();
+        Card host = af.getHostCard();
+        Map<String, String> svars = host.getSVars();
+
+        //AF specific params
+        int power = -1;
+        if (params.containsKey("Power")) power = AbilityFactory.calculateAmount(host, params.get("Power"), sa);
+        int toughness = -1;
+        if (params.containsKey("Toughness"))
+            toughness = AbilityFactory.calculateAmount(host, params.get("Toughness"), sa);
+
+        boolean permanent = params.containsKey("Permanent") ? true : false;
+
+        final ArrayList<String> types = new ArrayList<String>();
+        if (params.containsKey("Types")) types.addAll(Arrays.asList(params.get("Types").split(",")));
 ]]>
 </codefragment>
 </duplication>
@@ -6270,9 +4631,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="39" tokens="132">
-<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
-<file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<duplication lines="44" tokens="132">
+<file line="298" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="350" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
 <codefragment>
 <![CDATA[
         out.addAll(CardListUtil.getGoldCards(in));
@@ -6307,19 +4668,24 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
 
     /**
-     * <p>filterBadCards.</p>
+     * Filters out cards by color and their suitability for being placed in
+     * a randomly created deck.
      *
-     * @param list a {@link forge.CardList} object.
-     * @param colors a int.
-     * @return a {@link forge.CardList} object.
+     * @param sequence  an Iterable of Card instances
+     * 
+     * @param colors  the number of different colors the deck should have;
+     * if this is a number other than 3 or 5, we return an empty list.
+     * 
+     * @return a subset of sequence <= sequence which might be empty, but
+     * never null
      */
-    private CardList filterBadCards(CardList list, int colors) {
+    private CardList filterBadCards(Iterable<Card> sequence, int colors) {
 ]]>
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="132">
-<file line="247" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
-<file line="272" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
+<file line="239" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="264" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate3ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 throw new RuntimeException("Generate3ColorDeck : get3ColorDeck -- looped too much -- Sp123");
@@ -6345,8 +4711,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="132">
-<file line="299" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="323" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="295" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="319" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
 <codefragment>
 <![CDATA[
             Card c = AllZone.getCardFactory().getCard(aList, null);
@@ -6369,36 +4735,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="20" tokens="132">
-<file line="1265" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="1262" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-    JPanel cdPanel = new JPanel();
-    JLabel oppLifeLabel = new JLabel();
-    JLabel oppIconLabel = new JLabel();
-    JLabel playerLifeLabel = new JLabel();
-    JLabel oppPCLabel = new JLabel();
-    JLabel playerPCLabel = new JLabel();
-    JLabel oppLibraryLabel = new JLabel(
-            ForgeProps.getLocalized(COMPUTER_LIBRARY.BUTTON),
-            SwingConstants.TRAILING);
-    JLabel oppHandValue = new JLabel();
-    JLabel oppLibraryValue = new JLabel();
-    JLabel oppGraveValue = new JLabel();
-    JLabel oppRemovedValue = new JLabel();
-    JLabel playerHandValue = new JLabel();
-    JLabel playerLibraryValue = new JLabel();
-    JLabel playerGraveValue = new JLabel();
-    JLabel playerFBValue = new JLabel();
-    JLabel playerRemovedValue = new JLabel();
-
-    CardDetailPanel detail = new CardDetailPanel(null);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="20" tokens="132">
-<file line="754" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<file line="898" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="768" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="912" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
         if (c.isEnchanted()) {
@@ -6424,44 +4762,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="27" tokens="130">
-<file line="113" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="133" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-            Random r = MyRandom.random;
-            //int n = 0;
-            //if (!PC.equals("")) {
-            //    if (PC.matches("[0-9][0-9]?"))
-            //    	n = Integer.parseInt(PC);
-            //    if (n > 1)
-            //        c.setRandomPicture(r.nextInt(n));
-            //}
-
-            if (c.getCurSetCode().equals(""))
-                c.setCurSetCode(c.getMostRecentSet());
-
-            if (!c.getCurSetCode().equals("")) {
-                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
-                if (n > 1)
-                    c.setRandomPicture(r.nextInt(n - 1) + 1);
-
-                c.setImageFilename(CardUtil.buildFilename(c));
-            }
-
-
-            topModel.addCard(c);
-        }//for
-
-        //update bottom
-        for (int i = 0; i < bottom.size(); i++) {
-            c = bottom.get(i);
-]]>
-</codefragment>
-</duplication>
 <duplication lines="23" tokens="130">
-<file line="2401" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
-<file line="3155" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="2421" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="3175" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Waterspout Weavers");
@@ -6487,39 +4790,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 
                     peek[0] = library.get(0);
                     boolean wantMerfolkBuff = false;
-]]>
-</codefragment>
-</duplication>
-<duplication lines="25" tokens="129">
-<file line="176" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardUtil.java"/>
-<file line="309" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData_BoosterPack.java"/>
-<codefragment>
-<![CDATA[
-    private String getColor(Card c) {
-        String m = c.getManaCost();
-        Set<String> colors = new HashSet<String>();
-
-        for (int i = 0; i < m.length(); i++) {
-            switch (m.charAt(i)) {
-                case ' ':
-                    break;
-                case 'G':
-                    colors.add(Constant.Color.Green);
-                    break;
-                case 'W':
-                    colors.add(Constant.Color.White);
-                    break;
-                case 'B':
-                    colors.add(Constant.Color.Black);
-                    break;
-                case 'U':
-                    colors.add(Constant.Color.Blue);
-                    break;
-                case 'R':
-                    colors.add(Constant.Color.Red);
-                    break;
-            }
-        }
 ]]>
 </codefragment>
 </duplication>
@@ -6630,8 +4900,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="15" tokens="127">
-<file line="668" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<file line="1026" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="674" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
+<file line="1007" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
         List<Card> tmp, diff;
@@ -6653,7 +4923,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="125">
-<file line="1019" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
+<file line="653" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
 <file line="40" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Sorceries.java"/>
 <codefragment>
 <![CDATA[
@@ -6691,7 +4961,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="17" tokens="125">
 <file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="874" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="880" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
         final int defense = getNumDefense(sa);
@@ -6715,8 +4985,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="27" tokens="124">
-<file line="133" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedDeck.java"/>
-<file line="300" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
+<file line="132" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedDeck.java"/>
+<file line="298" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java"/>
 <codefragment>
 <![CDATA[
         out.addAll(CardListUtil.getColor(in, color3));
@@ -6777,7 +5047,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="14" tokens="123">
-<file line="5482" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
+<file line="5479" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java"/>
 <file line="482" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Player.java"/>
 <codefragment>
 <![CDATA[
@@ -6853,8 +5123,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="11" tokens="121">
-<file line="1773" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<file line="1901" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1777" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
+<file line="1905" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
 <codefragment>
 <![CDATA[
                                 for (int no = 0; no < Max; no++) Numbers[no] = String.valueOf(no);
@@ -6898,74 +5168,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="25" tokens="120">
-<file line="1190" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="1186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-        canLoseByDecking.setSelected(fp.millingLossCondition);
-
-        return true;
-    }
-
-    /**
-     * <p>savePrefs.</p>
-     *
-     * @return a boolean.
-     */
-    public boolean savePrefs() {
-        Constant.Runtime.Mill[0] = canLoseByDecking.isSelected();
-        ForgePreferences fp = Gui_NewGame.preferences;
-
-        fp.bAIUpkeep = cbAIUpkeep.isSelected();
-        fp.bAIDraw = cbAIDraw.isSelected();
-        fp.bAIEOT = cbAIEndOfTurn.isSelected();
-        fp.bAIBeginCombat = cbAIBeginCombat.isSelected();
-        fp.bAIEndCombat = cbAIEndCombat.isSelected();
-
-        fp.bHumanUpkeep = cbHumanUpkeep.isSelected();
-        fp.bHumanDraw = cbHumanDraw.isSelected();
-        fp.bHumanEOT = cbHumanEndOfTurn.isSelected();
-        fp.bHumanBeginCombat = cbHumanBeginCombat.isSelected();
-        fp.bHumanEndCombat = cbHumanEndCombat.isSelected();
-]]>
-</codefragment>
-</duplication>
-<duplication lines="27" tokens="119">
-<file line="1065" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<file line="1106" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java"/>
-<codefragment>
-<![CDATA[
-                card = c.getCard(cardName, AllZone.getComputerPlayer());
-                card.setUniqueNumber(nextUniqueNumber++);
-
-                //if(card.isBasicLand()) {
-                //String PC = card.getSVar("PicCount");
-                //int n = 0;
-                //if (PC.matches("[0-9][0-9]?"))
-                //	n = Integer.parseInt(PC);
-                //if (n > 1)
-                //    card.setRandomPicture(generator.nextInt(n));
-                //System.out.println("computer random number:" + card.getRandomPicture());
-                //}
-
-                if (!setCode.equals(""))
-                    card.setCurSetCode(setCode);
-                else if ((card.getSets().size() > 0)) // && card.getCurSetCode().equals(""))
-                    card.setRandomSetCode();
-
-                if (!card.getCurSetCode().equals("")) {
-                    int n = SetInfoUtil.getSetInfo_Code(card.getSets(), card.getCurSetCode()).PicCount;
-                    if (n > 1)
-                        card.setRandomPicture(generator.nextInt(n - 1) + 1);
-
-                    card.setImageFilename(CardUtil.buildFilename(card));
-                }
-
-                AllZone.getComputerLibrary().add(card);
-]]>
-</codefragment>
-</duplication>
 <duplication lines="15" tokens="119">
 <file line="150" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerAI_General.java"/>
 <file line="193" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerAI_General.java"/>
@@ -6985,7 +5187,43 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
             }
         });
         all.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
-        all.addAll(CardFactoryUtil.getGraveyardActivationCards(AllZone.getComputerPlayer()));
+        all.addAll(CardFactoryUtil.getExternalZoneActivationCards(AllZone.getComputerPlayer()));
+]]>
+</codefragment>
+</duplication>
+<duplication lines="28" tokens="118">
+<file line="164" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="241" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<codefragment>
+<![CDATA[
+        bottomTable.repaint();
+    }// updateDisplay
+
+    /**
+     * <p>updateDisplay.</p>
+     */
+    public void updateDisplay() {
+        //updateDisplay(this.top, this.bottom);
+
+        topModel.clear();
+
+        top = AllZone.getNameChanger().changeCardsIfNeeded(top);
+        bottom = AllZone.getNameChanger().changeCardsIfNeeded(bottom);
+
+        Card c;
+        String cardName;
+        ReadBoosterPack pack = new ReadBoosterPack();
+
+        // update top
+        for (int i = 0; i < top.size(); i++) {
+            c = top.get(i);
+
+            // add rarity to card if this is a sealed card pool
+
+            cardName = AllZone.getNameChanger().getOriginalName(c.getName());
+            if (!pack.getRarity(cardName).equals("error")) {
+                c.setRarity(pack.getRarity(cardName));
+            }
 ]]>
 </codefragment>
 </duplication>
@@ -7051,8 +5289,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="67" tokens="116">
-<file line="432" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
-<file line="446" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
+<file line="419" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DownloadSetPictures_LQ.java"/>
+<file line="436" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_MigrateLocalMWSSetPictures_HQ.java"/>
 <codefragment>
 <![CDATA[
                             CList.add(new mCard(SC3 + "\\" + newFileName, URLBase + SC2 + "\\" + fn, SC3));
@@ -7126,8 +5364,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="19" tokens="116">
-<file line="2918" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
-<file line="3002" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="2938" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="3022" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
         CardList kinship = AllZoneUtil.getPlayerCardsInPlay(player, "Squeaking Pie Grubfellows");
@@ -7196,6 +5434,27 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
                 if (AllZone.getComputerPlayer().getLife() - abCost.getLifeAmount() < 4)
                     return false;
             }
+]]>
+</codefragment>
+</duplication>
+<duplication lines="13" tokens="115">
+<file line="1118" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<file line="1287" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CombatUtil.java"/>
+<codefragment>
+<![CDATA[
+        toughness += attacker.getKeywordMagnitude("Bushido");
+
+        ArrayList<Trigger> registeredTriggers = AllZone.getTriggerHandler().getRegisteredTriggers();
+        for (Trigger trigger : registeredTriggers) {
+            HashMap<String, String> trigParams = trigger.getMapParams();
+            Card source = trigger.getHostCard();
+
+            if (!combatTriggerWillTrigger(attacker, defender, trigger, null) || !trigParams.containsKey("Execute"))
+                continue;
+            String ability = source.getSVar(trigParams.get("Execute"));
+            AbilityFactory AF = new AbilityFactory();
+            HashMap<String, String> abilityParams = AF.getMapParams(ability, source);
+            if (abilityParams.containsKey("ValidTgts") || abilityParams.containsKey("Tgt"))
 ]]>
 </codefragment>
 </duplication>
@@ -7305,8 +5564,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="29" tokens="114">
-<file line="400" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
-<file line="594" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="381" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
+<file line="575" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java"/>
 <codefragment>
 <![CDATA[
             for (int i = 0; i < list.size(); i++) {
@@ -7343,7 +5602,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="14" tokens="113">
 <file line="897" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
-<file line="1663" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1670" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
 <codefragment>
 <![CDATA[
     private static void tapOrUntapResolve(final AbilityFactory af, final SpellAbility sa) {
@@ -7363,32 +5622,37 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="21" tokens="113">
-<file line="78" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="132" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<duplication lines="26" tokens="113">
+<file line="111" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="131" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
-    @Override
-    public void setTitle(String message) {
-        super.setTitle(message);
-    }
+            Random r = MyRandom.random;
+            //int n = 0;
+            //if (!PC.equals("")) {
+            //    if (PC.matches("[0-9][0-9]?"))
+            //    	n = Integer.parseInt(PC);
+            //    if (n > 1)
+            //        c.setRandomPicture(r.nextInt(n));
+            //}
 
-    /** {@inheritDoc} */
-    public void updateDisplay(CardList top, CardList bottom) {
-        this.top = top;
-        this.bottom = bottom;
+            if (c.getCurSetCode().equals(""))
+                c.setCurSetCode(c.getMostRecentSet());
 
-        topModel.clear();
-        bottomModel.clear();
+            if (!c.getCurSetCode().equals("")) {
+                int n = SetInfoUtil.getSetInfo_Code(c.getSets(), c.getCurSetCode()).PicCount;
+                if (n > 1)
+                    c.setRandomPicture(r.nextInt(n - 1) + 1);
 
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
+                c.setImageFilename(CardUtil.buildFilename(c));
+            }
 
-        Card c;
-        String cardName;
-        ReadBoosterPack pack = new ReadBoosterPack();
+
+            topModel.addCard(c);
+        }//for
+
+        //update bottom
+        for (int i = 0; i < bottom.size(); i++) {
 ]]>
 </codefragment>
 </duplication>
@@ -7448,7 +5712,7 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </duplication>
 <duplication lines="22" tokens="112">
 <file line="332" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/SealedDeck.java"/>
-<file line="296" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="288" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 String mc = tDeck.get(i).getManaCost();
@@ -7477,8 +5741,8 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 </codefragment>
 </duplication>
 <duplication lines="12" tokens="112">
-<file line="940" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
-<file line="990" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
+<file line="962" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
+<file line="1012" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_NewGame.java"/>
 <codefragment>
 <![CDATA[
         if (p.equals("H")) {
@@ -7496,35 +5760,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="18" tokens="112">
-<file line="348" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java"/>
-<file line="569" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<codefragment>
-<![CDATA[
-                    oppRemovedValue.setText("" + AllZone.getComputerExile().size());
-                }
-            };
-            AllZone.getComputerHand().addObserver(o);
-            AllZone.getComputerGraveyard().addObserver(o);
-            AllZone.getComputerLibrary().addObserver(o);
-        }
-
-
-        //opponent life
-        oppLifeLabel.setText("" + AllZone.getComputerPlayer().getLife());
-        AllZone.getComputerPlayer().addObserver(new Observer() {
-            public void update(Observable a, Object b) {
-                int life = AllZone.getComputerPlayer().getLife();
-                oppLifeLabel.setText("" + life);
-            }
-        });
-        AllZone.getComputerPlayer().updateObservers();
-]]>
-</codefragment>
-</duplication>
 <duplication lines="22" tokens="112">
 <file line="402" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/BoosterDraftAI.java"/>
-<file line="296" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
+<file line="288" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/Generate2ColorDeck.java"/>
 <codefragment>
 <![CDATA[
                 String mc = tDeck.get(i).getManaCost();
@@ -7630,42 +5868,9 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="25" tokens="110">
-<file line="128" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="93" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-    private CardPicturePanel picture = new CardPicturePanel(null);
-    private JPanel glassPane;
-
-    /** {@inheritDoc} */
-    @Override
-    public void setTitle(String message) {
-        super.setTitle(message);
-    }
-
-    /** {@inheritDoc} */
-    public void updateDisplay(CardList top, CardList bottom) {
-
-        this.top = top;
-        this.bottom = bottom;
-
-        topModel.clear();
-        bottomModel.clear();
-
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
-
-        Card c;
-        String cardName;
-]]>
-</codefragment>
-</duplication>
 <duplication lines="11" tokens="110">
-<file line="5024" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
-<file line="5099" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="4943" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
+<file line="5018" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameActionUtil.java"/>
 <codefragment>
 <![CDATA[
             String[] Keyword = Keyword_Details[2].split("/", 3);
@@ -7701,6 +5906,36 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="22" tokens="109">
+<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_Taps.java"/>
+<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_TapsForMana.java"/>
+<codefragment>
+<![CDATA[
+    public Trigger_TapsForMana(HashMap<String, String> params, Card host) {
+        super(params, host);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean performTest(java.util.Map<String, Object> runParams) {
+        Card tapper = (Card) runParams.get("Card");
+
+        if (mapParams.containsKey("ValidCard")) {
+            if (!tapper.isValidCard(mapParams.get("ValidCard").split(","), hostCard.getController(), hostCard)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public Trigger getCopy() {
+        Trigger copy = new Trigger_TapsForMana(mapParams, hostCard);
+]]>
+</codefragment>
+</duplication>
 <duplication lines="7" tokens="109">
 <file line="99" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
 <file line="178" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
@@ -7713,42 +5948,6 @@ public class Gui_MigrateLocalMWSSetPictures_HQ extends DefaultBoundedRangeModel 
             list.add(AllZone.getCardFactory().getCard("Plains", AllZone.getHumanPlayer()));
             list.add(AllZone.getCardFactory().getCard("Mountain", AllZone.getHumanPlayer()));
             list.add(AllZone.getCardFactory().getCard("Swamp", AllZone.getHumanPlayer()));
-]]>
-</codefragment>
-</duplication>
-<duplication lines="28" tokens="109">
-<file line="44" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="48" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewConstants, NewConstants.GUI.GuiDisplay, NewConstants.LANG.GuiDisplay {
-    /** Constant <code>serialVersionUID=4519302185194841060L</code> */
-    private static final long serialVersionUID = 4519302185194841060L;
-
-    private GuiInput inputControl;
-
-    Font statFont = new Font("Dialog", Font.PLAIN, 12);
-    Font lifeFont = new Font("Dialog", Font.PLAIN, 40);
-    Font checkboxFont = new Font("Dialog", Font.PLAIN, 9);
-
-
-    /** Constant <code>greenColor</code> */
-    public static Color greenColor = new Color(0, 164, 0);
-
-    private Action HUMAN_GRAVEYARD_ACTION;
-    private Action HUMAN_REMOVED_ACTION;
-    private Action HUMAN_FLASHBACK_ACTION;
-    private Action COMPUTER_GRAVEYARD_ACTION;
-    private Action COMPUTER_REMOVED_ACTION;
-    private Action CONCEDE_ACTION;
-    public Card cCardHQ;
-
-    //private CardList multiBlockers = new CardList();
-
-    /**
-     * <p>Constructor for GuiDisplay4.</p>
-     */
-    public GuiDisplay4() {
 ]]>
 </codefragment>
 </duplication>
@@ -7793,6 +5992,30 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="107">
+<file line="394" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<file line="769" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Planeswalkers.java"/>
+<codefragment>
+<![CDATA[
+                    }
+                }//resolve()
+
+                @Override
+                public boolean canPlay() {
+                    for (int i = 0; i < AllZone.getStack().size(); i++) {
+                        if (AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
+                    }
+
+                    return AllZone.getZone(card).is(Constant.Zone.Battlefield)
+                            && turn[0] != AllZone.getPhase().getTurn()
+                            && Phase.canCastSorcery(card.getController());
+                }
+
+                @Override
+                public boolean canPlayAI() {
+]]>
+</codefragment>
+</duplication>
+<duplication lines="16" tokens="107">
 <file line="128" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Choose.java"/>
 <file line="561" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Reveal.java"/>
 <codefragment>
@@ -7817,8 +6040,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="25" tokens="107">
-<file line="212" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
-<file line="161" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
+<file line="210" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="159" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
             c.setRarity(c.getSVar("Rarity"));
@@ -7901,6 +6124,30 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 ]]>
 </codefragment>
 </duplication>
+<duplication lines="16" tokens="106">
+<file line="1287" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<file line="1375" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_PermanentState.java"/>
+<codefragment>
+<![CDATA[
+        CardList validTappables = getTapAllTargets(valid, source);
+
+        Random r = MyRandom.random;
+        boolean rr = false;
+        if (r.nextFloat() <= Math.pow(.6667, source.getAbilityUsed()))
+            rr = true;
+
+        if (validTappables.size() > 0) {
+            CardList human = validTappables.filter(new CardListFilter() {
+                public boolean addCard(Card c) {
+                    return c.getController().isHuman();
+                }
+            });
+            CardList compy = validTappables.filter(new CardListFilter() {
+                public boolean addCard(Card c) {
+                    return c.getController().isHuman();
+]]>
+</codefragment>
+</duplication>
 <duplication lines="6" tokens="106">
 <file line="105" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
 <file line="186" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadBoosterPack.java"/>
@@ -7916,8 +6163,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="16" tokens="106">
-<file line="588" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="902" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="584" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="898" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
         this.getContentPane().add(statsLabel, "cell 0 7");
@@ -7936,128 +6183,6 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
             }
         };
         setGlassPane(glassPane);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="21" tokens="106">
-<file line="78" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="97" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_Quest_DeckEditor.java"/>
-<codefragment>
-<![CDATA[
-    @Override
-    public void setTitle(String message) {
-        super.setTitle(message);
-    }
-
-    /** {@inheritDoc} */
-    public void updateDisplay(CardList top, CardList bottom) {
-
-        this.top = top;
-        this.bottom = bottom;
-
-        topModel.clear();
-        bottomModel.clear();
-
-        if (AllZone.getNameChanger().shouldChangeCardName()) {
-            top = new CardList(AllZone.getNameChanger().changeCard(top.toArray()));
-            bottom = new CardList(AllZone.getNameChanger().changeCard(bottom.toArray()));
-        }
-
-        Card c;
-        String cardName;
-]]>
-</codefragment>
-</duplication>
-<duplication lines="16" tokens="105">
-<file line="654" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
-<file line="701" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java"/>
-<codefragment>
-<![CDATA[
-            return ((child != null) && child.isVisible()) ? child.getMinimumSize() : new Dimension(0, 0);
-        } else if (root instanceof Divider) {
-            if (!((Divider) root).isVisible())
-                return new Dimension(0, 0);
-            int divSize = getDividerSize();
-            return new Dimension(divSize, divSize);
-        } else {
-            Split split = (Split) root;
-            List<Node> splitChildren = split.getChildren();
-            int width = 0;
-            int height = 0;
-            if (split.isRowLayout()) {
-                for (Node splitChild : splitChildren) {
-                    if (!splitChild.isVisible())
-                        continue;
-                    Dimension size = minimumNodeSize(splitChild);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="22" tokens="105">
-<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_Taps.java"/>
-<file line="22" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_TapsForMana.java"/>
-<codefragment>
-<![CDATA[
-    public Trigger_TapsForMana(HashMap<String, String> params, Card host) {
-        super(params, host);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public boolean performTest(HashMap<String, Object> runParams) {
-        Card tapper = (Card) runParams.get("Card");
-
-        if (mapParams.containsKey("ValidCard")) {
-            if (!tapper.isValidCard(mapParams.get("ValidCard").split(","), hostCard.getController(), hostCard)) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Trigger getCopy() {
-        Trigger copy = new Trigger_TapsForMana(mapParams, hostCard);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="31" tokens="105">
-<file line="275" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java"/>
-<file line="41" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Instants.java"/>
-<codefragment>
-<![CDATA[
-                @Override
-                public boolean canPlayAI() {
-                    return getAttacker() != null;
-                }
-
-                public Card getAttacker() {
-                    // target creatures that is going to attack
-                    Combat c = ComputerUtil.getAttackers();
-                    Card[] att = c.getAttackers();
-
-                    // Effect best used on at least a couple creatures
-                    if (att.length > 1) {
-                        return att[0];
-                    } else return null;
-                }//getAttacker()
-
-                String getKeywordBoost() {
-                    String theColor = getChosenColor();
-                    return "Protection from " + theColor;
-                }//getKeywordBoost()
-
-                String getChosenColor() {
-                    // Choose color for protection in Brave the Elements
-                    String color = "";
-                    if (card.getController().isHuman()) {
-
-                        // String[] colors = Constant.Color.Colors;
-                        // colors[colors.length-1] = null;
-
-                        // You can no longer choose to gain "protection from null".
-                        String[] colors = Constant.Color.onlyColors;
 ]]>
 </codefragment>
 </duplication>
@@ -8301,116 +6426,6 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 ]]>
 </codefragment>
 </duplication>
-<duplication lines="25" tokens="103">
-<file line="745" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java"/>
-<file line="735" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java"/>
-<codefragment>
-<![CDATA[
-                GuiDisplayUtil.setupPlayZone(oppPlayPanel, c);
-            }
-        });
-        AllZone.getComputerBattlefield().updateObservers();
-        //END - computer play
-
-    }//addObservers()
-
-    /**
-     * <p>initComponents.</p>
-     */
-    private void initComponents() {
-        //Preparing the Frame
-        setTitle(ForgeProps.getLocalized(LANG.PROGRAM_NAME));
-        if (!Gui_NewGame.useLAFFonts.isSelected()) setFont(new Font("Times New Roman", 0, 16));
-        getContentPane().setLayout(new BorderLayout());
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent evt) {
-                concede();
-            }
-
-            @Override
-            public void windowClosed(WindowEvent e) {
-                File f = ForgeProps.getFile(LAYOUT_NEW);
-]]>
-</codefragment>
-</duplication>
-<duplication lines="43" tokens="102">
-<file line="498" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
-<file line="598" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/graphics/GraphicsUtilities.java"/>
-<codefragment>
-<![CDATA[
-            } while (width != newWidth || height != newHeight);
-        } finally {
-            g2.dispose();
-        }
-
-        if (width != thumb.getWidth() || height != thumb.getHeight()) {
-            temp = createCompatibleImage(image, width, height);
-            g2 = temp.createGraphics();
-
-            try {
-                g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-                        RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-                g2.drawImage(thumb, 0, 0, width, height, 0, 0, width, height, null);
-            } finally {
-                g2.dispose();
-            }
-
-            thumb = temp;
-        }
-
-        return thumb;
-    }
-
-    /**
-     * <p>Returns an array of pixels, stored as integers, from a
-     * <code>BufferedImage</code>. The pixels are grabbed from a rectangular
-     * area defined by a location and two dimensions. Calling this method on
-     * an image of type different from <code>BufferedImage.TYPE_INT_ARGB</code>
-     * and <code>BufferedImage.TYPE_INT_RGB</code> will unmanage the image.</p>
-     *
-     * @param img    the source image
-     * @param x      the x location at which to start grabbing pixels
-     * @param y      the y location at which to start grabbing pixels
-     * @param w      the width of the rectangle of pixels to grab
-     * @param h      the height of the rectangle of pixels to grab
-     * @param pixels a pre-allocated array of pixels of size w*h; can be null
-     * @return <code>pixels</code> if non-null, a new array of integers
-     *         otherwise
-     * @throws java.lang.IllegalArgumentException
-     *          is <code>pixels</code> is non-null and
-     *          of length &lt; w*h
-     */
-    public static int[] getPixels(BufferedImage img,
-]]>
-</codefragment>
-</duplication>
-<duplication lines="18" tokens="102">
-<file line="721" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
-<file line="945" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
-<codefragment>
-<![CDATA[
-            if (!AllZoneUtil.isCardInPlay(tgtC))
-                continue;
-
-            final int a = getNumAttack(sa);
-            final int d = getNumDefense(sa);
-
-            tgtC.addTempAttackBoost(a);
-            tgtC.addTempDefenseBoost(d);
-
-            for (int i = 0; i < Keywords.size(); i++) {
-                if (!Keywords.get(i).equals("none"))
-                    tgtC.addExtrinsicKeyword(Keywords.get(i));
-            }
-
-            if (!params.containsKey("Permanent")) {
-                // If not Permanent, remove Pumped at EOT
-                final Command untilEOT = new Command() {
-                    private static final long serialVersionUID = 5415795460189457660L;
-]]>
-</codefragment>
-</duplication>
 <duplication lines="32" tokens="101">
 <file line="385" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
 <file line="406" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Protection.java"/>
@@ -8472,7 +6487,7 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </duplication>
 <duplication lines="15" tokens="100">
 <file line="352" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Debuff.java"/>
-<file line="493" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
+<file line="497" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java"/>
 <codefragment>
 <![CDATA[
     private boolean pumpMandatoryTarget(AbilityFactory af, SpellAbility sa, boolean mandatory) {
@@ -8521,8 +6536,8 @@ public class GuiDisplay4 extends JFrame implements CardContainer, Display, NewCo
 </codefragment>
 </duplication>
 <duplication lines="23" tokens="100">
-<file line="109" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
-<file line="174" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
+<file line="107" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java"/>
+<file line="172" path="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_DeckEditor.java"/>
 <codefragment>
 <![CDATA[
                 filteredOut = filterByType(c);

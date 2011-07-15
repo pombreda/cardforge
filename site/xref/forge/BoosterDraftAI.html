@@ -39,7 +39,7 @@
 <a class="jxr_linenumber" name="29" href="#29">29</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="30" href="#30">30</a>  <em class="jxr_javadoccomment">     * Constant &lt;code&gt;colorToLand&lt;/code&gt;</em>
 <a class="jxr_linenumber" name="31" href="#31">31</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, String&gt; colorToLand = <strong class="jxr_keyword">new</strong> HashMap&lt;String, String&gt;();
+<a class="jxr_linenumber" name="32" href="#32">32</a>      <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> Map&lt;String, String&gt; colorToLand = <strong class="jxr_keyword">new</strong> TreeMap&lt;String, String&gt;();
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
 <a class="jxr_linenumber" name="34" href="#34">34</a>      <em class="jxr_comment">//picks one Card from in_choose, removes that card, and returns the list</em>
 <a class="jxr_linenumber" name="35" href="#35">35</a>      <em class="jxr_comment">//returns the cards not picked</em>
@@ -257,7 +257,7 @@
 <a class="jxr_linenumber" name="247" href="#247">247</a>         <strong class="jxr_keyword">if</strong> (n.length != nDecks)
 <a class="jxr_linenumber" name="248" href="#248">248</a>             <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> RuntimeException(<span class="jxr_string">"BoosterDraftAI : testColors error, numbers array length does not equal 7"</span>);
 <a class="jxr_linenumber" name="249" href="#249">249</a> 
-<a class="jxr_linenumber" name="250" href="#250">250</a>         HashSet&lt;Integer&gt; set = <strong class="jxr_keyword">new</strong> HashSet&lt;Integer&gt;();
+<a class="jxr_linenumber" name="250" href="#250">250</a>         Set&lt;Integer&gt; set = <strong class="jxr_keyword">new</strong> TreeSet&lt;Integer&gt;();
 <a class="jxr_linenumber" name="251" href="#251">251</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; nDecks; i++)
 <a class="jxr_linenumber" name="252" href="#252">252</a>             set.add(Integer.valueOf(n[i]));
 <a class="jxr_linenumber" name="253" href="#253">253</a> 

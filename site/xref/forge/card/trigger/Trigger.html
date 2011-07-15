@@ -78,23 +78,23 @@
 <a class="jxr_linenumber" name="68" href="#68">68</a>          <strong class="jxr_keyword">return</strong> mapParams;
 <a class="jxr_linenumber" name="69" href="#69">69</a>      }
 <a class="jxr_linenumber" name="70" href="#70">70</a>  
-<a class="jxr_linenumber" name="71" href="#71">71</a>      <strong class="jxr_keyword">protected</strong> HashMap&lt;String, Object&gt; runParams;
+<a class="jxr_linenumber" name="71" href="#71">71</a>      <strong class="jxr_keyword">protected</strong> Map&lt;String, Object&gt; runParams;
 <a class="jxr_linenumber" name="72" href="#72">72</a>  
 <a class="jxr_linenumber" name="73" href="#73">73</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="74" href="#74">74</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Setter for the field &lt;code&gt;runParams&lt;/code&gt;.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="75" href="#75">75</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * @param rp a {@link java.util.HashMap} object.</em>
+<a class="jxr_linenumber" name="76" href="#76">76</a>  <em class="jxr_javadoccomment">     * @param runParams2 a {@link java.util.Map} object.</em>
 <a class="jxr_linenumber" name="77" href="#77">77</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="78" href="#78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setRunParams(HashMap&lt;String, Object&gt; rp) {
-<a class="jxr_linenumber" name="79" href="#79">79</a>          runParams = rp;
+<a class="jxr_linenumber" name="78" href="#78">78</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setRunParams(Map&lt;String, Object&gt; runParams2) {
+<a class="jxr_linenumber" name="79" href="#79">79</a>          runParams = runParams2;
 <a class="jxr_linenumber" name="80" href="#80">80</a>      }
 <a class="jxr_linenumber" name="81" href="#81">81</a>  
 <a class="jxr_linenumber" name="82" href="#82">82</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="83" href="#83">83</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;Getter for the field &lt;code&gt;runParams&lt;/code&gt;.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="84" href="#84">84</a>  <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     * @return a {@link java.util.HashMap} object.</em>
+<a class="jxr_linenumber" name="85" href="#85">85</a>  <em class="jxr_javadoccomment">     * @return a {@link java.util.Map} object.</em>
 <a class="jxr_linenumber" name="86" href="#86">86</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="87" href="#87">87</a>      <strong class="jxr_keyword">public</strong> HashMap&lt;String, Object&gt; getRunParams() {
+<a class="jxr_linenumber" name="87" href="#87">87</a>      <strong class="jxr_keyword">public</strong> Map&lt;String, Object&gt; getRunParams() {
 <a class="jxr_linenumber" name="88" href="#88">88</a>          <strong class="jxr_keyword">return</strong> runParams;
 <a class="jxr_linenumber" name="89" href="#89">89</a>      }
 <a class="jxr_linenumber" name="90" href="#90">90</a>  
@@ -404,90 +404,127 @@
 <a class="jxr_linenumber" name="394" href="#394">394</a> 
 <a class="jxr_linenumber" name="395" href="#395">395</a>         }
 <a class="jxr_linenumber" name="396" href="#396">396</a> 
-<a class="jxr_linenumber" name="397" href="#397">397</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="398" href="#398">398</a>     }
-<a class="jxr_linenumber" name="399" href="#399">399</a> 
-<a class="jxr_linenumber" name="400" href="#400">400</a> 
-<a class="jxr_linenumber" name="401" href="#401">401</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="402" href="#402">402</a> <em class="jxr_javadoccomment">     * &lt;p&gt;matchesValid.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="403" href="#403">403</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="404" href="#404">404</a> <em class="jxr_javadoccomment">     * @param o a {@link java.lang.Object} object.</em>
-<a class="jxr_linenumber" name="405" href="#405">405</a> <em class="jxr_javadoccomment">     * @param valids an array of {@link java.lang.String} objects.</em>
-<a class="jxr_linenumber" name="406" href="#406">406</a> <em class="jxr_javadoccomment">     * @param srcCard a {@link forge.Card} object.</em>
-<a class="jxr_linenumber" name="407" href="#407">407</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="408" href="#408">408</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="409" href="#409">409</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> matchesValid(Object o, String[] valids, <a href="../../../forge/Card.html">Card</a> srcCard) {
-<a class="jxr_linenumber" name="410" href="#410">410</a>         <strong class="jxr_keyword">if</strong> (o instanceof Card) {
-<a class="jxr_linenumber" name="411" href="#411">411</a>             <a href="../../../forge/Card.html">Card</a> c = (Card) o;
-<a class="jxr_linenumber" name="412" href="#412">412</a>             <strong class="jxr_keyword">return</strong> c.isValidCard(valids, srcCard.getController(), srcCard);
-<a class="jxr_linenumber" name="413" href="#413">413</a>         }
-<a class="jxr_linenumber" name="414" href="#414">414</a> 
-<a class="jxr_linenumber" name="415" href="#415">415</a>         <strong class="jxr_keyword">if</strong> (o instanceof Player) {
-<a class="jxr_linenumber" name="416" href="#416">416</a>             <strong class="jxr_keyword">for</strong> (String v : valids) {
-<a class="jxr_linenumber" name="417" href="#417">417</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"Player"</span>) || v.equalsIgnoreCase(<span class="jxr_string">"Each"</span>)) {
-<a class="jxr_linenumber" name="418" href="#418">418</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="419" href="#419">419</a>                 }
-<a class="jxr_linenumber" name="420" href="#420">420</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"Opponent"</span>)) {
-<a class="jxr_linenumber" name="421" href="#421">421</a>                     <strong class="jxr_keyword">if</strong> (o.equals(srcCard.getController().getOpponent())) {
-<a class="jxr_linenumber" name="422" href="#422">422</a>                         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="423" href="#423">423</a>                     }
-<a class="jxr_linenumber" name="424" href="#424">424</a>                 }
-<a class="jxr_linenumber" name="425" href="#425">425</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"You"</span>)) {
-<a class="jxr_linenumber" name="426" href="#426">426</a>                     <strong class="jxr_keyword">return</strong> o.equals(srcCard.getController());
-<a class="jxr_linenumber" name="427" href="#427">427</a>                 }
-<a class="jxr_linenumber" name="428" href="#428">428</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"EnchantedController"</span>)) {
-<a class="jxr_linenumber" name="429" href="#429">429</a>                     <strong class="jxr_keyword">return</strong> ((Player) o).isPlayer(srcCard.getEnchantingCard().getController());
-<a class="jxr_linenumber" name="430" href="#430">430</a>                 }
-<a class="jxr_linenumber" name="431" href="#431">431</a>             }
-<a class="jxr_linenumber" name="432" href="#432">432</a>         }
-<a class="jxr_linenumber" name="433" href="#433">433</a> 
-<a class="jxr_linenumber" name="434" href="#434">434</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="435" href="#435">435</a>     }
-<a class="jxr_linenumber" name="436" href="#436">436</a> 
-<a class="jxr_linenumber" name="437" href="#437">437</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="438" href="#438">438</a> <em class="jxr_javadoccomment">     * &lt;p&gt;isSecondary.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="439" href="#439">439</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="440" href="#440">440</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="441" href="#441">441</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="442" href="#442">442</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSecondary() {
-<a class="jxr_linenumber" name="443" href="#443">443</a>         <strong class="jxr_keyword">if</strong> (mapParams.containsKey(<span class="jxr_string">"Secondary"</span>)) {
-<a class="jxr_linenumber" name="444" href="#444">444</a>             <strong class="jxr_keyword">if</strong> (mapParams.get(<span class="jxr_string">"Secondary"</span>).equals(<span class="jxr_string">"True"</span>))
-<a class="jxr_linenumber" name="445" href="#445">445</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="446" href="#446">446</a>         }
-<a class="jxr_linenumber" name="447" href="#447">447</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="448" href="#448">448</a>     }
-<a class="jxr_linenumber" name="449" href="#449">449</a> 
-<a class="jxr_linenumber" name="450" href="#450">450</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
-<a class="jxr_linenumber" name="451" href="#451">451</a>     @Override
-<a class="jxr_linenumber" name="452" href="#452">452</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object o) {
-<a class="jxr_linenumber" name="453" href="#453">453</a>         <strong class="jxr_keyword">if</strong> (!(o instanceof Trigger))
-<a class="jxr_linenumber" name="454" href="#454">454</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="455" href="#455">455</a> 
-<a class="jxr_linenumber" name="456" href="#456">456</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.ID == ((Trigger) o).ID;
-<a class="jxr_linenumber" name="457" href="#457">457</a>     }
-<a class="jxr_linenumber" name="458" href="#458">458</a> 
-<a class="jxr_linenumber" name="459" href="#459">459</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="460" href="#460">460</a> <em class="jxr_javadoccomment">     * &lt;p&gt;performTest.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="461" href="#461">461</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="462" href="#462">462</a> <em class="jxr_javadoccomment">     * @param runParams a {@link java.util.HashMap} object.</em>
-<a class="jxr_linenumber" name="463" href="#463">463</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="464" href="#464">464</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="465" href="#465">465</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">boolean</strong> performTest(HashMap&lt;String, Object&gt; runParams);
-<a class="jxr_linenumber" name="466" href="#466">466</a> 
-<a class="jxr_linenumber" name="467" href="#467">467</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="468" href="#468">468</a> <em class="jxr_javadoccomment">     * &lt;p&gt;getCopy.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="469" href="#469">469</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="470" href="#470">470</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.trigger.Trigger} object.</em>
-<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="472" href="#472">472</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> getCopy();
-<a class="jxr_linenumber" name="473" href="#473">473</a> 
-<a class="jxr_linenumber" name="474" href="#474">474</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_javadoccomment">     * &lt;p&gt;setTriggeringObjects.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="479" href="#479">479</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">void</strong> setTriggeringObjects(<a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa);
-<a class="jxr_linenumber" name="480" href="#480">480</a> }
+<a class="jxr_linenumber" name="397" href="#397">397</a>         <strong class="jxr_keyword">if</strong>(mapParams.containsKey(<span class="jxr_string">"CheckSVar"</span>)) {
+<a class="jxr_linenumber" name="398" href="#398">398</a>             String SVarName = mapParams.get(<span class="jxr_string">"CheckSVar"</span>);
+<a class="jxr_linenumber" name="399" href="#399">399</a>             String <strong class="jxr_keyword">operator</strong> = <span class="jxr_string">"GE"</span>;
+<a class="jxr_linenumber" name="400" href="#400">400</a>             String operand = <span class="jxr_string">"1"</span>;
+<a class="jxr_linenumber" name="401" href="#401">401</a> 
+<a class="jxr_linenumber" name="402" href="#402">402</a>             <strong class="jxr_keyword">if</strong>(mapParams.containsKey(<span class="jxr_string">"SVarCompare"</span>))
+<a class="jxr_linenumber" name="403" href="#403">403</a>             {
+<a class="jxr_linenumber" name="404" href="#404">404</a>                 <strong class="jxr_keyword">operator</strong> =  mapParams.get(<span class="jxr_string">"SVarCompare"</span>).substring(0,2);
+<a class="jxr_linenumber" name="405" href="#405">405</a>                 operand = mapParams.get(<span class="jxr_string">"SVarCompare"</span>).substring(2);
+<a class="jxr_linenumber" name="406" href="#406">406</a>             }
+<a class="jxr_linenumber" name="407" href="#407">407</a> 
+<a class="jxr_linenumber" name="408" href="#408">408</a>             <strong class="jxr_keyword">int</strong> sVarResult = CardFactoryUtil.xCount(hostCard, hostCard.getSVar(SVarName));
+<a class="jxr_linenumber" name="409" href="#409">409</a>             <strong class="jxr_keyword">int</strong> operandResult = 0;
+<a class="jxr_linenumber" name="410" href="#410">410</a>             <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="411" href="#411">411</a>                 operandResult = Integer.parseInt(operand);
+<a class="jxr_linenumber" name="412" href="#412">412</a>             }
+<a class="jxr_linenumber" name="413" href="#413">413</a>             <strong class="jxr_keyword">catch</strong> ( Exception e) {
+<a class="jxr_linenumber" name="414" href="#414">414</a>                 operandResult = CardFactoryUtil.xCount(hostCard, hostCard.getSVar(operand));
+<a class="jxr_linenumber" name="415" href="#415">415</a>             }
+<a class="jxr_linenumber" name="416" href="#416">416</a> 
+<a class="jxr_linenumber" name="417" href="#417">417</a>             <strong class="jxr_keyword">if</strong>(!AllZoneUtil.compare(sVarResult,<strong class="jxr_keyword">operator</strong>,operandResult))
+<a class="jxr_linenumber" name="418" href="#418">418</a>             {
+<a class="jxr_linenumber" name="419" href="#419">419</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="420" href="#420">420</a>             }
+<a class="jxr_linenumber" name="421" href="#421">421</a> 
+<a class="jxr_linenumber" name="422" href="#422">422</a>         }
+<a class="jxr_linenumber" name="423" href="#423">423</a> 
+<a class="jxr_linenumber" name="424" href="#424">424</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="425" href="#425">425</a>     }
+<a class="jxr_linenumber" name="426" href="#426">426</a> 
+<a class="jxr_linenumber" name="427" href="#427">427</a> 
+<a class="jxr_linenumber" name="428" href="#428">428</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="429" href="#429">429</a> <em class="jxr_javadoccomment">     * &lt;p&gt;matchesValid.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="430" href="#430">430</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="431" href="#431">431</a> <em class="jxr_javadoccomment">     * @param o a {@link java.lang.Object} object.</em>
+<a class="jxr_linenumber" name="432" href="#432">432</a> <em class="jxr_javadoccomment">     * @param valids an array of {@link java.lang.String} objects.</em>
+<a class="jxr_linenumber" name="433" href="#433">433</a> <em class="jxr_javadoccomment">     * @param srcCard a {@link forge.Card} object.</em>
+<a class="jxr_linenumber" name="434" href="#434">434</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="435" href="#435">435</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="436" href="#436">436</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> matchesValid(Object o, String[] valids, <a href="../../../forge/Card.html">Card</a> srcCard) {
+<a class="jxr_linenumber" name="437" href="#437">437</a>         <strong class="jxr_keyword">if</strong> (o instanceof Card) {
+<a class="jxr_linenumber" name="438" href="#438">438</a>             <a href="../../../forge/Card.html">Card</a> c = (Card) o;
+<a class="jxr_linenumber" name="439" href="#439">439</a>             <strong class="jxr_keyword">return</strong> c.isValidCard(valids, srcCard.getController(), srcCard);
+<a class="jxr_linenumber" name="440" href="#440">440</a>         }
+<a class="jxr_linenumber" name="441" href="#441">441</a> 
+<a class="jxr_linenumber" name="442" href="#442">442</a>         <strong class="jxr_keyword">if</strong> (o instanceof Player) {
+<a class="jxr_linenumber" name="443" href="#443">443</a>             <strong class="jxr_keyword">for</strong> (String v : valids) {
+<a class="jxr_linenumber" name="444" href="#444">444</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"Player"</span>) || v.equalsIgnoreCase(<span class="jxr_string">"Each"</span>)) {
+<a class="jxr_linenumber" name="445" href="#445">445</a>                     <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="446" href="#446">446</a>                 }
+<a class="jxr_linenumber" name="447" href="#447">447</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"Opponent"</span>)) {
+<a class="jxr_linenumber" name="448" href="#448">448</a>                     <strong class="jxr_keyword">if</strong> (o.equals(srcCard.getController().getOpponent())) {
+<a class="jxr_linenumber" name="449" href="#449">449</a>                         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="450" href="#450">450</a>                     }
+<a class="jxr_linenumber" name="451" href="#451">451</a>                 }
+<a class="jxr_linenumber" name="452" href="#452">452</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"You"</span>)) {
+<a class="jxr_linenumber" name="453" href="#453">453</a>                     <strong class="jxr_keyword">return</strong> o.equals(srcCard.getController());
+<a class="jxr_linenumber" name="454" href="#454">454</a>                 }
+<a class="jxr_linenumber" name="455" href="#455">455</a>                 <strong class="jxr_keyword">if</strong> (v.equalsIgnoreCase(<span class="jxr_string">"EnchantedController"</span>)) {
+<a class="jxr_linenumber" name="456" href="#456">456</a>                     <strong class="jxr_keyword">return</strong> ((Player) o).isPlayer(srcCard.getEnchantingCard().getController());
+<a class="jxr_linenumber" name="457" href="#457">457</a>                 }
+<a class="jxr_linenumber" name="458" href="#458">458</a>             }
+<a class="jxr_linenumber" name="459" href="#459">459</a>         }
+<a class="jxr_linenumber" name="460" href="#460">460</a> 
+<a class="jxr_linenumber" name="461" href="#461">461</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="462" href="#462">462</a>     }
+<a class="jxr_linenumber" name="463" href="#463">463</a> 
+<a class="jxr_linenumber" name="464" href="#464">464</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="465" href="#465">465</a> <em class="jxr_javadoccomment">     * &lt;p&gt;isSecondary.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="466" href="#466">466</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="467" href="#467">467</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="468" href="#468">468</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="469" href="#469">469</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isSecondary() {
+<a class="jxr_linenumber" name="470" href="#470">470</a>         <strong class="jxr_keyword">if</strong> (mapParams.containsKey(<span class="jxr_string">"Secondary"</span>)) {
+<a class="jxr_linenumber" name="471" href="#471">471</a>             <strong class="jxr_keyword">if</strong> (mapParams.get(<span class="jxr_string">"Secondary"</span>).equals(<span class="jxr_string">"True"</span>))
+<a class="jxr_linenumber" name="472" href="#472">472</a>                 <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="473" href="#473">473</a>         }
+<a class="jxr_linenumber" name="474" href="#474">474</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="475" href="#475">475</a>     }
+<a class="jxr_linenumber" name="476" href="#476">476</a> 
+<a class="jxr_linenumber" name="477" href="#477">477</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
+<a class="jxr_linenumber" name="478" href="#478">478</a>     @Override
+<a class="jxr_linenumber" name="479" href="#479">479</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> equals(Object o) {
+<a class="jxr_linenumber" name="480" href="#480">480</a>         <strong class="jxr_keyword">if</strong> (!(o instanceof Trigger))
+<a class="jxr_linenumber" name="481" href="#481">481</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="482" href="#482">482</a> 
+<a class="jxr_linenumber" name="483" href="#483">483</a>         <strong class="jxr_keyword">return</strong> <strong class="jxr_keyword">this</strong>.ID == ((Trigger) o).ID;
+<a class="jxr_linenumber" name="484" href="#484">484</a>     }
+<a class="jxr_linenumber" name="485" href="#485">485</a> 
+<a class="jxr_linenumber" name="486" href="#486">486</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_javadoccomment">     * &lt;p&gt;performTest.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="489" href="#489">489</a> <em class="jxr_javadoccomment">     * @param runParams2 a {@link java.util.HashMap} object.</em>
+<a class="jxr_linenumber" name="490" href="#490">490</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="492" href="#492">492</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">boolean</strong> performTest(java.util.Map&lt;String, Object&gt; runParams2);
+<a class="jxr_linenumber" name="493" href="#493">493</a> 
+<a class="jxr_linenumber" name="494" href="#494">494</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="495" href="#495">495</a> <em class="jxr_javadoccomment">     * &lt;p&gt;getCopy.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="496" href="#496">496</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.trigger.Trigger} object.</em>
+<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="499" href="#499">499</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> getCopy();
+<a class="jxr_linenumber" name="500" href="#500">500</a> 
+<a class="jxr_linenumber" name="501" href="#501">501</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     * &lt;p&gt;setTriggeringObjects.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="504" href="#504">504</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="505" href="#505">505</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="506" href="#506">506</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">abstract</strong> <strong class="jxr_keyword">void</strong> setTriggeringObjects(<a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa);
+<a class="jxr_linenumber" name="507" href="#507">507</a>     
+<a class="jxr_linenumber" name="508" href="#508">508</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">boolean</strong> temporary = false;
+<a class="jxr_linenumber" name="509" href="#509">509</a>     
+<a class="jxr_linenumber" name="510" href="#510">510</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> setTemporary(<strong class="jxr_keyword">boolean</strong> temp) {
+<a class="jxr_linenumber" name="511" href="#511">511</a>     	temporary = temp;
+<a class="jxr_linenumber" name="512" href="#512">512</a>     }
+<a class="jxr_linenumber" name="513" href="#513">513</a>     
+<a class="jxr_linenumber" name="514" href="#514">514</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> isTemporary() {
+<a class="jxr_linenumber" name="515" href="#515">515</a>     	<strong class="jxr_keyword">return</strong> temporary;
+<a class="jxr_linenumber" name="516" href="#516">516</a>     }
+<a class="jxr_linenumber" name="517" href="#517">517</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

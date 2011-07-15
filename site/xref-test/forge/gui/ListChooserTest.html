@@ -16,13 +16,13 @@
 <a class="jxr_linenumber" name="6" href="#6">6</a>   <em class="jxr_javadoccomment"> * Created by IntelliJ IDEA.</em>
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <em class="jxr_javadoccomment"> * User: dhudson</em>
 <a class="jxr_linenumber" name="8" href="#8">8</a>   <em class="jxr_javadoccomment"> */</em>
-<a class="jxr_linenumber" name="9" href="#9">9</a>   @Test(timeOut = 1000)
+<a class="jxr_linenumber" name="9" href="#9">9</a>   @Test(timeOut = 5000, enabled = false)
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../forge/gui/ListChooserTest.html">ListChooserTest</a> {
 <a class="jxr_linenumber" name="11" href="#11">11</a>      <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment">     *</em>
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="15" href="#15">15</a>      @Test(timeOut = 1000)
+<a class="jxr_linenumber" name="15" href="#15">15</a>      @Test(timeOut = 5000)
 <a class="jxr_linenumber" name="16" href="#16">16</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> ListChooserTest1() {
 <a class="jxr_linenumber" name="17" href="#17">17</a>          ListChooser&lt;String&gt; c = <strong class="jxr_keyword">new</strong> ListChooser&lt;String&gt;(<span class="jxr_string">"test"</span>, <span class="jxr_string">"choose a or b"</span>, 0, 2, <span class="jxr_string">"a"</span>, <span class="jxr_string">"b"</span>);
 <a class="jxr_linenumber" name="18" href="#18">18</a>          System.out.println(c.show());

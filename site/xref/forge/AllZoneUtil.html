@@ -647,7 +647,7 @@
 <a class="jxr_linenumber" name="637" href="#637">637</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="638" href="#638">638</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are tapped</em>
 <a class="jxr_linenumber" name="639" href="#639">639</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="640" href="#640">640</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> tapped = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="640" href="#640">640</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> tapped = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="641" href="#641">641</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="642" href="#642">642</a>             <strong class="jxr_keyword">return</strong> c.isTapped();
 <a class="jxr_linenumber" name="643" href="#643">643</a>         }
@@ -656,7 +656,7 @@
 <a class="jxr_linenumber" name="646" href="#646">646</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="647" href="#647">647</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are untapped</em>
 <a class="jxr_linenumber" name="648" href="#648">648</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="649" href="#649">649</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> untapped = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="649" href="#649">649</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> untapped = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="650" href="#650">650</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="651" href="#651">651</a>             <strong class="jxr_keyword">return</strong> c.isUntapped();
 <a class="jxr_linenumber" name="652" href="#652">652</a>         }
@@ -665,7 +665,7 @@
 <a class="jxr_linenumber" name="655" href="#655">655</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="656" href="#656">656</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all creatures</em>
 <a class="jxr_linenumber" name="657" href="#657">657</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="658" href="#658">658</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> creatures = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="658" href="#658">658</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> creatures = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="659" href="#659">659</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="660" href="#660">660</a>             <strong class="jxr_keyword">return</strong> c.isCreature();
 <a class="jxr_linenumber" name="661" href="#661">661</a>         }
@@ -674,7 +674,7 @@
 <a class="jxr_linenumber" name="664" href="#664">664</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="665" href="#665">665</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all enchantments</em>
 <a class="jxr_linenumber" name="666" href="#666">666</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="667" href="#667">667</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> enchantments = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="667" href="#667">667</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> enchantments = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="668" href="#668">668</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="669" href="#669">669</a>             <strong class="jxr_keyword">return</strong> c.isEnchantment();
 <a class="jxr_linenumber" name="670" href="#670">670</a>         }
@@ -683,7 +683,7 @@
 <a class="jxr_linenumber" name="673" href="#673">673</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="674" href="#674">674</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all equipment</em>
 <a class="jxr_linenumber" name="675" href="#675">675</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="676" href="#676">676</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> equipment = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="676" href="#676">676</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> equipment = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="677" href="#677">677</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="678" href="#678">678</a>             <strong class="jxr_keyword">return</strong> c.isEquipment();
 <a class="jxr_linenumber" name="679" href="#679">679</a>         }
@@ -692,7 +692,7 @@
 <a class="jxr_linenumber" name="682" href="#682">682</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="683" href="#683">683</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all unenchanted cards in a list</em>
 <a class="jxr_linenumber" name="684" href="#684">684</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="685" href="#685">685</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> unenchanted = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="685" href="#685">685</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> unenchanted = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="686" href="#686">686</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="687" href="#687">687</a>             <strong class="jxr_keyword">return</strong> !c.isEnchanted();
 <a class="jxr_linenumber" name="688" href="#688">688</a>         }
@@ -701,7 +701,7 @@
 <a class="jxr_linenumber" name="691" href="#691">691</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="692" href="#692">692</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all enchanted cards in a list</em>
 <a class="jxr_linenumber" name="693" href="#693">693</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="694" href="#694">694</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> enchanted = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="694" href="#694">694</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> enchanted = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="695" href="#695">695</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="696" href="#696">696</a>             <strong class="jxr_keyword">return</strong> c.isEnchanted();
 <a class="jxr_linenumber" name="697" href="#697">697</a>         }
@@ -710,7 +710,7 @@
 <a class="jxr_linenumber" name="700" href="#700">700</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="701" href="#701">701</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all nontoken cards</em>
 <a class="jxr_linenumber" name="702" href="#702">702</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="703" href="#703">703</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonToken = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="703" href="#703">703</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonToken = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="704" href="#704">704</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="705" href="#705">705</a>             <strong class="jxr_keyword">return</strong> !c.isToken();
 <a class="jxr_linenumber" name="706" href="#706">706</a>         }
@@ -719,7 +719,7 @@
 <a class="jxr_linenumber" name="709" href="#709">709</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="710" href="#710">710</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all token cards</em>
 <a class="jxr_linenumber" name="711" href="#711">711</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="712" href="#712">712</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> token = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="712" href="#712">712</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> token = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="713" href="#713">713</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="714" href="#714">714</a>             <strong class="jxr_keyword">return</strong> c.isToken();
 <a class="jxr_linenumber" name="715" href="#715">715</a>         }
@@ -728,7 +728,7 @@
 <a class="jxr_linenumber" name="718" href="#718">718</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="719" href="#719">719</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all nonbasic lands</em>
 <a class="jxr_linenumber" name="720" href="#720">720</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="721" href="#721">721</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonBasicLand = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="721" href="#721">721</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonBasicLand = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="722" href="#722">722</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="723" href="#723">723</a>             <strong class="jxr_keyword">return</strong> !c.isBasicLand();
 <a class="jxr_linenumber" name="724" href="#724">724</a>         }
@@ -737,7 +737,7 @@
 <a class="jxr_linenumber" name="727" href="#727">727</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="728" href="#728">728</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all basicLands</em>
 <a class="jxr_linenumber" name="729" href="#729">729</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="730" href="#730">730</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> basicLands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="730" href="#730">730</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> basicLands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="731" href="#731">731</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="732" href="#732">732</a>             <em class="jxr_comment">//the isBasicLand() check here may be sufficient...</em>
 <a class="jxr_linenumber" name="733" href="#733">733</a>             <strong class="jxr_keyword">return</strong> c.isLand() &amp;&amp; c.isBasicLand();
@@ -747,7 +747,7 @@
 <a class="jxr_linenumber" name="737" href="#737">737</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="738" href="#738">738</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all artifacts</em>
 <a class="jxr_linenumber" name="739" href="#739">739</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="740" href="#740">740</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> artifacts = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="740" href="#740">740</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> artifacts = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="741" href="#741">741</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="742" href="#742">742</a>             <strong class="jxr_keyword">return</strong> c.isArtifact();
 <a class="jxr_linenumber" name="743" href="#743">743</a>         }
@@ -756,7 +756,7 @@
 <a class="jxr_linenumber" name="746" href="#746">746</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="747" href="#747">747</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all nonartifacts</em>
 <a class="jxr_linenumber" name="748" href="#748">748</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="749" href="#749">749</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonartifacts = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="749" href="#749">749</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonartifacts = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="750" href="#750">750</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="751" href="#751">751</a>             <strong class="jxr_keyword">return</strong> !c.isArtifact();
 <a class="jxr_linenumber" name="752" href="#752">752</a>         }
@@ -765,7 +765,7 @@
 <a class="jxr_linenumber" name="755" href="#755">755</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="756" href="#756">756</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all lands</em>
 <a class="jxr_linenumber" name="757" href="#757">757</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="758" href="#758">758</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> lands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="758" href="#758">758</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> lands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="759" href="#759">759</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="760" href="#760">760</a>             <strong class="jxr_keyword">return</strong> c.isLand();
 <a class="jxr_linenumber" name="761" href="#761">761</a>         }
@@ -774,7 +774,7 @@
 <a class="jxr_linenumber" name="764" href="#764">764</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="765" href="#765">765</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all nonlands</em>
 <a class="jxr_linenumber" name="766" href="#766">766</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="767" href="#767">767</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonlands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="767" href="#767">767</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> nonlands = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="768" href="#768">768</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="769" href="#769">769</a>             <strong class="jxr_keyword">return</strong> !c.isLand();
 <a class="jxr_linenumber" name="770" href="#770">770</a>         }
@@ -828,7 +828,7 @@
 <a class="jxr_linenumber" name="818" href="#818">818</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="819" href="#819">819</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are black</em>
 <a class="jxr_linenumber" name="820" href="#820">820</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="821" href="#821">821</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> black = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="821" href="#821">821</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> black = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="822" href="#822">822</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="823" href="#823">823</a>             <strong class="jxr_keyword">return</strong> c.isBlack();
 <a class="jxr_linenumber" name="824" href="#824">824</a>         }
@@ -837,7 +837,7 @@
 <a class="jxr_linenumber" name="827" href="#827">827</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="828" href="#828">828</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are blue</em>
 <a class="jxr_linenumber" name="829" href="#829">829</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="830" href="#830">830</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> blue = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="830" href="#830">830</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> blue = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="831" href="#831">831</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="832" href="#832">832</a>             <strong class="jxr_keyword">return</strong> c.isBlue();
 <a class="jxr_linenumber" name="833" href="#833">833</a>         }
@@ -846,7 +846,7 @@
 <a class="jxr_linenumber" name="836" href="#836">836</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="837" href="#837">837</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are green</em>
 <a class="jxr_linenumber" name="838" href="#838">838</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="839" href="#839">839</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> green = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="839" href="#839">839</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> green = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="840" href="#840">840</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="841" href="#841">841</a>             <strong class="jxr_keyword">return</strong> c.isGreen();
 <a class="jxr_linenumber" name="842" href="#842">842</a>         }
@@ -855,7 +855,7 @@
 <a class="jxr_linenumber" name="845" href="#845">845</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="846" href="#846">846</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are red</em>
 <a class="jxr_linenumber" name="847" href="#847">847</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="848" href="#848">848</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> red = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="848" href="#848">848</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> red = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="849" href="#849">849</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="850" href="#850">850</a>             <strong class="jxr_keyword">return</strong> c.isRed();
 <a class="jxr_linenumber" name="851" href="#851">851</a>         }
@@ -864,7 +864,7 @@
 <a class="jxr_linenumber" name="854" href="#854">854</a>     <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="855" href="#855">855</a> <em class="jxr_javadoccomment">     * a CardListFilter to get all cards that are white</em>
 <a class="jxr_linenumber" name="856" href="#856">856</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="857" href="#857">857</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> white = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
+<a class="jxr_linenumber" name="857" href="#857">857</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <a href="../forge/CardListFilter.html">CardListFilter</a> white = <strong class="jxr_keyword">new</strong> <a href="../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="858" href="#858">858</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../forge/Card.html">Card</a> c) {
 <a class="jxr_linenumber" name="859" href="#859">859</a>             <strong class="jxr_keyword">return</strong> c.isWhite();
 <a class="jxr_linenumber" name="860" href="#860">860</a>         }
