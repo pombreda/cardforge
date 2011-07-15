@@ -604,12 +604,23 @@ public class GameAction {
         	//remove old effects
         	AllZone.getStaticEffects().clearStaticEffects();
         	
-        	//apply new effects continuous 
+        	//search for cards with static abilities
         	CardList allCards = AllZoneUtil.getCardsInGame();
+        	CardList cardsWithStAbs = new CardList();
         	for (Card card : allCards) {
         		ArrayList<StaticAbility> staticAbilities = card.getStaticAbilities();
-        		for (StaticAbility stAb : staticAbilities)
-        			stAb.applyAbility("Continuous");
+        		if (!staticAbilities.isEmpty())
+        			cardsWithStAbs.add(card);
+        	}
+        	
+        	//apply continuous effects
+        	for (int layer = 4; layer < 9; layer++) {
+	        	for (Card card : cardsWithStAbs) {
+	        		ArrayList<StaticAbility> staticAbilities = card.getStaticAbilities();
+	        		for (StaticAbility stAb : staticAbilities)
+	        			if (stAb.getLayer() == layer)
+	        				stAb.applyAbility("Continuous");
+	        	}
         	}
         	
         	HashMap<String, Object> runParams = new HashMap<String, Object>();
