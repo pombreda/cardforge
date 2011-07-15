@@ -365,6 +365,40 @@ Fixes/Features:
 - Converted some enPumps to AF_Attach + StaticAbility.
 - Converted some enPumps to AF_Attach + StaticAbility. All auras using enPump or enPumpCurse have been converted to AF_Attach.
 - Added Conan the Barbarian 1 deck to quest mode.
+- Edited the changes.txt file.
+- Updated deps. Miglayout is old. GoogleCollections is VERY old. Disabled a few lengthy tests.
+- Moved braids test class from src into test/java.
+- Fixed the last commit.
+- Ran set info script.
+- Fixed Thalakos Scout CC.
+- Added some "fluff" material to the changes.txt file.
+- Converted some auras to StaticAbility.
+- Converted some generic auras to AF_Attach.
+- Converted some of the difficult auras to StaticAbility.
+- Converted some generic auras to AF_Attach.
+- Converted some more auras to StaticAbility.
+- Updated some card text files.
+- Converted some generic auras to AF_Attach.
+- Converted some generic auras to AF_Attach.
+- Converted some generic auras to AF_Attach.
+- Converted Battle Cry to a trigger/pump effect.
+- Converted some generic auras to AF_Attach.
+- Switched to a single AllZone instance of DeckManager. Sealed deck mode revealed a bug where following two consecutive sealed deck generations, the AI's deck was lost in the second build. This was due to the refreshed instance of DeckManager in Gui_NewGame, but a static instance in Gui_DeckEditor_Menu, which is never refreshed between views of the deck editor.
+- Converted some generic auras to AF_Attach. This finishes the conversion and the generic aura keyword is no longer needed. If you place a System.out.println(card.getName()) in the generic aura keyword you should only get the Animate Wall card. The oracle text uses "Enchant Wall", notice the capital "W". This card now uses AF-Attach but it also passes the test for the generic aura keyword.
+- Ran set info script.
+- Fixed Crusher Zendikon and Earthlore, these auras somehow did not have the type lowercased.
+- Commented out the enPump keyword code.
+- Commented out the initial test for the enPump and enControlCreature keyword.
+- Added some text.
+- Added The Thing 2 deck.
+- Added Alice in Wonderland 3 deck.
+- Fixed Court Homunculus.
+- Moved the Ursine Fylgja card file to the correct folder.
+- Commented out the generic aura keyword code.
+- Fixed Wonder, thank you Rock-n-Rollo.
+- Ran set info script.
+- Converted these auras from hard coded to AF_Attach + StaticAbility: Entangling Vines; Glimmerdust Nap; Melancholy; Mystic Restraints; Roots; Thirst.
+- Edited the changes.txt file.
 
 
 Many people helped with this version. A special thank you goes out to them:
