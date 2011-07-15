@@ -1,12 +1,12 @@
-Forge Beta: 07-15-2011 ver 1.1.00 SVN rev #
+Forge Beta: 07-15-2011 ver 1.1.00 SVN rev 10781
 
 (Quest icons used created by Teekatas, from his Legendora set 
 
 http://raindropmemory.deviantart.com)
 
-# cards in total.
+8614 cards in total.
 
-This version is based upon the revision number # which is found on our SVN.
+This version is based upon the revision number 10780 which is found on our SVN.
 
 
 This version and future versions will require java 6. There may still be a few people who are unable to install java 6 on the computer that they use to run the forge application. These people will have to use forge version 1.0.15. Forge version 1.1.00 and above will require java 6.
@@ -399,16 +399,149 @@ Fixes/Features:
 - Ran set info script.
 - Converted these auras from hard coded to AF_Attach + StaticAbility: Entangling Vines; Glimmerdust Nap; Melancholy; Mystic Restraints; Roots; Thirst.
 - Edited the changes.txt file.
+- Added SVar to coastal piracy.
+- Fixed text.
+- Updated some SVars.
+- Ran set info script.
+- Little tweak for continuous static effects.
 
 
 Many people helped with this version. A special thank you goes out to them:
 
-
+Slapshot5
+Rob Cashwalker
+JenDave
+Friar Sol
+Braids
+Sloth
+Hellfish
+Jeff Wadsworth
+SoulStorm
+Starcrash
+Marc
+Timmermac
+Slowe
+UnderFlow
+ZzzzSleep
+Corwin72
+ondrej.n...
+Chris H
 
 
 Added many cards, including:
 
-
+Adaptive Automaton
+Aggression
+Alabaster Mage
+Amphin Cutthroat
+Angelic Destiny
+Arbalest Elite
+Armored Warhorse
+Aven Fleetwing
+Aven Warcraft
+Azure Mage
+Battle Cry
+Benalish Veteran
+Blinkmoth Urn
+Blood Ogre
+Bloodrage Vampire
+Bonebreaker Giant
+Breath of Dreams
+Brink of Disaster
+Brutal Deceiver
+Buried Ruin
+Callous Deceiver
+Carnage Wurm
+Chains of Mephistopheles
+Chandra's Phoenix
+Chasm Drake
+Chrome Mox
+Circle of Flame
+Cloak of Confusion
+Controlled Instincts
+Crimson Mage
+Crumbling Colossus
+Dark Favor
+Desecration Elemental
+Devouring Swarm
+Divine Favor
+Domineer
+Dream's Grip
+Drifting Shade
+Dungrove Elder
+Duskhunter Bat
+Duskworker
+Earthlore
+Endangered Armodon
+Erhnam Djinn
+Essence Filter
+Feral Deceiver
+Frost Breath
+Fumarole
+Furyborn Hellkite
+Fylgja
+Gaea's Liege
+Garruk, Primal Hunter
+Gaze of Pain
+Gideon's Avenger
+Gideon's Lawkeeper
+Gladecover Scout
+Goblin Fireslinger
+Goblins of the Flarg
+Gorehorn Minotaurs
+Griffin Rider
+Guardians' Pledge
+Hideous Visage
+Hot Springs
+Indestructibility
+Jace, Memory Adept
+Jade Mage
+Justice
+Kavu Recluse
+Kite Shield
+Krovikan Sorcerer
+Lord of the Unreal
+Lurking Crocodile
+Manalith
+Master Apothecary
+Master Thief
+Merfolk Mesmerist
+Mind Unbound
+Myr Incubator
+Mystic Might
+Numbing Dose
+Onyx Mage
+Peregrine Griffin
+Phantasmal Bear
+Phantasmal Dragon
+Pride Guardian
+Primordial Hydra
+Riftstone Portal
+Rolling Spoil
+Rude Awakening
+Rune-Scarred Demon
+Rusted Sentinel
+Skywinder Drake
+Sorin's Thirst
+Sorin's Vengeance
+Spirit Mantle
+Spreading Algae
+Stave Off
+Stingerfling Spider
+Swiftfoot Boots
+Synod Centurion
+Taste of Blood
+Thelonite Monk
+Titanic Growth
+Tooth and Nail
+Tormented Soul
+Ursine Fylgja
+Vampire Outcasts
+Vengeful Pharaoh
+Wall of Torches
+Warstorm Surge
+Wring Flesh
+Wurmweaver Coil
 
 
 end
