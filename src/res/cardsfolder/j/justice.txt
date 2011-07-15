@@ -7,6 +7,7 @@ SVar:TrigSac:AB$Sacrifice | Cost$ 0 | Defined$ Card.Self | UnlessCost$ W W | Unl
 T:Mode$ DamageDone | ValidSource$ Card.Red | Execute$ TrigDamage | TriggerZones$ Battlefield | TriggerDescription$ Whenever a red creature or spell deals damage, CARDNAME deals that much damage to that creature's or spell's controller.
 SVar:TrigDamage:AB$DealDamage | Cost$ 0 | Defined$ TriggeredSourceController | NumDmg$ X
 SVar:X:TriggerCount$DamageAmount
+SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/justice.jpg
 SetInfo:5ED|Uncommon|http://magiccards.info/scans/en/5e/317.jpg
