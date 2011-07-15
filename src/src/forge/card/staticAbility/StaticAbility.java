@@ -124,9 +124,6 @@ public class StaticAbility {
     //apply the ability if it has the right mode
     public void applyAbility(String mode) {
     	
-        if (Constant.Runtime.DevMode[0])
-            System.out.println("staticAbility " + mode + " host: " + hostCard.toString());
-    	
     	//don't apply the ability if it hasn't got the right mode
     	if (!mapParams.get("Mode").equals(mode))
     		return;
