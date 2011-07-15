@@ -3,11 +3,14 @@ ManaCost:1 W W
 Types:Creature Human Cleric Avatar
 Text:no text
 PT:3/3
-K:stSetPT:3:3:LevelGE6:6:6:LevelGE12:9:9:LEVEL 6-11 6/6 Lifelink LEVEL 12+ 9/9 Lifelink Indestructible
-K:stPumpSelf:Creature.countersGE6LEVEL:0/0/Lifelink:No Condition:no text
-K:stPumpSelf:Creature.countersGEXLEVEL:0/0/HIDDEN Indestructible:No Condition:no text
 K:Level up:1
 K:maxLevel:12
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 3 | SetToughness$ 3 | CheckSVar$ T | SVarCompare$ EQ1 | Description$ LEVEL 1-5 3/3
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 6 | SetToughness$ 6 | AddKeyword$ Lifelink | CheckSVar$ Y | SVarCompare$ EQ1 | Description$ LEVEL 6-11 6/6 Lifelink
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 9 | SetToughness$ 9 | AddKeyword$ Indestructible | CheckSVar$ Z | SVarCompare$ EQ1 | Description$ LEVEL 12+ 9/9 Lifelink and CARDNAME is Indestructible.
+SVar:T:Count$Valid Card.Self+countersGE1LEVEL+countersLT3LEVEL
+SVar:Y:Count$Valid Card.Self+countersGE6LEVEL
+SVar:Z:Count$Valid Card.Self+countersGEXLEVEL
 SVar:X:Number$12
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/transcendent_master.jpg
