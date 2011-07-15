@@ -1050,12 +1050,14 @@ public class GameAction {
 
         {//re-number cards just so their unique numbers are low, just for user friendliness
             CardFactory c = AllZone.getCardFactory();
-            Card card;
+            
             int nextUniqueNumber = 10;
 
             Random generator = MyRandom.random;
 
             for (int i = 0; i < humanDeck.countMain(); i++) {
+            	Card card = new Card();
+            	
                 String cardName = humanDeck.getMain(i);
                 String setCode = "";
                 if (cardName.contains("|")) {
@@ -1103,6 +1105,8 @@ public class GameAction {
 
             ArrayList<String> RAICards = new ArrayList<String>();
             for (int i = 0; i < computerDeck.countMain(); i++) {
+            	Card card = new Card();
+            	
                 String cardName = computerDeck.getMain(i);
                 String setCode = "";
                 if (cardName.contains("|")) {
