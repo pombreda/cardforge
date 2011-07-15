@@ -5,7 +5,7 @@
     <artifactId>forge</artifactId>
     <packaging>jar</packaging>
     <name>Forge</name>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <description>
         Forge lets you play the card game Magic: The Gathering against a computer opponent
         using all of the rules.
@@ -118,8 +118,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:svn:https://cardforge.googlecode.com/svn/tags/forge-1.1.0</connection>
-        <developerConnection>scm:svn:https://cardforge.googlecode.com/svn/tags/forge-1.1.0</developerConnection>
+        <connection>scm:svn:https://cardforge.googlecode.com/svn/src</connection>
+        <developerConnection>scm:svn:https://cardforge.googlecode.com/svn/src</developerConnection>
     </scm>
 
     <prerequisites>
