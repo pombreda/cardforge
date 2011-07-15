@@ -1708,9 +1708,7 @@ public class CombatUtil {
 
         //Mijae Djinn
         if (c.getName().equals("Mijae Djinn")) {
-            if (GameActionUtil.flipACoin(c.getController(), c)) {
-                //attack as normal
-            } else {
+            if (!GameActionUtil.flipACoin(c.getController(), c)) {
                 AllZone.getCombat().removeFromCombat(c);
                 c.tap();
             }
@@ -2102,7 +2100,6 @@ public class CombatUtil {
                     @Override
                     public void resolve() {
                         CardList enchantments = AllZoneUtil.getPlayerCardsInLibrary(attacker.getController());
-                        //final String turn = attacker.getController();
                         enchantments = enchantments.filter(new CardListFilter() {
                             public boolean addCard(Card c) {
                                 if (attacker.hasKeyword("Protection from enchantments")
@@ -2116,17 +2113,15 @@ public class CombatUtil {
                         Card Enchantment = null;
                         if (player.isHuman()) {
                             Card[] Target = new Card[enchantments.size()];
-                            for (int i = 0; i < enchantments.size(); i++) {
-                                Card crd = enchantments.get(i);
-                                Target[i] = crd;
+                            for (int j = 0; j < enchantments.size(); j++) {
+                                Card crd = enchantments.get(j);
+                                Target[j] = crd;
                             }
                             Object check = GuiUtils.getChoiceOptional("Select enchantment to enchant exalted creature", Target);
                             if (check != null) {
                                 Enchantment = ((Card) check);
                             }
                         } else {
-                            //enchantments = enchantments.getKeywordsContain("enPump"); Doesn't seem to work
-                            //enchantments = enchantments.getKeywordsDontContain("enPumpCurse");
                             Enchantment = CardFactoryUtil.AI_getBestEnchantment(enchantments, attacker, false);
                         }
                         if (Enchantment != null && AllZoneUtil.isCardInPlay(attacker)) {
