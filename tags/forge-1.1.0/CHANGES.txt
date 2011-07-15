@@ -1,0 +1,547 @@
+Forge Beta: 07-15-2011 ver 1.1.00 SVN rev 10781
+
+(Quest icons used created by Teekatas, from his Legendora set 
+
+http://raindropmemory.deviantart.com)
+
+8614 cards in total.
+
+This version is based upon the revision number 10780 which is found on our SVN.
+
+
+This version and future versions will require java 6. There may still be a few people who are unable to install java 6 on the computer that they use to run the forge application. These people will have to use forge version 1.0.15. Forge version 1.1.00 and above will require java 6.
+
+Work on the new card scripting system is ongoing. We have new code to handle auras and cards with static abilities. This is a work in progress and it is not yet finished in this version.
+
+Rob and Marc have worked together to add in a new feature which will overlay a card's image with a foil like film. A few random cards will have a foil like image in constructed mode games and possibly quest mode games. There is a check box on the New Game window that you can use to turn this feature on or off.
+
+This version includes a large number of new cards from Magic 2012. Card images for these new cards are not yet available. We hope that these images will come online in a few weeks. Until then, please be patient.
+
+
+We have changed the archiving format to ".tar.bz2". There are utilities for Windows, Mac OS and the various *nix's that can be used to decompress these archives.
+
+
+The Mac OS application version:
+
+We have packaged the Forge 07/15/2011 BETA version as a Mac OS application. You can double click the Forge.app icon to launch the forge application on your Apple computer running Mac OS. This application will automatically increase the java heap space memory for you as it launches. This version does not require the forge.command file and it does not need to start the Terminal application as part of the start up process. This version should only require java 1.5.
+
+You can move a copy of your pictures and decks over to the Forge.app application. Right click or control click on the Forge.app icon. Select Show Package Contents form the contextual menu. A Finder window will open and will display a folder named Contents. Navigate to the folder:
+
+/Contents/Resources/Java/res/
+
+Your decks can be placed in the decks folder, your pics can be placed in the pics folder, etc.
+
+
+Fixes/Features:
+
+- Clean up unused methods.
+- More cleanup of deprecated classes. Eventually will move in what is still used into the current classes.
+- Cleaned the changes.txt file.
+- Beginning of the end for hard-coded Magic-specific lists. CardTypes and Non-Stacking Keywords are taken out of CardUtil. Probably not the best idea to hack the Constant object to hold dynamic data, but it works until someone else can do better.
+- Added foiling option for constructed mode. Approximately 1:6 cards will be foiled with this option turned on.
+- Added AF_ProtectionAll (should be the same params as AF_Protection with a ValidCards; it is not targeted for players at this point.)
+- Removed the second copy of the card text for Feudkiller's Verdict.
+- Converted Glory to script.
+- GetDefinedSpellAbilities looking for triggered weren't looking at the Root SA. (Fix for Counterbalance.)
+- Added a DevMode to allow you to play unlimited lands (well, 100) each turn you activate it.
+- Performance tweak in GuiDisplayUtil.
+- Fixed Raving Oni Slave.
+- Fixed Whitemane Lion.
+- Fixed Stonecloaker.
+- Added YouCtrl to SpellCast trigger for Hand of the Praetors.
+- Ran set info script.
+- Added SVar:RemAIDeck:True to Whitemane Lion.
+- Added a basic first draft of the new staticAbility system.
+- Converted Crusade.
+- Added the new classes.
+- Converted Captain of the Watch.
+- Fixed Anger and Valor, Card.keywordsToText() should now parse the keyword and append the spell description onto the string.
+- Deleted old quest code.
+- Added tooltips to the draft pick upload and the random foiling check boxes.
+- Removed empty tooltips from sealed and draft mode radio buttons.
+- Fixed Evil Eye of Urborg.
+- Increased the height of the New Game window by 12 Pixels.
+- Updated pom.xml to compile against java 1.6.
+- Little fix.
+- Added the option "AddAbility" to continuous static abilities.
+- Converted Acidic Sliver.
+- Removed jdesktop code, add a dep.
+- Add deps. Add package-info files for package level javadocs.
+- Removed old folder.
+- Converted Z cards from stPumpAll to StaticEffects Continuous.
+- Added restrictions to static abilities.
+- Converted Angelic Voices.
+- Fixed Zombie Master.
+- Removed minlog code from tree Added it as a dep.
+- Update some SVars.
+- Converted W cards from stPumpAll to StaticEffects Continuous.
+- Little fix.
+- Added an isHuman() in the resolve for TapOrUntap.
+- Fixed .classpath.
+- Made the CardListFilter fields in AllZoneUtil final.
+- Added an Upkeep class that mimics EndOfTurn and EndOfCombat. The Upkeep code from GameActionUtil could be off-loaded here if that's what we want to do architecturally.
+- Added an OpponentTurn condition to StaticAbility.
+- Revert Vedalken Orrery. Need clarification on this card first.
+- Added AffectedZone parameter to static abilities.
+- Converted Vedalken Orrery.
+- Added flying to Roil Elemental.
+- Added EffectZone parameter to static abilities.
+- Converted Valor.
+- Added UnderFlow's modified version of the manifest.forge file.
+- Intermediary controller change-changes, prettying it up soon. Fixes casting Steal Enchantment on a Control Magic-like not stealing what the Control Magic-like enchants.
+- Ran set info script.
+- Added support for X and Y variables in static abilities.
+- Converted Aspect of Wolf.
+- Converted Vernal Equinox from stpumpall to StaticEffects.
+- Added CheckSVar to triggers as well, same as for AFs. See the traps.
+- Added the restriction TopCardOfLibraryIs to static abilities.
+- Converted Vampire Nocturnus.
+- Updated pom.xml to automatically iterate Windows version numbers for launch4j (launch4j does not like -SNAPSHOT in the version.)
+- Updated the Maven version number-SNAPSHOT in preparation for the following release. Version "1.1" will denote that java 6 is now required.
+- Converted most of U cards from stPumpAll to StaticEffects.
+- Added AddSVar as an option to continuous static effects.
+- Converted Psionic Sliver.
+- Converted T cards from stPumpAll to StaticEffect.
+- Little fix.
+- Converted most S cards from stPumpAll to StaticEffect.
+- SetInfo for M12 Reprints.
+- Fixed Lord of Tresserhorn and related cards that Target in SubAbilities of Triggers.
+- Added Else's in AF so they don't have to check all APIs once the right one is found.
+- Increased Java version requirement from 5 to 6. More to come, once I figure out my svn locking issues.
+- Increased Java version requirement from 5 to 6. Removed places where we were using Java reflection defensively to support Java 5.
+- Ran set info script.
+- Converted most R cards from stPumpAll to StaticEffect.
+- Little fix.
+- Converted Q cards from stPumpAll to StaticEffect.
+- Fixed file name for Buried Ruin.
+- Converted most P cards from stPumpAll to StaticEffect.
+- Fixed file name for Buried Ruin.
+- Little fix.
+- Converted O and N cards from stPumpAll to StaticEffect.
+- Removed old LAF and mp3 deps.
+- Added the option "AddType" to continuous static abilities.
+- Converted Stormtide Leviathan.
+- Ran set info script.
+- Fixed the LQ pic URL file name for Buried Ruin.
+- Added the option "AddTrigger" to continuous static abilities.
+- Converted Bear Umbra.
+- Added Greatsword, somehow missed this one las night.
+- Ran set info script.
+- Deleted upper cased Greatsword.
+- Fixing Greatsword.
+- Removed debug controller/owner output from card text.
+- Added the Static$ parameter to triggers for use in "As ~ enters the battlefield" and such. Static$ True-triggers skip the stack.
+- Converted Brass Herald.
+- Added Adaptive Automaton from Starcrash.
+- Converted Anger to continuous static ability.
+- Removed the stGravePump keyword.
+- Converted Brawn, Filth and Wonder to script.
+- Added the Trigger "Always".
+- Converted Emperor Crocodile to trigger.
+- Fixed trigger descriptions not being removed from cards granted by continuous static effects.
+- Converted M cards from stPumpAll to StaticEffect.
+- Converted L cards from stPumpAll to StaticEffect.
+- Updated mtg-data.txt.
+- Added support for "ChosenType" in continuous static abilities.
+- Converted Adaptive Automaton.
+- Converted An-Zerrin Ruins to script.
+- Added the missing trigger class.
+- Cleanup in StaticEffects and Trigger classes.
+- Issue 143 (ongoing). Reduce heap allocation by switching some data structures from Hash to Tree implementations. Advocate for use of new immutable iterator instead of getCards and getAllCards. The former grants unsafe access to the card database, and the latter uses a lot of heap space.
+- Fixed Trigger_Always.getCopy().
+- Removed old GUI code. Removed cloudgarden code. Refactored filter dialogs. They still need some work though.
+- Remove ForgeFontConstants since we now using Java 1.6. Remove obselete GuiMultipleBlockers.
+- Converted K cards from stPumpAll to StaticEffect.
+- Added minimal xpp3 parser, desired strongly by xstream, to fix quest mode. Update README according to license requirements.
+- Updated the pom.xml file to include xpp3. Adjusted the default selections for the quest options.
+- Deleted old folders.
+- Ran set info script.
+- Converted I and J cards from stPumpAll to StaticEffect
+- Little fix.
+- Converted most H cards from stPumpAll to StaticEffect.
+- Issue 143 (ongoing). Estimated significant heap relief via removal of TWO unnecessary temporary lists in ReadCard, one of all card names and the other of all Card instances! Promoted ReadCard.zipFile from static bottom-feeder to classic homestyle member field. ReadCard now loads card directly into CardFactory's map; this means less code overall. Added some Javadoc describing CardFactory's use of two permanent Card collections. Changed field types in CardFactory to interface types. Removed silly progress bar from CardFactory.getAllCards; it was a very fast operation to begin with, plus its existence may have inadvertently promoted further unwanted use of getAllCards. Improved implementation of CardFactory's iterator method to act more like getCards and blessed it with Javadoc. Removed dead code, and commented out code that is unused according to Eclipse.
+- Converted most G cards from stPumpAll to StaticEffect.
+- Ultra minor. Remove unused import.
+- Issue 143, ongoing. Accomplish some TODO items to use less temporary heap space by changing one-time iterations over CardFactory.getCards or CardFactory.getAllCards to use CardFactory.iterator instead.
+- Converted most F cards from stPumpAll to StaticEffect.
+- Adding some Basic AI for Attach Pump.
+- Convert Holy Strength to AF_Attach.
+- Progress monitor suite: Rename base interface to avoid name conflict with javax.swing.ProgressMonitor. Add dispose method.
+- Added a size method to help progress monitors.
+- Issue 143, ongoing. Use CardFactory.iterator in forge.GUI_Filter. Using the Filter *menu* in the deck editor to filter by name is now quite fast. Changed forge.CardFilter.cardListNameFilter's name to lower case, and changed it to accept an Iterable<Card> as its first argument instead of a CardList; because the latter implements the former, this makes the method usable in more situations without significantly changing any calls to it. Added style TODO items to the rest of the methods in forge.CardFilter.
+- Issue 143, ongoing. More support for Iterator<Card> versus CardList. Add static method forge.CardList.filter(Iterable<Card>,CardFilter) to perform same actions on an Iterable<Card>; reimplement nonstatic method forge.CardList.filter(CardFilter) in terms of the former.
+- Issue 143, ongoing. Use less heap by creating fewer large temporary lists of cards, favoring CardFactory.iterator instead. Eliminated one such list in each of these two files for generating 2 and 3 color decks.
+- Ran set info script.
+- Added proper handling of state triggers. (No intervening if-check, no going on the stack twice.)
+- Cleaned up overzealous autocomplete.
+- Holy Strength now uses "Creature.EnchantedBy" not "AttachedBy".
+- Changed clearFirstSpellAbility to clearFirstSpell and change the functionality to match. Fixing an issue for Auras that gained an Ability before their enPump Spell.
+- Converted Snake Umbra to Attach.
+- Little fix Lord of the Undead.
+- AI now checking Targetability in Attach.
+- Added EnchantedBy, Enchanted, EquippedBy, and Equipped in the same vein as Attached{By} to hasProperty.
+- Added the option "CharacteristicDefining" to continuous static effects.
+- Added the options "SetPower" and "SetToughness" to continuous static effects.
+- Converted Crowd of Cinders.
+- Touch up for Kabira Vindicator.
+- Converted E cards from stPumpAll to StaticEffect.
+- Fixed Snake Umbra cost.
+- Issue 143, ongoing. Reduced temporary heap usage by changing GeneratedConstructedDeck.getCards to use CardFactory.iterator instead of CardFactory.getAllCards. Changed GeneratedConstructedDeck.filterBadCards to operate on an Iterable<Card> instead of only a CardList. Updated Javadoc for both.
+- Little fix.
+- Issue 143, ongoing. Reduced temporary heap usage by changing GeneratedConstructedMultiColorDeck.getCards to use CardFactory.iterator instead of CardFactory.getAllCards. Changed GeneratedConstructedMultiColorDeck.filterBadCards to operate on an Iterable<Card> instead of only a CardList. Updated Javadoc for both.
+- Added M12 to blocks and setdata.
+- Imporved variable names in CardDetailPanel.java.
+- Removed the period at the end of a keyword on some cards. We really need to standardize this.
+- Converted Mul Daya Channelers to script.
+- Fixed some cards.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Little fixes.
+- Updated some general utilities in preparation for my next commit. Add two functions to GeneratorFunctions for performing lazy deferred operations on products of a generator.
+- Converted most D cards from stPumpAll to StaticEffect
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Added CardList(Generator<Card>), a constructor that accepts a Card Generator. Fixed typo CardList(int).
+- Issue 143, ongoing. This is one of my bigger changes; further testing would be appreciated. Fixed deprecated calls to CardFactory.getAllCards. Changed forge.NameChanger's fields from HashMap to TreeMap. Changed NameChanger.changeCard to use Generators instead of arrays. Added NameChanger.changeCardsIfNeeded to perform a routine operation I noticed in a few other files. Updated other classes' method calls to use changeCardsIfNeeded. Created another version of forge.gui.GuiUtils.getChoiceOptional that takes an Iterator instead of varargs/ellipsis (...). Disambiguated top and bottom parameters from same named fields in forge.Gui_CardShop.updateDisplay. Updated and repaired Javadoc of most changed methods.
+- Fix serialVersionUID compiler warning. Does this have something to do with others' recent troubles running the latest SVN?
+- Converted C cards from stPumpAll to StaticEffect.
+- Removed Chaos Warp.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Replace CardList(CardList) constructor with 100\% compatible CardList(Iterable\<Card\>). It might be a little slower, but it's more dynamic because it uses a less specific type. Wrote javadoc for this constructor.
+- Issue 143, ongoing. I had to give in to duplicating the card database in CardLists when updating the GUI is involved. The results often get assigned to fields. Except for one in forge.Gui_DeckEditor_Menu, I changed most deprecated calls to CardFactory.getAllCards to new CardList(AllZone.getCardFactory()). I marked each with a comment that it "is an expensive heap operation." I was not sufficiently inspired to update javadoc :-(
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Converted B cards from stPumpAll to StaticEffect.
+- Renamed M10 and M11 in setdata.
+- Housekeeping. Automatic refactor to move static filtering methods from forge.CardList to forge.CardFilter, which is where static filtering methods should be.
+- Converted A cards from stPumpAll to StaticEffect. The only stPumpAll's left are special cases not handled yet.
+- Fixed an issue with tokens getting their color overwritten.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Added selectRandom and solidify methods.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Added getColor filter.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Issue 143, ongoing. Significant structural changes to Quest card disbursements; please let me know if the randomness seems off. Converted much code from CardLists to Generators. Realized that I need to solidify (fully evaluate) these Generators at certain points, like when they're about to be traversed more than once. Updated some Javadoc, too.
+- Fixed Sachi Daughter of Seshiro.
+- Updated Magma Sliver (original SVars called X could have been overwritten).
+- Updated some card text files.
+- Tweaked Vengeful Pharaoh. I had some concerns about this card yesterday but I can't remember what they were..
+- Cleanup: Removed the unused variables exaltedMagnitude, otherAttackBoost and otherDefenseBoost (together with their functions) from the card class.
+- Ran set info script.
+- First steps to implement the layer system of Continuous Effects.
+- Removed the keywords "When you control no ..., sacrifice CARDNAME" and converted the cards to triggers.
+- Converted the sac ability of Phylactery Lich to static trigger.
+- Fix for last commit.
+- Improvement in how types are displayed (noticeable most easily in the CardDetailPanel). Especially helpful with card that are animated.
+- Removed the keywords "When there are no ... on the battlefield, sacrifice CARDNAME" and converted the cards to triggers.
+- Removed RemAIDeck from Arbalest Elite.
+- Tweaked CardDetailPanel "Name - Cost" line.
+- Removed the whole mumbo jumbo about topCardOfLibrary.
+- Removed executeCardStateEffects (which was littered all over the code).
+- Make sure "Number$" xCount takes into account additional math.
+- Converted Mwonvuli Ooze to stSetPT (mostly so the math is there when it gets converted to static factory.)
+- Further tweak displaying subtypes for Cards.
+- Call updateObservers on each player in GuiDisplayUtil.updateGUI(). This fixes a problem where if you Swords to Plowshares one of compy's creatures, compy's Exile doesn't increment the displayed number in Exile zone until the next turn.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Ran set info script.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Fixed Kojak 1.
+- AEther Adept didn't get reprint Info, am looking into scripts handling of AE cards.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Issue 143, ongoing. Convert more calls to forge.CardFactory.getAllCards to use Generator instead. This actually went very smoothly.
+- Missed a null check in AF_Attach.
+- More Attach cleanup, synchronizing how Card is selected with non-Pump Modes.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Starting at Z. Converted some cards from stPumpSelf to StaticEffect.
+- Converted W cards from stPumpSelf to StaticEffect.
+- Replaced emdash with a hyphen.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Added Underflows version of the build-forge script.
+- Added some utilities to aid unit testing.
+- Issue 143, ongoing. Converted the last of the main non-test uses of CardFactory.getAllCards. To support that, I create a new method, CardFactory.getRandomCombinationWithoutRepetition. Added unit test for new CardFactory method. ReadCard's unit test is vastly out of synch with its code, so I commented out most of it.
+- Fixed wording of Brass Herald.
+- Converted most V cards from stPumpSelf to StaticEffect.
+- Fixed bad commit; restored history of CardFactory.java.
+- Fixed bad commit. Restored history of CardFactoryTest.java; this adds back the change from r10616.
+- Updated the build-forge script to use java 1.6.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Converted some simple enPumps to AF_Attach + StaticAbility.
+- Ran set info script.
+- Added missing keyword to Tiger Claws.
+- Issue 143, ongoing. Reduce heap size by converting Hash variables and fields to Tree implementations and interface types.
+- Issue 143, ongoing. In forge.Card, I converted Hashes to interface types and Tree implementations. This necessitated small changes in many other files, but I limited the changes to just what was needed. I will have to return to those files in a future revision to convert the rest of their Hashes and update their javadocs.
+- Centralizing a bit more of the Attach code. A few more AI Improvements in Pump.
+- Converted most T cards from stPumpSelf to StaticEffect. Added a little code in prep for Duplicate.
+- Ran set info script.
+- Fixed the card description for Aftershock, thank you ondrej.n...
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Added support for static abilities to AF Effect.
+- Converted Undergrowth.
+- Updated the Rocky 2 and 3 decks (the AI isn't able to play Earthquake etc. at the moment).
+- Added the missing M12.pack file to the /res/boosterdata/ folder. Thank you slowe.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some cards from stPumpAll to StaticAbilities.
+- Little fix.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Reduced Foil rate to 1:25 and ensured it would only foil in Constructed mode, which currently includes quest mode.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted most S cards from stPumpSelf to StaticEffect.
+- Fixed some script.
+- Converted R cards from stPumpSelf to StaticEffect.
+- Added the missing Hexproof to Zuo Ci, the Mocking Sage.
+- Fix NPE with Attach using the wrong list name.
+- Improved aggressiveness of casting Auras.
+- Some more AI Filtering for Pump, and the first bits of Curse.
+- Removed some unused code in GameAction class.
+- Improved the default actions and AI logic for "You may choose not to untap CARDNAME".
+- Cleanup in AF_Animate.
+- Fixed Isolation Cell.
+- Re-integrate substance.jar. This highlights a problem with dependency management. Maven has no problem with newer versions of the library since it automatically pulls in the deps. Eclipse (without using the Maven plugin) and the svn bat script forces the use of an older dep since the older version of substance has everything bundled in.
+- Updated testng in pom.xml. Applied pach to build.xml ( issue 150 ).
+- Uploaded substance. Updated testng.
+- Disabled tests that ran too long. We will have to use mocks and dependency injection to get a proper tests going.
+- Added self trigger to Archon of Redemption.
+- Ran set info script.
+- Updated .classpath to include the updated version of testng-6.1.1.jar. Made sure that the path is correct and is not linked to my own machine. This should fix the build error.
+- Added "AddColor" and "SetColor" parameters to continuous static effects.
+- Converted Thran Lens.
+- Converted two more cards to continuous static effects.
+- Converted two more cards to continuous static effects.
+- Fixed LQ pic of Spin Engine.
+- Little tweaks to the AI in AF Pump.
+- Fixed The Tabernacle at Pendrell Vale.
+- Converted P cards from stPumpSelf to StaticEffect.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted O and most N cards from stPumpSelf to StaticEffect.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility. This finishes the Black, Blue, Green and Red Scarabs.
+- Removed HIDDEN from Zuo Ci, the Mocking Sage. There are still a couple of auras with HIDDEN Hexproof, these auras do not use the term Hexproof in the oracle text. I am not sure if we should leave the HIDDEN on these auras or if we should remove them?
+- Added targeting support to AF PumpAll (fixes Sleep).
+- Fixed cost of Razormane Masticore.
+- Added targeting support, general improvements and a bug fix to AF TapAll (AI can now use Sleep).
+- Added a Count$GreatestPowerYouControl to xCount.
+- Moved getNumAttack()/getNumDefense() outside the foreach loop in AF_PumpAll.resolve().
+- Converted Overwhelming Stampede to script.
+- Fixed Beacon of Immortality.
+- Fixed some possible NPEs in Attach.
+- Ran set info script.
+- Issue 143, ongoing. Convert forge.Combat.map to use a TreeMap instead of a HashMap. Because of the contention over whether this is worth doing, this is probably one of the last such conversions I will be making for a while.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted most M cards from stPumpSelf to StaticEffect.
+- Reverted Mwonvuli Ooze.
+- Some tweaks to how the AI plays Land, if someone can come up with a sample deck that can recreate this problem I'd love to test this situation.
+- Fix for Animate Wall.
+- Fix Contaminated Bond.
+- Attach Curse is now strictly better than enPumpCurse (even though that's not saying much.)
+- Converted L and most K cards from stPumpSelf to StaticEffect.
+- Converted most of J, I, H cards from stPumpSelf to StaticEffect.
+- Fixed Hazy Homunculus.
+- Fixed Dredge and Chains of Mephistopheles.
+- Changed Zone of HUMAN_FLASHBACK_ACTION from Exile to Graveyard, which fixes flashback, unearth, etc. (but probably breaks Greater Gargadon).
+- Converted Orcish Spy to script.
+- Cleanup in CardFactory_Creatures.
+- Ran set info script.
+- Converted most G cards from stPumpSelf to StaticEffect.
+- Flashback and related cards now have the proper method being overridden again.
+- Changed a bit of how these cards are determined and used.
+- Fixed typo in PlayCard.
+- Added TinyTest.java, which helps make sure TestNG is working as expected.
+- .classpath change: Added test/java/ as a source directory so eclipse can run testng unit tests. Added TestNG library container for same reason.
+- Converted most F and E cards from stPumpSelf to StaticEffect.
+- Fixed Escaped Shapeshifter.
+- Added the Conan the Barbarian 2 deck to quest mode.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted the Vows from enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted A B C D cards from stPumpSelf to StaticEffect.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Little fix.
+- Fixed Bloodmark Mentor.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Updated tool tip for foil option to reflect new ratio.
+- Ran set info script.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility.
+- Converted some enPumps to AF_Attach + StaticAbility. All auras using enPump or enPumpCurse have been converted to AF_Attach.
+- Added Conan the Barbarian 1 deck to quest mode.
+- Edited the changes.txt file.
+- Updated deps. Miglayout is old. GoogleCollections is VERY old. Disabled a few lengthy tests.
+- Moved braids test class from src into test/java.
+- Fixed the last commit.
+- Ran set info script.
+- Fixed Thalakos Scout CC.
+- Added some "fluff" material to the changes.txt file.
+- Converted some auras to StaticAbility.
+- Converted some generic auras to AF_Attach.
+- Converted some of the difficult auras to StaticAbility.
+- Converted some generic auras to AF_Attach.
+- Converted some more auras to StaticAbility.
+- Updated some card text files.
+- Converted some generic auras to AF_Attach.
+- Converted some generic auras to AF_Attach.
+- Converted some generic auras to AF_Attach.
+- Converted Battle Cry to a trigger/pump effect.
+- Converted some generic auras to AF_Attach.
+- Switched to a single AllZone instance of DeckManager. Sealed deck mode revealed a bug where following two consecutive sealed deck generations, the AI's deck was lost in the second build. This was due to the refreshed instance of DeckManager in Gui_NewGame, but a static instance in Gui_DeckEditor_Menu, which is never refreshed between views of the deck editor.
+- Converted some generic auras to AF_Attach. This finishes the conversion and the generic aura keyword is no longer needed. If you place a System.out.println(card.getName()) in the generic aura keyword you should only get the Animate Wall card. The oracle text uses "Enchant Wall", notice the capital "W". This card now uses AF-Attach but it also passes the test for the generic aura keyword.
+- Ran set info script.
+- Fixed Crusher Zendikon and Earthlore, these auras somehow did not have the type lowercased.
+- Commented out the enPump keyword code.
+- Commented out the initial test for the enPump and enControlCreature keyword.
+- Added some text.
+- Added The Thing 2 deck.
+- Added Alice in Wonderland 3 deck.
+- Fixed Court Homunculus.
+- Moved the Ursine Fylgja card file to the correct folder.
+- Commented out the generic aura keyword code.
+- Fixed Wonder, thank you Rock-n-Rollo.
+- Ran set info script.
+- Converted these auras from hard coded to AF_Attach + StaticAbility: Entangling Vines; Glimmerdust Nap; Melancholy; Mystic Restraints; Roots; Thirst.
+- Edited the changes.txt file.
+- Added SVar to coastal piracy.
+- Fixed text.
+- Updated some SVars.
+- Ran set info script.
+- Little tweak for continuous static effects.
+
+
+Many people helped with this version. A special thank you goes out to them:
+
+Slapshot5
+Rob Cashwalker
+JenDave
+Friar Sol
+Braids
+Sloth
+Hellfish
+Jeff Wadsworth
+SoulStorm
+Starcrash
+Marc
+Timmermac
+Slowe
+UnderFlow
+ZzzzSleep
+Corwin72
+ondrej.n...
+Chris H
+
+
+Added many cards, including:
+
+Adaptive Automaton
+Aggression
+Alabaster Mage
+Amphin Cutthroat
+Angelic Destiny
+Arbalest Elite
+Armored Warhorse
+Aven Fleetwing
+Aven Warcraft
+Azure Mage
+Battle Cry
+Benalish Veteran
+Blinkmoth Urn
+Blood Ogre
+Bloodrage Vampire
+Bonebreaker Giant
+Breath of Dreams
+Brink of Disaster
+Brutal Deceiver
+Buried Ruin
+Callous Deceiver
+Carnage Wurm
+Chains of Mephistopheles
+Chandra's Phoenix
+Chasm Drake
+Chrome Mox
+Circle of Flame
+Cloak of Confusion
+Controlled Instincts
+Crimson Mage
+Crumbling Colossus
+Dark Favor
+Desecration Elemental
+Devouring Swarm
+Divine Favor
+Domineer
+Dream's Grip
+Drifting Shade
+Dungrove Elder
+Duskhunter Bat
+Duskworker
+Earthlore
+Endangered Armodon
+Erhnam Djinn
+Essence Filter
+Feral Deceiver
+Frost Breath
+Fumarole
+Furyborn Hellkite
+Fylgja
+Gaea's Liege
+Garruk, Primal Hunter
+Gaze of Pain
+Gideon's Avenger
+Gideon's Lawkeeper
+Gladecover Scout
+Goblin Fireslinger
+Goblins of the Flarg
+Gorehorn Minotaurs
+Griffin Rider
+Guardians' Pledge
+Hideous Visage
+Hot Springs
+Indestructibility
+Jace, Memory Adept
+Jade Mage
+Justice
+Kavu Recluse
+Kite Shield
+Krovikan Sorcerer
+Lord of the Unreal
+Lurking Crocodile
+Manalith
+Master Apothecary
+Master Thief
+Merfolk Mesmerist
+Mind Unbound
+Myr Incubator
+Mystic Might
+Numbing Dose
+Onyx Mage
+Peregrine Griffin
+Phantasmal Bear
+Phantasmal Dragon
+Pride Guardian
+Primordial Hydra
+Riftstone Portal
+Rolling Spoil
+Rude Awakening
+Rune-Scarred Demon
+Rusted Sentinel
+Skywinder Drake
+Sorin's Thirst
+Sorin's Vengeance
+Spirit Mantle
+Spreading Algae
+Stave Off
+Stingerfling Spider
+Swiftfoot Boots
+Synod Centurion
+Taste of Blood
+Thelonite Monk
+Titanic Growth
+Tooth and Nail
+Tormented Soul
+Ursine Fylgja
+Vampire Outcasts
+Vengeful Pharaoh
+Wall of Torches
+Warstorm Surge
+Wring Flesh
+Wurmweaver Coil
+
+
+end
