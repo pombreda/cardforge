@@ -25,21 +25,7 @@ public class StaticAbility_Continuous {
 		Player controller = hostCard.getController();
 		
 		StaticEffect se = new StaticEffect();
-		CardList affectedCards;
-		
-		if(params.containsKey("CharacteristicDefining"))
-			affectedCards = new CardList(hostCard); // will always be the card itself
-		else { // non - CharacteristicDefining
-			String affectedZone = "Battlefield"; // default
-			
-			if (params.containsKey("AffectedZone"))
-				affectedZone = params.get("AffectedZone");
-			
-			affectedCards = AllZoneUtil.getCardsInZone(affectedZone);
-			
-			if (params.containsKey("Affected"))
-				affectedCards = affectedCards.getValidCards(params.get("Affected").split(","), controller, hostCard);
-		}
+		CardList affectedCards =  getAffectedCards(stAb);
 		
 		se.setAffectedCards(affectedCards);
 		se.setParams(params);
@@ -187,6 +173,36 @@ public class StaticAbility_Continuous {
             		AllZone.getTriggerHandler().registerTrigger(actualTrigger);
 	        	}
 		}
+	}
+	
+	private static CardList getAffectedCards(StaticAbility stAb) {
+		HashMap<String, String> params = stAb.getMapParams();
+		Card hostCard = stAb.getHostCard();
+		Player controller = hostCard.getController();
+		
+		if(params.containsKey("CharacteristicDefining"))
+			return new CardList(hostCard); // will always be the card itself
+		
+		// non - CharacteristicDefining
+		CardList affectedCards;
+		String affectedZone = "Battlefield"; // default
+		
+		if (params.containsKey("AffectedZone"))
+			affectedZone = params.get("AffectedZone");
+		
+		affectedCards = AllZoneUtil.getCardsInZone(affectedZone);
+		
+		if (params.containsKey("Affected")) {
+			if (params.get("Affected").contains("Self"))
+				affectedCards = new CardList(hostCard);
+			else if (params.get("Affected").contains("EnchantedBy"))
+				affectedCards = new CardList(hostCard.getEnchantingCard());
+		}
+		
+		if (params.containsKey("Affected"))
+			affectedCards = affectedCards.getValidCards(params.get("Affected").split(","), controller, hostCard);
+		
+		return affectedCards;
 	}
 
 }
