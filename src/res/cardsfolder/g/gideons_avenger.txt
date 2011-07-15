@@ -1,6 +1,6 @@
 Name:Gideon's Avenger
 ManaCost:1 W W
-Types:Human Soldier
+Types:Creature Human Soldier
 Text:no text
 PT:2/2
 T:Mode$ Taps | ValidCard$ Creature.YouDontCtrl | TriggerZones$ Battlefield | Execute$ TrigPutCounter | TriggerDescription$ Whenever a creature an opponent controls becomes tapped, put a +1/+1 counter on CARDNAME.
