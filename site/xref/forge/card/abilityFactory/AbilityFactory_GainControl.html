@@ -17,7 +17,7 @@
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> java.util.Arrays;
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> java.util.HashMap;
-<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.util.Hashtable;
+<a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="11" href="#11">11</a>  
 <a class="jxr_linenumber" name="12" href="#12">12</a>  <em class="jxr_comment">//AB:GainControl|ValidTgts$Creature|TgtPrompt$Select target legendary creature|LoseControl$Untap,LoseControl|SpellDescription$Gain control of target xxxxxxx</em>
 <a class="jxr_linenumber" name="13" href="#13">13</a>  
@@ -253,7 +253,7 @@
 <a class="jxr_linenumber" name="243" href="#243">243</a>         <em class="jxr_comment">//AI won't try to grab cards that are filtered out of AI decks on purpose</em>
 <a class="jxr_linenumber" name="244" href="#244">244</a>         list = list.filter(<strong class="jxr_keyword">new</strong> <a href="../../../forge/CardListFilter.html">CardListFilter</a>() {
 <a class="jxr_linenumber" name="245" href="#245">245</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> addCard(<a href="../../../forge/Card.html">Card</a> c) {
-<a class="jxr_linenumber" name="246" href="#246">246</a>                 Hashtable&lt;String, String&gt; vars = c.getSVars();
+<a class="jxr_linenumber" name="246" href="#246">246</a>                 Map&lt;String, String&gt; vars = c.getSVars();
 <a class="jxr_linenumber" name="247" href="#247">247</a>                 <strong class="jxr_keyword">return</strong> !vars.containsKey(<span class="jxr_string">"RemAIDeck"</span>) &amp;&amp; CardFactoryUtil.canTarget(hostCard, c);
 <a class="jxr_linenumber" name="248" href="#248">248</a>             }
 <a class="jxr_linenumber" name="249" href="#249">249</a>         });

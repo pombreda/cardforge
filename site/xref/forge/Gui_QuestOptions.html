@@ -153,130 +153,131 @@
 <a class="jxr_linenumber" name="143" href="#143">143</a>         realisticRadio.setText(<span class="jxr_string">"Realistic"</span>);
 <a class="jxr_linenumber" name="144" href="#144">144</a>         fantasyRadio.setText(<span class="jxr_string">"Fantasy"</span>);
 <a class="jxr_linenumber" name="145" href="#145">145</a> 
-<a class="jxr_linenumber" name="146" href="#146">146</a>         realisticRadio.setSelected(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="147" href="#147">147</a> 
-<a class="jxr_linenumber" name="148" href="#148">148</a>         cbStandardStart.setText(<span class="jxr_string">"Standard (Type 2) Starting Pool"</span>);
-<a class="jxr_linenumber" name="149" href="#149">149</a> 
-<a class="jxr_linenumber" name="150" href="#150">150</a>         newQuestButton.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(179, 292, 140, 38));
-<a class="jxr_linenumber" name="151" href="#151">151</a>         newQuestButton.setFont(<strong class="jxr_keyword">new</strong> java.awt.Font(<span class="jxr_string">"Dialog"</span>, 0, 16));
-<a class="jxr_linenumber" name="152" href="#152">152</a>         newQuestButton.setText(<span class="jxr_string">"New Quest"</span>);
-<a class="jxr_linenumber" name="153" href="#153">153</a>         newQuestButton.addActionListener(<strong class="jxr_keyword">new</strong> java.awt.event.ActionListener() {
-<a class="jxr_linenumber" name="154" href="#154">154</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
-<a class="jxr_linenumber" name="155" href="#155">155</a>                 newQuestButton_actionPerformed(e);
-<a class="jxr_linenumber" name="156" href="#156">156</a>             }
-<a class="jxr_linenumber" name="157" href="#157">157</a>         });
-<a class="jxr_linenumber" name="158" href="#158">158</a> 
-<a class="jxr_linenumber" name="159" href="#159">159</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="160" href="#160">160</a>         sb.append(<span class="jxr_string">"New Quest will delete your current player decks, credits and win loss record. "</span>);
-<a class="jxr_linenumber" name="161" href="#161">161</a>         sb.append(<span class="jxr_string">"Continue Quest will allow you to continue a quest that you started at an earlier time."</span>);
-<a class="jxr_linenumber" name="162" href="#162">162</a>         sb.append(<span class="jxr_string">"\r\n"</span>);
+<a class="jxr_linenumber" name="146" href="#146">146</a>         easyRadio.setSelected(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="147" href="#147">147</a>         realisticRadio.setSelected(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="148" href="#148">148</a> 
+<a class="jxr_linenumber" name="149" href="#149">149</a>         cbStandardStart.setText(<span class="jxr_string">"Standard (Type 2) Starting Pool"</span>);
+<a class="jxr_linenumber" name="150" href="#150">150</a> 
+<a class="jxr_linenumber" name="151" href="#151">151</a>         newQuestButton.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(179, 292, 140, 38));
+<a class="jxr_linenumber" name="152" href="#152">152</a>         newQuestButton.setFont(<strong class="jxr_keyword">new</strong> java.awt.Font(<span class="jxr_string">"Dialog"</span>, 0, 16));
+<a class="jxr_linenumber" name="153" href="#153">153</a>         newQuestButton.setText(<span class="jxr_string">"New Quest"</span>);
+<a class="jxr_linenumber" name="154" href="#154">154</a>         newQuestButton.addActionListener(<strong class="jxr_keyword">new</strong> java.awt.event.ActionListener() {
+<a class="jxr_linenumber" name="155" href="#155">155</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> actionPerformed(ActionEvent e) {
+<a class="jxr_linenumber" name="156" href="#156">156</a>                 newQuestButton_actionPerformed(e);
+<a class="jxr_linenumber" name="157" href="#157">157</a>             }
+<a class="jxr_linenumber" name="158" href="#158">158</a>         });
+<a class="jxr_linenumber" name="159" href="#159">159</a> 
+<a class="jxr_linenumber" name="160" href="#160">160</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="161" href="#161">161</a>         sb.append(<span class="jxr_string">"New Quest will delete your current player decks, credits and win loss record. "</span>);
+<a class="jxr_linenumber" name="162" href="#162">162</a>         sb.append(<span class="jxr_string">"Continue Quest will allow you to continue a quest that you started at an earlier time."</span>);
 <a class="jxr_linenumber" name="163" href="#163">163</a>         sb.append(<span class="jxr_string">"\r\n"</span>);
-<a class="jxr_linenumber" name="164" href="#164">164</a>         sb.append(<span class="jxr_string">"Realistic is the original quest mode with a new feature, the Card Shop. "</span>);
-<a class="jxr_linenumber" name="165" href="#165">165</a>         sb.append(<span class="jxr_string">"Fantasy adds a Bazaar and the occasional fantasy themed opponent for you to battle."</span>);
-<a class="jxr_linenumber" name="166" href="#166">166</a> 
-<a class="jxr_linenumber" name="167" href="#167">167</a>         jTextArea1.setBorder(BorderFactory.createEtchedBorder(Color.white, <strong class="jxr_keyword">new</strong> <a href="../forge/Constant.html">Color</a>(148, 145, 140)));
-<a class="jxr_linenumber" name="168" href="#168">168</a>         jTextArea1.setEnabled(false);
-<a class="jxr_linenumber" name="169" href="#169">169</a>         jTextArea1.setFont(<strong class="jxr_keyword">new</strong> java.awt.Font(<span class="jxr_string">"Dialog"</span>, 0, 12));
-<a class="jxr_linenumber" name="170" href="#170">170</a>         jTextArea1.setDisabledTextColor(Color.black);
-<a class="jxr_linenumber" name="171" href="#171">171</a>         jTextArea1.setEditable(false);
-<a class="jxr_linenumber" name="172" href="#172">172</a> <em class="jxr_comment">//      jTextArea1.setText("Note: Starting a new quest will delete your current quest data");</em>
-<a class="jxr_linenumber" name="173" href="#173">173</a>         jTextArea1.setText(sb.toString());
-<a class="jxr_linenumber" name="174" href="#174">174</a>         jTextArea1.setLineWrap(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="175" href="#175">175</a>         jTextArea1.setWrapStyleWord(<strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="176" href="#176">176</a>         jTextArea1.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(86, 145, 327, 128));
-<a class="jxr_linenumber" name="177" href="#177">177</a> 
-<a class="jxr_linenumber" name="178" href="#178">178</a>         jPanel3.setBorder(titledBorder2);
-<a class="jxr_linenumber" name="179" href="#179">179</a>         jPanel3.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(110, 427, 323, 86));
-<a class="jxr_linenumber" name="180" href="#180">180</a>         jPanel3.setLayout(<strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="181" href="#181">181</a> 
-<a class="jxr_linenumber" name="182" href="#182">182</a>         jPanel2.add(easyRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="183" href="#183">183</a>         jPanel2.add(realisticRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="184" href="#184">184</a>         jPanel2.add(mediumRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="185" href="#185">185</a>         jPanel2.add(fantasyRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="186" href="#186">186</a>         jPanel2.add(hardRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="187" href="#187">187</a>         jPanel2.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">""</span>));  <em class="jxr_comment">// for empty cell</em>
-<a class="jxr_linenumber" name="188" href="#188">188</a>         jPanel2.add(veryHardRadio, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="189" href="#189">189</a>         jPanel2.add(cbStandardStart, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="190" href="#190">190</a> 
-<a class="jxr_linenumber" name="191" href="#191">191</a>         jPanel1.add(newQuestButton, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="192" href="#192">192</a>         jPanel1.add(jTextArea1, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="193" href="#193">193</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jPanel1, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="194" href="#194">194</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jPanel3, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="195" href="#195">195</a>         jPanel3.add(continueQuestButton, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="196" href="#196">196</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jLabel1, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="197" href="#197">197</a>         jPanel1.add(jPanel2, <strong class="jxr_keyword">null</strong>);
-<a class="jxr_linenumber" name="198" href="#198">198</a>         buttonGroup1.add(easyRadio);
-<a class="jxr_linenumber" name="199" href="#199">199</a>         buttonGroup1.add(mediumRadio);
-<a class="jxr_linenumber" name="200" href="#200">200</a>         buttonGroup1.add(hardRadio);
-<a class="jxr_linenumber" name="201" href="#201">201</a>         buttonGroup1.add(veryHardRadio);
-<a class="jxr_linenumber" name="202" href="#202">202</a> 
-<a class="jxr_linenumber" name="203" href="#203">203</a>         buttonGroup2.add(realisticRadio);
-<a class="jxr_linenumber" name="204" href="#204">204</a>         buttonGroup2.add(fantasyRadio);
-<a class="jxr_linenumber" name="205" href="#205">205</a> 
-<a class="jxr_linenumber" name="206" href="#206">206</a>     }
-<a class="jxr_linenumber" name="207" href="#207">207</a> 
-<a class="jxr_linenumber" name="208" href="#208">208</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="209" href="#209">209</a> <em class="jxr_javadoccomment">     * &lt;p&gt;continueQuestButton_actionPerformed.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     * @param e a {@link java.awt.event.ActionEvent} object.</em>
-<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="213" href="#213">213</a>     <strong class="jxr_keyword">void</strong> continueQuestButton_actionPerformed(ActionEvent e) {
-<a class="jxr_linenumber" name="214" href="#214">214</a>         <em class="jxr_comment">//set global variable</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a>         AllZone.setQuestData(QuestDataIO.loadData());
-<a class="jxr_linenumber" name="216" href="#216">216</a>         AllZone.getQuestData().setDifficultyIndex();
-<a class="jxr_linenumber" name="217" href="#217">217</a>         dispose();
-<a class="jxr_linenumber" name="218" href="#218">218</a> 
-<a class="jxr_linenumber" name="219" href="#219">219</a>         <strong class="jxr_keyword">new</strong> <a href="../forge/quest/gui/QuestFrame.html">QuestFrame</a>();
-<a class="jxr_linenumber" name="220" href="#220">220</a> 
-<a class="jxr_linenumber" name="221" href="#221">221</a>     }
-<a class="jxr_linenumber" name="222" href="#222">222</a> 
-<a class="jxr_linenumber" name="223" href="#223">223</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="224" href="#224">224</a> <em class="jxr_javadoccomment">     * &lt;p&gt;newQuestButton_actionPerformed.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_javadoccomment">     * @param e a {@link java.awt.event.ActionEvent} object.</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a>     <strong class="jxr_keyword">void</strong> newQuestButton_actionPerformed(ActionEvent e) {
-<a class="jxr_linenumber" name="229" href="#229">229</a>         <strong class="jxr_keyword">int</strong> difficulty = 0;
-<a class="jxr_linenumber" name="230" href="#230">230</a> 
-<a class="jxr_linenumber" name="231" href="#231">231</a>         String mode = fantasyRadio.isSelected() ? forge.quest.data.QuestData.FANTASY : forge.quest.data.QuestData.REALISTIC;
-<a class="jxr_linenumber" name="232" href="#232">232</a> 
-<a class="jxr_linenumber" name="233" href="#233">233</a>         <strong class="jxr_keyword">if</strong> (easyRadio.isSelected()) difficulty = 0;
-<a class="jxr_linenumber" name="234" href="#234">234</a> 
-<a class="jxr_linenumber" name="235" href="#235">235</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (mediumRadio.isSelected()) difficulty = 1;
-<a class="jxr_linenumber" name="236" href="#236">236</a> 
-<a class="jxr_linenumber" name="237" href="#237">237</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (hardRadio.isSelected()) difficulty = 2;
-<a class="jxr_linenumber" name="238" href="#238">238</a> 
-<a class="jxr_linenumber" name="239" href="#239">239</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (veryHardRadio.isSelected()) difficulty = 3;
-<a class="jxr_linenumber" name="240" href="#240">240</a> 
-<a class="jxr_linenumber" name="241" href="#241">241</a>         <strong class="jxr_keyword">else</strong> <em class="jxr_comment">//user didn't select a difficulty{</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a>             <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="243" href="#243">243</a> 
-<a class="jxr_linenumber" name="244" href="#244">244</a>         <strong class="jxr_keyword">if</strong> (questData.hasSaveFile()) {
-<a class="jxr_linenumber" name="245" href="#245">245</a>             <em class="jxr_comment">// this will overwrite your save file!</em>
-<a class="jxr_linenumber" name="246" href="#246">246</a>             Object[] possibleValues = {<span class="jxr_string">"Yes"</span>, <span class="jxr_string">"No"</span>};
-<a class="jxr_linenumber" name="247" href="#247">247</a>             Object choice = JOptionPane.showOptionDialog(<strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Starting a new quest will overwrite your current quest. Continue?"</span>,
-<a class="jxr_linenumber" name="248" href="#248">248</a>                     <span class="jxr_string">"Start New Quest?"</span>, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
-<a class="jxr_linenumber" name="249" href="#249">249</a>                     <strong class="jxr_keyword">null</strong>, possibleValues, possibleValues[0]);
-<a class="jxr_linenumber" name="250" href="#250">250</a> 
-<a class="jxr_linenumber" name="251" href="#251">251</a>             <strong class="jxr_keyword">if</strong> (!choice.equals(0))
-<a class="jxr_linenumber" name="252" href="#252">252</a>                 <strong class="jxr_keyword">return</strong>;
-<a class="jxr_linenumber" name="253" href="#253">253</a>         }
-<a class="jxr_linenumber" name="254" href="#254">254</a> 
-<a class="jxr_linenumber" name="255" href="#255">255</a>         <em class="jxr_comment">//give the user a few cards to build a deck</em>
-<a class="jxr_linenumber" name="256" href="#256">256</a>         questData.newGame(difficulty, mode, cbStandardStart.isSelected());
-<a class="jxr_linenumber" name="257" href="#257">257</a> 
-<a class="jxr_linenumber" name="258" href="#258">258</a>         questData.saveData();
-<a class="jxr_linenumber" name="259" href="#259">259</a> 
+<a class="jxr_linenumber" name="164" href="#164">164</a>         sb.append(<span class="jxr_string">"\r\n"</span>);
+<a class="jxr_linenumber" name="165" href="#165">165</a>         sb.append(<span class="jxr_string">"Realistic is the original quest mode with a new feature, the Card Shop. "</span>);
+<a class="jxr_linenumber" name="166" href="#166">166</a>         sb.append(<span class="jxr_string">"Fantasy adds a Bazaar and the occasional fantasy themed opponent for you to battle."</span>);
+<a class="jxr_linenumber" name="167" href="#167">167</a> 
+<a class="jxr_linenumber" name="168" href="#168">168</a>         jTextArea1.setBorder(BorderFactory.createEtchedBorder(Color.white, <strong class="jxr_keyword">new</strong> <a href="../forge/Constant.html">Color</a>(148, 145, 140)));
+<a class="jxr_linenumber" name="169" href="#169">169</a>         jTextArea1.setEnabled(false);
+<a class="jxr_linenumber" name="170" href="#170">170</a>         jTextArea1.setFont(<strong class="jxr_keyword">new</strong> java.awt.Font(<span class="jxr_string">"Dialog"</span>, 0, 12));
+<a class="jxr_linenumber" name="171" href="#171">171</a>         jTextArea1.setDisabledTextColor(Color.black);
+<a class="jxr_linenumber" name="172" href="#172">172</a>         jTextArea1.setEditable(false);
+<a class="jxr_linenumber" name="173" href="#173">173</a> <em class="jxr_comment">//      jTextArea1.setText("Note: Starting a new quest will delete your current quest data");</em>
+<a class="jxr_linenumber" name="174" href="#174">174</a>         jTextArea1.setText(sb.toString());
+<a class="jxr_linenumber" name="175" href="#175">175</a>         jTextArea1.setLineWrap(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="176" href="#176">176</a>         jTextArea1.setWrapStyleWord(<strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="177" href="#177">177</a>         jTextArea1.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(86, 145, 327, 128));
+<a class="jxr_linenumber" name="178" href="#178">178</a> 
+<a class="jxr_linenumber" name="179" href="#179">179</a>         jPanel3.setBorder(titledBorder2);
+<a class="jxr_linenumber" name="180" href="#180">180</a>         jPanel3.setBounds(<strong class="jxr_keyword">new</strong> Rectangle(110, 427, 323, 86));
+<a class="jxr_linenumber" name="181" href="#181">181</a>         jPanel3.setLayout(<strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="182" href="#182">182</a> 
+<a class="jxr_linenumber" name="183" href="#183">183</a>         jPanel2.add(easyRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="184" href="#184">184</a>         jPanel2.add(realisticRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="185" href="#185">185</a>         jPanel2.add(mediumRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="186" href="#186">186</a>         jPanel2.add(fantasyRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="187" href="#187">187</a>         jPanel2.add(hardRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="188" href="#188">188</a>         jPanel2.add(<strong class="jxr_keyword">new</strong> JLabel(<span class="jxr_string">""</span>));  <em class="jxr_comment">// for empty cell</em>
+<a class="jxr_linenumber" name="189" href="#189">189</a>         jPanel2.add(veryHardRadio, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="190" href="#190">190</a>         jPanel2.add(cbStandardStart, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="191" href="#191">191</a> 
+<a class="jxr_linenumber" name="192" href="#192">192</a>         jPanel1.add(newQuestButton, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="193" href="#193">193</a>         jPanel1.add(jTextArea1, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="194" href="#194">194</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jPanel1, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="195" href="#195">195</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jPanel3, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="196" href="#196">196</a>         jPanel3.add(continueQuestButton, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="197" href="#197">197</a>         <strong class="jxr_keyword">this</strong>.getContentPane().add(jLabel1, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="198" href="#198">198</a>         jPanel1.add(jPanel2, <strong class="jxr_keyword">null</strong>);
+<a class="jxr_linenumber" name="199" href="#199">199</a>         buttonGroup1.add(easyRadio);
+<a class="jxr_linenumber" name="200" href="#200">200</a>         buttonGroup1.add(mediumRadio);
+<a class="jxr_linenumber" name="201" href="#201">201</a>         buttonGroup1.add(hardRadio);
+<a class="jxr_linenumber" name="202" href="#202">202</a>         buttonGroup1.add(veryHardRadio);
+<a class="jxr_linenumber" name="203" href="#203">203</a> 
+<a class="jxr_linenumber" name="204" href="#204">204</a>         buttonGroup2.add(realisticRadio);
+<a class="jxr_linenumber" name="205" href="#205">205</a>         buttonGroup2.add(fantasyRadio);
+<a class="jxr_linenumber" name="206" href="#206">206</a> 
+<a class="jxr_linenumber" name="207" href="#207">207</a>     }
+<a class="jxr_linenumber" name="208" href="#208">208</a> 
+<a class="jxr_linenumber" name="209" href="#209">209</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">     * &lt;p&gt;continueQuestButton_actionPerformed.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     * @param e a {@link java.awt.event.ActionEvent} object.</em>
+<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="214" href="#214">214</a>     <strong class="jxr_keyword">void</strong> continueQuestButton_actionPerformed(ActionEvent e) {
+<a class="jxr_linenumber" name="215" href="#215">215</a>         <em class="jxr_comment">//set global variable</em>
+<a class="jxr_linenumber" name="216" href="#216">216</a>         AllZone.setQuestData(QuestDataIO.loadData());
+<a class="jxr_linenumber" name="217" href="#217">217</a>         AllZone.getQuestData().setDifficultyIndex();
+<a class="jxr_linenumber" name="218" href="#218">218</a>         dispose();
+<a class="jxr_linenumber" name="219" href="#219">219</a> 
+<a class="jxr_linenumber" name="220" href="#220">220</a>         <strong class="jxr_keyword">new</strong> <a href="../forge/quest/gui/QuestFrame.html">QuestFrame</a>();
+<a class="jxr_linenumber" name="221" href="#221">221</a> 
+<a class="jxr_linenumber" name="222" href="#222">222</a>     }
+<a class="jxr_linenumber" name="223" href="#223">223</a> 
+<a class="jxr_linenumber" name="224" href="#224">224</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="225" href="#225">225</a> <em class="jxr_javadoccomment">     * &lt;p&gt;newQuestButton_actionPerformed.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_javadoccomment">     * @param e a {@link java.awt.event.ActionEvent} object.</em>
+<a class="jxr_linenumber" name="228" href="#228">228</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="229" href="#229">229</a>     <strong class="jxr_keyword">void</strong> newQuestButton_actionPerformed(ActionEvent e) {
+<a class="jxr_linenumber" name="230" href="#230">230</a>         <strong class="jxr_keyword">int</strong> difficulty = 0;
+<a class="jxr_linenumber" name="231" href="#231">231</a> 
+<a class="jxr_linenumber" name="232" href="#232">232</a>         String mode = fantasyRadio.isSelected() ? forge.quest.data.QuestData.FANTASY : forge.quest.data.QuestData.REALISTIC;
+<a class="jxr_linenumber" name="233" href="#233">233</a> 
+<a class="jxr_linenumber" name="234" href="#234">234</a>         <strong class="jxr_keyword">if</strong> (easyRadio.isSelected()) difficulty = 0;
+<a class="jxr_linenumber" name="235" href="#235">235</a> 
+<a class="jxr_linenumber" name="236" href="#236">236</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (mediumRadio.isSelected()) difficulty = 1;
+<a class="jxr_linenumber" name="237" href="#237">237</a> 
+<a class="jxr_linenumber" name="238" href="#238">238</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (hardRadio.isSelected()) difficulty = 2;
+<a class="jxr_linenumber" name="239" href="#239">239</a> 
+<a class="jxr_linenumber" name="240" href="#240">240</a>         <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (veryHardRadio.isSelected()) difficulty = 3;
+<a class="jxr_linenumber" name="241" href="#241">241</a> 
+<a class="jxr_linenumber" name="242" href="#242">242</a>         <strong class="jxr_keyword">else</strong> <em class="jxr_comment">//user didn't select a difficulty{</em>
+<a class="jxr_linenumber" name="243" href="#243">243</a>             <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="244" href="#244">244</a> 
+<a class="jxr_linenumber" name="245" href="#245">245</a>         <strong class="jxr_keyword">if</strong> (questData.hasSaveFile()) {
+<a class="jxr_linenumber" name="246" href="#246">246</a>             <em class="jxr_comment">// this will overwrite your save file!</em>
+<a class="jxr_linenumber" name="247" href="#247">247</a>             Object[] possibleValues = {<span class="jxr_string">"Yes"</span>, <span class="jxr_string">"No"</span>};
+<a class="jxr_linenumber" name="248" href="#248">248</a>             Object choice = JOptionPane.showOptionDialog(<strong class="jxr_keyword">null</strong>, <span class="jxr_string">"Starting a new quest will overwrite your current quest. Continue?"</span>,
+<a class="jxr_linenumber" name="249" href="#249">249</a>                     <span class="jxr_string">"Start New Quest?"</span>, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+<a class="jxr_linenumber" name="250" href="#250">250</a>                     <strong class="jxr_keyword">null</strong>, possibleValues, possibleValues[1]);
+<a class="jxr_linenumber" name="251" href="#251">251</a> 
+<a class="jxr_linenumber" name="252" href="#252">252</a>             <strong class="jxr_keyword">if</strong> (!choice.equals(0))
+<a class="jxr_linenumber" name="253" href="#253">253</a>                 <strong class="jxr_keyword">return</strong>;
+<a class="jxr_linenumber" name="254" href="#254">254</a>         }
+<a class="jxr_linenumber" name="255" href="#255">255</a> 
+<a class="jxr_linenumber" name="256" href="#256">256</a>         <em class="jxr_comment">//give the user a few cards to build a deck</em>
+<a class="jxr_linenumber" name="257" href="#257">257</a>         questData.newGame(difficulty, mode, cbStandardStart.isSelected());
+<a class="jxr_linenumber" name="258" href="#258">258</a> 
+<a class="jxr_linenumber" name="259" href="#259">259</a>         questData.saveData();
 <a class="jxr_linenumber" name="260" href="#260">260</a> 
-<a class="jxr_linenumber" name="261" href="#261">261</a>         <em class="jxr_comment">//set global variable</em>
-<a class="jxr_linenumber" name="262" href="#262">262</a>         AllZone.setQuestData(questData);
-<a class="jxr_linenumber" name="263" href="#263">263</a> 
-<a class="jxr_linenumber" name="264" href="#264">264</a>         dispose();
-<a class="jxr_linenumber" name="265" href="#265">265</a>         <strong class="jxr_keyword">new</strong> <a href="../forge/quest/gui/QuestFrame.html">QuestFrame</a>();
-<a class="jxr_linenumber" name="266" href="#266">266</a>     }
-<a class="jxr_linenumber" name="267" href="#267">267</a> 
+<a class="jxr_linenumber" name="261" href="#261">261</a> 
+<a class="jxr_linenumber" name="262" href="#262">262</a>         <em class="jxr_comment">//set global variable</em>
+<a class="jxr_linenumber" name="263" href="#263">263</a>         AllZone.setQuestData(questData);
+<a class="jxr_linenumber" name="264" href="#264">264</a> 
+<a class="jxr_linenumber" name="265" href="#265">265</a>         dispose();
+<a class="jxr_linenumber" name="266" href="#266">266</a>         <strong class="jxr_keyword">new</strong> <a href="../forge/quest/gui/QuestFrame.html">QuestFrame</a>();
+<a class="jxr_linenumber" name="267" href="#267">267</a>     }
 <a class="jxr_linenumber" name="268" href="#268">268</a> 
-<a class="jxr_linenumber" name="269" href="#269">269</a> }
+<a class="jxr_linenumber" name="269" href="#269">269</a> 
+<a class="jxr_linenumber" name="270" href="#270">270</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

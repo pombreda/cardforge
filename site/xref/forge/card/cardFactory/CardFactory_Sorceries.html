@@ -2592,746 +2592,682 @@
 <a class="jxr_linenumber" name="2582" href="#2582">2582</a> 
 <a class="jxr_linenumber" name="2583" href="#2583">2583</a> 
 <a class="jxr_linenumber" name="2584" href="#2584">2584</a>         /<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* START *********** START **************************</em>
-<a class="jxr_linenumber" name="2585" href="#2585">2585</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Overwhelming Stampede")) {</em>
+<a class="jxr_linenumber" name="2585" href="#2585">2585</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Winds of Change")) {</em>
 <a class="jxr_linenumber" name="2586" href="#2586">2586</a> <em class="jxr_javadoccomment">        	/*</em>
-<a class="jxr_linenumber" name="2587" href="#2587">2587</a> <em class="jxr_javadoccomment">        	 * Until end of turn, creatures you control gain trample and get</em>
-<a class="jxr_linenumber" name="2588" href="#2588">2588</a> <em class="jxr_javadoccomment">        	 * +X/+X, where X is the greatest power among creatures you control.</em>
+<a class="jxr_linenumber" name="2587" href="#2587">2587</a> <em class="jxr_javadoccomment">        	 * Each player shuffles the cards from his or her hand into</em>
+<a class="jxr_linenumber" name="2588" href="#2588">2588</a> <em class="jxr_javadoccomment">        	 * his or her library, then draws that many cards.</em>
 <a class="jxr_linenumber" name="2589" href="#2589">2589</a> <em class="jxr_javadoccomment">        	 */</em>
-<a class="jxr_linenumber" name="2590" href="#2590">2590</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong>[] x = <strong class="jxr_keyword">new</strong> <strong class="jxr_keyword">int</strong>[1];
-<a class="jxr_linenumber" name="2591" href="#2591">2591</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spell = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(card) {
-<a class="jxr_linenumber" name="2592" href="#2592">2592</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -3676506382832498840L;
-<a class="jxr_linenumber" name="2593" href="#2593">2593</a> 
-<a class="jxr_linenumber" name="2594" href="#2594">2594</a>                 @Override
-<a class="jxr_linenumber" name="2595" href="#2595">2595</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
-<a class="jxr_linenumber" name="2596" href="#2596">2596</a>                     <a href="../../../forge/CardList.html">CardList</a> list = AllZoneUtil.getCreaturesInPlay(AllZone.getComputerPlayer());
-<a class="jxr_linenumber" name="2597" href="#2597">2597</a>                     <strong class="jxr_keyword">return</strong> list.size() &gt; 2;
-<a class="jxr_linenumber" name="2598" href="#2598">2598</a>                 }<em class="jxr_comment">//canPlayAI()</em>
-<a class="jxr_linenumber" name="2599" href="#2599">2599</a> 
-<a class="jxr_linenumber" name="2600" href="#2600">2600</a>                 @Override
-<a class="jxr_linenumber" name="2601" href="#2601">2601</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="2602" href="#2602">2602</a>                     <a href="../../../forge/Player.html">Player</a> player = card.getController();
-<a class="jxr_linenumber" name="2603" href="#2603">2603</a>                     <a href="../../../forge/CardList.html">CardList</a> list = AllZoneUtil.getCreaturesInPlay(player);
+<a class="jxr_linenumber" name="2590" href="#2590">2590</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spell = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(card) {
+<a class="jxr_linenumber" name="2591" href="#2591">2591</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1137557863607126794L;
+<a class="jxr_linenumber" name="2592" href="#2592">2592</a> 
+<a class="jxr_linenumber" name="2593" href="#2593">2593</a>                 @Override
+<a class="jxr_linenumber" name="2594" href="#2594">2594</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="2595" href="#2595">2595</a>                     discardDrawX(AllZone.getHumanPlayer());
+<a class="jxr_linenumber" name="2596" href="#2596">2596</a>                     discardDrawX(AllZone.getComputerPlayer());
+<a class="jxr_linenumber" name="2597" href="#2597">2597</a>                 }<em class="jxr_comment">//resolve()</em>
+<a class="jxr_linenumber" name="2598" href="#2598">2598</a> 
+<a class="jxr_linenumber" name="2599" href="#2599">2599</a>                 <strong class="jxr_keyword">void</strong> discardDrawX(<a href="../../../forge/Player.html">Player</a> player) {
+<a class="jxr_linenumber" name="2600" href="#2600">2600</a>                     <a href="../../../forge/CardList.html">CardList</a> hand = AllZoneUtil.getPlayerHand(player);
+<a class="jxr_linenumber" name="2601" href="#2601">2601</a> 
+<a class="jxr_linenumber" name="2602" href="#2602">2602</a>                     <strong class="jxr_keyword">for</strong> (Card c : hand)
+<a class="jxr_linenumber" name="2603" href="#2603">2603</a>                         AllZone.getGameAction().moveToLibrary(c);
 <a class="jxr_linenumber" name="2604" href="#2604">2604</a> 
-<a class="jxr_linenumber" name="2605" href="#2605">2605</a>                     x[0] = findHighestPower(list);
-<a class="jxr_linenumber" name="2606" href="#2606">2606</a> 
-<a class="jxr_linenumber" name="2607" href="#2607">2607</a>                     <strong class="jxr_keyword">for</strong> (Card creature : list) {
-<a class="jxr_linenumber" name="2608" href="#2608">2608</a>                         <strong class="jxr_keyword">final</strong> <a href="../../../forge/Card.html">Card</a> c = creature;
-<a class="jxr_linenumber" name="2609" href="#2609">2609</a> 
-<a class="jxr_linenumber" name="2610" href="#2610">2610</a>                         <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> untilEOT = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
-<a class="jxr_linenumber" name="2611" href="#2611">2611</a>                             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -2712661762676783458L;
-<a class="jxr_linenumber" name="2612" href="#2612">2612</a> 
-<a class="jxr_linenumber" name="2613" href="#2613">2613</a>                             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
-<a class="jxr_linenumber" name="2614" href="#2614">2614</a>                                 <strong class="jxr_keyword">if</strong> (AllZoneUtil.isCardInPlay(c)) {
-<a class="jxr_linenumber" name="2615" href="#2615">2615</a>                                     c.addTempAttackBoost(-x[0]);
-<a class="jxr_linenumber" name="2616" href="#2616">2616</a>                                     c.addTempDefenseBoost(-x[0]);
-<a class="jxr_linenumber" name="2617" href="#2617">2617</a>                                     c.removeExtrinsicKeyword(<span class="jxr_string">"Trample"</span>);
-<a class="jxr_linenumber" name="2618" href="#2618">2618</a>                                 }
-<a class="jxr_linenumber" name="2619" href="#2619">2619</a>                             }
-<a class="jxr_linenumber" name="2620" href="#2620">2620</a>                         };<em class="jxr_comment">//Command</em>
-<a class="jxr_linenumber" name="2621" href="#2621">2621</a> 
-<a class="jxr_linenumber" name="2622" href="#2622">2622</a>                         <strong class="jxr_keyword">if</strong> (AllZoneUtil.isCardInPlay(c)) {
-<a class="jxr_linenumber" name="2623" href="#2623">2623</a>                             c.addTempAttackBoost(x[0]);
-<a class="jxr_linenumber" name="2624" href="#2624">2624</a>                             c.addTempDefenseBoost(x[0]);
-<a class="jxr_linenumber" name="2625" href="#2625">2625</a>                             c.addExtrinsicKeyword(<span class="jxr_string">"Trample"</span>);
+<a class="jxr_linenumber" name="2605" href="#2605">2605</a>                     <em class="jxr_comment">// Shuffle library</em>
+<a class="jxr_linenumber" name="2606" href="#2606">2606</a>                     player.shuffle();
+<a class="jxr_linenumber" name="2607" href="#2607">2607</a> 
+<a class="jxr_linenumber" name="2608" href="#2608">2608</a>                     player.drawCards(hand.size());
+<a class="jxr_linenumber" name="2609" href="#2609">2609</a>                 }
+<a class="jxr_linenumber" name="2610" href="#2610">2610</a> 
+<a class="jxr_linenumber" name="2611" href="#2611">2611</a>                 <em class="jxr_comment">// Simple, If computer has two or less playable cards remaining in hand play Winds of Change</em>
+<a class="jxr_linenumber" name="2612" href="#2612">2612</a>                 @Override
+<a class="jxr_linenumber" name="2613" href="#2613">2613</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
+<a class="jxr_linenumber" name="2614" href="#2614">2614</a>                     <a href="../../../forge/CardList.html">CardList</a> c = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
+<a class="jxr_linenumber" name="2615" href="#2615">2615</a>                     c = c.filter(AllZoneUtil.nonlands);
+<a class="jxr_linenumber" name="2616" href="#2616">2616</a>                     <strong class="jxr_keyword">return</strong> 2 &gt;= c.size();
+<a class="jxr_linenumber" name="2617" href="#2617">2617</a>                 }
+<a class="jxr_linenumber" name="2618" href="#2618">2618</a> 
+<a class="jxr_linenumber" name="2619" href="#2619">2619</a>             };<em class="jxr_comment">//SpellAbility</em>
+<a class="jxr_linenumber" name="2620" href="#2620">2620</a> 
+<a class="jxr_linenumber" name="2621" href="#2621">2621</a>             
+<a class="jxr_linenumber" name="2622" href="#2622">2622</a>             
+<a class="jxr_linenumber" name="2623" href="#2623">2623</a>             card.addSpellAbility(spell);
+<a class="jxr_linenumber" name="2624" href="#2624">2624</a>         }/<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* END ************ END **************************</em>
+<a class="jxr_linenumber" name="2625" href="#2625">2625</a> 
 <a class="jxr_linenumber" name="2626" href="#2626">2626</a> 
-<a class="jxr_linenumber" name="2627" href="#2627">2627</a>                             AllZone.getEndOfTurn().addUntil(untilEOT);
-<a class="jxr_linenumber" name="2628" href="#2628">2628</a>                         }<em class="jxr_comment">//if</em>
-<a class="jxr_linenumber" name="2629" href="#2629">2629</a>                     }<em class="jxr_comment">//for</em>
-<a class="jxr_linenumber" name="2630" href="#2630">2630</a>                 }<em class="jxr_comment">//resolve()</em>
-<a class="jxr_linenumber" name="2631" href="#2631">2631</a> 
-<a class="jxr_linenumber" name="2632" href="#2632">2632</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> findHighestPower(<a href="../../../forge/CardList.html">CardList</a> list) {
-<a class="jxr_linenumber" name="2633" href="#2633">2633</a>                     <strong class="jxr_keyword">int</strong> highest = 0;
-<a class="jxr_linenumber" name="2634" href="#2634">2634</a>                     <strong class="jxr_keyword">for</strong> (Card c : list) {
-<a class="jxr_linenumber" name="2635" href="#2635">2635</a>                         <strong class="jxr_keyword">if</strong> (c.getNetAttack() &gt; highest) highest = c.getNetAttack();
-<a class="jxr_linenumber" name="2636" href="#2636">2636</a>                     }
-<a class="jxr_linenumber" name="2637" href="#2637">2637</a>                     <strong class="jxr_keyword">return</strong> highest;
-<a class="jxr_linenumber" name="2638" href="#2638">2638</a>                 }
-<a class="jxr_linenumber" name="2639" href="#2639">2639</a>             };
-<a class="jxr_linenumber" name="2640" href="#2640">2640</a> 
-<a class="jxr_linenumber" name="2641" href="#2641">2641</a>             
-<a class="jxr_linenumber" name="2642" href="#2642">2642</a>             
-<a class="jxr_linenumber" name="2643" href="#2643">2643</a>             card.addSpellAbility(spell);
-<a class="jxr_linenumber" name="2644" href="#2644">2644</a>             card.setSVar(<span class="jxr_string">"PlayMain1"</span>, <span class="jxr_string">"TRUE"</span>);
-<a class="jxr_linenumber" name="2645" href="#2645">2645</a>         }/<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* END ************ END **************************</em>
-<a class="jxr_linenumber" name="2646" href="#2646">2646</a> 
-<a class="jxr_linenumber" name="2647" href="#2647">2647</a> 
-<a class="jxr_linenumber" name="2648" href="#2648">2648</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="2649" href="#2649">2649</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Winds of Change")) {</em>
-<a class="jxr_linenumber" name="2650" href="#2650">2650</a> <em class="jxr_javadoccomment">        	/*</em>
-<a class="jxr_linenumber" name="2651" href="#2651">2651</a> <em class="jxr_javadoccomment">        	 * Each player shuffles the cards from his or her hand into</em>
-<a class="jxr_linenumber" name="2652" href="#2652">2652</a> <em class="jxr_javadoccomment">        	 * his or her library, then draws that many cards.</em>
-<a class="jxr_linenumber" name="2653" href="#2653">2653</a> <em class="jxr_javadoccomment">        	 */</em>
-<a class="jxr_linenumber" name="2654" href="#2654">2654</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spell = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(card) {
-<a class="jxr_linenumber" name="2655" href="#2655">2655</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 1137557863607126794L;
-<a class="jxr_linenumber" name="2656" href="#2656">2656</a> 
-<a class="jxr_linenumber" name="2657" href="#2657">2657</a>                 @Override
-<a class="jxr_linenumber" name="2658" href="#2658">2658</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="2659" href="#2659">2659</a>                     discardDrawX(AllZone.getHumanPlayer());
-<a class="jxr_linenumber" name="2660" href="#2660">2660</a>                     discardDrawX(AllZone.getComputerPlayer());
-<a class="jxr_linenumber" name="2661" href="#2661">2661</a>                 }<em class="jxr_comment">//resolve()</em>
+<a class="jxr_linenumber" name="2627" href="#2627">2627</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
+<a class="jxr_linenumber" name="2628" href="#2628">2628</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Molten Psyche")) {</em>
+<a class="jxr_linenumber" name="2629" href="#2629">2629</a> <em class="jxr_javadoccomment">        	/*</em>
+<a class="jxr_linenumber" name="2630" href="#2630">2630</a> <em class="jxr_javadoccomment">        	 * Each player shuffles the cards from his or her hand into his</em>
+<a class="jxr_linenumber" name="2631" href="#2631">2631</a> <em class="jxr_javadoccomment">        	 * or her library, then draws that many cards.</em>
+<a class="jxr_linenumber" name="2632" href="#2632">2632</a> <em class="jxr_javadoccomment">        	 * Metalcraft - If you control three or more artifacts, Molten</em>
+<a class="jxr_linenumber" name="2633" href="#2633">2633</a> <em class="jxr_javadoccomment">        	 * Psyche deals damage to each opponent equal to the number of</em>
+<a class="jxr_linenumber" name="2634" href="#2634">2634</a> <em class="jxr_javadoccomment">        	 * cards that player has drawn this turn.</em>
+<a class="jxr_linenumber" name="2635" href="#2635">2635</a> <em class="jxr_javadoccomment">        	 */</em>
+<a class="jxr_linenumber" name="2636" href="#2636">2636</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spell = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(card) {
+<a class="jxr_linenumber" name="2637" href="#2637">2637</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -1276674329039279896L;
+<a class="jxr_linenumber" name="2638" href="#2638">2638</a> 
+<a class="jxr_linenumber" name="2639" href="#2639">2639</a>                 @Override
+<a class="jxr_linenumber" name="2640" href="#2640">2640</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="2641" href="#2641">2641</a>                     <a href="../../../forge/Player.html">Player</a> player = card.getController();
+<a class="jxr_linenumber" name="2642" href="#2642">2642</a>                     <a href="../../../forge/Player.html">Player</a> opp = player.getOpponent();
+<a class="jxr_linenumber" name="2643" href="#2643">2643</a>                     discardDraw(AllZone.getHumanPlayer());
+<a class="jxr_linenumber" name="2644" href="#2644">2644</a>                     discardDraw(AllZone.getComputerPlayer());
+<a class="jxr_linenumber" name="2645" href="#2645">2645</a> 
+<a class="jxr_linenumber" name="2646" href="#2646">2646</a>                     <strong class="jxr_keyword">if</strong> (player.hasMetalcraft()) {
+<a class="jxr_linenumber" name="2647" href="#2647">2647</a>                         opp.addDamage(opp.getNumDrawnThisTurn(), card);
+<a class="jxr_linenumber" name="2648" href="#2648">2648</a>                     }
+<a class="jxr_linenumber" name="2649" href="#2649">2649</a>                 }<em class="jxr_comment">//resolve()</em>
+<a class="jxr_linenumber" name="2650" href="#2650">2650</a> 
+<a class="jxr_linenumber" name="2651" href="#2651">2651</a>                 <strong class="jxr_keyword">void</strong> discardDraw(<a href="../../../forge/Player.html">Player</a> player) {
+<a class="jxr_linenumber" name="2652" href="#2652">2652</a>                     <a href="../../../forge/CardList.html">CardList</a> hand = AllZoneUtil.getPlayerHand(player);
+<a class="jxr_linenumber" name="2653" href="#2653">2653</a>                     <strong class="jxr_keyword">int</strong> numDraw = hand.size();
+<a class="jxr_linenumber" name="2654" href="#2654">2654</a> 
+<a class="jxr_linenumber" name="2655" href="#2655">2655</a>                     <em class="jxr_comment">//move hand to library</em>
+<a class="jxr_linenumber" name="2656" href="#2656">2656</a>                     <strong class="jxr_keyword">for</strong> (Card c : hand) {
+<a class="jxr_linenumber" name="2657" href="#2657">2657</a>                         AllZone.getGameAction().moveToLibrary(c);
+<a class="jxr_linenumber" name="2658" href="#2658">2658</a>                     }
+<a class="jxr_linenumber" name="2659" href="#2659">2659</a> 
+<a class="jxr_linenumber" name="2660" href="#2660">2660</a>                     <em class="jxr_comment">// Shuffle library</em>
+<a class="jxr_linenumber" name="2661" href="#2661">2661</a>                     player.shuffle();
 <a class="jxr_linenumber" name="2662" href="#2662">2662</a> 
-<a class="jxr_linenumber" name="2663" href="#2663">2663</a>                 <strong class="jxr_keyword">void</strong> discardDrawX(<a href="../../../forge/Player.html">Player</a> player) {
-<a class="jxr_linenumber" name="2664" href="#2664">2664</a>                     <a href="../../../forge/CardList.html">CardList</a> hand = AllZoneUtil.getPlayerHand(player);
-<a class="jxr_linenumber" name="2665" href="#2665">2665</a> 
-<a class="jxr_linenumber" name="2666" href="#2666">2666</a>                     <strong class="jxr_keyword">for</strong> (Card c : hand)
-<a class="jxr_linenumber" name="2667" href="#2667">2667</a>                         AllZone.getGameAction().moveToLibrary(c);
-<a class="jxr_linenumber" name="2668" href="#2668">2668</a> 
-<a class="jxr_linenumber" name="2669" href="#2669">2669</a>                     <em class="jxr_comment">// Shuffle library</em>
-<a class="jxr_linenumber" name="2670" href="#2670">2670</a>                     player.shuffle();
-<a class="jxr_linenumber" name="2671" href="#2671">2671</a> 
-<a class="jxr_linenumber" name="2672" href="#2672">2672</a>                     player.drawCards(hand.size());
-<a class="jxr_linenumber" name="2673" href="#2673">2673</a>                 }
-<a class="jxr_linenumber" name="2674" href="#2674">2674</a> 
-<a class="jxr_linenumber" name="2675" href="#2675">2675</a>                 <em class="jxr_comment">// Simple, If computer has two or less playable cards remaining in hand play Winds of Change</em>
-<a class="jxr_linenumber" name="2676" href="#2676">2676</a>                 @Override
-<a class="jxr_linenumber" name="2677" href="#2677">2677</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
-<a class="jxr_linenumber" name="2678" href="#2678">2678</a>                     <a href="../../../forge/CardList.html">CardList</a> c = AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer());
-<a class="jxr_linenumber" name="2679" href="#2679">2679</a>                     c = c.filter(AllZoneUtil.nonlands);
-<a class="jxr_linenumber" name="2680" href="#2680">2680</a>                     <strong class="jxr_keyword">return</strong> 2 &gt;= c.size();
-<a class="jxr_linenumber" name="2681" href="#2681">2681</a>                 }
+<a class="jxr_linenumber" name="2663" href="#2663">2663</a>                     <em class="jxr_comment">// Draw X cards</em>
+<a class="jxr_linenumber" name="2664" href="#2664">2664</a>                     player.drawCards(numDraw);
+<a class="jxr_linenumber" name="2665" href="#2665">2665</a>                 }
+<a class="jxr_linenumber" name="2666" href="#2666">2666</a> 
+<a class="jxr_linenumber" name="2667" href="#2667">2667</a>                 <em class="jxr_comment">// Simple, If computer has two or less playable cards remaining in hand play CARDNAME</em>
+<a class="jxr_linenumber" name="2668" href="#2668">2668</a>                 @Override
+<a class="jxr_linenumber" name="2669" href="#2669">2669</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
+<a class="jxr_linenumber" name="2670" href="#2670">2670</a>                     <a href="../../../forge/CardList.html">CardList</a> c = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
+<a class="jxr_linenumber" name="2671" href="#2671">2671</a>                     c = c.filter(AllZoneUtil.nonlands);
+<a class="jxr_linenumber" name="2672" href="#2672">2672</a>                     <strong class="jxr_keyword">return</strong> 2 &gt;= c.size() ||
+<a class="jxr_linenumber" name="2673" href="#2673">2673</a>                             (AllZone.getComputerPlayer().hasMetalcraft() &amp;&amp; AllZone.getHumanPlayer().getLife() &lt;= 3);
+<a class="jxr_linenumber" name="2674" href="#2674">2674</a>                 }
+<a class="jxr_linenumber" name="2675" href="#2675">2675</a> 
+<a class="jxr_linenumber" name="2676" href="#2676">2676</a>             };<em class="jxr_comment">//SpellAbility</em>
+<a class="jxr_linenumber" name="2677" href="#2677">2677</a> 
+<a class="jxr_linenumber" name="2678" href="#2678">2678</a>             
+<a class="jxr_linenumber" name="2679" href="#2679">2679</a>             
+<a class="jxr_linenumber" name="2680" href="#2680">2680</a>             card.addSpellAbility(spell);
+<a class="jxr_linenumber" name="2681" href="#2681">2681</a>         }/<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* END ************ END **************************</em>
 <a class="jxr_linenumber" name="2682" href="#2682">2682</a> 
-<a class="jxr_linenumber" name="2683" href="#2683">2683</a>             };<em class="jxr_comment">//SpellAbility</em>
-<a class="jxr_linenumber" name="2684" href="#2684">2684</a> 
-<a class="jxr_linenumber" name="2685" href="#2685">2685</a>             
-<a class="jxr_linenumber" name="2686" href="#2686">2686</a>             
-<a class="jxr_linenumber" name="2687" href="#2687">2687</a>             card.addSpellAbility(spell);
-<a class="jxr_linenumber" name="2688" href="#2688">2688</a>         }/<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* END ************ END **************************</em>
-<a class="jxr_linenumber" name="2689" href="#2689">2689</a> 
-<a class="jxr_linenumber" name="2690" href="#2690">2690</a> 
-<a class="jxr_linenumber" name="2691" href="#2691">2691</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="2692" href="#2692">2692</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Molten Psyche")) {</em>
-<a class="jxr_linenumber" name="2693" href="#2693">2693</a> <em class="jxr_javadoccomment">        	/*</em>
-<a class="jxr_linenumber" name="2694" href="#2694">2694</a> <em class="jxr_javadoccomment">        	 * Each player shuffles the cards from his or her hand into his</em>
-<a class="jxr_linenumber" name="2695" href="#2695">2695</a> <em class="jxr_javadoccomment">        	 * or her library, then draws that many cards.</em>
-<a class="jxr_linenumber" name="2696" href="#2696">2696</a> <em class="jxr_javadoccomment">        	 * Metalcraft - If you control three or more artifacts, Molten</em>
-<a class="jxr_linenumber" name="2697" href="#2697">2697</a> <em class="jxr_javadoccomment">        	 * Psyche deals damage to each opponent equal to the number of</em>
-<a class="jxr_linenumber" name="2698" href="#2698">2698</a> <em class="jxr_javadoccomment">        	 * cards that player has drawn this turn.</em>
-<a class="jxr_linenumber" name="2699" href="#2699">2699</a> <em class="jxr_javadoccomment">        	 */</em>
-<a class="jxr_linenumber" name="2700" href="#2700">2700</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spell = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(card) {
-<a class="jxr_linenumber" name="2701" href="#2701">2701</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -1276674329039279896L;
-<a class="jxr_linenumber" name="2702" href="#2702">2702</a> 
-<a class="jxr_linenumber" name="2703" href="#2703">2703</a>                 @Override
-<a class="jxr_linenumber" name="2704" href="#2704">2704</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="2705" href="#2705">2705</a>                     <a href="../../../forge/Player.html">Player</a> player = card.getController();
-<a class="jxr_linenumber" name="2706" href="#2706">2706</a>                     <a href="../../../forge/Player.html">Player</a> opp = player.getOpponent();
-<a class="jxr_linenumber" name="2707" href="#2707">2707</a>                     discardDraw(AllZone.getHumanPlayer());
-<a class="jxr_linenumber" name="2708" href="#2708">2708</a>                     discardDraw(AllZone.getComputerPlayer());
-<a class="jxr_linenumber" name="2709" href="#2709">2709</a> 
-<a class="jxr_linenumber" name="2710" href="#2710">2710</a>                     <strong class="jxr_keyword">if</strong> (player.hasMetalcraft()) {
-<a class="jxr_linenumber" name="2711" href="#2711">2711</a>                         opp.addDamage(opp.getNumDrawnThisTurn(), card);
-<a class="jxr_linenumber" name="2712" href="#2712">2712</a>                     }
-<a class="jxr_linenumber" name="2713" href="#2713">2713</a>                 }<em class="jxr_comment">//resolve()</em>
-<a class="jxr_linenumber" name="2714" href="#2714">2714</a> 
-<a class="jxr_linenumber" name="2715" href="#2715">2715</a>                 <strong class="jxr_keyword">void</strong> discardDraw(<a href="../../../forge/Player.html">Player</a> player) {
-<a class="jxr_linenumber" name="2716" href="#2716">2716</a>                     <a href="../../../forge/CardList.html">CardList</a> hand = AllZoneUtil.getPlayerHand(player);
-<a class="jxr_linenumber" name="2717" href="#2717">2717</a>                     <strong class="jxr_keyword">int</strong> numDraw = hand.size();
-<a class="jxr_linenumber" name="2718" href="#2718">2718</a> 
-<a class="jxr_linenumber" name="2719" href="#2719">2719</a>                     <em class="jxr_comment">//move hand to library</em>
-<a class="jxr_linenumber" name="2720" href="#2720">2720</a>                     <strong class="jxr_keyword">for</strong> (Card c : hand) {
-<a class="jxr_linenumber" name="2721" href="#2721">2721</a>                         AllZone.getGameAction().moveToLibrary(c);
-<a class="jxr_linenumber" name="2722" href="#2722">2722</a>                     }
+<a class="jxr_linenumber" name="2683" href="#2683">2683</a> 
+<a class="jxr_linenumber" name="2684" href="#2684">2684</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
+<a class="jxr_linenumber" name="2685" href="#2685">2685</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Austere Command")) {</em>
+<a class="jxr_linenumber" name="2686" href="#2686">2686</a> <em class="jxr_javadoccomment">            final ArrayList&lt;String&gt; userChoice = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2687" href="#2687">2687</a> 
+<a class="jxr_linenumber" name="2688" href="#2688">2688</a> <em class="jxr_javadoccomment">            final String[] cardChoices = {</em>
+<a class="jxr_linenumber" name="2689" href="#2689">2689</a> <em class="jxr_javadoccomment">                    "Destroy all artifacts",</em>
+<a class="jxr_linenumber" name="2690" href="#2690">2690</a> <em class="jxr_javadoccomment">                    "Destroy all enchantments",</em>
+<a class="jxr_linenumber" name="2691" href="#2691">2691</a> <em class="jxr_javadoccomment">                    "Destroy all creatures with converted mana cost 3 or less",</em>
+<a class="jxr_linenumber" name="2692" href="#2692">2692</a> <em class="jxr_javadoccomment">                    "Destroy all creatures with converted mana cost 4 or more"</em>
+<a class="jxr_linenumber" name="2693" href="#2693">2693</a> <em class="jxr_javadoccomment">            };</em>
+<a class="jxr_linenumber" name="2694" href="#2694">2694</a> 
+<a class="jxr_linenumber" name="2695" href="#2695">2695</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
+<a class="jxr_linenumber" name="2696" href="#2696">2696</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -8501457363981482513L;</em>
+<a class="jxr_linenumber" name="2697" href="#2697">2697</a> 
+<a class="jxr_linenumber" name="2698" href="#2698">2698</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2699" href="#2699">2699</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
+<a class="jxr_linenumber" name="2700" href="#2700">2700</a> 
+<a class="jxr_linenumber" name="2701" href="#2701">2701</a> <em class="jxr_javadoccomment">                    //"Destroy all artifacts",</em>
+<a class="jxr_linenumber" name="2702" href="#2702">2702</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[0])) {</em>
+<a class="jxr_linenumber" name="2703" href="#2703">2703</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCardsInPlay().filter(AllZoneUtil.artifacts);</em>
+<a class="jxr_linenumber" name="2704" href="#2704">2704</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
+<a class="jxr_linenumber" name="2705" href="#2705">2705</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2706" href="#2706">2706</a> 
+<a class="jxr_linenumber" name="2707" href="#2707">2707</a> <em class="jxr_javadoccomment">                    //"Destroy all enchantments",</em>
+<a class="jxr_linenumber" name="2708" href="#2708">2708</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[1])) {</em>
+<a class="jxr_linenumber" name="2709" href="#2709">2709</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCardsInPlay().filter(AllZoneUtil.enchantments);</em>
+<a class="jxr_linenumber" name="2710" href="#2710">2710</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
+<a class="jxr_linenumber" name="2711" href="#2711">2711</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2712" href="#2712">2712</a> 
+<a class="jxr_linenumber" name="2713" href="#2713">2713</a> <em class="jxr_javadoccomment">                    //"Destroy all creatures with converted mana cost 3 or less",</em>
+<a class="jxr_linenumber" name="2714" href="#2714">2714</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[2])) {</em>
+<a class="jxr_linenumber" name="2715" href="#2715">2715</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCreaturesInPlay();</em>
+<a class="jxr_linenumber" name="2716" href="#2716">2716</a> <em class="jxr_javadoccomment">                        cards = cards.filter(new CardListFilter() {</em>
+<a class="jxr_linenumber" name="2717" href="#2717">2717</a> <em class="jxr_javadoccomment">                            public boolean addCard(Card c) {</em>
+<a class="jxr_linenumber" name="2718" href="#2718">2718</a> <em class="jxr_javadoccomment">                                return CardUtil.getConvertedManaCost(c) &lt;= 3;</em>
+<a class="jxr_linenumber" name="2719" href="#2719">2719</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2720" href="#2720">2720</a> <em class="jxr_javadoccomment">                        });</em>
+<a class="jxr_linenumber" name="2721" href="#2721">2721</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
+<a class="jxr_linenumber" name="2722" href="#2722">2722</a> <em class="jxr_javadoccomment">                    }</em>
 <a class="jxr_linenumber" name="2723" href="#2723">2723</a> 
-<a class="jxr_linenumber" name="2724" href="#2724">2724</a>                     <em class="jxr_comment">// Shuffle library</em>
-<a class="jxr_linenumber" name="2725" href="#2725">2725</a>                     player.shuffle();
-<a class="jxr_linenumber" name="2726" href="#2726">2726</a> 
-<a class="jxr_linenumber" name="2727" href="#2727">2727</a>                     <em class="jxr_comment">// Draw X cards</em>
-<a class="jxr_linenumber" name="2728" href="#2728">2728</a>                     player.drawCards(numDraw);
-<a class="jxr_linenumber" name="2729" href="#2729">2729</a>                 }
-<a class="jxr_linenumber" name="2730" href="#2730">2730</a> 
-<a class="jxr_linenumber" name="2731" href="#2731">2731</a>                 <em class="jxr_comment">// Simple, If computer has two or less playable cards remaining in hand play CARDNAME</em>
-<a class="jxr_linenumber" name="2732" href="#2732">2732</a>                 @Override
-<a class="jxr_linenumber" name="2733" href="#2733">2733</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
-<a class="jxr_linenumber" name="2734" href="#2734">2734</a>                     <a href="../../../forge/CardList.html">CardList</a> c = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
-<a class="jxr_linenumber" name="2735" href="#2735">2735</a>                     c = c.filter(AllZoneUtil.nonlands);
-<a class="jxr_linenumber" name="2736" href="#2736">2736</a>                     <strong class="jxr_keyword">return</strong> 2 &gt;= c.size() ||
-<a class="jxr_linenumber" name="2737" href="#2737">2737</a>                             (AllZone.getComputerPlayer().hasMetalcraft() &amp;&amp; AllZone.getHumanPlayer().getLife() &lt;= 3);
-<a class="jxr_linenumber" name="2738" href="#2738">2738</a>                 }
-<a class="jxr_linenumber" name="2739" href="#2739">2739</a> 
-<a class="jxr_linenumber" name="2740" href="#2740">2740</a>             };<em class="jxr_comment">//SpellAbility</em>
+<a class="jxr_linenumber" name="2724" href="#2724">2724</a> <em class="jxr_javadoccomment">                    //"Destroy all creatures with converted mana cost 4 or more"};</em>
+<a class="jxr_linenumber" name="2725" href="#2725">2725</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[3])) {</em>
+<a class="jxr_linenumber" name="2726" href="#2726">2726</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCreaturesInPlay();</em>
+<a class="jxr_linenumber" name="2727" href="#2727">2727</a> <em class="jxr_javadoccomment">                        cards = cards.filter(new CardListFilter() {</em>
+<a class="jxr_linenumber" name="2728" href="#2728">2728</a> <em class="jxr_javadoccomment">                            public boolean addCard(Card c) {</em>
+<a class="jxr_linenumber" name="2729" href="#2729">2729</a> <em class="jxr_javadoccomment">                                return CardUtil.getConvertedManaCost(c) &gt;= 4;</em>
+<a class="jxr_linenumber" name="2730" href="#2730">2730</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2731" href="#2731">2731</a> <em class="jxr_javadoccomment">                        });</em>
+<a class="jxr_linenumber" name="2732" href="#2732">2732</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
+<a class="jxr_linenumber" name="2733" href="#2733">2733</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2734" href="#2734">2734</a> <em class="jxr_javadoccomment">                }//resolve()</em>
+<a class="jxr_linenumber" name="2735" href="#2735">2735</a> 
+<a class="jxr_linenumber" name="2736" href="#2736">2736</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2737" href="#2737">2737</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
+<a class="jxr_linenumber" name="2738" href="#2738">2738</a> <em class="jxr_javadoccomment">                    return false;</em>
+<a class="jxr_linenumber" name="2739" href="#2739">2739</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2740" href="#2740">2740</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
 <a class="jxr_linenumber" name="2741" href="#2741">2741</a> 
-<a class="jxr_linenumber" name="2742" href="#2742">2742</a>             
-<a class="jxr_linenumber" name="2743" href="#2743">2743</a>             
-<a class="jxr_linenumber" name="2744" href="#2744">2744</a>             card.addSpellAbility(spell);
-<a class="jxr_linenumber" name="2745" href="#2745">2745</a>         }/<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************* END ************ END **************************</em>
-<a class="jxr_linenumber" name="2746" href="#2746">2746</a> 
-<a class="jxr_linenumber" name="2747" href="#2747">2747</a> 
-<a class="jxr_linenumber" name="2748" href="#2748">2748</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="2749" href="#2749">2749</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Austere Command")) {</em>
-<a class="jxr_linenumber" name="2750" href="#2750">2750</a> <em class="jxr_javadoccomment">            final ArrayList&lt;String&gt; userChoice = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2742" href="#2742">2742</a> <em class="jxr_javadoccomment">            final Command setStackDescription = new Command() {</em>
+<a class="jxr_linenumber" name="2743" href="#2743">2743</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -635710110379729475L;</em>
+<a class="jxr_linenumber" name="2744" href="#2744">2744</a> 
+<a class="jxr_linenumber" name="2745" href="#2745">2745</a> <em class="jxr_javadoccomment">                public void execute() {</em>
+<a class="jxr_linenumber" name="2746" href="#2746">2746</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2747" href="#2747">2747</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[0])) a.add("destroy all artifacts");</em>
+<a class="jxr_linenumber" name="2748" href="#2748">2748</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[1])) a.add("destroy all enchantments");</em>
+<a class="jxr_linenumber" name="2749" href="#2749">2749</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[2])) a.add("destroy all creatures with CMC &lt;= 3");</em>
+<a class="jxr_linenumber" name="2750" href="#2750">2750</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[3])) a.add("destroy all creatures with CMC &gt;= 4");</em>
 <a class="jxr_linenumber" name="2751" href="#2751">2751</a> 
-<a class="jxr_linenumber" name="2752" href="#2752">2752</a> <em class="jxr_javadoccomment">            final String[] cardChoices = {</em>
-<a class="jxr_linenumber" name="2753" href="#2753">2753</a> <em class="jxr_javadoccomment">                    "Destroy all artifacts",</em>
-<a class="jxr_linenumber" name="2754" href="#2754">2754</a> <em class="jxr_javadoccomment">                    "Destroy all enchantments",</em>
-<a class="jxr_linenumber" name="2755" href="#2755">2755</a> <em class="jxr_javadoccomment">                    "Destroy all creatures with converted mana cost 3 or less",</em>
-<a class="jxr_linenumber" name="2756" href="#2756">2756</a> <em class="jxr_javadoccomment">                    "Destroy all creatures with converted mana cost 4 or more"</em>
-<a class="jxr_linenumber" name="2757" href="#2757">2757</a> <em class="jxr_javadoccomment">            };</em>
-<a class="jxr_linenumber" name="2758" href="#2758">2758</a> 
-<a class="jxr_linenumber" name="2759" href="#2759">2759</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
-<a class="jxr_linenumber" name="2760" href="#2760">2760</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -8501457363981482513L;</em>
-<a class="jxr_linenumber" name="2761" href="#2761">2761</a> 
-<a class="jxr_linenumber" name="2762" href="#2762">2762</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2763" href="#2763">2763</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
-<a class="jxr_linenumber" name="2764" href="#2764">2764</a> 
-<a class="jxr_linenumber" name="2765" href="#2765">2765</a> <em class="jxr_javadoccomment">                    //"Destroy all artifacts",</em>
-<a class="jxr_linenumber" name="2766" href="#2766">2766</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[0])) {</em>
-<a class="jxr_linenumber" name="2767" href="#2767">2767</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCardsInPlay().filter(AllZoneUtil.artifacts);</em>
-<a class="jxr_linenumber" name="2768" href="#2768">2768</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
-<a class="jxr_linenumber" name="2769" href="#2769">2769</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2752" href="#2752">2752</a> <em class="jxr_javadoccomment">                    String s = a.get(0) + ", " + a.get(1);</em>
+<a class="jxr_linenumber" name="2753" href="#2753">2753</a> <em class="jxr_javadoccomment">                    spell.setStackDescription(card.getName() + " - " + s);</em>
+<a class="jxr_linenumber" name="2754" href="#2754">2754</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2755" href="#2755">2755</a> <em class="jxr_javadoccomment">            };//Command</em>
+<a class="jxr_linenumber" name="2756" href="#2756">2756</a> 
+<a class="jxr_linenumber" name="2757" href="#2757">2757</a> <em class="jxr_javadoccomment">            Input chooseTwoInput = new Input() {</em>
+<a class="jxr_linenumber" name="2758" href="#2758">2758</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2352497236500922820L;</em>
+<a class="jxr_linenumber" name="2759" href="#2759">2759</a> 
+<a class="jxr_linenumber" name="2760" href="#2760">2760</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2761" href="#2761">2761</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="2762" href="#2762">2762</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
+<a class="jxr_linenumber" name="2763" href="#2763">2763</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
+<a class="jxr_linenumber" name="2764" href="#2764">2764</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="2765" href="#2765">2765</a> <em class="jxr_javadoccomment">                    } else {</em>
+<a class="jxr_linenumber" name="2766" href="#2766">2766</a> <em class="jxr_javadoccomment">                        //reset variables</em>
+<a class="jxr_linenumber" name="2767" href="#2767">2767</a> <em class="jxr_javadoccomment">                        userChoice.clear();</em>
+<a class="jxr_linenumber" name="2768" href="#2768">2768</a> 
+<a class="jxr_linenumber" name="2769" href="#2769">2769</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; display = new ArrayList&lt;String&gt;(Arrays.asList(cardChoices));</em>
 <a class="jxr_linenumber" name="2770" href="#2770">2770</a> 
-<a class="jxr_linenumber" name="2771" href="#2771">2771</a> <em class="jxr_javadoccomment">                    //"Destroy all enchantments",</em>
-<a class="jxr_linenumber" name="2772" href="#2772">2772</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[1])) {</em>
-<a class="jxr_linenumber" name="2773" href="#2773">2773</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCardsInPlay().filter(AllZoneUtil.enchantments);</em>
-<a class="jxr_linenumber" name="2774" href="#2774">2774</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
-<a class="jxr_linenumber" name="2775" href="#2775">2775</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="2776" href="#2776">2776</a> 
-<a class="jxr_linenumber" name="2777" href="#2777">2777</a> <em class="jxr_javadoccomment">                    //"Destroy all creatures with converted mana cost 3 or less",</em>
-<a class="jxr_linenumber" name="2778" href="#2778">2778</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[2])) {</em>
-<a class="jxr_linenumber" name="2779" href="#2779">2779</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCreaturesInPlay();</em>
-<a class="jxr_linenumber" name="2780" href="#2780">2780</a> <em class="jxr_javadoccomment">                        cards = cards.filter(new CardListFilter() {</em>
-<a class="jxr_linenumber" name="2781" href="#2781">2781</a> <em class="jxr_javadoccomment">                            public boolean addCard(Card c) {</em>
-<a class="jxr_linenumber" name="2782" href="#2782">2782</a> <em class="jxr_javadoccomment">                                return CardUtil.getConvertedManaCost(c) &lt;= 3;</em>
-<a class="jxr_linenumber" name="2783" href="#2783">2783</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2784" href="#2784">2784</a> <em class="jxr_javadoccomment">                        });</em>
-<a class="jxr_linenumber" name="2785" href="#2785">2785</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
-<a class="jxr_linenumber" name="2786" href="#2786">2786</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="2787" href="#2787">2787</a> 
-<a class="jxr_linenumber" name="2788" href="#2788">2788</a> <em class="jxr_javadoccomment">                    //"Destroy all creatures with converted mana cost 4 or more"};</em>
-<a class="jxr_linenumber" name="2789" href="#2789">2789</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[3])) {</em>
-<a class="jxr_linenumber" name="2790" href="#2790">2790</a> <em class="jxr_javadoccomment">                        CardList cards = AllZoneUtil.getCreaturesInPlay();</em>
-<a class="jxr_linenumber" name="2791" href="#2791">2791</a> <em class="jxr_javadoccomment">                        cards = cards.filter(new CardListFilter() {</em>
-<a class="jxr_linenumber" name="2792" href="#2792">2792</a> <em class="jxr_javadoccomment">                            public boolean addCard(Card c) {</em>
-<a class="jxr_linenumber" name="2793" href="#2793">2793</a> <em class="jxr_javadoccomment">                                return CardUtil.getConvertedManaCost(c) &gt;= 4;</em>
-<a class="jxr_linenumber" name="2794" href="#2794">2794</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2795" href="#2795">2795</a> <em class="jxr_javadoccomment">                        });</em>
-<a class="jxr_linenumber" name="2796" href="#2796">2796</a> <em class="jxr_javadoccomment">                        for (Card c : cards) AllZone.getGameAction().destroy(c);</em>
-<a class="jxr_linenumber" name="2797" href="#2797">2797</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="2798" href="#2798">2798</a> <em class="jxr_javadoccomment">                }//resolve()</em>
-<a class="jxr_linenumber" name="2799" href="#2799">2799</a> 
-<a class="jxr_linenumber" name="2800" href="#2800">2800</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2801" href="#2801">2801</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
-<a class="jxr_linenumber" name="2802" href="#2802">2802</a> <em class="jxr_javadoccomment">                    return false;</em>
-<a class="jxr_linenumber" name="2803" href="#2803">2803</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="2804" href="#2804">2804</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
-<a class="jxr_linenumber" name="2805" href="#2805">2805</a> 
-<a class="jxr_linenumber" name="2806" href="#2806">2806</a> <em class="jxr_javadoccomment">            final Command setStackDescription = new Command() {</em>
-<a class="jxr_linenumber" name="2807" href="#2807">2807</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -635710110379729475L;</em>
-<a class="jxr_linenumber" name="2808" href="#2808">2808</a> 
-<a class="jxr_linenumber" name="2809" href="#2809">2809</a> <em class="jxr_javadoccomment">                public void execute() {</em>
-<a class="jxr_linenumber" name="2810" href="#2810">2810</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="2811" href="#2811">2811</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[0])) a.add("destroy all artifacts");</em>
-<a class="jxr_linenumber" name="2812" href="#2812">2812</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[1])) a.add("destroy all enchantments");</em>
-<a class="jxr_linenumber" name="2813" href="#2813">2813</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[2])) a.add("destroy all creatures with CMC &lt;= 3");</em>
-<a class="jxr_linenumber" name="2814" href="#2814">2814</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoices[3])) a.add("destroy all creatures with CMC &gt;= 4");</em>
-<a class="jxr_linenumber" name="2815" href="#2815">2815</a> 
-<a class="jxr_linenumber" name="2816" href="#2816">2816</a> <em class="jxr_javadoccomment">                    String s = a.get(0) + ", " + a.get(1);</em>
-<a class="jxr_linenumber" name="2817" href="#2817">2817</a> <em class="jxr_javadoccomment">                    spell.setStackDescription(card.getName() + " - " + s);</em>
-<a class="jxr_linenumber" name="2818" href="#2818">2818</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="2819" href="#2819">2819</a> <em class="jxr_javadoccomment">            };//Command</em>
-<a class="jxr_linenumber" name="2820" href="#2820">2820</a> 
-<a class="jxr_linenumber" name="2821" href="#2821">2821</a> <em class="jxr_javadoccomment">            Input chooseTwoInput = new Input() {</em>
-<a class="jxr_linenumber" name="2822" href="#2822">2822</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2352497236500922820L;</em>
+<a class="jxr_linenumber" name="2771" href="#2771">2771</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; a = chooseTwo(display);</em>
+<a class="jxr_linenumber" name="2772" href="#2772">2772</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
+<a class="jxr_linenumber" name="2773" href="#2773">2773</a> <em class="jxr_javadoccomment">                        if (a == null) {</em>
+<a class="jxr_linenumber" name="2774" href="#2774">2774</a> <em class="jxr_javadoccomment">                            stop();</em>
+<a class="jxr_linenumber" name="2775" href="#2775">2775</a> <em class="jxr_javadoccomment">                            return;</em>
+<a class="jxr_linenumber" name="2776" href="#2776">2776</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="2777" href="#2777">2777</a> 
+<a class="jxr_linenumber" name="2778" href="#2778">2778</a> <em class="jxr_javadoccomment">                        userChoice.addAll(a);</em>
+<a class="jxr_linenumber" name="2779" href="#2779">2779</a> 
+<a class="jxr_linenumber" name="2780" href="#2780">2780</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
+<a class="jxr_linenumber" name="2781" href="#2781">2781</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="2782" href="#2782">2782</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2783" href="#2783">2783</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
+<a class="jxr_linenumber" name="2784" href="#2784">2784</a> 
+<a class="jxr_linenumber" name="2785" href="#2785">2785</a> <em class="jxr_javadoccomment">                ArrayList&lt;String&gt; chooseTwo(ArrayList&lt;String&gt; choices) {</em>
+<a class="jxr_linenumber" name="2786" href="#2786">2786</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; out = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2787" href="#2787">2787</a> <em class="jxr_javadoccomment">                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
+<a class="jxr_linenumber" name="2788" href="#2788">2788</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
+<a class="jxr_linenumber" name="2789" href="#2789">2789</a> 
+<a class="jxr_linenumber" name="2790" href="#2790">2790</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
+<a class="jxr_linenumber" name="2791" href="#2791">2791</a> <em class="jxr_javadoccomment">                    choices.remove(out.get(0));</em>
+<a class="jxr_linenumber" name="2792" href="#2792">2792</a> <em class="jxr_javadoccomment">                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
+<a class="jxr_linenumber" name="2793" href="#2793">2793</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
+<a class="jxr_linenumber" name="2794" href="#2794">2794</a> 
+<a class="jxr_linenumber" name="2795" href="#2795">2795</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
+<a class="jxr_linenumber" name="2796" href="#2796">2796</a> 
+<a class="jxr_linenumber" name="2797" href="#2797">2797</a> <em class="jxr_javadoccomment">                    return out;</em>
+<a class="jxr_linenumber" name="2798" href="#2798">2798</a> <em class="jxr_javadoccomment">                }//chooseTwo()</em>
+<a class="jxr_linenumber" name="2799" href="#2799">2799</a> <em class="jxr_javadoccomment">            };//Input chooseTwoInput</em>
+<a class="jxr_linenumber" name="2800" href="#2800">2800</a> 
+<a class="jxr_linenumber" name="2801" href="#2801">2801</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="2802" href="#2802">2802</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="2803" href="#2803">2803</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
+<a class="jxr_linenumber" name="2804" href="#2804">2804</a> <em class="jxr_javadoccomment">            spell.setBeforePayMana(chooseTwoInput);</em>
+<a class="jxr_linenumber" name="2805" href="#2805">2805</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
+<a class="jxr_linenumber" name="2806" href="#2806">2806</a> 
+<a class="jxr_linenumber" name="2807" href="#2807">2807</a> 
+<a class="jxr_linenumber" name="2808" href="#2808">2808</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
+<a class="jxr_linenumber" name="2809" href="#2809">2809</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Praetor's Counsel")) {</em>
+<a class="jxr_linenumber" name="2810" href="#2810">2810</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
+<a class="jxr_linenumber" name="2811" href="#2811">2811</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2208683667850222369L;</em>
+<a class="jxr_linenumber" name="2812" href="#2812">2812</a> 
+<a class="jxr_linenumber" name="2813" href="#2813">2813</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2814" href="#2814">2814</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
+<a class="jxr_linenumber" name="2815" href="#2815">2815</a> <em class="jxr_javadoccomment">                    return false;</em>
+<a class="jxr_linenumber" name="2816" href="#2816">2816</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2817" href="#2817">2817</a> 
+<a class="jxr_linenumber" name="2818" href="#2818">2818</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2819" href="#2819">2819</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
+<a class="jxr_linenumber" name="2820" href="#2820">2820</a> <em class="jxr_javadoccomment">                    Player player = card.getController();</em>
+<a class="jxr_linenumber" name="2821" href="#2821">2821</a> <em class="jxr_javadoccomment">                    CardList grave = AllZoneUtil.getPlayerGraveyard(player);</em>
+<a class="jxr_linenumber" name="2822" href="#2822">2822</a> <em class="jxr_javadoccomment">                    for (Card c : grave) AllZone.getGameAction().moveToHand(c);</em>
 <a class="jxr_linenumber" name="2823" href="#2823">2823</a> 
-<a class="jxr_linenumber" name="2824" href="#2824">2824</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2825" href="#2825">2825</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="2826" href="#2826">2826</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
-<a class="jxr_linenumber" name="2827" href="#2827">2827</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
-<a class="jxr_linenumber" name="2828" href="#2828">2828</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="2829" href="#2829">2829</a> <em class="jxr_javadoccomment">                    } else {</em>
-<a class="jxr_linenumber" name="2830" href="#2830">2830</a> <em class="jxr_javadoccomment">                        //reset variables</em>
-<a class="jxr_linenumber" name="2831" href="#2831">2831</a> <em class="jxr_javadoccomment">                        userChoice.clear();</em>
-<a class="jxr_linenumber" name="2832" href="#2832">2832</a> 
-<a class="jxr_linenumber" name="2833" href="#2833">2833</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; display = new ArrayList&lt;String&gt;(Arrays.asList(cardChoices));</em>
-<a class="jxr_linenumber" name="2834" href="#2834">2834</a> 
-<a class="jxr_linenumber" name="2835" href="#2835">2835</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; a = chooseTwo(display);</em>
-<a class="jxr_linenumber" name="2836" href="#2836">2836</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
-<a class="jxr_linenumber" name="2837" href="#2837">2837</a> <em class="jxr_javadoccomment">                        if (a == null) {</em>
-<a class="jxr_linenumber" name="2838" href="#2838">2838</a> <em class="jxr_javadoccomment">                            stop();</em>
-<a class="jxr_linenumber" name="2839" href="#2839">2839</a> <em class="jxr_javadoccomment">                            return;</em>
-<a class="jxr_linenumber" name="2840" href="#2840">2840</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="2841" href="#2841">2841</a> 
-<a class="jxr_linenumber" name="2842" href="#2842">2842</a> <em class="jxr_javadoccomment">                        userChoice.addAll(a);</em>
-<a class="jxr_linenumber" name="2843" href="#2843">2843</a> 
-<a class="jxr_linenumber" name="2844" href="#2844">2844</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
-<a class="jxr_linenumber" name="2845" href="#2845">2845</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="2846" href="#2846">2846</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="2847" href="#2847">2847</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
-<a class="jxr_linenumber" name="2848" href="#2848">2848</a> 
-<a class="jxr_linenumber" name="2849" href="#2849">2849</a> <em class="jxr_javadoccomment">                ArrayList&lt;String&gt; chooseTwo(ArrayList&lt;String&gt; choices) {</em>
-<a class="jxr_linenumber" name="2850" href="#2850">2850</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; out = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="2851" href="#2851">2851</a> <em class="jxr_javadoccomment">                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
-<a class="jxr_linenumber" name="2852" href="#2852">2852</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
-<a class="jxr_linenumber" name="2853" href="#2853">2853</a> 
-<a class="jxr_linenumber" name="2854" href="#2854">2854</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
-<a class="jxr_linenumber" name="2855" href="#2855">2855</a> <em class="jxr_javadoccomment">                    choices.remove(out.get(0));</em>
-<a class="jxr_linenumber" name="2856" href="#2856">2856</a> <em class="jxr_javadoccomment">                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
-<a class="jxr_linenumber" name="2857" href="#2857">2857</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
-<a class="jxr_linenumber" name="2858" href="#2858">2858</a> 
-<a class="jxr_linenumber" name="2859" href="#2859">2859</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
-<a class="jxr_linenumber" name="2860" href="#2860">2860</a> 
-<a class="jxr_linenumber" name="2861" href="#2861">2861</a> <em class="jxr_javadoccomment">                    return out;</em>
-<a class="jxr_linenumber" name="2862" href="#2862">2862</a> <em class="jxr_javadoccomment">                }//chooseTwo()</em>
-<a class="jxr_linenumber" name="2863" href="#2863">2863</a> <em class="jxr_javadoccomment">            };//Input chooseTwoInput</em>
-<a class="jxr_linenumber" name="2864" href="#2864">2864</a> 
-<a class="jxr_linenumber" name="2865" href="#2865">2865</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="2866" href="#2866">2866</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="2867" href="#2867">2867</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
-<a class="jxr_linenumber" name="2868" href="#2868">2868</a> <em class="jxr_javadoccomment">            spell.setBeforePayMana(chooseTwoInput);</em>
-<a class="jxr_linenumber" name="2869" href="#2869">2869</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
-<a class="jxr_linenumber" name="2870" href="#2870">2870</a> 
-<a class="jxr_linenumber" name="2871" href="#2871">2871</a> 
-<a class="jxr_linenumber" name="2872" href="#2872">2872</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="2873" href="#2873">2873</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Praetor's Counsel")) {</em>
-<a class="jxr_linenumber" name="2874" href="#2874">2874</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
-<a class="jxr_linenumber" name="2875" href="#2875">2875</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2208683667850222369L;</em>
-<a class="jxr_linenumber" name="2876" href="#2876">2876</a> 
-<a class="jxr_linenumber" name="2877" href="#2877">2877</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2878" href="#2878">2878</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
-<a class="jxr_linenumber" name="2879" href="#2879">2879</a> <em class="jxr_javadoccomment">                    return false;</em>
-<a class="jxr_linenumber" name="2880" href="#2880">2880</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="2881" href="#2881">2881</a> 
-<a class="jxr_linenumber" name="2882" href="#2882">2882</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2883" href="#2883">2883</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
-<a class="jxr_linenumber" name="2884" href="#2884">2884</a> <em class="jxr_javadoccomment">                    Player player = card.getController();</em>
-<a class="jxr_linenumber" name="2885" href="#2885">2885</a> <em class="jxr_javadoccomment">                    CardList grave = AllZoneUtil.getPlayerGraveyard(player);</em>
-<a class="jxr_linenumber" name="2886" href="#2886">2886</a> <em class="jxr_javadoccomment">                    for (Card c : grave) AllZone.getGameAction().moveToHand(c);</em>
+<a class="jxr_linenumber" name="2824" href="#2824">2824</a> <em class="jxr_javadoccomment">                    AllZone.getGameAction().exile(card);</em>
+<a class="jxr_linenumber" name="2825" href="#2825">2825</a> 
+<a class="jxr_linenumber" name="2826" href="#2826">2826</a> <em class="jxr_javadoccomment">                    card.setSVar("HSStamp", "" + Player.getHandSizeStamp());</em>
+<a class="jxr_linenumber" name="2827" href="#2827">2827</a> <em class="jxr_javadoccomment">                    player.addHandSizeOperation(new HandSizeOp("=", -1, Integer.parseInt(card.getSVar("HSStamp"))));</em>
+<a class="jxr_linenumber" name="2828" href="#2828">2828</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2829" href="#2829">2829</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
+<a class="jxr_linenumber" name="2830" href="#2830">2830</a> 
+<a class="jxr_linenumber" name="2831" href="#2831">2831</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="2832" href="#2832">2832</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="2833" href="#2833">2833</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
+<a class="jxr_linenumber" name="2834" href="#2834">2834</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
+<a class="jxr_linenumber" name="2835" href="#2835">2835</a> 
+<a class="jxr_linenumber" name="2836" href="#2836">2836</a> 
+<a class="jxr_linenumber" name="2837" href="#2837">2837</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
+<a class="jxr_linenumber" name="2838" href="#2838">2838</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Profane Command")) {</em>
+<a class="jxr_linenumber" name="2839" href="#2839">2839</a> <em class="jxr_javadoccomment">            //not sure what to call variables, so I just made up something</em>
+<a class="jxr_linenumber" name="2840" href="#2840">2840</a> <em class="jxr_javadoccomment">            final Player[] ab0player = new Player[1];</em>
+<a class="jxr_linenumber" name="2841" href="#2841">2841</a> <em class="jxr_javadoccomment">            final Card[] ab1card = new Card[1];</em>
+<a class="jxr_linenumber" name="2842" href="#2842">2842</a> <em class="jxr_javadoccomment">            final Card[] ab2card = new Card[1];</em>
+<a class="jxr_linenumber" name="2843" href="#2843">2843</a> <em class="jxr_javadoccomment">            final ArrayList&lt;Card&gt; ab3cards = new ArrayList&lt;Card&gt;();</em>
+<a class="jxr_linenumber" name="2844" href="#2844">2844</a> <em class="jxr_javadoccomment">            final int x[] = new int[1];</em>
+<a class="jxr_linenumber" name="2845" href="#2845">2845</a> 
+<a class="jxr_linenumber" name="2846" href="#2846">2846</a> <em class="jxr_javadoccomment">            final ArrayList&lt;String&gt; userChoice = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2847" href="#2847">2847</a> 
+<a class="jxr_linenumber" name="2848" href="#2848">2848</a> <em class="jxr_javadoccomment">            final String[] cardChoice = {</em>
+<a class="jxr_linenumber" name="2849" href="#2849">2849</a> <em class="jxr_javadoccomment">                    "Target player loses X life",</em>
+<a class="jxr_linenumber" name="2850" href="#2850">2850</a> <em class="jxr_javadoccomment">                    "Return target creature card with converted mana cost X or less from your graveyard to the battlefield",</em>
+<a class="jxr_linenumber" name="2851" href="#2851">2851</a> <em class="jxr_javadoccomment">                    "Target creature gets -X/-X until end of turn",</em>
+<a class="jxr_linenumber" name="2852" href="#2852">2852</a> <em class="jxr_javadoccomment">                    "Up to X target creatures gain fear until end of turn"</em>
+<a class="jxr_linenumber" name="2853" href="#2853">2853</a> <em class="jxr_javadoccomment">            };</em>
+<a class="jxr_linenumber" name="2854" href="#2854">2854</a> 
+<a class="jxr_linenumber" name="2855" href="#2855">2855</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
+<a class="jxr_linenumber" name="2856" href="#2856">2856</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -2924301460675657126L;</em>
+<a class="jxr_linenumber" name="2857" href="#2857">2857</a> 
+<a class="jxr_linenumber" name="2858" href="#2858">2858</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2859" href="#2859">2859</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
+<a class="jxr_linenumber" name="2860" href="#2860">2860</a> <em class="jxr_javadoccomment">                    //System.out.println(userChoice);</em>
+<a class="jxr_linenumber" name="2861" href="#2861">2861</a> <em class="jxr_javadoccomment">                    //System.out.println("0: "+ab0player[0]);</em>
+<a class="jxr_linenumber" name="2862" href="#2862">2862</a> <em class="jxr_javadoccomment">                    //System.out.println("1: "+ab1card[0]);</em>
+<a class="jxr_linenumber" name="2863" href="#2863">2863</a> <em class="jxr_javadoccomment">                    //System.out.println("2: "+ab2card[0]);</em>
+<a class="jxr_linenumber" name="2864" href="#2864">2864</a> <em class="jxr_javadoccomment">                    //System.out.println("3: "+ab3cards);</em>
+<a class="jxr_linenumber" name="2865" href="#2865">2865</a> 
+<a class="jxr_linenumber" name="2866" href="#2866">2866</a> <em class="jxr_javadoccomment">                    //"Target player loses X life",</em>
+<a class="jxr_linenumber" name="2867" href="#2867">2867</a> <em class="jxr_javadoccomment">                    for (int i = 0; i &lt; card.getChoices().size(); i++) {</em>
+<a class="jxr_linenumber" name="2868" href="#2868">2868</a> <em class="jxr_javadoccomment">                        if (card.getChoice(i).equals(cardChoice[0])) {</em>
+<a class="jxr_linenumber" name="2869" href="#2869">2869</a> <em class="jxr_javadoccomment">                            if (ab0player[0] != null) {</em>
+<a class="jxr_linenumber" name="2870" href="#2870">2870</a> <em class="jxr_javadoccomment">                                setTargetPlayer(ab0player[0]);</em>
+<a class="jxr_linenumber" name="2871" href="#2871">2871</a> <em class="jxr_javadoccomment">                                if (getTargetPlayer().canTarget(card)) {</em>
+<a class="jxr_linenumber" name="2872" href="#2872">2872</a> <em class="jxr_javadoccomment">                                    getTargetPlayer().addDamage(x[0], card);</em>
+<a class="jxr_linenumber" name="2873" href="#2873">2873</a> <em class="jxr_javadoccomment">                                }</em>
+<a class="jxr_linenumber" name="2874" href="#2874">2874</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2875" href="#2875">2875</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="2876" href="#2876">2876</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2877" href="#2877">2877</a> 
+<a class="jxr_linenumber" name="2878" href="#2878">2878</a> <em class="jxr_javadoccomment">                    //"Return target creature card with converted mana cost X or less from your graveyard to the battlefield",</em>
+<a class="jxr_linenumber" name="2879" href="#2879">2879</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1])) {</em>
+<a class="jxr_linenumber" name="2880" href="#2880">2880</a> <em class="jxr_javadoccomment">                        Card c = ab1card[0];</em>
+<a class="jxr_linenumber" name="2881" href="#2881">2881</a> <em class="jxr_javadoccomment">                        if (c != null) {</em>
+<a class="jxr_linenumber" name="2882" href="#2882">2882</a> <em class="jxr_javadoccomment">                            if (AllZoneUtil.isCardInPlayerGraveyard(card.getController(), c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
+<a class="jxr_linenumber" name="2883" href="#2883">2883</a> <em class="jxr_javadoccomment">                                AllZone.getGameAction().moveToPlay(c);</em>
+<a class="jxr_linenumber" name="2884" href="#2884">2884</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2885" href="#2885">2885</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="2886" href="#2886">2886</a> <em class="jxr_javadoccomment">                    }</em>
 <a class="jxr_linenumber" name="2887" href="#2887">2887</a> 
-<a class="jxr_linenumber" name="2888" href="#2888">2888</a> <em class="jxr_javadoccomment">                    AllZone.getGameAction().exile(card);</em>
-<a class="jxr_linenumber" name="2889" href="#2889">2889</a> 
-<a class="jxr_linenumber" name="2890" href="#2890">2890</a> <em class="jxr_javadoccomment">                    card.setSVar("HSStamp", "" + Player.getHandSizeStamp());</em>
-<a class="jxr_linenumber" name="2891" href="#2891">2891</a> <em class="jxr_javadoccomment">                    player.addHandSizeOperation(new HandSizeOp("=", -1, Integer.parseInt(card.getSVar("HSStamp"))));</em>
-<a class="jxr_linenumber" name="2892" href="#2892">2892</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="2893" href="#2893">2893</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
-<a class="jxr_linenumber" name="2894" href="#2894">2894</a> 
-<a class="jxr_linenumber" name="2895" href="#2895">2895</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="2896" href="#2896">2896</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="2897" href="#2897">2897</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
-<a class="jxr_linenumber" name="2898" href="#2898">2898</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
+<a class="jxr_linenumber" name="2888" href="#2888">2888</a> <em class="jxr_javadoccomment">                    //"Target creature gets -X/-X until end of turn",</em>
+<a class="jxr_linenumber" name="2889" href="#2889">2889</a> <em class="jxr_javadoccomment">                    for (int i = 0; i &lt; card.getChoices().size(); i++) {</em>
+<a class="jxr_linenumber" name="2890" href="#2890">2890</a> <em class="jxr_javadoccomment">                        if (card.getChoice(i).equals(cardChoice[2])) {</em>
+<a class="jxr_linenumber" name="2891" href="#2891">2891</a> <em class="jxr_javadoccomment">                            final Card c = ab2card[0];</em>
+<a class="jxr_linenumber" name="2892" href="#2892">2892</a> <em class="jxr_javadoccomment">                            if (c != null) {</em>
+<a class="jxr_linenumber" name="2893" href="#2893">2893</a> <em class="jxr_javadoccomment">                                if (AllZoneUtil.isCardInPlay(c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
+<a class="jxr_linenumber" name="2894" href="#2894">2894</a> <em class="jxr_javadoccomment">                                    final int boost = x[0] * -1;</em>
+<a class="jxr_linenumber" name="2895" href="#2895">2895</a> <em class="jxr_javadoccomment">                                    c.addTempAttackBoost(boost);</em>
+<a class="jxr_linenumber" name="2896" href="#2896">2896</a> <em class="jxr_javadoccomment">                                    c.addTempDefenseBoost(boost);</em>
+<a class="jxr_linenumber" name="2897" href="#2897">2897</a> <em class="jxr_javadoccomment">                                    final Command untilEOT = new Command() {</em>
+<a class="jxr_linenumber" name="2898" href="#2898">2898</a> <em class="jxr_javadoccomment">                                        private static final long serialVersionUID = -6010783402521993651L;</em>
 <a class="jxr_linenumber" name="2899" href="#2899">2899</a> 
-<a class="jxr_linenumber" name="2900" href="#2900">2900</a> 
-<a class="jxr_linenumber" name="2901" href="#2901">2901</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="2902" href="#2902">2902</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Profane Command")) {</em>
-<a class="jxr_linenumber" name="2903" href="#2903">2903</a> <em class="jxr_javadoccomment">            //not sure what to call variables, so I just made up something</em>
-<a class="jxr_linenumber" name="2904" href="#2904">2904</a> <em class="jxr_javadoccomment">            final Player[] ab0player = new Player[1];</em>
-<a class="jxr_linenumber" name="2905" href="#2905">2905</a> <em class="jxr_javadoccomment">            final Card[] ab1card = new Card[1];</em>
-<a class="jxr_linenumber" name="2906" href="#2906">2906</a> <em class="jxr_javadoccomment">            final Card[] ab2card = new Card[1];</em>
-<a class="jxr_linenumber" name="2907" href="#2907">2907</a> <em class="jxr_javadoccomment">            final ArrayList&lt;Card&gt; ab3cards = new ArrayList&lt;Card&gt;();</em>
-<a class="jxr_linenumber" name="2908" href="#2908">2908</a> <em class="jxr_javadoccomment">            final int x[] = new int[1];</em>
-<a class="jxr_linenumber" name="2909" href="#2909">2909</a> 
-<a class="jxr_linenumber" name="2910" href="#2910">2910</a> <em class="jxr_javadoccomment">            final ArrayList&lt;String&gt; userChoice = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="2911" href="#2911">2911</a> 
-<a class="jxr_linenumber" name="2912" href="#2912">2912</a> <em class="jxr_javadoccomment">            final String[] cardChoice = {</em>
-<a class="jxr_linenumber" name="2913" href="#2913">2913</a> <em class="jxr_javadoccomment">                    "Target player loses X life",</em>
-<a class="jxr_linenumber" name="2914" href="#2914">2914</a> <em class="jxr_javadoccomment">                    "Return target creature card with converted mana cost X or less from your graveyard to the battlefield",</em>
-<a class="jxr_linenumber" name="2915" href="#2915">2915</a> <em class="jxr_javadoccomment">                    "Target creature gets -X/-X until end of turn",</em>
-<a class="jxr_linenumber" name="2916" href="#2916">2916</a> <em class="jxr_javadoccomment">                    "Up to X target creatures gain fear until end of turn"</em>
-<a class="jxr_linenumber" name="2917" href="#2917">2917</a> <em class="jxr_javadoccomment">            };</em>
-<a class="jxr_linenumber" name="2918" href="#2918">2918</a> 
-<a class="jxr_linenumber" name="2919" href="#2919">2919</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card) {</em>
-<a class="jxr_linenumber" name="2920" href="#2920">2920</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -2924301460675657126L;</em>
-<a class="jxr_linenumber" name="2921" href="#2921">2921</a> 
-<a class="jxr_linenumber" name="2922" href="#2922">2922</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="2923" href="#2923">2923</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
-<a class="jxr_linenumber" name="2924" href="#2924">2924</a> <em class="jxr_javadoccomment">                    //System.out.println(userChoice);</em>
-<a class="jxr_linenumber" name="2925" href="#2925">2925</a> <em class="jxr_javadoccomment">                    //System.out.println("0: "+ab0player[0]);</em>
-<a class="jxr_linenumber" name="2926" href="#2926">2926</a> <em class="jxr_javadoccomment">                    //System.out.println("1: "+ab1card[0]);</em>
-<a class="jxr_linenumber" name="2927" href="#2927">2927</a> <em class="jxr_javadoccomment">                    //System.out.println("2: "+ab2card[0]);</em>
-<a class="jxr_linenumber" name="2928" href="#2928">2928</a> <em class="jxr_javadoccomment">                    //System.out.println("3: "+ab3cards);</em>
-<a class="jxr_linenumber" name="2929" href="#2929">2929</a> 
-<a class="jxr_linenumber" name="2930" href="#2930">2930</a> <em class="jxr_javadoccomment">                    //"Target player loses X life",</em>
-<a class="jxr_linenumber" name="2931" href="#2931">2931</a> <em class="jxr_javadoccomment">                    for (int i = 0; i &lt; card.getChoices().size(); i++) {</em>
-<a class="jxr_linenumber" name="2932" href="#2932">2932</a> <em class="jxr_javadoccomment">                        if (card.getChoice(i).equals(cardChoice[0])) {</em>
-<a class="jxr_linenumber" name="2933" href="#2933">2933</a> <em class="jxr_javadoccomment">                            if (ab0player[0] != null) {</em>
-<a class="jxr_linenumber" name="2934" href="#2934">2934</a> <em class="jxr_javadoccomment">                                setTargetPlayer(ab0player[0]);</em>
-<a class="jxr_linenumber" name="2935" href="#2935">2935</a> <em class="jxr_javadoccomment">                                if (getTargetPlayer().canTarget(card)) {</em>
-<a class="jxr_linenumber" name="2936" href="#2936">2936</a> <em class="jxr_javadoccomment">                                    getTargetPlayer().addDamage(x[0], card);</em>
-<a class="jxr_linenumber" name="2937" href="#2937">2937</a> <em class="jxr_javadoccomment">                                }</em>
-<a class="jxr_linenumber" name="2938" href="#2938">2938</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2939" href="#2939">2939</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="2940" href="#2940">2940</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2900" href="#2900">2900</a> <em class="jxr_javadoccomment">                                        public void execute() {</em>
+<a class="jxr_linenumber" name="2901" href="#2901">2901</a> <em class="jxr_javadoccomment">                                            if (AllZoneUtil.isCardInPlay(c)) {</em>
+<a class="jxr_linenumber" name="2902" href="#2902">2902</a> <em class="jxr_javadoccomment">                                                c.addTempAttackBoost(-1 * boost);</em>
+<a class="jxr_linenumber" name="2903" href="#2903">2903</a> <em class="jxr_javadoccomment">                                                c.addTempDefenseBoost(-1 * boost);</em>
+<a class="jxr_linenumber" name="2904" href="#2904">2904</a> 
+<a class="jxr_linenumber" name="2905" href="#2905">2905</a> <em class="jxr_javadoccomment">                                            }</em>
+<a class="jxr_linenumber" name="2906" href="#2906">2906</a> <em class="jxr_javadoccomment">                                        }</em>
+<a class="jxr_linenumber" name="2907" href="#2907">2907</a> <em class="jxr_javadoccomment">                                    };</em>
+<a class="jxr_linenumber" name="2908" href="#2908">2908</a> <em class="jxr_javadoccomment">                                    AllZone.getEndOfTurn().addUntil(untilEOT);</em>
+<a class="jxr_linenumber" name="2909" href="#2909">2909</a> <em class="jxr_javadoccomment">                                }</em>
+<a class="jxr_linenumber" name="2910" href="#2910">2910</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2911" href="#2911">2911</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="2912" href="#2912">2912</a> <em class="jxr_javadoccomment">                    }//end ab[2]</em>
+<a class="jxr_linenumber" name="2913" href="#2913">2913</a> 
+<a class="jxr_linenumber" name="2914" href="#2914">2914</a> <em class="jxr_javadoccomment">                    //"Up to X target creatures gain fear until end of turn"</em>
+<a class="jxr_linenumber" name="2915" href="#2915">2915</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3])) {</em>
+<a class="jxr_linenumber" name="2916" href="#2916">2916</a> <em class="jxr_javadoccomment">                        ArrayList&lt;Card&gt; cs = new ArrayList&lt;Card&gt;();</em>
+<a class="jxr_linenumber" name="2917" href="#2917">2917</a> <em class="jxr_javadoccomment">                        cs.addAll(ab3cards);</em>
+<a class="jxr_linenumber" name="2918" href="#2918">2918</a> <em class="jxr_javadoccomment">                        for (final Card c : cs) {</em>
+<a class="jxr_linenumber" name="2919" href="#2919">2919</a> <em class="jxr_javadoccomment">                            if (AllZoneUtil.isCardInPlay(c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
+<a class="jxr_linenumber" name="2920" href="#2920">2920</a> <em class="jxr_javadoccomment">                                c.addExtrinsicKeyword("Fear");</em>
+<a class="jxr_linenumber" name="2921" href="#2921">2921</a> <em class="jxr_javadoccomment">                                final Command untilEOT = new Command() {</em>
+<a class="jxr_linenumber" name="2922" href="#2922">2922</a> <em class="jxr_javadoccomment">                                    private static final long serialVersionUID = 986259855862338866L;</em>
+<a class="jxr_linenumber" name="2923" href="#2923">2923</a> 
+<a class="jxr_linenumber" name="2924" href="#2924">2924</a> <em class="jxr_javadoccomment">                                    public void execute() {</em>
+<a class="jxr_linenumber" name="2925" href="#2925">2925</a> <em class="jxr_javadoccomment">                                        if (AllZoneUtil.isCardInPlay(c)) {</em>
+<a class="jxr_linenumber" name="2926" href="#2926">2926</a> <em class="jxr_javadoccomment">                                            c.removeExtrinsicKeyword("Fear");</em>
+<a class="jxr_linenumber" name="2927" href="#2927">2927</a> <em class="jxr_javadoccomment">                                        }</em>
+<a class="jxr_linenumber" name="2928" href="#2928">2928</a> <em class="jxr_javadoccomment">                                    }</em>
+<a class="jxr_linenumber" name="2929" href="#2929">2929</a> <em class="jxr_javadoccomment">                                };</em>
+<a class="jxr_linenumber" name="2930" href="#2930">2930</a> <em class="jxr_javadoccomment">                                AllZone.getEndOfTurn().addUntil(untilEOT);</em>
+<a class="jxr_linenumber" name="2931" href="#2931">2931</a> <em class="jxr_javadoccomment">                            }</em>
+<a class="jxr_linenumber" name="2932" href="#2932">2932</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="2933" href="#2933">2933</a> <em class="jxr_javadoccomment">                    }//end ab[3]</em>
+<a class="jxr_linenumber" name="2934" href="#2934">2934</a> <em class="jxr_javadoccomment">                }//resolve()</em>
+<a class="jxr_linenumber" name="2935" href="#2935">2935</a> 
+<a class="jxr_linenumber" name="2936" href="#2936">2936</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2937" href="#2937">2937</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
+<a class="jxr_linenumber" name="2938" href="#2938">2938</a> <em class="jxr_javadoccomment">                    return false;</em>
+<a class="jxr_linenumber" name="2939" href="#2939">2939</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2940" href="#2940">2940</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
 <a class="jxr_linenumber" name="2941" href="#2941">2941</a> 
-<a class="jxr_linenumber" name="2942" href="#2942">2942</a> <em class="jxr_javadoccomment">                    //"Return target creature card with converted mana cost X or less from your graveyard to the battlefield",</em>
-<a class="jxr_linenumber" name="2943" href="#2943">2943</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1])) {</em>
-<a class="jxr_linenumber" name="2944" href="#2944">2944</a> <em class="jxr_javadoccomment">                        Card c = ab1card[0];</em>
-<a class="jxr_linenumber" name="2945" href="#2945">2945</a> <em class="jxr_javadoccomment">                        if (c != null) {</em>
-<a class="jxr_linenumber" name="2946" href="#2946">2946</a> <em class="jxr_javadoccomment">                            if (AllZoneUtil.isCardInPlayerGraveyard(card.getController(), c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
-<a class="jxr_linenumber" name="2947" href="#2947">2947</a> <em class="jxr_javadoccomment">                                AllZone.getGameAction().moveToPlay(c);</em>
-<a class="jxr_linenumber" name="2948" href="#2948">2948</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2949" href="#2949">2949</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="2950" href="#2950">2950</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="2951" href="#2951">2951</a> 
-<a class="jxr_linenumber" name="2952" href="#2952">2952</a> <em class="jxr_javadoccomment">                    //"Target creature gets -X/-X until end of turn",</em>
-<a class="jxr_linenumber" name="2953" href="#2953">2953</a> <em class="jxr_javadoccomment">                    for (int i = 0; i &lt; card.getChoices().size(); i++) {</em>
-<a class="jxr_linenumber" name="2954" href="#2954">2954</a> <em class="jxr_javadoccomment">                        if (card.getChoice(i).equals(cardChoice[2])) {</em>
-<a class="jxr_linenumber" name="2955" href="#2955">2955</a> <em class="jxr_javadoccomment">                            final Card c = ab2card[0];</em>
-<a class="jxr_linenumber" name="2956" href="#2956">2956</a> <em class="jxr_javadoccomment">                            if (c != null) {</em>
-<a class="jxr_linenumber" name="2957" href="#2957">2957</a> <em class="jxr_javadoccomment">                                if (AllZoneUtil.isCardInPlay(c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
-<a class="jxr_linenumber" name="2958" href="#2958">2958</a> <em class="jxr_javadoccomment">                                    final int boost = x[0] * -1;</em>
-<a class="jxr_linenumber" name="2959" href="#2959">2959</a> <em class="jxr_javadoccomment">                                    c.addTempAttackBoost(boost);</em>
-<a class="jxr_linenumber" name="2960" href="#2960">2960</a> <em class="jxr_javadoccomment">                                    c.addTempDefenseBoost(boost);</em>
-<a class="jxr_linenumber" name="2961" href="#2961">2961</a> <em class="jxr_javadoccomment">                                    final Command untilEOT = new Command() {</em>
-<a class="jxr_linenumber" name="2962" href="#2962">2962</a> <em class="jxr_javadoccomment">                                        private static final long serialVersionUID = -6010783402521993651L;</em>
-<a class="jxr_linenumber" name="2963" href="#2963">2963</a> 
-<a class="jxr_linenumber" name="2964" href="#2964">2964</a> <em class="jxr_javadoccomment">                                        public void execute() {</em>
-<a class="jxr_linenumber" name="2965" href="#2965">2965</a> <em class="jxr_javadoccomment">                                            if (AllZoneUtil.isCardInPlay(c)) {</em>
-<a class="jxr_linenumber" name="2966" href="#2966">2966</a> <em class="jxr_javadoccomment">                                                c.addTempAttackBoost(-1 * boost);</em>
-<a class="jxr_linenumber" name="2967" href="#2967">2967</a> <em class="jxr_javadoccomment">                                                c.addTempDefenseBoost(-1 * boost);</em>
-<a class="jxr_linenumber" name="2968" href="#2968">2968</a> 
-<a class="jxr_linenumber" name="2969" href="#2969">2969</a> <em class="jxr_javadoccomment">                                            }</em>
-<a class="jxr_linenumber" name="2970" href="#2970">2970</a> <em class="jxr_javadoccomment">                                        }</em>
-<a class="jxr_linenumber" name="2971" href="#2971">2971</a> <em class="jxr_javadoccomment">                                    };</em>
-<a class="jxr_linenumber" name="2972" href="#2972">2972</a> <em class="jxr_javadoccomment">                                    AllZone.getEndOfTurn().addUntil(untilEOT);</em>
-<a class="jxr_linenumber" name="2973" href="#2973">2973</a> <em class="jxr_javadoccomment">                                }</em>
-<a class="jxr_linenumber" name="2974" href="#2974">2974</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2975" href="#2975">2975</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="2976" href="#2976">2976</a> <em class="jxr_javadoccomment">                    }//end ab[2]</em>
-<a class="jxr_linenumber" name="2977" href="#2977">2977</a> 
-<a class="jxr_linenumber" name="2978" href="#2978">2978</a> <em class="jxr_javadoccomment">                    //"Up to X target creatures gain fear until end of turn"</em>
-<a class="jxr_linenumber" name="2979" href="#2979">2979</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3])) {</em>
-<a class="jxr_linenumber" name="2980" href="#2980">2980</a> <em class="jxr_javadoccomment">                        ArrayList&lt;Card&gt; cs = new ArrayList&lt;Card&gt;();</em>
-<a class="jxr_linenumber" name="2981" href="#2981">2981</a> <em class="jxr_javadoccomment">                        cs.addAll(ab3cards);</em>
-<a class="jxr_linenumber" name="2982" href="#2982">2982</a> <em class="jxr_javadoccomment">                        for (final Card c : cs) {</em>
-<a class="jxr_linenumber" name="2983" href="#2983">2983</a> <em class="jxr_javadoccomment">                            if (AllZoneUtil.isCardInPlay(c) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
-<a class="jxr_linenumber" name="2984" href="#2984">2984</a> <em class="jxr_javadoccomment">                                c.addExtrinsicKeyword("Fear");</em>
-<a class="jxr_linenumber" name="2985" href="#2985">2985</a> <em class="jxr_javadoccomment">                                final Command untilEOT = new Command() {</em>
-<a class="jxr_linenumber" name="2986" href="#2986">2986</a> <em class="jxr_javadoccomment">                                    private static final long serialVersionUID = 986259855862338866L;</em>
-<a class="jxr_linenumber" name="2987" href="#2987">2987</a> 
-<a class="jxr_linenumber" name="2988" href="#2988">2988</a> <em class="jxr_javadoccomment">                                    public void execute() {</em>
-<a class="jxr_linenumber" name="2989" href="#2989">2989</a> <em class="jxr_javadoccomment">                                        if (AllZoneUtil.isCardInPlay(c)) {</em>
-<a class="jxr_linenumber" name="2990" href="#2990">2990</a> <em class="jxr_javadoccomment">                                            c.removeExtrinsicKeyword("Fear");</em>
-<a class="jxr_linenumber" name="2991" href="#2991">2991</a> <em class="jxr_javadoccomment">                                        }</em>
-<a class="jxr_linenumber" name="2992" href="#2992">2992</a> <em class="jxr_javadoccomment">                                    }</em>
-<a class="jxr_linenumber" name="2993" href="#2993">2993</a> <em class="jxr_javadoccomment">                                };</em>
-<a class="jxr_linenumber" name="2994" href="#2994">2994</a> <em class="jxr_javadoccomment">                                AllZone.getEndOfTurn().addUntil(untilEOT);</em>
-<a class="jxr_linenumber" name="2995" href="#2995">2995</a> <em class="jxr_javadoccomment">                            }</em>
-<a class="jxr_linenumber" name="2996" href="#2996">2996</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="2997" href="#2997">2997</a> <em class="jxr_javadoccomment">                    }//end ab[3]</em>
-<a class="jxr_linenumber" name="2998" href="#2998">2998</a> <em class="jxr_javadoccomment">                }//resolve()</em>
-<a class="jxr_linenumber" name="2999" href="#2999">2999</a> 
-<a class="jxr_linenumber" name="3000" href="#3000">3000</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3001" href="#3001">3001</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
-<a class="jxr_linenumber" name="3002" href="#3002">3002</a> <em class="jxr_javadoccomment">                    return false;</em>
-<a class="jxr_linenumber" name="3003" href="#3003">3003</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3004" href="#3004">3004</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
+<a class="jxr_linenumber" name="2942" href="#2942">2942</a> <em class="jxr_javadoccomment">            final Command setStackDescription = new Command() {</em>
+<a class="jxr_linenumber" name="2943" href="#2943">2943</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5840471361149632482L;</em>
+<a class="jxr_linenumber" name="2944" href="#2944">2944</a> 
+<a class="jxr_linenumber" name="2945" href="#2945">2945</a> <em class="jxr_javadoccomment">                public void execute() {</em>
+<a class="jxr_linenumber" name="2946" href="#2946">2946</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="2947" href="#2947">2947</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[0]) || card.getChoices().contains(cardChoice[0]))</em>
+<a class="jxr_linenumber" name="2948" href="#2948">2948</a> <em class="jxr_javadoccomment">                        a.add(ab0player[0] + " loses X life");</em>
+<a class="jxr_linenumber" name="2949" href="#2949">2949</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1]))</em>
+<a class="jxr_linenumber" name="2950" href="#2950">2950</a> <em class="jxr_javadoccomment">                        a.add("return " + ab1card[0] + " from graveyard to play");</em>
+<a class="jxr_linenumber" name="2951" href="#2951">2951</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
+<a class="jxr_linenumber" name="2952" href="#2952">2952</a> <em class="jxr_javadoccomment">                        a.add(ab2card[0] + " gets -X/-X until end of turn");</em>
+<a class="jxr_linenumber" name="2953" href="#2953">2953</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
+<a class="jxr_linenumber" name="2954" href="#2954">2954</a> <em class="jxr_javadoccomment">                        a.add("up to X target creatures gain Fear until end of turn");</em>
+<a class="jxr_linenumber" name="2955" href="#2955">2955</a> 
+<a class="jxr_linenumber" name="2956" href="#2956">2956</a> <em class="jxr_javadoccomment">                    String s = a.get(0) + ", " + a.get(1);</em>
+<a class="jxr_linenumber" name="2957" href="#2957">2957</a> <em class="jxr_javadoccomment">                    spell.setStackDescription(card.getName() + " - " + s);</em>
+<a class="jxr_linenumber" name="2958" href="#2958">2958</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2959" href="#2959">2959</a> <em class="jxr_javadoccomment">            };//Command</em>
+<a class="jxr_linenumber" name="2960" href="#2960">2960</a> 
+<a class="jxr_linenumber" name="2961" href="#2961">2961</a> <em class="jxr_javadoccomment">            //for ab[3] - X creatures gain fear until EOT</em>
+<a class="jxr_linenumber" name="2962" href="#2962">2962</a> <em class="jxr_javadoccomment">            final Input targetXCreatures = new Input() {</em>
+<a class="jxr_linenumber" name="2963" href="#2963">2963</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2584765431286321048L;</em>
+<a class="jxr_linenumber" name="2964" href="#2964">2964</a> 
+<a class="jxr_linenumber" name="2965" href="#2965">2965</a> <em class="jxr_javadoccomment">                int stop = 0;</em>
+<a class="jxr_linenumber" name="2966" href="#2966">2966</a> <em class="jxr_javadoccomment">                int count = 0;</em>
+<a class="jxr_linenumber" name="2967" href="#2967">2967</a> 
+<a class="jxr_linenumber" name="2968" href="#2968">2968</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2969" href="#2969">2969</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="2970" href="#2970">2970</a> <em class="jxr_javadoccomment">                    if (count == 0) stop = x[0];</em>
+<a class="jxr_linenumber" name="2971" href="#2971">2971</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select a target creature to gain Fear (up to " + (stop - count) + " more)");</em>
+<a class="jxr_linenumber" name="2972" href="#2972">2972</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableAll();</em>
+<a class="jxr_linenumber" name="2973" href="#2973">2973</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2974" href="#2974">2974</a> 
+<a class="jxr_linenumber" name="2975" href="#2975">2975</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2976" href="#2976">2976</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
+<a class="jxr_linenumber" name="2977" href="#2977">2977</a> <em class="jxr_javadoccomment">                    stop();</em>
+<a class="jxr_linenumber" name="2978" href="#2978">2978</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2979" href="#2979">2979</a> 
+<a class="jxr_linenumber" name="2980" href="#2980">2980</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2981" href="#2981">2981</a> <em class="jxr_javadoccomment">                public void selectButtonOK() {</em>
+<a class="jxr_linenumber" name="2982" href="#2982">2982</a> <em class="jxr_javadoccomment">                    done();</em>
+<a class="jxr_linenumber" name="2983" href="#2983">2983</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="2984" href="#2984">2984</a> 
+<a class="jxr_linenumber" name="2985" href="#2985">2985</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="2986" href="#2986">2986</a> <em class="jxr_javadoccomment">                public void selectCard(Card c, PlayerZone zone) {</em>
+<a class="jxr_linenumber" name="2987" href="#2987">2987</a> <em class="jxr_javadoccomment">                    if (c.isCreature() &amp;&amp; zone.is(Constant.Zone.Battlefield) &amp;&amp; CardFactoryUtil.canTarget(card, c) &amp;&amp;</em>
+<a class="jxr_linenumber" name="2988" href="#2988">2988</a> <em class="jxr_javadoccomment">                            !ab3cards.contains(c)) {</em>
+<a class="jxr_linenumber" name="2989" href="#2989">2989</a> <em class="jxr_javadoccomment">                        ab3cards.add(c);</em>
+<a class="jxr_linenumber" name="2990" href="#2990">2990</a> <em class="jxr_javadoccomment">                        count++;</em>
+<a class="jxr_linenumber" name="2991" href="#2991">2991</a> <em class="jxr_javadoccomment">                        if (count == stop) done();</em>
+<a class="jxr_linenumber" name="2992" href="#2992">2992</a> <em class="jxr_javadoccomment">                        else showMessage();</em>
+<a class="jxr_linenumber" name="2993" href="#2993">2993</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="2994" href="#2994">2994</a> <em class="jxr_javadoccomment">                }//selectCard()</em>
+<a class="jxr_linenumber" name="2995" href="#2995">2995</a> 
+<a class="jxr_linenumber" name="2996" href="#2996">2996</a> <em class="jxr_javadoccomment">                private void done() {</em>
+<a class="jxr_linenumber" name="2997" href="#2997">2997</a> <em class="jxr_javadoccomment">                    setStackDescription.execute();</em>
+<a class="jxr_linenumber" name="2998" href="#2998">2998</a> <em class="jxr_javadoccomment">                    stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="2999" href="#2999">2999</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3000" href="#3000">3000</a> <em class="jxr_javadoccomment">            };</em>
+<a class="jxr_linenumber" name="3001" href="#3001">3001</a> 
+<a class="jxr_linenumber" name="3002" href="#3002">3002</a> <em class="jxr_javadoccomment">            //for ab[2] target creature gets -X/-X</em>
+<a class="jxr_linenumber" name="3003" href="#3003">3003</a> <em class="jxr_javadoccomment">            final Input targetCreature = new Input() {</em>
+<a class="jxr_linenumber" name="3004" href="#3004">3004</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -6879692803780014943L;</em>
 <a class="jxr_linenumber" name="3005" href="#3005">3005</a> 
-<a class="jxr_linenumber" name="3006" href="#3006">3006</a> <em class="jxr_javadoccomment">            final Command setStackDescription = new Command() {</em>
-<a class="jxr_linenumber" name="3007" href="#3007">3007</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5840471361149632482L;</em>
-<a class="jxr_linenumber" name="3008" href="#3008">3008</a> 
-<a class="jxr_linenumber" name="3009" href="#3009">3009</a> <em class="jxr_javadoccomment">                public void execute() {</em>
-<a class="jxr_linenumber" name="3010" href="#3010">3010</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; a = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="3011" href="#3011">3011</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[0]) || card.getChoices().contains(cardChoice[0]))</em>
-<a class="jxr_linenumber" name="3012" href="#3012">3012</a> <em class="jxr_javadoccomment">                        a.add(ab0player[0] + " loses X life");</em>
-<a class="jxr_linenumber" name="3013" href="#3013">3013</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1]))</em>
-<a class="jxr_linenumber" name="3014" href="#3014">3014</a> <em class="jxr_javadoccomment">                        a.add("return " + ab1card[0] + " from graveyard to play");</em>
-<a class="jxr_linenumber" name="3015" href="#3015">3015</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
-<a class="jxr_linenumber" name="3016" href="#3016">3016</a> <em class="jxr_javadoccomment">                        a.add(ab2card[0] + " gets -X/-X until end of turn");</em>
-<a class="jxr_linenumber" name="3017" href="#3017">3017</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
-<a class="jxr_linenumber" name="3018" href="#3018">3018</a> <em class="jxr_javadoccomment">                        a.add("up to X target creatures gain Fear until end of turn");</em>
-<a class="jxr_linenumber" name="3019" href="#3019">3019</a> 
-<a class="jxr_linenumber" name="3020" href="#3020">3020</a> <em class="jxr_javadoccomment">                    String s = a.get(0) + ", " + a.get(1);</em>
-<a class="jxr_linenumber" name="3021" href="#3021">3021</a> <em class="jxr_javadoccomment">                    spell.setStackDescription(card.getName() + " - " + s);</em>
-<a class="jxr_linenumber" name="3022" href="#3022">3022</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3023" href="#3023">3023</a> <em class="jxr_javadoccomment">            };//Command</em>
-<a class="jxr_linenumber" name="3024" href="#3024">3024</a> 
-<a class="jxr_linenumber" name="3025" href="#3025">3025</a> <em class="jxr_javadoccomment">            //for ab[3] - X creatures gain fear until EOT</em>
-<a class="jxr_linenumber" name="3026" href="#3026">3026</a> <em class="jxr_javadoccomment">            final Input targetXCreatures = new Input() {</em>
-<a class="jxr_linenumber" name="3027" href="#3027">3027</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 2584765431286321048L;</em>
-<a class="jxr_linenumber" name="3028" href="#3028">3028</a> 
-<a class="jxr_linenumber" name="3029" href="#3029">3029</a> <em class="jxr_javadoccomment">                int stop = 0;</em>
-<a class="jxr_linenumber" name="3030" href="#3030">3030</a> <em class="jxr_javadoccomment">                int count = 0;</em>
-<a class="jxr_linenumber" name="3031" href="#3031">3031</a> 
-<a class="jxr_linenumber" name="3032" href="#3032">3032</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3033" href="#3033">3033</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3034" href="#3034">3034</a> <em class="jxr_javadoccomment">                    if (count == 0) stop = x[0];</em>
-<a class="jxr_linenumber" name="3035" href="#3035">3035</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select a target creature to gain Fear (up to " + (stop - count) + " more)");</em>
-<a class="jxr_linenumber" name="3036" href="#3036">3036</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableAll();</em>
-<a class="jxr_linenumber" name="3037" href="#3037">3037</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3038" href="#3038">3038</a> 
-<a class="jxr_linenumber" name="3039" href="#3039">3039</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3040" href="#3040">3040</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
-<a class="jxr_linenumber" name="3041" href="#3041">3041</a> <em class="jxr_javadoccomment">                    stop();</em>
-<a class="jxr_linenumber" name="3042" href="#3042">3042</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3043" href="#3043">3043</a> 
-<a class="jxr_linenumber" name="3044" href="#3044">3044</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3045" href="#3045">3045</a> <em class="jxr_javadoccomment">                public void selectButtonOK() {</em>
-<a class="jxr_linenumber" name="3046" href="#3046">3046</a> <em class="jxr_javadoccomment">                    done();</em>
-<a class="jxr_linenumber" name="3047" href="#3047">3047</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3048" href="#3048">3048</a> 
-<a class="jxr_linenumber" name="3049" href="#3049">3049</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3050" href="#3050">3050</a> <em class="jxr_javadoccomment">                public void selectCard(Card c, PlayerZone zone) {</em>
-<a class="jxr_linenumber" name="3051" href="#3051">3051</a> <em class="jxr_javadoccomment">                    if (c.isCreature() &amp;&amp; zone.is(Constant.Zone.Battlefield) &amp;&amp; CardFactoryUtil.canTarget(card, c) &amp;&amp;</em>
-<a class="jxr_linenumber" name="3052" href="#3052">3052</a> <em class="jxr_javadoccomment">                            !ab3cards.contains(c)) {</em>
-<a class="jxr_linenumber" name="3053" href="#3053">3053</a> <em class="jxr_javadoccomment">                        ab3cards.add(c);</em>
-<a class="jxr_linenumber" name="3054" href="#3054">3054</a> <em class="jxr_javadoccomment">                        count++;</em>
-<a class="jxr_linenumber" name="3055" href="#3055">3055</a> <em class="jxr_javadoccomment">                        if (count == stop) done();</em>
-<a class="jxr_linenumber" name="3056" href="#3056">3056</a> <em class="jxr_javadoccomment">                        else showMessage();</em>
-<a class="jxr_linenumber" name="3057" href="#3057">3057</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3058" href="#3058">3058</a> <em class="jxr_javadoccomment">                }//selectCard()</em>
-<a class="jxr_linenumber" name="3059" href="#3059">3059</a> 
-<a class="jxr_linenumber" name="3060" href="#3060">3060</a> <em class="jxr_javadoccomment">                private void done() {</em>
-<a class="jxr_linenumber" name="3061" href="#3061">3061</a> <em class="jxr_javadoccomment">                    setStackDescription.execute();</em>
-<a class="jxr_linenumber" name="3062" href="#3062">3062</a> <em class="jxr_javadoccomment">                    stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="3063" href="#3063">3063</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3064" href="#3064">3064</a> <em class="jxr_javadoccomment">            };</em>
-<a class="jxr_linenumber" name="3065" href="#3065">3065</a> 
-<a class="jxr_linenumber" name="3066" href="#3066">3066</a> <em class="jxr_javadoccomment">            //for ab[2] target creature gets -X/-X</em>
-<a class="jxr_linenumber" name="3067" href="#3067">3067</a> <em class="jxr_javadoccomment">            final Input targetCreature = new Input() {</em>
-<a class="jxr_linenumber" name="3068" href="#3068">3068</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -6879692803780014943L;</em>
-<a class="jxr_linenumber" name="3069" href="#3069">3069</a> 
-<a class="jxr_linenumber" name="3070" href="#3070">3070</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3071" href="#3071">3071</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3072" href="#3072">3072</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select target creature to get -X/-X");</em>
-<a class="jxr_linenumber" name="3073" href="#3073">3073</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableOnlyCancel();</em>
-<a class="jxr_linenumber" name="3074" href="#3074">3074</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3075" href="#3075">3075</a> 
-<a class="jxr_linenumber" name="3076" href="#3076">3076</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3077" href="#3077">3077</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
-<a class="jxr_linenumber" name="3078" href="#3078">3078</a> <em class="jxr_javadoccomment">                    stop();</em>
-<a class="jxr_linenumber" name="3079" href="#3079">3079</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3080" href="#3080">3080</a> 
-<a class="jxr_linenumber" name="3081" href="#3081">3081</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3082" href="#3082">3082</a> <em class="jxr_javadoccomment">                public void selectCard(Card c, PlayerZone zone) {</em>
-<a class="jxr_linenumber" name="3083" href="#3083">3083</a> <em class="jxr_javadoccomment">                    if (c.isCreature() &amp;&amp; zone.is(Constant.Zone.Battlefield) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
-<a class="jxr_linenumber" name="3084" href="#3084">3084</a> <em class="jxr_javadoccomment">                        if (card.isCopiedSpell()) card.getChoiceTargets().remove(0);</em>
-<a class="jxr_linenumber" name="3085" href="#3085">3085</a> <em class="jxr_javadoccomment">                        ab2card[0] = c;</em>
-<a class="jxr_linenumber" name="3086" href="#3086">3086</a> <em class="jxr_javadoccomment">                        //spell.setTargetCard(c);</em>
-<a class="jxr_linenumber" name="3087" href="#3087">3087</a> <em class="jxr_javadoccomment">                        card.setSpellChoiceTarget(String.valueOf(c.getUniqueNumber()));</em>
-<a class="jxr_linenumber" name="3088" href="#3088">3088</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
-<a class="jxr_linenumber" name="3089" href="#3089">3089</a> 
-<a class="jxr_linenumber" name="3090" href="#3090">3090</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
-<a class="jxr_linenumber" name="3091" href="#3091">3091</a> <em class="jxr_javadoccomment">                            stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3092" href="#3092">3092</a> <em class="jxr_javadoccomment">                        else {</em>
-<a class="jxr_linenumber" name="3093" href="#3093">3093</a> <em class="jxr_javadoccomment">                            System.out.println("Input_PayManaCost for spell is getting: " + spell.getManaCost());</em>
-<a class="jxr_linenumber" name="3094" href="#3094">3094</a> <em class="jxr_javadoccomment">                            stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="3095" href="#3095">3095</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3096" href="#3096">3096</a> <em class="jxr_javadoccomment">                    }//if</em>
-<a class="jxr_linenumber" name="3097" href="#3097">3097</a> <em class="jxr_javadoccomment">                }//selectCard()</em>
-<a class="jxr_linenumber" name="3098" href="#3098">3098</a> <em class="jxr_javadoccomment">            };//Input targetCreature</em>
-<a class="jxr_linenumber" name="3099" href="#3099">3099</a> 
-<a class="jxr_linenumber" name="3100" href="#3100">3100</a> <em class="jxr_javadoccomment">            //for ab[1] - return creature from grave to the battlefield</em>
-<a class="jxr_linenumber" name="3101" href="#3101">3101</a> <em class="jxr_javadoccomment">            final Input targetGraveCreature = new Input() {</em>
-<a class="jxr_linenumber" name="3102" href="#3102">3102</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -7558252187229252725L;</em>
-<a class="jxr_linenumber" name="3103" href="#3103">3103</a> 
-<a class="jxr_linenumber" name="3104" href="#3104">3104</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3105" href="#3105">3105</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3106" href="#3106">3106</a> <em class="jxr_javadoccomment">                    CardList grave = AllZoneUtil.getPlayerGraveyard(card.getController());</em>
-<a class="jxr_linenumber" name="3107" href="#3107">3107</a> <em class="jxr_javadoccomment">                    grave = grave.filter(AllZoneUtil.creatures);</em>
-<a class="jxr_linenumber" name="3108" href="#3108">3108</a> <em class="jxr_javadoccomment">                    grave = grave.filter(new CardListFilter() {</em>
-<a class="jxr_linenumber" name="3109" href="#3109">3109</a> <em class="jxr_javadoccomment">                        public boolean addCard(Card c) {</em>
-<a class="jxr_linenumber" name="3110" href="#3110">3110</a> <em class="jxr_javadoccomment">                            return c.getCMC() &lt;= x[0];</em>
-<a class="jxr_linenumber" name="3111" href="#3111">3111</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3112" href="#3112">3112</a> <em class="jxr_javadoccomment">                    });</em>
-<a class="jxr_linenumber" name="3113" href="#3113">3113</a> 
-<a class="jxr_linenumber" name="3114" href="#3114">3114</a> <em class="jxr_javadoccomment">                    Object check = GuiUtils.getChoiceOptional("Select target creature with CMC &lt; X", grave.toArray());</em>
-<a class="jxr_linenumber" name="3115" href="#3115">3115</a> <em class="jxr_javadoccomment">                    if (check != null) {</em>
-<a class="jxr_linenumber" name="3116" href="#3116">3116</a> <em class="jxr_javadoccomment">                        Card c = (Card) check;</em>
-<a class="jxr_linenumber" name="3117" href="#3117">3117</a> <em class="jxr_javadoccomment">                        if (CardFactoryUtil.canTarget(card, c)) {</em>
-<a class="jxr_linenumber" name="3118" href="#3118">3118</a> <em class="jxr_javadoccomment">                            ab1card[0] = c;</em>
-<a class="jxr_linenumber" name="3119" href="#3119">3119</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3120" href="#3120">3120</a> <em class="jxr_javadoccomment">                    } else</em>
-<a class="jxr_linenumber" name="3121" href="#3121">3121</a> <em class="jxr_javadoccomment">                        stop();</em>
-<a class="jxr_linenumber" name="3122" href="#3122">3122</a> 
-<a class="jxr_linenumber" name="3123" href="#3123">3123</a> <em class="jxr_javadoccomment">                    done();</em>
-<a class="jxr_linenumber" name="3124" href="#3124">3124</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
-<a class="jxr_linenumber" name="3125" href="#3125">3125</a> 
-<a class="jxr_linenumber" name="3126" href="#3126">3126</a> <em class="jxr_javadoccomment">                public void done() {</em>
-<a class="jxr_linenumber" name="3127" href="#3127">3127</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
-<a class="jxr_linenumber" name="3128" href="#3128">3128</a> <em class="jxr_javadoccomment">                        stopSetNext(targetCreature);</em>
-<a class="jxr_linenumber" name="3129" href="#3129">3129</a> <em class="jxr_javadoccomment">                    else if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
-<a class="jxr_linenumber" name="3130" href="#3130">3130</a> <em class="jxr_javadoccomment">                        stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3131" href="#3131">3131</a> <em class="jxr_javadoccomment">                    else {</em>
-<a class="jxr_linenumber" name="3132" href="#3132">3132</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="3133" href="#3133">3133</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3134" href="#3134">3134</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3135" href="#3135">3135</a> <em class="jxr_javadoccomment">            };//Input</em>
-<a class="jxr_linenumber" name="3136" href="#3136">3136</a> 
-<a class="jxr_linenumber" name="3137" href="#3137">3137</a> <em class="jxr_javadoccomment">            //for ab[0] - target player loses X life</em>
-<a class="jxr_linenumber" name="3138" href="#3138">3138</a> <em class="jxr_javadoccomment">            final Input targetPlayer = new Input() {</em>
-<a class="jxr_linenumber" name="3139" href="#3139">3139</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 9101387253945650303L;</em>
-<a class="jxr_linenumber" name="3140" href="#3140">3140</a> 
-<a class="jxr_linenumber" name="3141" href="#3141">3141</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3142" href="#3142">3142</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3143" href="#3143">3143</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select target player to lose life");</em>
-<a class="jxr_linenumber" name="3144" href="#3144">3144</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableOnlyCancel();</em>
-<a class="jxr_linenumber" name="3145" href="#3145">3145</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3146" href="#3146">3146</a> 
-<a class="jxr_linenumber" name="3147" href="#3147">3147</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3148" href="#3148">3148</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
-<a class="jxr_linenumber" name="3149" href="#3149">3149</a> <em class="jxr_javadoccomment">                    stop();</em>
-<a class="jxr_linenumber" name="3150" href="#3150">3150</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3151" href="#3151">3151</a> 
-<a class="jxr_linenumber" name="3152" href="#3152">3152</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3153" href="#3153">3153</a> <em class="jxr_javadoccomment">                public void selectPlayer(Player player) {</em>
-<a class="jxr_linenumber" name="3154" href="#3154">3154</a> <em class="jxr_javadoccomment">                    if (player.canTarget(card)) {</em>
-<a class="jxr_linenumber" name="3155" href="#3155">3155</a> <em class="jxr_javadoccomment">                        if (card.isCopiedSpell()) card.getChoiceTargets().remove(0);</em>
-<a class="jxr_linenumber" name="3156" href="#3156">3156</a> <em class="jxr_javadoccomment">                        ab0player[0] = player;</em>
-<a class="jxr_linenumber" name="3157" href="#3157">3157</a> <em class="jxr_javadoccomment">                        //spell.setTargetPlayer(player);</em>
-<a class="jxr_linenumber" name="3158" href="#3158">3158</a> <em class="jxr_javadoccomment">                        card.setSpellChoiceTarget(player.toString());</em>
-<a class="jxr_linenumber" name="3159" href="#3159">3159</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
-<a class="jxr_linenumber" name="3160" href="#3160">3160</a> 
-<a class="jxr_linenumber" name="3161" href="#3161">3161</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1]))</em>
-<a class="jxr_linenumber" name="3162" href="#3162">3162</a> <em class="jxr_javadoccomment">                            stopSetNext(targetGraveCreature);</em>
-<a class="jxr_linenumber" name="3163" href="#3163">3163</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
-<a class="jxr_linenumber" name="3164" href="#3164">3164</a> <em class="jxr_javadoccomment">                            stopSetNext(targetCreature);</em>
-<a class="jxr_linenumber" name="3165" href="#3165">3165</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
-<a class="jxr_linenumber" name="3166" href="#3166">3166</a> <em class="jxr_javadoccomment">                            stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3167" href="#3167">3167</a> <em class="jxr_javadoccomment">                        else {</em>
-<a class="jxr_linenumber" name="3168" href="#3168">3168</a> <em class="jxr_javadoccomment">                            stopSetNext(new Input_PayManaCost(spell));</em>
-<a class="jxr_linenumber" name="3169" href="#3169">3169</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3170" href="#3170">3170</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3171" href="#3171">3171</a> <em class="jxr_javadoccomment">                }//selectPlayer()</em>
-<a class="jxr_linenumber" name="3172" href="#3172">3172</a> <em class="jxr_javadoccomment">            };//Input targetPlayer</em>
-<a class="jxr_linenumber" name="3173" href="#3173">3173</a> 
-<a class="jxr_linenumber" name="3174" href="#3174">3174</a> <em class="jxr_javadoccomment">            final Input chooseX = new Input() {</em>
-<a class="jxr_linenumber" name="3175" href="#3175">3175</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5625588008756700226L;</em>
-<a class="jxr_linenumber" name="3176" href="#3176">3176</a> 
-<a class="jxr_linenumber" name="3177" href="#3177">3177</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3178" href="#3178">3178</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3179" href="#3179">3179</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
-<a class="jxr_linenumber" name="3180" href="#3180">3180</a> <em class="jxr_javadoccomment">                        x[0] = 0;</em>
-<a class="jxr_linenumber" name="3181" href="#3181">3181</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
-<a class="jxr_linenumber" name="3182" href="#3182">3182</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
-<a class="jxr_linenumber" name="3183" href="#3183">3183</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
-<a class="jxr_linenumber" name="3184" href="#3184">3184</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3185" href="#3185">3185</a> <em class="jxr_javadoccomment">                        else {</em>
-<a class="jxr_linenumber" name="3186" href="#3186">3186</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in if(isCopiedSpell()) in Profane Command selection is FUBAR.");</em>
-<a class="jxr_linenumber" name="3187" href="#3187">3187</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3188" href="#3188">3188</a> <em class="jxr_javadoccomment">                    } else {</em>
-<a class="jxr_linenumber" name="3189" href="#3189">3189</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; choices = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="3190" href="#3190">3190</a> <em class="jxr_javadoccomment">                        for (int i = 0; i &lt;= card.getController().getLife(); i++) {</em>
-<a class="jxr_linenumber" name="3191" href="#3191">3191</a> <em class="jxr_javadoccomment">                            choices.add("" + i);</em>
-<a class="jxr_linenumber" name="3192" href="#3192">3192</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3193" href="#3193">3193</a> <em class="jxr_javadoccomment">                        Object o = GuiUtils.getChoice("Choose X", choices.toArray());</em>
-<a class="jxr_linenumber" name="3194" href="#3194">3194</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
-<a class="jxr_linenumber" name="3195" href="#3195">3195</a> <em class="jxr_javadoccomment">                        if (o == null) {</em>
-<a class="jxr_linenumber" name="3196" href="#3196">3196</a> <em class="jxr_javadoccomment">                            stop();</em>
-<a class="jxr_linenumber" name="3197" href="#3197">3197</a> <em class="jxr_javadoccomment">                            return;</em>
-<a class="jxr_linenumber" name="3198" href="#3198">3198</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3199" href="#3199">3199</a> 
-<a class="jxr_linenumber" name="3200" href="#3200">3200</a> <em class="jxr_javadoccomment">                        String answer = (String) o;</em>
+<a class="jxr_linenumber" name="3006" href="#3006">3006</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3007" href="#3007">3007</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="3008" href="#3008">3008</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select target creature to get -X/-X");</em>
+<a class="jxr_linenumber" name="3009" href="#3009">3009</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableOnlyCancel();</em>
+<a class="jxr_linenumber" name="3010" href="#3010">3010</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3011" href="#3011">3011</a> 
+<a class="jxr_linenumber" name="3012" href="#3012">3012</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3013" href="#3013">3013</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
+<a class="jxr_linenumber" name="3014" href="#3014">3014</a> <em class="jxr_javadoccomment">                    stop();</em>
+<a class="jxr_linenumber" name="3015" href="#3015">3015</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3016" href="#3016">3016</a> 
+<a class="jxr_linenumber" name="3017" href="#3017">3017</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3018" href="#3018">3018</a> <em class="jxr_javadoccomment">                public void selectCard(Card c, PlayerZone zone) {</em>
+<a class="jxr_linenumber" name="3019" href="#3019">3019</a> <em class="jxr_javadoccomment">                    if (c.isCreature() &amp;&amp; zone.is(Constant.Zone.Battlefield) &amp;&amp; CardFactoryUtil.canTarget(card, c)) {</em>
+<a class="jxr_linenumber" name="3020" href="#3020">3020</a> <em class="jxr_javadoccomment">                        if (card.isCopiedSpell()) card.getChoiceTargets().remove(0);</em>
+<a class="jxr_linenumber" name="3021" href="#3021">3021</a> <em class="jxr_javadoccomment">                        ab2card[0] = c;</em>
+<a class="jxr_linenumber" name="3022" href="#3022">3022</a> <em class="jxr_javadoccomment">                        //spell.setTargetCard(c);</em>
+<a class="jxr_linenumber" name="3023" href="#3023">3023</a> <em class="jxr_javadoccomment">                        card.setSpellChoiceTarget(String.valueOf(c.getUniqueNumber()));</em>
+<a class="jxr_linenumber" name="3024" href="#3024">3024</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
+<a class="jxr_linenumber" name="3025" href="#3025">3025</a> 
+<a class="jxr_linenumber" name="3026" href="#3026">3026</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
+<a class="jxr_linenumber" name="3027" href="#3027">3027</a> <em class="jxr_javadoccomment">                            stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3028" href="#3028">3028</a> <em class="jxr_javadoccomment">                        else {</em>
+<a class="jxr_linenumber" name="3029" href="#3029">3029</a> <em class="jxr_javadoccomment">                            System.out.println("Input_PayManaCost for spell is getting: " + spell.getManaCost());</em>
+<a class="jxr_linenumber" name="3030" href="#3030">3030</a> <em class="jxr_javadoccomment">                            stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="3031" href="#3031">3031</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3032" href="#3032">3032</a> <em class="jxr_javadoccomment">                    }//if</em>
+<a class="jxr_linenumber" name="3033" href="#3033">3033</a> <em class="jxr_javadoccomment">                }//selectCard()</em>
+<a class="jxr_linenumber" name="3034" href="#3034">3034</a> <em class="jxr_javadoccomment">            };//Input targetCreature</em>
+<a class="jxr_linenumber" name="3035" href="#3035">3035</a> 
+<a class="jxr_linenumber" name="3036" href="#3036">3036</a> <em class="jxr_javadoccomment">            //for ab[1] - return creature from grave to the battlefield</em>
+<a class="jxr_linenumber" name="3037" href="#3037">3037</a> <em class="jxr_javadoccomment">            final Input targetGraveCreature = new Input() {</em>
+<a class="jxr_linenumber" name="3038" href="#3038">3038</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = -7558252187229252725L;</em>
+<a class="jxr_linenumber" name="3039" href="#3039">3039</a> 
+<a class="jxr_linenumber" name="3040" href="#3040">3040</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3041" href="#3041">3041</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="3042" href="#3042">3042</a> <em class="jxr_javadoccomment">                    CardList grave = AllZoneUtil.getPlayerGraveyard(card.getController());</em>
+<a class="jxr_linenumber" name="3043" href="#3043">3043</a> <em class="jxr_javadoccomment">                    grave = grave.filter(AllZoneUtil.creatures);</em>
+<a class="jxr_linenumber" name="3044" href="#3044">3044</a> <em class="jxr_javadoccomment">                    grave = grave.filter(new CardListFilter() {</em>
+<a class="jxr_linenumber" name="3045" href="#3045">3045</a> <em class="jxr_javadoccomment">                        public boolean addCard(Card c) {</em>
+<a class="jxr_linenumber" name="3046" href="#3046">3046</a> <em class="jxr_javadoccomment">                            return c.getCMC() &lt;= x[0];</em>
+<a class="jxr_linenumber" name="3047" href="#3047">3047</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3048" href="#3048">3048</a> <em class="jxr_javadoccomment">                    });</em>
+<a class="jxr_linenumber" name="3049" href="#3049">3049</a> 
+<a class="jxr_linenumber" name="3050" href="#3050">3050</a> <em class="jxr_javadoccomment">                    Object check = GuiUtils.getChoiceOptional("Select target creature with CMC &lt; X", grave.toArray());</em>
+<a class="jxr_linenumber" name="3051" href="#3051">3051</a> <em class="jxr_javadoccomment">                    if (check != null) {</em>
+<a class="jxr_linenumber" name="3052" href="#3052">3052</a> <em class="jxr_javadoccomment">                        Card c = (Card) check;</em>
+<a class="jxr_linenumber" name="3053" href="#3053">3053</a> <em class="jxr_javadoccomment">                        if (CardFactoryUtil.canTarget(card, c)) {</em>
+<a class="jxr_linenumber" name="3054" href="#3054">3054</a> <em class="jxr_javadoccomment">                            ab1card[0] = c;</em>
+<a class="jxr_linenumber" name="3055" href="#3055">3055</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3056" href="#3056">3056</a> <em class="jxr_javadoccomment">                    } else</em>
+<a class="jxr_linenumber" name="3057" href="#3057">3057</a> <em class="jxr_javadoccomment">                        stop();</em>
+<a class="jxr_linenumber" name="3058" href="#3058">3058</a> 
+<a class="jxr_linenumber" name="3059" href="#3059">3059</a> <em class="jxr_javadoccomment">                    done();</em>
+<a class="jxr_linenumber" name="3060" href="#3060">3060</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
+<a class="jxr_linenumber" name="3061" href="#3061">3061</a> 
+<a class="jxr_linenumber" name="3062" href="#3062">3062</a> <em class="jxr_javadoccomment">                public void done() {</em>
+<a class="jxr_linenumber" name="3063" href="#3063">3063</a> <em class="jxr_javadoccomment">                    if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
+<a class="jxr_linenumber" name="3064" href="#3064">3064</a> <em class="jxr_javadoccomment">                        stopSetNext(targetCreature);</em>
+<a class="jxr_linenumber" name="3065" href="#3065">3065</a> <em class="jxr_javadoccomment">                    else if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
+<a class="jxr_linenumber" name="3066" href="#3066">3066</a> <em class="jxr_javadoccomment">                        stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3067" href="#3067">3067</a> <em class="jxr_javadoccomment">                    else {</em>
+<a class="jxr_linenumber" name="3068" href="#3068">3068</a> <em class="jxr_javadoccomment">                        stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="3069" href="#3069">3069</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="3070" href="#3070">3070</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3071" href="#3071">3071</a> <em class="jxr_javadoccomment">            };//Input</em>
+<a class="jxr_linenumber" name="3072" href="#3072">3072</a> 
+<a class="jxr_linenumber" name="3073" href="#3073">3073</a> <em class="jxr_javadoccomment">            //for ab[0] - target player loses X life</em>
+<a class="jxr_linenumber" name="3074" href="#3074">3074</a> <em class="jxr_javadoccomment">            final Input targetPlayer = new Input() {</em>
+<a class="jxr_linenumber" name="3075" href="#3075">3075</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 9101387253945650303L;</em>
+<a class="jxr_linenumber" name="3076" href="#3076">3076</a> 
+<a class="jxr_linenumber" name="3077" href="#3077">3077</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3078" href="#3078">3078</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="3079" href="#3079">3079</a> <em class="jxr_javadoccomment">                    AllZone.getDisplay().showMessage(cardName + " - Select target player to lose life");</em>
+<a class="jxr_linenumber" name="3080" href="#3080">3080</a> <em class="jxr_javadoccomment">                    ButtonUtil.enableOnlyCancel();</em>
+<a class="jxr_linenumber" name="3081" href="#3081">3081</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3082" href="#3082">3082</a> 
+<a class="jxr_linenumber" name="3083" href="#3083">3083</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3084" href="#3084">3084</a> <em class="jxr_javadoccomment">                public void selectButtonCancel() {</em>
+<a class="jxr_linenumber" name="3085" href="#3085">3085</a> <em class="jxr_javadoccomment">                    stop();</em>
+<a class="jxr_linenumber" name="3086" href="#3086">3086</a> <em class="jxr_javadoccomment">                }</em>
+<a class="jxr_linenumber" name="3087" href="#3087">3087</a> 
+<a class="jxr_linenumber" name="3088" href="#3088">3088</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3089" href="#3089">3089</a> <em class="jxr_javadoccomment">                public void selectPlayer(Player player) {</em>
+<a class="jxr_linenumber" name="3090" href="#3090">3090</a> <em class="jxr_javadoccomment">                    if (player.canTarget(card)) {</em>
+<a class="jxr_linenumber" name="3091" href="#3091">3091</a> <em class="jxr_javadoccomment">                        if (card.isCopiedSpell()) card.getChoiceTargets().remove(0);</em>
+<a class="jxr_linenumber" name="3092" href="#3092">3092</a> <em class="jxr_javadoccomment">                        ab0player[0] = player;</em>
+<a class="jxr_linenumber" name="3093" href="#3093">3093</a> <em class="jxr_javadoccomment">                        //spell.setTargetPlayer(player);</em>
+<a class="jxr_linenumber" name="3094" href="#3094">3094</a> <em class="jxr_javadoccomment">                        card.setSpellChoiceTarget(player.toString());</em>
+<a class="jxr_linenumber" name="3095" href="#3095">3095</a> <em class="jxr_javadoccomment">                        setStackDescription.execute();</em>
+<a class="jxr_linenumber" name="3096" href="#3096">3096</a> 
+<a class="jxr_linenumber" name="3097" href="#3097">3097</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[1]) || card.getChoices().contains(cardChoice[1]))</em>
+<a class="jxr_linenumber" name="3098" href="#3098">3098</a> <em class="jxr_javadoccomment">                            stopSetNext(targetGraveCreature);</em>
+<a class="jxr_linenumber" name="3099" href="#3099">3099</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2]) || card.getChoices().contains(cardChoice[2]))</em>
+<a class="jxr_linenumber" name="3100" href="#3100">3100</a> <em class="jxr_javadoccomment">                            stopSetNext(targetCreature);</em>
+<a class="jxr_linenumber" name="3101" href="#3101">3101</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3]) || card.getChoices().contains(cardChoice[3]))</em>
+<a class="jxr_linenumber" name="3102" href="#3102">3102</a> <em class="jxr_javadoccomment">                            stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3103" href="#3103">3103</a> <em class="jxr_javadoccomment">                        else {</em>
+<a class="jxr_linenumber" name="3104" href="#3104">3104</a> <em class="jxr_javadoccomment">                            stopSetNext(new Input_PayManaCost(spell));</em>
+<a class="jxr_linenumber" name="3105" href="#3105">3105</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3106" href="#3106">3106</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="3107" href="#3107">3107</a> <em class="jxr_javadoccomment">                }//selectPlayer()</em>
+<a class="jxr_linenumber" name="3108" href="#3108">3108</a> <em class="jxr_javadoccomment">            };//Input targetPlayer</em>
+<a class="jxr_linenumber" name="3109" href="#3109">3109</a> 
+<a class="jxr_linenumber" name="3110" href="#3110">3110</a> <em class="jxr_javadoccomment">            final Input chooseX = new Input() {</em>
+<a class="jxr_linenumber" name="3111" href="#3111">3111</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5625588008756700226L;</em>
+<a class="jxr_linenumber" name="3112" href="#3112">3112</a> 
+<a class="jxr_linenumber" name="3113" href="#3113">3113</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3114" href="#3114">3114</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="3115" href="#3115">3115</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
+<a class="jxr_linenumber" name="3116" href="#3116">3116</a> <em class="jxr_javadoccomment">                        x[0] = 0;</em>
+<a class="jxr_linenumber" name="3117" href="#3117">3117</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
+<a class="jxr_linenumber" name="3118" href="#3118">3118</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
+<a class="jxr_linenumber" name="3119" href="#3119">3119</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
+<a class="jxr_linenumber" name="3120" href="#3120">3120</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3121" href="#3121">3121</a> <em class="jxr_javadoccomment">                        else {</em>
+<a class="jxr_linenumber" name="3122" href="#3122">3122</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in if(isCopiedSpell()) in Profane Command selection is FUBAR.");</em>
+<a class="jxr_linenumber" name="3123" href="#3123">3123</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3124" href="#3124">3124</a> <em class="jxr_javadoccomment">                    } else {</em>
+<a class="jxr_linenumber" name="3125" href="#3125">3125</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; choices = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="3126" href="#3126">3126</a> <em class="jxr_javadoccomment">                        for (int i = 0; i &lt;= card.getController().getLife(); i++) {</em>
+<a class="jxr_linenumber" name="3127" href="#3127">3127</a> <em class="jxr_javadoccomment">                            choices.add("" + i);</em>
+<a class="jxr_linenumber" name="3128" href="#3128">3128</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3129" href="#3129">3129</a> <em class="jxr_javadoccomment">                        Object o = GuiUtils.getChoice("Choose X", choices.toArray());</em>
+<a class="jxr_linenumber" name="3130" href="#3130">3130</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
+<a class="jxr_linenumber" name="3131" href="#3131">3131</a> <em class="jxr_javadoccomment">                        if (o == null) {</em>
+<a class="jxr_linenumber" name="3132" href="#3132">3132</a> <em class="jxr_javadoccomment">                            stop();</em>
+<a class="jxr_linenumber" name="3133" href="#3133">3133</a> <em class="jxr_javadoccomment">                            return;</em>
+<a class="jxr_linenumber" name="3134" href="#3134">3134</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3135" href="#3135">3135</a> 
+<a class="jxr_linenumber" name="3136" href="#3136">3136</a> <em class="jxr_javadoccomment">                        String answer = (String) o;</em>
+<a class="jxr_linenumber" name="3137" href="#3137">3137</a> 
+<a class="jxr_linenumber" name="3138" href="#3138">3138</a> <em class="jxr_javadoccomment">                        x[0] = Integer.parseInt(answer);</em>
+<a class="jxr_linenumber" name="3139" href="#3139">3139</a> <em class="jxr_javadoccomment">                        spell.setManaCost(x[0] + " B B");</em>
+<a class="jxr_linenumber" name="3140" href="#3140">3140</a> <em class="jxr_javadoccomment">                        spell.setIsXCost(false);</em>
+<a class="jxr_linenumber" name="3141" href="#3141">3141</a> 
+<a class="jxr_linenumber" name="3142" href="#3142">3142</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
+<a class="jxr_linenumber" name="3143" href="#3143">3143</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
+<a class="jxr_linenumber" name="3144" href="#3144">3144</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
+<a class="jxr_linenumber" name="3145" href="#3145">3145</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3146" href="#3146">3146</a> <em class="jxr_javadoccomment">                        else {</em>
+<a class="jxr_linenumber" name="3147" href="#3147">3147</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in Profane Command selection is FUBAR.");</em>
+<a class="jxr_linenumber" name="3148" href="#3148">3148</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3149" href="#3149">3149</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="3150" href="#3150">3150</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
+<a class="jxr_linenumber" name="3151" href="#3151">3151</a> <em class="jxr_javadoccomment">            };//Input chooseX</em>
+<a class="jxr_linenumber" name="3152" href="#3152">3152</a> 
+<a class="jxr_linenumber" name="3153" href="#3153">3153</a> <em class="jxr_javadoccomment">            Input chooseTwoInput = new Input() {</em>
+<a class="jxr_linenumber" name="3154" href="#3154">3154</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5625588008756700226L;</em>
+<a class="jxr_linenumber" name="3155" href="#3155">3155</a> 
+<a class="jxr_linenumber" name="3156" href="#3156">3156</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3157" href="#3157">3157</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
+<a class="jxr_linenumber" name="3158" href="#3158">3158</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
+<a class="jxr_linenumber" name="3159" href="#3159">3159</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
+<a class="jxr_linenumber" name="3160" href="#3160">3160</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
+<a class="jxr_linenumber" name="3161" href="#3161">3161</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
+<a class="jxr_linenumber" name="3162" href="#3162">3162</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
+<a class="jxr_linenumber" name="3163" href="#3163">3163</a> <em class="jxr_javadoccomment">                        else {</em>
+<a class="jxr_linenumber" name="3164" href="#3164">3164</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in if(isCopiedSpell()) in Profane Command selection is FUBAR.");</em>
+<a class="jxr_linenumber" name="3165" href="#3165">3165</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3166" href="#3166">3166</a> <em class="jxr_javadoccomment">                    } else {</em>
+<a class="jxr_linenumber" name="3167" href="#3167">3167</a> <em class="jxr_javadoccomment">                        //reset variables</em>
+<a class="jxr_linenumber" name="3168" href="#3168">3168</a> <em class="jxr_javadoccomment">                        ab0player[0] = null;</em>
+<a class="jxr_linenumber" name="3169" href="#3169">3169</a> <em class="jxr_javadoccomment">                        ab1card[0] = null;</em>
+<a class="jxr_linenumber" name="3170" href="#3170">3170</a> <em class="jxr_javadoccomment">                        ab2card[0] = null;</em>
+<a class="jxr_linenumber" name="3171" href="#3171">3171</a> <em class="jxr_javadoccomment">                        ab3cards.clear();</em>
+<a class="jxr_linenumber" name="3172" href="#3172">3172</a> <em class="jxr_javadoccomment">                        card.getChoices().clear();</em>
+<a class="jxr_linenumber" name="3173" href="#3173">3173</a> <em class="jxr_javadoccomment">                        card.getChoiceTargets().clear();</em>
+<a class="jxr_linenumber" name="3174" href="#3174">3174</a> <em class="jxr_javadoccomment">                        userChoice.clear();</em>
+<a class="jxr_linenumber" name="3175" href="#3175">3175</a> 
+<a class="jxr_linenumber" name="3176" href="#3176">3176</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; display = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="3177" href="#3177">3177</a> 
+<a class="jxr_linenumber" name="3178" href="#3178">3178</a> <em class="jxr_javadoccomment">                        //get all</em>
+<a class="jxr_linenumber" name="3179" href="#3179">3179</a> <em class="jxr_javadoccomment">                        CardList creatures = AllZoneUtil.getCreaturesInPlay();</em>
+<a class="jxr_linenumber" name="3180" href="#3180">3180</a> <em class="jxr_javadoccomment">                        CardList grave = AllZoneUtil.getPlayerGraveyard(card.getController());</em>
+<a class="jxr_linenumber" name="3181" href="#3181">3181</a> <em class="jxr_javadoccomment">                        grave = grave.filter(AllZoneUtil.creatures);</em>
+<a class="jxr_linenumber" name="3182" href="#3182">3182</a> 
+<a class="jxr_linenumber" name="3183" href="#3183">3183</a> <em class="jxr_javadoccomment">                        if (AllZone.getHumanPlayer().canTarget(card) || AllZone.getComputerPlayer().canTarget(card))</em>
+<a class="jxr_linenumber" name="3184" href="#3184">3184</a> <em class="jxr_javadoccomment">                            display.add("Target player loses X life");</em>
+<a class="jxr_linenumber" name="3185" href="#3185">3185</a> <em class="jxr_javadoccomment">                        if (grave.size() &gt; 0)</em>
+<a class="jxr_linenumber" name="3186" href="#3186">3186</a> <em class="jxr_javadoccomment">                            display.add("Return target creature card with converted mana cost X or less from your graveyard to the battlefield");</em>
+<a class="jxr_linenumber" name="3187" href="#3187">3187</a> <em class="jxr_javadoccomment">                        if (creatures.size() &gt; 0) display.add("Target creature gets -X/-X until end of turn");</em>
+<a class="jxr_linenumber" name="3188" href="#3188">3188</a> <em class="jxr_javadoccomment">                        display.add("Up to X target creatures gain fear until end of turn");</em>
+<a class="jxr_linenumber" name="3189" href="#3189">3189</a> 
+<a class="jxr_linenumber" name="3190" href="#3190">3190</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; a = chooseTwo(display);</em>
+<a class="jxr_linenumber" name="3191" href="#3191">3191</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
+<a class="jxr_linenumber" name="3192" href="#3192">3192</a> <em class="jxr_javadoccomment">                        if (a == null) {</em>
+<a class="jxr_linenumber" name="3193" href="#3193">3193</a> <em class="jxr_javadoccomment">                            stop();</em>
+<a class="jxr_linenumber" name="3194" href="#3194">3194</a> <em class="jxr_javadoccomment">                            return;</em>
+<a class="jxr_linenumber" name="3195" href="#3195">3195</a> <em class="jxr_javadoccomment">                        }</em>
+<a class="jxr_linenumber" name="3196" href="#3196">3196</a> <em class="jxr_javadoccomment">                        userChoice.addAll(a);</em>
+<a class="jxr_linenumber" name="3197" href="#3197">3197</a> 
+<a class="jxr_linenumber" name="3198" href="#3198">3198</a> <em class="jxr_javadoccomment">                        stopSetNext(chooseX);</em>
+<a class="jxr_linenumber" name="3199" href="#3199">3199</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="3200" href="#3200">3200</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
 <a class="jxr_linenumber" name="3201" href="#3201">3201</a> 
-<a class="jxr_linenumber" name="3202" href="#3202">3202</a> <em class="jxr_javadoccomment">                        x[0] = Integer.parseInt(answer);</em>
-<a class="jxr_linenumber" name="3203" href="#3203">3203</a> <em class="jxr_javadoccomment">                        spell.setManaCost(x[0] + " B B");</em>
-<a class="jxr_linenumber" name="3204" href="#3204">3204</a> <em class="jxr_javadoccomment">                        spell.setIsXCost(false);</em>
-<a class="jxr_linenumber" name="3205" href="#3205">3205</a> 
-<a class="jxr_linenumber" name="3206" href="#3206">3206</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
-<a class="jxr_linenumber" name="3207" href="#3207">3207</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
-<a class="jxr_linenumber" name="3208" href="#3208">3208</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
-<a class="jxr_linenumber" name="3209" href="#3209">3209</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3210" href="#3210">3210</a> <em class="jxr_javadoccomment">                        else {</em>
-<a class="jxr_linenumber" name="3211" href="#3211">3211</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in Profane Command selection is FUBAR.");</em>
-<a class="jxr_linenumber" name="3212" href="#3212">3212</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3213" href="#3213">3213</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3214" href="#3214">3214</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
-<a class="jxr_linenumber" name="3215" href="#3215">3215</a> <em class="jxr_javadoccomment">            };//Input chooseX</em>
-<a class="jxr_linenumber" name="3216" href="#3216">3216</a> 
-<a class="jxr_linenumber" name="3217" href="#3217">3217</a> <em class="jxr_javadoccomment">            Input chooseTwoInput = new Input() {</em>
-<a class="jxr_linenumber" name="3218" href="#3218">3218</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 5625588008756700226L;</em>
-<a class="jxr_linenumber" name="3219" href="#3219">3219</a> 
-<a class="jxr_linenumber" name="3220" href="#3220">3220</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3221" href="#3221">3221</a> <em class="jxr_javadoccomment">                public void showMessage() {</em>
-<a class="jxr_linenumber" name="3222" href="#3222">3222</a> <em class="jxr_javadoccomment">                    if (card.isCopiedSpell()) {</em>
-<a class="jxr_linenumber" name="3223" href="#3223">3223</a> <em class="jxr_javadoccomment">                        if (userChoice.contains(cardChoice[0])) stopSetNext(targetPlayer);</em>
-<a class="jxr_linenumber" name="3224" href="#3224">3224</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[1])) stopSetNext(targetGraveCreature);</em>
-<a class="jxr_linenumber" name="3225" href="#3225">3225</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[2])) stopSetNext(targetCreature);</em>
-<a class="jxr_linenumber" name="3226" href="#3226">3226</a> <em class="jxr_javadoccomment">                        else if (userChoice.contains(cardChoice[3])) stopSetNext(targetXCreatures);</em>
-<a class="jxr_linenumber" name="3227" href="#3227">3227</a> <em class="jxr_javadoccomment">                        else {</em>
-<a class="jxr_linenumber" name="3228" href="#3228">3228</a> <em class="jxr_javadoccomment">                            throw new RuntimeException("Something in if(isCopiedSpell()) in Profane Command selection is FUBAR.");</em>
-<a class="jxr_linenumber" name="3229" href="#3229">3229</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3230" href="#3230">3230</a> <em class="jxr_javadoccomment">                    } else {</em>
-<a class="jxr_linenumber" name="3231" href="#3231">3231</a> <em class="jxr_javadoccomment">                        //reset variables</em>
-<a class="jxr_linenumber" name="3232" href="#3232">3232</a> <em class="jxr_javadoccomment">                        ab0player[0] = null;</em>
-<a class="jxr_linenumber" name="3233" href="#3233">3233</a> <em class="jxr_javadoccomment">                        ab1card[0] = null;</em>
-<a class="jxr_linenumber" name="3234" href="#3234">3234</a> <em class="jxr_javadoccomment">                        ab2card[0] = null;</em>
-<a class="jxr_linenumber" name="3235" href="#3235">3235</a> <em class="jxr_javadoccomment">                        ab3cards.clear();</em>
-<a class="jxr_linenumber" name="3236" href="#3236">3236</a> <em class="jxr_javadoccomment">                        card.getChoices().clear();</em>
-<a class="jxr_linenumber" name="3237" href="#3237">3237</a> <em class="jxr_javadoccomment">                        card.getChoiceTargets().clear();</em>
-<a class="jxr_linenumber" name="3238" href="#3238">3238</a> <em class="jxr_javadoccomment">                        userChoice.clear();</em>
+<a class="jxr_linenumber" name="3202" href="#3202">3202</a> <em class="jxr_javadoccomment">                private ArrayList&lt;String&gt; chooseTwo(ArrayList&lt;String&gt; choices) {</em>
+<a class="jxr_linenumber" name="3203" href="#3203">3203</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; out = new ArrayList&lt;String&gt;();</em>
+<a class="jxr_linenumber" name="3204" href="#3204">3204</a> <em class="jxr_javadoccomment">                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
+<a class="jxr_linenumber" name="3205" href="#3205">3205</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
+<a class="jxr_linenumber" name="3206" href="#3206">3206</a> 
+<a class="jxr_linenumber" name="3207" href="#3207">3207</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
+<a class="jxr_linenumber" name="3208" href="#3208">3208</a> <em class="jxr_javadoccomment">                    card.addSpellChoice((String) o);</em>
+<a class="jxr_linenumber" name="3209" href="#3209">3209</a> <em class="jxr_javadoccomment">                    choices.remove(out.get(0));</em>
+<a class="jxr_linenumber" name="3210" href="#3210">3210</a> <em class="jxr_javadoccomment">                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
+<a class="jxr_linenumber" name="3211" href="#3211">3211</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
+<a class="jxr_linenumber" name="3212" href="#3212">3212</a> 
+<a class="jxr_linenumber" name="3213" href="#3213">3213</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
+<a class="jxr_linenumber" name="3214" href="#3214">3214</a> <em class="jxr_javadoccomment">                    card.addSpellChoice((String) o);</em>
+<a class="jxr_linenumber" name="3215" href="#3215">3215</a> <em class="jxr_javadoccomment">                    return out;</em>
+<a class="jxr_linenumber" name="3216" href="#3216">3216</a> <em class="jxr_javadoccomment">                }//chooseTwo()</em>
+<a class="jxr_linenumber" name="3217" href="#3217">3217</a> <em class="jxr_javadoccomment">            };//Input chooseTwoInput</em>
+<a class="jxr_linenumber" name="3218" href="#3218">3218</a> 
+<a class="jxr_linenumber" name="3219" href="#3219">3219</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="3220" href="#3220">3220</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="3221" href="#3221">3221</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
+<a class="jxr_linenumber" name="3222" href="#3222">3222</a> 
+<a class="jxr_linenumber" name="3223" href="#3223">3223</a> <em class="jxr_javadoccomment">            card.setSpellWithChoices(true);</em>
+<a class="jxr_linenumber" name="3224" href="#3224">3224</a> <em class="jxr_javadoccomment">            spell.setBeforePayMana(chooseTwoInput);</em>
+<a class="jxr_linenumber" name="3225" href="#3225">3225</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
+<a class="jxr_linenumber" name="3226" href="#3226">3226</a> 
+<a class="jxr_linenumber" name="3227" href="#3227">3227</a> 
+<a class="jxr_linenumber" name="3228" href="#3228">3228</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
+<a class="jxr_linenumber" name="3229" href="#3229">3229</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Turn to Slag")) {</em>
+<a class="jxr_linenumber" name="3230" href="#3230">3230</a> <em class="jxr_javadoccomment">            Cost abCost = new Cost("3 R R", cardName, false);</em>
+<a class="jxr_linenumber" name="3231" href="#3231">3231</a> <em class="jxr_javadoccomment">            Target target = new Target(card, "Select target creature", "Creature".split(","));</em>
+<a class="jxr_linenumber" name="3232" href="#3232">3232</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card, abCost, target) {</em>
+<a class="jxr_linenumber" name="3233" href="#3233">3233</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 3848014348910653252L;</em>
+<a class="jxr_linenumber" name="3234" href="#3234">3234</a> 
+<a class="jxr_linenumber" name="3235" href="#3235">3235</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3236" href="#3236">3236</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
+<a class="jxr_linenumber" name="3237" href="#3237">3237</a> <em class="jxr_javadoccomment">                    return false;</em>
+<a class="jxr_linenumber" name="3238" href="#3238">3238</a> <em class="jxr_javadoccomment">                }</em>
 <a class="jxr_linenumber" name="3239" href="#3239">3239</a> 
-<a class="jxr_linenumber" name="3240" href="#3240">3240</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; display = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="3241" href="#3241">3241</a> 
-<a class="jxr_linenumber" name="3242" href="#3242">3242</a> <em class="jxr_javadoccomment">                        //get all</em>
-<a class="jxr_linenumber" name="3243" href="#3243">3243</a> <em class="jxr_javadoccomment">                        CardList creatures = AllZoneUtil.getCreaturesInPlay();</em>
-<a class="jxr_linenumber" name="3244" href="#3244">3244</a> <em class="jxr_javadoccomment">                        CardList grave = AllZoneUtil.getPlayerGraveyard(card.getController());</em>
-<a class="jxr_linenumber" name="3245" href="#3245">3245</a> <em class="jxr_javadoccomment">                        grave = grave.filter(AllZoneUtil.creatures);</em>
-<a class="jxr_linenumber" name="3246" href="#3246">3246</a> 
-<a class="jxr_linenumber" name="3247" href="#3247">3247</a> <em class="jxr_javadoccomment">                        if (AllZone.getHumanPlayer().canTarget(card) || AllZone.getComputerPlayer().canTarget(card))</em>
-<a class="jxr_linenumber" name="3248" href="#3248">3248</a> <em class="jxr_javadoccomment">                            display.add("Target player loses X life");</em>
-<a class="jxr_linenumber" name="3249" href="#3249">3249</a> <em class="jxr_javadoccomment">                        if (grave.size() &gt; 0)</em>
-<a class="jxr_linenumber" name="3250" href="#3250">3250</a> <em class="jxr_javadoccomment">                            display.add("Return target creature card with converted mana cost X or less from your graveyard to the battlefield");</em>
-<a class="jxr_linenumber" name="3251" href="#3251">3251</a> <em class="jxr_javadoccomment">                        if (creatures.size() &gt; 0) display.add("Target creature gets -X/-X until end of turn");</em>
-<a class="jxr_linenumber" name="3252" href="#3252">3252</a> <em class="jxr_javadoccomment">                        display.add("Up to X target creatures gain fear until end of turn");</em>
-<a class="jxr_linenumber" name="3253" href="#3253">3253</a> 
-<a class="jxr_linenumber" name="3254" href="#3254">3254</a> <em class="jxr_javadoccomment">                        ArrayList&lt;String&gt; a = chooseTwo(display);</em>
-<a class="jxr_linenumber" name="3255" href="#3255">3255</a> <em class="jxr_javadoccomment">                        //everything stops here if user cancelled</em>
-<a class="jxr_linenumber" name="3256" href="#3256">3256</a> <em class="jxr_javadoccomment">                        if (a == null) {</em>
-<a class="jxr_linenumber" name="3257" href="#3257">3257</a> <em class="jxr_javadoccomment">                            stop();</em>
-<a class="jxr_linenumber" name="3258" href="#3258">3258</a> <em class="jxr_javadoccomment">                            return;</em>
-<a class="jxr_linenumber" name="3259" href="#3259">3259</a> <em class="jxr_javadoccomment">                        }</em>
-<a class="jxr_linenumber" name="3260" href="#3260">3260</a> <em class="jxr_javadoccomment">                        userChoice.addAll(a);</em>
-<a class="jxr_linenumber" name="3261" href="#3261">3261</a> 
-<a class="jxr_linenumber" name="3262" href="#3262">3262</a> <em class="jxr_javadoccomment">                        stopSetNext(chooseX);</em>
-<a class="jxr_linenumber" name="3263" href="#3263">3263</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3264" href="#3264">3264</a> <em class="jxr_javadoccomment">                }//showMessage()</em>
-<a class="jxr_linenumber" name="3265" href="#3265">3265</a> 
-<a class="jxr_linenumber" name="3266" href="#3266">3266</a> <em class="jxr_javadoccomment">                private ArrayList&lt;String&gt; chooseTwo(ArrayList&lt;String&gt; choices) {</em>
-<a class="jxr_linenumber" name="3267" href="#3267">3267</a> <em class="jxr_javadoccomment">                    ArrayList&lt;String&gt; out = new ArrayList&lt;String&gt;();</em>
-<a class="jxr_linenumber" name="3268" href="#3268">3268</a> <em class="jxr_javadoccomment">                    Object o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
-<a class="jxr_linenumber" name="3269" href="#3269">3269</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
-<a class="jxr_linenumber" name="3270" href="#3270">3270</a> 
-<a class="jxr_linenumber" name="3271" href="#3271">3271</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
-<a class="jxr_linenumber" name="3272" href="#3272">3272</a> <em class="jxr_javadoccomment">                    card.addSpellChoice((String) o);</em>
-<a class="jxr_linenumber" name="3273" href="#3273">3273</a> <em class="jxr_javadoccomment">                    choices.remove(out.get(0));</em>
-<a class="jxr_linenumber" name="3274" href="#3274">3274</a> <em class="jxr_javadoccomment">                    o = GuiUtils.getChoiceOptional("Choose Two", choices.toArray());</em>
-<a class="jxr_linenumber" name="3275" href="#3275">3275</a> <em class="jxr_javadoccomment">                    if (o == null) return null;</em>
-<a class="jxr_linenumber" name="3276" href="#3276">3276</a> 
-<a class="jxr_linenumber" name="3277" href="#3277">3277</a> <em class="jxr_javadoccomment">                    out.add((String) o);</em>
-<a class="jxr_linenumber" name="3278" href="#3278">3278</a> <em class="jxr_javadoccomment">                    card.addSpellChoice((String) o);</em>
-<a class="jxr_linenumber" name="3279" href="#3279">3279</a> <em class="jxr_javadoccomment">                    return out;</em>
-<a class="jxr_linenumber" name="3280" href="#3280">3280</a> <em class="jxr_javadoccomment">                }//chooseTwo()</em>
-<a class="jxr_linenumber" name="3281" href="#3281">3281</a> <em class="jxr_javadoccomment">            };//Input chooseTwoInput</em>
-<a class="jxr_linenumber" name="3282" href="#3282">3282</a> 
-<a class="jxr_linenumber" name="3283" href="#3283">3283</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="3284" href="#3284">3284</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="3285" href="#3285">3285</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
-<a class="jxr_linenumber" name="3286" href="#3286">3286</a> 
-<a class="jxr_linenumber" name="3287" href="#3287">3287</a> <em class="jxr_javadoccomment">            card.setSpellWithChoices(true);</em>
-<a class="jxr_linenumber" name="3288" href="#3288">3288</a> <em class="jxr_javadoccomment">            spell.setBeforePayMana(chooseTwoInput);</em>
-<a class="jxr_linenumber" name="3289" href="#3289">3289</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
-<a class="jxr_linenumber" name="3290" href="#3290">3290</a> 
-<a class="jxr_linenumber" name="3291" href="#3291">3291</a> 
-<a class="jxr_linenumber" name="3292" href="#3292">3292</a> <em class="jxr_javadoccomment">        //*************** START *********** START **************************</em>
-<a class="jxr_linenumber" name="3293" href="#3293">3293</a> <em class="jxr_javadoccomment">        else if (cardName.equals("Turn to Slag")) {</em>
-<a class="jxr_linenumber" name="3294" href="#3294">3294</a> <em class="jxr_javadoccomment">            Cost abCost = new Cost("3 R R", cardName, false);</em>
-<a class="jxr_linenumber" name="3295" href="#3295">3295</a> <em class="jxr_javadoccomment">            Target target = new Target(card, "Select target creature", "Creature".split(","));</em>
-<a class="jxr_linenumber" name="3296" href="#3296">3296</a> <em class="jxr_javadoccomment">            final SpellAbility spell = new Spell(card, abCost, target) {</em>
-<a class="jxr_linenumber" name="3297" href="#3297">3297</a> <em class="jxr_javadoccomment">                private static final long serialVersionUID = 3848014348910653252L;</em>
-<a class="jxr_linenumber" name="3298" href="#3298">3298</a> 
-<a class="jxr_linenumber" name="3299" href="#3299">3299</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3300" href="#3300">3300</a> <em class="jxr_javadoccomment">                public boolean canPlayAI() {</em>
-<a class="jxr_linenumber" name="3301" href="#3301">3301</a> <em class="jxr_javadoccomment">                    return false;</em>
-<a class="jxr_linenumber" name="3302" href="#3302">3302</a> <em class="jxr_javadoccomment">                }</em>
-<a class="jxr_linenumber" name="3303" href="#3303">3303</a> 
-<a class="jxr_linenumber" name="3304" href="#3304">3304</a> <em class="jxr_javadoccomment">                @Override</em>
-<a class="jxr_linenumber" name="3305" href="#3305">3305</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
-<a class="jxr_linenumber" name="3306" href="#3306">3306</a> <em class="jxr_javadoccomment">                    Card tgt = getTargetCard();</em>
-<a class="jxr_linenumber" name="3307" href="#3307">3307</a> <em class="jxr_javadoccomment">                    if (AllZoneUtil.isCardInPlay(tgt) &amp;&amp; CardFactoryUtil.canTarget(card, tgt)) {</em>
-<a class="jxr_linenumber" name="3308" href="#3308">3308</a> <em class="jxr_javadoccomment">                        tgt.addDamage(5, card);</em>
-<a class="jxr_linenumber" name="3309" href="#3309">3309</a> <em class="jxr_javadoccomment">                        CardList equipment = new CardList(tgt.getEquippedBy());</em>
-<a class="jxr_linenumber" name="3310" href="#3310">3310</a> <em class="jxr_javadoccomment">                        for (Card eq : equipment) AllZone.getGameAction().destroy(eq);</em>
-<a class="jxr_linenumber" name="3311" href="#3311">3311</a> <em class="jxr_javadoccomment">                    }</em>
-<a class="jxr_linenumber" name="3312" href="#3312">3312</a> <em class="jxr_javadoccomment">                }//resolve()</em>
-<a class="jxr_linenumber" name="3313" href="#3313">3313</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
-<a class="jxr_linenumber" name="3314" href="#3314">3314</a> 
-<a class="jxr_linenumber" name="3315" href="#3315">3315</a> <em class="jxr_javadoccomment">            spell.setDescription(cardName + " deals 5 damage to target creature. Destroy all Equipment attached to that creature.");</em>
-<a class="jxr_linenumber" name="3316" href="#3316">3316</a> 
-<a class="jxr_linenumber" name="3317" href="#3317">3317</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="3318" href="#3318">3318</a> <em class="jxr_javadoccomment">            </em>
-<a class="jxr_linenumber" name="3319" href="#3319">3319</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
-<a class="jxr_linenumber" name="3320" href="#3320">3320</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
-<a class="jxr_linenumber" name="3321" href="#3321">3321</a> 
-<a class="jxr_linenumber" name="3322" href="#3322">3322</a> <em class="jxr_javadoccomment">        return card;</em>
-<a class="jxr_linenumber" name="3323" href="#3323">3323</a> <em class="jxr_javadoccomment">    }//getCard</em>
-<a class="jxr_linenumber" name="3324" href="#3324">3324</a> <em class="jxr_javadoccomment">}</em>
+<a class="jxr_linenumber" name="3240" href="#3240">3240</a> <em class="jxr_javadoccomment">                @Override</em>
+<a class="jxr_linenumber" name="3241" href="#3241">3241</a> <em class="jxr_javadoccomment">                public void resolve() {</em>
+<a class="jxr_linenumber" name="3242" href="#3242">3242</a> <em class="jxr_javadoccomment">                    Card tgt = getTargetCard();</em>
+<a class="jxr_linenumber" name="3243" href="#3243">3243</a> <em class="jxr_javadoccomment">                    if (AllZoneUtil.isCardInPlay(tgt) &amp;&amp; CardFactoryUtil.canTarget(card, tgt)) {</em>
+<a class="jxr_linenumber" name="3244" href="#3244">3244</a> <em class="jxr_javadoccomment">                        tgt.addDamage(5, card);</em>
+<a class="jxr_linenumber" name="3245" href="#3245">3245</a> <em class="jxr_javadoccomment">                        CardList equipment = new CardList(tgt.getEquippedBy());</em>
+<a class="jxr_linenumber" name="3246" href="#3246">3246</a> <em class="jxr_javadoccomment">                        for (Card eq : equipment) AllZone.getGameAction().destroy(eq);</em>
+<a class="jxr_linenumber" name="3247" href="#3247">3247</a> <em class="jxr_javadoccomment">                    }</em>
+<a class="jxr_linenumber" name="3248" href="#3248">3248</a> <em class="jxr_javadoccomment">                }//resolve()</em>
+<a class="jxr_linenumber" name="3249" href="#3249">3249</a> <em class="jxr_javadoccomment">            };//SpellAbility</em>
+<a class="jxr_linenumber" name="3250" href="#3250">3250</a> 
+<a class="jxr_linenumber" name="3251" href="#3251">3251</a> <em class="jxr_javadoccomment">            spell.setDescription(cardName + " deals 5 damage to target creature. Destroy all Equipment attached to that creature.");</em>
+<a class="jxr_linenumber" name="3252" href="#3252">3252</a> 
+<a class="jxr_linenumber" name="3253" href="#3253">3253</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="3254" href="#3254">3254</a> <em class="jxr_javadoccomment">            </em>
+<a class="jxr_linenumber" name="3255" href="#3255">3255</a> <em class="jxr_javadoccomment">            card.addSpellAbility(spell);</em>
+<a class="jxr_linenumber" name="3256" href="#3256">3256</a> <em class="jxr_javadoccomment">        }//*************** END ************ END **************************</em>
+<a class="jxr_linenumber" name="3257" href="#3257">3257</a> 
+<a class="jxr_linenumber" name="3258" href="#3258">3258</a> <em class="jxr_javadoccomment">        return card;</em>
+<a class="jxr_linenumber" name="3259" href="#3259">3259</a> <em class="jxr_javadoccomment">    }//getCard</em>
+<a class="jxr_linenumber" name="3260" href="#3260">3260</a> <em class="jxr_javadoccomment">}</em>
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

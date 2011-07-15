@@ -18,7 +18,7 @@
 <a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> java.util.ArrayList;
 <a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> java.util.Arrays;
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <strong class="jxr_keyword">import</strong> java.util.HashMap;
-<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.util.Hashtable;
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">import</strong> java.util.Map;
 <a class="jxr_linenumber" name="12" href="#12">12</a>  
 <a class="jxr_linenumber" name="13" href="#13">13</a>  <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;AbilityFactory_Animate class.&lt;/p&gt;</em>
@@ -136,7 +136,7 @@
 <a class="jxr_linenumber" name="126" href="#126">126</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String animateStackDescription(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
 <a class="jxr_linenumber" name="127" href="#127">127</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
 <a class="jxr_linenumber" name="128" href="#128">128</a>         <a href="../../../forge/Card.html">Card</a> host = af.getHostCard();
-<a class="jxr_linenumber" name="129" href="#129">129</a>         Hashtable&lt;String, String&gt; svars = host.getSVars();
+<a class="jxr_linenumber" name="129" href="#129">129</a>         Map&lt;String, String&gt; svars = host.getSVars();
 <a class="jxr_linenumber" name="130" href="#130">130</a> 
 <a class="jxr_linenumber" name="131" href="#131">131</a>         <strong class="jxr_keyword">int</strong> power = -1;
 <a class="jxr_linenumber" name="132" href="#132">132</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Power"</span>)) power = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Power"</span>), sa);
@@ -206,645 +206,649 @@
 <a class="jxr_linenumber" name="196" href="#196">196</a>         <em class="jxr_comment">//sb.append(triggers)</em>
 <a class="jxr_linenumber" name="197" href="#197">197</a>         <strong class="jxr_keyword">if</strong> (!permanent) {
 <a class="jxr_linenumber" name="198" href="#198">198</a>             <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"UntilEndOfCombat"</span>)) sb.append(<span class="jxr_string">" until end of combat."</span>);
-<a class="jxr_linenumber" name="199" href="#199">199</a>             <strong class="jxr_keyword">else</strong> sb.append(<span class="jxr_string">" until end of turn."</span>);
-<a class="jxr_linenumber" name="200" href="#200">200</a>         } <strong class="jxr_keyword">else</strong> sb.append(<span class="jxr_string">"."</span>);
-<a class="jxr_linenumber" name="201" href="#201">201</a> 
-<a class="jxr_linenumber" name="202" href="#202">202</a>         Ability_Sub abSub = sa.getSubAbility();
-<a class="jxr_linenumber" name="203" href="#203">203</a>         <strong class="jxr_keyword">if</strong> (abSub != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="204" href="#204">204</a>             sb.append(abSub.getStackDescription());
-<a class="jxr_linenumber" name="205" href="#205">205</a> 
-<a class="jxr_linenumber" name="206" href="#206">206</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="207" href="#207">207</a>     }<em class="jxr_comment">//end animateStackDescription()</em>
-<a class="jxr_linenumber" name="208" href="#208">208</a> 
-<a class="jxr_linenumber" name="209" href="#209">209</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="210" href="#210">210</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateCanPlayAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="216" href="#216">216</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateCanPlayAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="217" href="#217">217</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))
-<a class="jxr_linenumber" name="218" href="#218">218</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="219" href="#219">219</a> 
-<a class="jxr_linenumber" name="220" href="#220">220</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="221" href="#221">221</a>         <a href="../../../forge/card/spellability/Target.html">Target</a> tgt = af.getAbTgt();
-<a class="jxr_linenumber" name="222" href="#222">222</a>         <a href="../../../forge/Card.html">Card</a> source = sa.getSourceCard();
-<a class="jxr_linenumber" name="223" href="#223">223</a> 
-<a class="jxr_linenumber" name="224" href="#224">224</a>         <strong class="jxr_keyword">boolean</strong> useAbility = <strong class="jxr_keyword">true</strong>;
-<a class="jxr_linenumber" name="225" href="#225">225</a> 
-<a class="jxr_linenumber" name="226" href="#226">226</a>         <em class="jxr_comment">//TODO - add some kind of check to answer "Am I going to attack with this?"</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a>         <em class="jxr_comment">//TODO - add some kind of check for during human turn to answer "Can I use this to block something?"</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a> 
-<a class="jxr_linenumber" name="229" href="#229">229</a>         <em class="jxr_comment">//don't use instant speed animate abilities outside computers Combat_Begin step</em>
-<a class="jxr_linenumber" name="230" href="#230">230</a>         <strong class="jxr_keyword">if</strong> (!AllZone.getPhase().is(Constant.Phase.Combat_Begin) &amp;&amp; AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer())
-<a class="jxr_linenumber" name="231" href="#231">231</a>                 &amp;&amp; !AbilityFactory.isSorcerySpeed(sa) &amp;&amp; !params.containsKey(<span class="jxr_string">"ActivatingPhases"</span>)
-<a class="jxr_linenumber" name="232" href="#232">232</a>                 &amp;&amp; !params.containsKey(<span class="jxr_string">"Permanent"</span>))
-<a class="jxr_linenumber" name="233" href="#233">233</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="234" href="#234">234</a>         
-<a class="jxr_linenumber" name="235" href="#235">235</a>         <em class="jxr_comment">//don't use instant speed animate abilities outside humans Combat_Declare_Attackers_InstantAbility step</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a>         <strong class="jxr_keyword">if</strong> ((!AllZone.getPhase().is(Constant.Phase.Combat_Declare_Attackers_InstantAbility)
-<a class="jxr_linenumber" name="237" href="#237">237</a>         		|| AllZone.getCombat().getAttackers().length == 0)
-<a class="jxr_linenumber" name="238" href="#238">238</a>         		&amp;&amp; AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
-<a class="jxr_linenumber" name="239" href="#239">239</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="240" href="#240">240</a> 
-<a class="jxr_linenumber" name="241" href="#241">241</a>         <em class="jxr_comment">//don't activate during main2 unless this effect is permanent</em>
-<a class="jxr_linenumber" name="242" href="#242">242</a>         <strong class="jxr_keyword">if</strong> (AllZone.getPhase().is(Constant.Phase.Main2) &amp;&amp; !params.containsKey(<span class="jxr_string">"Permanent"</span>))
-<a class="jxr_linenumber" name="243" href="#243">243</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="244" href="#244">244</a> 
-<a class="jxr_linenumber" name="245" href="#245">245</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">null</strong> == tgt) {
-<a class="jxr_linenumber" name="246" href="#246">246</a>             ArrayList&lt;Card&gt; defined = AbilityFactory.getDefinedCards(source, params.get(<span class="jxr_string">"Defined"</span>), sa);
-<a class="jxr_linenumber" name="247" href="#247">247</a> 
-<a class="jxr_linenumber" name="248" href="#248">248</a>             <strong class="jxr_keyword">boolean</strong> bFlag = false;
-<a class="jxr_linenumber" name="249" href="#249">249</a>             <strong class="jxr_keyword">for</strong> (Card c : defined) {
-<a class="jxr_linenumber" name="250" href="#250">250</a>                 bFlag |= (!c.isCreature() &amp;&amp; !c.isTapped() &amp;&amp; !(c.getTurnInZone() == AllZone.getPhase().getTurn()));
-<a class="jxr_linenumber" name="251" href="#251">251</a>             }
-<a class="jxr_linenumber" name="252" href="#252">252</a> 
-<a class="jxr_linenumber" name="253" href="#253">253</a>             <strong class="jxr_keyword">if</strong> (!bFlag)    <em class="jxr_comment">// All of the defined stuff is animated, not very useful</em>
-<a class="jxr_linenumber" name="254" href="#254">254</a>                 <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="255" href="#255">255</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="256" href="#256">256</a>             tgt.resetTargets();
-<a class="jxr_linenumber" name="257" href="#257">257</a>             useAbility &amp;= animateTgtAI(af, sa);
-<a class="jxr_linenumber" name="258" href="#258">258</a>         }
-<a class="jxr_linenumber" name="259" href="#259">259</a> 
-<a class="jxr_linenumber" name="260" href="#260">260</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="261" href="#261">261</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="262" href="#262">262</a>             useAbility &amp;= subAb.chkAI_Drawback();
-<a class="jxr_linenumber" name="263" href="#263">263</a> 
-<a class="jxr_linenumber" name="264" href="#264">264</a>         <strong class="jxr_keyword">return</strong> useAbility;
-<a class="jxr_linenumber" name="265" href="#265">265</a>     }<em class="jxr_comment">// end animateCanPlayAI()</em>
-<a class="jxr_linenumber" name="266" href="#266">266</a> 
-<a class="jxr_linenumber" name="267" href="#267">267</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="268" href="#268">268</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animatePlayDrawbackAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="269" href="#269">269</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="270" href="#270">270</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="271" href="#271">271</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="274" href="#274">274</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animatePlayDrawbackAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="275" href="#275">275</a>         <em class="jxr_comment">// AI should only activate this during Human's turn</em>
-<a class="jxr_linenumber" name="276" href="#276">276</a>         <strong class="jxr_keyword">boolean</strong> chance = animateTgtAI(af, sa);
-<a class="jxr_linenumber" name="277" href="#277">277</a> 
-<a class="jxr_linenumber" name="278" href="#278">278</a>         <em class="jxr_comment">// TODO: restrict the subAbility a bit</em>
-<a class="jxr_linenumber" name="279" href="#279">279</a> 
-<a class="jxr_linenumber" name="280" href="#280">280</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="281" href="#281">281</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="282" href="#282">282</a>             chance &amp;= subAb.chkAI_Drawback();
-<a class="jxr_linenumber" name="283" href="#283">283</a> 
-<a class="jxr_linenumber" name="284" href="#284">284</a>         <strong class="jxr_keyword">return</strong> chance;
-<a class="jxr_linenumber" name="285" href="#285">285</a>     }
-<a class="jxr_linenumber" name="286" href="#286">286</a> 
-<a class="jxr_linenumber" name="287" href="#287">287</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="288" href="#288">288</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateTriggerAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="289" href="#289">289</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="290" href="#290">290</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="291" href="#291">291</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="292" href="#292">292</a> <em class="jxr_javadoccomment">     * @param mandatory a boolean.</em>
-<a class="jxr_linenumber" name="293" href="#293">293</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="294" href="#294">294</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="295" href="#295">295</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateTriggerAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa, <strong class="jxr_keyword">boolean</strong> mandatory) {
-<a class="jxr_linenumber" name="296" href="#296">296</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))    <em class="jxr_comment">// If there is a cost payment</em>
-<a class="jxr_linenumber" name="297" href="#297">297</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="298" href="#298">298</a> 
-<a class="jxr_linenumber" name="299" href="#299">299</a>         <strong class="jxr_keyword">boolean</strong> chance = animateTgtAI(af, sa);
-<a class="jxr_linenumber" name="300" href="#300">300</a> 
-<a class="jxr_linenumber" name="301" href="#301">301</a>         <em class="jxr_comment">// Improve AI for triggers. If source is a creature with:</em>
-<a class="jxr_linenumber" name="302" href="#302">302</a>         <em class="jxr_comment">// When ETB, sacrifice a creature. Check to see if the AI has something to sacrifice</em>
-<a class="jxr_linenumber" name="303" href="#303">303</a> 
-<a class="jxr_linenumber" name="304" href="#304">304</a>         <em class="jxr_comment">// Eventually, we can call the trigger of ETB abilities with not mandatory as part of the checks to cast something</em>
-<a class="jxr_linenumber" name="305" href="#305">305</a> 
+<a class="jxr_linenumber" name="199" href="#199">199</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(params.containsKey(<span class="jxr_string">"UntilHostLeavesPlay"</span>)) sb.append(<span class="jxr_string">" until "</span>).append(host).append(<span class="jxr_string">" leaves the battlefield."</span>);
+<a class="jxr_linenumber" name="200" href="#200">200</a>             <strong class="jxr_keyword">else</strong> sb.append(<span class="jxr_string">" until end of turn."</span>);
+<a class="jxr_linenumber" name="201" href="#201">201</a>         } <strong class="jxr_keyword">else</strong> sb.append(<span class="jxr_string">"."</span>);
+<a class="jxr_linenumber" name="202" href="#202">202</a> 
+<a class="jxr_linenumber" name="203" href="#203">203</a>         Ability_Sub abSub = sa.getSubAbility();
+<a class="jxr_linenumber" name="204" href="#204">204</a>         <strong class="jxr_keyword">if</strong> (abSub != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="205" href="#205">205</a>             sb.append(abSub.getStackDescription());
+<a class="jxr_linenumber" name="206" href="#206">206</a> 
+<a class="jxr_linenumber" name="207" href="#207">207</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="208" href="#208">208</a>     }<em class="jxr_comment">//end animateStackDescription()</em>
+<a class="jxr_linenumber" name="209" href="#209">209</a> 
+<a class="jxr_linenumber" name="210" href="#210">210</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="211" href="#211">211</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateCanPlayAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="212" href="#212">212</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="213" href="#213">213</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="214" href="#214">214</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="215" href="#215">215</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="216" href="#216">216</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="217" href="#217">217</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateCanPlayAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="218" href="#218">218</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))
+<a class="jxr_linenumber" name="219" href="#219">219</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="220" href="#220">220</a> 
+<a class="jxr_linenumber" name="221" href="#221">221</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="222" href="#222">222</a>         <a href="../../../forge/card/spellability/Target.html">Target</a> tgt = af.getAbTgt();
+<a class="jxr_linenumber" name="223" href="#223">223</a>         <a href="../../../forge/Card.html">Card</a> source = sa.getSourceCard();
+<a class="jxr_linenumber" name="224" href="#224">224</a> 
+<a class="jxr_linenumber" name="225" href="#225">225</a>         <strong class="jxr_keyword">boolean</strong> useAbility = <strong class="jxr_keyword">true</strong>;
+<a class="jxr_linenumber" name="226" href="#226">226</a> 
+<a class="jxr_linenumber" name="227" href="#227">227</a>         <em class="jxr_comment">//TODO - add some kind of check to answer "Am I going to attack with this?"</em>
+<a class="jxr_linenumber" name="228" href="#228">228</a>         <em class="jxr_comment">//TODO - add some kind of check for during human turn to answer "Can I use this to block something?"</em>
+<a class="jxr_linenumber" name="229" href="#229">229</a> 
+<a class="jxr_linenumber" name="230" href="#230">230</a>         <em class="jxr_comment">//don't use instant speed animate abilities outside computers Combat_Begin step</em>
+<a class="jxr_linenumber" name="231" href="#231">231</a>         <strong class="jxr_keyword">if</strong> (!AllZone.getPhase().is(Constant.Phase.Combat_Begin) &amp;&amp; AllZone.getPhase().isPlayerTurn(AllZone.getComputerPlayer())
+<a class="jxr_linenumber" name="232" href="#232">232</a>                 &amp;&amp; !AbilityFactory.isSorcerySpeed(sa) &amp;&amp; !params.containsKey(<span class="jxr_string">"ActivatingPhases"</span>)
+<a class="jxr_linenumber" name="233" href="#233">233</a>                 &amp;&amp; !params.containsKey(<span class="jxr_string">"Permanent"</span>))
+<a class="jxr_linenumber" name="234" href="#234">234</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="235" href="#235">235</a>         
+<a class="jxr_linenumber" name="236" href="#236">236</a>         <em class="jxr_comment">//don't use instant speed animate abilities outside humans Combat_Declare_Attackers_InstantAbility step</em>
+<a class="jxr_linenumber" name="237" href="#237">237</a>         <strong class="jxr_keyword">if</strong> ((!AllZone.getPhase().is(Constant.Phase.Combat_Declare_Attackers_InstantAbility)
+<a class="jxr_linenumber" name="238" href="#238">238</a>         		|| AllZone.getCombat().getAttackers().length == 0)
+<a class="jxr_linenumber" name="239" href="#239">239</a>         		&amp;&amp; AllZone.getPhase().isPlayerTurn(AllZone.getHumanPlayer()))
+<a class="jxr_linenumber" name="240" href="#240">240</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="241" href="#241">241</a> 
+<a class="jxr_linenumber" name="242" href="#242">242</a>         <em class="jxr_comment">//don't activate during main2 unless this effect is permanent</em>
+<a class="jxr_linenumber" name="243" href="#243">243</a>         <strong class="jxr_keyword">if</strong> (AllZone.getPhase().is(Constant.Phase.Main2) &amp;&amp; !params.containsKey(<span class="jxr_string">"Permanent"</span>))
+<a class="jxr_linenumber" name="244" href="#244">244</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="245" href="#245">245</a> 
+<a class="jxr_linenumber" name="246" href="#246">246</a>         <strong class="jxr_keyword">if</strong> (<strong class="jxr_keyword">null</strong> == tgt) {
+<a class="jxr_linenumber" name="247" href="#247">247</a>             ArrayList&lt;Card&gt; defined = AbilityFactory.getDefinedCards(source, params.get(<span class="jxr_string">"Defined"</span>), sa);
+<a class="jxr_linenumber" name="248" href="#248">248</a> 
+<a class="jxr_linenumber" name="249" href="#249">249</a>             <strong class="jxr_keyword">boolean</strong> bFlag = false;
+<a class="jxr_linenumber" name="250" href="#250">250</a>             <strong class="jxr_keyword">for</strong> (Card c : defined) {
+<a class="jxr_linenumber" name="251" href="#251">251</a>                 bFlag |= (!c.isCreature() &amp;&amp; !c.isTapped() &amp;&amp; !(c.getTurnInZone() == AllZone.getPhase().getTurn()));
+<a class="jxr_linenumber" name="252" href="#252">252</a>             }
+<a class="jxr_linenumber" name="253" href="#253">253</a> 
+<a class="jxr_linenumber" name="254" href="#254">254</a>             <strong class="jxr_keyword">if</strong> (!bFlag)    <em class="jxr_comment">// All of the defined stuff is animated, not very useful</em>
+<a class="jxr_linenumber" name="255" href="#255">255</a>                 <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="256" href="#256">256</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="257" href="#257">257</a>             tgt.resetTargets();
+<a class="jxr_linenumber" name="258" href="#258">258</a>             useAbility &amp;= animateTgtAI(af, sa);
+<a class="jxr_linenumber" name="259" href="#259">259</a>         }
+<a class="jxr_linenumber" name="260" href="#260">260</a> 
+<a class="jxr_linenumber" name="261" href="#261">261</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="262" href="#262">262</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="263" href="#263">263</a>             useAbility &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="264" href="#264">264</a> 
+<a class="jxr_linenumber" name="265" href="#265">265</a>         <strong class="jxr_keyword">return</strong> useAbility;
+<a class="jxr_linenumber" name="266" href="#266">266</a>     }<em class="jxr_comment">// end animateCanPlayAI()</em>
+<a class="jxr_linenumber" name="267" href="#267">267</a> 
+<a class="jxr_linenumber" name="268" href="#268">268</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="269" href="#269">269</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animatePlayDrawbackAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="270" href="#270">270</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="271" href="#271">271</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="274" href="#274">274</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="275" href="#275">275</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animatePlayDrawbackAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="276" href="#276">276</a>         <em class="jxr_comment">// AI should only activate this during Human's turn</em>
+<a class="jxr_linenumber" name="277" href="#277">277</a>         <strong class="jxr_keyword">boolean</strong> chance = animateTgtAI(af, sa);
+<a class="jxr_linenumber" name="278" href="#278">278</a> 
+<a class="jxr_linenumber" name="279" href="#279">279</a>         <em class="jxr_comment">// TODO: restrict the subAbility a bit</em>
+<a class="jxr_linenumber" name="280" href="#280">280</a> 
+<a class="jxr_linenumber" name="281" href="#281">281</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="282" href="#282">282</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="283" href="#283">283</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="284" href="#284">284</a> 
+<a class="jxr_linenumber" name="285" href="#285">285</a>         <strong class="jxr_keyword">return</strong> chance;
+<a class="jxr_linenumber" name="286" href="#286">286</a>     }
+<a class="jxr_linenumber" name="287" href="#287">287</a> 
+<a class="jxr_linenumber" name="288" href="#288">288</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="289" href="#289">289</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateTriggerAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="290" href="#290">290</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="291" href="#291">291</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="292" href="#292">292</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="293" href="#293">293</a> <em class="jxr_javadoccomment">     * @param mandatory a boolean.</em>
+<a class="jxr_linenumber" name="294" href="#294">294</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="295" href="#295">295</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="296" href="#296">296</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateTriggerAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa, <strong class="jxr_keyword">boolean</strong> mandatory) {
+<a class="jxr_linenumber" name="297" href="#297">297</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))    <em class="jxr_comment">// If there is a cost payment</em>
+<a class="jxr_linenumber" name="298" href="#298">298</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="299" href="#299">299</a> 
+<a class="jxr_linenumber" name="300" href="#300">300</a>         <strong class="jxr_keyword">boolean</strong> chance = animateTgtAI(af, sa);
+<a class="jxr_linenumber" name="301" href="#301">301</a> 
+<a class="jxr_linenumber" name="302" href="#302">302</a>         <em class="jxr_comment">// Improve AI for triggers. If source is a creature with:</em>
+<a class="jxr_linenumber" name="303" href="#303">303</a>         <em class="jxr_comment">// When ETB, sacrifice a creature. Check to see if the AI has something to sacrifice</em>
+<a class="jxr_linenumber" name="304" href="#304">304</a> 
+<a class="jxr_linenumber" name="305" href="#305">305</a>         <em class="jxr_comment">// Eventually, we can call the trigger of ETB abilities with not mandatory as part of the checks to cast something</em>
 <a class="jxr_linenumber" name="306" href="#306">306</a> 
-<a class="jxr_linenumber" name="307" href="#307">307</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="308" href="#308">308</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="309" href="#309">309</a>             chance &amp;= subAb.chkAI_Drawback();
-<a class="jxr_linenumber" name="310" href="#310">310</a> 
-<a class="jxr_linenumber" name="311" href="#311">311</a>         <strong class="jxr_keyword">return</strong> chance || mandatory;
-<a class="jxr_linenumber" name="312" href="#312">312</a>     }
-<a class="jxr_linenumber" name="313" href="#313">313</a> 
-<a class="jxr_linenumber" name="314" href="#314">314</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="315" href="#315">315</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateTgtAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="316" href="#316">316</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="317" href="#317">317</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="318" href="#318">318</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="319" href="#319">319</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="320" href="#320">320</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="321" href="#321">321</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateTgtAI(<a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="322" href="#322">322</a>         <em class="jxr_comment">//This is reasonable for now.  Kamahl, Fist of Krosa and a sorcery or two are the only things</em>
-<a class="jxr_linenumber" name="323" href="#323">323</a>         <em class="jxr_comment">//that animate a target.  Those can just use SVar:RemAIDeck:True until this can do a reasonably</em>
-<a class="jxr_linenumber" name="324" href="#324">324</a>         <em class="jxr_comment">//good job of picking a good target</em>
-<a class="jxr_linenumber" name="325" href="#325">325</a>         <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="326" href="#326">326</a>     }
-<a class="jxr_linenumber" name="327" href="#327">327</a> 
-<a class="jxr_linenumber" name="328" href="#328">328</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="329" href="#329">329</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateResolve.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="330" href="#330">330</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="331" href="#331">331</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="332" href="#332">332</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="333" href="#333">333</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="334" href="#334">334</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> animateResolve(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="335" href="#335">335</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="336" href="#336">336</a>         <a href="../../../forge/Card.html">Card</a> source = sa.getSourceCard();
-<a class="jxr_linenumber" name="337" href="#337">337</a>         <a href="../../../forge/Card.html">Card</a> host = af.getHostCard();
-<a class="jxr_linenumber" name="338" href="#338">338</a>         Hashtable&lt;String, String&gt; svars = host.getSVars();
-<a class="jxr_linenumber" name="339" href="#339">339</a> 
-<a class="jxr_linenumber" name="340" href="#340">340</a>         <em class="jxr_comment">//AF specific params</em>
-<a class="jxr_linenumber" name="341" href="#341">341</a>         <strong class="jxr_keyword">int</strong> power = -1;
-<a class="jxr_linenumber" name="342" href="#342">342</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Power"</span>)) power = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Power"</span>), sa);
-<a class="jxr_linenumber" name="343" href="#343">343</a>         <strong class="jxr_keyword">int</strong> toughness = -1;
-<a class="jxr_linenumber" name="344" href="#344">344</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Toughness"</span>))
-<a class="jxr_linenumber" name="345" href="#345">345</a>             toughness = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Toughness"</span>), sa);
-<a class="jxr_linenumber" name="346" href="#346">346</a> 
-<a class="jxr_linenumber" name="347" href="#347">347</a>         <strong class="jxr_keyword">boolean</strong> permanent = params.containsKey(<span class="jxr_string">"Permanent"</span>) ? <strong class="jxr_keyword">true</strong> : false;
-<a class="jxr_linenumber" name="348" href="#348">348</a> 
-<a class="jxr_linenumber" name="349" href="#349">349</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; types = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="350" href="#350">350</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Types"</span>)) types.addAll(Arrays.asList(params.get(<span class="jxr_string">"Types"</span>).split(<span class="jxr_string">","</span>)));
-<a class="jxr_linenumber" name="351" href="#351">351</a> 
-<a class="jxr_linenumber" name="352" href="#352">352</a>         <em class="jxr_comment">//allow ChosenType - overrides anything else specified</em>
-<a class="jxr_linenumber" name="353" href="#353">353</a>         <strong class="jxr_keyword">if</strong> (types.contains(<span class="jxr_string">"ChosenType"</span>)) {
-<a class="jxr_linenumber" name="354" href="#354">354</a>             types.clear();
-<a class="jxr_linenumber" name="355" href="#355">355</a>             types.add(host.getChosenType());
-<a class="jxr_linenumber" name="356" href="#356">356</a>         }
-<a class="jxr_linenumber" name="357" href="#357">357</a> 
-<a class="jxr_linenumber" name="358" href="#358">358</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; keywords = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="359" href="#359">359</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>)) keywords.addAll(Arrays.asList(params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">" &amp; "</span>)));
-<a class="jxr_linenumber" name="360" href="#360">360</a>         <em class="jxr_comment">//allow SVar substitution for keywords</em>
-<a class="jxr_linenumber" name="361" href="#361">361</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keywords.size(); i++) {
-<a class="jxr_linenumber" name="362" href="#362">362</a>             String k = keywords.get(i);
-<a class="jxr_linenumber" name="363" href="#363">363</a>             <strong class="jxr_keyword">if</strong> (svars.containsKey(k)) {
-<a class="jxr_linenumber" name="364" href="#364">364</a>                 keywords.add(svars.get(k));
-<a class="jxr_linenumber" name="365" href="#365">365</a>                 keywords.remove(k);
-<a class="jxr_linenumber" name="366" href="#366">366</a>             }
-<a class="jxr_linenumber" name="367" href="#367">367</a>         }
-<a class="jxr_linenumber" name="368" href="#368">368</a> 
-<a class="jxr_linenumber" name="369" href="#369">369</a>         <em class="jxr_comment">//colors to be added or changed to</em>
-<a class="jxr_linenumber" name="370" href="#370">370</a>         String tmpDesc = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="371" href="#371">371</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Colors"</span>)) {
-<a class="jxr_linenumber" name="372" href="#372">372</a>             String colors = params.get(<span class="jxr_string">"Colors"</span>);
-<a class="jxr_linenumber" name="373" href="#373">373</a>             <strong class="jxr_keyword">if</strong> (colors.equals(<span class="jxr_string">"ChosenColor"</span>)) {
-<a class="jxr_linenumber" name="374" href="#374">374</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(host.getChosenColor().split(<span class="jxr_string">","</span>))));
-<a class="jxr_linenumber" name="375" href="#375">375</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="376" href="#376">376</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(colors.split(<span class="jxr_string">","</span>))));
-<a class="jxr_linenumber" name="377" href="#377">377</a>             }
-<a class="jxr_linenumber" name="378" href="#378">378</a>         }
-<a class="jxr_linenumber" name="379" href="#379">379</a>         <strong class="jxr_keyword">final</strong> String finalDesc = tmpDesc;
-<a class="jxr_linenumber" name="380" href="#380">380</a> 
-<a class="jxr_linenumber" name="381" href="#381">381</a>         <em class="jxr_comment">//abilities to add to the animated being</em>
-<a class="jxr_linenumber" name="382" href="#382">382</a>         ArrayList&lt;String&gt; abilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="383" href="#383">383</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>)) abilities.addAll(Arrays.asList(params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>)));
-<a class="jxr_linenumber" name="384" href="#384">384</a> 
-<a class="jxr_linenumber" name="385" href="#385">385</a>         <em class="jxr_comment">//triggers to add to the animated being</em>
-<a class="jxr_linenumber" name="386" href="#386">386</a>         ArrayList&lt;String&gt; triggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="387" href="#387">387</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>)) triggers.addAll(Arrays.asList(params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>)));
-<a class="jxr_linenumber" name="388" href="#388">388</a> 
-<a class="jxr_linenumber" name="389" href="#389">389</a>         <a href="../../../forge/card/spellability/Target.html">Target</a> tgt = af.getAbTgt();
-<a class="jxr_linenumber" name="390" href="#390">390</a>         ArrayList&lt;Card&gt; tgts;
-<a class="jxr_linenumber" name="391" href="#391">391</a>         <strong class="jxr_keyword">if</strong> (tgt != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="392" href="#392">392</a>             tgts = tgt.getTargetCards();
-<a class="jxr_linenumber" name="393" href="#393">393</a>         <strong class="jxr_keyword">else</strong>
-<a class="jxr_linenumber" name="394" href="#394">394</a>             tgts = AbilityFactory.getDefinedCards(source, params.get(<span class="jxr_string">"Defined"</span>), sa);
-<a class="jxr_linenumber" name="395" href="#395">395</a> 
-<a class="jxr_linenumber" name="396" href="#396">396</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Card c : tgts) {
-<a class="jxr_linenumber" name="397" href="#397">397</a>             <em class="jxr_comment">//final ArrayList&lt;Card_Color&gt; originalColors = c.getColor();</em>
-<a class="jxr_linenumber" name="398" href="#398">398</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; originalTypes = c.getType();
-<a class="jxr_linenumber" name="399" href="#399">399</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origPower = c.getBaseAttack();
-<a class="jxr_linenumber" name="400" href="#400">400</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origToughness = c.getBaseDefense();
-<a class="jxr_linenumber" name="401" href="#401">401</a> 
-<a class="jxr_linenumber" name="402" href="#402">402</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
-<a class="jxr_linenumber" name="403" href="#403">403</a> 
-<a class="jxr_linenumber" name="404" href="#404">404</a>             <em class="jxr_comment">//give abilities</em>
-<a class="jxr_linenumber" name="405" href="#405">405</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;SpellAbility&gt; addedAbilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;SpellAbility&gt;();
-<a class="jxr_linenumber" name="406" href="#406">406</a>             <strong class="jxr_keyword">if</strong> (abilities.size() &gt; 0) {
-<a class="jxr_linenumber" name="407" href="#407">407</a>                 <strong class="jxr_keyword">for</strong> (String s : abilities) {
-<a class="jxr_linenumber" name="408" href="#408">408</a>                     <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> newAF = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
-<a class="jxr_linenumber" name="409" href="#409">409</a>                     String actualAbility = host.getSVar(s);
-<a class="jxr_linenumber" name="410" href="#410">410</a>                     <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = newAF.getAbility(actualAbility, c);
-<a class="jxr_linenumber" name="411" href="#411">411</a>                     addedAbilities.add(grantedAbility);
-<a class="jxr_linenumber" name="412" href="#412">412</a>                     c.addSpellAbility(grantedAbility);
-<a class="jxr_linenumber" name="413" href="#413">413</a>                 }
-<a class="jxr_linenumber" name="414" href="#414">414</a>             }
-<a class="jxr_linenumber" name="415" href="#415">415</a> 
-<a class="jxr_linenumber" name="416" href="#416">416</a>             <em class="jxr_comment">//Grant triggers</em>
-<a class="jxr_linenumber" name="417" href="#417">417</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;Trigger&gt; addedTriggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;Trigger&gt;();
-<a class="jxr_linenumber" name="418" href="#418">418</a>             <strong class="jxr_keyword">if</strong> (triggers.size() &gt; 0) {
-<a class="jxr_linenumber" name="419" href="#419">419</a>                 <strong class="jxr_keyword">for</strong> (String s : triggers) {
-<a class="jxr_linenumber" name="420" href="#420">420</a>                     String actualTrigger = host.getSVar(s);
-<a class="jxr_linenumber" name="421" href="#421">421</a>                     <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
-<a class="jxr_linenumber" name="422" href="#422">422</a>                     addedTriggers.add(c.addTrigger(parsedTrigger));
-<a class="jxr_linenumber" name="423" href="#423">423</a>                     AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
-<a class="jxr_linenumber" name="424" href="#424">424</a>                 }
-<a class="jxr_linenumber" name="425" href="#425">425</a>             }
-<a class="jxr_linenumber" name="426" href="#426">426</a> 
-<a class="jxr_linenumber" name="427" href="#427">427</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> unanimate = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
-<a class="jxr_linenumber" name="428" href="#428">428</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
-<a class="jxr_linenumber" name="429" href="#429">429</a> 
-<a class="jxr_linenumber" name="430" href="#430">430</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
-<a class="jxr_linenumber" name="431" href="#431">431</a>                     doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
-<a class="jxr_linenumber" name="432" href="#432">432</a>                 }
-<a class="jxr_linenumber" name="433" href="#433">433</a>             };
-<a class="jxr_linenumber" name="434" href="#434">434</a> 
-<a class="jxr_linenumber" name="435" href="#435">435</a>             <strong class="jxr_keyword">if</strong> (!permanent) {
-<a class="jxr_linenumber" name="436" href="#436">436</a>                 <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"UntilEndOfCombat"</span>)) AllZone.getEndOfCombat().addUntil(unanimate);
-<a class="jxr_linenumber" name="437" href="#437">437</a>                 <strong class="jxr_keyword">else</strong> AllZone.getEndOfTurn().addUntil(unanimate);
-<a class="jxr_linenumber" name="438" href="#438">438</a>             }
-<a class="jxr_linenumber" name="439" href="#439">439</a>         }
-<a class="jxr_linenumber" name="440" href="#440">440</a>     }<em class="jxr_comment">//animateResolve</em>
-<a class="jxr_linenumber" name="441" href="#441">441</a> 
-<a class="jxr_linenumber" name="442" href="#442">442</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="443" href="#443">443</a> <em class="jxr_javadoccomment">     * &lt;p&gt;doAnimate.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="444" href="#444">444</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="445" href="#445">445</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.Card} object.</em>
-<a class="jxr_linenumber" name="446" href="#446">446</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="447" href="#447">447</a> <em class="jxr_javadoccomment">     * @param power a int.</em>
-<a class="jxr_linenumber" name="448" href="#448">448</a> <em class="jxr_javadoccomment">     * @param toughness a int.</em>
-<a class="jxr_linenumber" name="449" href="#449">449</a> <em class="jxr_javadoccomment">     * @param types a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="450" href="#450">450</a> <em class="jxr_javadoccomment">     * @param colors a {@link java.lang.String} object.</em>
-<a class="jxr_linenumber" name="451" href="#451">451</a> <em class="jxr_javadoccomment">     * @param keywords a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="452" href="#452">452</a> <em class="jxr_javadoccomment">     * @return a long.</em>
-<a class="jxr_linenumber" name="453" href="#453">453</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="454" href="#454">454</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">long</strong> doAnimate(<a href="../../../forge/Card.html">Card</a> c, <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">int</strong> power, <strong class="jxr_keyword">int</strong> toughness, ArrayList&lt;String&gt; types, String colors, ArrayList&lt;String&gt; keywords) {
-<a class="jxr_linenumber" name="455" href="#455">455</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="456" href="#456">456</a>         <strong class="jxr_keyword">if</strong> (power != -1) c.setBaseAttack(power);
-<a class="jxr_linenumber" name="457" href="#457">457</a>         <strong class="jxr_keyword">if</strong> (toughness != -1) c.setBaseDefense(toughness);
-<a class="jxr_linenumber" name="458" href="#458">458</a> 
-<a class="jxr_linenumber" name="459" href="#459">459</a>         ArrayList&lt;String&gt; supertypes = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="460" href="#460">460</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"KeepSupertypes"</span>)) {
-<a class="jxr_linenumber" name="461" href="#461">461</a>             <strong class="jxr_keyword">for</strong> (String t : c.getType()) {
-<a class="jxr_linenumber" name="462" href="#462">462</a>                 <strong class="jxr_keyword">if</strong> (CardUtil.isASuperType(t)) supertypes.add(t);
-<a class="jxr_linenumber" name="463" href="#463">463</a>             }
-<a class="jxr_linenumber" name="464" href="#464">464</a>         }
-<a class="jxr_linenumber" name="465" href="#465">465</a>         ArrayList&lt;String&gt; cardtypes = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="466" href="#466">466</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"KeepCardTypes"</span>)) {
-<a class="jxr_linenumber" name="467" href="#467">467</a>             <strong class="jxr_keyword">for</strong> (String t : c.getType()) {
-<a class="jxr_linenumber" name="468" href="#468">468</a>                 <strong class="jxr_keyword">if</strong> (CardUtil.isACardType(t)) cardtypes.add(t);
-<a class="jxr_linenumber" name="469" href="#469">469</a>             }
-<a class="jxr_linenumber" name="470" href="#470">470</a>         }
-<a class="jxr_linenumber" name="471" href="#471">471</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"OverwriteTypes"</span>)) c.clearAllTypes();
-<a class="jxr_linenumber" name="472" href="#472">472</a>         types.addAll(supertypes);
-<a class="jxr_linenumber" name="473" href="#473">473</a>         types.addAll(cardtypes);
-<a class="jxr_linenumber" name="474" href="#474">474</a>         <strong class="jxr_keyword">for</strong> (String r : types) {
-<a class="jxr_linenumber" name="475" href="#475">475</a>             <em class="jxr_comment">// if the card doesn't have that type, add it</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a>             <strong class="jxr_keyword">if</strong> (!c.isType(r))
-<a class="jxr_linenumber" name="477" href="#477">477</a>                 c.addType(r);
-<a class="jxr_linenumber" name="478" href="#478">478</a>         }
-<a class="jxr_linenumber" name="479" href="#479">479</a>         <strong class="jxr_keyword">for</strong> (String k : keywords) {
-<a class="jxr_linenumber" name="480" href="#480">480</a>             <strong class="jxr_keyword">if</strong> (k.startsWith(<span class="jxr_string">"HIDDEN"</span>))
-<a class="jxr_linenumber" name="481" href="#481">481</a>                 c.addExtrinsicKeyword(k);
-<a class="jxr_linenumber" name="482" href="#482">482</a>                 <em class="jxr_comment">//this maybe should just blindly add since multiple instances of a keyword sometimes have effects</em>
-<a class="jxr_linenumber" name="483" href="#483">483</a>                 <em class="jxr_comment">//practically, this shouldn't matter though, and will display more cleanly</em>
-<a class="jxr_linenumber" name="484" href="#484">484</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (!c.getIntrinsicKeyword().contains(k) || CardUtil.isStackingKeyword(k))
-<a class="jxr_linenumber" name="485" href="#485">485</a>                 c.addIntrinsicKeyword(k);
-<a class="jxr_linenumber" name="486" href="#486">486</a>         }
-<a class="jxr_linenumber" name="487" href="#487">487</a> 
-<a class="jxr_linenumber" name="488" href="#488">488</a>         <strong class="jxr_keyword">long</strong> timestamp = c.addColor(colors, c, !params.containsKey(<span class="jxr_string">"OverwriteColors"</span>), <strong class="jxr_keyword">true</strong>);
-<a class="jxr_linenumber" name="489" href="#489">489</a>         <strong class="jxr_keyword">return</strong> timestamp;
-<a class="jxr_linenumber" name="490" href="#490">490</a>     }
+<a class="jxr_linenumber" name="307" href="#307">307</a> 
+<a class="jxr_linenumber" name="308" href="#308">308</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="309" href="#309">309</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="310" href="#310">310</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="311" href="#311">311</a> 
+<a class="jxr_linenumber" name="312" href="#312">312</a>         <strong class="jxr_keyword">return</strong> chance || mandatory;
+<a class="jxr_linenumber" name="313" href="#313">313</a>     }
+<a class="jxr_linenumber" name="314" href="#314">314</a> 
+<a class="jxr_linenumber" name="315" href="#315">315</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="316" href="#316">316</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateTgtAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="317" href="#317">317</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="318" href="#318">318</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="319" href="#319">319</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="320" href="#320">320</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="321" href="#321">321</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="322" href="#322">322</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateTgtAI(<a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="323" href="#323">323</a>         <em class="jxr_comment">//This is reasonable for now.  Kamahl, Fist of Krosa and a sorcery or two are the only things</em>
+<a class="jxr_linenumber" name="324" href="#324">324</a>         <em class="jxr_comment">//that animate a target.  Those can just use SVar:RemAIDeck:True until this can do a reasonably</em>
+<a class="jxr_linenumber" name="325" href="#325">325</a>         <em class="jxr_comment">//good job of picking a good target</em>
+<a class="jxr_linenumber" name="326" href="#326">326</a>         <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="327" href="#327">327</a>     }
+<a class="jxr_linenumber" name="328" href="#328">328</a> 
+<a class="jxr_linenumber" name="329" href="#329">329</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="330" href="#330">330</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateResolve.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="331" href="#331">331</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="332" href="#332">332</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="333" href="#333">333</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="334" href="#334">334</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="335" href="#335">335</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> animateResolve(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="336" href="#336">336</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="337" href="#337">337</a>         <a href="../../../forge/Card.html">Card</a> source = sa.getSourceCard();
+<a class="jxr_linenumber" name="338" href="#338">338</a>         <a href="../../../forge/Card.html">Card</a> host = af.getHostCard();
+<a class="jxr_linenumber" name="339" href="#339">339</a>         Map&lt;String, String&gt; svars = host.getSVars();
+<a class="jxr_linenumber" name="340" href="#340">340</a> 
+<a class="jxr_linenumber" name="341" href="#341">341</a>         <em class="jxr_comment">//AF specific params</em>
+<a class="jxr_linenumber" name="342" href="#342">342</a>         <strong class="jxr_keyword">int</strong> power = -1;
+<a class="jxr_linenumber" name="343" href="#343">343</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Power"</span>)) power = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Power"</span>), sa);
+<a class="jxr_linenumber" name="344" href="#344">344</a>         <strong class="jxr_keyword">int</strong> toughness = -1;
+<a class="jxr_linenumber" name="345" href="#345">345</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Toughness"</span>))
+<a class="jxr_linenumber" name="346" href="#346">346</a>             toughness = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Toughness"</span>), sa);
+<a class="jxr_linenumber" name="347" href="#347">347</a> 
+<a class="jxr_linenumber" name="348" href="#348">348</a>         <strong class="jxr_keyword">boolean</strong> permanent = params.containsKey(<span class="jxr_string">"Permanent"</span>) ? <strong class="jxr_keyword">true</strong> : false;
+<a class="jxr_linenumber" name="349" href="#349">349</a> 
+<a class="jxr_linenumber" name="350" href="#350">350</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; types = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="351" href="#351">351</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Types"</span>)) types.addAll(Arrays.asList(params.get(<span class="jxr_string">"Types"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="352" href="#352">352</a> 
+<a class="jxr_linenumber" name="353" href="#353">353</a>         <em class="jxr_comment">//allow ChosenType - overrides anything else specified</em>
+<a class="jxr_linenumber" name="354" href="#354">354</a>         <strong class="jxr_keyword">if</strong> (types.contains(<span class="jxr_string">"ChosenType"</span>)) {
+<a class="jxr_linenumber" name="355" href="#355">355</a>             types.clear();
+<a class="jxr_linenumber" name="356" href="#356">356</a>             types.add(host.getChosenType());
+<a class="jxr_linenumber" name="357" href="#357">357</a>         }
+<a class="jxr_linenumber" name="358" href="#358">358</a> 
+<a class="jxr_linenumber" name="359" href="#359">359</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; keywords = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="360" href="#360">360</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>)) keywords.addAll(Arrays.asList(params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">" &amp; "</span>)));
+<a class="jxr_linenumber" name="361" href="#361">361</a>         <em class="jxr_comment">//allow SVar substitution for keywords</em>
+<a class="jxr_linenumber" name="362" href="#362">362</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keywords.size(); i++) {
+<a class="jxr_linenumber" name="363" href="#363">363</a>             String k = keywords.get(i);
+<a class="jxr_linenumber" name="364" href="#364">364</a>             <strong class="jxr_keyword">if</strong> (svars.containsKey(k)) {
+<a class="jxr_linenumber" name="365" href="#365">365</a>                 keywords.add(svars.get(k));
+<a class="jxr_linenumber" name="366" href="#366">366</a>                 keywords.remove(k);
+<a class="jxr_linenumber" name="367" href="#367">367</a>             }
+<a class="jxr_linenumber" name="368" href="#368">368</a>         }
+<a class="jxr_linenumber" name="369" href="#369">369</a> 
+<a class="jxr_linenumber" name="370" href="#370">370</a>         <em class="jxr_comment">//colors to be added or changed to</em>
+<a class="jxr_linenumber" name="371" href="#371">371</a>         String tmpDesc = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="372" href="#372">372</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Colors"</span>)) {
+<a class="jxr_linenumber" name="373" href="#373">373</a>             String colors = params.get(<span class="jxr_string">"Colors"</span>);
+<a class="jxr_linenumber" name="374" href="#374">374</a>             <strong class="jxr_keyword">if</strong> (colors.equals(<span class="jxr_string">"ChosenColor"</span>)) {
+<a class="jxr_linenumber" name="375" href="#375">375</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(host.getChosenColor().split(<span class="jxr_string">","</span>))));
+<a class="jxr_linenumber" name="376" href="#376">376</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="377" href="#377">377</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(colors.split(<span class="jxr_string">","</span>))));
+<a class="jxr_linenumber" name="378" href="#378">378</a>             }
+<a class="jxr_linenumber" name="379" href="#379">379</a>         }
+<a class="jxr_linenumber" name="380" href="#380">380</a>         <strong class="jxr_keyword">final</strong> String finalDesc = tmpDesc;
+<a class="jxr_linenumber" name="381" href="#381">381</a> 
+<a class="jxr_linenumber" name="382" href="#382">382</a>         <em class="jxr_comment">//abilities to add to the animated being</em>
+<a class="jxr_linenumber" name="383" href="#383">383</a>         ArrayList&lt;String&gt; abilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="384" href="#384">384</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>)) abilities.addAll(Arrays.asList(params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="385" href="#385">385</a> 
+<a class="jxr_linenumber" name="386" href="#386">386</a>         <em class="jxr_comment">//triggers to add to the animated being</em>
+<a class="jxr_linenumber" name="387" href="#387">387</a>         ArrayList&lt;String&gt; triggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="388" href="#388">388</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>)) triggers.addAll(Arrays.asList(params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="389" href="#389">389</a> 
+<a class="jxr_linenumber" name="390" href="#390">390</a>         <a href="../../../forge/card/spellability/Target.html">Target</a> tgt = af.getAbTgt();
+<a class="jxr_linenumber" name="391" href="#391">391</a>         ArrayList&lt;Card&gt; tgts;
+<a class="jxr_linenumber" name="392" href="#392">392</a>         <strong class="jxr_keyword">if</strong> (tgt != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="393" href="#393">393</a>             tgts = tgt.getTargetCards();
+<a class="jxr_linenumber" name="394" href="#394">394</a>         <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="395" href="#395">395</a>             tgts = AbilityFactory.getDefinedCards(source, params.get(<span class="jxr_string">"Defined"</span>), sa);
+<a class="jxr_linenumber" name="396" href="#396">396</a> 
+<a class="jxr_linenumber" name="397" href="#397">397</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Card c : tgts) {
+<a class="jxr_linenumber" name="398" href="#398">398</a>             <em class="jxr_comment">//final ArrayList&lt;Card_Color&gt; originalColors = c.getColor();</em>
+<a class="jxr_linenumber" name="399" href="#399">399</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; originalTypes = c.getType();
+<a class="jxr_linenumber" name="400" href="#400">400</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origPower = c.getBaseAttack();
+<a class="jxr_linenumber" name="401" href="#401">401</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origToughness = c.getBaseDefense();
+<a class="jxr_linenumber" name="402" href="#402">402</a> 
+<a class="jxr_linenumber" name="403" href="#403">403</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
+<a class="jxr_linenumber" name="404" href="#404">404</a> 
+<a class="jxr_linenumber" name="405" href="#405">405</a>             <em class="jxr_comment">//give abilities</em>
+<a class="jxr_linenumber" name="406" href="#406">406</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;SpellAbility&gt; addedAbilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;SpellAbility&gt;();
+<a class="jxr_linenumber" name="407" href="#407">407</a>             <strong class="jxr_keyword">if</strong> (abilities.size() &gt; 0) {
+<a class="jxr_linenumber" name="408" href="#408">408</a>                 <strong class="jxr_keyword">for</strong> (String s : abilities) {
+<a class="jxr_linenumber" name="409" href="#409">409</a>                     <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> newAF = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
+<a class="jxr_linenumber" name="410" href="#410">410</a>                     String actualAbility = host.getSVar(s);
+<a class="jxr_linenumber" name="411" href="#411">411</a>                     <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = newAF.getAbility(actualAbility, c);
+<a class="jxr_linenumber" name="412" href="#412">412</a>                     addedAbilities.add(grantedAbility);
+<a class="jxr_linenumber" name="413" href="#413">413</a>                     c.addSpellAbility(grantedAbility);
+<a class="jxr_linenumber" name="414" href="#414">414</a>                 }
+<a class="jxr_linenumber" name="415" href="#415">415</a>             }
+<a class="jxr_linenumber" name="416" href="#416">416</a> 
+<a class="jxr_linenumber" name="417" href="#417">417</a>             <em class="jxr_comment">//Grant triggers</em>
+<a class="jxr_linenumber" name="418" href="#418">418</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;Trigger&gt; addedTriggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;Trigger&gt;();
+<a class="jxr_linenumber" name="419" href="#419">419</a>             <strong class="jxr_keyword">if</strong> (triggers.size() &gt; 0) {
+<a class="jxr_linenumber" name="420" href="#420">420</a>                 <strong class="jxr_keyword">for</strong> (String s : triggers) {
+<a class="jxr_linenumber" name="421" href="#421">421</a>                     String actualTrigger = host.getSVar(s);
+<a class="jxr_linenumber" name="422" href="#422">422</a>                     <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
+<a class="jxr_linenumber" name="423" href="#423">423</a>                     addedTriggers.add(c.addTrigger(parsedTrigger));
+<a class="jxr_linenumber" name="424" href="#424">424</a>                     AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
+<a class="jxr_linenumber" name="425" href="#425">425</a>                 }
+<a class="jxr_linenumber" name="426" href="#426">426</a>             }
+<a class="jxr_linenumber" name="427" href="#427">427</a> 
+<a class="jxr_linenumber" name="428" href="#428">428</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> unanimate = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
+<a class="jxr_linenumber" name="429" href="#429">429</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
+<a class="jxr_linenumber" name="430" href="#430">430</a> 
+<a class="jxr_linenumber" name="431" href="#431">431</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
+<a class="jxr_linenumber" name="432" href="#432">432</a>                     doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+<a class="jxr_linenumber" name="433" href="#433">433</a>                 }
+<a class="jxr_linenumber" name="434" href="#434">434</a>             };
+<a class="jxr_linenumber" name="435" href="#435">435</a> 
+<a class="jxr_linenumber" name="436" href="#436">436</a>             <strong class="jxr_keyword">if</strong> (!permanent) {
+<a class="jxr_linenumber" name="437" href="#437">437</a>                 <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"UntilEndOfCombat"</span>)) AllZone.getEndOfCombat().addUntil(unanimate);
+<a class="jxr_linenumber" name="438" href="#438">438</a>                 <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong>(params.containsKey(<span class="jxr_string">"UntilHostLeavesPlay"</span>)) {
+<a class="jxr_linenumber" name="439" href="#439">439</a>                 	host.addLeavesPlayCommand(unanimate);
+<a class="jxr_linenumber" name="440" href="#440">440</a>                 }
+<a class="jxr_linenumber" name="441" href="#441">441</a>                 <strong class="jxr_keyword">else</strong> AllZone.getEndOfTurn().addUntil(unanimate);
+<a class="jxr_linenumber" name="442" href="#442">442</a>             }
+<a class="jxr_linenumber" name="443" href="#443">443</a>         }
+<a class="jxr_linenumber" name="444" href="#444">444</a>     }<em class="jxr_comment">//animateResolve</em>
+<a class="jxr_linenumber" name="445" href="#445">445</a> 
+<a class="jxr_linenumber" name="446" href="#446">446</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="447" href="#447">447</a> <em class="jxr_javadoccomment">     * &lt;p&gt;doAnimate.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="448" href="#448">448</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="449" href="#449">449</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.Card} object.</em>
+<a class="jxr_linenumber" name="450" href="#450">450</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="451" href="#451">451</a> <em class="jxr_javadoccomment">     * @param power a int.</em>
+<a class="jxr_linenumber" name="452" href="#452">452</a> <em class="jxr_javadoccomment">     * @param toughness a int.</em>
+<a class="jxr_linenumber" name="453" href="#453">453</a> <em class="jxr_javadoccomment">     * @param types a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="454" href="#454">454</a> <em class="jxr_javadoccomment">     * @param colors a {@link java.lang.String} object.</em>
+<a class="jxr_linenumber" name="455" href="#455">455</a> <em class="jxr_javadoccomment">     * @param keywords a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="456" href="#456">456</a> <em class="jxr_javadoccomment">     * @return a long.</em>
+<a class="jxr_linenumber" name="457" href="#457">457</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="458" href="#458">458</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">long</strong> doAnimate(<a href="../../../forge/Card.html">Card</a> c, <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">int</strong> power, <strong class="jxr_keyword">int</strong> toughness, ArrayList&lt;String&gt; types, String colors, ArrayList&lt;String&gt; keywords) {
+<a class="jxr_linenumber" name="459" href="#459">459</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="460" href="#460">460</a>         <strong class="jxr_keyword">if</strong> (power != -1) c.setBaseAttack(power);
+<a class="jxr_linenumber" name="461" href="#461">461</a>         <strong class="jxr_keyword">if</strong> (toughness != -1) c.setBaseDefense(toughness);
+<a class="jxr_linenumber" name="462" href="#462">462</a> 
+<a class="jxr_linenumber" name="463" href="#463">463</a>         ArrayList&lt;String&gt; supertypes = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="464" href="#464">464</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"KeepSupertypes"</span>)) {
+<a class="jxr_linenumber" name="465" href="#465">465</a>             <strong class="jxr_keyword">for</strong> (String t : c.getType()) {
+<a class="jxr_linenumber" name="466" href="#466">466</a>                 <strong class="jxr_keyword">if</strong> (CardUtil.isASuperType(t)) supertypes.add(t);
+<a class="jxr_linenumber" name="467" href="#467">467</a>             }
+<a class="jxr_linenumber" name="468" href="#468">468</a>         }
+<a class="jxr_linenumber" name="469" href="#469">469</a>         ArrayList&lt;String&gt; cardtypes = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="470" href="#470">470</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"KeepCardTypes"</span>)) {
+<a class="jxr_linenumber" name="471" href="#471">471</a>             <strong class="jxr_keyword">for</strong> (String t : c.getType()) {
+<a class="jxr_linenumber" name="472" href="#472">472</a>                 <strong class="jxr_keyword">if</strong> (CardUtil.isACardType(t)) cardtypes.add(t);
+<a class="jxr_linenumber" name="473" href="#473">473</a>             }
+<a class="jxr_linenumber" name="474" href="#474">474</a>         }
+<a class="jxr_linenumber" name="475" href="#475">475</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"OverwriteTypes"</span>)) c.clearAllTypes();
+<a class="jxr_linenumber" name="476" href="#476">476</a>         types.addAll(supertypes);
+<a class="jxr_linenumber" name="477" href="#477">477</a>         types.addAll(cardtypes);
+<a class="jxr_linenumber" name="478" href="#478">478</a>         <strong class="jxr_keyword">for</strong> (String r : types) {
+<a class="jxr_linenumber" name="479" href="#479">479</a>             <em class="jxr_comment">// if the card doesn't have that type, add it</em>
+<a class="jxr_linenumber" name="480" href="#480">480</a>             <strong class="jxr_keyword">if</strong> (!c.isType(r))
+<a class="jxr_linenumber" name="481" href="#481">481</a>                 c.addType(r);
+<a class="jxr_linenumber" name="482" href="#482">482</a>         }
+<a class="jxr_linenumber" name="483" href="#483">483</a>         <strong class="jxr_keyword">for</strong> (String k : keywords) {
+<a class="jxr_linenumber" name="484" href="#484">484</a>             <strong class="jxr_keyword">if</strong> (k.startsWith(<span class="jxr_string">"HIDDEN"</span>))
+<a class="jxr_linenumber" name="485" href="#485">485</a>                 c.addExtrinsicKeyword(k);
+<a class="jxr_linenumber" name="486" href="#486">486</a>                 <em class="jxr_comment">//this maybe should just blindly add since multiple instances of a keyword sometimes have effects</em>
+<a class="jxr_linenumber" name="487" href="#487">487</a>                 <em class="jxr_comment">//practically, this shouldn't matter though, and will display more cleanly</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a>             <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (!c.getIntrinsicKeyword().contains(k) || CardUtil.isStackingKeyword(k))
+<a class="jxr_linenumber" name="489" href="#489">489</a>                 c.addIntrinsicKeyword(k);
+<a class="jxr_linenumber" name="490" href="#490">490</a>         }
 <a class="jxr_linenumber" name="491" href="#491">491</a> 
-<a class="jxr_linenumber" name="492" href="#492">492</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="493" href="#493">493</a> <em class="jxr_javadoccomment">     * &lt;p&gt;doUnanimate.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="494" href="#494">494</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="495" href="#495">495</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.Card} object.</em>
-<a class="jxr_linenumber" name="496" href="#496">496</a> <em class="jxr_javadoccomment">     * @param originalPower a int.</em>
-<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_javadoccomment">     * @param originalToughness a int.</em>
-<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_javadoccomment">     * @param originalTypes a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="499" href="#499">499</a> <em class="jxr_javadoccomment">     * @param colorDesc a {@link java.lang.String} object.</em>
-<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_javadoccomment">     * @param originalKeywords a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     * @param addedAbilities a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     * @param addedTriggers a {@link java.util.ArrayList} object.</em>
-<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     * @param timestamp a long.</em>
-<a class="jxr_linenumber" name="504" href="#504">504</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="505" href="#505">505</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> doUnanimate(<a href="../../../forge/Card.html">Card</a> c, <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">int</strong> originalPower, <strong class="jxr_keyword">int</strong> originalToughness, ArrayList&lt;String&gt; originalTypes, String colorDesc, ArrayList&lt;String&gt; originalKeywords, ArrayList&lt;SpellAbility&gt; addedAbilities, ArrayList&lt;Trigger&gt; addedTriggers, <strong class="jxr_keyword">long</strong> timestamp) {
-<a class="jxr_linenumber" name="506" href="#506">506</a>     	HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="507" href="#507">507</a>     	
-<a class="jxr_linenumber" name="508" href="#508">508</a>     	c.setBaseAttack(originalPower);
-<a class="jxr_linenumber" name="509" href="#509">509</a>         c.setBaseDefense(originalToughness);
-<a class="jxr_linenumber" name="510" href="#510">510</a> 
-<a class="jxr_linenumber" name="511" href="#511">511</a>         c.clearAllTypes();
-<a class="jxr_linenumber" name="512" href="#512">512</a>         <strong class="jxr_keyword">for</strong> (String type : originalTypes) {
-<a class="jxr_linenumber" name="513" href="#513">513</a>             c.addType(type);
-<a class="jxr_linenumber" name="514" href="#514">514</a>         }
-<a class="jxr_linenumber" name="515" href="#515">515</a> 
-<a class="jxr_linenumber" name="516" href="#516">516</a>         c.removeColor(colorDesc, c, !params.containsKey(<span class="jxr_string">"OverwriteColors"</span>), timestamp);
-<a class="jxr_linenumber" name="517" href="#517">517</a> 
-<a class="jxr_linenumber" name="518" href="#518">518</a>         <strong class="jxr_keyword">for</strong> (String k : originalKeywords) {
-<a class="jxr_linenumber" name="519" href="#519">519</a>             <strong class="jxr_keyword">if</strong> (k.startsWith(<span class="jxr_string">"HIDDEN"</span>))
-<a class="jxr_linenumber" name="520" href="#520">520</a>                 c.removeExtrinsicKeyword(k);
-<a class="jxr_linenumber" name="521" href="#521">521</a>             <em class="jxr_comment">//TODO - may want to look at saving off intrinsic and extrinsic separately and add back that way</em>
-<a class="jxr_linenumber" name="522" href="#522">522</a>             c.removeIntrinsicKeyword(k);
-<a class="jxr_linenumber" name="523" href="#523">523</a>         }
-<a class="jxr_linenumber" name="524" href="#524">524</a> 
-<a class="jxr_linenumber" name="525" href="#525">525</a>         <strong class="jxr_keyword">for</strong> (SpellAbility sa : addedAbilities) {
-<a class="jxr_linenumber" name="526" href="#526">526</a>             c.removeSpellAbility(sa);
+<a class="jxr_linenumber" name="492" href="#492">492</a>         <strong class="jxr_keyword">long</strong> timestamp = c.addColor(colors, c, !params.containsKey(<span class="jxr_string">"OverwriteColors"</span>), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="493" href="#493">493</a>         <strong class="jxr_keyword">return</strong> timestamp;
+<a class="jxr_linenumber" name="494" href="#494">494</a>     }
+<a class="jxr_linenumber" name="495" href="#495">495</a> 
+<a class="jxr_linenumber" name="496" href="#496">496</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_javadoccomment">     * &lt;p&gt;doUnanimate.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="499" href="#499">499</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.Card} object.</em>
+<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_javadoccomment">     * @param originalPower a int.</em>
+<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_javadoccomment">     * @param originalToughness a int.</em>
+<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_javadoccomment">     * @param originalTypes a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="503" href="#503">503</a> <em class="jxr_javadoccomment">     * @param colorDesc a {@link java.lang.String} object.</em>
+<a class="jxr_linenumber" name="504" href="#504">504</a> <em class="jxr_javadoccomment">     * @param originalKeywords a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="505" href="#505">505</a> <em class="jxr_javadoccomment">     * @param addedAbilities a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="506" href="#506">506</a> <em class="jxr_javadoccomment">     * @param addedTriggers a {@link java.util.ArrayList} object.</em>
+<a class="jxr_linenumber" name="507" href="#507">507</a> <em class="jxr_javadoccomment">     * @param timestamp a long.</em>
+<a class="jxr_linenumber" name="508" href="#508">508</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="509" href="#509">509</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> doUnanimate(<a href="../../../forge/Card.html">Card</a> c, <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">int</strong> originalPower, <strong class="jxr_keyword">int</strong> originalToughness, ArrayList&lt;String&gt; originalTypes, String colorDesc, ArrayList&lt;String&gt; originalKeywords, ArrayList&lt;SpellAbility&gt; addedAbilities, ArrayList&lt;Trigger&gt; addedTriggers, <strong class="jxr_keyword">long</strong> timestamp) {
+<a class="jxr_linenumber" name="510" href="#510">510</a>     	HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="511" href="#511">511</a>     	
+<a class="jxr_linenumber" name="512" href="#512">512</a>     	c.setBaseAttack(originalPower);
+<a class="jxr_linenumber" name="513" href="#513">513</a>         c.setBaseDefense(originalToughness);
+<a class="jxr_linenumber" name="514" href="#514">514</a> 
+<a class="jxr_linenumber" name="515" href="#515">515</a>         c.clearAllTypes();
+<a class="jxr_linenumber" name="516" href="#516">516</a>         <strong class="jxr_keyword">for</strong> (String type : originalTypes) {
+<a class="jxr_linenumber" name="517" href="#517">517</a>             c.addType(type);
+<a class="jxr_linenumber" name="518" href="#518">518</a>         }
+<a class="jxr_linenumber" name="519" href="#519">519</a> 
+<a class="jxr_linenumber" name="520" href="#520">520</a>         c.removeColor(colorDesc, c, !params.containsKey(<span class="jxr_string">"OverwriteColors"</span>), timestamp);
+<a class="jxr_linenumber" name="521" href="#521">521</a> 
+<a class="jxr_linenumber" name="522" href="#522">522</a>         <strong class="jxr_keyword">for</strong> (String k : originalKeywords) {
+<a class="jxr_linenumber" name="523" href="#523">523</a>             <strong class="jxr_keyword">if</strong> (k.startsWith(<span class="jxr_string">"HIDDEN"</span>))
+<a class="jxr_linenumber" name="524" href="#524">524</a>                 c.removeExtrinsicKeyword(k);
+<a class="jxr_linenumber" name="525" href="#525">525</a>             <em class="jxr_comment">//TODO - may want to look at saving off intrinsic and extrinsic separately and add back that way</em>
+<a class="jxr_linenumber" name="526" href="#526">526</a>             c.removeIntrinsicKeyword(k);
 <a class="jxr_linenumber" name="527" href="#527">527</a>         }
 <a class="jxr_linenumber" name="528" href="#528">528</a> 
-<a class="jxr_linenumber" name="529" href="#529">529</a>         <strong class="jxr_keyword">for</strong> (Trigger t : addedTriggers) {
-<a class="jxr_linenumber" name="530" href="#530">530</a>             AllZone.getTriggerHandler().removeRegisteredTrigger(t);
-<a class="jxr_linenumber" name="531" href="#531">531</a>             c.removeTrigger(t);
-<a class="jxr_linenumber" name="532" href="#532">532</a>         }
-<a class="jxr_linenumber" name="533" href="#533">533</a> 
-<a class="jxr_linenumber" name="534" href="#534">534</a>         <em class="jxr_comment">//any other unanimate cleanup</em>
-<a class="jxr_linenumber" name="535" href="#535">535</a>         <strong class="jxr_keyword">if</strong> (!c.isCreature()) c.unEquipAllCards();
-<a class="jxr_linenumber" name="536" href="#536">536</a>     }
+<a class="jxr_linenumber" name="529" href="#529">529</a>         <strong class="jxr_keyword">for</strong> (SpellAbility sa : addedAbilities) {
+<a class="jxr_linenumber" name="530" href="#530">530</a>             c.removeSpellAbility(sa);
+<a class="jxr_linenumber" name="531" href="#531">531</a>         }
+<a class="jxr_linenumber" name="532" href="#532">532</a> 
+<a class="jxr_linenumber" name="533" href="#533">533</a>         <strong class="jxr_keyword">for</strong> (Trigger t : addedTriggers) {
+<a class="jxr_linenumber" name="534" href="#534">534</a>             AllZone.getTriggerHandler().removeRegisteredTrigger(t);
+<a class="jxr_linenumber" name="535" href="#535">535</a>             c.removeTrigger(t);
+<a class="jxr_linenumber" name="536" href="#536">536</a>         }
 <a class="jxr_linenumber" name="537" href="#537">537</a> 
-<a class="jxr_linenumber" name="538" href="#538">538</a>     /<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************************************************************</em>
-<a class="jxr_linenumber" name="539" href="#539">539</a> <em class="jxr_javadoccomment">    // ************************ AnimateAll *************************</em>
-<a class="jxr_linenumber" name="540" href="#540">540</a> <em class="jxr_javadoccomment">    //**************************************************************</em>
+<a class="jxr_linenumber" name="538" href="#538">538</a>         <em class="jxr_comment">//any other unanimate cleanup</em>
+<a class="jxr_linenumber" name="539" href="#539">539</a>         <strong class="jxr_keyword">if</strong> (!c.isCreature()) c.unEquipAllCards();
+<a class="jxr_linenumber" name="540" href="#540">540</a>     }
 <a class="jxr_linenumber" name="541" href="#541">541</a> 
-<a class="jxr_linenumber" name="542" href="#542">542</a> <em class="jxr_javadoccomment">    /**</em>
-<a class="jxr_linenumber" name="543" href="#543">543</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createAbilityAnimateAll.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="544" href="#544">544</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="545" href="#545">545</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="546" href="#546">546</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="547" href="#547">547</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="548" href="#548">548</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createAbilityAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
-<a class="jxr_linenumber" name="549" href="#549">549</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> abAnimateAll = <strong class="jxr_keyword">new</strong> Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
-<a class="jxr_linenumber" name="550" href="#550">550</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -4969632476557290609L;
-<a class="jxr_linenumber" name="551" href="#551">551</a> 
-<a class="jxr_linenumber" name="552" href="#552">552</a>             @Override
-<a class="jxr_linenumber" name="553" href="#553">553</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
-<a class="jxr_linenumber" name="554" href="#554">554</a>                 <strong class="jxr_keyword">return</strong> animateAllCanPlayAI(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="555" href="#555">555</a>             }
-<a class="jxr_linenumber" name="556" href="#556">556</a> 
-<a class="jxr_linenumber" name="557" href="#557">557</a>             @Override
-<a class="jxr_linenumber" name="558" href="#558">558</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="559" href="#559">559</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="560" href="#560">560</a>             }
-<a class="jxr_linenumber" name="561" href="#561">561</a> 
-<a class="jxr_linenumber" name="562" href="#562">562</a>             @Override
-<a class="jxr_linenumber" name="563" href="#563">563</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
-<a class="jxr_linenumber" name="564" href="#564">564</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="565" href="#565">565</a>             }
-<a class="jxr_linenumber" name="566" href="#566">566</a> 
-<a class="jxr_linenumber" name="567" href="#567">567</a>             @Override
-<a class="jxr_linenumber" name="568" href="#568">568</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> doTrigger(<strong class="jxr_keyword">boolean</strong> mandatory) {
-<a class="jxr_linenumber" name="569" href="#569">569</a>                 <strong class="jxr_keyword">return</strong> animateAllTriggerAI(af, <strong class="jxr_keyword">this</strong>, mandatory);
-<a class="jxr_linenumber" name="570" href="#570">570</a>             }
-<a class="jxr_linenumber" name="571" href="#571">571</a>         };
-<a class="jxr_linenumber" name="572" href="#572">572</a>         <strong class="jxr_keyword">return</strong> abAnimateAll;
-<a class="jxr_linenumber" name="573" href="#573">573</a>     }
-<a class="jxr_linenumber" name="574" href="#574">574</a> 
-<a class="jxr_linenumber" name="575" href="#575">575</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="576" href="#576">576</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createSpellAnimateAll.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="577" href="#577">577</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="578" href="#578">578</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="579" href="#579">579</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="580" href="#580">580</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="581" href="#581">581</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createSpellAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
-<a class="jxr_linenumber" name="582" href="#582">582</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spAnimateAll = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
-<a class="jxr_linenumber" name="583" href="#583">583</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 2946847609068706237L;
-<a class="jxr_linenumber" name="584" href="#584">584</a> 
-<a class="jxr_linenumber" name="585" href="#585">585</a>             @Override
-<a class="jxr_linenumber" name="586" href="#586">586</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
-<a class="jxr_linenumber" name="587" href="#587">587</a>                 <strong class="jxr_keyword">return</strong> animateAllCanPlayAI(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="588" href="#588">588</a>             }
-<a class="jxr_linenumber" name="589" href="#589">589</a> 
-<a class="jxr_linenumber" name="590" href="#590">590</a>             @Override
-<a class="jxr_linenumber" name="591" href="#591">591</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="592" href="#592">592</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="593" href="#593">593</a>             }
-<a class="jxr_linenumber" name="594" href="#594">594</a> 
-<a class="jxr_linenumber" name="595" href="#595">595</a>             @Override
-<a class="jxr_linenumber" name="596" href="#596">596</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
-<a class="jxr_linenumber" name="597" href="#597">597</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="598" href="#598">598</a>             }
-<a class="jxr_linenumber" name="599" href="#599">599</a>         };
-<a class="jxr_linenumber" name="600" href="#600">600</a>         <strong class="jxr_keyword">return</strong> spAnimateAll;
-<a class="jxr_linenumber" name="601" href="#601">601</a>     }
-<a class="jxr_linenumber" name="602" href="#602">602</a> 
-<a class="jxr_linenumber" name="603" href="#603">603</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="604" href="#604">604</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createDrawbackAnimateAll.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="605" href="#605">605</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="606" href="#606">606</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="607" href="#607">607</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="609" href="#609">609</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createDrawbackAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
-<a class="jxr_linenumber" name="610" href="#610">610</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> dbAnimateAll = <strong class="jxr_keyword">new</strong> Ability_Sub(af.getHostCard(), af.getAbTgt()) {
-<a class="jxr_linenumber" name="611" href="#611">611</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 2056843302051205632L;
-<a class="jxr_linenumber" name="612" href="#612">612</a> 
-<a class="jxr_linenumber" name="613" href="#613">613</a>             @Override
-<a class="jxr_linenumber" name="614" href="#614">614</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="615" href="#615">615</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="616" href="#616">616</a>             }
-<a class="jxr_linenumber" name="617" href="#617">617</a> 
-<a class="jxr_linenumber" name="618" href="#618">618</a>             @Override
-<a class="jxr_linenumber" name="619" href="#619">619</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> chkAI_Drawback() {
-<a class="jxr_linenumber" name="620" href="#620">620</a>                 <strong class="jxr_keyword">return</strong> animateAllPlayDrawbackAI(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="621" href="#621">621</a>             }
-<a class="jxr_linenumber" name="622" href="#622">622</a> 
-<a class="jxr_linenumber" name="623" href="#623">623</a>             @Override
-<a class="jxr_linenumber" name="624" href="#624">624</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
-<a class="jxr_linenumber" name="625" href="#625">625</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
-<a class="jxr_linenumber" name="626" href="#626">626</a>             }
-<a class="jxr_linenumber" name="627" href="#627">627</a> 
-<a class="jxr_linenumber" name="628" href="#628">628</a>             @Override
-<a class="jxr_linenumber" name="629" href="#629">629</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> doTrigger(<strong class="jxr_keyword">boolean</strong> mandatory) {
-<a class="jxr_linenumber" name="630" href="#630">630</a>                 <strong class="jxr_keyword">return</strong> animateAllTriggerAI(af, <strong class="jxr_keyword">this</strong>, mandatory);
-<a class="jxr_linenumber" name="631" href="#631">631</a>             }
-<a class="jxr_linenumber" name="632" href="#632">632</a>         };
-<a class="jxr_linenumber" name="633" href="#633">633</a>         <strong class="jxr_keyword">return</strong> dbAnimateAll;
-<a class="jxr_linenumber" name="634" href="#634">634</a>     }
-<a class="jxr_linenumber" name="635" href="#635">635</a> 
-<a class="jxr_linenumber" name="636" href="#636">636</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="637" href="#637">637</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllStackDescription.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="638" href="#638">638</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="639" href="#639">639</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="640" href="#640">640</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="641" href="#641">641</a> <em class="jxr_javadoccomment">     * @return a {@link java.lang.String} object.</em>
-<a class="jxr_linenumber" name="642" href="#642">642</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="643" href="#643">643</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String animateAllStackDescription(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="644" href="#644">644</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="645" href="#645">645</a> 
-<a class="jxr_linenumber" name="646" href="#646">646</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="647" href="#647">647</a> 
-<a class="jxr_linenumber" name="648" href="#648">648</a>         <strong class="jxr_keyword">if</strong> (sa instanceof Ability_Sub)
-<a class="jxr_linenumber" name="649" href="#649">649</a>             sb.append(<span class="jxr_string">" "</span>);
-<a class="jxr_linenumber" name="650" href="#650">650</a>         <strong class="jxr_keyword">else</strong>
-<a class="jxr_linenumber" name="651" href="#651">651</a>             sb.append(sa.getSourceCard()).append(<span class="jxr_string">" - "</span>);
-<a class="jxr_linenumber" name="652" href="#652">652</a> 
-<a class="jxr_linenumber" name="653" href="#653">653</a>         String desc = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="654" href="#654">654</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"SpellDescription"</span>)) {
-<a class="jxr_linenumber" name="655" href="#655">655</a>             desc = params.get(<span class="jxr_string">"SpellDescription"</span>);
-<a class="jxr_linenumber" name="656" href="#656">656</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="657" href="#657">657</a>             desc = <span class="jxr_string">"Animate all valid cards."</span>;
-<a class="jxr_linenumber" name="658" href="#658">658</a>         }
-<a class="jxr_linenumber" name="659" href="#659">659</a> 
-<a class="jxr_linenumber" name="660" href="#660">660</a>         sb.append(desc);
-<a class="jxr_linenumber" name="661" href="#661">661</a> 
-<a class="jxr_linenumber" name="662" href="#662">662</a>         Ability_Sub abSub = sa.getSubAbility();
-<a class="jxr_linenumber" name="663" href="#663">663</a>         <strong class="jxr_keyword">if</strong> (abSub != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="664" href="#664">664</a>             sb.append(abSub.getStackDescription());
+<a class="jxr_linenumber" name="542" href="#542">542</a>     /<em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment">************************************************************</em>
+<a class="jxr_linenumber" name="543" href="#543">543</a> <em class="jxr_javadoccomment">    // ************************ AnimateAll *************************</em>
+<a class="jxr_linenumber" name="544" href="#544">544</a> <em class="jxr_javadoccomment">    //**************************************************************</em>
+<a class="jxr_linenumber" name="545" href="#545">545</a> 
+<a class="jxr_linenumber" name="546" href="#546">546</a> <em class="jxr_javadoccomment">    /**</em>
+<a class="jxr_linenumber" name="547" href="#547">547</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createAbilityAnimateAll.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="548" href="#548">548</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="549" href="#549">549</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="550" href="#550">550</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="551" href="#551">551</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="552" href="#552">552</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createAbilityAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
+<a class="jxr_linenumber" name="553" href="#553">553</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> abAnimateAll = <strong class="jxr_keyword">new</strong> Ability_Activated(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
+<a class="jxr_linenumber" name="554" href="#554">554</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -4969632476557290609L;
+<a class="jxr_linenumber" name="555" href="#555">555</a> 
+<a class="jxr_linenumber" name="556" href="#556">556</a>             @Override
+<a class="jxr_linenumber" name="557" href="#557">557</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
+<a class="jxr_linenumber" name="558" href="#558">558</a>                 <strong class="jxr_keyword">return</strong> animateAllCanPlayAI(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="559" href="#559">559</a>             }
+<a class="jxr_linenumber" name="560" href="#560">560</a> 
+<a class="jxr_linenumber" name="561" href="#561">561</a>             @Override
+<a class="jxr_linenumber" name="562" href="#562">562</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="563" href="#563">563</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="564" href="#564">564</a>             }
+<a class="jxr_linenumber" name="565" href="#565">565</a> 
+<a class="jxr_linenumber" name="566" href="#566">566</a>             @Override
+<a class="jxr_linenumber" name="567" href="#567">567</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
+<a class="jxr_linenumber" name="568" href="#568">568</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="569" href="#569">569</a>             }
+<a class="jxr_linenumber" name="570" href="#570">570</a> 
+<a class="jxr_linenumber" name="571" href="#571">571</a>             @Override
+<a class="jxr_linenumber" name="572" href="#572">572</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> doTrigger(<strong class="jxr_keyword">boolean</strong> mandatory) {
+<a class="jxr_linenumber" name="573" href="#573">573</a>                 <strong class="jxr_keyword">return</strong> animateAllTriggerAI(af, <strong class="jxr_keyword">this</strong>, mandatory);
+<a class="jxr_linenumber" name="574" href="#574">574</a>             }
+<a class="jxr_linenumber" name="575" href="#575">575</a>         };
+<a class="jxr_linenumber" name="576" href="#576">576</a>         <strong class="jxr_keyword">return</strong> abAnimateAll;
+<a class="jxr_linenumber" name="577" href="#577">577</a>     }
+<a class="jxr_linenumber" name="578" href="#578">578</a> 
+<a class="jxr_linenumber" name="579" href="#579">579</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="580" href="#580">580</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createSpellAnimateAll.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="581" href="#581">581</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="582" href="#582">582</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="583" href="#583">583</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="584" href="#584">584</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="585" href="#585">585</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createSpellAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
+<a class="jxr_linenumber" name="586" href="#586">586</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> spAnimateAll = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/spellability/Spell.html">Spell</a>(af.getHostCard(), af.getAbCost(), af.getAbTgt()) {
+<a class="jxr_linenumber" name="587" href="#587">587</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 2946847609068706237L;
+<a class="jxr_linenumber" name="588" href="#588">588</a> 
+<a class="jxr_linenumber" name="589" href="#589">589</a>             @Override
+<a class="jxr_linenumber" name="590" href="#590">590</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> canPlayAI() {
+<a class="jxr_linenumber" name="591" href="#591">591</a>                 <strong class="jxr_keyword">return</strong> animateAllCanPlayAI(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="592" href="#592">592</a>             }
+<a class="jxr_linenumber" name="593" href="#593">593</a> 
+<a class="jxr_linenumber" name="594" href="#594">594</a>             @Override
+<a class="jxr_linenumber" name="595" href="#595">595</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="596" href="#596">596</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="597" href="#597">597</a>             }
+<a class="jxr_linenumber" name="598" href="#598">598</a> 
+<a class="jxr_linenumber" name="599" href="#599">599</a>             @Override
+<a class="jxr_linenumber" name="600" href="#600">600</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
+<a class="jxr_linenumber" name="601" href="#601">601</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="602" href="#602">602</a>             }
+<a class="jxr_linenumber" name="603" href="#603">603</a>         };
+<a class="jxr_linenumber" name="604" href="#604">604</a>         <strong class="jxr_keyword">return</strong> spAnimateAll;
+<a class="jxr_linenumber" name="605" href="#605">605</a>     }
+<a class="jxr_linenumber" name="606" href="#606">606</a> 
+<a class="jxr_linenumber" name="607" href="#607">607</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="608" href="#608">608</a> <em class="jxr_javadoccomment">     * &lt;p&gt;createDrawbackAnimateAll.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="609" href="#609">609</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="610" href="#610">610</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="611" href="#611">611</a> <em class="jxr_javadoccomment">     * @return a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="612" href="#612">612</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="613" href="#613">613</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> createDrawbackAnimateAll(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af) {
+<a class="jxr_linenumber" name="614" href="#614">614</a>         <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> dbAnimateAll = <strong class="jxr_keyword">new</strong> Ability_Sub(af.getHostCard(), af.getAbTgt()) {
+<a class="jxr_linenumber" name="615" href="#615">615</a>             <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = 2056843302051205632L;
+<a class="jxr_linenumber" name="616" href="#616">616</a> 
+<a class="jxr_linenumber" name="617" href="#617">617</a>             @Override
+<a class="jxr_linenumber" name="618" href="#618">618</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="619" href="#619">619</a>                 animateAllResolve(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="620" href="#620">620</a>             }
+<a class="jxr_linenumber" name="621" href="#621">621</a> 
+<a class="jxr_linenumber" name="622" href="#622">622</a>             @Override
+<a class="jxr_linenumber" name="623" href="#623">623</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> chkAI_Drawback() {
+<a class="jxr_linenumber" name="624" href="#624">624</a>                 <strong class="jxr_keyword">return</strong> animateAllPlayDrawbackAI(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="625" href="#625">625</a>             }
+<a class="jxr_linenumber" name="626" href="#626">626</a> 
+<a class="jxr_linenumber" name="627" href="#627">627</a>             @Override
+<a class="jxr_linenumber" name="628" href="#628">628</a>             <strong class="jxr_keyword">public</strong> String getStackDescription() {
+<a class="jxr_linenumber" name="629" href="#629">629</a>                 <strong class="jxr_keyword">return</strong> animateAllStackDescription(af, <strong class="jxr_keyword">this</strong>);
+<a class="jxr_linenumber" name="630" href="#630">630</a>             }
+<a class="jxr_linenumber" name="631" href="#631">631</a> 
+<a class="jxr_linenumber" name="632" href="#632">632</a>             @Override
+<a class="jxr_linenumber" name="633" href="#633">633</a>             <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">boolean</strong> doTrigger(<strong class="jxr_keyword">boolean</strong> mandatory) {
+<a class="jxr_linenumber" name="634" href="#634">634</a>                 <strong class="jxr_keyword">return</strong> animateAllTriggerAI(af, <strong class="jxr_keyword">this</strong>, mandatory);
+<a class="jxr_linenumber" name="635" href="#635">635</a>             }
+<a class="jxr_linenumber" name="636" href="#636">636</a>         };
+<a class="jxr_linenumber" name="637" href="#637">637</a>         <strong class="jxr_keyword">return</strong> dbAnimateAll;
+<a class="jxr_linenumber" name="638" href="#638">638</a>     }
+<a class="jxr_linenumber" name="639" href="#639">639</a> 
+<a class="jxr_linenumber" name="640" href="#640">640</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="641" href="#641">641</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllStackDescription.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="642" href="#642">642</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="643" href="#643">643</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="644" href="#644">644</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="645" href="#645">645</a> <em class="jxr_javadoccomment">     * @return a {@link java.lang.String} object.</em>
+<a class="jxr_linenumber" name="646" href="#646">646</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="647" href="#647">647</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> String animateAllStackDescription(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="648" href="#648">648</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="649" href="#649">649</a> 
+<a class="jxr_linenumber" name="650" href="#650">650</a>         StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="651" href="#651">651</a> 
+<a class="jxr_linenumber" name="652" href="#652">652</a>         <strong class="jxr_keyword">if</strong> (sa instanceof Ability_Sub)
+<a class="jxr_linenumber" name="653" href="#653">653</a>             sb.append(<span class="jxr_string">" "</span>);
+<a class="jxr_linenumber" name="654" href="#654">654</a>         <strong class="jxr_keyword">else</strong>
+<a class="jxr_linenumber" name="655" href="#655">655</a>             sb.append(sa.getSourceCard()).append(<span class="jxr_string">" - "</span>);
+<a class="jxr_linenumber" name="656" href="#656">656</a> 
+<a class="jxr_linenumber" name="657" href="#657">657</a>         String desc = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="658" href="#658">658</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"SpellDescription"</span>)) {
+<a class="jxr_linenumber" name="659" href="#659">659</a>             desc = params.get(<span class="jxr_string">"SpellDescription"</span>);
+<a class="jxr_linenumber" name="660" href="#660">660</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="661" href="#661">661</a>             desc = <span class="jxr_string">"Animate all valid cards."</span>;
+<a class="jxr_linenumber" name="662" href="#662">662</a>         }
+<a class="jxr_linenumber" name="663" href="#663">663</a> 
+<a class="jxr_linenumber" name="664" href="#664">664</a>         sb.append(desc);
 <a class="jxr_linenumber" name="665" href="#665">665</a> 
-<a class="jxr_linenumber" name="666" href="#666">666</a>         <strong class="jxr_keyword">return</strong> sb.toString();
-<a class="jxr_linenumber" name="667" href="#667">667</a>     }
-<a class="jxr_linenumber" name="668" href="#668">668</a> 
-<a class="jxr_linenumber" name="669" href="#669">669</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="670" href="#670">670</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllCanPlayAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="671" href="#671">671</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="672" href="#672">672</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="673" href="#673">673</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="674" href="#674">674</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="675" href="#675">675</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="676" href="#676">676</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllCanPlayAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="677" href="#677">677</a>         <strong class="jxr_keyword">boolean</strong> useAbility = false;
-<a class="jxr_linenumber" name="678" href="#678">678</a> 
-<a class="jxr_linenumber" name="679" href="#679">679</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="680" href="#680">680</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="681" href="#681">681</a>             useAbility &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="666" href="#666">666</a>         Ability_Sub abSub = sa.getSubAbility();
+<a class="jxr_linenumber" name="667" href="#667">667</a>         <strong class="jxr_keyword">if</strong> (abSub != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="668" href="#668">668</a>             sb.append(abSub.getStackDescription());
+<a class="jxr_linenumber" name="669" href="#669">669</a> 
+<a class="jxr_linenumber" name="670" href="#670">670</a>         <strong class="jxr_keyword">return</strong> sb.toString();
+<a class="jxr_linenumber" name="671" href="#671">671</a>     }
+<a class="jxr_linenumber" name="672" href="#672">672</a> 
+<a class="jxr_linenumber" name="673" href="#673">673</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="674" href="#674">674</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllCanPlayAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="675" href="#675">675</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="676" href="#676">676</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="677" href="#677">677</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="678" href="#678">678</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="679" href="#679">679</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="680" href="#680">680</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllCanPlayAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="681" href="#681">681</a>         <strong class="jxr_keyword">boolean</strong> useAbility = false;
 <a class="jxr_linenumber" name="682" href="#682">682</a> 
-<a class="jxr_linenumber" name="683" href="#683">683</a>         <strong class="jxr_keyword">return</strong> useAbility;
-<a class="jxr_linenumber" name="684" href="#684">684</a>     }<em class="jxr_comment">// end animateAllCanPlayAI()</em>
-<a class="jxr_linenumber" name="685" href="#685">685</a> 
-<a class="jxr_linenumber" name="686" href="#686">686</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="687" href="#687">687</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllPlayDrawbackAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="688" href="#688">688</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="689" href="#689">689</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="690" href="#690">690</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="691" href="#691">691</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="692" href="#692">692</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="693" href="#693">693</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllPlayDrawbackAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="694" href="#694">694</a>         <strong class="jxr_keyword">boolean</strong> chance = false;
-<a class="jxr_linenumber" name="695" href="#695">695</a> 
-<a class="jxr_linenumber" name="696" href="#696">696</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="697" href="#697">697</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="698" href="#698">698</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="683" href="#683">683</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="684" href="#684">684</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="685" href="#685">685</a>             useAbility &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="686" href="#686">686</a> 
+<a class="jxr_linenumber" name="687" href="#687">687</a>         <strong class="jxr_keyword">return</strong> useAbility;
+<a class="jxr_linenumber" name="688" href="#688">688</a>     }<em class="jxr_comment">// end animateAllCanPlayAI()</em>
+<a class="jxr_linenumber" name="689" href="#689">689</a> 
+<a class="jxr_linenumber" name="690" href="#690">690</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="691" href="#691">691</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllPlayDrawbackAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="692" href="#692">692</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="693" href="#693">693</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="694" href="#694">694</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="695" href="#695">695</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="696" href="#696">696</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="697" href="#697">697</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllPlayDrawbackAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="698" href="#698">698</a>         <strong class="jxr_keyword">boolean</strong> chance = false;
 <a class="jxr_linenumber" name="699" href="#699">699</a> 
-<a class="jxr_linenumber" name="700" href="#700">700</a>         <strong class="jxr_keyword">return</strong> chance;
-<a class="jxr_linenumber" name="701" href="#701">701</a>     }
-<a class="jxr_linenumber" name="702" href="#702">702</a> 
-<a class="jxr_linenumber" name="703" href="#703">703</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="704" href="#704">704</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllTriggerAI.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="705" href="#705">705</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="706" href="#706">706</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="707" href="#707">707</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="708" href="#708">708</a> <em class="jxr_javadoccomment">     * @param mandatory a boolean.</em>
-<a class="jxr_linenumber" name="709" href="#709">709</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
-<a class="jxr_linenumber" name="710" href="#710">710</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="711" href="#711">711</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllTriggerAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa, <strong class="jxr_keyword">boolean</strong> mandatory) {
-<a class="jxr_linenumber" name="712" href="#712">712</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))    <em class="jxr_comment">// If there is a cost payment</em>
-<a class="jxr_linenumber" name="713" href="#713">713</a>             <strong class="jxr_keyword">return</strong> false;
-<a class="jxr_linenumber" name="714" href="#714">714</a> 
-<a class="jxr_linenumber" name="715" href="#715">715</a>         <strong class="jxr_keyword">boolean</strong> chance = false;
-<a class="jxr_linenumber" name="716" href="#716">716</a> 
-<a class="jxr_linenumber" name="717" href="#717">717</a>         Ability_Sub subAb = sa.getSubAbility();
-<a class="jxr_linenumber" name="718" href="#718">718</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
-<a class="jxr_linenumber" name="719" href="#719">719</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="700" href="#700">700</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="701" href="#701">701</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="702" href="#702">702</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="703" href="#703">703</a> 
+<a class="jxr_linenumber" name="704" href="#704">704</a>         <strong class="jxr_keyword">return</strong> chance;
+<a class="jxr_linenumber" name="705" href="#705">705</a>     }
+<a class="jxr_linenumber" name="706" href="#706">706</a> 
+<a class="jxr_linenumber" name="707" href="#707">707</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="708" href="#708">708</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllTriggerAI.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="709" href="#709">709</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="710" href="#710">710</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="711" href="#711">711</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="712" href="#712">712</a> <em class="jxr_javadoccomment">     * @param mandatory a boolean.</em>
+<a class="jxr_linenumber" name="713" href="#713">713</a> <em class="jxr_javadoccomment">     * @return a boolean.</em>
+<a class="jxr_linenumber" name="714" href="#714">714</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="715" href="#715">715</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">boolean</strong> animateAllTriggerAI(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa, <strong class="jxr_keyword">boolean</strong> mandatory) {
+<a class="jxr_linenumber" name="716" href="#716">716</a>         <strong class="jxr_keyword">if</strong> (!ComputerUtil.canPayCost(sa))    <em class="jxr_comment">// If there is a cost payment</em>
+<a class="jxr_linenumber" name="717" href="#717">717</a>             <strong class="jxr_keyword">return</strong> false;
+<a class="jxr_linenumber" name="718" href="#718">718</a> 
+<a class="jxr_linenumber" name="719" href="#719">719</a>         <strong class="jxr_keyword">boolean</strong> chance = false;
 <a class="jxr_linenumber" name="720" href="#720">720</a> 
-<a class="jxr_linenumber" name="721" href="#721">721</a>         <strong class="jxr_keyword">return</strong> chance || mandatory;
-<a class="jxr_linenumber" name="722" href="#722">722</a>     }
-<a class="jxr_linenumber" name="723" href="#723">723</a> 
-<a class="jxr_linenumber" name="724" href="#724">724</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="725" href="#725">725</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllResolve.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="726" href="#726">726</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="727" href="#727">727</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
-<a class="jxr_linenumber" name="728" href="#728">728</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
-<a class="jxr_linenumber" name="729" href="#729">729</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="730" href="#730">730</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> animateAllResolve(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
-<a class="jxr_linenumber" name="731" href="#731">731</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
-<a class="jxr_linenumber" name="732" href="#732">732</a>         <a href="../../../forge/Card.html">Card</a> host = af.getHostCard();
-<a class="jxr_linenumber" name="733" href="#733">733</a>         Hashtable&lt;String, String&gt; svars = host.getSVars();
-<a class="jxr_linenumber" name="734" href="#734">734</a> 
-<a class="jxr_linenumber" name="735" href="#735">735</a>         <em class="jxr_comment">//AF specific params</em>
-<a class="jxr_linenumber" name="736" href="#736">736</a>         <strong class="jxr_keyword">int</strong> power = -1;
-<a class="jxr_linenumber" name="737" href="#737">737</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Power"</span>)) power = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Power"</span>), sa);
-<a class="jxr_linenumber" name="738" href="#738">738</a>         <strong class="jxr_keyword">int</strong> toughness = -1;
-<a class="jxr_linenumber" name="739" href="#739">739</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Toughness"</span>))
-<a class="jxr_linenumber" name="740" href="#740">740</a>             toughness = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Toughness"</span>), sa);
-<a class="jxr_linenumber" name="741" href="#741">741</a> 
-<a class="jxr_linenumber" name="742" href="#742">742</a>         <strong class="jxr_keyword">boolean</strong> permanent = params.containsKey(<span class="jxr_string">"Permanent"</span>) ? <strong class="jxr_keyword">true</strong> : false;
-<a class="jxr_linenumber" name="743" href="#743">743</a> 
-<a class="jxr_linenumber" name="744" href="#744">744</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; types = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="745" href="#745">745</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Types"</span>)) types.addAll(Arrays.asList(params.get(<span class="jxr_string">"Types"</span>).split(<span class="jxr_string">","</span>)));
-<a class="jxr_linenumber" name="746" href="#746">746</a> 
-<a class="jxr_linenumber" name="747" href="#747">747</a>         <em class="jxr_comment">//allow ChosenType - overrides anything else specified</em>
-<a class="jxr_linenumber" name="748" href="#748">748</a>         <strong class="jxr_keyword">if</strong> (types.contains(<span class="jxr_string">"ChosenType"</span>)) {
-<a class="jxr_linenumber" name="749" href="#749">749</a>             types.clear();
-<a class="jxr_linenumber" name="750" href="#750">750</a>             types.add(host.getChosenType());
-<a class="jxr_linenumber" name="751" href="#751">751</a>         }
-<a class="jxr_linenumber" name="752" href="#752">752</a> 
-<a class="jxr_linenumber" name="753" href="#753">753</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; keywords = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="754" href="#754">754</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>)) keywords.addAll(Arrays.asList(params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">" &amp; "</span>)));
-<a class="jxr_linenumber" name="755" href="#755">755</a>         <em class="jxr_comment">//allow SVar substitution for keywords</em>
-<a class="jxr_linenumber" name="756" href="#756">756</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keywords.size(); i++) {
-<a class="jxr_linenumber" name="757" href="#757">757</a>             String k = keywords.get(i);
-<a class="jxr_linenumber" name="758" href="#758">758</a>             <strong class="jxr_keyword">if</strong> (svars.containsKey(k)) {
-<a class="jxr_linenumber" name="759" href="#759">759</a>                 keywords.add(svars.get(k));
-<a class="jxr_linenumber" name="760" href="#760">760</a>                 keywords.remove(k);
-<a class="jxr_linenumber" name="761" href="#761">761</a>             }
-<a class="jxr_linenumber" name="762" href="#762">762</a>         }
-<a class="jxr_linenumber" name="763" href="#763">763</a> 
-<a class="jxr_linenumber" name="764" href="#764">764</a>         <em class="jxr_comment">//colors to be added or changed to</em>
-<a class="jxr_linenumber" name="765" href="#765">765</a>         String tmpDesc = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="766" href="#766">766</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Colors"</span>)) {
-<a class="jxr_linenumber" name="767" href="#767">767</a>             String colors = params.get(<span class="jxr_string">"Colors"</span>);
-<a class="jxr_linenumber" name="768" href="#768">768</a>             <strong class="jxr_keyword">if</strong> (colors.equals(<span class="jxr_string">"ChosenColor"</span>)) {
-<a class="jxr_linenumber" name="769" href="#769">769</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(host.getChosenColor().split(<span class="jxr_string">","</span>))));
-<a class="jxr_linenumber" name="770" href="#770">770</a>             } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="771" href="#771">771</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(colors.split(<span class="jxr_string">","</span>))));
-<a class="jxr_linenumber" name="772" href="#772">772</a>             }
-<a class="jxr_linenumber" name="773" href="#773">773</a>         }
-<a class="jxr_linenumber" name="774" href="#774">774</a>         <strong class="jxr_keyword">final</strong> String finalDesc = tmpDesc;
-<a class="jxr_linenumber" name="775" href="#775">775</a> 
-<a class="jxr_linenumber" name="776" href="#776">776</a>         <em class="jxr_comment">//abilities to add to the animated being</em>
-<a class="jxr_linenumber" name="777" href="#777">777</a>         ArrayList&lt;String&gt; abilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="778" href="#778">778</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>)) abilities.addAll(Arrays.asList(params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="721" href="#721">721</a>         Ability_Sub subAb = sa.getSubAbility();
+<a class="jxr_linenumber" name="722" href="#722">722</a>         <strong class="jxr_keyword">if</strong> (subAb != <strong class="jxr_keyword">null</strong>)
+<a class="jxr_linenumber" name="723" href="#723">723</a>             chance &amp;= subAb.chkAI_Drawback();
+<a class="jxr_linenumber" name="724" href="#724">724</a> 
+<a class="jxr_linenumber" name="725" href="#725">725</a>         <strong class="jxr_keyword">return</strong> chance || mandatory;
+<a class="jxr_linenumber" name="726" href="#726">726</a>     }
+<a class="jxr_linenumber" name="727" href="#727">727</a> 
+<a class="jxr_linenumber" name="728" href="#728">728</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="729" href="#729">729</a> <em class="jxr_javadoccomment">     * &lt;p&gt;animateAllResolve.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="730" href="#730">730</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="731" href="#731">731</a> <em class="jxr_javadoccomment">     * @param af a {@link forge.card.abilityFactory.AbilityFactory} object.</em>
+<a class="jxr_linenumber" name="732" href="#732">732</a> <em class="jxr_javadoccomment">     * @param sa a {@link forge.card.spellability.SpellAbility} object.</em>
+<a class="jxr_linenumber" name="733" href="#733">733</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="734" href="#734">734</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> animateAllResolve(<strong class="jxr_keyword">final</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> af, <strong class="jxr_keyword">final</strong> <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
+<a class="jxr_linenumber" name="735" href="#735">735</a>         HashMap&lt;String, String&gt; params = af.getMapParams();
+<a class="jxr_linenumber" name="736" href="#736">736</a>         <a href="../../../forge/Card.html">Card</a> host = af.getHostCard();
+<a class="jxr_linenumber" name="737" href="#737">737</a>         Map&lt;String, String&gt; svars = host.getSVars();
+<a class="jxr_linenumber" name="738" href="#738">738</a> 
+<a class="jxr_linenumber" name="739" href="#739">739</a>         <em class="jxr_comment">//AF specific params</em>
+<a class="jxr_linenumber" name="740" href="#740">740</a>         <strong class="jxr_keyword">int</strong> power = -1;
+<a class="jxr_linenumber" name="741" href="#741">741</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Power"</span>)) power = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Power"</span>), sa);
+<a class="jxr_linenumber" name="742" href="#742">742</a>         <strong class="jxr_keyword">int</strong> toughness = -1;
+<a class="jxr_linenumber" name="743" href="#743">743</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Toughness"</span>))
+<a class="jxr_linenumber" name="744" href="#744">744</a>             toughness = AbilityFactory.calculateAmount(host, params.get(<span class="jxr_string">"Toughness"</span>), sa);
+<a class="jxr_linenumber" name="745" href="#745">745</a> 
+<a class="jxr_linenumber" name="746" href="#746">746</a>         <strong class="jxr_keyword">boolean</strong> permanent = params.containsKey(<span class="jxr_string">"Permanent"</span>) ? <strong class="jxr_keyword">true</strong> : false;
+<a class="jxr_linenumber" name="747" href="#747">747</a> 
+<a class="jxr_linenumber" name="748" href="#748">748</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; types = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="749" href="#749">749</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Types"</span>)) types.addAll(Arrays.asList(params.get(<span class="jxr_string">"Types"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="750" href="#750">750</a> 
+<a class="jxr_linenumber" name="751" href="#751">751</a>         <em class="jxr_comment">//allow ChosenType - overrides anything else specified</em>
+<a class="jxr_linenumber" name="752" href="#752">752</a>         <strong class="jxr_keyword">if</strong> (types.contains(<span class="jxr_string">"ChosenType"</span>)) {
+<a class="jxr_linenumber" name="753" href="#753">753</a>             types.clear();
+<a class="jxr_linenumber" name="754" href="#754">754</a>             types.add(host.getChosenType());
+<a class="jxr_linenumber" name="755" href="#755">755</a>         }
+<a class="jxr_linenumber" name="756" href="#756">756</a> 
+<a class="jxr_linenumber" name="757" href="#757">757</a>         <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; keywords = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="758" href="#758">758</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Keywords"</span>)) keywords.addAll(Arrays.asList(params.get(<span class="jxr_string">"Keywords"</span>).split(<span class="jxr_string">" &amp; "</span>)));
+<a class="jxr_linenumber" name="759" href="#759">759</a>         <em class="jxr_comment">//allow SVar substitution for keywords</em>
+<a class="jxr_linenumber" name="760" href="#760">760</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; keywords.size(); i++) {
+<a class="jxr_linenumber" name="761" href="#761">761</a>             String k = keywords.get(i);
+<a class="jxr_linenumber" name="762" href="#762">762</a>             <strong class="jxr_keyword">if</strong> (svars.containsKey(k)) {
+<a class="jxr_linenumber" name="763" href="#763">763</a>                 keywords.add(svars.get(k));
+<a class="jxr_linenumber" name="764" href="#764">764</a>                 keywords.remove(k);
+<a class="jxr_linenumber" name="765" href="#765">765</a>             }
+<a class="jxr_linenumber" name="766" href="#766">766</a>         }
+<a class="jxr_linenumber" name="767" href="#767">767</a> 
+<a class="jxr_linenumber" name="768" href="#768">768</a>         <em class="jxr_comment">//colors to be added or changed to</em>
+<a class="jxr_linenumber" name="769" href="#769">769</a>         String tmpDesc = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="770" href="#770">770</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Colors"</span>)) {
+<a class="jxr_linenumber" name="771" href="#771">771</a>             String colors = params.get(<span class="jxr_string">"Colors"</span>);
+<a class="jxr_linenumber" name="772" href="#772">772</a>             <strong class="jxr_keyword">if</strong> (colors.equals(<span class="jxr_string">"ChosenColor"</span>)) {
+<a class="jxr_linenumber" name="773" href="#773">773</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(host.getChosenColor().split(<span class="jxr_string">","</span>))));
+<a class="jxr_linenumber" name="774" href="#774">774</a>             } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="775" href="#775">775</a>                 tmpDesc = CardUtil.getShortColorsString(<strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;(Arrays.asList(colors.split(<span class="jxr_string">","</span>))));
+<a class="jxr_linenumber" name="776" href="#776">776</a>             }
+<a class="jxr_linenumber" name="777" href="#777">777</a>         }
+<a class="jxr_linenumber" name="778" href="#778">778</a>         <strong class="jxr_keyword">final</strong> String finalDesc = tmpDesc;
 <a class="jxr_linenumber" name="779" href="#779">779</a> 
-<a class="jxr_linenumber" name="780" href="#780">780</a>         <em class="jxr_comment">//triggers to add to the animated being</em>
-<a class="jxr_linenumber" name="781" href="#781">781</a>         ArrayList&lt;String&gt; triggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
-<a class="jxr_linenumber" name="782" href="#782">782</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>)) triggers.addAll(Arrays.asList(params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="780" href="#780">780</a>         <em class="jxr_comment">//abilities to add to the animated being</em>
+<a class="jxr_linenumber" name="781" href="#781">781</a>         ArrayList&lt;String&gt; abilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="782" href="#782">782</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Abilities"</span>)) abilities.addAll(Arrays.asList(params.get(<span class="jxr_string">"Abilities"</span>).split(<span class="jxr_string">","</span>)));
 <a class="jxr_linenumber" name="783" href="#783">783</a> 
-<a class="jxr_linenumber" name="784" href="#784">784</a>         String valid = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="785" href="#785">785</a> 
-<a class="jxr_linenumber" name="786" href="#786">786</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"ValidCards"</span>))
-<a class="jxr_linenumber" name="787" href="#787">787</a>             valid = params.get(<span class="jxr_string">"ValidCards"</span>);
-<a class="jxr_linenumber" name="788" href="#788">788</a> 
-<a class="jxr_linenumber" name="789" href="#789">789</a>         <a href="../../../forge/CardList.html">CardList</a> list = AllZoneUtil.getCardsInPlay();
-<a class="jxr_linenumber" name="790" href="#790">790</a>         list = list.getValidCards(valid.split(<span class="jxr_string">","</span>), host.getController(), host);
-<a class="jxr_linenumber" name="791" href="#791">791</a> 
-<a class="jxr_linenumber" name="792" href="#792">792</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Card c : list) {
-<a class="jxr_linenumber" name="793" href="#793">793</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; originalTypes = c.getType();
-<a class="jxr_linenumber" name="794" href="#794">794</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origPower = c.getBaseAttack();
-<a class="jxr_linenumber" name="795" href="#795">795</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origToughness = c.getBaseDefense();
-<a class="jxr_linenumber" name="796" href="#796">796</a> 
-<a class="jxr_linenumber" name="797" href="#797">797</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
-<a class="jxr_linenumber" name="798" href="#798">798</a> 
-<a class="jxr_linenumber" name="799" href="#799">799</a>             <em class="jxr_comment">//give abilities</em>
-<a class="jxr_linenumber" name="800" href="#800">800</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;SpellAbility&gt; addedAbilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;SpellAbility&gt;();
-<a class="jxr_linenumber" name="801" href="#801">801</a>             <strong class="jxr_keyword">if</strong> (abilities.size() &gt; 0) {
-<a class="jxr_linenumber" name="802" href="#802">802</a>                 <strong class="jxr_keyword">for</strong> (String s : abilities) {
-<a class="jxr_linenumber" name="803" href="#803">803</a>                     <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> newAF = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
-<a class="jxr_linenumber" name="804" href="#804">804</a>                     String actualAbility = host.getSVar(s);
-<a class="jxr_linenumber" name="805" href="#805">805</a>                     <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = newAF.getAbility(actualAbility, c);
-<a class="jxr_linenumber" name="806" href="#806">806</a>                     addedAbilities.add(grantedAbility);
-<a class="jxr_linenumber" name="807" href="#807">807</a>                     c.addSpellAbility(grantedAbility);
-<a class="jxr_linenumber" name="808" href="#808">808</a>                 }
-<a class="jxr_linenumber" name="809" href="#809">809</a>             }
-<a class="jxr_linenumber" name="810" href="#810">810</a> 
-<a class="jxr_linenumber" name="811" href="#811">811</a>             <em class="jxr_comment">//Grant triggers</em>
-<a class="jxr_linenumber" name="812" href="#812">812</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;Trigger&gt; addedTriggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;Trigger&gt;();
-<a class="jxr_linenumber" name="813" href="#813">813</a>             <strong class="jxr_keyword">if</strong> (triggers.size() &gt; 0) {
-<a class="jxr_linenumber" name="814" href="#814">814</a>                 <strong class="jxr_keyword">for</strong> (String s : triggers) {
-<a class="jxr_linenumber" name="815" href="#815">815</a>                     String actualTrigger = host.getSVar(s);
-<a class="jxr_linenumber" name="816" href="#816">816</a>                     <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
-<a class="jxr_linenumber" name="817" href="#817">817</a>                     addedTriggers.add(c.addTrigger(parsedTrigger));
-<a class="jxr_linenumber" name="818" href="#818">818</a>                     AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
-<a class="jxr_linenumber" name="819" href="#819">819</a>                 }
-<a class="jxr_linenumber" name="820" href="#820">820</a>             }
-<a class="jxr_linenumber" name="821" href="#821">821</a> 
-<a class="jxr_linenumber" name="822" href="#822">822</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> unanimate = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
-<a class="jxr_linenumber" name="823" href="#823">823</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
-<a class="jxr_linenumber" name="824" href="#824">824</a> 
-<a class="jxr_linenumber" name="825" href="#825">825</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
-<a class="jxr_linenumber" name="826" href="#826">826</a>                     doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
-<a class="jxr_linenumber" name="827" href="#827">827</a>                 }
-<a class="jxr_linenumber" name="828" href="#828">828</a>             };
-<a class="jxr_linenumber" name="829" href="#829">829</a> 
-<a class="jxr_linenumber" name="830" href="#830">830</a>             <strong class="jxr_keyword">if</strong> (!permanent) {
-<a class="jxr_linenumber" name="831" href="#831">831</a>                 <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"UntilEndOfCombat"</span>)) AllZone.getEndOfCombat().addUntil(unanimate);
-<a class="jxr_linenumber" name="832" href="#832">832</a>                 <strong class="jxr_keyword">else</strong> AllZone.getEndOfTurn().addUntil(unanimate);
-<a class="jxr_linenumber" name="833" href="#833">833</a>             }
-<a class="jxr_linenumber" name="834" href="#834">834</a>         }
-<a class="jxr_linenumber" name="835" href="#835">835</a>     }<em class="jxr_comment">//animateAllResolve</em>
-<a class="jxr_linenumber" name="836" href="#836">836</a> 
-<a class="jxr_linenumber" name="837" href="#837">837</a> }<em class="jxr_comment">//end class AbilityFactory_Animate</em>
+<a class="jxr_linenumber" name="784" href="#784">784</a>         <em class="jxr_comment">//triggers to add to the animated being</em>
+<a class="jxr_linenumber" name="785" href="#785">785</a>         ArrayList&lt;String&gt; triggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;String&gt;();
+<a class="jxr_linenumber" name="786" href="#786">786</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"Triggers"</span>)) triggers.addAll(Arrays.asList(params.get(<span class="jxr_string">"Triggers"</span>).split(<span class="jxr_string">","</span>)));
+<a class="jxr_linenumber" name="787" href="#787">787</a> 
+<a class="jxr_linenumber" name="788" href="#788">788</a>         String valid = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="789" href="#789">789</a> 
+<a class="jxr_linenumber" name="790" href="#790">790</a>         <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"ValidCards"</span>))
+<a class="jxr_linenumber" name="791" href="#791">791</a>             valid = params.get(<span class="jxr_string">"ValidCards"</span>);
+<a class="jxr_linenumber" name="792" href="#792">792</a> 
+<a class="jxr_linenumber" name="793" href="#793">793</a>         <a href="../../../forge/CardList.html">CardList</a> list = AllZoneUtil.getCardsInPlay();
+<a class="jxr_linenumber" name="794" href="#794">794</a>         list = list.getValidCards(valid.split(<span class="jxr_string">","</span>), host.getController(), host);
+<a class="jxr_linenumber" name="795" href="#795">795</a> 
+<a class="jxr_linenumber" name="796" href="#796">796</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">final</strong> Card c : list) {
+<a class="jxr_linenumber" name="797" href="#797">797</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;String&gt; originalTypes = c.getType();
+<a class="jxr_linenumber" name="798" href="#798">798</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origPower = c.getBaseAttack();
+<a class="jxr_linenumber" name="799" href="#799">799</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> origToughness = c.getBaseDefense();
+<a class="jxr_linenumber" name="800" href="#800">800</a> 
+<a class="jxr_linenumber" name="801" href="#801">801</a>             <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
+<a class="jxr_linenumber" name="802" href="#802">802</a> 
+<a class="jxr_linenumber" name="803" href="#803">803</a>             <em class="jxr_comment">//give abilities</em>
+<a class="jxr_linenumber" name="804" href="#804">804</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;SpellAbility&gt; addedAbilities = <strong class="jxr_keyword">new</strong> ArrayList&lt;SpellAbility&gt;();
+<a class="jxr_linenumber" name="805" href="#805">805</a>             <strong class="jxr_keyword">if</strong> (abilities.size() &gt; 0) {
+<a class="jxr_linenumber" name="806" href="#806">806</a>                 <strong class="jxr_keyword">for</strong> (String s : abilities) {
+<a class="jxr_linenumber" name="807" href="#807">807</a>                     <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a> newAF = <strong class="jxr_keyword">new</strong> <a href="../../../forge/card/abilityFactory/AbilityFactory.html">AbilityFactory</a>();
+<a class="jxr_linenumber" name="808" href="#808">808</a>                     String actualAbility = host.getSVar(s);
+<a class="jxr_linenumber" name="809" href="#809">809</a>                     <a href="../../../forge/card/spellability/SpellAbility.html">SpellAbility</a> grantedAbility = newAF.getAbility(actualAbility, c);
+<a class="jxr_linenumber" name="810" href="#810">810</a>                     addedAbilities.add(grantedAbility);
+<a class="jxr_linenumber" name="811" href="#811">811</a>                     c.addSpellAbility(grantedAbility);
+<a class="jxr_linenumber" name="812" href="#812">812</a>                 }
+<a class="jxr_linenumber" name="813" href="#813">813</a>             }
+<a class="jxr_linenumber" name="814" href="#814">814</a> 
+<a class="jxr_linenumber" name="815" href="#815">815</a>             <em class="jxr_comment">//Grant triggers</em>
+<a class="jxr_linenumber" name="816" href="#816">816</a>             <strong class="jxr_keyword">final</strong> ArrayList&lt;Trigger&gt; addedTriggers = <strong class="jxr_keyword">new</strong> ArrayList&lt;Trigger&gt;();
+<a class="jxr_linenumber" name="817" href="#817">817</a>             <strong class="jxr_keyword">if</strong> (triggers.size() &gt; 0) {
+<a class="jxr_linenumber" name="818" href="#818">818</a>                 <strong class="jxr_keyword">for</strong> (String s : triggers) {
+<a class="jxr_linenumber" name="819" href="#819">819</a>                     String actualTrigger = host.getSVar(s);
+<a class="jxr_linenumber" name="820" href="#820">820</a>                     <a href="../../../forge/card/trigger/Trigger.html">Trigger</a> parsedTrigger = TriggerHandler.parseTrigger(actualTrigger, c);
+<a class="jxr_linenumber" name="821" href="#821">821</a>                     addedTriggers.add(c.addTrigger(parsedTrigger));
+<a class="jxr_linenumber" name="822" href="#822">822</a>                     AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
+<a class="jxr_linenumber" name="823" href="#823">823</a>                 }
+<a class="jxr_linenumber" name="824" href="#824">824</a>             }
+<a class="jxr_linenumber" name="825" href="#825">825</a> 
+<a class="jxr_linenumber" name="826" href="#826">826</a>             <strong class="jxr_keyword">final</strong> <a href="../../../forge/Command.html">Command</a> unanimate = <strong class="jxr_keyword">new</strong> <a href="../../../forge/Command.html">Command</a>() {
+<a class="jxr_linenumber" name="827" href="#827">827</a>                 <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">long</strong> serialVersionUID = -5861759814760561373L;
+<a class="jxr_linenumber" name="828" href="#828">828</a> 
+<a class="jxr_linenumber" name="829" href="#829">829</a>                 <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> execute() {
+<a class="jxr_linenumber" name="830" href="#830">830</a>                     doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+<a class="jxr_linenumber" name="831" href="#831">831</a>                 }
+<a class="jxr_linenumber" name="832" href="#832">832</a>             };
+<a class="jxr_linenumber" name="833" href="#833">833</a> 
+<a class="jxr_linenumber" name="834" href="#834">834</a>             <strong class="jxr_keyword">if</strong> (!permanent) {
+<a class="jxr_linenumber" name="835" href="#835">835</a>                 <strong class="jxr_keyword">if</strong> (params.containsKey(<span class="jxr_string">"UntilEndOfCombat"</span>)) AllZone.getEndOfCombat().addUntil(unanimate);
+<a class="jxr_linenumber" name="836" href="#836">836</a>                 <strong class="jxr_keyword">else</strong> AllZone.getEndOfTurn().addUntil(unanimate);
+<a class="jxr_linenumber" name="837" href="#837">837</a>             }
+<a class="jxr_linenumber" name="838" href="#838">838</a>         }
+<a class="jxr_linenumber" name="839" href="#839">839</a>     }<em class="jxr_comment">//animateAllResolve</em>
+<a class="jxr_linenumber" name="840" href="#840">840</a> 
+<a class="jxr_linenumber" name="841" href="#841">841</a> }<em class="jxr_comment">//end class AbilityFactory_Animate</em>
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

@@ -13,13 +13,13 @@
 <a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> forge.deck.Deck;
 <a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> org.testng.annotations.Test;
 <a class="jxr_linenumber" name="5" href="#5">5</a>   
-<a class="jxr_linenumber" name="6" href="#6">6</a>   @Test(timeOut = 1000)
+<a class="jxr_linenumber" name="6" href="#6">6</a>   @Test(timeOut = 5000, enabled = false)
 <a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../forge/BoosterDraftAITest.html">BoosterDraftAITest</a> {
 <a class="jxr_linenumber" name="8" href="#8">8</a>   
 <a class="jxr_linenumber" name="9" href="#9">9</a>       <em class="jxr_javadoccomment">/**</em>
 <a class="jxr_linenumber" name="10" href="#10">10</a>  <em class="jxr_javadoccomment">     * &lt;p&gt;runTestPrint.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="11" href="#11">11</a>  <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="12" href="#12">12</a>      @Test(timeOut = 1000)
+<a class="jxr_linenumber" name="12" href="#12">12</a>      @Test(timeOut = 5000)
 <a class="jxr_linenumber" name="13" href="#13">13</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> runTestPrint() {
 <a class="jxr_linenumber" name="14" href="#14">14</a>          BoosterDraftAI ai = <strong class="jxr_keyword">new</strong> BoosterDraftAI();
 <a class="jxr_linenumber" name="15" href="#15">15</a>          runTest(ai);
@@ -41,7 +41,7 @@
 <a class="jxr_linenumber" name="31" href="#31">31</a>          }<em class="jxr_comment">//for outer</em>
 <a class="jxr_linenumber" name="32" href="#32">32</a>      }<em class="jxr_comment">//runTestPrint()</em>
 <a class="jxr_linenumber" name="33" href="#33">33</a>  
-<a class="jxr_linenumber" name="34" href="#34">34</a>  
+<a class="jxr_linenumber" name="34" href="#34">34</a>      @Test
 <a class="jxr_linenumber" name="35" href="#35">35</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> runTest(BoosterDraftAI ai) {
 <a class="jxr_linenumber" name="36" href="#36">36</a>          ReadDraftBoosterPack booster = <strong class="jxr_keyword">new</strong> ReadDraftBoosterPack();
 <a class="jxr_linenumber" name="37" href="#37">37</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> <strong class="jxr_keyword">outer</strong> = 0; <strong class="jxr_keyword">outer</strong> &lt; 1; <strong class="jxr_keyword">outer</strong>++) {

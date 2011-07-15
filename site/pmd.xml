@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<pmd version="4.2.5" timestamp="2011-07-05T07:15:47.818">
+<pmd version="4.2.5" timestamp="2011-07-15T07:47:50.081">
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/arcane/ui/CardArea.java">
 <violation beginline="78" endline="81" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="arcane.ui" class="CardArea" method="getCardPanel" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
@@ -15,10 +15,7 @@ Avoid duplicate imports such as 'java.awt.Color'
 <violation beginline="231" endline="255" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="arcane.ui" class="CardPanel" method="paintComponent" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="289" endline="310" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="arcane.ui" class="CardPanel" method="paintChildren" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
-</violation>
-<violation beginline="291" endline="309" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="arcane.ui" class="CardPanel" method="paintChildren" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="297" endline="315" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="arcane.ui" class="CardPanel" method="paintChildren" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -61,25 +58,33 @@ Avoid empty catch blocks
 Avoid unused private fields such as 'deckColor'.
 </violation>
 </file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/BoosterGenerator.java">
+<violation beginline="5" endline="5" begincolumn="1" endcolumn="35" rule="UnusedImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'forge.properties.ForgeProps'
+</violation>
+<violation beginline="6" endline="6" begincolumn="1" endcolumn="37" rule="UnusedImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'forge.properties.NewConstants'
+</violation>
+</file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Card.java">
-<violation beginline="325" endline="327" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="getNamedTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="320" endline="322" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="getNamedTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="3026" endline="3026" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="Card" method="isEnchanting" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="3002" endline="3002" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="Card" method="isEnchanting" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="3851" endline="3852" begincolumn="13" endcolumn="113" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="addNonStackingIntrinsicKeyword" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3772" endline="3773" begincolumn="13" endcolumn="113" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="addNonStackingIntrinsicKeyword" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5260" endline="5261" begincolumn="17" endcolumn="99" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="addCombatDamage" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5257" endline="5258" begincolumn="17" endcolumn="99" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="addCombatDamage" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5388" endline="5391" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="staticDamagePrevention" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5385" endline="5388" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Card" method="staticDamagePrevention" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CardList.java">
-<violation beginline="153" endline="153" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge" class="CardList" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
+<violation beginline="184" endline="184" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge" class="CardList" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
 Ensure you override both equals() and hashCode()
 </violation>
 </file>
@@ -164,8 +169,13 @@ These nested if statements could be combined
 <violation beginline="1711" endline="1713" begincolumn="65" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="CombatUtil" method="checkDeclareAttackers" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="2122" endline="2125" begincolumn="29" endcolumn="29" rule="JumbledIncrementer" ruleset="Basic Rules" package="forge" class="CombatUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#JumbledIncrementer" priority="3">
+<violation beginline="2119" endline="2122" begincolumn="29" endcolumn="29" rule="JumbledIncrementer" ruleset="Basic Rules" package="forge" class="CombatUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#JumbledIncrementer" priority="3">
 Avoid modifying an outer loop incrementer in an inner loop for update expression
+</violation>
+</file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/CommandList.java">
+<violation beginline="19" endline="19" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="CommandList" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ComputerAI_General.java">
@@ -217,7 +227,7 @@ Avoid duplicate imports such as 'java.awt.Color'
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java">
-<violation beginline="816" endline="895" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GUI_Filter" method="FilterCardTable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="671" endline="751" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GUI_Filter" method="FilterCardTable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -227,75 +237,81 @@ Avoid duplicate imports such as 'java.awt.Color'
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Quest_Filter.java">
-<violation beginline="797" endline="881" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GUI_Quest_Filter" method="FilterCardTable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="642" endline="726" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GUI_Quest_Filter" method="FilterCardTable" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java">
-<violation beginline="147" endline="150" begincolumn="63" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="moveTo" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="148" endline="151" begincolumn="63" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="moveTo" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="292" endline="294" begincolumn="21" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="moveToGraveyard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="293" endline="295" begincolumn="21" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="moveToGraveyard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="542" endline="545" begincolumn="28" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="checkEndGameSate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="543" endline="546" begincolumn="28" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="checkEndGameSate" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1493" endline="1493" begincolumn="68" endcolumn="84" rule="ClassCastExceptionWithToArray" ruleset="Basic Rules" package="forge" class="GameAction" method="playCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#ClassCastExceptionWithToArray" priority="3">
+<violation beginline="1073" endline="1074" begincolumn="25" endcolumn="77" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="newGame" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="1125" endline="1126" begincolumn="25" endcolumn="77" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="newGame" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="1497" endline="1497" begincolumn="68" endcolumn="84" rule="ClassCastExceptionWithToArray" ruleset="Basic Rules" package="forge" class="GameAction" method="playCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#ClassCastExceptionWithToArray" priority="3">
 This usage of the Collection.toArray() method will throw a ClassCastException.
 </violation>
-<violation beginline="1536" endline="1536" begincolumn="71" endcolumn="87" rule="ClassCastExceptionWithToArray" ruleset="Basic Rules" package="forge" class="GameAction" method="playCardNoCost" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#ClassCastExceptionWithToArray" priority="3">
+<violation beginline="1540" endline="1540" begincolumn="71" endcolumn="87" rule="ClassCastExceptionWithToArray" ruleset="Basic Rules" package="forge" class="GameAction" method="playCardNoCost" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#ClassCastExceptionWithToArray" priority="3">
 This usage of the Collection.toArray() method will throw a ClassCastException.
 </violation>
-<violation beginline="1680" endline="1680" begincolumn="21" endcolumn="61" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1684" endline="1684" begincolumn="21" endcolumn="61" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1702" endline="1703" begincolumn="112" endcolumn="37" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1706" endline="1707" begincolumn="112" endcolumn="37" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1709" endline="1710" begincolumn="90" endcolumn="37" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1713" endline="1714" begincolumn="90" endcolumn="37" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1729" endline="1729" begincolumn="29" endcolumn="69" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1733" endline="1733" begincolumn="29" endcolumn="69" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1732" endline="1732" begincolumn="29" endcolumn="80" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1736" endline="1736" begincolumn="29" endcolumn="80" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1735" endline="1735" begincolumn="29" endcolumn="80" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1739" endline="1739" begincolumn="29" endcolumn="80" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1738" endline="1738" begincolumn="29" endcolumn="70" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1742" endline="1742" begincolumn="29" endcolumn="70" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1741" endline="1741" begincolumn="29" endcolumn="88" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1745" endline="1745" begincolumn="29" endcolumn="88" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1803" endline="1804" begincolumn="52" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1807" endline="1808" begincolumn="52" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1819" endline="1819" begincolumn="25" endcolumn="65" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1823" endline="1823" begincolumn="25" endcolumn="65" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1842" endline="1843" begincolumn="116" endcolumn="41" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1846" endline="1847" begincolumn="116" endcolumn="41" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1849" endline="1850" begincolumn="94" endcolumn="41" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1853" endline="1854" begincolumn="94" endcolumn="41" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1869" endline="1869" begincolumn="33" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1873" endline="1873" begincolumn="33" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1872" endline="1872" begincolumn="33" endcolumn="84" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1876" endline="1876" begincolumn="33" endcolumn="84" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1875" endline="1875" begincolumn="33" endcolumn="84" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1879" endline="1879" begincolumn="33" endcolumn="84" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1878" endline="1878" begincolumn="33" endcolumn="74" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1882" endline="1882" begincolumn="33" endcolumn="74" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1881" endline="1881" begincolumn="33" endcolumn="92" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1885" endline="1885" begincolumn="33" endcolumn="92" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameAction" method="getSpellCostChange" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -312,135 +328,113 @@ These nested if statements could be combined
 <violation beginline="1027" endline="1029" begincolumn="49" endcolumn="29" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1669" endline="1671" begincolumn="16" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="landfall_Lotus_Cobra" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1689" endline="1691" begincolumn="16" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="landfall_Lotus_Cobra" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1804" endline="1807" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1824" endline="1827" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2076" endline="2088" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GameActionUtil" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="2096" endline="2108" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GameActionUtil" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'c'.
 </violation>
-<violation beginline="2305" endline="2305" begincolumn="21" endcolumn="21" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="2325" endline="2325" begincolumn="21" endcolumn="21" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="3578" endline="3587" begincolumn="33" endcolumn="33" rule="JumbledIncrementer" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#JumbledIncrementer" priority="3">
+<violation beginline="3598" endline="3607" begincolumn="33" endcolumn="33" rule="JumbledIncrementer" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#JumbledIncrementer" priority="3">
 Avoid modifying an outer loop incrementer in an inner loop for update expression
 </violation>
-<violation beginline="4529" endline="4531" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="4549" endline="4551" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="5177" endline="5178" begincolumn="17" endcolumn="78" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="AffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5096" endline="5097" begincolumn="17" endcolumn="78" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="AffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5182" endline="5183" begincolumn="17" endcolumn="77" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="AffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5101" endline="5102" begincolumn="17" endcolumn="77" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="AffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5267" endline="5267" begincolumn="13" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5186" endline="5186" begincolumn="13" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5270" endline="5270" begincolumn="13" endcolumn="66" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5189" endline="5189" begincolumn="13" endcolumn="66" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5303" endline="5303" begincolumn="13" endcolumn="55" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5222" endline="5222" begincolumn="13" endcolumn="55" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5306" endline="5306" begincolumn="13" endcolumn="56" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5225" endline="5225" begincolumn="13" endcolumn="56" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5309" endline="5309" begincolumn="13" endcolumn="55" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5228" endline="5228" begincolumn="13" endcolumn="55" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5316" endline="5316" begincolumn="13" endcolumn="91" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5235" endline="5235" begincolumn="13" endcolumn="91" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5319" endline="5319" begincolumn="13" endcolumn="105" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5238" endline="5238" begincolumn="13" endcolumn="105" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5322" endline="5322" begincolumn="13" endcolumn="96" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5241" endline="5241" begincolumn="13" endcolumn="96" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5325" endline="5325" begincolumn="13" endcolumn="95" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5244" endline="5244" begincolumn="13" endcolumn="95" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="specialConditionsMet" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5560" endline="5570" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5479" endline="5489" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5562" endline="5569" begincolumn="37" endcolumn="37" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5481" endline="5488" begincolumn="37" endcolumn="37" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="5628" endline="5633" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5547" endline="5552" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="execute" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="6452" endline="6453" begincolumn="29" endcolumn="54" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="5832" endline="5833" begincolumn="29" endcolumn="54" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="6754" endline="6756" begincolumn="24" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="addStaticEffects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="6132" endline="6134" begincolumn="24" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="addStaticEffects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="6820" endline="6822" begincolumn="20" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="removeStaticEffect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="6198" endline="6200" begincolumn="20" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="removeStaticEffect" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="6837" endline="6839" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="getAffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="6215" endline="6217" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GameActionUtil" method="getAffectedCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
-</violation>
-</file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java">
-<violation beginline="822" endline="825" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay2" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'evt'.
-</violation>
-<violation beginline="832" endline="835" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay2" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'evt'.
-</violation>
-<violation beginline="842" endline="847" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay2" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'evt'.
-</violation>
-</file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay3.java">
-<violation beginline="28" endline="28" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
-Avoid duplicate imports such as 'java.awt.Color'
-</violation>
-<violation beginline="830" endline="853" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay3" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'pane'.
-</violation>
-<violation beginline="1107" endline="1109" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay3" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'evt'.
-</violation>
-<violation beginline="1116" endline="1118" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay3" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'evt'.
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay4.java">
-<violation beginline="31" endline="31" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
+<violation beginline="9" endline="9" begincolumn="1" endcolumn="44" rule="UnusedImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'forge.card.spellability.SpellAbility'
+</violation>
+<violation beginline="35" endline="35" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
 Avoid duplicate imports such as 'java.awt.Color'
 </violation>
-<violation beginline="664" endline="664" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GuiDisplay4" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="670" endline="670" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GuiDisplay4" method="update" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="818" endline="841" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="824" endline="847" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'pane'.
 </violation>
-<violation beginline="1101" endline="1103" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1107" endline="1109" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'evt'.
 </violation>
-<violation beginline="1110" endline="1112" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1116" endline="1118" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="GuiDisplay4" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'evt'.
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplayUtil.java">
-<violation beginline="17" endline="17" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
+<violation beginline="16" endline="16" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
 Avoid duplicate imports such as 'java.awt.Color'
 </violation>
-<violation beginline="883" endline="883" begincolumn="34" endcolumn="34" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="864" endline="864" begincolumn="34" endcolumn="34" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="883" endline="883" begincolumn="34" endcolumn="34" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="864" endline="864" begincolumn="34" endcolumn="34" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="905" endline="907" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="886" endline="888" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="935" endline="937" begincolumn="77" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getNonBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="916" endline="918" begincolumn="77" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="GuiDisplayUtil" method="getNonBasics" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -470,22 +464,22 @@ Avoid duplicate imports such as 'java.awt.Color'
 <violation beginline="133" endline="135" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
 Overriding method merely calls super
 </violation>
-<violation beginline="395" endline="397" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="391" endline="393" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="401" endline="403" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="397" endline="399" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="407" endline="409" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="403" endline="405" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="413" endline="415" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="409" endline="411" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="419" endline="421" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="415" endline="417" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="425" endline="427" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="421" endline="423" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -519,7 +513,7 @@ Avoid empty catch blocks
 <violation beginline="25" endline="25" begincolumn="8" endcolumn="21" rule="DuplicateImports" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#DuplicateImports" priority="4">
 Avoid duplicate imports such as 'java.awt.Color'
 </violation>
-<violation beginline="1480" endline="1480" begincolumn="13" endcolumn="32" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_NewGame" method="processWindowEvent" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1504" endline="1504" begincolumn="13" endcolumn="32" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_NewGame" method="processWindowEvent" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -535,22 +529,22 @@ Avoid duplicate imports such as 'java.awt.Color'
 <violation beginline="98" endline="100" begincolumn="12" endcolumn="5" rule="UselessOverridingMethod" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
 Overriding method merely calls super
 </violation>
-<violation beginline="243" endline="245" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="239" endline="241" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="249" endline="251" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="245" endline="247" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="255" endline="257" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="251" endline="253" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="261" endline="263" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="257" endline="259" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="267" endline="269" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="263" endline="265" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="273" endline="275" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="269" endline="271" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor" method="filterByColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -564,7 +558,7 @@ An empty statement (semicolon) not part of a loop
 <violation beginline="458" endline="459" begincolumn="27" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor_Menu" method="importDeck" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="911" endline="913" begincolumn="64" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor_Menu" method="actionPerformed" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="917" endline="919" begincolumn="64" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="Gui_Quest_DeckEditor_Menu" method="actionPerformed" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -616,10 +610,10 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Phase.java">
-<violation beginline="426" endline="427" begincolumn="13" endcolumn="67" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Phase" method="nextPhase" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="424" endline="425" begincolumn="13" endcolumn="67" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Phase" method="nextPhase" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="503" endline="505" begincolumn="20" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="Phase" method="skipTurnTimeVault" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="501" endline="503" begincolumn="20" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="Phase" method="skipTurnTimeVault" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -630,19 +624,22 @@ Avoid empty if statements
 <violation beginline="444" endline="450" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="staticDamagePrevention" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="853" endline="855" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="doDraw" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="835" endline="836" begincolumn="17" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="drawCards" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="872" endline="872" begincolumn="21" endcolumn="110" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="getDredge" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="878" endline="880" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="doDraw" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="965" endline="974" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="doDiscard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="897" endline="897" begincolumn="21" endcolumn="110" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="getDredge" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="990" endline="990" begincolumn="13" endcolumn="13" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="Player" method="doDiscard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="992" endline="1001" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge" class="Player" method="doDiscard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="1017" endline="1017" begincolumn="13" endcolumn="13" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge" class="Player" method="doDiscard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="1753" endline="1753" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge" class="Player" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
+<violation beginline="1780" endline="1780" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge" class="Player" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
 Ensure you override both equals() and hashCode()
 </violation>
 </file>
@@ -651,19 +648,14 @@ Ensure you override both equals() and hashCode()
 These nested if statements could be combined
 </violation>
 </file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData_State.java">
-<violation beginline="75" endline="101" begincolumn="12" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge" class="QuestData_State" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused constructor parameters such as 'selectedPet'.
-</violation>
-</file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/ReadCard.java">
 <violation beginline="3" endline="3" begincolumn="1" endcolumn="18" rule="ImportFromSamePackage" ruleset="Import Statement Rules" package="forge" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#ImportFromSamePackage" priority="3">
 No need to import a type that lives in the same package
 </violation>
-<violation beginline="113" endline="115" begincolumn="15" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="forge" class="ReadCard" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
+<violation beginline="126" endline="128" begincolumn="15" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="forge" class="ReadCard" method="run" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
 Avoid empty catch blocks
 </violation>
-<violation beginline="205" endline="207" begincolumn="36" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="ReadCard" method="loadCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="217" endline="219" begincolumn="36" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge" class="ReadCard" method="loadCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -688,22 +680,19 @@ Avoid empty if statements
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory.java">
-<violation beginline="776" endline="777" begincolumn="13" endcolumn="62" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="getAbility" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1290" endline="1294" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="getDefinedPlayers" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1281" endline="1285" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="getDefinedPlayers" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
-</violation>
-<violation beginline="1501" endline="1503" begincolumn="49" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1513" endline="1515" begincolumn="49" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1503" endline="1505" begincolumn="47" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1515" endline="1517" begincolumn="47" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1505" endline="1507" begincolumn="50" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1517" endline="1519" begincolumn="50" endcolumn="13" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="predictThreatenedObjects" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1579" endline="1579" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="1591" endline="1591" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
 </file>
@@ -719,39 +708,36 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Animate.java">
-<violation beginline="321" endline="326" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="322" endline="327" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="321" endline="326" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="322" endline="327" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'sa'.
 </violation>
-<violation beginline="676" endline="684" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="680" endline="688" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="693" endline="701" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="697" endline="705" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="711" endline="722" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="715" endline="726" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Animate" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Attach.java">
-<violation beginline="188" endline="192" begincolumn="54" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachAIControlPreference" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="233" endline="237" begincolumn="54" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachAIControlPreference" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="221" endline="221" begincolumn="24" endcolumn="30" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachAIPumpPreference" variable="stCheck" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
-Avoid unused local variables such as 'stCheck'.
-</violation>
-<violation beginline="237" endline="239" begincolumn="65" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachAIPumpPreference" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
-Avoid empty if statements
-</violation>
-<violation beginline="353" endline="355" begincolumn="49" endcolumn="25" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachCanPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
-Avoid empty if statements
-</violation>
-<violation beginline="361" endline="368" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachCanPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="440" endline="448" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachAICursePreference" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="449" endline="455" begincolumn="46" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="handleAttachment" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="520" endline="522" begincolumn="49" endcolumn="25" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachCanPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+Avoid empty if statements
+</violation>
+<violation beginline="528" endline="535" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="attachCanPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="624" endline="630" begincolumn="46" endcolumn="17" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Attach" method="handleAttachment" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -1077,13 +1063,13 @@ Avoid unused method parameters such as 'sa'.
 <violation beginline="1069" endline="1078" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="1401" endline="1403" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1408" endline="1410" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="1401" endline="1403" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1408" endline="1410" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'sa'.
 </violation>
-<violation beginline="1641" endline="1643" begincolumn="26" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" method="tapOrUntapPlayDrawbackAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1648" endline="1650" begincolumn="26" endcolumn="9" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_PermanentState" method="tapOrUntapPlayDrawbackAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
@@ -1111,36 +1097,42 @@ Avoid empty if statements
 <violation beginline="618" endline="638" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Protection" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'host'.
 </violation>
+<violation beginline="797" endline="802" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Protection" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'af'.
+</violation>
+<violation beginline="797" endline="802" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Protection" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+Avoid unused method parameters such as 'mandatory'.
+</violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/abilityFactory/AbilityFactory_Pump.java">
-<violation beginline="264" endline="294" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="265" endline="295" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'attack'.
 </violation>
-<violation beginline="264" endline="294" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="265" endline="295" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'sa'.
 </violation>
-<violation beginline="338" endline="339" begincolumn="17" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" method="pumpPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="342" endline="343" begincolumn="17" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" method="pumpPlayAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="436" endline="441" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" method="pumpTgtAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="440" endline="445" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" method="pumpTgtAI" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="493" endline="555" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="497" endline="559" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'mandatory'.
 </violation>
-<violation beginline="566" endline="603" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="570" endline="607" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="993" endline="1000" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1012" endline="1019" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
-<violation beginline="993" endline="1000" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1012" endline="1019" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'mandatory'.
 </violation>
-<violation beginline="1008" endline="1010" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1027" endline="1029" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'sa'.
 </violation>
-<violation beginline="1019" endline="1042" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="1038" endline="1061" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.abilityFactory" class="AbilityFactory_Pump" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'af'.
 </violation>
 </file>
@@ -1302,130 +1294,121 @@ An empty statement (semicolon) not part of a loop
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory.java">
-<violation beginline="136" endline="156" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.cardFactory" class="CardFactory" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="180" endline="187" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.card.cardFactory" class="CardFactory" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused method parameters such as 'file'.
 </violation>
-<violation beginline="356" endline="358" begincolumn="13" endcolumn="61" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="copySpellontoStack" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="347" endline="349" begincolumn="13" endcolumn="61" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="copySpellontoStack" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1252" endline="1254" begincolumn="24" endcolumn="17" rule="UselessOverridingMethod" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="canPlay" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
+<violation beginline="1289" endline="1291" begincolumn="24" endcolumn="17" rule="UselessOverridingMethod" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="canPlay" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UselessOverridingMethod" priority="3">
 Overriding method merely calls super
 </violation>
-<violation beginline="1668" endline="1670" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1848" endline="1850" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1847" endline="1849" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="1916" endline="1918" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
-<violation beginline="1915" endline="1917" begincolumn="28" endcolumn="21" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
-Avoid empty if statements
-</violation>
-<violation beginline="2240" endline="2245" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2241" endline="2246" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactoryUtil.java">
-<violation beginline="1583" endline="1586" begincolumn="33" endcolumn="49" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2423" endline="2423" begincolumn="21" endcolumn="92" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1594" endline="1597" begincolumn="33" endcolumn="49" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2427" endline="2427" begincolumn="21" endcolumn="72" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="1605" endline="1608" begincolumn="33" endcolumn="49" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2431" endline="2431" begincolumn="21" endcolumn="52" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2418" endline="2418" begincolumn="21" endcolumn="92" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2435" endline="2435" begincolumn="21" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2422" endline="2422" begincolumn="21" endcolumn="72" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2439" endline="2439" begincolumn="21" endcolumn="72" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2426" endline="2426" begincolumn="21" endcolumn="52" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2443" endline="2443" begincolumn="21" endcolumn="54" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2430" endline="2430" begincolumn="21" endcolumn="73" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2675" endline="2677" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2434" endline="2434" begincolumn="21" endcolumn="72" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2681" endline="2683" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2438" endline="2438" begincolumn="21" endcolumn="54" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="canTarget" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2687" endline="2689" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2660" endline="2662" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2692" endline="2694" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2666" endline="2668" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2697" endline="2699" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2672" endline="2674" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2703" endline="2705" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2677" endline="2679" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2709" endline="2711" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2682" endline="2684" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2715" endline="2717" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2688" endline="2690" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2781" endline="2783" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2694" endline="2696" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2786" endline="2788" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2700" endline="2702" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="playerXCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3012" endline="3015" begincolumn="40" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2961" endline="2964" begincolumn="40" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3017" endline="3020" begincolumn="43" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2966" endline="2969" begincolumn="43" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3022" endline="3025" begincolumn="46" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2971" endline="2974" begincolumn="46" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3027" endline="3030" begincolumn="43" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2976" endline="2979" begincolumn="43" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3032" endline="3035" begincolumn="40" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2981" endline="2984" begincolumn="40" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3037" endline="3040" begincolumn="42" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2986" endline="2989" begincolumn="42" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="3042" endline="3045" begincolumn="42" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2991" endline="2994" begincolumn="42" endcolumn="9" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="xCount" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
-</violation>
-<violation beginline="3322" endline="3322" begincolumn="48" endcolumn="48" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="getMostProminentColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="3373" endline="3373" begincolumn="48" endcolumn="48" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="getMostProminentColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
-<violation beginline="3322" endline="3322" begincolumn="48" endcolumn="48" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="getMostProminentColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
+<violation beginline="3373" endline="3373" begincolumn="48" endcolumn="48" rule="EmptyIfStmt" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactoryUtil" method="getMostProminentColor" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyIfStmt" priority="3">
 Avoid empty if statements
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Auras.java">
-<violation beginline="166" endline="168" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
+<violation beginline="12" endline="12" begincolumn="1" endcolumn="33" rule="UnusedImports" ruleset="Import Statement Rules" package="forge.card.cardFactory" externalInfoUrl="http://pmd.sourceforge.net/rules/imports.html#UnusedImports" priority="4">
+Avoid unused imports such as 'java.util.StringTokenizer'
 </violation>
-<violation beginline="1011" endline="1011" begincolumn="17" endcolumn="59" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="isCurseAura" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
+<violation beginline="77" endline="77" begincolumn="17" endcolumn="33" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="getCard" variable="standardUnenchant" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'standardUnenchant'.
 </violation>
-<violation beginline="1028" endline="1028" begincolumn="17" endcolumn="65" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="isTypeYouControl" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
-These nested if statements could be combined
-</violation>
-<violation beginline="1045" endline="1045" begincolumn="17" endcolumn="74" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="isTypeOppControl" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="168" endline="170" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Auras" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/cardFactory/CardFactory_Creatures.java">
-<violation beginline="2397" endline="2400" begincolumn="57" endcolumn="57" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="1739" endline="1742" begincolumn="57" endcolumn="57" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="3341" endline="3343" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2635" endline="2637" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="3707" endline="3717" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2948" endline="2958" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Creatures" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -1466,13 +1449,13 @@ An empty statement (semicolon) not part of a loop
 <violation beginline="628" endline="628" begincolumn="29" endcolumn="96" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="remove" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2933" endline="2938" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2869" endline="2874" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2946" endline="2948" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2882" endline="2884" begincolumn="29" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="2957" endline="2973" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="2893" endline="2909" begincolumn="33" endcolumn="33" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.cardFactory" class="CardFactory_Sorceries" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -1588,6 +1571,14 @@ These nested if statements could be combined
 These nested if statements could be combined
 </violation>
 </file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/staticAbility/StaticAbility_Continuous.java">
+<violation beginline="25" endline="25" begincolumn="24" endcolumn="33" rule="UnusedLocalVariable" ruleset="Unused Code Rules" package="forge.card.staticAbility" class="StaticAbility_Continuous" method="applyContinuousAbility" variable="controller" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedLocalVariable" priority="3">
+Avoid unused local variables such as 'controller'.
+</violation>
+<violation beginline="124" endline="128" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.staticAbility" class="StaticAbility_Continuous" method="applyContinuousAbility" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+</file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger.java">
 <violation beginline="244" endline="245" begincolumn="13" endcolumn="29" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="phasesCheck" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
@@ -1604,58 +1595,64 @@ These nested if statements could be combined
 <violation beginline="273" endline="275" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="requirementsCheck" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="421" endline="423" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="matchesValid" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="448" endline="450" begincolumn="21" endcolumn="21" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="matchesValid" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="444" endline="445" begincolumn="13" endcolumn="28" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="isSecondary" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="471" endline="472" begincolumn="13" endcolumn="28" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="isSecondary" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="452" endline="452" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
+<violation beginline="479" endline="479" begincolumn="20" endcolumn="35" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
 Ensure you override both equals() and hashCode()
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/TriggerHandler.java">
-<violation beginline="265" endline="268" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="runTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="277" endline="280" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="runTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="281" endline="284" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="runTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="293" endline="296" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="runTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="325" endline="328" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="runSingleTrigger" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+These nested if statements could be combined
+</violation>
+<violation beginline="874" endline="876" begincolumn="25" endcolumn="25" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="TriggerHandler" method="resolve" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_AttackerBlocked.java">
-<violation beginline="30" endline="32" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerBlocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="31" endline="33" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerBlocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="35" endline="37" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerBlocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="36" endline="38" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerBlocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_AttackerUnblocked.java">
-<violation beginline="30" endline="32" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerUnblocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="31" endline="33" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_AttackerUnblocked" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_Attacks.java">
-<violation beginline="31" endline="33" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Attacks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="32" endline="34" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Attacks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_BecomesTarget.java">
-<violation beginline="38" endline="40" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="39" endline="41" begincolumn="17" endcolumn="17" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="44" endline="46" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="45" endline="47" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="49" endline="51" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="50" endline="52" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_BecomesTarget" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/card/trigger/Trigger_Blocks.java">
-<violation beginline="31" endline="33" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Blocks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="32" endline="34" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Blocks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
-<violation beginline="36" endline="38" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Blocks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="37" endline="39" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.card.trigger" class="Trigger_Blocks" method="performTest" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -1793,12 +1790,12 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedDeck.java">
-<violation beginline="177" endline="178" begincolumn="21" endcolumn="37" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.deck.generate" class="GenerateConstructedDeck" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="180" endline="181" begincolumn="21" endcolumn="37" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.deck.generate" class="GenerateConstructedDeck" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/deck/generate/GenerateConstructedMultiColorDeck.java">
-<violation beginline="407" endline="410" begincolumn="25" endcolumn="41" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.deck.generate" class="GenerateConstructedMultiColorDeck" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="410" endline="413" begincolumn="25" endcolumn="41" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.deck.generate" class="GenerateConstructedMultiColorDeck" method="addCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -1831,7 +1828,7 @@ These nested if statements could be combined
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/gui/input/Input_Block.java">
-<violation beginline="90" endline="93" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.gui.input" class="Input_Block" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
+<violation beginline="89" endline="92" begincolumn="13" endcolumn="13" rule="CollapsibleIfStatements" ruleset="Basic Rules" package="forge.gui.input" class="Input_Block" method="selectCard" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#CollapsibleIfStatements" priority="3">
 These nested if statements could be combined
 </violation>
 </file>
@@ -1856,52 +1853,50 @@ This usage of the Collection.toArray() method will throw a ClassCastException.
 Avoid empty catch blocks
 </violation>
 </file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/quest/data/QuestBoosterPack.java">
+<violation beginline="205" endline="205" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="forge.quest.data" class="QuestBoosterPack" method="getCardName" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/quest/gui/main/QuestBattle.java">
-<violation beginline="435" endline="439" begincolumn="17" endcolumn="9" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.quest.gui.main" class="QuestBattle$DeckInfo" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
+<violation beginline="438" endline="442" begincolumn="17" endcolumn="9" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="forge.quest.gui.main" class="QuestBattle$DeckInfo" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
 Avoid unused constructor parameters such as 'name'.
 </violation>
 </file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/net/slightlymagic/braids/util/UtilFunctions.java">
+<violation beginline="14" endline="14" begincolumn="34" endcolumn="34" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util" class="UtilFunctions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+<violation beginline="64" endline="64" begincolumn="36" endcolumn="49" rule="ClassCastExceptionWithToArray" ruleset="Basic Rules" package="net.slightlymagic.braids.util" class="UtilFunctions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#ClassCastExceptionWithToArray" priority="3">
+This usage of the Collection.toArray() method will throw a ClassCastException.
+</violation>
+</file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/net/slightlymagic/braids/util/generator/GeneratorFunctions.java">
-<violation beginline="17" endline="17" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.generator" class="GeneratorFunctions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="23" endline="23" begincolumn="17" endcolumn="17" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.generator" class="GeneratorFunctions" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+</file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/net/slightlymagic/braids/util/lambda/FrozenCall.java">
+<violation beginline="32" endline="32" begincolumn="24" endcolumn="41" rule="OverrideBothEqualsAndHashcode" ruleset="Basic Rules" package="net.slightlymagic.braids.util.lambda" class="FrozenCall" method="equals" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#OverrideBothEqualsAndHashcode" priority="3">
+Ensure you override both equals() and hashCode()
+</violation>
+</file>
+<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/net/slightlymagic/braids/util/lambda/Null.java">
+<violation beginline="8" endline="8" begincolumn="25" endcolumn="25" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.lambda" class="Null" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
 </file>
 <file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/net/slightlymagic/braids/util/progress_monitor/BaseProgressMonitor.java">
-<violation beginline="357" endline="357" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.progress_monitor" class="BaseProgressMonitor" method="sendMessage" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+<violation beginline="108" endline="108" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.progress_monitor" class="BaseProgressMonitor" method="dispose" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
+An empty statement (semicolon) not part of a loop
+</violation>
+<violation beginline="364" endline="364" begincolumn="9" endcolumn="9" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="net.slightlymagic.braids.util.progress_monitor" class="BaseProgressMonitor" method="sendMessage" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
 An empty statement (semicolon) not part of a loop
 </violation>
 </file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingworker/SwingPropertyChangeSupport.java">
-<violation beginline="86" endline="88" begincolumn="18" endcolumn="5" rule="UnnecessaryFinalModifier" ruleset="Basic Rules" package="org.jdesktop.swingworker" class="SwingPropertyChangeSupport" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#UnnecessaryFinalModifier" priority="3">
-Unnecessary final modifier in final class
-</violation>
-</file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingworker/SwingWorker.java">
-<violation beginline="758" endline="758" begincolumn="29" endcolumn="29" rule="EmptyStatementNotInLoop" ruleset="Basic Rules" package="org.jdesktop.swingworker" class="SwingWorker" method="newThread" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyStatementNotInLoop" priority="3">
-An empty statement (semicolon) not part of a loop
-</violation>
-</file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/JXMultiSplitPane.java">
-<violation beginline="478" endline="487" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.jdesktop.swingx" class="JXMultiSplitPane" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'x'.
-</violation>
-<violation beginline="478" endline="487" begincolumn="13" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.jdesktop.swingx" class="JXMultiSplitPane" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'y'.
-</violation>
-</file>
-<file name="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java">
-<violation beginline="2139" endline="2141" begincolumn="20" endcolumn="5" rule="UnusedFormalParameter" ruleset="Unused Code Rules" package="org.jdesktop.swingx" class="MultiSplitLayout" externalInfoUrl="http://pmd.sourceforge.net/rules/unusedcode.html#UnusedFormalParameter" priority="3">
-Avoid unused method parameters such as 'st'.
-</violation>
-<violation beginline="2274" endline="2275" begincolumn="15" endcolumn="13" rule="EmptyCatchBlock" ruleset="Basic Rules" package="org.jdesktop.swingx" class="MultiSplitLayout" method="parseModel" externalInfoUrl="http://pmd.sourceforge.net/rules/basic.html#EmptyCatchBlock" priority="3">
-Avoid empty catch blocks
-</violation>
-</file>
-<suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GUI_Filter.java" suppressiontype="annotation" msg="Avoid unused private fields such as 'cardType'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'getDifferentLand(CardList,String)'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java" suppressiontype="annotation" msg="Avoid unused method parameters such as 'land'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GameAction.java" suppressiontype="annotation" msg="Avoid unused method parameters such as 'list'." usermsg=""/>
-<suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/GuiDisplay2.java" suppressiontype="annotation" msg="Avoid unused private fields such as 'jMenuBar2'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_BoosterDraft.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'refreshDeck()'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_BoosterDraft.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'setupMenu()'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/Gui_CardShop.java" suppressiontype="annotation" msg="Avoid unused private fields such as 'border1'." usermsg=""/>
@@ -1919,6 +1914,4 @@ Avoid empty catch blocks
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/MenuItem_HowToPlay.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'getString()'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/NameChanger.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'printMap(Map)'." usermsg=""/>
 <suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/NameChanger.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'readFile()'." usermsg=""/>
-<suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/forge/QuestData.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'getBackupFilename()'." usermsg=""/>
-<suppressedviolation filename="/Users/chrishutmire/workspace/ForgeSVN/target/checkout/src/org/jdesktop/swingx/MultiSplitLayout.java" suppressiontype="annotation" msg="Avoid unused private methods such as 'minimumComponentSize(Node)'." usermsg=""/>
 </pmd>

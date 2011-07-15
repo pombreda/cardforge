@@ -199,86 +199,105 @@
 <a class="jxr_linenumber" name="189" href="#189">189</a>                 AllZone.getStack().addSimultaneousStackEntry(change);
 <a class="jxr_linenumber" name="190" href="#190">190</a> 
 <a class="jxr_linenumber" name="191" href="#191">191</a>             }
-<a class="jxr_linenumber" name="192" href="#192">192</a>             <strong class="jxr_keyword">if</strong> (c.hasKeyword(<span class="jxr_string">"At the beginning of your end step, return CARDNAME to its owner's hand."</span>)
-<a class="jxr_linenumber" name="193" href="#193">193</a>                     &amp;&amp; AllZone.getPhase().isPlayerTurn(c.getController())) {
-<a class="jxr_linenumber" name="194" href="#194">194</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/Card.html">Card</a> source = c;
-<a class="jxr_linenumber" name="195" href="#195">195</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/card/spellability/SpellAbility.html">SpellAbility</a> change = <strong class="jxr_keyword">new</strong> <a href="../forge/card/spellability/Ability.html">Ability</a>(source, <span class="jxr_string">"0"</span>) {
-<a class="jxr_linenumber" name="196" href="#196">196</a>                     @Override
-<a class="jxr_linenumber" name="197" href="#197">197</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
-<a class="jxr_linenumber" name="198" href="#198">198</a>                         <strong class="jxr_keyword">if</strong> (AllZoneUtil.isCardInPlay(source)) {
-<a class="jxr_linenumber" name="199" href="#199">199</a>                             AllZone.getGameAction().moveToHand(source);
-<a class="jxr_linenumber" name="200" href="#200">200</a>                         }
-<a class="jxr_linenumber" name="201" href="#201">201</a>                     }
-<a class="jxr_linenumber" name="202" href="#202">202</a>                 };
-<a class="jxr_linenumber" name="203" href="#203">203</a>                 StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
-<a class="jxr_linenumber" name="204" href="#204">204</a>                 sb.append(source).append(<span class="jxr_string">" - At the beginning of your end step, return CARDNAME to its owner's hand."</span>);
-<a class="jxr_linenumber" name="205" href="#205">205</a>                 change.setStackDescription(sb.toString());
-<a class="jxr_linenumber" name="206" href="#206">206</a> 
-<a class="jxr_linenumber" name="207" href="#207">207</a>                 AllZone.getStack().addSimultaneousStackEntry(change);
-<a class="jxr_linenumber" name="208" href="#208">208</a> 
-<a class="jxr_linenumber" name="209" href="#209">209</a>             }
-<a class="jxr_linenumber" name="210" href="#210">210</a> 
-<a class="jxr_linenumber" name="211" href="#211">211</a>         }
-<a class="jxr_linenumber" name="212" href="#212">212</a> 
-<a class="jxr_linenumber" name="213" href="#213">213</a> 
-<a class="jxr_linenumber" name="214" href="#214">214</a>         execute(at);
-<a class="jxr_linenumber" name="215" href="#215">215</a> 
-<a class="jxr_linenumber" name="216" href="#216">216</a> 
-<a class="jxr_linenumber" name="217" href="#217">217</a>         <a href="../forge/CardList.html">CardList</a> all2 = AllZoneUtil.getCardsInPlay();
-<a class="jxr_linenumber" name="218" href="#218">218</a>         <strong class="jxr_keyword">for</strong> (Card c : all2) {
-<a class="jxr_linenumber" name="219" href="#219">219</a>             <strong class="jxr_keyword">if</strong> (c.getCreatureAttackedThisTurn()) c.setCreatureAttackedThisTurn(false);
-<a class="jxr_linenumber" name="220" href="#220">220</a>         }
-<a class="jxr_linenumber" name="221" href="#221">221</a> 
-<a class="jxr_linenumber" name="222" href="#222">222</a>     }<em class="jxr_comment">//executeAt()</em>
-<a class="jxr_linenumber" name="223" href="#223">223</a> 
-<a class="jxr_linenumber" name="224" href="#224">224</a> 
-<a class="jxr_linenumber" name="225" href="#225">225</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="226" href="#226">226</a> <em class="jxr_javadoccomment">     * &lt;p&gt;executeUntil.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="227" href="#227">227</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="228" href="#228">228</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> executeUntil() {
-<a class="jxr_linenumber" name="229" href="#229">229</a>         execute(until);
-<a class="jxr_linenumber" name="230" href="#230">230</a>         execute(last);
-<a class="jxr_linenumber" name="231" href="#231">231</a>     }
+<a class="jxr_linenumber" name="192" href="#192">192</a>             <strong class="jxr_keyword">if</strong> (c.hasKeyword(<span class="jxr_string">"At the beginning of your end step, destroy this creature if it didn't attack this turn."</span>)
+<a class="jxr_linenumber" name="193" href="#193">193</a>                     &amp;&amp; !c.getCreatureAttackedThisTurn()
+<a class="jxr_linenumber" name="194" href="#194">194</a>                     &amp;&amp; AllZone.getPhase().isPlayerTurn(c.getController())) {
+<a class="jxr_linenumber" name="195" href="#195">195</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/Card.html">Card</a> source = c;
+<a class="jxr_linenumber" name="196" href="#196">196</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/card/spellability/SpellAbility.html">SpellAbility</a> change = <strong class="jxr_keyword">new</strong> <a href="../forge/card/spellability/Ability.html">Ability</a>(source, <span class="jxr_string">"0"</span>) {
+<a class="jxr_linenumber" name="197" href="#197">197</a>                     @Override
+<a class="jxr_linenumber" name="198" href="#198">198</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="199" href="#199">199</a>                         <strong class="jxr_keyword">if</strong> (AllZoneUtil.isCardInPlay(source)) {
+<a class="jxr_linenumber" name="200" href="#200">200</a>                             AllZone.getGameAction().destroy(source);
+<a class="jxr_linenumber" name="201" href="#201">201</a>                         }
+<a class="jxr_linenumber" name="202" href="#202">202</a>                     }
+<a class="jxr_linenumber" name="203" href="#203">203</a>                 };
+<a class="jxr_linenumber" name="204" href="#204">204</a>                 StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="205" href="#205">205</a>                 sb.append(source.getName()).append(<span class="jxr_string">" - destroy "</span>).append(source.getName()).append(<span class="jxr_string">"."</span>);
+<a class="jxr_linenumber" name="206" href="#206">206</a>                 change.setStackDescription(sb.toString());
+<a class="jxr_linenumber" name="207" href="#207">207</a> 
+<a class="jxr_linenumber" name="208" href="#208">208</a>                 AllZone.getStack().addSimultaneousStackEntry(change);
+<a class="jxr_linenumber" name="209" href="#209">209</a> 
+<a class="jxr_linenumber" name="210" href="#210">210</a>             }
+<a class="jxr_linenumber" name="211" href="#211">211</a>             <strong class="jxr_keyword">if</strong> (c.hasKeyword(<span class="jxr_string">"At the beginning of your end step, return CARDNAME to its owner's hand."</span>)
+<a class="jxr_linenumber" name="212" href="#212">212</a>                     &amp;&amp; AllZone.getPhase().isPlayerTurn(c.getController())) {
+<a class="jxr_linenumber" name="213" href="#213">213</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/Card.html">Card</a> source = c;
+<a class="jxr_linenumber" name="214" href="#214">214</a>                 <strong class="jxr_keyword">final</strong> <a href="../forge/card/spellability/SpellAbility.html">SpellAbility</a> change = <strong class="jxr_keyword">new</strong> <a href="../forge/card/spellability/Ability.html">Ability</a>(source, <span class="jxr_string">"0"</span>) {
+<a class="jxr_linenumber" name="215" href="#215">215</a>                     @Override
+<a class="jxr_linenumber" name="216" href="#216">216</a>                     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> resolve() {
+<a class="jxr_linenumber" name="217" href="#217">217</a>                         <strong class="jxr_keyword">if</strong> (AllZoneUtil.isCardInPlay(source)) {
+<a class="jxr_linenumber" name="218" href="#218">218</a>                             AllZone.getGameAction().moveToHand(source);
+<a class="jxr_linenumber" name="219" href="#219">219</a>                         }
+<a class="jxr_linenumber" name="220" href="#220">220</a>                     }
+<a class="jxr_linenumber" name="221" href="#221">221</a>                 };
+<a class="jxr_linenumber" name="222" href="#222">222</a>                 StringBuilder sb = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="223" href="#223">223</a>                 sb.append(source).append(<span class="jxr_string">" - At the beginning of your end step, return CARDNAME to its owner's hand."</span>);
+<a class="jxr_linenumber" name="224" href="#224">224</a>                 change.setStackDescription(sb.toString());
+<a class="jxr_linenumber" name="225" href="#225">225</a> 
+<a class="jxr_linenumber" name="226" href="#226">226</a>                 AllZone.getStack().addSimultaneousStackEntry(change);
+<a class="jxr_linenumber" name="227" href="#227">227</a> 
+<a class="jxr_linenumber" name="228" href="#228">228</a>             }
+<a class="jxr_linenumber" name="229" href="#229">229</a> 
+<a class="jxr_linenumber" name="230" href="#230">230</a>         }
+<a class="jxr_linenumber" name="231" href="#231">231</a> 
 <a class="jxr_linenumber" name="232" href="#232">232</a> 
-<a class="jxr_linenumber" name="233" href="#233">233</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="234" href="#234">234</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeAt.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="235" href="#235">235</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="236" href="#236">236</a> <em class="jxr_javadoccomment">     * @return a int.</em>
-<a class="jxr_linenumber" name="237" href="#237">237</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="238" href="#238">238</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeAt() {
-<a class="jxr_linenumber" name="239" href="#239">239</a>         <strong class="jxr_keyword">return</strong> at.size();
-<a class="jxr_linenumber" name="240" href="#240">240</a>     }
-<a class="jxr_linenumber" name="241" href="#241">241</a> 
-<a class="jxr_linenumber" name="242" href="#242">242</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="243" href="#243">243</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeUntil.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="244" href="#244">244</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_javadoccomment">     * @return a int.</em>
+<a class="jxr_linenumber" name="233" href="#233">233</a>         execute(at);
+<a class="jxr_linenumber" name="234" href="#234">234</a> 
+<a class="jxr_linenumber" name="235" href="#235">235</a> 
+<a class="jxr_linenumber" name="236" href="#236">236</a>         <a href="../forge/CardList.html">CardList</a> all2 = AllZoneUtil.getCardsInPlay();
+<a class="jxr_linenumber" name="237" href="#237">237</a>         <strong class="jxr_keyword">for</strong> (Card c : all2) {
+<a class="jxr_linenumber" name="238" href="#238">238</a>             <strong class="jxr_keyword">if</strong> (c.getCreatureAttackedThisTurn()) c.setCreatureAttackedThisTurn(false);
+<a class="jxr_linenumber" name="239" href="#239">239</a>         }
+<a class="jxr_linenumber" name="240" href="#240">240</a> 
+<a class="jxr_linenumber" name="241" href="#241">241</a>     }<em class="jxr_comment">//executeAt()</em>
+<a class="jxr_linenumber" name="242" href="#242">242</a> 
+<a class="jxr_linenumber" name="243" href="#243">243</a> 
+<a class="jxr_linenumber" name="244" href="#244">244</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="245" href="#245">245</a> <em class="jxr_javadoccomment">     * &lt;p&gt;executeUntil.&lt;/p&gt;</em>
 <a class="jxr_linenumber" name="246" href="#246">246</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="247" href="#247">247</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeUntil() {
-<a class="jxr_linenumber" name="248" href="#248">248</a>         <strong class="jxr_keyword">return</strong> until.size();
-<a class="jxr_linenumber" name="249" href="#249">249</a>     }
-<a class="jxr_linenumber" name="250" href="#250">250</a> 
-<a class="jxr_linenumber" name="251" href="#251">251</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="252" href="#252">252</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeLast.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="253" href="#253">253</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="254" href="#254">254</a> <em class="jxr_javadoccomment">     * @return a int.</em>
-<a class="jxr_linenumber" name="255" href="#255">255</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="256" href="#256">256</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeLast() {
-<a class="jxr_linenumber" name="257" href="#257">257</a>         <strong class="jxr_keyword">return</strong> last.size();
-<a class="jxr_linenumber" name="258" href="#258">258</a>     }
-<a class="jxr_linenumber" name="259" href="#259">259</a> 
-<a class="jxr_linenumber" name="260" href="#260">260</a>     <em class="jxr_javadoccomment">/**</em>
-<a class="jxr_linenumber" name="261" href="#261">261</a> <em class="jxr_javadoccomment">     * &lt;p&gt;execute.&lt;/p&gt;</em>
-<a class="jxr_linenumber" name="262" href="#262">262</a> <em class="jxr_javadoccomment">     *</em>
-<a class="jxr_linenumber" name="263" href="#263">263</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.CommandList} object.</em>
-<a class="jxr_linenumber" name="264" href="#264">264</a> <em class="jxr_javadoccomment">     */</em>
-<a class="jxr_linenumber" name="265" href="#265">265</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> execute(<a href="../forge/CommandList.html">CommandList</a> c) {
-<a class="jxr_linenumber" name="266" href="#266">266</a>         <strong class="jxr_keyword">int</strong> length = c.size();
-<a class="jxr_linenumber" name="267" href="#267">267</a> 
-<a class="jxr_linenumber" name="268" href="#268">268</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; length; i++)
-<a class="jxr_linenumber" name="269" href="#269">269</a>             c.remove(0).execute();
-<a class="jxr_linenumber" name="270" href="#270">270</a>     }
-<a class="jxr_linenumber" name="271" href="#271">271</a> }
+<a class="jxr_linenumber" name="247" href="#247">247</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> executeUntil() {
+<a class="jxr_linenumber" name="248" href="#248">248</a>         execute(until);
+<a class="jxr_linenumber" name="249" href="#249">249</a>         execute(last);
+<a class="jxr_linenumber" name="250" href="#250">250</a>     }
+<a class="jxr_linenumber" name="251" href="#251">251</a> 
+<a class="jxr_linenumber" name="252" href="#252">252</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="253" href="#253">253</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeAt.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="254" href="#254">254</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="255" href="#255">255</a> <em class="jxr_javadoccomment">     * @return a int.</em>
+<a class="jxr_linenumber" name="256" href="#256">256</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="257" href="#257">257</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeAt() {
+<a class="jxr_linenumber" name="258" href="#258">258</a>         <strong class="jxr_keyword">return</strong> at.size();
+<a class="jxr_linenumber" name="259" href="#259">259</a>     }
+<a class="jxr_linenumber" name="260" href="#260">260</a> 
+<a class="jxr_linenumber" name="261" href="#261">261</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="262" href="#262">262</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeUntil.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="263" href="#263">263</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="264" href="#264">264</a> <em class="jxr_javadoccomment">     * @return a int.</em>
+<a class="jxr_linenumber" name="265" href="#265">265</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="266" href="#266">266</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeUntil() {
+<a class="jxr_linenumber" name="267" href="#267">267</a>         <strong class="jxr_keyword">return</strong> until.size();
+<a class="jxr_linenumber" name="268" href="#268">268</a>     }
+<a class="jxr_linenumber" name="269" href="#269">269</a> 
+<a class="jxr_linenumber" name="270" href="#270">270</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="271" href="#271">271</a> <em class="jxr_javadoccomment">     * &lt;p&gt;sizeLast.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="272" href="#272">272</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="273" href="#273">273</a> <em class="jxr_javadoccomment">     * @return a int.</em>
+<a class="jxr_linenumber" name="274" href="#274">274</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="275" href="#275">275</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> sizeLast() {
+<a class="jxr_linenumber" name="276" href="#276">276</a>         <strong class="jxr_keyword">return</strong> last.size();
+<a class="jxr_linenumber" name="277" href="#277">277</a>     }
+<a class="jxr_linenumber" name="278" href="#278">278</a> 
+<a class="jxr_linenumber" name="279" href="#279">279</a>     <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="280" href="#280">280</a> <em class="jxr_javadoccomment">     * &lt;p&gt;execute.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="281" href="#281">281</a> <em class="jxr_javadoccomment">     *</em>
+<a class="jxr_linenumber" name="282" href="#282">282</a> <em class="jxr_javadoccomment">     * @param c a {@link forge.CommandList} object.</em>
+<a class="jxr_linenumber" name="283" href="#283">283</a> <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="284" href="#284">284</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">void</strong> execute(<a href="../forge/CommandList.html">CommandList</a> c) {
+<a class="jxr_linenumber" name="285" href="#285">285</a>         <strong class="jxr_keyword">int</strong> length = c.size();
+<a class="jxr_linenumber" name="286" href="#286">286</a> 
+<a class="jxr_linenumber" name="287" href="#287">287</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; length; i++)
+<a class="jxr_linenumber" name="288" href="#288">288</a>             c.remove(0).execute();
+<a class="jxr_linenumber" name="289" href="#289">289</a>     }
+<a class="jxr_linenumber" name="290" href="#290">290</a> }
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

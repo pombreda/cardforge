@@ -399,146 +399,136 @@
 <a class="jxr_linenumber" name="389" href="#389">389</a> 
 <a class="jxr_linenumber" name="390" href="#390">390</a>         ArrayList&lt;mCard&gt; CList = <strong class="jxr_keyword">new</strong> ArrayList&lt;mCard&gt;();
 <a class="jxr_linenumber" name="391" href="#391">391</a> 
-<a class="jxr_linenumber" name="392" href="#392">392</a> 		<em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="393" href="#393">393</a> <em class="jxr_comment">		 * TODO Braids: "getAllCards copies the entire array, but that does not</em>
-<a class="jxr_linenumber" name="394" href="#394">394</a> <em class="jxr_comment">		 * seem to be needed here. Significant performance improvement is</em>
-<a class="jxr_linenumber" name="395" href="#395">395</a> <em class="jxr_comment">		 * possible if this code used getCards instead (along with a for each</em>
-<a class="jxr_linenumber" name="396" href="#396">396</a> <em class="jxr_comment">		 * loop instead of using get(i), if applicable)."</em>
-<a class="jxr_linenumber" name="397" href="#397">397</a> <em class="jxr_comment">		 */</em>
-<a class="jxr_linenumber" name="398" href="#398">398</a>         <a href="../forge/CardList.html">CardList</a> AllCards = AllZone.getCardFactory().getAllCards();
-<a class="jxr_linenumber" name="399" href="#399">399</a>         <em class="jxr_comment">//Log.error("AllCards.size: " + AllCards.size());</em>
-<a class="jxr_linenumber" name="400" href="#400">400</a> 
-<a class="jxr_linenumber" name="401" href="#401">401</a>         <em class="jxr_comment">//File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);</em>
-<a class="jxr_linenumber" name="402" href="#402">402</a>         String URLBase = <span class="jxr_string">"C:&#92;&#92;MTGForge&#92;&#92;HQPICS&#92;&#92;"</span>;
-<a class="jxr_linenumber" name="403" href="#403">403</a>         String imgFN = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="404" href="#404">404</a> 
-<a class="jxr_linenumber" name="405" href="#405">405</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; AllCards.size(); i++) {
-<a class="jxr_linenumber" name="406" href="#406">406</a>             <a href="../forge/Card.html">Card</a> c = AllCards.get(i);
-<a class="jxr_linenumber" name="407" href="#407">407</a>             <em class="jxr_comment">//String url = c.getSVar("Picture");</em>
-<a class="jxr_linenumber" name="408" href="#408">408</a>             <em class="jxr_comment">//String[] URLs = url.split("&#92;&#92;&#92;&#92;");</em>
-<a class="jxr_linenumber" name="409" href="#409">409</a> 
-<a class="jxr_linenumber" name="410" href="#410">410</a>             ArrayList&lt;SetInfo&gt; cSetInfo = c.getSets();
-<a class="jxr_linenumber" name="411" href="#411">411</a>             <strong class="jxr_keyword">if</strong> (cSetInfo.size() &gt; 0) {
-<a class="jxr_linenumber" name="412" href="#412">412</a>                 <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; j &lt; cSetInfo.size(); j++) {
-<a class="jxr_linenumber" name="413" href="#413">413</a>                     c.setCurSetCode(cSetInfo.get(j).Code);
-<a class="jxr_linenumber" name="414" href="#414">414</a>                     String SC3 = c.getCurSetCode();
-<a class="jxr_linenumber" name="415" href="#415">415</a>                     String SC2 = SetInfoUtil.getSetCode2_SetCode3(c.getCurSetCode());
-<a class="jxr_linenumber" name="416" href="#416">416</a> 
-<a class="jxr_linenumber" name="417" href="#417">417</a>                     <strong class="jxr_keyword">int</strong> n = 0;
-<a class="jxr_linenumber" name="418" href="#418">418</a>                     <strong class="jxr_keyword">if</strong> (cSetInfo.get(j).PicCount &gt; 0) {
-<a class="jxr_linenumber" name="419" href="#419">419</a>                         n = cSetInfo.get(j).PicCount;
-<a class="jxr_linenumber" name="420" href="#420">420</a> 
-<a class="jxr_linenumber" name="421" href="#421">421</a>                         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> k = 1; k &lt;= n; k++) {
-<a class="jxr_linenumber" name="422" href="#422">422</a>                             c.setRandomPicture(k);
-<a class="jxr_linenumber" name="423" href="#423">423</a> 
-<a class="jxr_linenumber" name="424" href="#424">424</a>                             imgFN = CardUtil.buildFilename(c);
+<a class="jxr_linenumber" name="392" href="#392">392</a>         <em class="jxr_comment">//File imgBase = ForgeProps.getFile(NewConstants.IMAGE_BASE);</em>
+<a class="jxr_linenumber" name="393" href="#393">393</a>         String URLBase = <span class="jxr_string">"C:&#92;&#92;MTGForge&#92;&#92;HQPICS&#92;&#92;"</span>;
+<a class="jxr_linenumber" name="394" href="#394">394</a>         String imgFN = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="395" href="#395">395</a> 
+<a class="jxr_linenumber" name="396" href="#396">396</a>         <strong class="jxr_keyword">for</strong> (Card c : AllZone.getCardFactory()) {
+<a class="jxr_linenumber" name="397" href="#397">397</a>             <em class="jxr_comment">//String url = c.getSVar("Picture");</em>
+<a class="jxr_linenumber" name="398" href="#398">398</a>             <em class="jxr_comment">//String[] URLs = url.split("&#92;&#92;&#92;&#92;");</em>
+<a class="jxr_linenumber" name="399" href="#399">399</a> 
+<a class="jxr_linenumber" name="400" href="#400">400</a>             ArrayList&lt;SetInfo&gt; cSetInfo = c.getSets();
+<a class="jxr_linenumber" name="401" href="#401">401</a>             <strong class="jxr_keyword">if</strong> (cSetInfo.size() &gt; 0) {
+<a class="jxr_linenumber" name="402" href="#402">402</a>                 <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> j = 0; j &lt; cSetInfo.size(); j++) {
+<a class="jxr_linenumber" name="403" href="#403">403</a>                     c.setCurSetCode(cSetInfo.get(j).Code);
+<a class="jxr_linenumber" name="404" href="#404">404</a>                     String SC3 = c.getCurSetCode();
+<a class="jxr_linenumber" name="405" href="#405">405</a>                     String SC2 = SetInfoUtil.getSetCode2_SetCode3(c.getCurSetCode());
+<a class="jxr_linenumber" name="406" href="#406">406</a> 
+<a class="jxr_linenumber" name="407" href="#407">407</a>                     <strong class="jxr_keyword">int</strong> n = 0;
+<a class="jxr_linenumber" name="408" href="#408">408</a>                     <strong class="jxr_keyword">if</strong> (cSetInfo.get(j).PicCount &gt; 0) {
+<a class="jxr_linenumber" name="409" href="#409">409</a>                         n = cSetInfo.get(j).PicCount;
+<a class="jxr_linenumber" name="410" href="#410">410</a> 
+<a class="jxr_linenumber" name="411" href="#411">411</a>                         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> k = 1; k &lt;= n; k++) {
+<a class="jxr_linenumber" name="412" href="#412">412</a>                             c.setRandomPicture(k);
+<a class="jxr_linenumber" name="413" href="#413">413</a> 
+<a class="jxr_linenumber" name="414" href="#414">414</a>                             imgFN = CardUtil.buildFilename(c);
+<a class="jxr_linenumber" name="415" href="#415">415</a> 
+<a class="jxr_linenumber" name="416" href="#416">416</a>                             <strong class="jxr_keyword">if</strong> (imgFN.equals(<span class="jxr_string">"none"</span>) || (!imgFN.contains(SC3) &amp;&amp; !imgFN.contains(SC2))) {
+<a class="jxr_linenumber" name="417" href="#417">417</a>                                 imgFN += k + <span class="jxr_string">".jpg"</span>;
+<a class="jxr_linenumber" name="418" href="#418">418</a>                                 String fn = GuiDisplayUtil.cleanStringMWS(c.getName()) + k + <span class="jxr_string">".full.jpg"</span>;
+<a class="jxr_linenumber" name="419" href="#419">419</a>                                 <em class="jxr_comment">//CList.add(new mCard(SC3 + "/" + fn, URLBase + SC2 + "/" + Base64Coder.encodeString(fn, true), SC3));</em>
+<a class="jxr_linenumber" name="420" href="#420">420</a>                                 CList.add(<strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(SC3 + <span class="jxr_string">"&#92;&#92;"</span> + imgFN, URLBase + SC2 + <span class="jxr_string">"&#92;&#92;"</span> + fn, SC3));
+<a class="jxr_linenumber" name="421" href="#421">421</a>                             }
+<a class="jxr_linenumber" name="422" href="#422">422</a>                         }
+<a class="jxr_linenumber" name="423" href="#423">423</a>                     } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="424" href="#424">424</a>                         c.setRandomPicture(0);
 <a class="jxr_linenumber" name="425" href="#425">425</a> 
-<a class="jxr_linenumber" name="426" href="#426">426</a>                             <strong class="jxr_keyword">if</strong> (imgFN.equals(<span class="jxr_string">"none"</span>) || (!imgFN.contains(SC3) &amp;&amp; !imgFN.contains(SC2))) {
-<a class="jxr_linenumber" name="427" href="#427">427</a>                                 imgFN += k + <span class="jxr_string">".jpg"</span>;
-<a class="jxr_linenumber" name="428" href="#428">428</a>                                 String fn = GuiDisplayUtil.cleanStringMWS(c.getName()) + k + <span class="jxr_string">".full.jpg"</span>;
-<a class="jxr_linenumber" name="429" href="#429">429</a>                                 <em class="jxr_comment">//CList.add(new mCard(SC3 + "/" + fn, URLBase + SC2 + "/" + Base64Coder.encodeString(fn, true), SC3));</em>
-<a class="jxr_linenumber" name="430" href="#430">430</a>                                 CList.add(<strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(SC3 + <span class="jxr_string">"&#92;&#92;"</span> + imgFN, URLBase + SC2 + <span class="jxr_string">"&#92;&#92;"</span> + fn, SC3));
-<a class="jxr_linenumber" name="431" href="#431">431</a>                             }
-<a class="jxr_linenumber" name="432" href="#432">432</a>                         }
-<a class="jxr_linenumber" name="433" href="#433">433</a>                     } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="434" href="#434">434</a>                         c.setRandomPicture(0);
-<a class="jxr_linenumber" name="435" href="#435">435</a> 
-<a class="jxr_linenumber" name="436" href="#436">436</a>                         imgFN = CardUtil.buildFilename(c);
+<a class="jxr_linenumber" name="426" href="#426">426</a>                         imgFN = CardUtil.buildFilename(c);
+<a class="jxr_linenumber" name="427" href="#427">427</a> 
+<a class="jxr_linenumber" name="428" href="#428">428</a>                         <strong class="jxr_keyword">if</strong> (imgFN.equals(<span class="jxr_string">"none"</span>) || (!imgFN.contains(SC3) &amp;&amp; !imgFN.contains(SC2))) {
+<a class="jxr_linenumber" name="429" href="#429">429</a>                             <em class="jxr_comment">//imgFN += ".jpg";</em>
+<a class="jxr_linenumber" name="430" href="#430">430</a> 
+<a class="jxr_linenumber" name="431" href="#431">431</a>                             String newFileName = GuiDisplayUtil.cleanString(c.getName()) + <span class="jxr_string">".jpg"</span>;
+<a class="jxr_linenumber" name="432" href="#432">432</a> 
+<a class="jxr_linenumber" name="433" href="#433">433</a>                             String fn = GuiDisplayUtil.cleanStringMWS(c.getName()) + <span class="jxr_string">".full.jpg"</span>;
+<a class="jxr_linenumber" name="434" href="#434">434</a>                             <em class="jxr_comment">//fn = fn.replace(" ", "%20%");</em>
+<a class="jxr_linenumber" name="435" href="#435">435</a>                             <em class="jxr_comment">//CList.add(new mCard(SC3 + "/" + fn, URLBase + SC2 + "/" + Base64Coder.encodeString(fn, true), SC3));</em>
+<a class="jxr_linenumber" name="436" href="#436">436</a>                             CList.add(<strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(SC3 + <span class="jxr_string">"&#92;&#92;"</span> + newFileName, URLBase + SC2 + <span class="jxr_string">"&#92;&#92;"</span> + fn, SC3));
 <a class="jxr_linenumber" name="437" href="#437">437</a> 
-<a class="jxr_linenumber" name="438" href="#438">438</a>                         <strong class="jxr_keyword">if</strong> (imgFN.equals(<span class="jxr_string">"none"</span>) || (!imgFN.contains(SC3) &amp;&amp; !imgFN.contains(SC2))) {
-<a class="jxr_linenumber" name="439" href="#439">439</a>                             <em class="jxr_comment">//imgFN += ".jpg";</em>
-<a class="jxr_linenumber" name="440" href="#440">440</a> 
-<a class="jxr_linenumber" name="441" href="#441">441</a>                             String newFileName = GuiDisplayUtil.cleanString(c.getName()) + <span class="jxr_string">".jpg"</span>;
+<a class="jxr_linenumber" name="438" href="#438">438</a>                         }
+<a class="jxr_linenumber" name="439" href="#439">439</a> 
+<a class="jxr_linenumber" name="440" href="#440">440</a>                     }
+<a class="jxr_linenumber" name="441" href="#441">441</a>                 }
 <a class="jxr_linenumber" name="442" href="#442">442</a> 
-<a class="jxr_linenumber" name="443" href="#443">443</a>                             String fn = GuiDisplayUtil.cleanStringMWS(c.getName()) + <span class="jxr_string">".full.jpg"</span>;
-<a class="jxr_linenumber" name="444" href="#444">444</a>                             <em class="jxr_comment">//fn = fn.replace(" ", "%20%");</em>
-<a class="jxr_linenumber" name="445" href="#445">445</a>                             <em class="jxr_comment">//CList.add(new mCard(SC3 + "/" + fn, URLBase + SC2 + "/" + Base64Coder.encodeString(fn, true), SC3));</em>
-<a class="jxr_linenumber" name="446" href="#446">446</a>                             CList.add(<strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(SC3 + <span class="jxr_string">"&#92;&#92;"</span> + newFileName, URLBase + SC2 + <span class="jxr_string">"&#92;&#92;"</span> + fn, SC3));
-<a class="jxr_linenumber" name="447" href="#447">447</a> 
-<a class="jxr_linenumber" name="448" href="#448">448</a>                         }
-<a class="jxr_linenumber" name="449" href="#449">449</a> 
-<a class="jxr_linenumber" name="450" href="#450">450</a>                     }
-<a class="jxr_linenumber" name="451" href="#451">451</a>                 }
-<a class="jxr_linenumber" name="452" href="#452">452</a> 
-<a class="jxr_linenumber" name="453" href="#453">453</a>             }
-<a class="jxr_linenumber" name="454" href="#454">454</a> 
-<a class="jxr_linenumber" name="455" href="#455">455</a>             <em class="jxr_comment">//Log.error(iName + ".jpg" + "\t" + URLs[0]);</em>
-<a class="jxr_linenumber" name="456" href="#456">456</a> 
-<a class="jxr_linenumber" name="457" href="#457">457</a>         }
-<a class="jxr_linenumber" name="458" href="#458">458</a> 
-<a class="jxr_linenumber" name="459" href="#459">459</a>         <em class="jxr_comment">//ArrayList&lt;mCard&gt; list = new ArrayList&lt;mCard&gt;();</em>
-<a class="jxr_linenumber" name="460" href="#460">460</a>         <em class="jxr_comment">//File file;</em>
-<a class="jxr_linenumber" name="461" href="#461">461</a>         <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="462" href="#462">462</a> <em class="jxr_comment">        File base = ForgeProps.getFile(IMAGE_TOKEN);</em>
-<a class="jxr_linenumber" name="463" href="#463">463</a> <em class="jxr_comment">        for(int i = 0; i &lt; cardTokenLQ.length; i++) {</em>
-<a class="jxr_linenumber" name="464" href="#464">464</a> <em class="jxr_comment">        	 file = new File(base, cardTokenLQ[i].name.substring(3, cardTokenLQ[i].name.length()));</em>
-<a class="jxr_linenumber" name="465" href="#465">465</a> <em class="jxr_comment">            if(!file.exists()) CList.add(cardTokenLQ[i]);</em>
-<a class="jxr_linenumber" name="466" href="#466">466</a> <em class="jxr_comment">        }</em>
-<a class="jxr_linenumber" name="467" href="#467">467</a> <em class="jxr_comment">        */</em>
-<a class="jxr_linenumber" name="468" href="#468">468</a>         <em class="jxr_comment">//return all card names and urls that are needed</em>
-<a class="jxr_linenumber" name="469" href="#469">469</a>         <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>[] out = <strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>[CList.size()];
-<a class="jxr_linenumber" name="470" href="#470">470</a>         CList.toArray(out);
-<a class="jxr_linenumber" name="471" href="#471">471</a> 
-<a class="jxr_linenumber" name="472" href="#472">472</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; out.length; i++)
-<a class="jxr_linenumber" name="473" href="#473">473</a>             System.out.println(out[i].name + <span class="jxr_string">" "</span> + out[i].url);
-<a class="jxr_linenumber" name="474" href="#474">474</a>         <strong class="jxr_keyword">return</strong> out;
-<a class="jxr_linenumber" name="475" href="#475">475</a>     }<em class="jxr_comment">//getNeededCards()</em>
-<a class="jxr_linenumber" name="476" href="#476">476</a>     <em class="jxr_comment">/*</em>
-<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_comment">    private static mCard[] readFile(String ABC) {</em>
-<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_comment">        try {</em>
-<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_comment">        	FileReader zrc = new FileReader(ForgeProps.getFile(ABC));</em>
-<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_comment">        	BufferedReader in = new BufferedReader(zrc);</em>
-<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_comment">            String line;</em>
-<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_comment">            ArrayList&lt;mCard&gt; list = new ArrayList&lt;mCard&gt;();</em>
-<a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_comment">            StringTokenizer tok;</em>
-<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_comment">            </em>
-<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_comment">            line = in.readLine();</em>
-<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_comment">            while(line != null &amp;&amp; (!line.equals(""))) {</em>
-<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_comment">                tok = new StringTokenizer(line);</em>
-<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_comment">                list.add(new mCard(tok.nextToken(), tok.nextToken(), ""));</em>
-<a class="jxr_linenumber" name="489" href="#489">489</a> <em class="jxr_comment">                </em>
-<a class="jxr_linenumber" name="490" href="#490">490</a> <em class="jxr_comment">                line = in.readLine();</em>
-<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_comment">            }</em>
-<a class="jxr_linenumber" name="492" href="#492">492</a> <em class="jxr_comment">            </em>
-<a class="jxr_linenumber" name="493" href="#493">493</a> <em class="jxr_comment">            mCard[] out = new mCard[list.size()];</em>
-<a class="jxr_linenumber" name="494" href="#494">494</a> <em class="jxr_comment">            list.toArray(out);</em>
-<a class="jxr_linenumber" name="495" href="#495">495</a> <em class="jxr_comment">            return out;</em>
-<a class="jxr_linenumber" name="496" href="#496">496</a> <em class="jxr_comment">            </em>
-<a class="jxr_linenumber" name="497" href="#497">497</a> <em class="jxr_comment">        } catch(Exception ex) {</em>
-<a class="jxr_linenumber" name="498" href="#498">498</a> <em class="jxr_comment">            ErrorViewer.showError(ex, "Gui_DownloadPictures: readFile() error");</em>
-<a class="jxr_linenumber" name="499" href="#499">499</a> <em class="jxr_comment">            throw new RuntimeException("Gui_DownloadPictures : readFile() error");</em>
-<a class="jxr_linenumber" name="500" href="#500">500</a> <em class="jxr_comment">        }</em>
-<a class="jxr_linenumber" name="501" href="#501">501</a> <em class="jxr_comment">    }//readFile()</em>
-<a class="jxr_linenumber" name="502" href="#502">502</a> <em class="jxr_comment">    */</em>
-<a class="jxr_linenumber" name="503" href="#503">503</a> 
-<a class="jxr_linenumber" name="504" href="#504">504</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">ProxyHandler</a> <strong class="jxr_keyword">implements</strong> ChangeListener {
-<a class="jxr_linenumber" name="505" href="#505">505</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> type;
-<a class="jxr_linenumber" name="506" href="#506">506</a> 
-<a class="jxr_linenumber" name="507" href="#507">507</a>         <strong class="jxr_keyword">public</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">ProxyHandler</a>(<strong class="jxr_keyword">int</strong> type) {
-<a class="jxr_linenumber" name="508" href="#508">508</a>             <strong class="jxr_keyword">this</strong>.type = type;
-<a class="jxr_linenumber" name="509" href="#509">509</a>         }
-<a class="jxr_linenumber" name="510" href="#510">510</a> 
-<a class="jxr_linenumber" name="511" href="#511">511</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> stateChanged(ChangeEvent e) {
-<a class="jxr_linenumber" name="512" href="#512">512</a>             <strong class="jxr_keyword">if</strong> (((AbstractButton) e.getSource()).isSelected()) {
-<a class="jxr_linenumber" name="513" href="#513">513</a>                 Gui_MigrateLocalMWSSetPictures_HQ.<strong class="jxr_keyword">this</strong>.type = type;
-<a class="jxr_linenumber" name="514" href="#514">514</a>                 addr.setEnabled(type != 0);
-<a class="jxr_linenumber" name="515" href="#515">515</a>                 port.setEnabled(type != 0);
-<a class="jxr_linenumber" name="516" href="#516">516</a>             }
-<a class="jxr_linenumber" name="517" href="#517">517</a>         }
-<a class="jxr_linenumber" name="518" href="#518">518</a>     }
-<a class="jxr_linenumber" name="519" href="#519">519</a> 
-<a class="jxr_linenumber" name="520" href="#520">520</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a> {
-<a class="jxr_linenumber" name="521" href="#521">521</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String name;
-<a class="jxr_linenumber" name="522" href="#522">522</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String url;
-<a class="jxr_linenumber" name="523" href="#523">523</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String folder;
-<a class="jxr_linenumber" name="524" href="#524">524</a> 
-<a class="jxr_linenumber" name="525" href="#525">525</a>         <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(String cardName, String cardURL, String cardFolder) {
-<a class="jxr_linenumber" name="526" href="#526">526</a>             name = cardName;
-<a class="jxr_linenumber" name="527" href="#527">527</a>             url = cardURL;
-<a class="jxr_linenumber" name="528" href="#528">528</a>             folder = cardFolder;
-<a class="jxr_linenumber" name="529" href="#529">529</a>         }
-<a class="jxr_linenumber" name="530" href="#530">530</a>     }<em class="jxr_comment">//mCard</em>
-<a class="jxr_linenumber" name="531" href="#531">531</a> } 
+<a class="jxr_linenumber" name="443" href="#443">443</a>             }
+<a class="jxr_linenumber" name="444" href="#444">444</a> 
+<a class="jxr_linenumber" name="445" href="#445">445</a>             <em class="jxr_comment">//Log.error(iName + ".jpg" + "\t" + URLs[0]);</em>
+<a class="jxr_linenumber" name="446" href="#446">446</a> 
+<a class="jxr_linenumber" name="447" href="#447">447</a>         }
+<a class="jxr_linenumber" name="448" href="#448">448</a> 
+<a class="jxr_linenumber" name="449" href="#449">449</a>         <em class="jxr_comment">//ArrayList&lt;mCard&gt; list = new ArrayList&lt;mCard&gt;();</em>
+<a class="jxr_linenumber" name="450" href="#450">450</a>         <em class="jxr_comment">//File file;</em>
+<a class="jxr_linenumber" name="451" href="#451">451</a>         <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="452" href="#452">452</a> <em class="jxr_comment">        File base = ForgeProps.getFile(IMAGE_TOKEN);</em>
+<a class="jxr_linenumber" name="453" href="#453">453</a> <em class="jxr_comment">        for(int i = 0; i &lt; cardTokenLQ.length; i++) {</em>
+<a class="jxr_linenumber" name="454" href="#454">454</a> <em class="jxr_comment">        	 file = new File(base, cardTokenLQ[i].name.substring(3, cardTokenLQ[i].name.length()));</em>
+<a class="jxr_linenumber" name="455" href="#455">455</a> <em class="jxr_comment">            if(!file.exists()) CList.add(cardTokenLQ[i]);</em>
+<a class="jxr_linenumber" name="456" href="#456">456</a> <em class="jxr_comment">        }</em>
+<a class="jxr_linenumber" name="457" href="#457">457</a> <em class="jxr_comment">        */</em>
+<a class="jxr_linenumber" name="458" href="#458">458</a>         <em class="jxr_comment">//return all card names and urls that are needed</em>
+<a class="jxr_linenumber" name="459" href="#459">459</a>         <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>[] out = <strong class="jxr_keyword">new</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>[CList.size()];
+<a class="jxr_linenumber" name="460" href="#460">460</a>         CList.toArray(out);
+<a class="jxr_linenumber" name="461" href="#461">461</a> 
+<a class="jxr_linenumber" name="462" href="#462">462</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; out.length; i++)
+<a class="jxr_linenumber" name="463" href="#463">463</a>             System.out.println(out[i].name + <span class="jxr_string">" "</span> + out[i].url);
+<a class="jxr_linenumber" name="464" href="#464">464</a>         <strong class="jxr_keyword">return</strong> out;
+<a class="jxr_linenumber" name="465" href="#465">465</a>     }<em class="jxr_comment">//getNeededCards()</em>
+<a class="jxr_linenumber" name="466" href="#466">466</a>     <em class="jxr_comment">/*</em>
+<a class="jxr_linenumber" name="467" href="#467">467</a> <em class="jxr_comment">    private static mCard[] readFile(String ABC) {</em>
+<a class="jxr_linenumber" name="468" href="#468">468</a> <em class="jxr_comment">        try {</em>
+<a class="jxr_linenumber" name="469" href="#469">469</a> <em class="jxr_comment">        	FileReader zrc = new FileReader(ForgeProps.getFile(ABC));</em>
+<a class="jxr_linenumber" name="470" href="#470">470</a> <em class="jxr_comment">        	BufferedReader in = new BufferedReader(zrc);</em>
+<a class="jxr_linenumber" name="471" href="#471">471</a> <em class="jxr_comment">            String line;</em>
+<a class="jxr_linenumber" name="472" href="#472">472</a> <em class="jxr_comment">            ArrayList&lt;mCard&gt; list = new ArrayList&lt;mCard&gt;();</em>
+<a class="jxr_linenumber" name="473" href="#473">473</a> <em class="jxr_comment">            StringTokenizer tok;</em>
+<a class="jxr_linenumber" name="474" href="#474">474</a> <em class="jxr_comment">            </em>
+<a class="jxr_linenumber" name="475" href="#475">475</a> <em class="jxr_comment">            line = in.readLine();</em>
+<a class="jxr_linenumber" name="476" href="#476">476</a> <em class="jxr_comment">            while(line != null &amp;&amp; (!line.equals(""))) {</em>
+<a class="jxr_linenumber" name="477" href="#477">477</a> <em class="jxr_comment">                tok = new StringTokenizer(line);</em>
+<a class="jxr_linenumber" name="478" href="#478">478</a> <em class="jxr_comment">                list.add(new mCard(tok.nextToken(), tok.nextToken(), ""));</em>
+<a class="jxr_linenumber" name="479" href="#479">479</a> <em class="jxr_comment">                </em>
+<a class="jxr_linenumber" name="480" href="#480">480</a> <em class="jxr_comment">                line = in.readLine();</em>
+<a class="jxr_linenumber" name="481" href="#481">481</a> <em class="jxr_comment">            }</em>
+<a class="jxr_linenumber" name="482" href="#482">482</a> <em class="jxr_comment">            </em>
+<a class="jxr_linenumber" name="483" href="#483">483</a> <em class="jxr_comment">            mCard[] out = new mCard[list.size()];</em>
+<a class="jxr_linenumber" name="484" href="#484">484</a> <em class="jxr_comment">            list.toArray(out);</em>
+<a class="jxr_linenumber" name="485" href="#485">485</a> <em class="jxr_comment">            return out;</em>
+<a class="jxr_linenumber" name="486" href="#486">486</a> <em class="jxr_comment">            </em>
+<a class="jxr_linenumber" name="487" href="#487">487</a> <em class="jxr_comment">        } catch(Exception ex) {</em>
+<a class="jxr_linenumber" name="488" href="#488">488</a> <em class="jxr_comment">            ErrorViewer.showError(ex, "Gui_DownloadPictures: readFile() error");</em>
+<a class="jxr_linenumber" name="489" href="#489">489</a> <em class="jxr_comment">            throw new RuntimeException("Gui_DownloadPictures : readFile() error");</em>
+<a class="jxr_linenumber" name="490" href="#490">490</a> <em class="jxr_comment">        }</em>
+<a class="jxr_linenumber" name="491" href="#491">491</a> <em class="jxr_comment">    }//readFile()</em>
+<a class="jxr_linenumber" name="492" href="#492">492</a> <em class="jxr_comment">    */</em>
+<a class="jxr_linenumber" name="493" href="#493">493</a> 
+<a class="jxr_linenumber" name="494" href="#494">494</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">class</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">ProxyHandler</a> <strong class="jxr_keyword">implements</strong> ChangeListener {
+<a class="jxr_linenumber" name="495" href="#495">495</a>         <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">int</strong> type;
+<a class="jxr_linenumber" name="496" href="#496">496</a> 
+<a class="jxr_linenumber" name="497" href="#497">497</a>         <strong class="jxr_keyword">public</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">ProxyHandler</a>(<strong class="jxr_keyword">int</strong> type) {
+<a class="jxr_linenumber" name="498" href="#498">498</a>             <strong class="jxr_keyword">this</strong>.type = type;
+<a class="jxr_linenumber" name="499" href="#499">499</a>         }
+<a class="jxr_linenumber" name="500" href="#500">500</a> 
+<a class="jxr_linenumber" name="501" href="#501">501</a>         <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> stateChanged(ChangeEvent e) {
+<a class="jxr_linenumber" name="502" href="#502">502</a>             <strong class="jxr_keyword">if</strong> (((AbstractButton) e.getSource()).isSelected()) {
+<a class="jxr_linenumber" name="503" href="#503">503</a>                 Gui_MigrateLocalMWSSetPictures_HQ.<strong class="jxr_keyword">this</strong>.type = type;
+<a class="jxr_linenumber" name="504" href="#504">504</a>                 addr.setEnabled(type != 0);
+<a class="jxr_linenumber" name="505" href="#505">505</a>                 port.setEnabled(type != 0);
+<a class="jxr_linenumber" name="506" href="#506">506</a>             }
+<a class="jxr_linenumber" name="507" href="#507">507</a>         }
+<a class="jxr_linenumber" name="508" href="#508">508</a>     }
+<a class="jxr_linenumber" name="509" href="#509">509</a> 
+<a class="jxr_linenumber" name="510" href="#510">510</a>     <strong class="jxr_keyword">private</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">class</strong> <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a> {
+<a class="jxr_linenumber" name="511" href="#511">511</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String name;
+<a class="jxr_linenumber" name="512" href="#512">512</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String url;
+<a class="jxr_linenumber" name="513" href="#513">513</a>         <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">public</strong> String folder;
+<a class="jxr_linenumber" name="514" href="#514">514</a> 
+<a class="jxr_linenumber" name="515" href="#515">515</a>         <a href="../forge/Gui_MigrateLocalMWSSetPictures_HQ.html">mCard</a>(String cardName, String cardURL, String cardFolder) {
+<a class="jxr_linenumber" name="516" href="#516">516</a>             name = cardName;
+<a class="jxr_linenumber" name="517" href="#517">517</a>             url = cardURL;
+<a class="jxr_linenumber" name="518" href="#518">518</a>             folder = cardFolder;
+<a class="jxr_linenumber" name="519" href="#519">519</a>         }
+<a class="jxr_linenumber" name="520" href="#520">520</a>     }<em class="jxr_comment">//mCard</em>
+<a class="jxr_linenumber" name="521" href="#521">521</a> } 
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>

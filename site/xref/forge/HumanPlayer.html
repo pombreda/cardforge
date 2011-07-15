@@ -144,67 +144,71 @@
 <a class="jxr_linenumber" name="134" href="#134">134</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> discardUnless(<strong class="jxr_keyword">int</strong> num, String uType, <a href="../forge/card/spellability/SpellAbility.html">SpellAbility</a> sa) {
 <a class="jxr_linenumber" name="135" href="#135">135</a>         AllZone.getInputControl().setInput(PlayerUtil.input_discardNumUnless(num, uType, sa));
 <a class="jxr_linenumber" name="136" href="#136">136</a>     }
-<a class="jxr_linenumber" name="137" href="#137">137</a> 
-<a class="jxr_linenumber" name="138" href="#138">138</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
-<a class="jxr_linenumber" name="139" href="#139">139</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> handToLibrary(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> numToLibrary, String libPos) {
-<a class="jxr_linenumber" name="140" href="#140">140</a>         <strong class="jxr_keyword">if</strong> (libPos.equals(<span class="jxr_string">"Top"</span>) || libPos.equals(<span class="jxr_string">"Bottom"</span>)) libPos = libPos.toLowerCase();
-<a class="jxr_linenumber" name="141" href="#141">141</a>         <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="142" href="#142">142</a>             String s = <span class="jxr_string">"card"</span>;
-<a class="jxr_linenumber" name="143" href="#143">143</a>             <strong class="jxr_keyword">if</strong> (numToLibrary &gt; 1) s += <span class="jxr_string">"s"</span>;
-<a class="jxr_linenumber" name="144" href="#144">144</a> 
-<a class="jxr_linenumber" name="145" href="#145">145</a>             Object o = GuiUtils.getChoice(<span class="jxr_string">"Do you want to put the "</span> + s
-<a class="jxr_linenumber" name="146" href="#146">146</a>                     + <span class="jxr_string">" on the top or bottom of your library?"</span>, <strong class="jxr_keyword">new</strong> Object[]{<span class="jxr_string">"top"</span>, <span class="jxr_string">"bottom"</span>});
-<a class="jxr_linenumber" name="147" href="#147">147</a>             libPos = o.toString();
-<a class="jxr_linenumber" name="148" href="#148">148</a>         }
-<a class="jxr_linenumber" name="149" href="#149">149</a>         AllZone.getInputControl().setInput(PlayerUtil.input_putFromHandToLibrary(libPos, numToLibrary));
-<a class="jxr_linenumber" name="150" href="#150">150</a>     }
-<a class="jxr_linenumber" name="151" href="#151">151</a> 
-<a class="jxr_linenumber" name="152" href="#152">152</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
-<a class="jxr_linenumber" name="153" href="#153">153</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> doScry(<strong class="jxr_keyword">final</strong> <a href="../forge/CardList.html">CardList</a> topN, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> N) {
-<a class="jxr_linenumber" name="154" href="#154">154</a>         <strong class="jxr_keyword">int</strong> num = N;
-<a class="jxr_linenumber" name="155" href="#155">155</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; num; i++) {
-<a class="jxr_linenumber" name="156" href="#156">156</a>             Object o = GuiUtils.getChoiceOptional(<span class="jxr_string">"Put on bottom of library."</span>, topN.toArray());
-<a class="jxr_linenumber" name="157" href="#157">157</a>             <strong class="jxr_keyword">if</strong> (o != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="158" href="#158">158</a>                 <a href="../forge/Card.html">Card</a> c = (Card) o;
-<a class="jxr_linenumber" name="159" href="#159">159</a>                 topN.remove(c);
-<a class="jxr_linenumber" name="160" href="#160">160</a>                 AllZone.getGameAction().moveToBottomOfLibrary(c);
-<a class="jxr_linenumber" name="161" href="#161">161</a>             } <strong class="jxr_keyword">else</strong> <em class="jxr_comment">// no card chosen for the bottom</em>
-<a class="jxr_linenumber" name="162" href="#162">162</a>                 <strong class="jxr_keyword">break</strong>;
-<a class="jxr_linenumber" name="163" href="#163">163</a>         }
-<a class="jxr_linenumber" name="164" href="#164">164</a>         num = topN.size();
-<a class="jxr_linenumber" name="165" href="#165">165</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; num; i++) {
-<a class="jxr_linenumber" name="166" href="#166">166</a>             Object o;
-<a class="jxr_linenumber" name="167" href="#167">167</a>             o = GuiUtils.getChoice(<span class="jxr_string">"Put on top of library."</span>, topN.toArray());
-<a class="jxr_linenumber" name="168" href="#168">168</a>             <strong class="jxr_keyword">if</strong> (o != <strong class="jxr_keyword">null</strong>) {
-<a class="jxr_linenumber" name="169" href="#169">169</a>                 <a href="../forge/Card.html">Card</a> c = (Card) o;
-<a class="jxr_linenumber" name="170" href="#170">170</a>                 topN.remove(c);
-<a class="jxr_linenumber" name="171" href="#171">171</a>                 AllZone.getGameAction().moveToLibrary(c);
-<a class="jxr_linenumber" name="172" href="#172">172</a>             }
-<a class="jxr_linenumber" name="173" href="#173">173</a>             <em class="jxr_comment">// no else - a card must have been chosen</em>
-<a class="jxr_linenumber" name="174" href="#174">174</a>         }
-<a class="jxr_linenumber" name="175" href="#175">175</a>     }
-<a class="jxr_linenumber" name="176" href="#176">176</a> 
-<a class="jxr_linenumber" name="177" href="#177">177</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
-<a class="jxr_linenumber" name="178" href="#178">178</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sacrificePermanent(String prompt, <a href="../forge/CardList.html">CardList</a> choices) {
-<a class="jxr_linenumber" name="179" href="#179">179</a>         <a href="../forge/gui/input/Input.html">Input</a> in = PlayerUtil.input_sacrificePermanent(choices, prompt);
-<a class="jxr_linenumber" name="180" href="#180">180</a>         AllZone.getInputControl().setInput(in);
-<a class="jxr_linenumber" name="181" href="#181">181</a>     }
-<a class="jxr_linenumber" name="182" href="#182">182</a> 
-<a class="jxr_linenumber" name="183" href="#183">183</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
-<a class="jxr_linenumber" name="184" href="#184">184</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> clashMoveToTopOrBottom(<a href="../forge/Card.html">Card</a> c) {
-<a class="jxr_linenumber" name="185" href="#185">185</a>         String choice = <span class="jxr_string">""</span>;
-<a class="jxr_linenumber" name="186" href="#186">186</a>         String choices[] = {<span class="jxr_string">"top"</span>, <span class="jxr_string">"bottom"</span>};
-<a class="jxr_linenumber" name="187" href="#187">187</a>         AllZone.getDisplay().setCard(c);
-<a class="jxr_linenumber" name="188" href="#188">188</a>         choice = (String) GuiUtils.getChoice(c.getName() + <span class="jxr_string">" - Top or bottom of Library"</span>, choices);
-<a class="jxr_linenumber" name="189" href="#189">189</a> 
-<a class="jxr_linenumber" name="190" href="#190">190</a>         <strong class="jxr_keyword">if</strong> (choice.equals(<span class="jxr_string">"bottom"</span>)) {
-<a class="jxr_linenumber" name="191" href="#191">191</a>             AllZone.getGameAction().moveToBottomOfLibrary(c);
-<a class="jxr_linenumber" name="192" href="#192">192</a>         } <strong class="jxr_keyword">else</strong> {
-<a class="jxr_linenumber" name="193" href="#193">193</a>             AllZone.getGameAction().moveToLibrary(c);
-<a class="jxr_linenumber" name="194" href="#194">194</a>         }
-<a class="jxr_linenumber" name="195" href="#195">195</a>     }
-<a class="jxr_linenumber" name="196" href="#196">196</a> 
-<a class="jxr_linenumber" name="197" href="#197">197</a> }<em class="jxr_comment">//end HumanPlayer class</em>
+<a class="jxr_linenumber" name="137" href="#137">137</a>     
+<a class="jxr_linenumber" name="138" href="#138">138</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> discard_Chains_of_Mephistopheles() {
+<a class="jxr_linenumber" name="139" href="#139">139</a>     	AllZone.getInputControl().setInput(PlayerUtil.input_chainsDiscard(), <strong class="jxr_keyword">true</strong>);
+<a class="jxr_linenumber" name="140" href="#140">140</a>     }
+<a class="jxr_linenumber" name="141" href="#141">141</a> 
+<a class="jxr_linenumber" name="142" href="#142">142</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
+<a class="jxr_linenumber" name="143" href="#143">143</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> handToLibrary(<strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> numToLibrary, String libPos) {
+<a class="jxr_linenumber" name="144" href="#144">144</a>         <strong class="jxr_keyword">if</strong> (libPos.equals(<span class="jxr_string">"Top"</span>) || libPos.equals(<span class="jxr_string">"Bottom"</span>)) libPos = libPos.toLowerCase();
+<a class="jxr_linenumber" name="145" href="#145">145</a>         <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="146" href="#146">146</a>             String s = <span class="jxr_string">"card"</span>;
+<a class="jxr_linenumber" name="147" href="#147">147</a>             <strong class="jxr_keyword">if</strong> (numToLibrary &gt; 1) s += <span class="jxr_string">"s"</span>;
+<a class="jxr_linenumber" name="148" href="#148">148</a> 
+<a class="jxr_linenumber" name="149" href="#149">149</a>             Object o = GuiUtils.getChoice(<span class="jxr_string">"Do you want to put the "</span> + s
+<a class="jxr_linenumber" name="150" href="#150">150</a>                     + <span class="jxr_string">" on the top or bottom of your library?"</span>, <strong class="jxr_keyword">new</strong> Object[]{<span class="jxr_string">"top"</span>, <span class="jxr_string">"bottom"</span>});
+<a class="jxr_linenumber" name="151" href="#151">151</a>             libPos = o.toString();
+<a class="jxr_linenumber" name="152" href="#152">152</a>         }
+<a class="jxr_linenumber" name="153" href="#153">153</a>         AllZone.getInputControl().setInput(PlayerUtil.input_putFromHandToLibrary(libPos, numToLibrary));
+<a class="jxr_linenumber" name="154" href="#154">154</a>     }
+<a class="jxr_linenumber" name="155" href="#155">155</a> 
+<a class="jxr_linenumber" name="156" href="#156">156</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
+<a class="jxr_linenumber" name="157" href="#157">157</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> doScry(<strong class="jxr_keyword">final</strong> <a href="../forge/CardList.html">CardList</a> topN, <strong class="jxr_keyword">final</strong> <strong class="jxr_keyword">int</strong> N) {
+<a class="jxr_linenumber" name="158" href="#158">158</a>         <strong class="jxr_keyword">int</strong> num = N;
+<a class="jxr_linenumber" name="159" href="#159">159</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; num; i++) {
+<a class="jxr_linenumber" name="160" href="#160">160</a>             Object o = GuiUtils.getChoiceOptional(<span class="jxr_string">"Put on bottom of library."</span>, topN.toArray());
+<a class="jxr_linenumber" name="161" href="#161">161</a>             <strong class="jxr_keyword">if</strong> (o != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="162" href="#162">162</a>                 <a href="../forge/Card.html">Card</a> c = (Card) o;
+<a class="jxr_linenumber" name="163" href="#163">163</a>                 topN.remove(c);
+<a class="jxr_linenumber" name="164" href="#164">164</a>                 AllZone.getGameAction().moveToBottomOfLibrary(c);
+<a class="jxr_linenumber" name="165" href="#165">165</a>             } <strong class="jxr_keyword">else</strong> <em class="jxr_comment">// no card chosen for the bottom</em>
+<a class="jxr_linenumber" name="166" href="#166">166</a>                 <strong class="jxr_keyword">break</strong>;
+<a class="jxr_linenumber" name="167" href="#167">167</a>         }
+<a class="jxr_linenumber" name="168" href="#168">168</a>         num = topN.size();
+<a class="jxr_linenumber" name="169" href="#169">169</a>         <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; num; i++) {
+<a class="jxr_linenumber" name="170" href="#170">170</a>             Object o;
+<a class="jxr_linenumber" name="171" href="#171">171</a>             o = GuiUtils.getChoice(<span class="jxr_string">"Put on top of library."</span>, topN.toArray());
+<a class="jxr_linenumber" name="172" href="#172">172</a>             <strong class="jxr_keyword">if</strong> (o != <strong class="jxr_keyword">null</strong>) {
+<a class="jxr_linenumber" name="173" href="#173">173</a>                 <a href="../forge/Card.html">Card</a> c = (Card) o;
+<a class="jxr_linenumber" name="174" href="#174">174</a>                 topN.remove(c);
+<a class="jxr_linenumber" name="175" href="#175">175</a>                 AllZone.getGameAction().moveToLibrary(c);
+<a class="jxr_linenumber" name="176" href="#176">176</a>             }
+<a class="jxr_linenumber" name="177" href="#177">177</a>             <em class="jxr_comment">// no else - a card must have been chosen</em>
+<a class="jxr_linenumber" name="178" href="#178">178</a>         }
+<a class="jxr_linenumber" name="179" href="#179">179</a>     }
+<a class="jxr_linenumber" name="180" href="#180">180</a> 
+<a class="jxr_linenumber" name="181" href="#181">181</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
+<a class="jxr_linenumber" name="182" href="#182">182</a>     <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> sacrificePermanent(String prompt, <a href="../forge/CardList.html">CardList</a> choices) {
+<a class="jxr_linenumber" name="183" href="#183">183</a>         <a href="../forge/gui/input/Input.html">Input</a> in = PlayerUtil.input_sacrificePermanent(choices, prompt);
+<a class="jxr_linenumber" name="184" href="#184">184</a>         AllZone.getInputControl().setInput(in);
+<a class="jxr_linenumber" name="185" href="#185">185</a>     }
+<a class="jxr_linenumber" name="186" href="#186">186</a> 
+<a class="jxr_linenumber" name="187" href="#187">187</a>     <em class="jxr_javadoccomment">/**</em><em class="jxr_javadoccomment"> {@inheritDoc} */</em>
+<a class="jxr_linenumber" name="188" href="#188">188</a>     <strong class="jxr_keyword">protected</strong> <strong class="jxr_keyword">void</strong> clashMoveToTopOrBottom(<a href="../forge/Card.html">Card</a> c) {
+<a class="jxr_linenumber" name="189" href="#189">189</a>         String choice = <span class="jxr_string">""</span>;
+<a class="jxr_linenumber" name="190" href="#190">190</a>         String choices[] = {<span class="jxr_string">"top"</span>, <span class="jxr_string">"bottom"</span>};
+<a class="jxr_linenumber" name="191" href="#191">191</a>         AllZone.getDisplay().setCard(c);
+<a class="jxr_linenumber" name="192" href="#192">192</a>         choice = (String) GuiUtils.getChoice(c.getName() + <span class="jxr_string">" - Top or bottom of Library"</span>, choices);
+<a class="jxr_linenumber" name="193" href="#193">193</a> 
+<a class="jxr_linenumber" name="194" href="#194">194</a>         <strong class="jxr_keyword">if</strong> (choice.equals(<span class="jxr_string">"bottom"</span>)) {
+<a class="jxr_linenumber" name="195" href="#195">195</a>             AllZone.getGameAction().moveToBottomOfLibrary(c);
+<a class="jxr_linenumber" name="196" href="#196">196</a>         } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="197" href="#197">197</a>             AllZone.getGameAction().moveToLibrary(c);
+<a class="jxr_linenumber" name="198" href="#198">198</a>         }
+<a class="jxr_linenumber" name="199" href="#199">199</a>     }
+<a class="jxr_linenumber" name="200" href="#200">200</a> 
+<a class="jxr_linenumber" name="201" href="#201">201</a> }<em class="jxr_comment">//end HumanPlayer class</em>
 </pre>
 <hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
 </html>
