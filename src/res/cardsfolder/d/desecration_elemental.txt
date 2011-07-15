@@ -10,4 +10,5 @@ SVar:RemAIDeck:True
 SVar:AntiBuffedBy:Card
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/desecration_elemental.jpg
+SetInfo:5DN|Rare|http://magiccards.info/scans/en/5dn/45.jpg
 End
