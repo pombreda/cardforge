@@ -316,10 +316,8 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public Trigger getNamedTrigger(String name) {
         for (Trigger t : triggers) {
-            if (t.getName() != null) {
-                if (t.getName().equals(name)) {
+            if (t.getName() != null && t.getName().equals(name)) {
                     return t;
-                }
             }
         }
 
@@ -2999,7 +2997,6 @@ public class Card extends MyObservable implements Comparable<Card> {
      * @return a boolean.
      */
     public boolean isEnchanting() {
-        ;
         return enchanting.size() != 0;
     }
 
@@ -3768,8 +3765,7 @@ public class Card extends MyObservable implements Comparable<Card> {
      * @param s a {@link java.lang.String} object.
      */
     public void addNonStackingIntrinsicKeyword(String s) {
-        if (!getIntrinsicKeyword().contains(s)) {
-            if (s.trim().length() != 0)
+        if (!getIntrinsicKeyword().contains(s) && s.trim().length() != 0) {
                 intrinsicKeyword.add((getName().trim().length() == 0 ? s : s.replaceAll(getName(), "CARDNAME")));
         }
     }
@@ -5253,8 +5249,7 @@ public class Card extends MyObservable implements Comparable<Card> {
             damageToAdd = replaceDamage(damageToAdd, source, true);
             damageToAdd = preventDamage(damageToAdd, source, true);
 
-            if (damageToAdd > 0) {
-                if (isCreature())
+            if (damageToAdd > 0 && isCreature()) {
                     GameActionUtil.executeCombatDamageToCreatureEffects(source, this, damageToAdd);
             }
             map.put(source, damageToAdd);
@@ -5381,11 +5376,10 @@ public class Card extends MyObservable implements Comparable<Card> {
                 final String restrictions1[] = k[1].split(",");
                 final String restrictions2[] = k[2].split(",");
                 final Card card = ca;
-                if (this.isValidCard(restrictions1, card.getController(), card)) {
-                    if (source.isValidCard(restrictions2, card.getController(), card)) {
-                        if (k[3].equals("All")) return 0;
-                        restDamage = restDamage - Integer.valueOf(k[3]);
-                    }
+                if (this.isValidCard(restrictions1, card.getController(), card)
+                		&& source.isValidCard(restrictions2, card.getController(), card)) {
+                    if (k[3].equals("All")) return 0;
+                    restDamage = restDamage - Integer.valueOf(k[3]);
                 }
             }
         } //stPreventDamage
