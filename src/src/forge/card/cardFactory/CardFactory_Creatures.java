@@ -2800,7 +2800,12 @@ public class CardFactory_Creatures {
                     }
 
                     if (copyTarget[0] != null) {
-                        cloned[0] = CardFactory.copyStats(copyTarget[0]);
+                    	/*
+                    	 * This cannot just be copyStats with an addSpellAbility loop below.
+                    	 * Unless we get a copySpellAbility.  Adding the SpellAbility from the
+                    	 * source card causes many weird and Bad Things to happen.
+                    	 */
+                        cloned[0] = cfact.getCard(copyTarget[0].getName(), card.getController());
                         cloned[0].setOwner(card.getController());
                         cloned[0].setController(card.getController());
                         if (cardName.equals("Phyrexian Metamorph")) cloned[0].addType("Artifact");
@@ -2817,16 +2822,20 @@ public class CardFactory_Creatures {
                             cloned[0].setBaseAttack(7);
                         }
 
+                        /*
                         for (SpellAbility sa : copyTarget[0].getSpellAbilities()) {
                             cloned[0].addSpellAbility(sa);
                         }
+                        */
 
                         //Slight hack in case the cloner copies a card with triggers
                         for (Trigger t : cloned[0].getTriggers()) {
                             AllZone.getTriggerHandler().registerTrigger(t);
                         }
+                        
+                        //special
 
-                        AllZone.getGameAction().moveToPlay(cloned[0]);
+                        AllZone.getGameAction().moveToPlayFromHand(cloned[0]);
                         card.setCurrentlyCloningCard(cloned[0]);
                     }
                 }
