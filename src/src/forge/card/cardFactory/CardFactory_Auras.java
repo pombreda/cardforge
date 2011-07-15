@@ -587,7 +587,7 @@ class CardFactory_Auras {
             card.addUnEnchantCommand(detachCmd);
         }//*************** END ************ END **************************
 
-        
+        /*    Converted these auras from hard coded to AF_Attach + StaticAbility
         //*************** START *********** START **************************
         else if (cardName.equals("Entangling Vines") || cardName.equals("Glimmerdust Nap") ||
                 cardName.equals("Melancholy") || cardName.equals("Mystic Restraints") ||
@@ -722,7 +722,7 @@ class CardFactory_Auras {
             card.addLeavesPlayCommand(onLeavesPlay);
 
             spell.setBeforePayMana(runtime);
-        }//*************** END ************ END **************************
+        }//*************** END ************ END **************************    */
 
 
         //*************** START *********** START **************************
