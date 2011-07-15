@@ -152,6 +152,23 @@ public class GameAction {
 
         return c;
     }
+    
+    /**
+     * <p>moveToPlayFromHand.</p>
+     *
+     * @param c    a {@link forge.Card} object.
+     * @return a {@link forge.Card} object.
+     */
+    public Card moveToPlayFromHand(Card c) {
+        //handles the case for Clone, etc where prev was null
+    	
+        PlayerZone hand = AllZone.getZone(Constant.Zone.Hand, c.getOwner());
+        PlayerZone play = AllZone.getZone(Constant.Zone.Battlefield, c.getController());
+
+        c = changeZone(hand, play, c);
+
+        return c;
+    }
 
     /**
      * <p>changeController.</p>
