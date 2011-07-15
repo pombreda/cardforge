@@ -22,7 +22,6 @@ public class StaticAbility_Continuous {
 	public static void applyContinuousAbility(StaticAbility stAb) {
 		HashMap<String, String> params = stAb.getMapParams();
 		Card hostCard = stAb.getHostCard();
-		Player controller = hostCard.getController();
 		
 		StaticEffect se = new StaticEffect();
 		CardList affectedCards =  getAffectedCards(stAb);
@@ -115,10 +114,6 @@ public class StaticAbility_Continuous {
 			
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
-            
-            //store old P/T
-            if (setPower != -1)
-            
             
             // set P/T
             if (setPower != -1) {
