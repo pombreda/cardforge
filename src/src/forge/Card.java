@@ -1668,7 +1668,7 @@ public class Card extends MyObservable implements Comparable<Card> {
             // static abilities
             for (StaticAbility stAb : staticAbilities) {
             	String stAbD = stAb.toString();
-            	if (stAbD != "")
+            	if (!stAbD.equals(""))
             		sb.append(stAbD + "\r\n");
             }
 
