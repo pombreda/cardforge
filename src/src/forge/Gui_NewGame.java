@@ -1456,7 +1456,7 @@ public class Gui_NewGame extends JFrame implements NewConstants, NewConstants.LA
                 area.setFont(f);
             }
 
-            area.setText("I enjoyed programming this project.  I'm glad other people also enjoy my program.  MTG Forge has turned out to be very successful.\n\nmtgrares@yahoo.com\nhttp://mtgrares.blogspot.com\n\nWritten by: Forge\n\n(Quest icons used created by Teekatas, from his Legendora set:\n http://raindropmemory.deviantart.com)");
+            area.setText("TThe various people who have contributed to this project apologize with deep remorse for any bugs that you may have noticed.\n\nThe development team.\n\nOriginal author: Forge\n\n(Quest icons used created by Teekatas, from his Legendora set:\n http://raindropmemory.deviantart.com)");
 
             area.setWrapStyleWord(true);
             area.setLineWrap(true);
