@@ -5,10 +5,11 @@ Text:no text
 PT:2/2
 K:Level up:1
 K:maxLevel:4
-K:stSetPT:2:2:LevelGE2:3:3:LevelGE4:4:4:LEVEL 2-3 3/3 Flying LEVEL 4+ 4/4 Flying, Other Merfolk creatures you control get +1/+1.
-K:stPumpSelf:Creature.countersGE2LEVEL:0/0/Flying:no Condition:no text.
-S:Mode$ Continuous | Affected$ Creature.Merfolk+YouCtrl+Other | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ X | SVarCompare$ EQ1
-SVar:X:Count$Valid Creature.Self+countersGE4LEVEL
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 3 | SetToughness$ 3 | AddKeyword$ Flying | CheckSVar$ X | SVarCompare$ EQ1 | Description$ LEVEL 2+ 3/3
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 4 | SetToughness$ 4 | CheckSVar$ Y | SVarCompare$ EQ1 | Description$ LEVEL 4+ 4/4 Other Merfolk you control get +1/+1
+S:Mode$ Continuous | Affected$ Creature.Merfolk+YouCtrl+Other | AddPower$ 1 | AddToughness$ 1 | CheckSVar$ Y | SVarCompare$ EQ1
+SVar:X:Count$Valid Card.Self+countersGE2LEVEL
+SVar:Y:Count$Valid Card.Self+countersGE4LEVEL
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/coralhelm_commander.jpg
 SetInfo:ROE|Rare|http://magiccards.info/scans/en/roe/57.jpg
