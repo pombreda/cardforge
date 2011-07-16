@@ -2,7 +2,7 @@ Name:Threads of Disloyalty
 ManaCost:1 U U
 Types:Enchantment Aura
 Text:You control enchanted creature.
-A:SP$ Attach | Cost$ 2 U U | ValidTgts$ Creature.cmcLE2 | TgtPrompt$ Select target creature with converted mana cost 2 or less | AILogic$ GainControl
+A:SP$ Attach | Cost$ 1 U U | ValidTgts$ Creature.cmcLE2 | TgtPrompt$ Select target creature with converted mana cost 2 or less | AILogic$ GainControl
 K:Enchant creature with converted mana cost 2 or less
 SVar:PlayMain1:TRUE
 SVar:Rarity:Rare
