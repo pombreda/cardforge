@@ -6,7 +6,7 @@ PT:2/2
 K:Level up:3
 K:maxLevel:4
 S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 2 | SetToughness$ 3 | AddKeyword$ Flying | CheckSVar$ X | SVarCompare$ EQ1 | Description$ LEVEL 1+ 2/3 CARDNAME has Flying
-S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 3 | SetToughness$ 5 | AddKeyword$ Vigilance | CheckSVar$ Y | SVarCompare$ EQ1 | Description$ LEVEL 4+ 3/5 CARDNAME has Flying and Vigilance
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 4 | SetToughness$ 4 | AddKeyword$ Vigilance | CheckSVar$ Y | SVarCompare$ EQ1 | Description$ LEVEL 4+ 4/4 CARDNAME has Flying and Vigilance
 SVar:X:Count$Valid Card.Self+countersGE1LEVEL
 SVar:Y:Count$Valid Card.Self+countersGE4LEVEL
 SVar:Rarity:Common
