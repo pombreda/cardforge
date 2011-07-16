@@ -44,7 +44,7 @@ class CardFactory_Auras {
         ArrayList<String> a = c.getKeyword();
         for (int i = 0; i < a.size(); i++) {
             if (a.get(i).toString().startsWith("Cycling")) {
-            	return i;
+                return i;
             }
         }
         return -1;
@@ -122,7 +122,7 @@ class CardFactory_Auras {
                 public boolean canPlayAI() {
 
                     if (!super.canPlayAI()) {
-                    	return false;
+                        return false;
                     }
 
                     if (card.getName().equals("Spreading Seas")
@@ -155,7 +155,7 @@ class CardFactory_Auras {
                         int minVal = Integer.MAX_VALUE;
                         for (int i = 0; i < landTypes.length; i++) {
                             if (getTargetCard().isType(landTypes[i])) {
-                            	continue;
+                                continue;
                             }
 
                             if (humanLandCount.get(landTypes[i]) < minVal) {
@@ -169,7 +169,7 @@ class CardFactory_Auras {
                     CardList list = AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer());
                     list = list.getNotType(newType[0]); // Don't enchant lands that already have the type
                     if (list.isEmpty()) {
-                    	return false;
+                        return false;
                     }
                     setTargetCard(list.get(0));
                     return true;
@@ -196,8 +196,8 @@ class CardFactory_Auras {
                     Card c = getTargetCard();
 
                     if (AllZoneUtil.isCardInPlay(c) 
-                    		&& CardFactoryUtil.canTarget(card, c)) {
-                    	card.enchantCard(c);
+                            && CardFactoryUtil.canTarget(card, c)) {
+                        card.enchantCard(c);
                     }
 
                 }//resolve()
@@ -240,7 +240,7 @@ class CardFactory_Auras {
                             Card Other_Seas = null;
                             for (int i = 0; i < seas.size(); i++) {
                                 if (seas.get(i) != card) {
-                                	Other_Seas = seas.get(i);
+                                    Other_Seas = seas.get(i);
                                 }
                             }
                             SpellAbility[] Abilities = Other_Seas.getSpellAbility();
@@ -262,7 +262,7 @@ class CardFactory_Auras {
                         int count = 0;
                         for (int i = 0; i < seas.size(); i++) {
                             if (seas.get(i).getName().equals(card.getName())) {
-                            	count = count + 1;
+                                count = count + 1;
                             }
                         }
                         if (count == 1) {
@@ -274,7 +274,7 @@ class CardFactory_Auras {
                             SpellAbility[] Card_Abilities = crd.getSpellAbility();
                             for (int i = 0; i < Card_Abilities.length; i++) {
                                 if (Card_Abilities[i].isIntrinsic()) {
-                                	crd.removeSpellAbility(Card_Abilities[i]);
+                                    crd.removeSpellAbility(Card_Abilities[i]);
                                 }
                             }
                             Card c = AllZone.getCardFactory().copyCard(crd);
@@ -344,7 +344,7 @@ class CardFactory_Auras {
                     CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
                     list = list.getKeyword("Flying");
                     if (list.isEmpty()) {
-                    	return false;
+                        return false;
                     }
 
                     CardListFilter f = new CardListFilter() {
@@ -353,7 +353,7 @@ class CardFactory_Auras {
                         }
                     };
                     if (!list.filter(f).isEmpty()) {
-                    	list = list.filter(f);
+                        list = list.filter(f);
                     }
                     CardListUtil.sortAttack(list);
 
@@ -396,7 +396,7 @@ class CardFactory_Auras {
                             crd.removeIntrinsicKeyword("Flying");
                             crd.removeExtrinsicKeyword("Flying");
                         } else {
-                        	badTarget[0] = true;
+                            badTarget[0] = true;
                         }
                     }
                 }//execute()
@@ -453,7 +453,7 @@ class CardFactory_Auras {
                         CardList list = AllZoneUtil.getCreaturesInPlay(AllZone.getHumanPlayer());
 
                         if (list.isEmpty()) {
-                        	return false;
+                            return false;
                         }
 
                         //else
@@ -481,7 +481,7 @@ class CardFactory_Auras {
 
                     if (AllZoneUtil.isCardInPlay(c)
                             && CardFactoryUtil.canTarget(card, c)) {
-                    	card.enchantCard(c);
+                        card.enchantCard(c);
                     }
                 }//resolve()
             };//SpellAbility
@@ -572,7 +572,7 @@ class CardFactory_Auras {
                     animated.setController(card.getController());
                     AllZone.getGameAction().moveToPlay(animated, card.getController());
                     if (cardName.equals("Dance of the Dead")) {
-                    	animated.tap();
+                        animated.tap();
                     }
                     card.enchantCard(animated);    // Attach before Targeting so detach Command will trigger
 
