@@ -7,4 +7,5 @@ A:AB$ PreventDamage | Cost$ Sac<1/Land> | Tgt$ TgtCP | Amount$ 2 | SpellDescript
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/troubled_healer.jpg
+SetInfo:PCY|Common|http://magiccards.info/scans/en/pr/27.jpg
 End

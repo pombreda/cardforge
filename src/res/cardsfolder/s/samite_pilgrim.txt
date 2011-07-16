@@ -7,4 +7,5 @@ A:AB$ PreventDamage | Cost$ T | ValidTgts$ Creature | Amount$ X | PrecostDesc$ D
 SVar:X:Count$Domain
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/samite_pilgrim.jpg
+SetInfo:PLS|Common|http://magiccards.info/scans/en/ps/15.jpg
 End
