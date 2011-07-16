@@ -10,4 +10,3 @@ SVar:TrigExile:AB$ChangeZoneAll | Cost$ 0 | ChangeType$ Artifact | Origin$ Battl
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/furnace_dragon.jpg
 End
-

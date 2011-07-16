@@ -11,5 +11,3 @@ SVar:X:Number$20
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/darksteel_reactor.jpg
 End
-
-
