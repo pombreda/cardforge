@@ -8,4 +8,5 @@ S:Mode$ Continuous | Affected$ Card.EnchantedBy | AddKeyword$ HIDDEN CARDNAME's 
 S:Mode$ Continuous | Affected$ Creature.EnchantedBy | AddKeyword$ HIDDEN CARDNAME can't attack or block.
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/stasis_cocoon.jpg
+SetInfo:5DN|Common|http://magiccards.info/scans/en/5dn/18.jpg
 End
