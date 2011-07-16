@@ -15,5 +15,3 @@ SVar:Picture:http://www.wizards.com/global/images/magic/general/kargan_dragonlor
 SetInfo:ROE|Mythic|http://magiccards.info/scans/en/roe/152.jpg
 End
 
-
-
