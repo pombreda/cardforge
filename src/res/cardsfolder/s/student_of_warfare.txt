@@ -3,11 +3,12 @@ ManaCost:W
 Types:Creature Human Knight
 Text:no text
 PT:1/1
-K:stSetPT:1:1:LevelGE2:3:3:LevelGE7:4:4:LEVEL 2-6 3/3 First strike LEVEL 7+ 4/4 Double Strike
-K:stPumpSelf:Creature.countersGE2LEVEL+countersLT7LEVEL:0/0/First Strike:No Condition:no text
-K:stPumpSelf:Creature.countersGE7LEVEL:0/0/Double Strike:No Condition:no text
 K:Level up:W
 K:maxLevel:7
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 3 | SetToughness$ 3 | AddKeyword$ First Strike | CheckSVar$ X | SVarCompare$ EQ1 | Description$ LEVEL 2-6 3/3 CARDNAME has First Strike
+S:Mode$ Continuous | Affected$ Card.Self | SetPower$ 4 | SetToughness$ 4 | AddKeyword$ Double Strike | CheckSVar$ Y | SVarCompare$ EQ1 | Description$ LEVEL 7+ 4/4 CARDNAME has First Strike and Double Strike
+SVar:X:Count$Valid Card.Self+countersGE2LEVEL
+SVar:Y:Count$Valid Card.Self+countersGE7LEVEL
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/student_of_warfare.jpg
 SetInfo:ROE|Rare|http://magiccards.info/scans/en/roe/47.jpg
