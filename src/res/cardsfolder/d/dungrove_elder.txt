@@ -1,10 +1,11 @@
 Name:Dungrove Elder
 ManaCost:2 G
-Types:Creature Cat
+Types:Creature Treefolk
 Text:no text
 PT:*/*
 K:Hexproof
-K:stSetPT:Count$NumTypeYouCtrl.Forest:Count$NumTypeYouCtrl.Forest:CARDNAME's power and toughness are each equal to the number of Forests you control.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of Forests you control.
+SVar:X:Count$Valid Forest.YouCtrl
 SVar:BuffedBy:Forest
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/dungrove_elder.jpg
