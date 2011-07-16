@@ -3,7 +3,8 @@ ManaCost:3 W
 Types:Creature Cleric Avatar
 Text:no text
 PT:*/*
-K:stSetPT:Count$Valid Cleric:Count$Valid Cleric:CARDNAME's power and toughness are each equal to the number of Clerics on the battlefield.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of Clerics on the battlefield.
+SVar:X:Count$Valid Cleric
 T:Mode$ DamageDone | ValidSource$ Card.Self | Execute$ TrigGain | TriggerZones$ Battlefield | TriggerDescription$ Whenever CARDNAME deals damage, you gain that much life.
 SVar:TrigGain:AB$GainLife | Cost$ 0 | Defined$ You | LifeAmount$ X
 SVar:X:TriggerCount$DamageAmount
