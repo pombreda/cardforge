@@ -7,4 +7,5 @@ A:AB$ PreventDamage | Cost$ 2 W T | Tgt$ TgtCP | Amount$ 2 | SpellDescription$ P
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/treefolk_healer.jpg
+SetInfo:INV|Uncommon|http://magiccards.info/scans/en/in/218.jpg
 End
