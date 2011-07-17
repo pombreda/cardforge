@@ -7,4 +7,5 @@ A:AB$ Pump | Cost$ 1 W | ValidTgts$ Permanent.YouCtrl | TgtPrompt$ Select target
 A:AB$ Animate | Cost$ 1 | ValidTgts$ Spell,Permanent | TgtPrompt$ Select target spell or permanent | Colors$ White | OverwriteColors$ True | SpellDescription$ Target spell or permanent becomes white until end of turn.
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/eight_and_a_half_tails.jpg
+SetInfo:CHK|Rare|http://magiccards.info/scans/en/chk/8.jpg
 End
