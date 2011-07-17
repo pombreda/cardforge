@@ -6,7 +6,6 @@ import arcane.ui.PlayArea;
 import arcane.ui.ViewPanel;
 import arcane.ui.util.Animation;
 import forge.card.cardFactory.CardFactoryUtil;
-import forge.card.spellability.SpellAbility;
 import forge.error.ErrorViewer;
 import forge.gui.ForgeAction;
 import forge.gui.GuiUtils;
