@@ -875,7 +875,7 @@ public abstract class Player extends MyObservable {
     	PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
         if (library.size() != 0) {
             Card c = library.get(0);
-            AllZone.getGameAction().moveToHand(c);
+            c = AllZone.getGameAction().moveToHand(c);
 
             setLastDrawnCard(c);
             c.setDrawnThisTurn(true);

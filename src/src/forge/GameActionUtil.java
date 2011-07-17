@@ -4518,7 +4518,7 @@ public class GameActionUtil {
                         if (GameActionUtil.showYesNoDialog(source, question)) {
                             player.drawCards(2);
                             for (int i = 0; i < 2; i++) {
-                                final String prompt = source.getName() + " - Select a card drawn this turn: " + (2 - i) + " of 2";
+                                final String prompt = source + " - Select a card drawn this turn: " + (2 - i) + " of 2";
                                 AllZone.getInputControl().setInput(new Input() {
                                     private static final long serialVersionUID = -3389565833121544797L;
 
@@ -4532,7 +4532,6 @@ public class GameActionUtil {
                                     @Override
                                     public void selectCard(Card card, PlayerZone zone) {
                                         if (zone.is(Constant.Zone.Hand) && true == card.getDrawnThisTurn()) {
-                                            /////////////////////////////////////////
                                             if (player.canPayLife(4) && GameActionUtil.showYesNoDialog(source, cardQuestion)) {
                                                 player.payLife(4, source);
                                                 //card stays in hand
@@ -4540,7 +4539,6 @@ public class GameActionUtil {
                                                 AllZone.getGameAction().moveToLibrary(card);
                                             }
                                             stop();
-                                            ////////////////////////////////////
                                         }
                                     }
                                 });//end Input
