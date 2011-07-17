@@ -26,11 +26,13 @@ class CardFactory_Equipment {
      */
     public static int shouldEquip(Card c) {
         ArrayList<String> a = c.getKeyword();
-        for (int i = 0; i < a.size(); i++)
+        for (int i = 0; i < a.size(); i++) {
 
             // Keyword renamed to eqPump, was VanillaEquipment
-            if (a.get(i).toString().startsWith("eqPump")) return i;
-
+            if (a.get(i).toString().startsWith("eqPump")) {
+                return i;
+            }
+        }
         return -1;
     }
 
@@ -59,7 +61,9 @@ class CardFactory_Equipment {
 
                         if (card.isEquipping()) {
                             Card crd = card.getEquipping().get(0);
-                            if (crd.equals(getTargetCard())) return;
+                            if (crd.equals(getTargetCard())) {
+                                return;
+                            }
 
                             card.unEquipCard(crd);
                         }
@@ -167,7 +171,9 @@ class CardFactory_Equipment {
 
                         if (card.isEquipping()) {
                             Card crd = card.getEquipping().get(0);
-                            if (crd.equals(getTargetCard())) return;
+                            if (crd.equals(getTargetCard())) {
+                                return;
+                            }
 
                             card.unEquipCard(crd);
                         }
@@ -295,7 +301,9 @@ class CardFactory_Equipment {
                     list = list.filter(AllZoneUtil.getCanTargetFilter(card));
                     AllZone.getDisplay().showMessage(card + " - Select target creature you control to attach");
                     ButtonUtil.disableAll();
-                    if (list.size() == 0) stop();
+                    if (list.size() == 0) {
+                        stop();
+                    }
                 }
 
                 @Override
@@ -348,8 +356,8 @@ class CardFactory_Equipment {
 
                 //final String manaCost = tmpCost.trim();
                 final Cost abCost = new Cost(tmpCost.trim(), card.getName(), true);
-                int Power = 0;
-                int Tough = 0;
+                int power = 0;
+                int tough = 0;
 
                 String ptk[] = k[1].split("/");
 
@@ -359,15 +367,18 @@ class CardFactory_Equipment {
                 } else // parse the power/toughness boosts in first two cells
                 {
                     for (int i = 0; i < 2; i++) {
-                        if (ptk[i].matches("[\\+\\-][0-9]")) ptk[i] = ptk[i].replace("+", "");
+                        if (ptk[i].matches("[\\+\\-][0-9]")) {
+                            ptk[i] = ptk[i].replace("+", "");
+                        }
                     }
 
-                    Power = Integer.parseInt(ptk[0].trim());
-                    Tough = Integer.parseInt(ptk[1].trim());
+                    power = Integer.parseInt(ptk[0].trim());
+                    tough = Integer.parseInt(ptk[1].trim());
 
 
-                    if (ptk.length > 2)     // keywords in third cell
+                    if (ptk.length > 2) {     // keywords in third cell
                         keywordsUnsplit = ptk[2];
+                    }
                 }
 
                 if (keywordsUnsplit.length() > 0)    // then there is at least one extrinsic keyword to assign
@@ -380,9 +391,9 @@ class CardFactory_Equipment {
                     }
                 }
 
-                card.addSpellAbility(CardFactoryUtil.eqPump_Equip(card, Power, Tough, extrinsicKeywords, abCost));
-                card.addEquipCommand(CardFactoryUtil.eqPump_onEquip(card, Power, Tough, extrinsicKeywords, abCost));
-                card.addUnEquipCommand(CardFactoryUtil.eqPump_unEquip(card, Power, Tough, extrinsicKeywords, abCost));
+                card.addSpellAbility(CardFactoryUtil.eqPump_Equip(card, power, tough, extrinsicKeywords, abCost));
+                card.addEquipCommand(CardFactoryUtil.eqPump_onEquip(card, power, tough, extrinsicKeywords, abCost));
+                card.addUnEquipCommand(CardFactoryUtil.eqPump_unEquip(card, power, tough, extrinsicKeywords, abCost));
 
             }
         }// eqPump (was VanillaEquipment)
