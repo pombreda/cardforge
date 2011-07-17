@@ -1496,63 +1496,6 @@ public class CardFactory_Sorceries {
         }//*************** END ************ END **************************
 
 
-        //*************** START *********** START **************************
-        else if (cardName.equals("Lobotomy")) {
-            Cost cost = new Cost("2 U B", cardName, false);
-            Target tgt = new Target(card, "Select a Player", "Player");
-            final SpellAbility spell = new Spell(card, cost, tgt) {
-                private static final long serialVersionUID = 5338238621454661783L;
-
-                @Override
-                public void resolve() {
-                    Card choice = null;
-                    Player player = getTargetPlayer();
-
-                    //check for no cards in hand on resolve
-                    CardList handList = AllZoneUtil.getPlayerHand(player);
-
-                    if (handList.size() == 0)
-                        return;
-
-                    if (card.getController().isHuman())
-                        GuiUtils.getChoice("Revealing hand", handList.toArray());
-
-                    CardList choices = handList.getNotType("Basic");
-
-                    if (choices.size() == 0)
-                        return;
-
-                    if (card.getController().isHuman())
-                        choice = GuiUtils.getChoice("Choose", choices.toArray());
-                    else //computer chooses
-                        choice = CardUtil.getRandom(choices.toArray());
-
-                    String name = choice.getName();
-
-                    CardList remove = AllZoneUtil.getPlayerCardsInLibrary(player);
-                    remove.addAll(AllZoneUtil.getPlayerHand(player));
-                    remove.addAll(AllZoneUtil.getPlayerGraveyard(player));
-                    remove = remove.getName(name);
-
-                    for (Card c : remove)
-                        AllZone.getGameAction().exile(c);
-                }//resolve()
-
-                @Override
-                public boolean canPlayAI() {
-                    setTargetPlayer(AllZone.getHumanPlayer());
-                    CardList handList = AllZoneUtil.getPlayerHand(AllZone.getHumanPlayer());
-                    return 0 < handList.size();
-                }
-            };//SpellAbility spell
-
-            spell.setChooseTargetAI(CardFactoryUtil.AI_targetHuman());
-
-            
-            
-            card.addSpellAbility(spell);
-        }//*************** END ************ END **************************          
-
 
         //*************** START *********** START **************************
         else if (cardName.equals("Donate")) {
