@@ -174,15 +174,11 @@ public class AbilityFactory_Reveal {
      * @return a boolean.
      */
     private static boolean digCanPlayAI(final AbilityFactory af, final SpellAbility sa) {
-        HashMap<String, String> params = af.getMapParams();
+
         Card source = sa.getSourceCard();
 
         if (!ComputerUtil.canPayCost(sa))
             return false;
-
-        //currently to restrict everything except Mulch
-        String changeNum = params.get("ChangeNum");
-        if (changeNum != null && !changeNum.equalsIgnoreCase("All")) return false;
 
         double chance = .4;    // 40 percent chance with instant speed stuff
         if (AbilityFactory.isSorcerySpeed(sa))
@@ -361,9 +357,8 @@ public class AbilityFactory_Reveal {
                                         AllZone.getGameAction().moveToLibrary(chosen, libraryPosition);
                                     } else {
                                         Card c = AllZone.getGameAction().moveTo(zone, chosen);
-                                        if (destZone1.equals("Battlefield") && !keywords.isEmpty()) {
+                                        if (destZone1.equals("Battlefield") && !keywords.isEmpty())
                                             for (String kw : keywords) c.addExtrinsicKeyword(kw);
-                                        }
                                     }
                                     //AllZone.getGameAction().revealToComputer() - for when this exists
                                     j++;
@@ -378,8 +373,11 @@ public class AbilityFactory_Reveal {
                                     PlayerZone zone = AllZone.getZone(destZone1, chosen.getOwner());
                                     if (zone.is("Library")) {
                                         AllZone.getGameAction().moveToLibrary(chosen, libraryPosition);
-                                    } else
+                                    } else {
                                         AllZone.getGameAction().moveTo(zone, chosen);
+                                    	if (destZone1.equals("Battlefield") && !keywords.isEmpty())
+                                    		for (String kw : keywords) chosen.addExtrinsicKeyword(kw);
+                                    }
                                     if (changeValid.length() > 0)
                                         GuiUtils.getChoice("Computer picked: ", chosen);
                                     valid.remove(chosen);
