@@ -84,18 +84,17 @@ public class AIPlayer extends Player {
     ///
     ////////////////////////////////
 
-    /**
-     * <p>mayDrawCard.</p>
-     */
-    public void mayDrawCard() {
-        mayDrawCards(1);
+    /** {@inheritDoc} */
+    public CardList mayDrawCard() {
+        return mayDrawCards(1);
     }
 
     /** {@inheritDoc} */
-    public void mayDrawCards(int n) {
+    public CardList mayDrawCards(int n) {
         if (AllZone.getComputerLibrary().size() > n) {
-            drawCards(n);
+            return drawCards(n);
         }
+        else return new CardList();
     }
 
     /**

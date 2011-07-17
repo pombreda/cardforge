@@ -78,18 +78,17 @@ public class HumanPlayer extends Player {
     ///////////////
 
     /** {@inheritDoc} */
-    public void mayDrawCards(int n) {
+    public CardList mayDrawCards(int n) {
         String[] choices = {"Yes", "No"};
         Object choice = GuiUtils.getChoice("Draw " + n + " cards?", choices);
         if (choice.equals("Yes"))
-            drawCards(n);
+            return drawCards(n);
+        else return new CardList();
     }
 
-    /**
-     * <p>mayDrawCard.</p>
-     */
-    public void mayDrawCard() {
-        mayDrawCards(1);
+    /** {@inheritDoc} */
+    public CardList mayDrawCard() {
+        return mayDrawCards(1);
     }
 
     /**
