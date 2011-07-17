@@ -1898,10 +1898,12 @@ public class CardFactory implements NewConstants, Iterable<Card> {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Phyrexian Processor")) {
-            final SpellAbility ability = new Ability_Static(card, "0") {
-                @Override
-                public void resolve() {
-                    Player player = card.getController();
+            Command intoPlay = new Command() {
+                private static final long serialVersionUID = 5634360316643996274L;
+
+                public void execute() {
+
+                	Player player = card.getController();
                     int lifeToPay = 0;
                     if (player.isHuman()) {
                         int num = card.getController().getLife();
@@ -1917,18 +1919,6 @@ public class CardFactory implements NewConstants, Iterable<Card> {
                     }
 
                     if (player.payLife(lifeToPay, card)) card.setXLifePaid(lifeToPay);
-                }
-            };//ability
-            Command intoPlay = new Command() {
-                private static final long serialVersionUID = 5634360316643996274L;
-
-                public void execute() {
-
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("As ").append(card.getName()).append(" enters the battlefield, pay any amount of life.");
-                    ability.setStackDescription(sb.toString());
-
-                    AllZone.getStack().addSimultaneousStackEntry(ability);
 
                 }
             };
