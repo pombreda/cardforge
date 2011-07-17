@@ -8,5 +8,5 @@ A:AB$Draw | Cost$ SubCounter<3/CHARGE> | NumCards$ 1 | SpellDescription$ Draw a 
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/arcane_spyglass.jpg
-SetInfo:DST|Rare|http://magiccards.info/scans/en/ds/93.jpg
+SetInfo:DST|Common|http://magiccards.info/scans/en/ds/93.jpg
 End
