@@ -90,7 +90,8 @@ class CardFactory_Auras {
      */
     public static Card getCard(final Card card, final String cardName, final Player owner) {
 
-        Command standardUnenchant = new Command() {
+        /* This command was used by the generic aura code which is no longer needed
+    	Command standardUnenchant = new Command() {
             private static final long serialVersionUID = 3938247133551483568L;
 
             public void execute() {
@@ -99,7 +100,7 @@ class CardFactory_Auras {
                     card.unEnchantCard(crd);
                 }
             }
-        };
+        };    */
 
 
         // *****************************************************************
