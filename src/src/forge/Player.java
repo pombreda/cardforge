@@ -781,28 +781,35 @@ public abstract class Player extends MyObservable {
 
     /**
      * <p>mayDrawCard.</p>
+     * 
+     * @return a CardList of cards actually drawn
      */
-    public abstract void mayDrawCard();
+    public abstract CardList mayDrawCard();
 
     /**
      * <p>mayDrawCards.</p>
      *
      * @param numCards a int.
+     * @return a CardList of cards actually drawn
      */
-    public abstract void mayDrawCards(int numCards);
+    public abstract CardList mayDrawCards(int numCards);
 
     /**
      * <p>drawCard.</p>
+     * 
+     * @return a CardList of cards actually drawn
      */
-    public void drawCard() {
-        drawCards(1);
+    public CardList drawCard() {
+        return drawCards(1);
     }
 
     /**
      * <p>drawCards.</p>
+     * 
+     * @return a CardList of cards actually drawn
      */
-    public void drawCards() {
-        drawCards(1);
+    public CardList drawCards() {
+        return drawCards(1);
     }
 
     /**
@@ -816,18 +823,21 @@ public abstract class Player extends MyObservable {
      * <p>drawCards.</p>
      *
      * @param n a int.
+     * @return a CardList of cards actually drawn
      */
-    public void drawCards(int n) {
-    	drawCards(n, false);
+    public CardList drawCards(int n) {
+    	return drawCards(n, false);
     }
 
     /**
      * <p>drawCards.</p>
      *
      * @param n a int.
-     * @params firstFromDraw true if this is the card drawn from that player's draw step each turn
+     * @param firstFromDraw true if this is the card drawn from that player's draw step each turn
+     * @return a CardList of cards actually drawn
      */
-    public void drawCards(int n, boolean firstFromDraw) {
+    public CardList drawCards(int n, boolean firstFromDraw) {
+    	CardList drawn = new CardList();
         for (int i = 0; i < n; i++) {
 
             // TODO: multiple replacements need to be selected by the controller
@@ -841,7 +851,7 @@ public abstract class Player extends MyObservable {
             		else { //Computer
             			discard(1, null, false);
             			//true causes this code not to be run again
-            			drawCards(1, true);
+            			drawn.addAll(drawCards(1, true));
             		}
             	}
             	else {
@@ -849,15 +859,19 @@ public abstract class Player extends MyObservable {
             	}
             }
             else {
-            	doDraw();
+            	drawn.addAll(doDraw());
             }
         }
+        return drawn;
     }
 
     /**
      * <p>doDraw.</p>
+     * 
+     * @return a CardList of cards actually drawn
      */
-    private void doDraw() {
+    private CardList doDraw() {
+    	CardList drawn = new CardList();
     	PlayerZone library = AllZone.getZone(Constant.Zone.Library, this);
         if (library.size() != 0) {
             Card c = library.get(0);
@@ -866,6 +880,7 @@ public abstract class Player extends MyObservable {
             setLastDrawnCard(c);
             c.setDrawnThisTurn(true);
             numDrawnThisTurn++;
+            drawn.add(c);
 
             //Run triggers
             HashMap<String, Object> runParams = new HashMap<String, Object>();
@@ -879,6 +894,7 @@ public abstract class Player extends MyObservable {
                 AllZone.getGameAction().checkStateEffects();
             }
         }
+        return drawn;
     }
 
     /**
