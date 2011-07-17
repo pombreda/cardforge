@@ -10,5 +10,3 @@ SVar:Picture:http://www.wizards.com/global/images/magic/general/lobotomy.jpg
 SetInfo:TMP|Uncommon|http://magiccards.info/scans/en/tp/342.jpg
 SetInfo:INV|Uncommon|http://magiccards.info/scans/en/in/255.jpg
 End
-
-
