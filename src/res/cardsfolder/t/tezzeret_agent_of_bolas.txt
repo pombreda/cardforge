@@ -8,7 +8,6 @@ A:AB$ Animate | Cost$ SubCounter<1/LOYALTY> | Planeswalker$ True | ValidTgts$ Ar
 A:AB$ LoseLife | Cost$ SubCounter<4/LOYALTY> | Planeswalker$ True | ValidTgts$ Player | TgtPrompt$ Select target player | LifeAmount$ X | SubAbility$ SVar=DBGain | SpellDescription$ Target player loses X life and you gain X life, where X is twice the number of artifacts you control.
 SVar:DBGain:DB$GainLife | Defined$ You | LifeAmount$ X
 SVar:X:Count$Valid Artifact.YouCtrl/Times.2
-SVar:RemAIDeck:True
 SVar:Rarity:Mythic
 SVar:Picture:http://www.wizards.com/global/images/magic/general/tezzeret_agent_of_bolas.jpg
 SetInfo:MBS|Mythic|http://magiccards.info/scans/en/mbs/97.jpg
