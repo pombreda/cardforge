@@ -3153,6 +3153,7 @@ public class CardFactory_Creatures {
             card.addTrigger(myTrig);
         }//*************** END ************ END **************************
 
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Duct Crawler") || cardName.equals("Shrewd Hatchling") || cardName.equals("Spin Engine")) {
             String theCost = "0";
@@ -3178,6 +3179,59 @@ public class CardFactory_Creatures {
 
 
         }//*************** END ************ END **************************
+        
+        
+        //*************** START *********** START **************************
+        else if (cardName.equals("Krovikan Sorcerer")) {
+            Cost abCost = new Cost("T Discard<1/Card.Black>", cardName, true);
+            final Ability_Activated ability = new Ability_Activated(card, abCost, null) {
+                private static final long serialVersionUID = 3689290210743241201L;
+
+                @Override
+                public boolean canPlayAI() {
+                    return false;
+                }
+
+                @Override
+                public void resolve() {
+                	final Player player = card.getController();
+                	if (player.isHuman()) {
+                		final CardList n = player.drawCards(2);
+                		
+                		AllZone.getInputControl().setInput(new Input() {
+							private static final long serialVersionUID = -1411038851955251074L;
+
+							@Override
+                			public void showMessage() {
+                				if(n.isEmpty()) stop();
+                				AllZone.getDisplay().showMessage(card+" - discard one of the cards drawn.");
+                				ButtonUtil.disableAll();
+                			}
+
+                			@Override
+                			public void selectCard(Card c, PlayerZone zone) {
+                				if (zone.is(Constant.Zone.Hand) && n.contains(c)) {
+                					player.discard(c, null);
+                					stop();
+                				}
+                			}
+                		});//end Input
+                	}
+                }//resolve()
+            };//SpellAbility
+
+            card.addSpellAbility(ability);
+            ability.setDescription("Tap, Discard a black card: " + "Draw two cards, then discard one of them.");
+
+            StringBuilder sb = new StringBuilder();
+            sb.append(card).append(" - Draw two cards, then discard one of them.");
+            ability.setStackDescription(sb.toString());
+        }//*************** END ************ END **************************
+        
+        
+        //***************************************************
+        // end of card specific code
+        //***************************************************
 
         if (hasKeyword(card, "Level up") != -1 && hasKeyword(card, "maxLevel") != -1) {
             int n = hasKeyword(card, "Level up");
