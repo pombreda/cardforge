@@ -366,6 +366,8 @@ public class CardFactory implements NewConstants, Iterable<Card> {
      * 
      * @return a {@link forge.Card} instance, owned by owner; or the special 
      * blankCard
+     * 
+     * @throws RuntimeException if cardName isn't in the Card map
      */
     final public Card getCard(String cardName, Player owner) {
         if (removedCardList.contains(cardName) || cardName.equals(blankCard.getName())) return blankCard;
@@ -796,6 +798,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
      * @param cardName a {@link java.lang.String} object.
      * @param owner a {@link forge.Player} object.
      * @return a {@link forge.Card} object.
+     * @throws RuntimeException if cardName isn't in the Card map
      */
     final private Card getCard2(final String cardName, final Player owner) {
         //o should be Card object
@@ -812,7 +815,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
         if (card.isPermanent() && !card.isLand() && !card.isAura()) 
         	card.addSpellAbility(new Spell_Permanent(card));
 
-       parseKeywords(card, cardName);
+        parseKeywords(card, cardName);
 
         //**************************************************
         // AbilityFactory cards
@@ -844,10 +847,11 @@ public class CardFactory implements NewConstants, Iterable<Card> {
         
         //register static abilities
         ArrayList<String> stAbs = card.getStaticAbilityStrings();
-        if (stAbs.size() > 0)
-            for (int i = 0; i < stAbs.size(); i++) {
-            	card.addStaticAbility(stAbs.get(i));
-            }
+        if (stAbs.size() > 0) {
+        	for (int i = 0; i < stAbs.size(); i++) {
+        		card.addStaticAbility(stAbs.get(i));
+        	}
+        }
 
 
         //******************************************************************
@@ -873,7 +877,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             return postFactoryKeywords(card2);
 
 
-            //*************** START *********** START **************************
+        //*************** START *********** START **************************
         else if (cardName.equals("Bridge from Below")) {
             SpellAbility spell = new Spell_Permanent(card) {
                 private static final long serialVersionUID = 7254358703158629514L;
@@ -1233,8 +1237,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             ability1.setStackDescription("Aluren - Play creature with converted manacost 3 or less for free.");
             ability1.getRestrictions().setAnyPlayer(true);
             card.addSpellAbility(ability1);
-        }
-        //*************** END ************ END **************************
+        }//*************** END ************ END **************************
 
 
         //*************** START *********** START **************************
@@ -1583,10 +1586,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             card.addSpellAbility(ab1);
         }//*************** END ************ END **************************
 
-
-               
-
-
+        
         //*************** START *********** START **************************
         else if (cardName.equals("Everflowing Chalice")) {
             final Command comesIntoPlay = new Command() {
@@ -1814,7 +1814,6 @@ public class CardFactory implements NewConstants, Iterable<Card> {
         //*************** END ************ END **************************        
 
 
-
         //*************** START *********** START **************************
         else if (cardName.equals("Pithing Needle")) {
             final CardFactory factory = this;
@@ -1879,9 +1878,9 @@ public class CardFactory implements NewConstants, Iterable<Card> {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Bazaar of Wonders")) {
-            /*
-                * When Bazaar of Wonders enters the battlefield, exile all cards from all graveyards.
-                */
+        	/*
+        	 * When Bazaar of Wonders enters the battlefield, exile all cards from all graveyards.
+        	 */
             Command intoPlay = new Command() {
                 private static final long serialVersionUID = 9209706681167017765L;
 
@@ -2013,10 +2012,10 @@ public class CardFactory implements NewConstants, Iterable<Card> {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Cursed Scroll")) {
-            /*
-                * 3, Tap: Name a card.  Reveal a card at random from your hand.  If it's the named card,
-                * Cursed Scroll deals 2 damage to target creature or player.
-                */
+        	/*
+        	 * 3, Tap: Name a card.  Reveal a card at random from your hand.  If it's the named card,
+        	 * Cursed Scroll deals 2 damage to target creature or player.
+        	 */
             Cost abCost = new Cost("3 T", cardName, true);
             final Ability_Activated ability = new Ability_Activated(card, abCost, new Target(card, "TgtCP")) {
                 private static final long serialVersionUID = 7550743617522146304L;
@@ -2072,12 +2071,12 @@ public class CardFactory implements NewConstants, Iterable<Card> {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Temporal Aperture")) {
-            /*
-                * 5, Tap: Shuffle your library, then reveal the top card. Until end
-                * of turn, for as long as that card remains on top of your library,
-                * play with the top card of your library revealed and you may play that
-                * card without paying its mana cost. (If it has X in its mana cost, X is 0.)
-                */
+        	/*
+        	 * 5, Tap: Shuffle your library, then reveal the top card. Until end
+        	 * of turn, for as long as that card remains on top of your library,
+        	 * play with the top card of your library revealed and you may play that
+        	 * card without paying its mana cost. (If it has X in its mana cost, X is 0.)
+        	 */
             final Card[] topCard = new Card[1];
 
             final Ability freeCast = new Ability(card, "0") {
@@ -2165,10 +2164,7 @@ public class CardFactory implements NewConstants, Iterable<Card> {
             card.addSpellAbility(ability);
         }//*************** END ************ END **************************
 
-
         
-
-
         //*************** START *********** START **************************
         else if (cardName.equals("Lich")) {
             final SpellAbility loseAllLife = new Ability(card, "0") {
