@@ -4,7 +4,9 @@ Types:Creature Elf Avatar
 Text:no text
 PT:*/*
 K:Trample
-K:stSetPT:Count$TypeOnBattlefield.Elf:Count$TypeOnBattlefield.Elf:CARDNAME's power and toughness are each equal to the number of Elves on the battlefield.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of Elves on the battlefield.
+SVar:X:Count$Valid Elf
+SVar:BuffedBy:Permanent.Elf
 SVar:RemRandomDeck:True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/heedless_one.jpg
