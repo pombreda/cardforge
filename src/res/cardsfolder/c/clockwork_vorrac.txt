@@ -3,6 +3,7 @@ ManaCost:5
 Types:Artifact Creature Boar Beast
 Text:no text
 PT:0/0
+K:Trample
 K:etbCounter:P1P1:4
 A:AB$ PutCounter | Cost$ T | Defined$ Self | CounterType$ P1P1 | CounterNum$ 1 | SpellDescription$ Put a +1/+1 counter on CARDNAME.
 T:Mode$ Attacks | ValidCard$ Card.Self | DelayedTrigger$ DelTrig | TriggerDescription$ Whenever CARDNAME attacks or blocks, remove a +1/+1 counter from it at end of combat.
