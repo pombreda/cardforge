@@ -2884,8 +2884,14 @@ public class CardFactoryUtil {
             CardList topcard = AllZoneUtil.getPlayerCardsInLibrary(cardController, 1);
             return doXMath(topcard.getTotalConvertedManaCost(), m, c);
         }
+        
+        // Count$EnchantedControllerCreatures
+        if (sq[0].contains("EnchantedControllerCreatures")) {
+        	CardList EnchantedControllerInPlay = AllZoneUtil.getPlayerCardsInPlay(c.getEnchantingCard().getController());
+            EnchantedControllerInPlay = EnchantedControllerInPlay.getType("Creature");
+            return EnchantedControllerInPlay.size();
+        }
     
-
 
         // Count$Chroma.<mana letter>
         if (sq[0].contains("Chroma")) return doXMath(
