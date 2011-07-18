@@ -1603,8 +1603,14 @@ public class Card extends MyObservable implements Comparable<Card> {
                 } else if (keyword.get(i).toString().contains("tap: add ")) {
                     sbMana.append(keyword.get(i).toString()).append("\r\n");
                 } else if (keyword.get(i).contains("Bloodthirst")) {
-                    sbLong.append(keyword.get(i));
-                    sbLong.append(" (If an opponent was dealt damage this turn, this creature enters the battlefield with a +1/+1 counter on it.)");
+                    String k = keyword.get(i);
+                    String kk[] = k.split(" ");
+                    sbLong.append(keyword.get(i)).append(" (If an opponent was dealt damage this turn, this creature enters the battlefield with ");
+                    sbLong.append(kk[1]).append(" +1/+1 counter");
+                    if (Integer.parseInt(kk[1]) > 1) {
+                        sbLong.append("s");
+                    }
+                    sbLong.append(" on it.)").append("\r\n");
                 } else if (keyword.get(i).startsWith("Modular")) {
                     String numCounters = keyword.get(i).split(" ")[1];
                     sbLong.append(keyword.get(i));
