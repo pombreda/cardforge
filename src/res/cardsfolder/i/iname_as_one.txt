@@ -11,4 +11,5 @@ SVar:DBReturn:DB$ChangeZone | Origin$ Graveyard | Destination$ Battlefield | Hid
 SVar:RemAIDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/iname_as_one.jpg
+SetInfo:SOK|Rare|http://magiccards.info/scans/en/sok/151.jpg
 End
