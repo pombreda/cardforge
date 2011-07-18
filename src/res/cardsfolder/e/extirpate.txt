@@ -8,4 +8,5 @@ SVar:DBSearch:DB$ChangeZoneAll | Origin$ Graveyard,Hand,Library | Destination$ E
 SVar:DBCleanup:DB$Cleanup | ClearRemembered$ True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/extirpate.jpg
+SetInfo:PLC|Rare|http://magiccards.info/scans/en/pc/71.jpg
 End

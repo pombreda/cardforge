@@ -7,4 +7,6 @@ SVar:DBChangeZoneAll:DB$ChangeZoneAll | ChangeType$ Remembered.sameName | Origin
 SVar:DBCleanup:DB$Cleanup | ClearRemembered$ True
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/scour.jpg
+SetInfo:UDS|Uncommon|http://magiccards.info/scans/en/ud/18.jpg
+SetInfo:BOK|Uncommon|http://magiccards.info/scans/en/bok/20.jpg
 End
