@@ -128,6 +128,7 @@ public class QuestBattle extends QuestSelectablePanel {
         addToDeckList("Doc Holiday 1", "easy", "WUG Morph deck");
         addToDeckList("Doc Holiday 2", "medium", "WUG deck with Sunscape Familiar and Bant Sureblade");
         addToDeckList("Doc Holiday 3", "hard", "WUG deck with Stoic Angel, Murkfiend Liege and Knight of New Alara");
+        addToDeckList("Dogbert 2", "medium", "WRG Berserker deck with Blade-Tribe Berserkers and Spiraling Duelist");
 //        addToDeckList("Dog 2", "medium", "GRB Sacrifice");
         addToDeckList("Doran 3", "hard", "WBG Doran, the Siege Tower deck with high toughness creatures");
 //        addToDeckList("Dr Doom 2", "medium", "GWB");
