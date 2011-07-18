@@ -9,5 +9,5 @@ SVar:DBUntap:DB$ Untap | Cost$ 0 | ValidTgts$ Permanent | TgtPrompt$ Select targ
 SVar:RemAIDeck:True
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/dreams_grip.jpg
-SetInfo:MIR|Common|http://magiccards.info/scans/en/m1/34.jpg
+SetInfo:MRD|Common|http://magiccards.info/scans/en/mi/34.jpg
 End
