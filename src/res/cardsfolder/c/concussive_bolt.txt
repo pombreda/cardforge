@@ -6,4 +6,5 @@ A:SP$ DealDamage | Cost$ 3 R R | ValidTgts$ Player | TgtPrompt$ Select target pl
 SVar:DBPump:DB$PumpAll | Defined$ Targeted | ValidCards$ Creature | ConditionPresent$ Artifact.YouCtrl | ConditionCompare$ GE3 | KW$ HIDDEN CARDNAME can't block.
 SVar:Rarity:Common
 SVar:Picture:http://www.wizards.com/global/images/magic/general/concussive_bolt.jpg
+SetInfo:MBS|Common|http://magiccards.info/scans/en/mbs/60.jpg
 End
