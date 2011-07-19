@@ -5323,8 +5323,9 @@ public class GameActionUtil {
         }// execute()
 
     };//stLandManaAbilities
-
-    /** Constant <code>stSetPT</code> */
+    
+    /*
+    /** Constant <code>stSetPT</code> 
     public static Command stSetPT = new Command() {
         /*
 		 * Syntax: K:stSetPT:power:toughness:Description
@@ -5332,7 +5333,7 @@ public class GameActionUtil {
 		 * K:stSetPT:power:toughness:condition:altPower:altToughness:Description
 		 * or (for Levels)
 		 * K:stSetPT:power:toughness:condition:altPower:altToughness:condition2:altPower2:altToughness2:Description
-		 */
+		 
         private static final long serialVersionUID = -8019071015309088017L;
 
         public void execute() {
@@ -5355,7 +5356,7 @@ public class GameActionUtil {
                         String k[] = parse.split(":");
                         /*for(int z = 0; z < k.length; z++) {
 							System.out.println("k["+z+"]: "+k[z]);
-						}*/
+						}
                         if (k.length < 2) {
                             System.out.println("Error in stSetPT for: " + card.getName());
                         } else {
@@ -5438,7 +5439,7 @@ public class GameActionUtil {
             }
         }// execute()
 
-    };//stSetPT
+    };//stSetPT */
 
     /** Constant <code>Coat_of_Arms</code> */
     public static Command Coat_of_Arms = new Command() {
