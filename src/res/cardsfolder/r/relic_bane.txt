@@ -10,4 +10,3 @@ SVar:LoseLife:AB$LoseLife | Cost$ 0 | LifeAmount$ 2
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/relic_bane.jpg
 End
-
