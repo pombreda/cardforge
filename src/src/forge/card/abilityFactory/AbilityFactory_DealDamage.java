@@ -965,11 +965,8 @@ public class AbilityFactory_DealDamage {
         if (tgt != null)
             targetPlayer = tgt.getTargetPlayers().get(0);
 
-        String valid = "";
         String players = "";
 
-        if (params.containsKey("ValidCards"))
-            valid = params.get("ValidCards");
         if (params.containsKey("ValidPlayers"))
             players = params.get("ValidPlayers");
 
@@ -978,7 +975,7 @@ public class AbilityFactory_DealDamage {
         if (targetPlayer != null)
             list = list.getController(targetPlayer);
 
-        list = list.getValidCards(valid.split(","), card.getController(), card);
+        list = AbilityFactory.filterListByType(list, params.get("ValidCards"), sa);
 
         for (Card c : list) c.addDamage(dmg, card);
 
