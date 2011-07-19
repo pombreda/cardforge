@@ -633,7 +633,7 @@ public class GameAction {
             }
 
             GameActionUtil.stAnimate.execute();
-            GameActionUtil.stSetPT.execute();
+            //GameActionUtil.stSetPT.execute();
             GameActionUtil.stPump.execute();
 
             CardList list = AllZoneUtil.getCardsInPlay();
