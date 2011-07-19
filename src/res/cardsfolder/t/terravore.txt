@@ -2,9 +2,10 @@ Name:Terravore
 ManaCost:1 G G
 Types:Creature Lhurgoyf
 Text:no text
-PT:1/1
+PT:*/*
 K:Trample
-K:stSetPT:Count$TypeInAllYards.Land:Count$TypeInAllYards.Land:CARDNAME's power and toughness are each equal to the number of land cards in all graveyards.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of land cards in all graveyards.
+SVar:X:Count$TypeInAllYards.Land
 SVar:RemRandomDeck:True
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/terravore.jpg
