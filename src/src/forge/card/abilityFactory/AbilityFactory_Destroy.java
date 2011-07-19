@@ -673,7 +673,7 @@ public class AbilityFactory_Destroy {
 
         CardList list = AllZoneUtil.getCardsInPlay();
 
-        list = list.getValidCards(Valid.split(","), card.getController(), card);
+        list = AbilityFactory.filterListByType(list, Valid, sa);
 
         boolean remDestroyed = params.containsKey("RememberDestroyed");
         if (remDestroyed)
