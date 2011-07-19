@@ -2,6 +2,7 @@ package forge.card.abilityFactory;
 
 import forge.*;
 import forge.card.spellability.*;
+import forge.card.staticAbility.StaticAbility;
 import forge.card.trigger.Trigger;
 import forge.card.trigger.TriggerHandler;
 
@@ -386,6 +387,10 @@ public class AbilityFactory_Animate {
         //triggers to add to the animated being
         ArrayList<String> triggers = new ArrayList<String>();
         if (params.containsKey("Triggers")) triggers.addAll(Arrays.asList(params.get("Triggers").split(",")));
+        
+        //static abilities to add to the animated being
+        ArrayList<String> stAbs = new ArrayList<String>();
+        if (params.containsKey("staticAbilities")) stAbs.addAll(Arrays.asList(params.get("staticAbilities").split(",")));
 
         Target tgt = af.getAbTgt();
         ArrayList<Card> tgts;
@@ -424,12 +429,22 @@ public class AbilityFactory_Animate {
                     AllZone.getTriggerHandler().registerTrigger(parsedTrigger);
                 }
             }
+            
+            //give static abilities (should only be used by cards to give itself a static ability)
+            if (stAbs.size() > 0) {
+                for (String s : stAbs) {
+                	String actualAbility = host.getSVar(s);
+                    c.addStaticAbility(actualAbility);
+                }
+            }
+            
+            final boolean givesStAbs = (stAbs.size() > 0);
 
             final Command unanimate = new Command() {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp, givesStAbs);
                 }
             };
 
@@ -506,13 +521,20 @@ public class AbilityFactory_Animate {
      * @param addedTriggers a {@link java.util.ArrayList} object.
      * @param timestamp a long.
      */
-    private static void doUnanimate(Card c, AbilityFactory af, int originalPower, int originalToughness, ArrayList<String> originalTypes, String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, long timestamp) {
+    private static void doUnanimate(Card c, AbilityFactory af, int originalPower, int originalToughness, ArrayList<String> originalTypes, 
+    		String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, 
+    		long timestamp, boolean givesStAbs) {
     	HashMap<String, String> params = af.getMapParams();
     	
     	c.setBaseAttack(originalPower);
         c.setBaseDefense(originalToughness);
 
         c.clearAllTypes();
+        
+        //remove all static abilities
+        if (givesStAbs)
+        	c.setStaticAbilities(new ArrayList<StaticAbility>());
+        	
         for (String type : originalTypes) {
             c.addType(type);
         }
@@ -827,7 +849,7 @@ public class AbilityFactory_Animate {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp);
+                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp, false);
                 }
             };
 
