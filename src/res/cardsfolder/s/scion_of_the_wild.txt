@@ -3,7 +3,8 @@ ManaCost:1 G G
 Types:Creature Avatar
 Text:no text
 PT:*/*
-K:stSetPT:Count$NumTypeYouCtrl.Creature:Count$NumTypeYouCtrl.Creature:Scion of the Wild's power and toughness are each equal to the number of creatures you control.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of creatures you control.
+SVar:X:Count$Valid Creature.YouCtrl
 SVar:BuffedBy:Creature
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/scion_of_the_wild.jpg
