@@ -1028,7 +1028,7 @@ public class AbilityFactory {
             if (calcX.length == 1 || calcX[1].equals("none"))
                 return 0;
 
-            if (calcX[0].startsWith("Count"))
+            if (calcX[0].startsWith("Count") || calcX[0].startsWith("Number"))
                 return CardFactoryUtil.xCount(card, calcX[1]) * multiplier;
 
             else if (ability != null) {
