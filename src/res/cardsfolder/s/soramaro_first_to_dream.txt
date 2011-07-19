@@ -1,6 +1,6 @@
 Name:Soramaro, First to Dream
 ManaCost:4 U U
-Types:Legendary Creature Demon
+Types:Legendary Creature Spirit
 Text:no text
 PT:*/*
 K:Flying

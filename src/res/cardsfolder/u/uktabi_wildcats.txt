@@ -3,7 +3,8 @@ ManaCost:4 G
 Types:Creature Cat
 Text:no text
 PT:*/*
-K:stSetPT:Count$NumTypeYouCtrl.Forest:Count$NumTypeYouCtrl.Forest:Uktabi Wildcats's power and toughness are each equal to the number of Forests you control.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ X | SetToughness$ X | Description$ CARDNAME's power and toughness are each equal to the number of Forests you control.
+SVar:X:Count$Valid Forest.YouCtrl
 A:AB$ Regenerate | Cost$ G Sac<1/Forest> | SpellDescription$ Regenerate CARDNAME.
 SVar:BuffedBy:Forest
 SVar:Rarity:Rare
