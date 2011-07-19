@@ -4,7 +4,8 @@ Types:Creature Ooze
 Text:no text
 PT:1+*/1+*
 K:Cumulative upkeep:2
-K:stSetPT:Number$1/Plus.X:Number$1/Plus.X:CARDNAME's power and toughness are each equal to 1 plus twice the number of age counters on it.
+S:Mode$ Continuous | EffectZone$ All | CharacteristicDefining$ True | SetPower$ Y | SetToughness$ Y | Description$ CARDNAME's power and toughness are each equal to 1 plus twice the number of age counters on it.
+SVar:Y:Number$1/Plus.X
 SVar:X:Count$CardCounters.AGE/Times.2
 SVar:Rarity:Rare
 SVar:Picture:http://www.wizards.com/global/images/magic/general/mwonvuli_ooze.jpg
