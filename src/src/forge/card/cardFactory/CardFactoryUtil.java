@@ -2891,8 +2891,12 @@ public class CardFactoryUtil {
             EnchantedControllerInPlay = EnchantedControllerInPlay.getType("Creature");
             return EnchantedControllerInPlay.size();
         }
+        
+        // Count$LowestLibrary
+        if (sq[0].contains("LowestLibrary")) {
+        return Math.min(AllZone.getHumanLibrary().size(),AllZone.getComputerLibrary().size());
+        }
     
-
         // Count$Chroma.<mana letter>
         if (sq[0].contains("Chroma")) return doXMath(
                 getNumberOfManaSymbolsControlledByColor(sq[1], cardController), m, c);
