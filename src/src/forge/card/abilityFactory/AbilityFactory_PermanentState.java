@@ -1227,25 +1227,9 @@ public class AbilityFactory_PermanentState {
         else
             cards = AllZoneUtil.getPlayerCardsInPlay(tgtPlayers.get(0));
 
-        cards = filterListByType(cards, params, sa);
+        cards = AbilityFactory.filterListByType(cards, params.get("ValidCards"), sa);
 
         for (Card c : cards) c.tap();
-    }
-
-    /**
-     * <p>filterListByType.</p>
-     *
-     * @param list a {@link forge.CardList} object.
-     * @param params a {@link java.util.HashMap} object.
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
-     * @return a {@link forge.CardList} object.
-     */
-    private static CardList filterListByType(CardList list, HashMap<String, String> params, SpellAbility sa) {
-        String type = params.containsKey("ValidCards") ? params.get("ValidCards") : "";
-        if (type == "")
-            return list;
-
-        return list.getValidCards(type.split(","), sa.getActivatingPlayer(), sa.getSourceCard());
     }
 
     /**

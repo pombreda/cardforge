@@ -334,7 +334,7 @@ public class AbilityFactory_ChangeZone {
 
             if (type != null && p.isComputer()) {
                 // AI only "knows" about his information
-                list = filterListByType(list, params, sa);
+                list = AbilityFactory.filterListByType(list, params.get("ChangeType"), sa);
             }
 
             if (list.isEmpty())
@@ -431,7 +431,7 @@ public class AbilityFactory_ChangeZone {
             CardList list = AllZoneUtil.getCardsInZone(origin, p);
 
             if (p.isComputer())    // Computer should "know" his deck
-                list = filterListByType(list, params, sa);
+                list = AbilityFactory.filterListByType(list, params.get("ChangeType"), sa);
 
             if (list.isEmpty())
                 return false;
@@ -589,7 +589,7 @@ public class AbilityFactory_ChangeZone {
             // Improve how this message reacts for other cards
             String alt = params.get("OriginAlternative");
             CardList altFetchList = AllZoneUtil.getCardsInZone(alt, player);
-            altFetchList = filterListByType(altFetchList, params, sa);
+            altFetchList = AbilityFactory.filterListByType(altFetchList, params.get("ChangeType"), sa);
 
             StringBuilder sb = new StringBuilder();
             sb.append(params.get("AlternativeMessage")).append(" ");
@@ -617,7 +617,7 @@ public class AbilityFactory_ChangeZone {
         if (origin.contains("Hand") && player.isComputer())    // Look at opponents hand before moving onto choosing a card
             GuiUtils.getChoiceOptional(af.getHostCard().getName() + " - Looking at Opponent's Hand", AllZoneUtil.getCardsInZone("Hand", player).toArray());
 
-        fetchList = filterListByType(fetchList, params, sa);
+        fetchList = AbilityFactory.filterListByType(fetchList, params.get("ChangeType"), sa);
 
         PlayerZone destZone = AllZone.getZone(destination, player);
 
@@ -699,7 +699,7 @@ public class AbilityFactory_ChangeZone {
         String origin = params.get("Origin");
 
         CardList fetchList = AllZoneUtil.getCardsInZone(origin, player);
-        fetchList = filterListByType(fetchList, params, sa);
+        fetchList = AbilityFactory.filterListByType(fetchList, params.get("ChangeType"), sa);
 
         String destination = params.get("Destination");
 
@@ -782,49 +782,6 @@ public class AbilityFactory_ChangeZone {
     }
 
     // *********** Utility functions for Hidden ********************
-    /**
-     * <p>filterListByType.</p>
-     *
-     * @param list a {@link forge.CardList} object.
-     * @param params a {@link java.util.HashMap} object.
-     * @param sa a {@link forge.card.spellability.SpellAbility} object.
-     * @return a {@link forge.CardList} object.
-     */
-    private static CardList filterListByType(CardList list, HashMap<String, String> params, SpellAbility sa) {
-        String type = params.get("ChangeType");
-        if (type == null)
-            return list;
-
-        // Filter List Can send a different Source card in for things like Mishra and Lobotomy
-
-        Card source = sa.getSourceCard();
-        if (type.contains("Triggered")) {
-            Object o = sa.getTriggeringObject("Card");
-
-            // I won't the card attached to the Triggering object
-            if (!(o instanceof Card))
-                return new CardList();
-
-            source = (Card) (o);
-            type = type.replace("Triggered", "Card");
-        } else if (type.contains("Remembered")) {
-            boolean hasRememberedCard = false;
-            for (Object o : source.getRemembered()) {
-                if (o instanceof Card) {
-                    hasRememberedCard = true;
-                    source = (Card) o;
-                    type = type.replace("Remembered", "Card");
-                    break;
-                }
-            }
-
-            if (!hasRememberedCard)
-                return new CardList();
-        }
-
-        return list.getValidCards(type.split(","), sa.getActivatingPlayer(), source);
-    }
-
     /**
      * <p>basicManaFixing.</p>
      *
@@ -1543,9 +1500,9 @@ public class AbilityFactory_ChangeZone {
         // ex. "Return all blocking/blocked by target creature"
 
         CardList humanType = AllZoneUtil.getCardsInZone(origin, AllZone.getHumanPlayer());
-        humanType = filterListByType(humanType, params, sa);
+        humanType = AbilityFactory.filterListByType(humanType, params.get("ChangeType"), sa);
         CardList computerType = AllZoneUtil.getCardsInZone(origin, AllZone.getComputerPlayer());
-        computerType = filterListByType(computerType, params, sa);
+        computerType = AbilityFactory.filterListByType(computerType, params.get("ChangeType"), sa);
 
         // TODO: improve restrictions on when the AI would want to use this
         // spBounceAll has some AI we can compare to.
@@ -1688,7 +1645,7 @@ public class AbilityFactory_ChangeZone {
         else
             cards = AllZoneUtil.getCardsInZone(origin, tgtPlayers.get(0));
 
-        cards = filterListByType(cards, params, sa);
+        cards = AbilityFactory.filterListByType(cards, params.get("ChangeType"), sa);
 
         if (params.containsKey("ForgetOtherRemembered"))
             sa.getSourceCard().clearRemembered();

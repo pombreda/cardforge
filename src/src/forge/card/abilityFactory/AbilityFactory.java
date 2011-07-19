@@ -1028,8 +1028,11 @@ public class AbilityFactory {
             if (calcX.length == 1 || calcX[1].equals("none"))
                 return 0;
 
-            if (calcX[0].startsWith("Count") || calcX[0].startsWith("Number"))
+            if (calcX[0].startsWith("Count"))
                 return CardFactoryUtil.xCount(card, calcX[1]) * multiplier;
+            
+            if (calcX[0].startsWith("Number"))
+                return CardFactoryUtil.xCount(card, card.getSVar(amount)) * multiplier;
 
             else if (ability != null) {
                 //Player attribute counting
@@ -1557,6 +1560,48 @@ public class AbilityFactory {
             ArrayList<Card> tgts = (tgt == null) ? new ArrayList<Card>() : tgt.getTargetCards();
             host.addImprinted(tgts);
         }
+    }
+    
+    /**
+     * <p>filterListByType.</p>
+     *
+     * @param list a {@link forge.CardList} object.
+     * @param params a {@link java.util.HashMap} object.
+     * @param sa a {@link forge.card.spellability.SpellAbility} object.
+     * @return a {@link forge.CardList} object.
+     */
+    public static CardList filterListByType(CardList list, String type, SpellAbility sa) {
+        if (type == null)
+            return list;
+
+        // Filter List Can send a different Source card in for things like Mishra and Lobotomy
+
+        Card source = sa.getSourceCard();
+        if (type.contains("Triggered")) {
+            Object o = sa.getTriggeringObject("Card");
+
+            // I won't the card attached to the Triggering object
+            if (!(o instanceof Card))
+                return new CardList();
+
+            source = (Card) (o);
+            type = type.replace("Triggered", "Card");
+        } else if (type.contains("Remembered")) {
+            boolean hasRememberedCard = false;
+            for (Object o : source.getRemembered()) {
+                if (o instanceof Card) {
+                    hasRememberedCard = true;
+                    source = (Card) o;
+                    type = type.replace("Remembered", "Card");
+                    break;
+                }
+            }
+
+            if (!hasRememberedCard)
+                return new CardList();
+        }
+
+        return list.getValidCards(type.split(","), sa.getActivatingPlayer(), source);
     }
 
     /**
