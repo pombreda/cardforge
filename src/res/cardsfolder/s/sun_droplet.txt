@@ -9,4 +9,5 @@ SVar:TrigGainLife:AB$GainLife | Cost$ SubCounter<1/CHARGE> | LifeAmount$ 1 | Def
 SVar:X:TriggerCount$DamageAmount
 SVar:Rarity:Uncommon
 SVar:Picture:http://www.wizards.com/global/images/magic/general/sun_droplet.jpg
+SetInfo:MRD|Uncommon|http://magiccards.info/scans/en/mi/249.jpg
 End
