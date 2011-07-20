@@ -28,6 +28,7 @@ public class StaticAbility_Continuous {
 		
 		se.setAffectedCards(affectedCards);
 		se.setParams(params);
+		se.setTimestamp(hostCard.getTimestamp());
 		AllZone.getStaticEffects().addStaticEffect(se);
 		
 		int powerBonus = 0;
@@ -112,17 +113,20 @@ public class StaticAbility_Continuous {
 			addTriggers = sVars;
 		}
 			
+		//start modifying the cards
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
             
             // set P/T
-            if (setPower != -1) {
-            	affectedCard.setBaseAttack(setPower);
-    			if(!params.containsKey("CharacteristicDefining"))
-    				se.addOriginalPT(hostCard, affectedCard.getBaseAttack(), affectedCard.getBaseDefense());
+            if(params.containsKey("CharacteristicDefining")) {
+                if (setPower != -1)
+                	affectedCard.setBaseAttack(setPower);
+                if (setToughness != -1)
+                	affectedCard.setBaseDefense(setToughness);
             }
-            if (setToughness != -1)
-            	affectedCard.setBaseDefense(setToughness);
+            else  //non CharacteristicDefining
+            	if (setPower != -1 || setToughness != -1)
+            		affectedCard.addNewPT(setPower, setToughness, hostCard.getTimestamp());
             
             // add P/T bonus
             affectedCard.addSemiPermanentAttackBoost(powerBonus);

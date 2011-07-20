@@ -103,9 +103,12 @@ public class Card extends MyObservable implements Comparable<Card> {
 
     //for Vanguard / Manapool / Emblems etc.
     private boolean isImmutable = false;
+    
+    private long timestamp = -1; // permanents on the battlefield
 
     private int baseAttack;
     private int baseDefense;
+    private ArrayList<Card_PT> newPT = new ArrayList<Card_PT>(); // stack of set power/toughness
     private int baseLoyalty = 0;
     private String baseAttackString = null;
     private String baseDefenseString = null;
@@ -3265,7 +3268,6 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public void setBaseAttack(int n) {
         baseAttack = n;
-        this.updateObservers();
     }
 
     /**
@@ -3275,7 +3277,6 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public void setBaseDefense(int n) {
         baseDefense = n;
-        this.updateObservers();
     }
 
     //values that are printed on card
@@ -3317,6 +3318,51 @@ public class Card extends MyObservable implements Comparable<Card> {
         baseDefenseString = s;
         this.updateObservers();
     }
+    
+    public int getSetPower() {
+    	if (newPT.isEmpty())
+    		return -1;
+    	
+    	Card_PT latestPT = getLatestPT();
+    	
+    	return latestPT.getPower();
+    }
+    
+    public int getSetToughness() {
+    	if (newPT.isEmpty())
+    		return -1;
+    	
+    	Card_PT latestPT = getLatestPT();
+    	
+    	return latestPT.getToughness();
+    }
+    
+    public Card_PT getLatestPT() {
+    	Card_PT latestPT = new Card_PT(-1,-1,0);
+    	long max = 0;
+    	
+    	for (Card_PT pt : newPT) {
+    		if (pt.getTimestamp() >= max) {
+    			max = pt.getTimestamp();
+    			latestPT = pt;
+    		}
+    	}
+    	
+    	return latestPT;
+    }
+    
+    public void addNewPT(int power, int toughness, long timestamp) {
+    	newPT.add(new Card_PT(power, toughness, timestamp));
+    }
+    
+    public void removeNewPT(int power, int toughness, long timestamp) {
+    	for (int i = 0; i < newPT.size(); i++) {
+    		Card_PT cardPT = newPT.get(i);
+    		if (cardPT.getTimestamp() == timestamp)
+    			newPT.remove(cardPT);
+    	}
+    }
+    
 
     /**
      * <p>getUnswitchedAttack.</p>
@@ -3325,6 +3371,10 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public int getUnswitchedAttack() {
         int total = getBaseAttack();
+        int setPower = getSetPower();
+        if(setPower != -1)
+        	total = setPower;
+        
         total += getTempAttackBoost() + getSemiPermanentAttackBoost()
                 + getCounters(Counters.P1P1) + getCounters(Counters.P1P2)
                 + getCounters(Counters.P1P0) - getCounters(Counters.M1M1)
@@ -3351,6 +3401,10 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public int getUnswitchedDefense() {
         int total = getBaseDefense();
+        int setToughness = getSetToughness();
+        if(setToughness != -1)
+        	total = setToughness;
+        
         total += getTempDefenseBoost() + getSemiPermanentDefenseBoost()
                 + getCounters(Counters.P1P1) + (2 * getCounters(Counters.P1P2))
                 - getCounters(Counters.M1M1) + getCounters(Counters.P0P1)
@@ -5786,6 +5840,14 @@ public class Card extends MyObservable implements Comparable<Card> {
      */
     public boolean isEvoked() {
         return evoked;
+    }
+    
+    public void setTimestamp(long t) {
+    	timestamp = t;
+    }
+    
+    public long getTimestamp() {
+    	return timestamp;
     }
 
     //private int foil = 0;

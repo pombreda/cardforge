@@ -18,6 +18,8 @@ public class StaticEffect {
     private CardList affectedCards = new CardList();
     private int xValue = 0;
     private int yValue = 0;
+    private long timestamp = -1;
+    
     private String chosenType;
     private HashMap<String, String> mapParams = new HashMap<String, String>();
 
@@ -43,6 +45,14 @@ public class StaticEffect {
     private String colorDesc = "";
     private boolean overwriteColors = false;
     private HashMap<Card, Long> timestamps = new HashMap<Card, Long>();
+    
+    public void setTimestamp(long t) {
+    	timestamp = t;
+    }
+    
+    public long getTimestamp() {
+    	return timestamp;
+    }
 
 
     //overwrite SAs
