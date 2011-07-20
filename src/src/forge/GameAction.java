@@ -117,6 +117,8 @@ public class GameAction {
         //remove all counters from the card if destination is not the battlefield
         if (!zone.is(Constant.Zone.Battlefield))
             copied.clearCounters();
+        
+        copied.setTimestamp(AllZone.getNextTimestamp());
 
         return copied;
     }

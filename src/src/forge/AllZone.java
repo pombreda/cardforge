@@ -132,8 +132,9 @@ public class AllZone implements NewConstants {
         map.put(Constant.Zone.Command + AllZone.getComputerPlayer(), Computer_Command);
 
         map.put(Constant.Zone.Stack + null, Stack_Zone);
-
     }
+    
+    private static long timestamp = 0;
     
     /** Constant <code>DeckManager</code> */
     private final static DeckManager dMgr = new DeckManager(ForgeProps.getFile(NEW_DECKS));
@@ -593,5 +594,10 @@ public class AllZone implements NewConstants {
      */
     public static DeckManager getDeckManager() {
     	return dMgr;
+    }
+    
+    public static long getNextTimestamp() {
+    	timestamp++;
+    	return timestamp;
     }
 }//AllZone

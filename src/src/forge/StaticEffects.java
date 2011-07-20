@@ -43,9 +43,21 @@ public class StaticEffects {
 
         int powerBonus = 0;
         int toughnessBonus = 0;
+		int setPower = -1;
+		int setToughness = -1;
 		String addKeywords[] = null;
 		String addTypes[] = null;
 		String addColors = null;
+		
+		if (params.containsKey("SetPower")) {
+			String setP = params.get("SetPower");
+			setPower = setP.matches("[0-9][0-9]?") ? Integer.parseInt(setP) : -1;
+		}
+		
+		if (params.containsKey("SetToughness")) {
+			String setT = params.get("SetToughness");
+			setToughness = setT.matches("[0-9][0-9]?") ? Integer.parseInt(setT) : -1;
+		}
         
 		if (params.containsKey("AddPower")) {
 			if (params.get("AddPower").equals("X")) {
@@ -81,8 +93,13 @@ public class StaticEffects {
 		if (params.containsKey("SetColor"))
 			addColors = CardUtil.getShortColorsString(new ArrayList<String>(Arrays.asList(params.get("SetColor").split(" & "))));
 			
+		//modify the affected card
 		for (int i = 0; i < affectedCards.size(); i++) {
             Card affectedCard = affectedCards.get(i);
+            
+            //remove set P/T
+            if(!params.containsKey("CharacteristicDefining") && (setPower != -1 || setToughness != -1))
+            	affectedCard.removeNewPT(setPower, setToughness, se.getTimestamp());
             
             //remove P/T bonus
             affectedCard.addSemiPermanentAttackBoost(powerBonus * -1);
