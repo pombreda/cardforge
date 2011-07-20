@@ -338,6 +338,7 @@ public class AbilityFactory_Animate {
         Card source = sa.getSourceCard();
         Card host = af.getHostCard();
         Map<String, String> svars = host.getSVars();
+        long timest = -1;
 
         //AF specific params
         int power = -1;
@@ -345,6 +346,11 @@ public class AbilityFactory_Animate {
         int toughness = -1;
         if (params.containsKey("Toughness"))
             toughness = AbilityFactory.calculateAmount(host, params.get("Toughness"), sa);
+        
+        if (power != -1 || toughness != -1)
+        	timest = AllZone.getNextTimestamp();
+        
+        final long timestamp = timest;
 
         boolean permanent = params.containsKey("Permanent") ? true : false;
 
@@ -402,10 +408,8 @@ public class AbilityFactory_Animate {
         for (final Card c : tgts) {
             //final ArrayList<Card_Color> originalColors = c.getColor();
             final ArrayList<String> originalTypes = c.getType();
-            final int origPower = c.getBaseAttack();
-            final int origToughness = c.getBaseDefense();
 
-            final long timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
+            final long colorTimestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords, timestamp);
 
             //give abilities
             final ArrayList<SpellAbility> addedAbilities = new ArrayList<SpellAbility>();
@@ -444,7 +448,7 @@ public class AbilityFactory_Animate {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp, givesStAbs);
+                    doUnanimate(c, af, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, colorTimestamp, givesStAbs, timestamp);
                 }
             };
 
@@ -470,8 +474,12 @@ public class AbilityFactory_Animate {
      * @param keywords a {@link java.util.ArrayList} object.
      * @return a long.
      */
-    private static long doAnimate(Card c, AbilityFactory af, int power, int toughness, ArrayList<String> types, String colors, ArrayList<String> keywords) {
+    private static long doAnimate(Card c, AbilityFactory af, int power, int toughness, ArrayList<String> types, String colors, 
+    		ArrayList<String> keywords, long timestamp) {
         HashMap<String, String> params = af.getMapParams();
+        
+        if (power != -1 || toughness != -1)
+    		c.addNewPT(power, toughness, timestamp);
         if (power != -1) c.setBaseAttack(power);
         if (toughness != -1) c.setBaseDefense(toughness);
 
@@ -504,8 +512,8 @@ public class AbilityFactory_Animate {
                 c.addIntrinsicKeyword(k);
         }
 
-        long timestamp = c.addColor(colors, c, !params.containsKey("OverwriteColors"), true);
-        return timestamp;
+        long colorTimestamp = c.addColor(colors, c, !params.containsKey("OverwriteColors"), true);
+        return colorTimestamp;
     }
 
     /**
@@ -521,13 +529,12 @@ public class AbilityFactory_Animate {
      * @param addedTriggers a {@link java.util.ArrayList} object.
      * @param timestamp a long.
      */
-    private static void doUnanimate(Card c, AbilityFactory af, int originalPower, int originalToughness, ArrayList<String> originalTypes, 
-    		String colorDesc, ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, 
-    		long timestamp, boolean givesStAbs) {
+    private static void doUnanimate(Card c, AbilityFactory af, ArrayList<String> originalTypes, String colorDesc, 
+    		ArrayList<String> originalKeywords, ArrayList<SpellAbility> addedAbilities, ArrayList<Trigger> addedTriggers, 
+    		long colorTimestamp, boolean givesStAbs, long timestamp) {
     	HashMap<String, String> params = af.getMapParams();
     	
-    	c.setBaseAttack(originalPower);
-        c.setBaseDefense(originalToughness);
+    	c.removeNewPT(timestamp);
 
         c.clearAllTypes();
         
@@ -539,7 +546,7 @@ public class AbilityFactory_Animate {
             c.addType(type);
         }
 
-        c.removeColor(colorDesc, c, !params.containsKey("OverwriteColors"), timestamp);
+        c.removeColor(colorDesc, c, !params.containsKey("OverwriteColors"), colorTimestamp);
 
         for (String k : originalKeywords) {
             if (k.startsWith("HIDDEN"))
@@ -757,6 +764,7 @@ public class AbilityFactory_Animate {
         HashMap<String, String> params = af.getMapParams();
         Card host = af.getHostCard();
         Map<String, String> svars = host.getSVars();
+        long timest = -1;
 
         //AF specific params
         int power = -1;
@@ -764,6 +772,11 @@ public class AbilityFactory_Animate {
         int toughness = -1;
         if (params.containsKey("Toughness"))
             toughness = AbilityFactory.calculateAmount(host, params.get("Toughness"), sa);
+        
+        if (power != -1 || toughness != -1)
+        	timest = AllZone.getNextTimestamp();
+        
+        final long timestamp = timest;
 
         boolean permanent = params.containsKey("Permanent") ? true : false;
 
@@ -817,10 +830,8 @@ public class AbilityFactory_Animate {
 
         for (final Card c : list) {
             final ArrayList<String> originalTypes = c.getType();
-            final int origPower = c.getBaseAttack();
-            final int origToughness = c.getBaseDefense();
 
-            final long timestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords);
+            final long colorTimestamp = doAnimate(c, af, power, toughness, types, finalDesc, keywords, timestamp);
 
             //give abilities
             final ArrayList<SpellAbility> addedAbilities = new ArrayList<SpellAbility>();
@@ -849,7 +860,7 @@ public class AbilityFactory_Animate {
                 private static final long serialVersionUID = -5861759814760561373L;
 
                 public void execute() {
-                    doUnanimate(c, af, origPower, origToughness, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, timestamp, false);
+                    doUnanimate(c, af, originalTypes, finalDesc, keywords, addedAbilities, addedTriggers, colorTimestamp, false, timestamp);
                 }
             };
 

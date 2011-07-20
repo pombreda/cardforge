@@ -3355,7 +3355,7 @@ public class Card extends MyObservable implements Comparable<Card> {
     	newPT.add(new Card_PT(power, toughness, timestamp));
     }
     
-    public void removeNewPT(int power, int toughness, long timestamp) {
+    public void removeNewPT(long timestamp) {
     	for (int i = 0; i < newPT.size(); i++) {
     		Card_PT cardPT = newPT.get(i);
     		if (cardPT.getTimestamp() == timestamp)

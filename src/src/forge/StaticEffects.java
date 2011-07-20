@@ -99,7 +99,7 @@ public class StaticEffects {
             
             //remove set P/T
             if(!params.containsKey("CharacteristicDefining") && (setPower != -1 || setToughness != -1))
-            	affectedCard.removeNewPT(setPower, setToughness, se.getTimestamp());
+            	affectedCard.removeNewPT(se.getTimestamp());
             
             //remove P/T bonus
             affectedCard.addSemiPermanentAttackBoost(powerBonus * -1);
