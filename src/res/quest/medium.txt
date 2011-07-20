@@ -47,6 +47,7 @@ King Arthur 2
 King Edward 2
 King Kong 2
 Kojak 2
+Lisa Simpson 2
 Magnum 2
 Marge Simpson 2
 Nagini 2
