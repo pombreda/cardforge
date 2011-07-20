@@ -42,17 +42,27 @@ class CardFactory_Lands {
                 private static final long serialVersionUID = 7352127748114888255L;
 
                 public void execute() {
-                    if (card.getController().isHuman()) humanExecute();
-                    else computerExecute();
+                    if (card.getController().isHuman()) {
+                        humanExecute();
+                    }
+                    else {
+                        computerExecute();
+                    }
                 }
 
                 public void computerExecute() {
                     boolean pay = false;
 
-                    if (AllZone.getComputerPlayer().getLife() > 9) pay = MyRandom.random.nextBoolean();
+                    if (AllZone.getComputerPlayer().getLife() > 9) {
+                        pay = MyRandom.random.nextBoolean();
+                    }
 
-                    if (pay) AllZone.getComputerPlayer().loseLife(2, card);
-                    else card.tap();
+                    if (pay) {
+                        AllZone.getComputerPlayer().loseLife(2, card);
+                    }
+                    else {
+                        card.tap();
+                    }
                 }
 
                 public void humanExecute() {
@@ -65,10 +75,14 @@ class CardFactory_Lands {
 
                         if (GameActionUtil.showYesNoDialog(card, question.toString())) {
                             AllZone.getHumanPlayer().loseLife(2, card);
-                        } else tapCard();
+                        } else {
+                            tapCard();
+                        }
 
                     }//if
-                    else tapCard();
+                    else {
+                        tapCard();
+                    }
                 }//execute()
 
                 private void tapCard() {
@@ -201,12 +215,19 @@ class CardFactory_Lands {
                 @Override
                 public boolean canPlay() {
                     for (int i = 0; i < AllZone.getStack().size(); i++) {
-                        if (AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) return false;
+                        if (AllZone.getStack().peekInstance(i).getSourceCard().equals(card)) {
+                            return false;
+                        }
                     }
 
-                    if (card.getCounters(Counters.ICE) > 0 && AllZoneUtil.isCardInPlay(card) && super.canPlay())
+                    if (card.getCounters(Counters.ICE) > 0 
+                            && AllZoneUtil.isCardInPlay(card) 
+                            && super.canPlay()) {
                         return true;
-                    else return false;
+                    }
+                    else {
+                        return false;
+                    }
                 }
 
                 @Override
@@ -281,8 +302,10 @@ class CardFactory_Lands {
 
                 @Override
                 public boolean canPlayAI() {
-                    if (!(AllZone.getPhase().getPhase().equals(Constant.Phase.Main1) && AllZone.getPhase().getPlayerTurn().isComputer()))
+                    if (!(AllZone.getPhase().getPhase().equals(Constant.Phase.Main1) 
+                            && AllZone.getPhase().getPlayerTurn().isComputer())) {
                         return false;
+                    }
                     inPlay.clear();
                     inPlay.addAll(AllZoneUtil.getPlayerCardsInPlay(AllZone.getComputerPlayer()));
                     return (inPlay.filter(targets).size() > 1) && super.canPlayAI();
@@ -292,8 +315,9 @@ class CardFactory_Lands {
                 public void resolve() {
                     inPlay.clear();
                     inPlay.addAll(AllZoneUtil.getCardsInPlay());
-                    for (Card targ : inPlay.filter(targets))
+                    for (Card targ : inPlay.filter(targets)) {
                         targ.addCounter(Counters.P1P1, 1);
+                    }
                 }
             };
             ability.setDescription(abCost + "Put a +1/+1 counter on each creature that entered the battlefield this turn.");
@@ -338,14 +362,18 @@ class CardFactory_Lands {
                                     if (paid[0] < 1) {
                                         paid[0]++;
                                         AllZone.getDisplay().showMessage(cardName + " - Select an untapped land to sacrifice");
-                                    } else stop();
+                                    } else {
+                                        stop();
+                                    }
                                 }
                             }//selectCard()
                         };//Input
                         if ((AllZoneUtil.getPlayerLandsInPlay(AllZone.getHumanPlayer()).filter(AllZoneUtil.untapped).size() < 2)) {
                             AllZone.getGameAction().sacrifice(card);
                             return;
-                        } else AllZone.getInputControl().setInput(target);
+                        } else {
+                            AllZone.getInputControl().setInput(target);
+                        }
                     } else {
                         //compy can't play this card because it has no mana pool
                     }
@@ -358,14 +386,25 @@ class CardFactory_Lands {
 
         //*************** START *********** START **************************
         else if (cardName.equals("Kjeldoran Outpost") || cardName.equals("Balduvian Trading Post")
-                || cardName.equals("Heart of Yavimaya") || cardName.equals("Lake of the Dead") || cardName.equals("Soldevi Excavations")) {
+                || cardName.equals("Heart of Yavimaya") || cardName.equals("Lake of the Dead") 
+                || cardName.equals("Soldevi Excavations")) {
 
             final String[] type = new String[1];
-            if (cardName.equals("Kjeldoran Outpost")) type[0] = "Plains";
-            else if (cardName.equals("Balduvian Trading Post")) type[0] = "Mountain.untapped";
-            else if (cardName.equals("Heart of Yavimaya")) type[0] = "Forest";
-            else if (cardName.equals("Lake of the Dead")) type[0] = "Swamp";
-            else if (cardName.equals("Soldevi Excavations")) type[0] = "Island.untapped";
+            if (cardName.equals("Kjeldoran Outpost")) {
+                type[0] = "Plains";
+            }
+            else if (cardName.equals("Balduvian Trading Post")) {
+                type[0] = "Mountain.untapped";
+            }
+            else if (cardName.equals("Heart of Yavimaya")) {
+                type[0] = "Forest";
+            }
+            else if (cardName.equals("Lake of the Dead")) {
+                type[0] = "Swamp";
+            }
+            else if (cardName.equals("Soldevi Excavations")) {
+                type[0] = "Island.untapped";
+            }
 
             final Command comesIntoPlay = new Command() {
                 private static final long serialVersionUID = 6175830918425915833L;
@@ -430,7 +469,9 @@ class CardFactory_Lands {
                     land.remove(card);
 
                     if (land.size() > 0) {
-                        for (Card c : land) AllZone.getGameAction().sacrifice(c);
+                        for (Card c : land) {
+                            AllZone.getGameAction().sacrifice(c);
+                        }
                     }
                 }
             };
@@ -453,8 +494,9 @@ class CardFactory_Lands {
                         if (plains.size() > 1) {
                             CardList tappedPlains = new CardList(plains.toArray());
                             tappedPlains = tappedPlains.getType("Basic");
-                            for (Card c : tappedPlains)
+                            for (Card c : tappedPlains) {
                                 AllZone.getGameAction().sacrifice(c);
+                            }
                             for (int i = 0; i < tappedPlains.size(); i++) {
                                 AllZone.getGameAction().sacrifice(plains.get(i));
                             }
@@ -488,7 +530,9 @@ class CardFactory_Lands {
                                     if (paid[0] < 1) {
                                         paid[0]++;
                                         AllZone.getDisplay().showMessage("Scorched Ruins - Select an untapped land to sacrifice");
-                                    } else stop();
+                                    } else {
+                                        stop();
+                                    }
                                 }
                             }//selectCard()
                         };//Input
@@ -507,11 +551,21 @@ class CardFactory_Lands {
                 || cardName.equals("Sand Silos")) {
             final int[] num = new int[1];
             String shortTemp = "";
-            if (cardName.equals("Bottomless Vault")) shortTemp = "B";
-            if (cardName.equals("Dwarven Hold")) shortTemp = "R";
-            if (cardName.equals("Hollow Trees")) shortTemp = "G";
-            if (cardName.equals("Icatian Store")) shortTemp = "W";
-            if (cardName.equals("Sand Silos")) shortTemp = "U";
+            if (cardName.equals("Bottomless Vault")) {
+                shortTemp = "B";
+            }
+            if (cardName.equals("Dwarven Hold")) {
+                shortTemp = "R";
+            }
+            if (cardName.equals("Hollow Trees")) {
+                shortTemp = "G";
+            }
+            if (cardName.equals("Icatian Store")) {
+                shortTemp = "W";
+            }
+            if (cardName.equals("Sand Silos")) {
+                shortTemp = "U";
+            }
 
             final String shortString = shortTemp;
             StringBuilder desc = new StringBuilder();
@@ -535,7 +589,9 @@ class CardFactory_Lands {
                 //@Override
                 public String mana() {
                     StringBuilder mana = new StringBuilder();
-                    if (num[0] == 0) mana.append("0");
+                    if (num[0] == 0) {
+                        mana.append("0");
+                    }
                     else {
                         for (int i = 0; i < num[0]; i++) {
                             mana.append(shortString).append(" ");
@@ -593,13 +649,27 @@ class CardFactory_Lands {
                 || cardName.equals("Rustic Clachan") || cardName.equals("Murmuring Bosk")) {
 
             String shortTemp = "";
-            if (cardName.equals("Ancient Amphitheater")) shortTemp = "Giant";
-            if (cardName.equals("Auntie's Hovel")) shortTemp = "Goblin";
-            if (cardName.equals("Gilt-Leaf Palace")) shortTemp = "Elf";
-            if (cardName.equals("Secluded Glen")) shortTemp = "Faerie";
-            if (cardName.equals("Wanderwine Hub")) shortTemp = "Merfolk";
-            if (cardName.equals("Rustic Clachan")) shortTemp = "Kithkin";
-            if (cardName.equals("Murmuring Bosk")) shortTemp = "Treefolk";
+            if (cardName.equals("Ancient Amphitheater")) {
+                shortTemp = "Giant";
+            }
+            if (cardName.equals("Auntie's Hovel")) {
+                shortTemp = "Goblin";
+            }
+            if (cardName.equals("Gilt-Leaf Palace")) {
+                shortTemp = "Elf";
+            }
+            if (cardName.equals("Secluded Glen")) {
+                shortTemp = "Faerie";
+            }
+            if (cardName.equals("Wanderwine Hub")) {
+                shortTemp = "Merfolk";
+            }
+            if (cardName.equals("Rustic Clachan")) {
+                shortTemp = "Kithkin";
+            }
+            if (cardName.equals("Murmuring Bosk")) {
+                shortTemp = "Treefolk";
+            }
 
             final String type = shortTemp;
 
@@ -608,15 +678,23 @@ class CardFactory_Lands {
                 private static final long serialVersionUID = -5646344170306812481L;
 
                 public void execute() {
-                    if (card.getController().isHuman()) humanExecute();
-                    else computerExecute();
+                    if (card.getController().isHuman()) {
+                        humanExecute();
+                    }
+                    else {
+                        computerExecute();
+                    }
                 }
 
                 public void computerExecute() {
                     CardList hand = AllZoneUtil.getPlayerHand(AllZone.getComputerPlayer());
                     hand = hand.filter(AllZoneUtil.getTypeFilter(type));
-                    if (hand.size() > 0) revealCard(hand.get(0));
-                    else card.tap();
+                    if (hand.size() > 0) {
+                        revealCard(hand.get(0));
+                    }
+                    else {
+                        card.tap();
+                    }
                 }
 
                 public void humanExecute() {
@@ -653,10 +731,10 @@ class CardFactory_Lands {
 
 
         //*************** START ************ START **************************
-        else if (cardName.equals("Calciform Pools") || cardName.equals("Dreadship Reef") ||
-                cardName.equals("Fungal Reaches") || cardName.equals("Molten Slagheap") ||
-                cardName.equals("Saltcrusted Steppe")) {
-            /*
+        else if (cardName.equals("Calciform Pools") || cardName.equals("Dreadship Reef") 
+                || cardName.equals("Fungal Reaches") || cardName.equals("Molten Slagheap") 
+                || cardName.equals("Saltcrusted Steppe")) {
+                /*
                 * tap, Remove X storage counters from Calciform Pools: Add X mana in any combination of W and/or U to your mana pool.
                 */
             final int[] num = new int[1];
@@ -776,9 +854,9 @@ class CardFactory_Lands {
 
 
         //*************** START *********** START **************************
-        else if (cardName.equals("Crosis's Catacombs") || cardName.equals("Darigaaz's Caldera") ||
-                cardName.equals("Dromar's Cavern") || cardName.equals("Rith's Grove") ||
-                cardName.equals("Treva's Ruins")) {
+        else if (cardName.equals("Crosis's Catacombs") || cardName.equals("Darigaaz's Caldera") 
+                || cardName.equals("Dromar's Cavern") || cardName.equals("Rith's Grove") 
+                || cardName.equals("Treva's Ruins")) {
             final Command comesIntoPlay = new Command() {
                 private static final long serialVersionUID = 7813334062721799674L;
 
@@ -837,11 +915,21 @@ class CardFactory_Lands {
                 || cardName.equals("Karoo")) {
 
             final String[] type = new String[1];
-            if (cardName.equals("Coral Atoll")) type[0] = "Island";
-            else if (cardName.equals("Dormant Volcano")) type[0] = "Mountain";
-            else if (cardName.equals("Everglades")) type[0] = "Swamp";
-            else if (cardName.equals("Jungle Basin")) type[0] = "Forest";
-            else if (cardName.equals("Karoo")) type[0] = "Plains";
+            if (cardName.equals("Coral Atoll")) {
+                type[0] = "Island";
+            }
+            else if (cardName.equals("Dormant Volcano")) {
+                type[0] = "Mountain";
+            }
+            else if (cardName.equals("Everglades")) {
+                type[0] = "Swamp";
+            }
+            else if (cardName.equals("Jungle Basin")) {
+                type[0] = "Forest";
+            }
+            else if (cardName.equals("Karoo")) {
+                type[0] = "Plains";
+            }
 
             final SpellAbility sacOrNo = new Ability(card, "") {
                 @Override
