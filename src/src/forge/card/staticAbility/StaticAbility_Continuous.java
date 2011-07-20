@@ -192,7 +192,7 @@ public class StaticAbility_Continuous {
 		affectedCards = AllZoneUtil.getCardsInZone(affectedZone);
 		
 		if (params.containsKey("Affected")) {
-			if (params.get("Affected").contains("Self"))
+			if (params.get("Affected").contains("Self") && !params.get("Affected").contains(","))
 				affectedCards = new CardList(hostCard);
 			else if (params.get("Affected").contains("EnchantedBy"))
 				affectedCards = new CardList(hostCard.getEnchantingCard());
