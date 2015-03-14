@@ -1,0 +1,1 @@
+We use google code's subversion server. Instead of '/trunk' like some projects, our trunk is named '/src'. There's another 'src' folder inside that.
